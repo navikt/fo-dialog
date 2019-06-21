@@ -9,6 +9,6 @@ interface Props {
 export function Dialoger(props: Props) {
 
     return <>
-        {props.dialogdata.map((dialogen) => <p> {dialogen.overskrift}</p>)}
+        {props.dialogdata.map((dialogen, i) => <p key={i}> {dialogen.overskrift}</p>)}
         </>
 }
