@@ -1,26 +1,27 @@
-import React from 'react';
+import React, {useEffect, useState} from 'react';
 import logo from './logo.svg';
 import './App.css';
+import {fetchData, fetchData as ass} from "./utils/fetch";
+import {DialogData} from "./utils/typer";
+import dialoger from "./mock/dialog";
+import {Dialoger} from "./view/Dialoger";
 
 const App: React.FC = () => {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+
+    const [dialogListe, setDialogListe] = useState<DialogData[] | undefined>(undefined);
+
+    useEffect(() => {
+        fetchData<DialogData[]>("/veilarbdialog/api/dialog", {method: 'get'})
+            .then(res => setDialogListe(res))
+    }, []);
+
+
+    return (
+        <div className="App">
+            { dialogListe === undefined? null : <Dialoger dialogdata={dialogListe}/> }
+        </div>
+    );
 }
+
 
 export default App;
