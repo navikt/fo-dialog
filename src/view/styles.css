@@ -1,0 +1,14 @@
+.DialogPreview{
+    background-color: red;
+    margin-left: 20%;
+    width: 20%;
+    align-content: start;
+}
+.DialogPreviewDato{
+    background-color: #61dafb;
+    display: inline-block;
+}
+.DialogNumberOfMessages{
+    display: inline-block;
+    background-color: aqua;
+}

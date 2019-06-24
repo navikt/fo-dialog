@@ -5,6 +5,7 @@ import {fetchData} from "./utils/fetch";
 import {DialogData} from "./utils/typer";
 import dialoger from "./mock/dialog";
 import {Dialoger} from "./view/Dialoger";
+import {DialogOverview} from "./view/DialogOverview";
 
 const App: React.FC = () => {
 
@@ -18,7 +19,7 @@ const App: React.FC = () => {
 
     return (
         <div className="App">
-            { dialogListe === undefined? null : <Dialoger dialogdata={dialogListe}/> }
+            { dialogListe === undefined? null : <DialogOverview dialogData={dialogListe}/> }
         </div>
     );
 }
