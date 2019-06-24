@@ -1,7 +1,7 @@
 import React, {useEffect, useState} from 'react';
 import logo from './logo.svg';
 import './App.css';
-import {fetchData, fetchData as ass} from "./utils/fetch";
+import {fetchData} from "./utils/fetch";
 import {DialogData} from "./utils/typer";
 import dialoger from "./mock/dialog";
 import {Dialoger} from "./view/Dialoger";
