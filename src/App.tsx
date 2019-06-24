@@ -1,9 +1,7 @@
 import React, {useEffect, useState} from 'react';
-import logo from './logo.svg';
-import './App.css';
+import './App.less';
 import {fetchData} from "./utils/fetch";
 import {DialogData} from "./utils/typer";
-import dialoger from "./mock/dialog";
 import {Dialoger} from "./view/Dialoger";
 
 const App: React.FC = () => {
