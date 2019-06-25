@@ -9,7 +9,7 @@ interface Props {
 }
 
 export function HenvendelseList(props: Props) {
-    return <> {props.henvendelseDataList.map( (henvendelseData, i) => <div key={i}>
+    return <> {props.henvendelseDataList.reverse().map( (henvendelseData, i) => <div key={i}>
             <Henvendelse henvendelseData = {henvendelseData}/>
     </div>
     )} </>
