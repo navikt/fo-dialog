@@ -12,11 +12,10 @@ interface Props {
 export function DialogPreview(props: Props){
     return <div className="DialogPreview">
         <div className="DialogPreviewDato">{convertDateTimeStringToNorwegianDate(props.dialog.sisteDato)}</div>
-        <div className="DialogNumberOfMessages">{}</div>
         <Element>  {props.dialog.henvendelser.length}<NavFrontendChevron type={"høyre"}/> </Element>
-        <h1>{props.dialog.overskrift}</h1>
+        <h3>{props.dialog.overskrift}</h3>
 
-        <p>{props.dialog.sisteTekst}</p>
+        <p className="DialogPreviewLastMessage">{props.dialog.sisteTekst}</p>
 
     </div>
 }

@@ -3,12 +3,21 @@
     margin-left: 20%;
     width: 20%;
     align-content: start;
+    flex-direction: row;
 }
 .DialogPreviewDato{
     background-color: #61dafb;
-    display: inline-block;
+    display: flex;
+    float: left;
 }
 .DialogNumberOfMessages{
-    display: inline-block;
     background-color: aqua;
+    display: flex;
+}
+.DialogPreviewLastMessage{
+    background-color: aliceblue;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    overflow: hidden;
+    
 }
