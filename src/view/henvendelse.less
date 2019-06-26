@@ -1,16 +1,15 @@
 @import "~nav-frontend-core/less/core";
 
-.henvendelse{
-  
-}
-
-
-
 .snakkeboble{
   width: 100%;
+  text-align: left;
 }
 .snakkeboble-panel{
   width: 50%;
+  padding: 0.5rem 1rem 1rem;
+  .snakkeboble-panel__topp{
+     margin-bottom: .5rem;
+  }
 }
 
 .snakkeboble--venstre{
@@ -19,27 +18,22 @@ padding-left: 10%;
 }
 .snakkeboble--hoyre{
   padding-right: 15%;
+  .snakkeboble-panel{
+    text-align: left;
+  }
 }
+
+// 
 .ikon {
-  flex-shrink: 0;
   width: 36px;
   height: 36px;
   margin-top: 2px;
-  background: no-repeat;
-  background-size: cover;
-
 }
 
 
 .bruker-ikon{
-  flex-shrink: 0;
-  width: 36px;
-  height: 36px;
-  margin-top: 2px;
+  background: no-repeat data-uri('./noytral-bruker.svg');
   background-size: cover;
-  background-image: data-uri(
-          './noytral-bruker.svg'
-  );
  }
 
 .veileder-ikon{

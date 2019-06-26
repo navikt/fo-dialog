@@ -5,6 +5,8 @@ import {DialogData} from "./utils/typer";
 import {Dialoger} from "./view/Dialoger";
 import {HenvendelseList} from "./view/HenvendelseList";
 
+import './App.less';
+
 const App: React.FC = () => {
 
     const [dialogListe, setDialogListe] = useState<DialogData[] | undefined>(undefined);
@@ -18,7 +20,7 @@ const App: React.FC = () => {
     return (
         <div className="App">
             { dialogListe === undefined? null : <Dialoger dialogdata={dialogListe}/> }
-            <div style={{backgroundColor: "#e9e7e7"}}> {dialogListe === undefined? null :<HenvendelseList henvendelseDataList={dialogListe[0].henvendelser}/>}</div>
+            <div className="henvendelseList"> {dialogListe === undefined? null :<HenvendelseList henvendelseDataList={dialogListe[0].henvendelser}/>}</div>
         </div>
     );
 }
