@@ -26,7 +26,7 @@ export interface HenvendelseData {
     avsender: string,
     avsenderId: string,
     sendt: string,
-    lest: boolean,He
+    lest: boolean,
     tekst: string,
 
 }
