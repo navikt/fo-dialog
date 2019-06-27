@@ -1,10 +1,11 @@
 import React from "react";
 import Snakkeboble from "nav-frontend-snakkeboble";
-import {HenvendelseData, StringOrUndefinedOrNull} from "../utils/typer";
-import {getFormattedDate} from "../utils/functions";
+import {HenvendelseData} from "../utils/typer";
+import { getFormattedHenvendelseDate } from "../utils/functions";
+import { Normaltekst } from 'nav-frontend-typografi';
 
 import './henvendelse.less';
-import Normaltekst from "nav-frontend-typografi/lib/normaltekst";
+
 
 interface Props {
     henvendelseData: HenvendelseData;
@@ -12,9 +13,9 @@ interface Props {
 
 
 export function Henvendelse(props: Props) {
-    const erMeldingFraBruker = props.henvendelseData.avsender === 'BRUKER' ? true : false;
-    const date: string = getFormattedDate(props.henvendelseData.sendt)
-    const className: string = erMeldingFraBruker? 'ikon bruker-ikon' : 'ikon veileder-ikon'
+    const erMeldingFraBruker = props.henvendelseData.avsender === 'BRUKER';
+    const date: string = getFormattedHenvendelseDate(props.henvendelseData.sendt);
+    const className: string = erMeldingFraBruker? 'ikon bruker-ikon' : 'ikon veileder-ikon';
     return  (
         <div className="henvendelse">
             <Snakkeboble

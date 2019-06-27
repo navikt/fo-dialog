@@ -18,12 +18,12 @@ const App: React.FC = () => {
 
 
     return (
-        <div className="App">
+        <div className="app">
             { dialogListe === undefined? null : <Dialoger dialogdata={dialogListe}/> }
             <div className="henvendelseList"> {dialogListe === undefined? null :<HenvendelseList henvendelseDataList={dialogListe[0].henvendelser}/>}</div>
         </div>
     );
-}
+};
 
 
 export default App;
