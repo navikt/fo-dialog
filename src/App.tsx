@@ -3,6 +3,7 @@ import './App.less';
 import {fetchData} from "./utils/fetch";
 import {DialogData} from "./utils/typer";
 import {Dialoger} from "./view/Dialoger";
+import {DialogBanner} from "./view/DialogBanner";
 
 const App: React.FC = () => {
 
@@ -16,10 +17,11 @@ const App: React.FC = () => {
 
     return (
         <div className="App">
+            <DialogBanner/>
             { dialogListe === undefined? null : <Dialoger dialogdata={dialogListe}/> }
         </div>
     );
-}
+};
 
 
 export default App;
