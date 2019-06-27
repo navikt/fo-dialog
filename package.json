@@ -20,7 +20,9 @@
     "start": "craco start",
     "build": "craco build",
     "test": "craco test",
-    "eject": "craco eject"
+    "eject": "craco eject",
+    "heroku-serve": "serve -s build -l $PORT",
+    "heroku-postbuild": "craco build"
   },
   "eslintConfig": {
     "extends": "react-app"
@@ -38,6 +40,7 @@
     ]
   },
   "devDependencies": {
+    "serve": "^11.0.2",
     "yet-another-fetch-mock": "^3.1.1"
   }
 }
