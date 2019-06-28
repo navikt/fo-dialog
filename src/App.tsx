@@ -1,7 +1,7 @@
 import React, {useEffect, useState} from 'react';
 import './App.less';
 import {fetchData} from "./utils/fetch";
-import {DialogData} from "./utils/typer";
+import {Bruker, DialogData} from "./utils/typer";
 import {Dialoger} from "./view/Dialoger";
 import {HenvendelseList} from "./view/HenvendelseList";
 
@@ -10,15 +10,22 @@ import './App.less';
 const App: React.FC = () => {
 
     const [dialogListe, setDialogListe] = useState<DialogData[] | undefined>(undefined);
+    const [erVeileder, setErVeileder] = useState<Bruker | undefined>(undefined);
+    
 
     useEffect(() => {
         fetchData<DialogData[]>("/veilarbdialog/api/dialog", {method: 'get'})
             .then(res => setDialogListe(res))
     }, []);
-
+    useEffect(() => {
+        fetchData<Bruker>("/brukeridentifikasjon/api/id", {method: 'get'})
+            .then(res => setErVeileder(res))
+    }, [] )
 
     return (
         <div className="app">
+
+            <div>{erVeileder}</div>
             { dialogListe === undefined? null : <Dialoger dialogdata={dialogListe}/> }
             <div className="henvendelseList"> {dialogListe === undefined? null :<HenvendelseList henvendelseDataList={dialogListe[0].henvendelser}/>}</div>
         </div>
