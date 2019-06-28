@@ -10,7 +10,7 @@ import './App.less';
 const App: React.FC = () => {
 
     const [dialogListe, setDialogListe] = useState<DialogData[] | undefined>(undefined);
-    const [erVeileder, setErVeileder] = useState<Bruker | undefined>(undefined);
+    const [userInfo, setUserInfo] = useState<Bruker | undefined>(undefined);
     
 
     useEffect(() => {
@@ -19,13 +19,15 @@ const App: React.FC = () => {
     }, []);
     useEffect(() => {
         fetchData<Bruker>("/brukeridentifikasjon/api/id", {method: 'get'})
-            .then(res => setErVeileder(res))
-    }, [] )
+            .then(res => setUserInfo(res))
+    }, [] );
+
 
     return (
         <div className="app">
-
-            <div>{erVeileder}</div>
+            <div>
+            { userInfo === undefined? null: userInfo.id}
+            </div>
             { dialogListe === undefined? null : <Dialoger dialogdata={dialogListe}/> }
             <div className="henvendelseList"> {dialogListe === undefined? null :<HenvendelseList henvendelseDataList={dialogListe[0].henvendelser}/>}</div>
         </div>
