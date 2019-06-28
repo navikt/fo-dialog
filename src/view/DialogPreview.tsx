@@ -1,8 +1,12 @@
-import {DialogData, StringOrUndefinedOrNull} from "../utils/typer";
-import NavFrontendChevron from "nav-frontend-chevron";
-import {Element} from "nav-frontend-typografi";
 import React from "react";
-import "./styles.css";
+
+import {DialogData, StringOrUndefinedOrNull} from "../utils/typer";
+
+import {EtikettLiten, Normaltekst, Systemtittel} from "nav-frontend-typografi";
+import {LenkepanelBase} from "nav-frontend-lenkepanel";
+
+import {EtikettListe} from "./EtikettListe";
+import "./styles.less";
 
 interface Props {
     dialog: DialogData;
@@ -10,14 +14,21 @@ interface Props {
 
 
 export function DialogPreview(props: Props){
-    return <div className="DialogPreview">
-        <div className="DialogPreviewDato">{convertDateTimeStringToNorwegianDate(props.dialog.sisteDato)}</div>
-        <Element>  {props.dialog.henvendelser.length}<NavFrontendChevron type={"høyre"}/> </Element>
-        <h3>{props.dialog.overskrift}</h3>
 
-        <p className="DialogPreviewLastMessage">{props.dialog.sisteTekst}</p>
 
-    </div>
+    return (
+        <LenkepanelBase className="dialog-preview" >
+
+            <div className="dialog-preview__internal-div">
+                <EtikettLiten>{props.dialog.sisteDato}</EtikettLiten>
+                <Systemtittel className="lenkepanel__heading"> {props.dialog.overskrift}</Systemtittel>
+                <Normaltekst className="dialog-preview__last-henvendelse">{props.dialog.sisteTekst}</Normaltekst>
+                <EtikettListe dialog={props.dialog}/>
+            </div>
+
+
+
+        </LenkepanelBase>)
 }
 
 
@@ -30,7 +41,6 @@ function convertDateTimeStringToNorwegianDate(dateString: StringOrUndefinedOrNul
     }
 
     const year = dateString.substring(0,4);
-
     const norwegianMonths: string[] = ["JAN","FEB","MAR","APR","MAI","JUN","JUL","AUG","SEP","OKT","NOV","DES"];
     const monthInteger: number = parseInt(dateString.substring(5,7));
     const month: string = norwegianMonths[monthInteger-1];
