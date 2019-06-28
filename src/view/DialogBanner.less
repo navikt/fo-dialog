@@ -1,21 +1,29 @@
 @import (reference) "~nav-frontend-core/less/core";
 
-.dialogBanner{
+.dialogbanner{
      background-color: @navDypBlaLighten80;
      box-sizing: border-box;
-}
-.linkPathContainer{
-  display: flex;
-}
-.PersonIcon{
-  width: 30px;
-  height: 30px;
+     border-bottom: 3px solid @navDypBlaLighten60;
+     margin-bottom: 2.5rem;
+
+  &-grid{
+    width: 70%;
+    margin: 0 auto;
+  }
+  .dialog-sidetittel{
+    font-size: 2.5rem;
+    line-height: 2.75rem;
+    padding-top: 2rem;
+    padding-bottom: 2rem;
+  }
 }
 
-.linkPathList{
-  list-style: none;
+.sidetittel-container{
   display: flex;
-  &Item{
-    color: @navDypBla;
+  justify-content: center;
+  align-items: center;
+  .dialog-ikon{
+    padding: 1rem;
+
   }
 }
