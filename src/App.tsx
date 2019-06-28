@@ -3,10 +3,10 @@ import React, {useEffect, useState} from 'react';
 import {DialogData} from "./utils/typer";
 import {fetchData} from "./utils/fetch";
 import {DialogOverview} from "./view/DialogOverview";
-
-import './App.less';
 import {HenvendelseList} from "./view/HenvendelseList";
 import {Dialoger} from "./view/Dialoger";
+
+import './App.less';
 
 const App: React.FC = () => {
 
