@@ -9,8 +9,10 @@ interface Props {
 }
 
 export function HenvendelseList(props: Props) {
-    return <> {props.henvendelseDataList.reverse().map( (henvendelseData, i) => <div key={i}>
-            <Henvendelse henvendelseData = {henvendelseData}/>
+    return <> {props.henvendelseDataList
+        .reverse()
+        .map( (henvendelse) => <div key={henvendelse.id}>
+            <Henvendelse henvendelseData = {henvendelse}/>
     </div>
     )} </>
 }
