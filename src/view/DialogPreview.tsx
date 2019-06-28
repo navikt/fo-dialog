@@ -26,25 +26,5 @@ export function DialogPreview(props: Props){
                 <EtikettListe dialog={props.dialog}/>
             </div>
 
-
-
         </LenkepanelBase>)
-}
-
-
-function convertDateTimeStringToNorwegianDate(dateString: StringOrUndefinedOrNull){
-    if (dateString === undefined){
-        return "undefined";
-    }
-    if (dateString === null){
-        return "null";
-    }
-
-    const year = dateString.substring(0,4);
-    const norwegianMonths: string[] = ["JAN","FEB","MAR","APR","MAI","JUN","JUL","AUG","SEP","OKT","NOV","DES"];
-    const monthInteger: number = parseInt(dateString.substring(5,7));
-    const month: string = norwegianMonths[monthInteger-1];
-
-    const day = dateString.substring(8,10);
-    return day+". "+month+" "+year;
 }
