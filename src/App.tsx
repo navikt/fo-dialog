@@ -5,6 +5,8 @@ import {fetchData} from "./utils/fetch";
 import {DialogOverview} from "./view/DialogOverview";
 
 import './App.less';
+import {HenvendelseList} from "./view/HenvendelseList";
+import {Dialoger} from "./view/Dialoger";
 
 const App: React.FC = () => {
 
@@ -15,10 +17,18 @@ const App: React.FC = () => {
     }, []);
 
 
-    return (
-        <div className="App">
-            { dialogListe === undefined? null : <DialogOverview dialogData={dialogListe}/> }
-        </div>
+    return (<>
+            <div className="App">
+                {dialogListe === undefined ? null : <DialogOverview dialogData={dialogListe}/>}
+            </div>
+            <div className="app">
+                {dialogListe === undefined ? null : <Dialoger dialogdata={dialogListe}/>}
+                <div className="henvendelseList"> {dialogListe === undefined ? null :
+                    <HenvendelseList henvendelseDataList={dialogListe[0].henvendelser}/>}</div>
+            </div>
+
+        </>
+
     );
 }
 
