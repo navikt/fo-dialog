@@ -23,11 +23,11 @@ export interface HenvendelseData {
 
     id: string,
     dialogId: string,
-    avsender: StringOrUndefinedOrNull,
-    avsenderId: StringOrUndefinedOrNull,
-    sendt: StringOrUndefinedOrNull,
+    avsender: string,
+    avsenderId: string,
+    sendt: string,
     lest: boolean,
-    tekst: StringOrUndefinedOrNull,
+    tekst: string,
 
 }
 

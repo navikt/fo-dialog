@@ -4,7 +4,7 @@ import {DialogData} from "./utils/typer";
 import {fetchData} from "./utils/fetch";
 import {DialogOverview} from "./view/DialogOverview";
 
-import './App.css';
+import './App.less';
 
 const App: React.FC = () => {
 
