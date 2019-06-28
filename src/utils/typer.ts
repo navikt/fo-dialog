@@ -1,4 +1,4 @@
-type ValueOrUndefinedOrNull<T> = T |null | undefined;
+type ValueOrUndefinedOrNull<T> = T | null | undefined;
 type StringOrUndefinedOrNull = ValueOrUndefinedOrNull<string>;
 
 export interface DialogData {

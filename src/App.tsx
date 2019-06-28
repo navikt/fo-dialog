@@ -18,7 +18,7 @@ const App: React.FC = () => {
     return (
         <div className="App">
             <DialogBanner/>
-            { dialogListe === undefined? null : <Dialoger dialogdata={dialogListe}/> }
+            {dialogListe === undefined ? null : <Dialoger dialogdata={dialogListe}/>}
         </div>
     );
 };
