@@ -10,10 +10,15 @@
     "@types/react-dom": "16.8.4",
     "classnames": "^2.2.6",
     "craco-less": "^1.9.0",
+    "date-fns": "^1.30.1",
     "less-plugin-npm-import": "^2.1.0",
     "nav-frontend-core": "^4.0.9",
     "nav-frontend-lenker": "^1.0.27",
     "nav-frontend-lenker-style": "^0.2.20",
+    "nav-frontend-paneler": "^1.0.17",
+    "nav-frontend-paneler-style": "^0.3.15",
+    "nav-frontend-snakkeboble": "^1.0.29",
+    "nav-frontend-snakkeboble-style": "^0.2.19",
     "nav-frontend-typografi": "^2.0.12",
     "nav-frontend-typografi-style": "^1.0.13",
     "prop-types": "^15.7.2",
@@ -27,7 +32,9 @@
     "start": "craco start",
     "build": "craco build",
     "test": "craco test",
-    "eject": "craco eject"
+    "eject": "craco eject",
+    "heroku-serve": "serve -s build -l $PORT",
+    "heroku-postbuild": "craco build"
   },
   "eslintConfig": {
     "extends": "react-app"
@@ -45,6 +52,7 @@
     ]
   },
   "devDependencies": {
+    "serve": "^11.0.2",
     "yet-another-fetch-mock": "^3.1.1"
   }
 }
