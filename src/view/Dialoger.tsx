@@ -9,7 +9,6 @@ interface Props {
 }
 
 export function Dialoger(props: Props) {
-    const userInfo = useContext(UserInfoContext);
     return <>
         {props.dialogdata.map((dialogen, i) => <p key={i}> {dialogen.overskrift}</p>)}
         </>
