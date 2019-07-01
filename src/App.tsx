@@ -4,7 +4,6 @@ import {DialogData} from "./utils/typer";
 import {fetchData} from "./utils/fetch";
 import {DialogOverview} from "./view/DialogOverview";
 import {HenvendelseList} from "./view/HenvendelseList";
-import {Dialoger} from "./view/Dialoger";
 
 import './App.less';
 
@@ -18,11 +17,8 @@ const App: React.FC = () => {
 
 
     return (<>
-            <div className="App">
-                {dialogListe === undefined ? null : <DialogOverview dialogData={dialogListe}/>}
-            </div>
             <div className="app">
-                {dialogListe === undefined ? null : <Dialoger dialogdata={dialogListe}/>}
+                {dialogListe === undefined ? null : <DialogOverview dialogData={dialogListe}/>}
                 <div className="henvendelseList"> {dialogListe === undefined ? null :
                     <HenvendelseList henvendelseDataList={dialogListe[0].henvendelser}/>}</div>
             </div>
