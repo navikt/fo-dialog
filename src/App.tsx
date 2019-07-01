@@ -26,7 +26,7 @@ const App: React.FC = () => {
     return (
         <div className="app">
             <div>
-            { userInfo === undefined? null: userInfo.id}
+            { userInfo === undefined ? null: (userInfo.erVeileder) ? "Innlogget som veileder" : "Innlogget som bruker"}
             </div>
             { dialogListe === undefined? null : <Dialoger dialogdata={dialogListe}/> }
             <div className="henvendelseList"> {dialogListe === undefined? null :<HenvendelseList henvendelseDataList={dialogListe[0].henvendelser}/>}</div>
