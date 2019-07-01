@@ -19,7 +19,7 @@ export function DialogPreview(props: Props) {
     const datoString = !!props.dialog.sisteDato ? formaterHenvendelseDate(props.dialog.sisteDato) : "";
 
     return (
-        <LenkepanelBase className="dialog-preview" href={"/"+props.dialog.id}>
+        <LenkepanelBase className="dialog-preview" href={`/${props.dialog.id}`}>
 
             <div className="dialog-preview__internal-div">
                 <EtikettLiten>{datoString}</EtikettLiten>
