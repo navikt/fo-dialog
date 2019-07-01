@@ -1,34 +1,22 @@
 import React from "react";
 
-import {EtikettAdvarsel, EtikettFokus} from "nav-frontend-etiketter";
-
 import {DialogData} from "../utils/typer";
+import {EtikettFokus,EtikettAdvarsel} from "../component/etiketter/Etiketter";
 
 interface Props {
     dialog: DialogData;
 }
 
+
 export function EtikettListe(props: Props) {
 
-    const list = [];
-
-    if (props.dialog.venterPaSvar) {
-        list.push(<EtikettFokus className="dialog-preview__etikett" children="NAV venter på svar fra deg"/>)
-    }
-    if (props.dialog.egenskaper.length > 0) {
-        list.push(<EtikettAdvarsel className="dialog-preview__etikett" children="Viktig melding"/>)
-    }
-    if (!props.dialog.ferdigBehandlet) {
-        list.push(<EtikettFokus className="dialog-preview__etikett" children="Venter på svar fra NAV"/>)
-    }
 
     return (<>
-            {!props.dialog.venterPaSvar &&
-            <EtikettFokus className="dialog-preview__etikett" children="NAV venter på svar fra deg"/>}
-            {(props.dialog.egenskaper.length > 0) &&
-            <EtikettAdvarsel className="dialog-preview__etikett" children="Viktig melding"/>}
-            {!props.dialog.ferdigBehandlet &&
-            <EtikettFokus className="dialog-preview__etikett" children="Venter på svar fra NAV"/>}
+            <EtikettFokus className="dialog-preview__etikett" children="NAV venter på svar fra deg" visible={!props.dialog.venterPaSvar}/>
+
+            <EtikettAdvarsel className="dialog-preview__etikett" children="Viktig melding" visible={props.dialog.egenskaper.length>0}/>
+
+            <EtikettFokus className="dialog-preview__etikett" children="Venter på svar fra NAV" visible={!props.dialog.ferdigBehandlet}/>
         </>
     )
 }
