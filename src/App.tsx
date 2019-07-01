@@ -10,7 +10,7 @@ import {DialogBanner} from "./view/DialogBanner";
 import './App.less';
 
 
-const App: React.FC = () => {
+const App = () => {
 
     const [dialogListe, setDialogListe] = useState<DialogData[] | undefined>(undefined);
     const [userInfo, setUserInfo] = useState<Bruker | undefined>(undefined);
