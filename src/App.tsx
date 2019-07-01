@@ -18,12 +18,10 @@ const App = () => {
 
     useEffect(() => {
         fetchData<DialogData[]>("/veilarbdialog/api/dialog", {method: 'get'})
-            .then(res => setDialogListe(res))
-    }, []);
-    useEffect(() => {
+            .then(res => setDialogListe(res));
         fetchData<Bruker>("/veilarboppfolging/api/oppfolging/me", {method: 'get'})
             .then(res => setUserInfo(res))
-    }, [] );
+    }, []);
 
 
     return (
