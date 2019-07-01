@@ -4,6 +4,7 @@ import {DialogData} from "../utils/typer";
 import {DialogPreview} from "./DialogPreview";
 import {DialogOverviewHeader} from "./DialogOverviewHeader";
 
+import "./dialogoverview.less"
 
 interface Props {
     dialogData: DialogData[];

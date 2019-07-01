@@ -6,7 +6,7 @@ import {EtikettLiten, Normaltekst, Systemtittel} from "nav-frontend-typografi";
 import {LenkepanelBase} from "nav-frontend-lenkepanel";
 
 import {EtikettListe} from "./EtikettListe";
-import "./styles.less";
+import "./dialogpreview.less";
 import {formaterHenvendelseDate} from "../utils/date";
 
 interface Props {
