@@ -17,7 +17,7 @@ interface Props {
 
 export function DialogPreview(props: Props) {
 
-    const datoString: string = (typeof props.dialog.sisteDato === "string") ? formaterHenvendelseDate(props.dialog.sisteDato) : "";
+    const datoString = !!props.dialog.sisteDato ? formaterHenvendelseDate(props.dialog.sisteDato) : "";
 
     return (
         <LenkepanelBase className="dialog-preview">
