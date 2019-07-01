@@ -7,7 +7,7 @@ import {LenkepanelBase} from "nav-frontend-lenkepanel";
 
 import {EtikettListe} from "./EtikettListe";
 import "./styles.less";
-import {formaterHenvendelseDate} from "../utils/functions";
+import {formaterHenvendelseDate} from "../utils/date";
 
 interface Props {
     dialog: DialogData;
