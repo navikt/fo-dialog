@@ -30,6 +30,7 @@
     "start": "craco start",
     "build": "craco build",
     "test": "craco test",
+    "test:coverage": "npm test -- --coverage",
     "eject": "craco eject",
     "heroku-serve": "serve -s build -l $PORT",
     "heroku-postbuild": "craco build",
