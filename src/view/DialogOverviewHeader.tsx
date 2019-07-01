@@ -3,7 +3,6 @@ import React from "react";
 import {Knapp} from "nav-frontend-knapper";
 import {Checkbox} from "nav-frontend-skjema";
 
-import {DialogData} from "../utils/typer";
 
 
 

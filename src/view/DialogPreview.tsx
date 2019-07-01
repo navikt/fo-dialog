@@ -1,6 +1,6 @@
 import React from "react";
 
-import {DialogData, StringOrUndefinedOrNull} from "../utils/typer";
+import {DialogData} from "../utils/typer";
 
 import {EtikettLiten, Normaltekst, Systemtittel} from "nav-frontend-typografi";
 import {LenkepanelBase} from "nav-frontend-lenkepanel";
@@ -8,7 +8,6 @@ import {LenkepanelBase} from "nav-frontend-lenkepanel";
 import {EtikettListe} from "./EtikettListe";
 import "./styles.less";
 import {formaterHenvendelseDate} from "../utils/functions";
-import {string} from "prop-types";
 
 interface Props {
     dialog: DialogData;
