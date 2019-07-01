@@ -10,5 +10,5 @@ export function Dialoger(props: Props) {
 
     return <>
         {props.dialogdata.map((dialogen, i) => <p key={i}> {dialogen.overskrift}</p>)}
-        </>
+    </>
 }

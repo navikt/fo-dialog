@@ -4,6 +4,7 @@ import {fetchData} from "./utils/fetch";
 import {DialogData} from "./utils/typer";
 import {Dialoger} from "./view/Dialoger";
 import {HenvendelseList} from "./view/HenvendelseList";
+import {DialogBanner} from "./view/DialogBanner";
 
 import './App.less';
 
@@ -19,6 +20,7 @@ const App: React.FC = () => {
 
     return (
         <div className="app">
+            <DialogBanner/>
             { dialogListe === undefined? null : <Dialoger dialogdata={dialogListe}/> }
             <div className="henvendelseList"> {dialogListe === undefined? null :<HenvendelseList henvendelseDataList={dialogListe[0].henvendelser}/>}</div>
         </div>
