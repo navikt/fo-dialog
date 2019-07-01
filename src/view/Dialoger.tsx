@@ -1,5 +1,7 @@
-import React from "react"
-import {DialogData} from "../utils/typer";
+import React, { useContext } from "react"
+import { DialogData} from "../utils/typer";
+import { UserInfoContext } from "../Context";
+
 
 
 interface Props {
@@ -7,7 +9,7 @@ interface Props {
 }
 
 export function Dialoger(props: Props) {
-
+    const userInfo = useContext(UserInfoContext);
     return <>
         {props.dialogdata.map((dialogen, i) => <p key={i}> {dialogen.overskrift}</p>)}
         </>

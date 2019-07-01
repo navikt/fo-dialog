@@ -5,7 +5,7 @@ import bruker from "./bruker";
 const loggingMiddleware: Middleware = (request, response) => {
     console.log('response', response);
     return response;
-}
+};
 
 
 const mock = FetchMock.configure({
@@ -16,5 +16,5 @@ const mock = FetchMock.configure({
 
 mock.get("/veilarbdialog/api/dialog", dialoger);
 
-mock.get("/brukeridentifikasjon/api/id", bruker);
+mock.get("/veilarboppfolging/api/oppfolging/me", bruker);
 
