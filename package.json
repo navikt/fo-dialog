@@ -32,7 +32,8 @@
     "test": "craco test",
     "eject": "craco eject",
     "heroku-serve": "serve -s build -l $PORT",
-    "heroku-postbuild": "craco build"
+    "heroku-postbuild": "craco build",
+    "lint": "echo \"Not implemented\""
   },
   "eslintConfig": {
     "extends": "react-app"
