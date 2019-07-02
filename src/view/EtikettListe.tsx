@@ -12,11 +12,11 @@ export function EtikettListe(props: Props) {
 
 
     return (<>
-            <EtikettFokus className="dialog-preview__etikett" children="NAV venter på svar fra deg" visible={!props.dialog.venterPaSvar}/>
+            <EtikettFokus className="arbeidsrettet__dialog--preview__etikett" children="NAV venter på svar fra deg" visible={!props.dialog.venterPaSvar}/>
 
-            <EtikettAdvarsel className="dialog-preview__etikett" children="Viktig melding" visible={props.dialog.egenskaper.length>0}/>
+            <EtikettAdvarsel className="arbeidsrettet__dialog--preview__etikett" children="Viktig melding" visible={props.dialog.egenskaper.length>0}/>
 
-            <EtikettFokus className="dialog-preview__etikett" children="Venter på svar fra NAV" visible={!props.dialog.ferdigBehandlet}/>
+            <EtikettFokus className="arbeidsrettet__dialog--preview__etikett" children="Venter på svar fra NAV" visible={!props.dialog.ferdigBehandlet}/>
         </>
     )
 }
