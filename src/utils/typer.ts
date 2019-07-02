@@ -28,9 +28,13 @@ export interface HenvendelseData {
     sendt: string,
     lest: boolean,
     tekst: string,
-
 }
 
+export interface Bruker {
+    id: string,
+    erVeileder: boolean,
+    erBruker:boolean
+}
 
 export interface OppfolgingData {
     fnr: StringOrUndefinedOrNull,
