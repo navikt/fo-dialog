@@ -17,7 +17,7 @@ export function Henvendelse(props: Props) {
     const date: string = formaterHenvendelseDate(props.henvendelseData.sendt);
     const className: string = erMeldingFraBruker? 'ikon bruker-ikon' : 'ikon veileder-ikon';
     return  (
-        <div className="henvendelse">
+        <div className="arbeidsrettet__dialog--henvendelse">
             <Snakkeboble
                 topp={date}
                 pilHoyre={erMeldingFraBruker}
