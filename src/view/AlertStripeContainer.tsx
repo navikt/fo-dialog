@@ -14,17 +14,17 @@ export function AlertStripeContainer(){
     const UserInfo = useContext(UserInfoContext);
 
     const erVeileder = UserInfo!.erVeileder;
-    const isUnderOppfolging= oppfolgingData!.underOppfolging;
-    const hasOppfolgingsPerioder = oppfolgingData!.oppfolgingsPerioder.length > 0;
+    const erUnderOppfolging= oppfolgingData!.underOppfolging;
+    const harOppfolgingsPerioder = oppfolgingData!.oppfolgingsPerioder.length > 0;
     return (
         <div>
             <div className="oppfolging-alertstripe">
-                <OppfolgingAlertStripeVisibleProp visible={(!erVeileder && !isUnderOppfolging && !hasOppfolgingsPerioder)}>
+                <OppfolgingAlertStripeVisibleProp visible={(!erVeileder && !erUnderOppfolging && !harOppfolgingsPerioder)}>
                     Du må være registrert hos NAV for å bruke aktivitetsplanen.
                 </OppfolgingAlertStripeVisibleProp>
             </div>
             <div className="oppfolging-alertstripe">
-                <OppfolgingAlertStripeVisibleProp visible={!erVeileder && !isUnderOppfolging}>
+                <OppfolgingAlertStripeVisibleProp visible={!erVeileder && !erUnderOppfolging && harOppfolgingsPerioder}>
                     <Normaltekst>
                         Du er ikke lenger registrert hos NAV og din tidligere aktivitetsplan er lagt under "Mine tidligere planer". Hvis du fortsatt skal motta ytelser, få oppfølging fra NAV og bruke aktivitetsplanen må du være registrert.
                     </Normaltekst>
@@ -32,7 +32,7 @@ export function AlertStripeContainer(){
                 </OppfolgingAlertStripeVisibleProp>
             </div>
             <div className="oppfolging-alertstripe">
-                <OppfolgingAlertStripeVisibleProp visible={erVeileder && !isUnderOppfolging && !hasOppfolgingsPerioder}>
+                <OppfolgingAlertStripeVisibleProp visible={erVeileder && !erUnderOppfolging && !harOppfolgingsPerioder}>
                     Denne brukeren er ikke registrert.
                 </OppfolgingAlertStripeVisibleProp>
             </div>
