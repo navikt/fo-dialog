@@ -46,6 +46,4 @@ export function Provider(props: ProviderData){
             </UserInfoContext.Provider>
         </OppfolgingContext.Provider>
     )
-
-
 }

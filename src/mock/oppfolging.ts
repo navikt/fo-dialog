@@ -1,4 +1,4 @@
-const oppfPerioder:any = [
+const oppfPerioder: any[] = [
     {
         aktorId: '1234567988888',
         veileder: null,

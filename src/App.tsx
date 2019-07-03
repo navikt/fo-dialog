@@ -24,7 +24,7 @@ const App = () => {
                 <DialogBanner/>
                 <Provider>
                     <AlertStripeContainer/>
-                    {dialogListe === undefined ? null : <DialogOverview dialogData={dialogListe} visible={false}/>}
+                    {dialogListe === undefined ? null : <DialogOverview dialogData={dialogListe} />}
                     <div className="henvendelseList"> {dialogListe === undefined ? null :
                         <HenvendelseList henvendelseDataList={dialogListe[0].henvendelser}/>}</div>
                 </Provider>
