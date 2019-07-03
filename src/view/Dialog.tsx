@@ -15,8 +15,8 @@ export function Dialog(props: Props) {
         )
     } else {
         return (
-            <div className="arbeidsrettet__dialog--detail">
-                <div className="arbeidsrettet__dialog--top">
+            <div className="dialog">
+                <div className="dialog-top">
                     <Innholdstittel> Ingen Valgt Dialog</Innholdstittel>
                 </div>
             </div>

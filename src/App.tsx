@@ -29,12 +29,12 @@ const App = () => {
             <div className="app">
                 <DialogBanner/>
                 <UserInfoContext.Provider value={userInfo}>
-                    <div className="arbeidsrettet__dialog--app-body">
-                        <div className="arbeidsrettet__dialog--list">
+                    <div className="App-body">
+                        <div className="dialog-list">
                             { dialogListe === undefined? null : <DialogOverview dialogData={dialogListe}/> }
                         </div>
-                        <div className="arbeidsrettet__dialog--detail">
-                            { dialogListe === undefined ? null : <Dialog dialog={dialogListe[2]}/> }
+                        <div className="dialog-detail">
+                            { dialogListe === undefined ? null : <Dialog dialog={dialogListe[3]}/> }
                         </div>
                     </div>
                 </UserInfoContext.Provider>

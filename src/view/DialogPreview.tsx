@@ -19,12 +19,12 @@ export function DialogPreview(props: Props) {
     const datoString = !!props.dialog.sisteDato ? formaterHenvendelseDate(props.dialog.sisteDato) : "";
 
     return (
-        <LenkepanelBase className="arbeidsrettet__dialog--dialog-preview" href={`/${props.dialog.id}`}>
+        <LenkepanelBase className="dialog-preview" href={`/${props.dialog.id}`}>
 
-            <div className="arbeidsrettet__dialog--preview__internal-div">
+            <div className="dialog-preview__internal-div">
                 <EtikettLiten>{datoString}</EtikettLiten>
-                <Systemtittel className="arbeidsrettet__dialog--lenkepanel__heading"> {props.dialog.overskrift}</Systemtittel>
-                <Normaltekst className="arbeidsrettet__dialog--preview__last-henvendelse">{props.dialog.sisteTekst}</Normaltekst>
+                <Systemtittel className="lenkepanel__heading"> {props.dialog.overskrift}</Systemtittel>
+                <Normaltekst className="dialog-preview__last-henvendelse">{props.dialog.sisteTekst}</Normaltekst>
                 <EtikettListe dialog={props.dialog}/>
             </div>
 
