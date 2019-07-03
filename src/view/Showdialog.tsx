@@ -15,40 +15,40 @@ interface Props {
 export function Showdialog(props: Props) {
     const [value, setValue] =  useState('');
 
-    return <div className="arbeidsrettet__dialog--detail">
-        <div className="arbeidsrettet__dialog--top">
+    return <div className="dialog">
+        <div className="dialog-top">
             <Lenke href="/dialog">
                 <Undertittel>
                     Aktivitet: {props.dialog.aktivitetId}
                     <HoyreChevron stor type={'høyre'}/>
                 </Undertittel>
             </Lenke>
-            <div className="arbeidsrettet__dialog--venter-pa">
-                <div className="arbeidsrettet__dialog--venter-pa-item">
+            <div className="venter-pa">
+                <div className="venter-pa-item">
                     <Checkbox
                         id='navHarBallen'
                         label='Venter på svar fra NAV'
                         checked={!props.dialog.venterPaSvar}
-                        className="arbeidsrettet__dialog--venter-pa-item-checkbox"
+                        className="venter-pa-item-checkbox"
                     />
                 </div>
-                <div className="arbeidsrettet__dialog--venter-pa-item">
+                <div className="venter-pa-item">
                     <Checkbox
                         id='brukerHarBallen'
                         label='Venter på svar fra bruker'
                         checked={props.dialog.venterPaSvar}
-                        className="arbeidsrettet__dialog--venter-pa-item-checkbox"
+                        className="venter-pa-item-checkbox"
                     />
                 </div>
             </div>
 
-        <div className="arbeidsrettet__dialog--henvendelseList"> {props.dialog.henvendelser === undefined? null :<HenvendelseList henvendelseDataList={props.dialog.henvendelser}/>}</div>
+        <div className="henvendelseList"> {props.dialog.henvendelser === undefined? null :<HenvendelseList henvendelseDataList={props.dialog.henvendelser}/>}</div>
 
-        <div className="arbeidsrettet__dialog--skriv-melding">
+        <div className="skriv-melding">
             <Textarea
                 label='Skriv en melding til brukeren'
                 placeholder="Skriv her .."
-                textareaClass='arbeidsrettet__dialog--meldingsfelt'
+                textareaClass='meldingsfelt'
                 id='meldingIn'
                 name='NyMelding'
                 onChange={(event) => setValue((event.target as HTMLInputElement).value)}
