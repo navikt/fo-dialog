@@ -34,6 +34,8 @@
     "nav-frontend-skjema-style": "^1.0.40",
     "nav-frontend-snakkeboble": "^1.0.29",
     "nav-frontend-snakkeboble-style": "^0.2.19",
+    "nav-frontend-spinner": "^1.0.18",
+    "nav-frontend-spinner-style": "^0.2.5",
     "nav-frontend-typografi": "^2.0.12",
     "nav-frontend-typografi-style": "^1.0.13",
     "prop-types": "^15.7.2",
