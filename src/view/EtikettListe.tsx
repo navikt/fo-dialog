@@ -20,13 +20,10 @@ export function EtikettListe(props: Props) {
 
             <UserInfoContext.Consumer>
                 { userInfo =>(
-                    <EtikettFokus className="dialog-preview__etikett" children="Venter på svar fra NAV"
+                    <EtikettFokus className="dialog-preview__etikett dialog-preview__etikett--bruker-venter" children="Venter på svar fra NAV"
                                   visible={!props.dialog.ferdigBehandlet && (!!userInfo ? userInfo.erVeileder : false)}/>
                 )}
             </UserInfoContext.Consumer>
-
-
-
         </>
     )
 }
