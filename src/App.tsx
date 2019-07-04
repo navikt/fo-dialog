@@ -27,7 +27,7 @@ const App = () => {
             <div className="app">
                 <DialogBanner/>
                 <UserInfoContext.Provider value={userInfo}>
-                    <div className="App-body">
+                    <div className="app__body">
                         { dialogListe === undefined? null : <DialogOverview dialogData={dialogListe}/> }
                         { dialogListe === undefined ? null : <Dialog dialog={dialogListe[1]}/> }
                     </div>
