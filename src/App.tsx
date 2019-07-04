@@ -1,14 +1,15 @@
 import React, { useEffect, useState} from 'react';
-import './App.less';
 import {fetchData} from "./utils/fetch";
-import { DialogData } from "./utils/typer";
-import {HenvendelseList} from "./view/HenvendelseList";
 import { Provider} from "./Context";
 import {DialogBanner} from "./view/DialogBanner";
+import {Bruker, DialogData} from "./utils/typer";
 import {DialogOverview} from "./view/DialogOverview";
-import {AlertStripeContainer} from "./view/AlertStripeContainer";
+
 
 import './App.less';
+
+import {Dialog} from "./view/Dialog";
+import {AlertStripeContainer} from "./view/AlertStripeContainer";
 
 
 const App = () => {
@@ -19,19 +20,27 @@ const App = () => {
         fetchData<DialogData[]>("/veilarbdialog/api/dialog", {method: 'get'})
             .then(res => setDialogListe(res));
     }, []);
-    return (<>
+
+    return (
+        <>
             <div className="app">
                 <DialogBanner/>
                 <Provider>
                     <AlertStripeContainer/>
-                    {dialogListe === undefined ? null : <DialogOverview dialogData={dialogListe} />}
-                    <div className="henvendelseList"> {dialogListe === undefined ? null :
-                        <HenvendelseList henvendelseDataList={dialogListe[0].henvendelser}/>}</div>
+                    <div className="App-body">
+                        <div className="dialog-list">
+                            { dialogListe === undefined? null : <DialogOverview dialogData={dialogListe}/> }
+                        </div>
+                        <div className="dialog-detail">
+                            { dialogListe === undefined ? null : <Dialog dialog={dialogListe[3]}/> }
+                        </div>
+                    </div>
                 </Provider>
             </div>
         </>
+
     );
-};
+}
 
 
 export default App;
