@@ -1,17 +1,21 @@
 @import (reference) "~nav-frontend-core/less/core";
 
 .dialog-overview{
-  width: 50%;
+  height:100%;
   background-color:@navLysGra;
   padding-bottom: 5px;
+  flex-grow: 1;
+  margin: 0.5rem;
+  min-width: 30%;
   &__header{
     display: flex;
     justify-content:space-around;
     background-color: white;
     margin-bottom: 0.3rem;
+    height: 10%;
   }
   &__preview-list{
     overflow-y: scroll;
-    height: 25rem;
+    height: 90%;
   }
 }

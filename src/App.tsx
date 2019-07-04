@@ -1,21 +1,16 @@
 import React, {useEffect, useState} from 'react';
-
-import './App.less';
 import {fetchData} from "./utils/fetch";
 import {Bruker, DialogData} from "./utils/typer";
-import {HenvendelseList} from "./view/HenvendelseList";
-import { UserInfoContext} from "./Context";
+import {DialogOverview} from "./view/DialogOverview";
+import {Dialog} from "./view/Dialog";
 import {DialogBanner} from "./view/DialogBanner";
-
+import { UserInfoContext} from "./Context";
 
 import './App.less';
-import {DialogOverview} from "./view/DialogOverview";
-
 
 const App = () => {
 
     const [dialogListe, setDialogListe] = useState<DialogData[] | undefined>(undefined);
-
     const [userInfo, setUserInfo] = useState<Bruker | undefined>(undefined);
 
     useEffect(() => {
@@ -23,23 +18,27 @@ const App = () => {
             .then(res => setDialogListe(res));
         fetchData<Bruker>("/veilarboppfolging/api/oppfolging/me", {method: 'get'})
             .then(res => setUserInfo(res))
+
     }, []);
 
 
-    return (<>
+    return (
+        <>
             <div className="app">
                 <DialogBanner/>
                 <UserInfoContext.Provider value={userInfo}>
-                {dialogListe === undefined ? null : <DialogOverview dialogData={dialogListe}/>}
-                <div className="henvendelseList"> {dialogListe === undefined ? null :
-                    <HenvendelseList henvendelseDataList={dialogListe[0].henvendelser}/>}</div>
+                    <div className="app__body">
+                        { dialogListe === undefined? null : <DialogOverview dialogData={dialogListe}/> }
+                        { dialogListe === undefined ? null : <Dialog dialog={dialogListe[1]}/> }
+                    </div>
                 </UserInfoContext.Provider>
+
             </div>
 
         </>
 
     );
-}
+};
 
 
 export default App;
