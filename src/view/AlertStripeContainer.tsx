@@ -21,7 +21,7 @@ export function AlertStripeContainer(){
             return(<AlertStripeAdvarsel className="oppfolging-alertstripe">Du må være registrert hos NAV for å bruke aktivitetsplanen.</AlertStripeAdvarsel>)
         }
     }
-    if (!erUnderOppfolging && harOppfolgingsPerioder && !erVeileder )
+    if (!erUnderOppfolging && harOppfolgingsPerioder && !erVeileder ){
     return (
             <AlertStripeAdvarsel>
                 <Normaltekst>
@@ -29,6 +29,6 @@ export function AlertStripeContainer(){
                 </Normaltekst>
                 <a href="https://www.nav.no/Forsiden">www.nav.no</a>
             </AlertStripeAdvarsel>
-    );
+    );}
     return <></>
 }

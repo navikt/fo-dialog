@@ -1,18 +1,24 @@
-import React from "react";
+import React, {useContext} from "react";
 
 import {DialogData} from "../utils/typer";
 import {DialogPreview} from "./DialogPreview";
 import {DialogOverviewHeader} from "./DialogOverviewHeader";
-import {visibleIfHoc} from "../component/hoc/visibleIfHoc";
-import { defaultProps } from 'recompose';
+
 
 import "./dialogoverview.less"
+import {OppfolgingContext} from "../Context";
 
 interface Props {
     dialogData: DialogData[];
 }
 
-function DialogOverviewRaw(props: Props){
+export function DialogOverview(props: Props){
+    const oppfolgingData = useContext(OppfolgingContext);
+
+    const erUnderOppfolging= oppfolgingData!.underOppfolging;
+    const harOppfolgingsPerioder = oppfolgingData!.oppfolgingsPerioder.length > 0;
+
+    if(!erUnderOppfolging && !harOppfolgingsPerioder) { return null;}
 
     return <div className="dialog-overview">
         <DialogOverviewHeader/>
@@ -21,6 +27,3 @@ function DialogOverviewRaw(props: Props){
         </div>
     </div>
 }
-
-const withDefualtProps = defaultProps({visible: true});
-export const DialogOverview = withDefualtProps(visibleIfHoc(DialogOverviewRaw));

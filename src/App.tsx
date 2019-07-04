@@ -29,18 +29,16 @@ const App = () => {
                     <AlertStripeContainer/>
                     <div className="App-body">
                         <div className="dialog-list">
-                            { dialogListe === undefined? null : <DialogOverview dialogData={dialogListe}/> }
+                            {dialogListe === undefined ? null : <DialogOverview dialogData={dialogListe} />}
                         </div>
                         <div className="dialog-detail">
-                            { dialogListe === undefined ? null : <Dialog dialog={dialogListe[3]}/> }
+                            {dialogListe === undefined ? null : <Dialog dialog={dialogListe[3]}/>}
                         </div>
                     </div>
                 </Provider>
             </div>
         </>
-
     );
-}
-
+};
 
 export default App;
