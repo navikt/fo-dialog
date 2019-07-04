@@ -1,14 +1,12 @@
 import React, {useEffect, useState} from 'react';
-
-import './App.less';
 import {fetchData} from "./utils/fetch";
 import {Bruker, DialogData} from "./utils/typer";
-
-import './App.less';
 import {DialogOverview} from "./view/DialogOverview";
 import {Dialog} from "./view/Dialog";
 import {DialogBanner} from "./view/DialogBanner";
 import { UserInfoContext} from "./Context";
+
+import './App.less';
 
 const App = () => {
 
@@ -29,13 +27,9 @@ const App = () => {
             <div className="app">
                 <DialogBanner/>
                 <UserInfoContext.Provider value={userInfo}>
-                    <div className="App-body">
-                        <div className="dialog-list">
-                            { dialogListe === undefined? null : <DialogOverview dialogData={dialogListe}/> }
-                        </div>
-                        <div className="dialog-detail">
-                            { dialogListe === undefined ? null : <Dialog dialog={dialogListe[3]}/> }
-                        </div>
+                    <div className="app__body">
+                        { dialogListe === undefined? null : <DialogOverview dialogData={dialogListe}/> }
+                        { dialogListe === undefined ? null : <Dialog dialog={dialogListe[1]}/> }
                     </div>
                 </UserInfoContext.Provider>
 
