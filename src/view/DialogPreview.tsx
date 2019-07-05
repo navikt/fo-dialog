@@ -6,15 +6,13 @@ import {LenkepanelBase} from "nav-frontend-lenkepanel";
 import {EtikettListe} from "./EtikettListe";
 import "./dialogpreview.less";
 import {formaterHenvendelseDate} from "../utils/date";
-import {visibleIfHoc} from "../component/hoc/visibleIfHoc";
-import { defaultProps } from 'recompose';
 
 interface Props {
     dialog: DialogData;
 }
 
 
-function DialogPreviewRaw(props: Props) {
+export function DialogPreview(props: Props) {
 
     const datoString = !!props.dialog.sisteDato ? formaterHenvendelseDate(props.dialog.sisteDato) : "";
 
@@ -31,7 +29,5 @@ function DialogPreviewRaw(props: Props) {
         </LenkepanelBase>)
 }
 
-const withDefualtProps = defaultProps({visible: true});
-export const DialogPreview = withDefualtProps(visibleIfHoc(DialogPreviewRaw));
 
 
