@@ -13,13 +13,19 @@ interface Props {
 }
 const DialogOverviewHeaderVisible = visibleIfHoc(DialogOverviewHeader);
 
-export function DialogOverview(props: Props){
+export function DialogOverview(props: Props) {
     const oppfolgingData = useContext(OppfolgingContext);
 
-    return <div className="dialog-overview">
-        <DialogOverviewHeaderVisible visible={oppfolgingData!.underOppfolging}/>
-        <div className="dialog-overview__preview-list">
-            {props.dialogData.map((dialog) => <DialogPreview dialog={dialog} key={dialog.id}/>)}
+    const erUnderOppfolging = oppfolgingData!.underOppfolging;
+    const harOppfolgingsPerioder = oppfolgingData!.oppfolgingsPerioder.length > 0;
+    if (!erUnderOppfolging && !harOppfolgingsPerioder) {
+        return <></>
+    } else{
+        return <div className="dialog-overview">
+            <DialogOverviewHeaderVisible visible={oppfolgingData!.underOppfolging}/>
+            <div className="dialog-overview__preview-list">
+                {props.dialogData.map((dialog) => <DialogPreview dialog={dialog} key={dialog.id}/>)}
+            </div>
         </div>
-    </div>
+        }
 }
