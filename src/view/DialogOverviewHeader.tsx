@@ -15,6 +15,6 @@ export function DialogOverviewHeader(props: Props) {
 
     return (<div className="dialog-overview__header">
         <Knapp>Ny dialog</Knapp>
-        <Checkbox label={"Viktige Meldinger"} visible={brukerHarViktigeDialoger}/>
+        <Checkbox label={"Viktige meldinger"} visible={brukerHarViktigeDialoger}/>
     </div>)
 }
