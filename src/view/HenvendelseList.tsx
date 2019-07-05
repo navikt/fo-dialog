@@ -9,13 +9,16 @@ interface Props {
 }
 
 export function HenvendelseList(props: Props) {
-    return (
-    <div className="henvendelse-list">
-        {props.henvendelseDataList
-        .map( (henvendelse) =>
-            <div key={henvendelse.id}>
-                <Henvendelse henvendelseData = {henvendelse}/>
+    return <>
+        {props.henvendelseDataList === undefined ? null :
+            <div className="henvendelse-list">
+                {props.henvendelseDataList
+                    .map((henvendelse) =>
+                        <div key={henvendelse.id}>
+                            <Henvendelse henvendelseData={henvendelse}/>
+                        </div>
+                    )
+                }
             </div>
-    )}
-    </div>)
+        }</>
 }
