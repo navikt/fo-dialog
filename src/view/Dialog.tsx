@@ -38,7 +38,7 @@ export function Dialog(props: Props) {
                     />
                 </div>
 
-                {props.dialog.henvendelser === undefined? null :<HenvendelseList henvendelseDataList={props.dialog.henvendelser}/>}
+                <HenvendelseList henvendelseDataList={props.dialog.henvendelser}/>
 
                 <div className="skriv-melding">
                     <Textarea
