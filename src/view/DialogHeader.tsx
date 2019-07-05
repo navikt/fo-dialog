@@ -7,12 +7,10 @@ import {DialogData} from "../utils/typer";
 
 
 interface Props {
-    dialog: DialogData | null;
+    dialog: DialogData;
 }
 
-export function DialogCheckboxes(props: Props) {
-
-    if (props.dialog !== null) {
+export function DialogHeader(props: Props) {
     return (
         <>
             <Lenke href="/dialog">
@@ -32,6 +30,4 @@ export function DialogCheckboxes(props: Props) {
                     className="checkbox-block__item"/>
             </div>
         </>)
-    }
-    return (<></>);
 }

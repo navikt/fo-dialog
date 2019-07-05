@@ -2,8 +2,8 @@ import React from "react";
 import {DialogData} from "../utils/typer";
 import {Innholdstittel} from "nav-frontend-typografi";
 import {HenvendelseList} from "./HenvendelseList";
-import {DialogCheckboxes} from "./DialogCheckboxes";
-import {DialogSkrivMeld} from "./DialogSkrivMeld";
+import {DialogHeader} from "./DialogHeader";
+import {DialogInputBox} from "./DialogInputBox";
 
 import './Dialog.less';
 
@@ -15,9 +15,9 @@ export function Dialog(props: Props) {
     if (props.dialog !== null) {
         return (
             <div className="dialog">
-                <DialogCheckboxes dialog={props.dialog}/>
+                <DialogHeader dialog={props.dialog}/>
                 <HenvendelseList henvendelseDataList={props.dialog.henvendelser}/>
-                <DialogSkrivMeld/>
+                <DialogInputBox/>
             </div>)
     } else {
         return (

@@ -6,7 +6,7 @@ function sendeNyMelding (props: { tekst: string }) {
     console.log(props);
 }
 
-export function DialogSkrivMeld(){
+export function DialogInputBox(){
     const [value, setValue] =  useState('');
 
     return (
