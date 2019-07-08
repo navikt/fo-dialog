@@ -1,13 +1,13 @@
-import React, {useContext} from "react";
+import React from "react";
 import {AlertStripeAdvarsel} from "nav-frontend-alertstriper";
-import {OppfolgingContext, UserInfoContext} from "../Context";
+import { useOppfolgingContext, useUserInfoContext} from "../Context";
 import {Normaltekst} from "nav-frontend-typografi";
 
 import "./alertstripe-container.less"
 
 export function AlertStripeContainer(){
-    const oppfolgingData = useContext(OppfolgingContext);
-    const UserInfo = useContext(UserInfoContext);
+    const oppfolgingData = useOppfolgingContext();
+    const UserInfo = useUserInfoContext();
 
     const erVeileder = UserInfo!.erVeileder;
     const erUnderOppfolging= oppfolgingData!.underOppfolging;
@@ -15,15 +15,16 @@ export function AlertStripeContainer(){
 
     if (!erUnderOppfolging && !harOppfolgingsPerioder){
         if (erVeileder){
-            return (<AlertStripeAdvarsel className="oppfolging-alertstripe">Denne brukeren er ikke registrert.</AlertStripeAdvarsel>)
-        }
+            return (<AlertStripeAdvarsel data-ikke-reg-veileder className="oppfolging-alertstripe">
+            Denne brukeren er ikke registrert.</AlertStripeAdvarsel>)
+    }
         else{
-            return(<AlertStripeAdvarsel className="oppfolging-alertstripe">Du må være registrert hos NAV for å bruke aktivitetsplanen.</AlertStripeAdvarsel>)
+            return(<AlertStripeAdvarsel data-ikke-reg-bruker className="oppfolging-alertstripe">Du må være registrert hos NAV for å bruke aktivitetsplanen.</AlertStripeAdvarsel>)
         }
     }
     if (!erUnderOppfolging && harOppfolgingsPerioder && !erVeileder ){
     return (
-            <AlertStripeAdvarsel>
+            <AlertStripeAdvarsel data-har-oppfP-bruker >
                 <Normaltekst>
                 Du er ikke lenger registrert hos NAV og din tidligere aktivitetsplan er lagt under "Mine tidligere planer". Hvis du fortsatt skal motta ytelser, få oppfølging fra NAV og bruke aktivitetsplanen må du være registrert.
                 </Normaltekst>

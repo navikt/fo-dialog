@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from "react";
+import React, {useContext, useEffect, useState} from "react";
 import {Bruker, OppfolgingData} from "./utils/typer";
 import {fetchData} from "./utils/fetch";
 import NavFrontendSpinner from "nav-frontend-spinner";
@@ -10,8 +10,10 @@ enum FetchStatusData {
 }
 
 export const UserInfoContext = React.createContext<Bruker| undefined>(undefined);
-
 export const OppfolgingContext = React.createContext<OppfolgingData|undefined>(undefined);
+
+export const useUserInfoContext = () => useContext(UserInfoContext);
+export const useOppfolgingContext = () => useContext(OppfolgingContext);
 
 interface ProviderData {
     children: React.ReactNode;
