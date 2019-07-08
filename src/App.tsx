@@ -7,8 +7,18 @@ import {DialogBanner} from "./view/DialogBanner";
 import { UserInfoContext} from "./Context";
 
 import './App.less';
+import {RouteComponentProps} from "react-router";
 
-const App = () => {
+type TParams = {
+    id: string;
+}
+
+const App = (match : RouteComponentProps<TParams>) => {
+
+    const skalViseDialog = "1234".includes(match.match.params.id);
+    const dialogID = match.match.params.id;
+    console.log(skalViseDialog);
+    console.log(dialogID);
 
     const [dialogListe, setDialogListe] = useState<DialogData[] | undefined>(undefined);
     const [userInfo, setUserInfo] = useState<Bruker | undefined>(undefined);
@@ -29,7 +39,7 @@ const App = () => {
                 <UserInfoContext.Provider value={userInfo}>
                     <div className="app__body">
                         { dialogListe === undefined? null : <DialogOverview dialogData={dialogListe}/> }
-                        { dialogListe === undefined ? null : <Dialog dialog={dialogListe[1]}/> }
+                        { !(dialogListe === undefined)&& skalViseDialog ? <Dialog dialog={dialogListe[parseInt(dialogID)-1]}/> : null  }
                     </div>
                 </UserInfoContext.Provider>
 
