@@ -1,10 +1,10 @@
-import React, {useContext} from "react";
+import React from "react";
 import Lenke from "nav-frontend-lenker";
 import {Undertittel} from "nav-frontend-typografi";
 import {HoyreChevron} from "nav-frontend-chevron";
-import {Checkbox} from "nav-frontend-skjema";
 import {DialogData} from "../utils/typer";
-import {OppfolgingContext} from "../Context";
+import { useOppfolgingContext} from "../Context";
+import {DialogHeaderCheckboxes} from "./DialogHeaderCheckboxes";
 
 
 interface Props {
@@ -13,7 +13,7 @@ interface Props {
 
 
 export function DialogHeader(props: Props) {
-    const oppfolgingData = useContext(OppfolgingContext);
+    const oppfolgingData = useOppfolgingContext();
 
     return (
         <>
@@ -23,19 +23,6 @@ export function DialogHeader(props: Props) {
                     <HoyreChevron/>
                 </Undertittel>
             </Lenke>
-            {oppfolgingData!.underOppfolging ?
-                <div className="checkbox-block">
-                    <Checkbox
-                        label='Venter på svar fra NAV'
-                        checked={!props.dialog.venterPaSvar}
-                        className="checkbox-block__item"/>
-                    <Checkbox
-                        label='Venter på svar fra bruker'
-                        checked={props.dialog.venterPaSvar}
-                        className="checkbox-block__item"/>
-                </div>
-                :<></>
-            }
-
+            {oppfolgingData!.underOppfolging ? <DialogHeaderCheckboxes dialog={props.dialog}/> :null}
         </>)
 }

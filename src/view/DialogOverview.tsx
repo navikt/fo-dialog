@@ -1,8 +1,8 @@
-import React, {useContext} from "react";
+import React from "react";
 import {DialogData} from "../utils/typer";
 import {DialogPreview} from "./DialogPreview";
 import {DialogOverviewHeader} from "./DialogOverviewHeader";
-import {OppfolgingContext } from "../Context";
+import { useOppfolgingContext} from "../Context";
 import {visibleIfHoc} from "../component/hoc/visibleIfHoc";
 
 import "./dialogoverview.less"
@@ -14,12 +14,12 @@ interface Props {
 const DialogOverviewHeaderVisible = visibleIfHoc(DialogOverviewHeader);
 
 export function DialogOverview(props: Props) {
-    const oppfolgingData = useContext(OppfolgingContext);
+    const oppfolgingData = useOppfolgingContext();
 
     const erUnderOppfolging = oppfolgingData!.underOppfolging;
     const harOppfolgingsPerioder = oppfolgingData!.oppfolgingsPerioder.length > 0;
     if (!erUnderOppfolging && !harOppfolgingsPerioder) {
-        return <></>
+        return null
     } else{
         return <div className="dialog-overview">
             <DialogOverviewHeaderVisible visible={oppfolgingData!.underOppfolging}/>

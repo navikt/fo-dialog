@@ -7,6 +7,7 @@ import Enzyme from 'enzyme';
 import Adapter from 'enzyme-adapter-react-16';
 import {Bruker, PeriodeData} from "../utils/typer";
 import {useUserInfoContext} from "../Context";
+import {AlertStripeAdvarsel} from "nav-frontend-alertstriper";
 
 Enzyme.configure({ adapter: new Adapter() });
 const userInfo: Bruker = {id:"010101", erVeileder: true,erBruker:false};
@@ -57,14 +58,7 @@ describe('<AlertStripeContainer/>', () => {
             startDato: '2017-01-30T10:46:10.971+01:00',
             sluttDato: '2017-12-31T10:46:10.971+01:00',
             begrunnelse: null,
-        },
-            {
-                aktorId: '1234567988888',
-                veileder: false,
-                startDato: '2018-01-31T10:46:10.971+01:00',
-                sluttDato: null,
-                begrunnelse: null,
-            },];
+        }];
         jest.spyOn(AppContext, 'useUserInfoContext').mockImplementation(() => userInfo);
         jest.spyOn(AppContext, 'useOppfolgingContext').mockImplementation(() => oppfolgingData);
         const wrapper = shallow(<AlertStripeContainer/>);
@@ -79,18 +73,11 @@ describe('<AlertStripeContainer/>', () => {
             startDato: '2017-01-30T10:46:10.971+01:00',
             sluttDato: '2017-12-31T10:46:10.971+01:00',
             begrunnelse: null,
-        },
-            {
-                aktorId: '1234567988888',
-                veileder: false,
-                startDato: '2018-01-31T10:46:10.971+01:00',
-                sluttDato: null,
-                begrunnelse: null,
-            },];
+        }];
         jest.spyOn(AppContext, 'useUserInfoContext').mockImplementation(() => userInfo);
         jest.spyOn(AppContext, 'useOppfolgingContext').mockImplementation(() => oppfolgingData);
         const wrapper = shallow(<AlertStripeContainer/>);
-        expect(wrapper.containsMatchingElement(<></>)).toBeTruthy()
+        expect(wrapper.find(AlertStripeAdvarsel).exists()).toBeFalsy()
     })
 
 });

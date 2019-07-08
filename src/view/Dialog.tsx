@@ -1,4 +1,4 @@
-import React, {useContext} from "react";
+import React from "react";
 import {DialogData} from "../utils/typer";
 import {Innholdstittel} from "nav-frontend-typografi";
 import {HenvendelseList} from "./HenvendelseList";
@@ -7,7 +7,7 @@ import {DialogInputBox} from "./DialogInputBox";
 import './Dialog.less';
 
 import {visibleIfHoc} from "../component/hoc/visibleIfHoc";
-import {OppfolgingContext} from "../Context";
+import {useOppfolgingContext} from "../Context";
 import {DialogHeader} from "./DialogHeader";
 
 interface Props {
@@ -17,12 +17,12 @@ interface Props {
 const DialogInputBoxVisible = visibleIfHoc(DialogInputBox);
 
 export function Dialog(props: Props) {
-    const oppfolgingData = useContext(OppfolgingContext);
+    const oppfolgingData = useOppfolgingContext();
 
     if (props.dialog !== null) {
         return (
             <div className="dialog">
-                {<DialogHeader dialog={props.dialog}/>}
+                <DialogHeader dialog={props.dialog}/>
                 <HenvendelseList henvendelseDataList={props.dialog.henvendelser}/>
                 <DialogInputBoxVisible visible={oppfolgingData!.underOppfolging}/>
             </div>)
