@@ -13,7 +13,7 @@ interface Props {
 export function DialogOverview(props: Props){
 
     return <div className="dialog-overview">
-        <DialogOverviewHeader/>
+        <DialogOverviewHeader dialogData={props.dialogData} />
         <div className="dialog-overview__preview-list">
             {props.dialogData.map((dialog) => <DialogPreview dialog={dialog} key={dialog.id}/>)}
         </div>

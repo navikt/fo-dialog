@@ -4,7 +4,7 @@ import {Bruker, DialogData} from "./utils/typer";
 import {DialogOverview} from "./view/DialogOverview";
 import {Dialog} from "./view/Dialog";
 import {DialogBanner} from "./view/DialogBanner";
-import { UserInfoContext} from "./Context";
+import {UserInfoContext} from "./Context";
 
 import './App.less';
 
@@ -28,8 +28,8 @@ const App = () => {
                 <DialogBanner/>
                 <UserInfoContext.Provider value={userInfo}>
                     <div className="app__body">
-                        { dialogListe === undefined? null : <DialogOverview dialogData={dialogListe}/> }
-                        { dialogListe === undefined ? null : <Dialog dialog={dialogListe[1]}/> }
+                        {dialogListe === undefined ? null : <DialogOverview dialogData={dialogListe}/>}
+                        {dialogListe === undefined ? null : <Dialog dialog={dialogListe[1]}/>}
                     </div>
                 </UserInfoContext.Provider>
 
