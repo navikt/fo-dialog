@@ -2,9 +2,9 @@ import React, {FormEvent} from "react";
 import {Innholdstittel, Normaltekst} from "nav-frontend-typografi";
 import {Input, Textarea} from "nav-frontend-skjema";
 import {Hovedknapp} from "nav-frontend-knapper";
+import useFieldState from "../utils/useFieldState";
 
 import './Dialog.less';
-import useFieldState from "../utils/useFieldState";
 
 function validerMelding(melding: string): string | null {
     if (melding.length === 0) {
@@ -18,7 +18,6 @@ function validerMelding(melding: string): string | null {
 
 export function DialogNew() {
     const tema = useFieldState('', value => {
-        console.log('tema', value);
         return value.length === 0 ? 'Tema må ha innhold.' : null;
     });
     const melding = useFieldState('', validerMelding);
