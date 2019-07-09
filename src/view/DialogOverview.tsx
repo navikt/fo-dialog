@@ -15,11 +15,12 @@ export function DialogOverview(props: Props) {
 
     const erUnderOppfolging = oppfolgingData!.underOppfolging;
     const harOppfolgingsPerioder = oppfolgingData!.oppfolgingsPerioder.length > 0;
+
     if (!erUnderOppfolging && !harOppfolgingsPerioder) {
         return null
     } else{
         return <div className="dialog-overview">
-            <DialogOverviewHeaderVisible visible={oppfolgingData!.underOppfolging}/>
+            <DialogOverviewHeaderVisible dialogData={props.dialogData} visible={oppfolgingData!.underOppfolging}/>
             <div className="dialog-overview__preview-list">
                 {props.dialogData.map((dialog) => <DialogPreview dialog={dialog} key={dialog.id}/>)}
             </div>
