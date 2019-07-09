@@ -1,17 +1,14 @@
 import React from "react";
 import {DialogData} from "../utils/typer";
 import {DialogPreview} from "./DialogPreview";
-import {DialogOverviewHeader} from "./DialogOverviewHeader";
+import {DialogOverviewHeaderVisible} from "./DialogOverviewHeader";
 import { useOppfolgingContext} from "../Context";
-import {visibleIfHoc} from "../component/hoc/visibleIfHoc";
 
 import "./dialogoverview.less"
-
 
 interface Props {
     dialogData: DialogData[];
 }
-const DialogOverviewHeaderVisible = visibleIfHoc(DialogOverviewHeader);
 
 export function DialogOverview(props: Props) {
     const oppfolgingData = useOppfolgingContext();

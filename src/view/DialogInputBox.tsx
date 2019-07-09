@@ -1,6 +1,7 @@
 import React, {useState} from "react";
 import {Textarea} from "nav-frontend-skjema";
 import {Hovedknapp} from "nav-frontend-knapper";
+import {visibleIfHoc} from "../component/hoc/visibleIfHoc";
 
 function sendeNyMelding (props: { tekst: string }) {
     console.log(props);
@@ -27,5 +28,7 @@ export function DialogInputBox(){
         </div>
     )
 }
+
+export const DialogInputBoxVisible = visibleIfHoc(DialogInputBox);
 
 

@@ -2,11 +2,10 @@ import React from "react";
 import {DialogData} from "../utils/typer";
 import {Innholdstittel} from "nav-frontend-typografi";
 import {HenvendelseList} from "./HenvendelseList";
-import {DialogInputBox} from "./DialogInputBox";
+import {DialogInputBoxVisible} from "./DialogInputBox";
 
 import './Dialog.less';
 
-import {visibleIfHoc} from "../component/hoc/visibleIfHoc";
 import {useOppfolgingContext} from "../Context";
 import {DialogHeader} from "./DialogHeader";
 
@@ -14,7 +13,6 @@ interface Props {
     dialog: DialogData | null;
 }
 
-const DialogInputBoxVisible = visibleIfHoc(DialogInputBox);
 
 export function Dialog(props: Props) {
     const oppfolgingData = useOppfolgingContext();
