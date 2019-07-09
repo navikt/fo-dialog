@@ -8,11 +8,10 @@ import {HenvendelseList} from "../view/HenvendelseList";
 import {DialogInputBox} from "../view/DialogInputBox";
 import {DialogHeader} from "../view/DialogHeader";
 import {AlertStripeContainer} from "../view/AlertStripeContainer";
-import {AlertStripeAdvarsel} from "nav-frontend-alertstriper";
 import {DialogOverview} from "../view/DialogOverview";
 import {DialogOverviewHeader} from "../view/DialogOverviewHeader";
 import {DialogPreview} from "../view/DialogPreview";
-import {DialogHeaderCheckboxes} from "../view/DialogHeaderCheckboxes";
+import {Checkbox} from "nav-frontend-skjema";
 
 Enzyme.configure({ adapter: new Adapter() });
 
@@ -82,7 +81,7 @@ describe('<AlertStripeContainer/>', () => {
         jest.spyOn(AppContext, 'useUserInfoContext').mockImplementation(() => userInfo);
         jest.spyOn(AppContext, 'useOppfolgingContext').mockImplementation(() => oppfolgingData);
         const wrapper = shallow(<AlertStripeContainer/>);
-        expect(wrapper.prop("data-ikke-reg-veileder")).toBeTruthy()
+        expect(wrapper.find("[data-ikke-reg-veileder-test]").props().visible).toBeTruthy()
     });
     test("Bruker uten oppf.perioder og ikke under oppf. viser en advarsel - bruker. ", () => {
         userInfo.erVeileder = false;
@@ -91,7 +90,7 @@ describe('<AlertStripeContainer/>', () => {
         jest.spyOn(AppContext, 'useUserInfoContext').mockImplementation(() => userInfo);
         jest.spyOn(AppContext, 'useOppfolgingContext').mockImplementation(() => oppfolgingData);
         const wrapper = shallow(<AlertStripeContainer/>);
-        expect(wrapper.prop("data-ikke-reg-bruker")).toBeTruthy()
+        expect(wrapper.find("[data-ikke-reg-bruker-test]").props().visible).toBeTruthy()
     });
     test("Bruker med oppf.perioder og ikke under oppf. viser en advarsel - bruker. ", () => {
         userInfo.erVeileder = false;
@@ -106,7 +105,7 @@ describe('<AlertStripeContainer/>', () => {
         jest.spyOn(AppContext, 'useUserInfoContext').mockImplementation(() => userInfo);
         jest.spyOn(AppContext, 'useOppfolgingContext').mockImplementation(() => oppfolgingData);
         const wrapper = shallow(<AlertStripeContainer/>);
-        expect(wrapper.prop("data-har-oppfP-bruker")).toBeTruthy()
+        expect(wrapper.find("[data-har-oppfP-bruker-test]").props().visible).toBeTruthy()
     });
     test("Bruker med oppf.perioder, ikke under oppf. gir ingen feilmelding - veileder", () => {
         userInfo.erVeileder = true;
@@ -121,7 +120,9 @@ describe('<AlertStripeContainer/>', () => {
         jest.spyOn(AppContext, 'useUserInfoContext').mockImplementation(() => userInfo);
         jest.spyOn(AppContext, 'useOppfolgingContext').mockImplementation(() => oppfolgingData);
         const wrapper = shallow(<AlertStripeContainer/>);
-        expect(wrapper.find(AlertStripeAdvarsel).exists()).toBeFalsy()
+        expect(wrapper.find("[data-ikke-reg-veileder-test]").props().visible).toBeFalsy();
+        expect(wrapper.find("[data-ikke-reg-bruker-test]").props().visible).toBeFalsy();
+        expect(wrapper.find("[data-har-oppfP-bruker-test]").props().visible).toBeFalsy();
     })
 
 });
@@ -177,9 +178,9 @@ describe('<Dialog/>', () => {
         }];
         jest.spyOn(AppContext, 'useOppfolgingContext').mockImplementation(() => oppfolgingData);
         const wrapper = mount(<Dialog dialog={dialoger[0]}/>);
-        expect(wrapper.find(DialogHeaderCheckboxes).exists()).toBeFalsy();
         expect(wrapper.find(DialogInputBox).exists()).toBeFalsy();
         expect(wrapper.find(HenvendelseList).exists()).toBeTruthy();
+        expect(wrapper.find(Checkbox).exists()).toBeFalsy();
     });
     test("Bruker under oppf. viser komponenter i Dialog", () => {
         oppfolgingData.underOppfolging = true;
