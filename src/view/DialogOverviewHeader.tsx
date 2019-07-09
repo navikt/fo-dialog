@@ -1,15 +1,23 @@
 import React from "react";
 import {Knapp} from "nav-frontend-knapper";
-import {Checkbox} from "nav-frontend-skjema";
 import {visibleIfHoc} from "../component/hoc/visibleIfHoc";
+import {DialogData} from "../utils/typer";
+import {Checkbox} from "../component/checkbox/Checkbox";
 
-
-export function DialogOverviewHeader(){
-
-    return (<div className="dialog-overview__header">
-        <Knapp>Ny dialog</Knapp>
-        <Checkbox label={"Viktige Meldinger"}/>
-    </div>)
+interface Props {
+    dialogData: DialogData[];
 }
+
+export function DialogOverviewHeader(props: Props) {
+
+    const brukerHarViktigeDialoger = !!props.dialogData.filter((dialog) => dialog.egenskaper.length > 0).length;
+
+    return (
+        <div className="dialog-overview__header">
+            <Knapp>Ny dialog</Knapp>
+            <Checkbox label={"Viktige meldinger"} visible={brukerHarViktigeDialoger}/>
+        </div>)
+}
+
 export const DialogOverviewHeaderVisible = visibleIfHoc(DialogOverviewHeader);
 
