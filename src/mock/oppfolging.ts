@@ -1,4 +1,4 @@
-import {OppfolgingData, PeriodeData} from "../utils/typer";
+import {PeriodeData} from "../utils/typer";
 import {JSONArray} from "yet-another-fetch-mock";
 
 
@@ -18,12 +18,12 @@ const oppfPerioder: PeriodeData[] & JSONArray = [
         begrunnelse: null,
     },
 ];
-const oppfolgingData: OppfolgingData = {
+const oppfolgingData = {
     fnr: null,
     veilederId: "101010",
     reservasjonKRR: false,
     manuell: false,
-    underOppfolging: false, //eller false
+    underOppfolging: true, //eller false
     underKvp: false,
     oppfolgingUtgang: null,
     gjeldendeEskaleringsvarsel: null,
