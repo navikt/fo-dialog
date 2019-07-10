@@ -8,6 +8,7 @@ import {Dialog} from "./view/Dialog";
 import {AlertStripeContainer} from "./view/AlertStripeContainer";
 
 import './App.less';
+import {Aktivitetskort} from "./view/Aktivitetskort";
 
 const App = () => {
 
@@ -28,6 +29,7 @@ const App = () => {
                     <div className="app__body app__body--dialogvisning">
                         { dialogListe === undefined? null : <DialogOverview dialogData={dialogListe}/> }
                         { dialogListe === undefined ? null : <Dialog dialog={dialogListe[3]}/> }
+                        { dialogListe === undefined ? null : <Aktivitetskort dialog={dialogListe[3]}/> }
                     </div>
                 </Provider>
             </div>
