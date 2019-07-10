@@ -15,6 +15,7 @@ function validerMelding(melding: string): string | null {
         return null;
     }
 }
+
 function validerTema(tema: string): string | null {
     if (tema.length === 0) {
         return "Melding må ha innhold.";
@@ -32,13 +33,23 @@ export function DialogNew() {
         event.preventDefault();
         tema.validate();
         melding.validate();
+
+        if (tema.input.feil === undefined && melding.input.feil === undefined) {
+            fetch('/veilarbdialog/api/dialog/ny', {
+                method: 'POST', body: JSON.stringify({
+                    overskrift: tema.input.value,
+                    tekst: melding.input.value
+                })
+            });
+        }
     }
 
 
     return (<>
         <form onSubmit={handleSubmit} noValidate>
             <Innholdstittel>Ny Dialog</Innholdstittel>
-            <Normaltekst>Her kan du skrive til din veileder om arbeid og oppfølging. Du vil få svar i løpet av noen dager.</Normaltekst>
+            <Normaltekst>Her kan du skrive til din veileder om arbeid og oppfølging. Du vil få svar i løpet av noen
+                dager.</Normaltekst>
             <Input
                 label={'Hva er tema for dialogen?'}
                 placeholder="Skriv her"
