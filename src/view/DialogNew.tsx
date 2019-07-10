@@ -15,32 +15,30 @@ function validerMelding(melding: string): string | null {
         return null;
     }
 }
+function validerTema(tema: string): string | null {
+    if (tema.length === 0) {
+        return "Melding må ha innhold.";
+    } else {
+        return null;
+    }
+}
 
 export function DialogNew() {
-    const tema = useFieldState('', value => {
-        return value.length === 0 ? 'Tema må ha innhold.' : null;
-    });
+
+    const tema = useFieldState('', validerTema);
     const melding = useFieldState('', validerMelding);
 
     function handleSubmit(event: FormEvent) {
         event.preventDefault();
-
         tema.validate();
         melding.validate();
-
-        if (tema.input.feil || melding.input.feil) {
-            console.log('Det skjedde en feil', tema, melding);
-        } else {
-            console.log("Submitted Succesfully", {tema: tema.input.value, melding: melding.input.value});
-        }
     }
 
 
     return (<>
         <form onSubmit={handleSubmit} noValidate>
             <Innholdstittel>Ny Dialog</Innholdstittel>
-            <Normaltekst>Her kan du skrive til din veileder om arbeid og oppfølging. Du vil få
-                svar i løpet av noen dager.</Normaltekst>
+            <Normaltekst>Her kan du skrive til din veileder om arbeid og oppfølging. Du vil få svar i løpet av noen dager.</Normaltekst>
             <Input
                 label={'Hva er tema for dialogen?'}
                 placeholder="Skriv her"

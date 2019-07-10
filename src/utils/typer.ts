@@ -1,6 +1,12 @@
 export type ValueOrUndefinedOrNull<T> = T | null | undefined;
 export type StringOrUndefinedOrNull = ValueOrUndefinedOrNull<string>;
 
+export interface NyDialogMeldingData {
+    tekst: string;
+    dialogId?: StringOrUndefinedOrNull;
+    overskrift?: string;
+}
+
 export interface DialogData {
 
     id: string;
@@ -12,7 +18,7 @@ export interface DialogData {
     historisk: boolean,
     lest: boolean,
     venterPaSvar: boolean,
-    ferdigBehandlet: boolean
+    ferdigBehandlet: boolean,
     lestAvBrukerTidspunkt: StringOrUndefinedOrNull,
     erLestAvBruker: boolean,
     henvendelser: HenvendelseData[],

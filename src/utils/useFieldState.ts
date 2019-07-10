@@ -8,10 +8,14 @@ export interface FieldState {
         onBlur: React.FocusEventHandler;
         feil?: SkjemaelementFeil;
     };
+
     validate(): void;
 }
 
-export default function useFieldState(initialState: string, validate: (value: string) => string | null = () => null): FieldState {
+export type Validator = (value: string) => string | null;
+const noopValidator: Validator = () => null;
+
+export default function useFieldState(initialState: string, validate: Validator = noopValidator): FieldState {
     const [value, setValue] = useState(initialState);
     const [touched, setTouched] = useState<boolean>(false);
     const [error, setError] = useState<string | null>(null);
