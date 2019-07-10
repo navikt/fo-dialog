@@ -36,3 +36,31 @@ export interface Bruker {
     erBruker:boolean
 }
 
+export interface OppfolgingData {
+    fnr: StringOrUndefinedOrNull,
+    veilederId: StringOrUndefinedOrNull,
+    reservasjonKRR: boolean,
+    manuell: boolean,
+    underOppfolging: boolean,
+    underKvp: boolean,
+    oppfolgingUtgang: StringOrUndefinedOrNull,
+    gjeldendeEskaleringsvarsel: StringOrUndefinedOrNull,
+    kanStarteOppfolging: boolean,
+    avslutningStatus: StringOrUndefinedOrNull,
+    oppfolgingsPerioder: PeriodeData[],
+    harSkriveTilgang: boolean,
+    kanReaktiveres: boolean,
+    inaktiveringsdato: StringOrUndefinedOrNull,
+}
+
+
+
+export interface PeriodeData{
+    aktorId: string,
+    veileder: boolean,
+    startDato: StringOrUndefinedOrNull,
+    sluttDato: StringOrUndefinedOrNull,
+    begrunnelse: StringOrUndefinedOrNull,
+}
+
+

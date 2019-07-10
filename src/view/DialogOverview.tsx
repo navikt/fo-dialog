@@ -1,8 +1,8 @@
 import React from "react";
-
 import {DialogData} from "../utils/typer";
 import {DialogPreview} from "./DialogPreview";
-import {DialogOverviewHeader} from "./DialogOverviewHeader";
+import {DialogOverviewHeaderVisible} from "./DialogOverviewHeader";
+import { useOppfolgingContext} from "../Context";
 
 import "./dialogoverview.less"
 
@@ -10,12 +10,20 @@ interface Props {
     dialogData: DialogData[];
 }
 
-export function DialogOverview(props: Props){
+export function DialogOverview(props: Props) {
+    const oppfolgingData = useOppfolgingContext();
 
-    return <div className="dialog-overview">
-        <DialogOverviewHeader dialogData={props.dialogData} />
-        <div className="dialog-overview__preview-list">
-            {props.dialogData.map((dialog) => <DialogPreview dialog={dialog} key={dialog.id}/>)}
+    const erUnderOppfolging = oppfolgingData!.underOppfolging;
+    const harOppfolgingsPerioder = oppfolgingData!.oppfolgingsPerioder.length > 0;
+
+    if (!erUnderOppfolging && !harOppfolgingsPerioder) {
+        return null
+    } else{
+        return <div className="dialog-overview">
+            <DialogOverviewHeaderVisible dialogData={props.dialogData} visible={oppfolgingData!.underOppfolging}/>
+            <div className="dialog-overview__preview-list">
+                {props.dialogData.map((dialog) => <DialogPreview dialog={dialog} key={dialog.id}/>)}
+            </div>
         </div>
-    </div>
+        }
 }
