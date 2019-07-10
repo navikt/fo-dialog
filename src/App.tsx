@@ -5,8 +5,9 @@ import {DialogOverview} from "./view/DialogOverview";
 import {Dialog} from "./view/Dialog";
 import {DialogBanner} from "./view/DialogBanner";
 import {UserInfoContext} from "./Context";
-
+import {Aktivitetskort} from "./view/Aktivitetskort";
 import './App.less';
+
 
 const App = () => {
 
@@ -27,12 +28,12 @@ const App = () => {
             <div className="app">
                 <DialogBanner/>
                 <UserInfoContext.Provider value={userInfo}>
-                    <div className="app__body">
+                    <div className="app__body app__body--dialogvisning">
                         {dialogListe === undefined ? null : <DialogOverview dialogData={dialogListe}/>}
                         {dialogListe === undefined ? null : <Dialog dialog={dialogListe[1]}/>}
+                        {dialogListe === undefined ? null : <Aktivitetskort dialog={dialogListe[1]}/>}
                     </div>
                 </UserInfoContext.Provider>
-
             </div>
 
         </>

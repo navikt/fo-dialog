@@ -4,6 +4,7 @@ import {Innholdstittel} from "nav-frontend-typografi";
 import {HenvendelseList} from "./HenvendelseList";
 import {DialogHeader} from "./DialogHeader";
 import {DialogInputBox} from "./DialogInputBox";
+import {AktivitetskortPreview} from "./AktivitetskortPreview";
 
 import './Dialog.less';
 
@@ -15,6 +16,7 @@ export function Dialog(props: Props) {
     if (props.dialog !== null) {
         return (
             <div className="dialog">
+                <AktivitetskortPreview dialog={props.dialog}/>
                 <DialogHeader dialog={props.dialog}/>
                 <HenvendelseList henvendelseDataList={props.dialog.henvendelser}/>
                 <DialogInputBox/>
