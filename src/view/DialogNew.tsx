@@ -6,23 +6,25 @@ import useFieldState from "../utils/useFieldState";
 
 import './Dialog.less';
 
+function validerTema(tema: string): string | null {
+    if (tema.length === 0) {
+        return "Tema må ha innhold.";
+    } else if (!tema.replace(/\s/g, '').length) {
+        return "Tema må ha lesbart innhold.";
+    } else {
+        return null;
+    }
+}
 function validerMelding(melding: string): string | null {
     if (melding.length === 0) {
         return "Melding må ha innhold.";
-    } else if (melding.length < 10) {
-        return "Meldingen må være lengre enn 10 tegn.";
+    } else if (!melding.replace(/\s/g, '').length) {
+        return "Meldingen må ha lesbart innhold.";
     } else {
         return null;
     }
 }
 
-function validerTema(tema: string): string | null {
-    if (tema.length === 0) {
-        return "Melding må ha innhold.";
-    } else {
-        return null;
-    }
-}
 
 export function DialogNew() {
 
