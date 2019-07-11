@@ -10,6 +10,7 @@ import "./dialogpreview.less";
 import {formaterHenvendelseDate} from "../utils/date";
 import {Link} from "react-router-dom";
 import {classPrivateProperty} from "@babel/types";
+import WrapInReactLink from "../component/hoc/wrapInReactLink";
 
 interface Props {
     dialog: DialogData;
@@ -33,9 +34,4 @@ export function DialogPreview(props: Props) {
 
             </LenkepanelBase>
         </>)
-}
-
-function WrapInReactLink(props: HTMLProps<HTMLElement>){
-    const innerProps = props as AnchorHTMLAttributes<HTMLAnchorElement>;
-    return <Link to={innerProps.href!} {...innerProps}/>
 }
