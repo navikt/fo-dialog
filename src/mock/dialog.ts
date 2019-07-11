@@ -162,10 +162,9 @@ const dialoger: DialogData[] & JSONArray = [
 ];
 
 
-export function opprettEllerOppdaterDialog(update:NyDialogMeldingData): DialogData & JSONObject {
+export function opprettDialog(update:NyDialogMeldingData): DialogData & JSONObject {
     const dialogId =
         update.dialogId === undefined ? rndId() : `${update.dialogId}`;
-
     const nyHenvendelse : HenvendelseData = {
         id: rndId(),
         dialogId: dialogId,
@@ -176,14 +175,12 @@ export function opprettEllerOppdaterDialog(update:NyDialogMeldingData): DialogDa
         tekst: update.tekst,
     };
 
-//    const eksisterendeDialog = dialoger.filter(
-//           dialog => update.dialogId !== undefined && dialog.id === dialogId
-//    );
+    const eksisterendeDialoger = dialoger.filter(
+        dialog => update.dialogId !== undefined && dialog.id === dialogId
+    );
 
-    const eksisterendeDialog = dialoger.filter((dialog) => dialog.id === dialogId);
-
-    if (eksisterendeDialog.length === 1) {
-        const oldDialog = eksisterendeDialog[0];
+    if (eksisterendeDialoger.length === 1) {
+        const oldDialog = eksisterendeDialoger[0];
         oldDialog.sisteTekst = update.tekst;
         oldDialog.sisteDato = nyHenvendelse.sendt;
         oldDialog.henvendelser.push(nyHenvendelse);
