@@ -6,24 +6,32 @@ import {DialogHeader} from "./DialogHeader";
 import {DialogInputBox} from "./DialogInputBox";
 
 import './Dialog.less';
+import {RouteComponentProps, withRouter} from "react-router";
+import {variableDeclaration} from "@babel/types";
 
-interface Props {
-    dialog: DialogData | null;
+interface Props extends RouteComponentProps<{ dialogId?: string; }> {
+    dialogData: DialogData[];
 }
 
-export function Dialog(props: Props) {
-    if (props.dialog !== null) {
+function Dialog(props: Props) {
+    const dialogId = props.match.params.dialogId;
+    const valgtDialog = props.dialogData.find((dialog) => dialog.id === dialogId);
+
+    if (!valgtDialog) {
         return (
             <div className="dialog">
-                <DialogHeader dialog={props.dialog}/>
-                <HenvendelseList henvendelseDataList={props.dialog.henvendelser}/>
-                <DialogInputBox/>
-            </div>)
-    } else {
-        return (
-            <div className="dialog">
-                <Innholdstittel> Ingen Valgt Dialog</Innholdstittel>
+                <Innholdstittel>Ingen Valgt Dialog</Innholdstittel>
             </div>
-        )
+        );
     }
+
+    return (
+        <div className="dialog">
+            <DialogHeader dialog={valgtDialog}/>
+            <HenvendelseList henvendelseDataList={valgtDialog.henvendelser}/>
+            <DialogInputBox/>
+        </div>
+    );
 }
+
+export default withRouter(Dialog);

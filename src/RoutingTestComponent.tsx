@@ -1,13 +1,14 @@
 import React, {FC} from "react";
-import {match} from "react-router";
+import {match, withRouter} from "react-router";
 import {RouteComponentProps} from "react-router";
 
-type TParams = { id: string  };
+type TParams = { dialogId: string  };
 
-function RoutingTestComponent( match : RouteComponentProps<TParams>) {
+function RoutingTestComponent( props : RouteComponentProps<TParams>) {
+    console.log('tester', props);
     return (<>
-        {match.match.params.id}
+        {props.match.params.dialogId}
         </>)
 }
 
-export default RoutingTestComponent;
+export default withRouter(RoutingTestComponent);
