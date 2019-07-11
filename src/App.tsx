@@ -9,7 +9,7 @@ import {UserInfoContext} from "./Context";
 import './App.less';
 import NavFrontendSpinner from "nav-frontend-spinner";
 
-function NyTest() {
+function NyTest() { // Stand-in for NyDialog-komponenten
     return <h1>LAG NY DIALOG</h1>;
 }
 
