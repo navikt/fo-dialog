@@ -5,14 +5,15 @@ import {Bruker, DialogData} from "./utils/typer";
 import {DialogOverview} from "./view/DialogOverview";
 import Dialog from "./view/Dialog";
 import {DialogBanner} from "./view/DialogBanner";
-import { UserInfoContext} from "./Context";
+import {UserInfoContext} from "./Context";
 import './App.less';
+import NavFrontendSpinner from "nav-frontend-spinner";
 
 function NyTest() {
     return <h1>LAG NY DIALOG</h1>;
 }
 
-function App(props: any) {
+function App() {
     const [dialogListe, setDialogListe] = useState<DialogData[] | undefined>(undefined);
     const [userInfo, setUserInfo] = useState<Bruker | undefined>(undefined);
 
@@ -24,7 +25,7 @@ function App(props: any) {
     }, []);
 
     if (dialogListe === undefined || userInfo === undefined) {
-        return <h1>VENT MENS VI LASTER</h1>
+        return <NavFrontendSpinner className="app__spinner"/>
     }
 
     return (
@@ -33,10 +34,10 @@ function App(props: any) {
                 <DialogBanner/>
                 <UserInfoContext.Provider value={userInfo}>
                     <div className="app__body">
-                        <DialogOverview dialogData={dialogListe} />
+                        <DialogOverview dialogData={dialogListe}/>
                         <Switch>
-                            <Route exact path="/" component={() => <Dialog dialogData={dialogListe}/>} />
-                            <Route path="/ny" component={NyTest} />
+                            <Route exact path="/" component={() => <Dialog dialogData={dialogListe}/>}/>
+                            <Route path="/ny" component={NyTest}/>
                             <Route path="/:dialogId" component={() => <Dialog dialogData={dialogListe}/>}/>
                         </Switch>
                     </div>

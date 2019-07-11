@@ -7,7 +7,6 @@ import {DialogInputBox} from "./DialogInputBox";
 
 import './Dialog.less';
 import {RouteComponentProps, withRouter} from "react-router";
-import {variableDeclaration} from "@babel/types";
 
 interface Props extends RouteComponentProps<{ dialogId?: string; }> {
     dialogData: DialogData[];

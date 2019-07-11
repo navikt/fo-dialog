@@ -10,7 +10,7 @@ interface Props {
     dialogData: DialogData[];
 }
 
-export function DialogOverview(props: Props){
+export function DialogOverview(props: Props) {
 
     return <div className="dialog-overview">
         <DialogOverviewHeader/>

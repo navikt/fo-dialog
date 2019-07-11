@@ -5,4 +5,4 @@ import App from './App';
 
 require('./mock');
 
-ReactDOM.render(<App />, document.getElementById('root'));
+ReactDOM.render(<App/>, document.getElementById('root'));
