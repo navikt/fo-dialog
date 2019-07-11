@@ -8,8 +8,6 @@ import {LenkepanelBase} from "nav-frontend-lenkepanel";
 import {EtikettListe} from "./EtikettListe";
 import "./dialogpreview.less";
 import {formaterHenvendelseDate} from "../utils/date";
-import {Link} from "react-router-dom";
-import {classPrivateProperty} from "@babel/types";
 import WrapInReactLink from "../component/hoc/wrapInReactLink";
 
 interface Props {
