@@ -175,12 +175,12 @@ export function opprettDialog(update:NyDialogMeldingData): DialogData & JSONObje
         tekst: update.tekst,
     };
 
-    const eksisterendeDialoger = dialoger.filter(
+    const eksisterendeDialog = dialoger.find(
         dialog => update.dialogId !== undefined && dialog.id === dialogId
     );
 
-    if (eksisterendeDialoger.length === 1) {
-        const oldDialog = eksisterendeDialoger[0];
+    if (eksisterendeDialog) {
+        const oldDialog = eksisterendeDialog;
         oldDialog.sisteTekst = update.tekst;
         oldDialog.sisteDato = nyHenvendelse.sendt;
         oldDialog.henvendelser.push(nyHenvendelse);

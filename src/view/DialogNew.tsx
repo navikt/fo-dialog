@@ -7,19 +7,15 @@ import useFieldState from "../utils/useFieldState";
 import './Dialog.less';
 
 function validerTema(tema: string): string | null {
-    if (tema.length === 0) {
+    if (tema.trim().length === 0) {
         return "Tema må ha innhold.";
-    } else if (!tema.replace(/\s/g, '').length) {
-        return "Tema må ha lesbart innhold.";
     } else {
         return null;
     }
 }
 function validerMelding(melding: string): string | null {
-    if (melding.length === 0) {
+    if (melding.trim().length === 0) {
         return "Melding må ha innhold.";
-    } else if (!melding.replace(/\s/g, '').length) {
-        return "Meldingen må ha lesbart innhold.";
     } else {
         return null;
     }
@@ -50,8 +46,7 @@ export function DialogNew() {
     return (<>
         <form onSubmit={handleSubmit} noValidate>
             <Innholdstittel>Ny Dialog</Innholdstittel>
-            <Normaltekst>Her kan du skrive til din veileder om arbeid og oppfølging. Du vil få svar i løpet av noen
-                dager.</Normaltekst>
+            <Normaltekst>Her kan du skrive til din veileder om arbeid og oppfølging. Du vil få svar i løpet av noen dager.</Normaltekst>
             <Input
                 label={'Hva er tema for dialogen?'}
                 placeholder="Skriv her"
