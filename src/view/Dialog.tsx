@@ -17,7 +17,7 @@ export function Dialog(props: Props) {
             <div className="dialog">
                 <DialogHeader dialog={props.dialog}/>
                 <HenvendelseList henvendelseDataList={props.dialog.henvendelser}/>
-                <DialogInputBox/>
+                <DialogInputBox dialog={props.dialog}/>
             </div>)
     } else {
         return (
