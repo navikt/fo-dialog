@@ -50,8 +50,7 @@ export function DialogNew() {
     return (<>
         <form onSubmit={handleSubmit} noValidate>
             <Innholdstittel>Ny Dialog</Innholdstittel>
-            <Normaltekst>Her kan du skrive til din veileder om arbeid og oppfølging. Du vil få svar i løpet av noen
-                dager.</Normaltekst>
+            <Normaltekst>Her kan du skrive til din veileder om arbeid og oppfølging. Du vil få svar i løpet av noen dager.</Normaltekst>
             <Input
                 label={'Hva er tema for dialogen?'}
                 placeholder="Skriv her"

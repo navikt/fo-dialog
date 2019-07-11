@@ -3,7 +3,7 @@ export type StringOrUndefinedOrNull = ValueOrUndefinedOrNull<string>;
 
 export interface NyDialogMeldingData {
     tekst: string;
-    dialogId?: StringOrUndefinedOrNull;
+    dialogId: StringOrUndefinedOrNull;
     overskrift?: string;
 }
 

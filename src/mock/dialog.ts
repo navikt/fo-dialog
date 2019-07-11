@@ -176,14 +176,12 @@ export function opprettEllerOppdaterDialog(update:NyDialogMeldingData): DialogDa
         tekst: update.tekst,
     };
 
-//    const eksisterendeDialog = dialoger.filter(
-//           dialog => update.dialogId !== undefined && dialog.id === dialogId
-//    );
+    const eksisterendeDialog = dialoger.find(
+        dialog => update.dialogId !== undefined && dialog.id === dialogId
+    );
 
-    const eksisterendeDialog = dialoger.filter((dialog) => dialog.id === dialogId);
-
-    if (eksisterendeDialog.length === 1) {
-        const oldDialog = eksisterendeDialog[0];
+    if (eksisterendeDialog) {
+        const oldDialog = eksisterendeDialog;
         oldDialog.sisteTekst = update.tekst;
         oldDialog.sisteDato = nyHenvendelse.sendt;
         oldDialog.henvendelser.push(nyHenvendelse);

@@ -5,10 +5,8 @@ import useFieldState from "../utils/useFieldState";
 import {DialogData} from "../utils/typer";
 
 function validerMelding(melding: string): string | null {
-    if (melding.length === 0) {
+    if (melding.trim().length === 0) {
         return "Melding må ha innhold.";
-    } else if (!melding.replace(/\s/g, '').length) {
-        return "Meldingen må ha lesbart innhold.";
     } else {
         return null;
     }
