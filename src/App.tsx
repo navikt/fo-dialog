@@ -38,7 +38,7 @@ function App() {
                         <DialogOverview dialogData={dialogListe}/>
                         <Switch>
                             <Route exact path="/" component={() => <Dialog dialogData={dialogListe}/>}/>
-                            <Route path="/ny" component={() => <DialogNew />}/>
+                            <Route path="/ny" component={DialogNew}/>
                             <Route path="/:dialogId" component={() => <Dialog dialogData={dialogListe}/>}/>
                         </Switch>
                     </div>
