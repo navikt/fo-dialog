@@ -8,6 +8,8 @@ import {useOppfolgingContext} from "../Context";
 import './Dialog.less';
 import {RouteComponentProps, withRouter} from "react-router";
 import {Aktivitetskort} from "./Aktivitetskort";
+import {AktivitetskortPreview} from "./AktivitetskortPreview";
+import {Innholdstittel} from "nav-frontend-typografi";
 
 interface Props extends RouteComponentProps<{ dialogId?: string; }> {
     dialogData: DialogData[];
@@ -21,16 +23,19 @@ function Dialog(props: Props) {
 
     if (!valgtDialog) {
         return (
-            null
+            <div className="dialog">
+                <Innholdstittel> Ingen Valgt Dialog</Innholdstittel>
+            </div>
         );
     }
 
     return (
         <>
             <div className="dialog">
+                <AktivitetskortPreview dialog={valgtDialog}/>
                 <DialogHeader dialog={valgtDialog}/>
                 <HenvendelseList henvendelseDataList={valgtDialog.henvendelser}/>
-                <DialogInputBoxVisible visible={oppfolgingData!.underOppfolging}/>
+                <DialogInputBoxVisible  dialog={valgtDialog} visible={oppfolgingData!.underOppfolging}/>
             </div>
             <Aktivitetskort dialog={valgtDialog}/>
         </>
