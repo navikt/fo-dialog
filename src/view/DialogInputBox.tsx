@@ -3,6 +3,7 @@ import {Textarea} from "nav-frontend-skjema";
 import {Hovedknapp} from "nav-frontend-knapper";
 import useFieldState from "../utils/useFieldState";
 import {DialogData} from "../utils/typer";
+import {visibleIfHoc} from "../component/hoc/visibleIfHoc";
 
 function validerMelding(melding: string): string | null {
     if (melding.trim().length === 0) {
@@ -53,3 +54,4 @@ export function DialogInputBox(props: Props){
 
     )
 }
+export const DialogInputBoxVisible = visibleIfHoc(DialogInputBox);
