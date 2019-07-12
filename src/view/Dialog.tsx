@@ -1,9 +1,8 @@
 import React from "react";
 import {DialogData} from "../utils/typer";
-import {Innholdstittel} from "nav-frontend-typografi";
+
 import {HenvendelseList} from "./HenvendelseList";
 import {DialogHeader} from "./DialogHeader";
-import {AktivitetskortPreview} from "./AktivitetskortPreview";
 import {DialogInputBoxVisible} from "./DialogInputBox";
 import {useOppfolgingContext} from "../Context";
 import './Dialog.less';

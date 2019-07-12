@@ -1,4 +1,4 @@
-import React, {AnchorHTMLAttributes, HTMLProps} from "react";
+import React from "react";
 
 import {DialogData} from "../utils/typer";
 import {EtikettLiten, Normaltekst, Systemtittel} from "nav-frontend-typografi";

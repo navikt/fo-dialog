@@ -8,11 +8,9 @@ import {DialogOverview} from "./view/DialogOverview";
 
 import Dialog from "./view/Dialog";
 import {AlertStripeContainer} from "./view/AlertStripeContainer";
-
-import './App.less';
-import {Aktivitetskort} from "./view/Aktivitetskort";
 import NavFrontendSpinner from "nav-frontend-spinner";
 
+import './App.less';
 
 
 function NyTest() { // Stand-in for NyDialog-komponenten
