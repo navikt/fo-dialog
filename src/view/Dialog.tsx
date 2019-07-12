@@ -22,7 +22,7 @@ export function Dialog(props: Props) {
                 <AktivitetskortPreview dialog={props.dialog}/>
                 <DialogHeader dialog={props.dialog}/>
                 <HenvendelseList henvendelseDataList={props.dialog.henvendelser}/>
-                <DialogInputBoxVisible visible={oppfolgingData!.underOppfolging}/>
+                 <DialogInputBoxVisible  dialog={props.dialog} visible={oppfolgingData!.underOppfolging}/>
             </div>)
     } else {
         return (

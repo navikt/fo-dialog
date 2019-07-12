@@ -162,9 +162,10 @@ const dialoger: DialogData[] & JSONArray = [
 ];
 
 
-export function opprettDialog(update:NyDialogMeldingData): DialogData & JSONObject {
+export function opprettEllerOppdaterDialog(update:NyDialogMeldingData): DialogData & JSONObject {
     const dialogId =
         update.dialogId === undefined ? rndId() : `${update.dialogId}`;
+
     const nyHenvendelse : HenvendelseData = {
         id: rndId(),
         dialogId: dialogId,
