@@ -9,7 +9,7 @@ import './Dialog.less';
 import {RouteComponentProps, withRouter} from "react-router";
 import {Aktivitetskort} from "./Aktivitetskort";
 import {AktivitetskortPreview} from "./AktivitetskortPreview";
-import {Innholdstittel} from "nav-frontend-typografi";
+import {Innholdstittel, Normaltekst} from "nav-frontend-typografi";
 
 interface Props extends RouteComponentProps<{ dialogId?: string; }> {
     dialogData: DialogData[];
@@ -24,7 +24,8 @@ function Dialog(props: Props) {
     if (!valgtDialog) {
         return (
             <div className="dialog">
-                <Innholdstittel> Ingen Valgt Dialog</Innholdstittel>
+                <Innholdstittel>Dialog</Innholdstittel>
+                <Normaltekst>Detaljer for valgt dialog vises her.</Normaltekst>
             </div>
         );
     }

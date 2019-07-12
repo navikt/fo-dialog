@@ -1,21 +1,16 @@
 import React, {useEffect, useState} from 'react';
 import {BrowserRouter as Router, Route, Switch} from "react-router-dom";
 import {fetchData} from "./utils/fetch";
-import { Provider} from "./Context";
+import {Provider} from "./Context";
 import {DialogBanner} from "./view/DialogBanner";
 import {Bruker, DialogData} from "./utils/typer";
 import {DialogOverview} from "./view/DialogOverview";
-
 import Dialog from "./view/Dialog";
+import {DialogNew} from "./view/DialogNew";
 import {AlertStripeContainer} from "./view/AlertStripeContainer";
 import NavFrontendSpinner from "nav-frontend-spinner";
 
 import './App.less';
-
-
-function NyTest() { // Stand-in for NyDialog-komponenten
-    return <h1>LAG NY DIALOG</h1>;
-}
 
 function App() {
     const [dialogListe, setDialogListe] = useState<DialogData[] | undefined>(undefined);
@@ -43,7 +38,7 @@ function App() {
                         <DialogOverview dialogData={dialogListe}/>
                         <Switch>
                             <Route exact path="/" component={() => <Dialog dialogData={dialogListe}/>}/>
-                            <Route path="/ny" component={NyTest}/>
+                            <Route path="/ny" component={DialogNew}/>
                             <Route path="/:dialogId" component={() => <Dialog dialogData={dialogListe}/>}/>
                         </Switch>
                     </div>
