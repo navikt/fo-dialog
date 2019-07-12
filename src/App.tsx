@@ -40,20 +40,14 @@ function App() {
             <div className="app">
                 <DialogBanner/>
                 <Provider>
-                    <div className="app__body">
+                    <AlertStripeContainer/>
+                    <div className="app__body app__body--dialogvisning">
                         <DialogOverview dialogData={dialogListe}/>
                         <Switch>
                             <Route exact path="/" component={() => <Dialog dialogData={dialogListe}/>}/>
                             <Route path="/ny" component={NyTest}/>
                             <Route path="/:dialogId" component={() => <Dialog dialogData={dialogListe}/>}/>
                         </Switch>
-                    </div>
-
-                    <AlertStripeContainer/>
-                    <div className="app__body app__body--dialogvisning">
-                        { dialogListe === undefined? null : <DialogOverview dialogData={dialogListe}/> }
-                        { dialogListe === undefined ? null : <Dialog dialogData={dialogListe}/> }
-                        { dialogListe === undefined ? null : <Aktivitetskort dialog={dialogListe[3]}/> }
                     </div>
                 </Provider>
             </div>

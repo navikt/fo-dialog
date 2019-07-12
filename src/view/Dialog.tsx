@@ -8,6 +8,7 @@ import {DialogInputBoxVisible} from "./DialogInputBox";
 import {useOppfolgingContext} from "../Context";
 import './Dialog.less';
 import {RouteComponentProps, withRouter} from "react-router";
+import {Aktivitetskort} from "./Aktivitetskort";
 
 interface Props extends RouteComponentProps<{ dialogId?: string; }> {
     dialogData: DialogData[];
@@ -20,20 +21,20 @@ function Dialog(props: Props) {
     const valgtDialog = props.dialogData.find((dialog) => dialog.id === dialogId);
 
     if (!valgtDialog) {
-
         return (
-            <div className="dialog">
-                <Innholdstittel>Ingen Valgt Dialog</Innholdstittel>
-            </div>
+            null
         );
     }
 
     return (
-        <div className="dialog">
-            <DialogHeader dialog={valgtDialog}/>
-            <HenvendelseList henvendelseDataList={valgtDialog.henvendelser}/>
-            <DialogInputBoxVisible visible={oppfolgingData!.underOppfolging}/>
-        </div>
+        <>
+            <div className="dialog">
+                <DialogHeader dialog={valgtDialog}/>
+                <HenvendelseList henvendelseDataList={valgtDialog.henvendelser}/>
+                <DialogInputBoxVisible visible={oppfolgingData!.underOppfolging}/>
+            </div>
+            <Aktivitetskort dialog={valgtDialog}/>
+        </>
     );
 }
 
