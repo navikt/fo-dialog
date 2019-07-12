@@ -5,6 +5,8 @@ import {Hovedknapp} from "nav-frontend-knapper";
 import useFieldState from "../utils/useFieldState";
 
 import './Dialog.less';
+import {DialogData} from "../utils/typer";
+import {fetchData} from "../utils/fetch";
 
 function validerTema(tema: string): string | null {
     if (tema.trim().length === 0) {
@@ -33,12 +35,11 @@ export function DialogNew() {
         melding.validate();
 
         if (tema.input.feil === undefined && melding.input.feil === undefined) {
-            fetch('/veilarbdialog/api/dialog/ny', {
-                method: 'POST', body: JSON.stringify({
-                    overskrift: tema.input.value,
-                    tekst: melding.input.value
-                })
+            const body = JSON.stringify({
+                overskrift: tema.input.value,
+                tekst: melding.input.value
             });
+            fetchData<DialogData>('/veilarbdialog/api/dialog/ny', {method: 'post', body });
         }
     }
 
