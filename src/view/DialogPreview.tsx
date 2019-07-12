@@ -1,10 +1,8 @@
 import React, {AnchorHTMLAttributes, HTMLProps} from "react";
 
 import {DialogData} from "../utils/typer";
-
 import {EtikettLiten, Normaltekst, Systemtittel} from "nav-frontend-typografi";
 import {LenkepanelBase} from "nav-frontend-lenkepanel";
-
 import {EtikettListe} from "./EtikettListe";
 import "./dialogpreview.less";
 import {formaterHenvendelseDate} from "../utils/date";
@@ -33,3 +31,6 @@ export function DialogPreview(props: Props) {
             </LenkepanelBase>
         </>)
 }
+
+
+

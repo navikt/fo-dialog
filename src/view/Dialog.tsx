@@ -3,8 +3,9 @@ import {DialogData} from "../utils/typer";
 import {Innholdstittel} from "nav-frontend-typografi";
 import {HenvendelseList} from "./HenvendelseList";
 import {DialogHeader} from "./DialogHeader";
-import {DialogInputBox} from "./DialogInputBox";
-
+import {AktivitetskortPreview} from "./AktivitetskortPreview";
+import {DialogInputBoxVisible} from "./DialogInputBox";
+import {useOppfolgingContext} from "../Context";
 import './Dialog.less';
 import {RouteComponentProps, withRouter} from "react-router";
 
@@ -13,10 +14,13 @@ interface Props extends RouteComponentProps<{ dialogId?: string; }> {
 }
 
 function Dialog(props: Props) {
+
+    const oppfolgingData = useOppfolgingContext();
     const dialogId = props.match.params.dialogId;
     const valgtDialog = props.dialogData.find((dialog) => dialog.id === dialogId);
 
     if (!valgtDialog) {
+
         return (
             <div className="dialog">
                 <Innholdstittel>Ingen Valgt Dialog</Innholdstittel>
@@ -28,7 +32,7 @@ function Dialog(props: Props) {
         <div className="dialog">
             <DialogHeader dialog={valgtDialog}/>
             <HenvendelseList henvendelseDataList={valgtDialog.henvendelser}/>
-            <DialogInputBox/>
+            <DialogInputBoxVisible visible={oppfolgingData!.underOppfolging}/>
         </div>
     );
 }
