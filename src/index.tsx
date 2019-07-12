@@ -1,7 +1,7 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import './index.less';
-import AppNyDialog from './AppNyDialog';
+import App from "./App";
 
 require('./mock');
 
