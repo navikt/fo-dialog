@@ -15,8 +15,7 @@ interface Props extends RouteComponentProps<{ dialogId?: string; }> {
     dialogData: DialogData[];
 }
 
-function Dialog(props: Props) {
-
+export function Dialog(props: Props) {
     const oppfolgingData = useOppfolgingContext();
     const dialogId = props.match.params.dialogId;
     const valgtDialog = props.dialogData.find((dialog) => dialog.id === dialogId);
