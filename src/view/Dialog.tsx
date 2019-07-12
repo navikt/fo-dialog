@@ -3,7 +3,6 @@ import {DialogData} from "../utils/typer";
 import {Innholdstittel} from "nav-frontend-typografi";
 import {HenvendelseList} from "./HenvendelseList";
 import {DialogHeader} from "./DialogHeader";
-import {AktivitetskortPreview} from "./AktivitetskortPreview";
 import {DialogInputBoxVisible} from "./DialogInputBox";
 import {useOppfolgingContext} from "../Context";
 import './Dialog.less';
@@ -19,7 +18,6 @@ export function Dialog(props: Props) {
     if (props.dialog !== null) {
         return (
             <div className="dialog">
-                <AktivitetskortPreview dialog={props.dialog}/>
                 <DialogHeader dialog={props.dialog}/>
                 <HenvendelseList henvendelseDataList={props.dialog.henvendelser}/>
                 <DialogInputBoxVisible visible={oppfolgingData!.underOppfolging}/>

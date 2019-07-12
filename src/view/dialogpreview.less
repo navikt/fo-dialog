@@ -2,22 +2,40 @@
 
 .dialog-preview{
   &.lenkepanel {
+    padding: .5rem .5rem .5rem .5rem;
     border-radius: 0;
-    margin-bottom: 0.3rem;
-    margin-right: 0.3rem;
+    margin-bottom: 0.2rem;
+  }
+  &__ikon{
+    flex-basis: 1.5rem;
+    flex-shrink: 0;
+    margin: 1rem 1rem 1rem 2rem;
+
   }
   &__internal-div{
-    width: 95%;
+    flex: 1;
+    overflow: hidden;
     text-align: left;
+    .lenkepanel__heading{
+      font-size: 1.1rem;
+      font-weight: normal;
+    }
+
   }
 
   &__last-henvendelse{
     text-overflow: ellipsis;
     white-space: nowrap;
     overflow: hidden;
+    font-size: .9rem;
+    margin-bottom: .5rem;
   }
   &__etikett{
     margin-right: 0.3rem;
+    padding: .2rem .4rem;
+    .typo-normal{
+      font-size: .8rem;
+    }
     &--nav-venter{
       background-color: @navLimeGronnLighten60;
     }

@@ -1,13 +1,21 @@
-@import (reference) "~nav-frontend-core/less/core";
-@import "~nav-frontend-typografi-style/src/index";
+@import "~nav-frontend-core/less/core";
 
+body{
+  margin: 0;
+}
+
+html, body, #root, .app {
+  height: 100%;
+  overflow: hidden;
+}
+.app{
+  display: flex;
+  flex-direction: column;
+}
 
 .app__body {
-  flex-grow: 1;
   display: flex;
-  flex-direction: row;
-  align-content: flex-start;
-
+  height: 100%;
   .dialog-overview{
     width: 100%;
   }
@@ -18,33 +26,37 @@
   .aktivitetkort{
     display: none;
   }
+
   &--dialogvisning{
     .dialog-overview{
       display: none;
     }
     .dialog{
-      display: block;
+      display: flex;
     }
   }
 
-  @media (min-width: 700px) {
+  @media (min-width: 800px) {
     .dialog-overview{
-      display: block;
-      width: 50%;
+      display: flex;
+      width: 35%;
     }
     .dialog{
-      display: block;
-      width: 50%;
+      display: flex;
+      width: 65%;
     }
   }
   @media (min-width: 1200px){
+    .dialog-overview{
+      max-width: 30rem;
+    }
     .aktivitetkort{
       display: block;
       width: 30%;
       background-color: @navBlaLighten60;
     }
     .dialog{
-      display: block;
+      display: flex;
     }
   }
 }

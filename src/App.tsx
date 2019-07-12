@@ -28,7 +28,7 @@ const App = () => {
                     <AlertStripeContainer/>
                     <div className="app__body app__body--dialogvisning">
                         { dialogListe === undefined? null : <DialogOverview dialogData={dialogListe}/> }
-                        { dialogListe === undefined ? null : <Dialog dialog={dialogListe[3]}/> }
+                        { dialogListe === undefined ? null : <Dialog dialog={dialogListe[0]}/> }
                         { dialogListe === undefined ? null : <Aktivitetskort dialog={dialogListe[3]}/> }
                     </div>
                 </Provider>

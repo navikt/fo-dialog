@@ -1,5 +1,5 @@
 import React from "react";
-import {Knapp} from "nav-frontend-knapper";
+import {Flatknapp} from "nav-frontend-knapper";
 import {visibleIfHoc} from "../component/hoc/visibleIfHoc";
 import {DialogData} from "../utils/typer";
 import {Checkbox} from "../component/checkbox/Checkbox";
@@ -14,7 +14,9 @@ export function DialogOverviewHeader(props: Props) {
 
     return (
         <div className="dialog-overview__header">
-            <Knapp>Ny dialog</Knapp>
+            <Flatknapp>
+                Ny dialog
+            </Flatknapp>
             <Checkbox label={"Viktige meldinger"} visible={brukerHarViktigeDialoger}/>
         </div>)
 }
