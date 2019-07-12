@@ -54,4 +54,6 @@ export function DialogInputBox(props: Props){
 
     )
 }
+
 export const DialogInputBoxVisible = visibleIfHoc(DialogInputBox);
+

@@ -1,5 +1,22 @@
-export function fetchData<T>(url: string, config = {}): Promise<T> { // tslint:disable-line
-    return fetch(url, config)
+function getCookie(name: string) {
+    const re = new RegExp(`${name}=([^;]+)`);
+    const match = re.exec(document.cookie);
+    return match !== null ? match[1] : '';
+}
+function getHeaders() {
+    return new Headers({
+        'Content-Type': 'application/json',
+        'NAV_CSRF_PROTECTION': getCookie('NAV_CSRF_PROTECTION'), // eslint-disable-line quote-props
+    });
+}
+
+const CONFIG: RequestInit = {
+    credentials: 'same-origin',
+    headers: getHeaders(),
+};
+
+export function fetchData<T>(url: string, config: RequestInit = {}): Promise<T> {
+    return fetch(url, { ...config, ...CONFIG })
         .then(sjekkStatuskode)
         .then(toJson);
 }

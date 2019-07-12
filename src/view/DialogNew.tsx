@@ -5,21 +5,19 @@ import {Hovedknapp} from "nav-frontend-knapper";
 import useFieldState from "../utils/useFieldState";
 
 import './Dialog.less';
+import {DialogData} from "../utils/typer";
+import {fetchData} from "../utils/fetch";
 
 function validerTema(tema: string): string | null {
-    if (tema.length === 0) {
+    if (tema.trim().length === 0) {
         return "Tema må ha innhold.";
-    } else if (!tema.replace(/\s/g, '').length) {
-        return "Tema må ha lesbart innhold.";
     } else {
         return null;
     }
 }
 function validerMelding(melding: string): string | null {
-    if (melding.length === 0) {
+    if (melding.trim().length === 0) {
         return "Melding må ha innhold.";
-    } else if (!melding.replace(/\s/g, '').length) {
-        return "Meldingen må ha lesbart innhold.";
     } else {
         return null;
     }
@@ -37,12 +35,11 @@ export function DialogNew() {
         melding.validate();
 
         if (tema.input.feil === undefined && melding.input.feil === undefined) {
-            fetch('/veilarbdialog/api/dialog/ny', {
-                method: 'POST', body: JSON.stringify({
-                    overskrift: tema.input.value,
-                    tekst: melding.input.value
-                })
+            const body = JSON.stringify({
+                overskrift: tema.input.value,
+                tekst: melding.input.value
             });
+            fetchData<DialogData>('/veilarbdialog/api/dialog/ny', {method: 'post', body });
         }
     }
 
