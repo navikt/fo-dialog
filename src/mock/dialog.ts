@@ -1,7 +1,10 @@
-const dialoger = [
+import {DialogData, HenvendelseData, NyDialogMeldingData} from "../utils/typer";
+import {rndId} from "./utils";
+import {JSONArray, JSONObject} from "yet-another-fetch-mock";
+
+const dialoger: DialogData[] & JSONArray = [
     {
         id: '1',
-        aktivitetId: '1',
         overskrift: 'Memes',
         sisteTekst: 'Hei. Hva er status her? Har du finnet Kaptain Sabeltann?',
         sisteDato: '2018-01-28T12:48:56.097+01:00',
@@ -12,6 +15,7 @@ const dialoger = [
         ferdigBehandlet: false,
         lestAvBrukerTidspunkt: null,
         erLestAvBruker: false,
+        aktivitetId: null,
         henvendelser: [
             {
                 id: '1',
@@ -37,7 +41,6 @@ const dialoger = [
     },
     {
         id: '3',
-        aktivitetId: '2',
         overskrift: 'NOT USED',
         sisteTekst:
             'Det er viktig at du gjennomfører denne aktiviteten med NAV. Gjør du ikke det, kan det medføre at stønaden du mottar fra NAV bortfaller for en periode eller stanses. Hvis du ikke kan gjennomføre aktiviteten, ber vi deg ta kontakt med veilederen din så snart som mulig.',
@@ -49,6 +52,7 @@ const dialoger = [
         ferdigBehandlet: true,
         lestAvBrukerTidspunkt: null,
         erLestAvBruker: false,
+        aktivitetId: null,
         henvendelser: [
             {
                 id: '4',
@@ -65,7 +69,6 @@ const dialoger = [
     },
     {
         id: '2',
-        aktivitetId: null,
         overskrift: 'Du har fått et varsel fra NAV',
         sisteTekst:
             'Jeg har ikke hørt noe fra deg i det siste. Har du forlist?\n',
@@ -77,6 +80,7 @@ const dialoger = [
         ferdigBehandlet: true,
         lestAvBrukerTidspunkt: null,
         erLestAvBruker: false,
+        aktivitetId: null,
         henvendelser: [
             {
                 id: '3',
@@ -93,7 +97,6 @@ const dialoger = [
     },
     {
         id: '4',
-        aktivitetId: null,
         overskrift: 'Automatiske dialoger',
         sisteTekst:
             'Hei!\n' +
@@ -107,12 +110,13 @@ const dialoger = [
         ferdigBehandlet: true,
         lestAvBrukerTidspunkt: null,
         erLestAvBruker: false,
+        aktivitetId: null,
         henvendelser: [
             {
                 id: '4',
                 dialogId: '4',
                 avsender: 'VEILEDER',
-                avsenderId: null,
+                avsenderId: 'Z999999',
                 sendt: '2018-02-27T12:48:56.097+01:00',
                 lest: false,
                 tekst:
@@ -124,7 +128,7 @@ const dialoger = [
                 id: '5',
                 dialogId: '4',
                 avsender: 'VEILEDER',
-                avsenderId: null,
+                avsenderId: 'Z999999',
                 sendt: '2018-02-28T12:48:56.097+01:00',
                 lest: false,
                 tekst:
@@ -140,7 +144,7 @@ const dialoger = [
                 id: '6',
                 dialogId: '4',
                 avsender: 'VEILEDER',
-                avsenderId: null,
+                avsenderId: 'Z999999',
                 sendt: '2018-02-28T12:48:56.097+01:00',
                 lest: false,
                 tekst:
@@ -156,5 +160,52 @@ const dialoger = [
         egenskaper: [],
     },
 ];
+
+
+export function opprettDialog(update:NyDialogMeldingData): DialogData & JSONObject {
+    const dialogId =
+        update.dialogId === undefined ? rndId() : `${update.dialogId}`;
+    const nyHenvendelse : HenvendelseData = {
+        id: rndId(),
+        dialogId: dialogId,
+        avsender: 'BRUKER',
+        avsenderId: "Z123456",
+        sendt: new Date().toISOString(),
+        lest: true,
+        tekst: update.tekst,
+    };
+
+    const eksisterendeDialog = dialoger.find(
+        dialog => update.dialogId !== undefined && dialog.id === dialogId
+    );
+
+    if (eksisterendeDialog) {
+        const oldDialog = eksisterendeDialog;
+        oldDialog.sisteTekst = update.tekst;
+        oldDialog.sisteDato = nyHenvendelse.sendt;
+        oldDialog.henvendelser.push(nyHenvendelse);
+        return oldDialog as DialogData & JSONObject;
+    } else {
+        const nyDialog: DialogData = {
+            id: nyHenvendelse.dialogId,
+            overskrift: update.overskrift === undefined || update.overskrift === null ? rndId().toString() : update.overskrift,
+            sisteTekst: update.tekst,
+            sisteDato: new Date().toISOString(),
+            opprettetDato: new Date().toISOString(),
+            historisk: false,
+            lest: true,
+            venterPaSvar: true,
+            ferdigBehandlet: false,
+            lestAvBrukerTidspunkt: null,
+            erLestAvBruker: false,
+            aktivitetId: null,
+            henvendelser: [nyHenvendelse],
+            egenskaper:[],
+        };
+        dialoger.push(nyDialog);
+        return nyDialog as DialogData & JSONObject;
+    }
+}
+
 
 export default dialoger;
