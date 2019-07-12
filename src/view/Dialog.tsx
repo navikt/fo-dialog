@@ -1,34 +1,45 @@
 import React from "react";
 import {DialogData} from "../utils/typer";
-import {Innholdstittel} from "nav-frontend-typografi";
+
 import {HenvendelseList} from "./HenvendelseList";
 import {DialogHeader} from "./DialogHeader";
-import {AktivitetskortPreview} from "./AktivitetskortPreview";
 import {DialogInputBoxVisible} from "./DialogInputBox";
 import {useOppfolgingContext} from "../Context";
 import './Dialog.less';
+import {RouteComponentProps, withRouter} from "react-router";
+import {Aktivitetskort} from "./Aktivitetskort";
+import {AktivitetskortPreview} from "./AktivitetskortPreview";
+import {Innholdstittel} from "nav-frontend-typografi";
 
-
-interface Props {
-    dialog: DialogData | null;
+interface Props extends RouteComponentProps<{ dialogId?: string; }> {
+    dialogData: DialogData[];
 }
 
-export function Dialog(props: Props) {
-    const oppfolgingData = useOppfolgingContext();
+function Dialog(props: Props) {
 
-    if (props.dialog !== null) {
-        return (
-            <div className="dialog">
-                <AktivitetskortPreview dialog={props.dialog}/>
-                <DialogHeader dialog={props.dialog}/>
-                <HenvendelseList henvendelseDataList={props.dialog.henvendelser}/>
-                 <DialogInputBoxVisible  dialog={props.dialog} visible={oppfolgingData!.underOppfolging}/>
-            </div>)
-    } else {
+    const oppfolgingData = useOppfolgingContext();
+    const dialogId = props.match.params.dialogId;
+    const valgtDialog = props.dialogData.find((dialog) => dialog.id === dialogId);
+
+    if (!valgtDialog) {
         return (
             <div className="dialog">
                 <Innholdstittel> Ingen Valgt Dialog</Innholdstittel>
             </div>
-        )
+        );
     }
+
+    return (
+        <>
+            <div className="dialog">
+                <AktivitetskortPreview dialog={valgtDialog}/>
+                <DialogHeader dialog={valgtDialog}/>
+                <HenvendelseList henvendelseDataList={valgtDialog.henvendelser}/>
+                <DialogInputBoxVisible  dialog={valgtDialog} visible={oppfolgingData!.underOppfolging}/>
+            </div>
+            <Aktivitetskort dialog={valgtDialog}/>
+        </>
+    );
 }
+
+export default withRouter(Dialog);

@@ -1,9 +1,10 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import './index.less';
-import AppNyDialog from './AppNyDialog';
+import App from "./App";
 
 require('./mock');
 
 
-ReactDOM.render(<AppNyDialog />, document.getElementById('root'));
+ReactDOM.render(<App/>, document.getElementById('root'));
+
