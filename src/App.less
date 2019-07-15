@@ -1,65 +1,65 @@
-@import "~nav-frontend-core/less/core";
+@import '~nav-frontend-core/less/core';
 
 body {
-  margin: 0;
+    margin: 0;
 }
 
 html,
 body,
 #root,
 .app {
-  height: 100%;
-  overflow: hidden;
+    height: 100%;
+    overflow: hidden;
 }
 .app {
-  display: flex;
-  flex-direction: column;
+    display: flex;
+    flex-direction: column;
 }
 
 .app__body {
-  display: flex;
-  height: 100%;
-  .dialog-overview {
-    width: 100%;
-  }
-  .dialog {
-    width: 100%;
-    display: none;
-  }
-  .aktivitetkort {
-    display: none;
-  }
-
-  &--dialogvisning {
+    display: flex;
+    height: 100%;
     .dialog-overview {
-      display: none;
+        width: 100%;
     }
     .dialog {
-      display: flex;
-    }
-  }
-
-  @media (min-width: 800px) {
-    .dialog-overview {
-      display: flex;
-      width: 35%;
-    }
-    .dialog {
-      display: flex;
-      width: 65%;
-    }
-  }
-  @media (min-width: 1200px) {
-    .dialog-overview {
-      max-width: 30rem;
+        width: 100%;
+        display: none;
     }
     .aktivitetkort {
-      display: block;
-      width: 30%;
-      background-color: @navBlaLighten60;
+        display: none;
     }
-    .dialog {
-      display: flex;
+
+    &--dialogvisning {
+        .dialog-overview {
+            display: none;
+        }
+        .dialog {
+            display: flex;
+        }
     }
-  }
+
+    @media (min-width: 800px) {
+        .dialog-overview {
+            display: flex;
+            width: 35%;
+        }
+        .dialog {
+            display: flex;
+            width: 65%;
+        }
+    }
+    @media (min-width: 1200px) {
+        .dialog-overview {
+            max-width: 30rem;
+        }
+        .aktivitetkort {
+            display: block;
+            width: 30%;
+            background-color: @navBlaLighten60;
+        }
+        .dialog {
+            display: flex;
+        }
+    }
 }

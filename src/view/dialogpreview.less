@@ -1,48 +1,48 @@
-@import (reference) "~nav-frontend-core/less/core";
+@import (reference) '~nav-frontend-core/less/core';
 
 .dialog-preview {
-  border-left: 5px solid transparent;
-  &--lest {
-    border-left-color: @navBla;
-  }
+    border-left: 5px solid transparent;
+    &--lest {
+        border-left-color: @navBla;
+    }
 
-  &.lenkepanel {
-    padding: 0.5rem 0.5rem 0.5rem 0.5rem;
-    border-radius: 0;
-    margin-bottom: 0.5rem;
-  }
-  &__ikon {
-    flex-basis: 1.5rem;
-    flex-shrink: 0;
-    margin: 1rem 1rem 1rem 2rem;
-  }
-  &__internal-div {
-    flex: 1;
-    overflow: hidden;
-    text-align: left;
-    .lenkepanel__heading {
-      font-size: 1.1rem;
+    &.lenkepanel {
+        padding: 0.5rem 0.5rem 0.5rem 0.5rem;
+        border-radius: 0;
+        margin-bottom: 0.5rem;
     }
-  }
+    &__ikon {
+        flex-basis: 1.5rem;
+        flex-shrink: 0;
+        margin: 1rem 1rem 1rem 2rem;
+    }
+    &__internal-div {
+        flex: 1;
+        overflow: hidden;
+        text-align: left;
+        .lenkepanel__heading {
+            font-size: 1.1rem;
+        }
+    }
 
-  &__last-henvendelse {
-    text-overflow: ellipsis;
-    white-space: nowrap;
-    overflow: hidden;
-    font-size: 0.9rem;
-    margin-bottom: 0.5rem;
-  }
-  &__etikett {
-    margin-right: 0.3rem;
-    padding: 0.2rem 0.4rem;
-    .typo-normal {
-      font-size: 0.8rem;
+    &__last-henvendelse {
+        text-overflow: ellipsis;
+        white-space: nowrap;
+        overflow: hidden;
+        font-size: 0.9rem;
+        margin-bottom: 0.5rem;
     }
-    &--nav-venter {
-      background-color: @navLimeGronnLighten60;
+    &__etikett {
+        margin-right: 0.3rem;
+        padding: 0.2rem 0.4rem;
+        .typo-normal {
+            font-size: 0.8rem;
+        }
+        &--nav-venter {
+            background-color: @navLimeGronnLighten60;
+        }
+        &--bruker-venter {
+            background-color: @navLillaLighten60;
+        }
     }
-    &--bruker-venter {
-      background-color: @navLillaLighten60;
-    }
-  }
 }
