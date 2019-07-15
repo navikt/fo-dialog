@@ -1,50 +1,49 @@
-@import (reference) "~nav-frontend-core/less/core";
-@import "~nav-frontend-typografi-style/src/index";
-
+@import (reference) '~nav-frontend-core/less/core';
+@import '~nav-frontend-typografi-style/src/index';
 
 .app__body {
-  flex-grow: 1;
-  display: flex;
-  flex-direction: row;
-  align-content: flex-start;
+    flex-grow: 1;
+    display: flex;
+    flex-direction: row;
+    align-content: flex-start;
 
-  .dialog-overview{
-    width: 100%;
-  }
-  .dialog{
-    width: 100%;
-    display: none;
-  }
-  .aktivitetkort{
-    display: none;
-  }
-  &--dialogvisning{
-    .dialog-overview{
-      display: none;
+    .dialog-overview {
+        width: 100%;
     }
-    .dialog{
-      display: block;
+    .dialog {
+        width: 100%;
+        display: none;
     }
-  }
+    .aktivitetkort {
+        display: none;
+    }
+    &--dialogvisning {
+        .dialog-overview {
+            display: none;
+        }
+        .dialog {
+            display: block;
+        }
+    }
 
-  @media (min-width: 700px) {
-    .dialog-overview{
-      display: block;
-      width: 50%;
+    @media (min-width: 700px) {
+        .dialog-overview {
+            display: block;
+            width: 50%;
+        }
+        .dialog {
+            display: block;
+            width: 50%;
+        }
     }
-    .dialog{
-      display: block;
-      width: 50%;
+    @media (min-width: 1200px) {
+        .aktivitetkort {
+            display: block;
+            width: 30%;
+            background-color: @navBlaLighten60;
+        }
+        .dialog {
+            display: block;
+        }
     }
-  }
-  @media (min-width: 1200px){
-    .aktivitetkort{
-      display: block;
-      width: 30%;
-      background-color: @navBlaLighten60;
-    }
-    .dialog{
-      display: block;
-    }
-  }
 }

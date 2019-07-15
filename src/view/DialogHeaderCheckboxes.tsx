@@ -1,34 +1,32 @@
-import {Checkbox} from "nav-frontend-skjema";
-import React from "react";
-import {DialogData} from "../utils/typer";
-import {useOppfolgingContext} from "../Context";
+import { Checkbox } from 'nav-frontend-skjema';
+import React from 'react';
+import { DialogData } from '../utils/typer';
+import { useOppfolgingContext } from '../Context';
 
 interface Props {
     dialog: DialogData;
 }
 
-export function DialogHeaderCheckboxes(props: Props){
+export function DialogHeaderCheckboxes(props: Props) {
     const oppfolgingData = useOppfolgingContext();
-    if (oppfolgingData && oppfolgingData.underOppfolging){
+    if (oppfolgingData && oppfolgingData.underOppfolging) {
         return (
             <div className="checkbox-block">
                 <Checkbox
-                    label='Venter på svar fra NAV'
+                    label="Venter på svar fra NAV"
                     checked={!props.dialog.venterPaSvar}
                     className="checkbox-block__item"
                     onChange={() => {}}
                 />
                 <Checkbox
-                    label='Venter på svar fra bruker'
+                    label="Venter på svar fra bruker"
                     checked={props.dialog.venterPaSvar}
                     className="checkbox-block__item"
-                    onChange={ () => {}}
+                    onChange={() => {}}
                 />
             </div>
-        )
+        );
+    } else {
+        return null;
     }
-    else{
-        return null
-    }
-
 }
