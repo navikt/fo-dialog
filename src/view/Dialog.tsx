@@ -1,24 +1,36 @@
-import React from "react";
-import {DialogData} from "../utils/typer";
-
+import React, {useEffect} from "react";
 import {HenvendelseList} from "./HenvendelseList";
 import {DialogHeader} from "./DialogHeader";
 import {DialogInputBoxVisible} from "./DialogInputBox";
-import {useOppfolgingContext} from "../Context";
+import {useDialogContext, useOppfolgingContext} from "../Context";
 import './Dialog.less';
 import {RouteComponentProps, withRouter} from "react-router";
 import {Aktivitetskort} from "./Aktivitetskort";
-import {AktivitetskortPreview} from "./AktivitetskortPreview";
 import {Innholdstittel, Normaltekst} from "nav-frontend-typografi";
 
 interface Props extends RouteComponentProps<{ dialogId?: string; }> {
-    dialogData: DialogData[];
+
 }
 
 export function Dialog(props: Props) {
     const oppfolgingData = useOppfolgingContext();
+    const dialoger = useDialogContext();
     const dialogId = props.match.params.dialogId;
-    const valgtDialog = props.dialogData.find((dialog) => dialog.id === dialogId);
+    const valgtDialog = dialoger.data!.find((dialog) => dialog.id === dialogId);
+
+
+    useEffect(() => {
+        if (valgtDialog && !valgtDialog.lest) {
+            fetch("/veilarbdialog/api/dialog/lest", {
+                method: 'PUT', body: JSON.stringify({
+                    lest: true,
+                    dialogId: valgtDialog.id
+                })
+            })
+                .then(() => dialoger.refetch());
+        }
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [valgtDialog]);
 
     if (!valgtDialog) {
         return (
@@ -28,14 +40,12 @@ export function Dialog(props: Props) {
             </div>
         );
     }
-
     return (
         <>
             <div className="dialog">
-                <AktivitetskortPreview dialog={valgtDialog}/>
                 <DialogHeader dialog={valgtDialog}/>
                 <HenvendelseList henvendelseDataList={valgtDialog.henvendelser}/>
-                <DialogInputBoxVisible  dialog={valgtDialog} visible={oppfolgingData!.underOppfolging}/>
+                <DialogInputBoxVisible dialog={valgtDialog} visible={oppfolgingData!.underOppfolging}/>
             </div>
             <Aktivitetskort dialog={valgtDialog}/>
         </>
