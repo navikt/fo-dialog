@@ -39,7 +39,17 @@ export function DialogNew() {
                 overskrift: tema.input.value,
                 tekst: melding.input.value
             });
-            fetchData<DialogData>('/veilarbdialog/api/dialog/ny', {method: 'post', body });
+            fetchData<DialogData>(
+                '/veilarbdialog/api/dialog/ny',
+                {method: 'post', body }
+            ).then( function (response){
+                        console.log("Posted the new dialog!",response);
+                    //TODO refresh page with the new dialog
+                }, function(error){
+                    console.log("Failed posting the new dialog!",error);
+                    //TODO inform with a user friendly message
+                }
+            );
         }
     }
 

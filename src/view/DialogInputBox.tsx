@@ -4,6 +4,7 @@ import {Hovedknapp} from "nav-frontend-knapper";
 import useFieldState from "../utils/useFieldState";
 import {DialogData} from "../utils/typer";
 import {visibleIfHoc} from "../component/hoc/visibleIfHoc";
+import {fetchData} from "../utils/fetch";
 
 function validerMelding(melding: string): string | null {
     if (melding.trim().length === 0) {
@@ -25,13 +26,22 @@ export function DialogInputBox(props: Props){
         melding.validate();
         var dialg : DialogData = props.dialog;
         if ( melding.input.feil === undefined) {
-            fetch('/veilarbdialog/api/dialog/ny', {
-                method: 'POST', body: JSON.stringify({
-                    tekst: melding.input.value,
-                    dialogId: dialg.id,
-                    overskrift: dialg.overskrift,
-                })
+            const body = JSON.stringify({
+                tekst: melding.input.value,
+                overskrift: dialg.overskrift,
             });
+            fetchData<DialogData>(
+                '/veilarbdialog/api/dialog/ny',
+                {method: 'POST', body}
+                ).then( function (response){
+                        console.log("Posted endret dialog!",response);
+                        //TODO refresh page with the changed dialog
+                    }, function(error){
+                        console.log("Failed posting endret dialog!",error);
+                        //TODO inform with a user friendly message
+                    }
+                );
+
         }
     }
     return (
