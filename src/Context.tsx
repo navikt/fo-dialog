@@ -1,51 +1,39 @@
-import React, {useContext, useEffect, useState} from "react";
-import {Bruker, OppfolgingData} from "./utils/typer";
-import {fetchData} from "./utils/fetch";
+import React, {useContext} from "react";
+import {Bruker, DialogData, OppfolgingData} from "./utils/typer";
 import NavFrontendSpinner from "nav-frontend-spinner";
+import useFetch, {initalData, Status, UseFetchHook} from "./utils/use-fetch";
 
-
-enum FetchStatusData {
-    LOADING,
-    DONE,
-}
-
-export const UserInfoContext = React.createContext<Bruker| undefined>(undefined);
-export const OppfolgingContext = React.createContext<OppfolgingData|undefined>(undefined);
-
+export const UserInfoContext = React.createContext<Bruker| null>(null);
+export const OppfolgingContext = React.createContext<OppfolgingData|null>(null);
+export const DialogContext = React.createContext<UseFetchHook<DialogData[]>>(initalData);
 export const useUserInfoContext = () => useContext(UserInfoContext);
 export const useOppfolgingContext = () => useContext(OppfolgingContext);
+export const useDialogContext = () => useContext(DialogContext);
 
 interface ProviderData {
-    children: React.ReactNode;
+    children(bruker: Bruker, oppfolgingdata: OppfolgingData, dialoger: UseFetchHook<DialogData[]>): React.ReactNode
 }
 
 export function Provider(props: ProviderData){
+    const bruker = useFetch<Bruker>("/veilarboppfolging/api/oppfolging/me");
+    const oppfolgingData = useFetch<OppfolgingData>("/veilarboppfolging/api/oppfolging");
+    const dialoger = useFetch<DialogData[]>("/veilarbdialog/api/dialog");
 
-    const [userInfo, setUserInfo] = useState<Bruker | undefined>(undefined);
-    const [oppfolgingData, setOppfolgingData] = useState<OppfolgingData |undefined>(undefined);
-    const [fetchStatusMe, setFetchStatusMe] = useState<FetchStatusData>(FetchStatusData.LOADING);
-    const [fetchStatusOppf, setFetchStatusOppf] = useState<FetchStatusData>(FetchStatusData.LOADING);
+    const apier: Array<UseFetchHook<any>> = [bruker, oppfolgingData, dialoger];
 
-    useEffect(() => {
-        fetchData<Bruker>("/veilarboppfolging/api/oppfolging/me", {method: 'get'})
-            .then(res => setUserInfo(res))
-            .then( () => setFetchStatusMe(FetchStatusData.DONE));
-
-        fetchData<OppfolgingData>("/veilarboppfolging/api/oppfolging", {method: 'get'})
-            .then(res => setOppfolgingData(res))
-            .then(() => setFetchStatusOppf(FetchStatusData.DONE));
-        }, [] );
-
-    if (fetchStatusMe === FetchStatusData.LOADING || fetchStatusOppf === FetchStatusData.LOADING){
+    if (apier.some((api) => [Status.INIT, Status.LOADING].includes(api.status))){
         return(
             <NavFrontendSpinner/>
         )
     }
+
     return(
-        <OppfolgingContext.Provider value={oppfolgingData}>
-            <UserInfoContext.Provider value={userInfo}>
-                {props.children}
-            </UserInfoContext.Provider>
-        </OppfolgingContext.Provider>
+        <DialogContext.Provider value={dialoger}>
+            <OppfolgingContext.Provider value={oppfolgingData.data}>
+                <UserInfoContext.Provider value={bruker.data}>
+                    {props.children(bruker.data!, oppfolgingData.data!, dialoger)}
+                </UserInfoContext.Provider>
+            </OppfolgingContext.Provider>
+        </DialogContext.Provider>
     )
 }

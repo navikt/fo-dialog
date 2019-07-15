@@ -26,7 +26,6 @@ export interface DialogData {
 }
 
 export interface HenvendelseData {
-
     id: string,
     dialogId: string,
     avsender: string,
@@ -58,8 +57,6 @@ export interface OppfolgingData {
     kanReaktiveres: boolean,
     inaktiveringsdato: StringOrUndefinedOrNull,
 }
-
-
 
 export interface PeriodeData{
     aktorId: string,

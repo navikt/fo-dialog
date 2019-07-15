@@ -1,47 +1,33 @@
-import React, {useEffect, useState} from 'react';
+import React from 'react';
 import {BrowserRouter as Router, Route, Switch} from "react-router-dom";
-import {fetchData} from "./utils/fetch";
 import {Provider} from "./Context";
 import {DialogBanner} from "./view/DialogBanner";
-import {Bruker, DialogData} from "./utils/typer";
 import {DialogOverview} from "./view/DialogOverview";
 import Dialog from "./view/Dialog";
 import {DialogNew} from "./view/DialogNew";
 import {AlertStripeContainer} from "./view/AlertStripeContainer";
-import NavFrontendSpinner from "nav-frontend-spinner";
 
 import './App.less';
 
 function App() {
-    const [dialogListe, setDialogListe] = useState<DialogData[] | undefined>(undefined);
-    const [userInfo, setUserInfo] = useState<Bruker | undefined>(undefined);
-
-    useEffect(() => {
-        fetchData<DialogData[]>("/veilarbdialog/api/dialog", {method: 'get'})
-            .then(res => setDialogListe(res));
-        fetchData<Bruker>("/veilarboppfolging/api/oppfolging/me", {method: 'get'})
-            .then(res => setUserInfo(res))
-
-    }, []);
-
-    if (dialogListe === undefined || userInfo === undefined) {
-        return <NavFrontendSpinner className="app__spinner"/>
-    }
-
     return (
         <Router>
             <div className="app">
                 <DialogBanner/>
                 <Provider>
-                    <AlertStripeContainer/>
-                    <div className="app__body app__body--dialogvisning">
-                        <DialogOverview dialogData={dialogListe}/>
-                        <Switch>
-                            <Route exact path="/" component={() => <Dialog dialogData={dialogListe}/>}/>
+                    {(bruker, oppfolgingData, dialoger) => (
+                        <>
+                            <AlertStripeContainer/>
+                            <div className="app__body ">
+                            <DialogOverview dialogData={dialoger.data!}/>
+                            <Switch>
+                            <Route exact path="/" component={Dialog}/>
                             <Route path="/ny" component={DialogNew}/>
-                            <Route path="/:dialogId" component={() => <Dialog dialogData={dialogListe}/>}/>
-                        </Switch>
-                    </div>
+                            <Route path="/:dialogId" component={Dialog}/>
+                            </Switch>
+                            </div>
+                        </>
+                    )}
                 </Provider>
             </div>
         </Router>
