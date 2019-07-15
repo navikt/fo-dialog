@@ -1,6 +1,7 @@
 import React from "react";
 import Enzyme, {mount, shallow} from 'enzyme';
 import Adapter from 'enzyme-adapter-react-16';
+import {MemoryRouter, RouteComponentProps} from 'react-router';
 import * as AppContext from "../Context";
 import {Dialog} from "../view/Dialog";
 import {Bruker, PeriodeData} from "../utils/typer";
@@ -13,9 +14,9 @@ import {DialogOverviewHeader} from "../view/DialogOverviewHeader";
 import {DialogPreview} from "../view/DialogPreview";
 import {Checkbox} from "nav-frontend-skjema";
 
-Enzyme.configure({ adapter: new Adapter() });
+Enzyme.configure({adapter: new Adapter()});
 
-const userInfo: Bruker = {id:"010101", erVeileder: true,erBruker:false};
+const userInfo: Bruker = {id: "010101", erVeileder: true, erBruker: false};
 const oppfPerioder: PeriodeData[] = [];
 const oppfolgingData = {
     fnr: null,
@@ -75,7 +76,7 @@ const dialoger = [
 describe('<AlertStripeContainer/>', () => {
 
     test("Bruker uten oppf.perioder og ikke under oppf. viser en advarsel - veileder.", () => {
-        userInfo.erVeileder=true;
+        userInfo.erVeileder = true;
         oppfolgingData.underOppfolging = false;
         oppfolgingData.oppfolgingsPerioder = [];
         jest.spyOn(AppContext, 'useUserInfoContext').mockImplementation(() => userInfo);
@@ -127,13 +128,13 @@ describe('<AlertStripeContainer/>', () => {
 
 });
 
-describe( '<DialogOverview/>', () => {
+describe('<DialogOverview/>', () => {
 
     test("Bruker uten oppf.perioder og ikke under oppf skjuler store deler av appen", () => {
         oppfolgingData.underOppfolging = false;
         oppfolgingData.oppfolgingsPerioder = [];
         jest.spyOn(AppContext, 'useOppfolgingContext').mockImplementation(() => oppfolgingData);
-        const wrapper = mount(<DialogOverview dialogData={dialoger} />);
+        const wrapper = mount(<MemoryRouter><DialogOverview dialogData={dialoger}/></MemoryRouter>);
         expect(wrapper.find(DialogOverviewHeader).exists()).toBeFalsy();
         expect(wrapper.find(DialogPreview).exists()).toBeFalsy();
     });
@@ -147,7 +148,7 @@ describe( '<DialogOverview/>', () => {
             begrunnelse: null,
         }];
         jest.spyOn(AppContext, 'useOppfolgingContext').mockImplementation(() => oppfolgingData);
-        const wrapper = mount(<DialogOverview dialogData={dialoger} />);
+        const wrapper = mount(<MemoryRouter><DialogOverview dialogData={dialoger}/></MemoryRouter>);
         expect(wrapper.find(DialogOverviewHeader).exists()).toBeFalsy();
         expect(wrapper.find(DialogPreview).exists()).toBeTruthy();
     });
@@ -160,14 +161,14 @@ describe( '<DialogOverview/>', () => {
             sluttDato: '2017-12-31T10:46:10.971+01:00',
             begrunnelse: null,
         }];
-        const wrapper = mount(<DialogOverview dialogData={dialoger} />);
+        const wrapper = mount(<MemoryRouter><DialogOverview dialogData={dialoger}/></MemoryRouter>);
         expect(wrapper.find(DialogOverviewHeader).exists()).toBeTruthy();
         expect(wrapper.find(DialogPreview).exists()).toBeTruthy();
     })
 });
 
 describe('<Dialog/>', () => {
-    test("Bruker ikke under oppf. skjuler dialogcontroller og viser fortsatt henvendelser", () =>{
+    test("Bruker ikke under oppf. skjuler dialogcontroller og viser fortsatt henvendelser", () => {
         oppfolgingData.underOppfolging = false;
         oppfolgingData.oppfolgingsPerioder = [{
             aktorId: '1234567988888',
@@ -177,7 +178,7 @@ describe('<Dialog/>', () => {
             begrunnelse: null,
         }];
         jest.spyOn(AppContext, 'useOppfolgingContext').mockImplementation(() => oppfolgingData);
-        const wrapper = mount(<Dialog dialog={dialoger[0]}/>);
+        const wrapper = mount(<Dialog dialogData={dialoger} {...lagRouterProps('1')}/>);
         expect(wrapper.find(DialogInputBox).exists()).toBeFalsy();
         expect(wrapper.find(HenvendelseList).exists()).toBeTruthy();
         expect(wrapper.find(Checkbox).exists()).toBeFalsy();
@@ -192,9 +193,17 @@ describe('<Dialog/>', () => {
             begrunnelse: null,
         }];
         jest.spyOn(AppContext, 'useOppfolgingContext').mockImplementation(() => oppfolgingData);
-        const wrapper = mount(<Dialog dialog={dialoger[0]}/>);
+        const wrapper = mount(<Dialog dialogData={dialoger} {...lagRouterProps('1')}/>);
         expect(wrapper.find(DialogHeader).exists()).toBeTruthy();
         expect(wrapper.find(DialogInputBox).exists()).toBeTruthy();
         expect(wrapper.find(HenvendelseList).exists()).toBeTruthy();
     })
 });
+
+function lagRouterProps(dialogId: string): RouteComponentProps<{ dialogId?: string; }> {
+    return {
+        history: undefined as any,
+        location: undefined as any,
+        match: {params: {dialogId}} as any
+    };
+}
