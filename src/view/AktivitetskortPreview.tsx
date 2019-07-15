@@ -22,5 +22,5 @@ export function AktivitetskortPreview(props: Props) {
             </div>
         );
     }
-    return null;
+    return null
 }
