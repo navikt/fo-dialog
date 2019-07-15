@@ -1,14 +1,17 @@
 @import "~nav-frontend-core/less/core";
 
-body{
+body {
   margin: 0;
 }
 
-html, body, #root, .app {
+html,
+body,
+#root,
+.app {
   height: 100%;
   overflow: hidden;
 }
-.app{
+.app {
   display: flex;
   flex-direction: column;
 }
@@ -16,46 +19,46 @@ html, body, #root, .app {
 .app__body {
   display: flex;
   height: 100%;
-  .dialog-overview{
+  .dialog-overview {
     width: 100%;
   }
-  .dialog{
+  .dialog {
     width: 100%;
     display: none;
   }
-  .aktivitetkort{
+  .aktivitetkort {
     display: none;
   }
 
-  &--dialogvisning{
-    .dialog-overview{
+  &--dialogvisning {
+    .dialog-overview {
       display: none;
     }
-    .dialog{
+    .dialog {
       display: flex;
     }
   }
 
   @media (min-width: 800px) {
-    .dialog-overview{
+    .dialog-overview {
       display: flex;
       width: 35%;
     }
-    .dialog{
+    .dialog {
       display: flex;
       width: 65%;
     }
   }
-  @media (min-width: 1200px){
-    .dialog-overview{
+  @media (min-width: 1200px) {
+    .dialog-overview {
       max-width: 30rem;
     }
-    .aktivitetkort{
+    .aktivitetkort {
       display: block;
       width: 30%;
       background-color: @navBlaLighten60;
     }
-    .dialog{
+    .dialog {
       display: flex;
     }
   }

@@ -1,28 +1,28 @@
-@import (reference) '~nav-frontend-core/less/core';
+@import (reference) "~nav-frontend-core/less/core";
 
 .dialog {
   display: flex;
   flex-direction: column;
   height: 100%;
-  &__header{
+  &__header {
     background-color: @navLysGra;
     flex-basis: 4rem;
-    .dialog__tittel{
+    .dialog__tittel {
       padding: 1rem;
     }
   }
 
-  .aktivitetskortpreview{
+  .aktivitetskortpreview {
     background-color: @navBlaLighten60;
     height: 4rem;
   }
-  @media (min-width: 800px){
-    .tilbake-til-oversikt{
+  @media (min-width: 800px) {
+    .tilbake-til-oversikt {
       display: none;
     }
   }
-  @media (min-width: 1200px){
-    .aktivitetskortpreview{
+  @media (min-width: 1200px) {
+    .aktivitetskortpreview {
       display: none;
     }
   }
@@ -51,16 +51,16 @@
   bottom: 0;
   align-items: center;
   padding: 1rem;
-  .skjemaelement{
+  .skjemaelement {
     flex: 1;
-    &__input{
+    &__input {
       //font-size: .8rem;
     }
   }
-  .textarea__container label{
+  .textarea__container label {
     .sr-only();
   }
-  .knapp--hoved{
+  .knapp--hoved {
     padding: 0.5rem;
     margin-left: 1rem;
   }
