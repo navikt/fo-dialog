@@ -1,5 +1,5 @@
-import React, {useCallback, useState} from "react";
-import {SkjemaelementFeil} from "nav-frontend-skjema/lib/skjemaelement-feilmelding";
+import React, { useCallback, useState } from 'react';
+import { SkjemaelementFeil } from 'nav-frontend-skjema/lib/skjemaelement-feilmelding';
 
 export interface FieldState {
     input: {
@@ -47,7 +47,7 @@ export default function useFieldState(initialState: string, validate: Validator 
             value,
             onChange,
             onBlur,
-            feil: (!touched || error === null) ? undefined : {feilmelding: error}
+            feil: !touched || error === null ? undefined : { feilmelding: error }
         },
         validate: handleValidate
     };
