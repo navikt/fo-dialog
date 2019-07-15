@@ -26,7 +26,7 @@ export function Dialog(props: Props) {
                 <Innholdstittel>Dialog</Innholdstittel>
                 <Normaltekst>Detaljer for valgt dialog vises her.</Normaltekst>
                 <Normaltekst> - Du kan velge en dialog fra oversikten, </Normaltekst>
-                <Normaltekst> - eller klikke på "Ny Dialog" for å starte en ny en.</Normaltekst>
+                <Normaltekst> - Du kan klikke på "Ny Dialog" for å starte en ny en.</Normaltekst>
             </div>
         );
     }
