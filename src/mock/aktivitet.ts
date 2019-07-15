@@ -1,6 +1,7 @@
 import { Aktivitet } from '../utils/typer';
+import { JSONArray } from 'yet-another-fetch-mock';
 
-const aktiviteter: Aktivitet[] = [
+const aktiviteter: Aktivitet[] & JSONArray = [
     {
         id: '6871',
         versjon: '9389',

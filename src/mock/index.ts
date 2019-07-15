@@ -2,6 +2,7 @@ import FetchMock, { Middleware } from 'yet-another-fetch-mock';
 import dialoger, { opprettEllerOppdaterDialog } from './dialog';
 import bruker from './bruker';
 import oppfolging from './oppfolging';
+import aktiviteter from './aktivitet';
 
 const loggingMiddleware: Middleware = (request, response) => {
     console.log('response', response);
@@ -20,3 +21,5 @@ mock.post('/veilarbdialog/api/dialog/ny', ({ body }) => opprettEllerOppdaterDial
 mock.get('/veilarboppfolging/api/oppfolging/me', bruker);
 
 mock.get('/veilarboppfolging/api/oppfolging', oppfolging);
+
+mock.get('/veilarbaktivitet/api/aktivitet', aktiviteter);
