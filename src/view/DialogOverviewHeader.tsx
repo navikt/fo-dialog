@@ -1,5 +1,4 @@
 import React from 'react';
-
 import { visibleIfHoc } from '../component/hoc/visibleIfHoc';
 import { DialogData } from '../utils/typer';
 import { Checkbox } from '../component/checkbox/Checkbox';

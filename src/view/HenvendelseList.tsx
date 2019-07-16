@@ -9,17 +9,19 @@ interface Props {
 }
 
 export function HenvendelseList(props: Props) {
+    if (!props.henvendelseDataList) {
+        return null;
+    }
+
+    const henvendelser = props.henvendelseDataList.map(henvendelse => (
+        <div key={henvendelse.id} className="henvendelse-list__henvendelse">
+            <Henvendelse henvendelseData={henvendelse} />
+        </div>
+    ));
+
     return (
-        <>
-            {props.henvendelseDataList === undefined ? null : (
-                <div className="henvendelse-list">
-                    {props.henvendelseDataList.map(henvendelse => (
-                        <div key={henvendelse.id}>
-                            <Henvendelse henvendelseData={henvendelse} />
-                        </div>
-                    ))}
-                </div>
-            )}
-        </>
+        <div className="henvendelse-list">
+            <div className="henvendelse-list__viewport">{henvendelser}</div>
+        </div>
     );
 }

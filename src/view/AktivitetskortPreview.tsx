@@ -1,6 +1,8 @@
 import React from 'react';
 import { DialogData } from '../utils/typer';
-import { Normaltekst } from 'nav-frontend-typografi';
+import { Normaltekst, Undertittel } from 'nav-frontend-typografi';
+import { HoyreChevron } from 'nav-frontend-chevron';
+import Lenke from 'nav-frontend-lenker';
 
 interface Props {
     dialog: DialogData | null;
@@ -9,10 +11,16 @@ interface Props {
 export function AktivitetskortPreview(props: Props) {
     if (props.dialog) {
         return (
-            <div className="dialog__aktivitetskortpreview">
-                <Normaltekst>Aktivitet: {props.dialog.aktivitetId} Frist: 24.12. Arbeidsgiver: Julenissen</Normaltekst>
+            <div className="aktivitetskortpreview">
+                <Lenke href="/dialog">
+                    <Undertittel>
+                        Aktivitet: {props.dialog.aktivitetId}
+                        <HoyreChevron />
+                    </Undertittel>
+                </Lenke>
+                <Normaltekst>Frist: 24.12. Arbeidsgiver: Julenissen</Normaltekst>
             </div>
         );
     }
-    return null;
+    return null
 }

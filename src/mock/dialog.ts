@@ -1,6 +1,6 @@
 import { DialogData, HenvendelseData, NyDialogMeldingData } from '../utils/typer';
 import { rndId } from './utils';
-import { JSONArray, JSONObject } from 'yet-another-fetch-mock';
+import { JSONArray, JSONObject, ResponseData } from 'yet-another-fetch-mock';
 
 const dialoger: DialogData[] & JSONArray = [
     {
@@ -46,7 +46,7 @@ const dialoger: DialogData[] & JSONArray = [
         sisteDato: '2018-11-21T13:13:20.685+01:00',
         opprettetDato: '2018-11-21T13:13:20.663+01:00',
         historisk: false,
-        lest: true,
+        lest: false,
         venterPaSvar: false,
         ferdigBehandlet: true,
         lestAvBrukerTidspunkt: null,
@@ -102,12 +102,12 @@ const dialoger: DialogData[] & JSONArray = [
         sisteDato: '2018-01-28T12:48:56.097+01:00',
         opprettetDato: '2018-02-27T12:48:56.081+01:00',
         historisk: false,
-        lest: true,
+        lest: false,
         venterPaSvar: false,
         ferdigBehandlet: true,
         lestAvBrukerTidspunkt: null,
         erLestAvBruker: false,
-        aktivitetId: null,
+        aktivitetId: '1',
         henvendelser: [
             {
                 id: '4',
@@ -157,6 +157,15 @@ const dialoger: DialogData[] & JSONArray = [
         egenskaper: []
     }
 ];
+
+export function lesDialog(dialogId: string): Promise<ResponseData> {
+    const dialog = dialoger.find(dialog => dialog.id === dialogId);
+    if (dialog) {
+        dialog.lest = true;
+        return Promise.resolve({ status: 200 });
+    }
+    return Promise.resolve({ status: 404 });
+}
 
 export function opprettEllerOppdaterDialog(update: NyDialogMeldingData): DialogData & JSONObject {
     const dialogId = update.dialogId === undefined ? rndId() : `${update.dialogId}`;
