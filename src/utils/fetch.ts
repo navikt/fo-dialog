@@ -6,13 +6,13 @@ function getCookie(name: string) {
 function getHeaders() {
     return new Headers({
         'Content-Type': 'application/json',
-        'NAV_CSRF_PROTECTION': getCookie('NAV_CSRF_PROTECTION'), // eslint-disable-line quote-props
+        NAV_CSRF_PROTECTION: getCookie('NAV_CSRF_PROTECTION') // eslint-disable-line quote-props
     });
 }
 
 const CONFIG: RequestInit = {
     credentials: 'same-origin',
-    headers: getHeaders(),
+    headers: getHeaders()
 };
 
 export function fetchData<T>(url: string, config: RequestInit = {}): Promise<T> {
@@ -22,12 +22,7 @@ export function fetchData<T>(url: string, config: RequestInit = {}): Promise<T> 
 }
 
 export function sjekkStatuskode(response: Response) {
-    if (
-        response.status >= 200 &&
-        response.status < 300 &&
-        response.ok &&
-        !response.redirected
-    ) {
+    if (response.status >= 200 && response.status < 300 && response.ok && !response.redirected) {
         return response;
     }
     throw new Error(response.statusText || response.type);

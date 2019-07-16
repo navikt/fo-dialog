@@ -1,28 +1,28 @@
-@import (reference) "~nav-frontend-core/less/core";
+@import (reference) '~nav-frontend-core/less/core';
 
-.dialog-preview{
-  &.lenkepanel {
-    border-radius: 0;
-    margin-bottom: 0.3rem;
-    margin-right: 0.3rem;
-  }
-  &__internal-div{
-    width: 95%;
-    text-align: left;
-  }
+.dialog-preview {
+    &.lenkepanel {
+        border-radius: 0;
+        margin-bottom: 0.3rem;
+        margin-right: 0.3rem;
+    }
+    &__internal-div {
+        width: 95%;
+        text-align: left;
+    }
 
-  &__last-henvendelse{
-    text-overflow: ellipsis;
-    white-space: nowrap;
-    overflow: hidden;
-  }
-  &__etikett{
-    margin-right: 0.3rem;
-    &--nav-venter{
-      background-color: @navLimeGronnLighten60;
+    &__last-henvendelse {
+        text-overflow: ellipsis;
+        white-space: nowrap;
+        overflow: hidden;
     }
-    &--bruker-venter{
-      background-color: @navLillaLighten60;
+    &__etikett {
+        margin-right: 0.3rem;
+        &--nav-venter {
+            background-color: @navLimeGronnLighten60;
+        }
+        &--bruker-venter {
+            background-color: @navLillaLighten60;
+        }
     }
-  }
 }

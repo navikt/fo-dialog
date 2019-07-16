@@ -1,10 +1,8 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import './index.less';
-import App from "./App";
+import App from './App';
 
 require('./mock');
 
-
-ReactDOM.render(<App/>, document.getElementById('root'));
-
+ReactDOM.render(<App />, document.getElementById('root'));

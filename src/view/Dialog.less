@@ -1,40 +1,40 @@
 @import (reference) '~nav-frontend-core/less/core';
 
 .dialog {
-  flex-grow: 1;
-  background: @navLysGra;
-  display: flex;
-  flex-direction: column;
-  margin: 0.5rem;
-
-  .checkbox-block{
+    flex-grow: 1;
+    background: @navLysGra;
     display: flex;
-    flex-direction: row;
-    margin-top: 0.5rem;
-    border-style: solid;
-    border-width: 0 0 0.2rem 0;
-    &__item{
-      flex-grow: 1;
+    flex-direction: column;
+    margin: 0.5rem;
+
+    .checkbox-block {
+        display: flex;
+        flex-direction: row;
+        margin-top: 0.5rem;
+        border-style: solid;
+        border-width: 0 0 0.2rem 0;
+        &__item {
+            flex-grow: 1;
+        }
     }
-  }
-  &__aktivitetskortpreview{
-    background-color: @navBlaLighten60;
-    height: 4rem;
-  }
-  @media (min-width: 1200px){
-    &__aktivitetskortpreview{
-      display: none;
+    &__aktivitetskortpreview {
+        background-color: @navBlaLighten60;
+        height: 4rem;
     }
-  }
+    @media (min-width: 1200px) {
+        &__aktivitetskortpreview {
+            display: none;
+        }
+    }
 }
 
 .skriv-melding {
-  flex-grow: 1;
-  font-weight: bold;
-  border-style: solid;
-  border-width: 0 0 0.2rem 0;
+    flex-grow: 1;
+    font-weight: bold;
+    border-style: solid;
+    border-width: 0 0 0.2rem 0;
 }
 
 .meldingsfelt {
-  width: 100%;
+    width: 100%;
 }
