@@ -1,26 +1,46 @@
+import React, { useEffect } from 'react';
+import { HenvendelseList } from './HenvendelseList';
+import { DialogHeader } from './DialogHeader';
+import { DialogInputBoxVisible } from './DialogInputBox';
+import { useDialogContext, useOppfolgingContext } from '../Context';
 import React from 'react';
 import { DialogData } from '../utils/typer';
-
 import { HenvendelseList } from './HenvendelseList';
 import { DialogHeader } from './DialogHeader';
 import { DialogInputBoxVisible } from './DialogInputBox';
 import { useOppfolgingContext } from '../Context';
-import './Dialog.less';
+import { RouteComponentProps, withRouter } from 'react-router';
+import { Aktivitetskort } from './Aktivitetskort';
+import { Innholdstittel, Normaltekst } from 'nav-frontend-typografi';
 import { RouteComponentProps, withRouter } from 'react-router';
 import { Aktivitetskort } from './Aktivitetskort';
 import { AktivitetskortPreview } from './AktivitetskortPreview';
 import { Innholdstittel, Normaltekst } from 'nav-frontend-typografi';
 
-interface Props extends RouteComponentProps<{ dialogId?: string }> {
-    dialogData: DialogData[];
-}
+import './Dialog.less';
+
+interface Props extends RouteComponentProps<{ dialogId?: string }> {}
 
 export function Dialog(props: Props) {
     const oppfolgingData = useOppfolgingContext();
+    const dialoger = useDialogContext();
     const dialogId = props.match.params.dialogId;
-    const valgtDialog = props.dialogData.find(dialog => dialog.id === dialogId);
+    const valgtDialog = dialoger.data!.find(dialog => dialog.id === dialogId);
 
-    if (props.dialogData.length === 0) {
+    useEffect(() => {
+        if (valgtDialog && !valgtDialog.lest) {
+            fetch('/veilarbdialog/api/dialog/lest', {
+                method: 'PUT',
+                body: JSON.stringify({
+                    lest: true,
+                    dialogId: valgtDialog.id
+                })
+            }).then(() => dialoger.refetch());
+        }
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [valgtDialog]);
+
+    if (dialoger.length === 0) {
         return (
             <div className="dialog">
                 <Innholdstittel>Dialog</Innholdstittel>
@@ -43,7 +63,6 @@ export function Dialog(props: Props) {
         return (
             <>
                 <div className="dialog">
-                    <AktivitetskortPreview dialog={valgtDialog} />
                     <DialogHeader dialog={valgtDialog} />
                     <HenvendelseList henvendelseDataList={valgtDialog.henvendelser} />
                     <DialogInputBoxVisible dialog={valgtDialog} visible={oppfolgingData!.underOppfolging} />

@@ -1,22 +1,11 @@
 @import (reference) '~nav-frontend-core/less/core';
 
 .snakkeboble {
-    width: 100%;
-    text-align: left;
-    box-sizing: border-box;
-    &-panel {
-        width: 60%;
-        padding: 0.5rem 1rem 1rem;
-        &__topp {
-            margin-bottom: 0.5rem;
-        }
+    .snakkeboble-panel {
+        flex-basis: 70%;
     }
 
-    &--venstre {
-        padding-left: 10%;
-    }
     &--hoyre {
-        padding-right: 15%;
         .snakkeboble-panel {
             text-align: left;
         }
@@ -27,6 +16,7 @@
     width: 36px;
     height: 36px;
     margin-top: 2px;
+    flex-shrink: 0;
 }
 
 .bruker-ikon {
@@ -45,5 +35,15 @@
         content: 'NAV';
         color: @white;
         font-style: normal;
+    }
+}
+
+@media (max-width: 700px) {
+    .snakkeboble {
+        margin-left: 0;
+        margin-right: 0;
+        .snakkeboble-panel {
+            flex-basis: 100%;
+        }
     }
 }

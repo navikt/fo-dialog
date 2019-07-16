@@ -1,9 +1,9 @@
 import React from 'react';
+import { VenstreChevron } from 'nav-frontend-chevron';
+import { DialogData } from '../utils/typer';
+import { AktivitetskortPreview } from './AktivitetskortPreview';
 import Lenke from 'nav-frontend-lenker';
 import { Undertittel } from 'nav-frontend-typografi';
-import { HoyreChevron } from 'nav-frontend-chevron';
-import { DialogData } from '../utils/typer';
-import { DialogHeaderCheckboxes } from './DialogHeaderCheckboxes';
 
 interface Props {
     dialog: DialogData;
@@ -11,14 +11,16 @@ interface Props {
 
 export function DialogHeader(props: Props) {
     return (
-        <>
-            <Lenke href="/dialog">
-                <Undertittel>
-                    Aktivitet: {props.dialog.aktivitetId}
-                    <HoyreChevron />
-                </Undertittel>
+        <div className="dialog__header">
+            <Lenke href="#" className="tilbake-til-oversikt">
+                <VenstreChevron className="tilbake-til-oversikt__pilknapp" />
+                Oversikt
             </Lenke>
-            <DialogHeaderCheckboxes dialog={props.dialog} />
-        </>
+            {props.dialog.aktivitetId == null ? (
+                <Undertittel className="dialog__tittel">{props.dialog.overskrift}</Undertittel>
+            ) : (
+                <AktivitetskortPreview dialog={props.dialog} />
+            )}
+        </div>
     );
 }

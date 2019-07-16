@@ -14,6 +14,25 @@ function validerMelding(melding: string): string | null {
     }
 }
 
+function defaultTellerTekst(antallTegn: number, maxLength: number): React.ReactNode {
+    const difference = antallTegn - maxLength;
+    const remainingLetters = maxLength - antallTegn;
+
+    if (remainingLetters > 1000) {
+        return null;
+    }
+
+    const ariaAttrs: any = {};
+    if (antallTegn > maxLength) {
+        ariaAttrs['aria-live'] = 'assertive';
+        return <span {...ariaAttrs}>Du har {difference} tegn for mye</span>;
+    }
+    if (remainingLetters === 5 || remainingLetters === 10 || remainingLetters === 0) {
+        ariaAttrs['aria-live'] = 'polite';
+    }
+    return <span {...ariaAttrs}>Du har {remainingLetters} tegn igjen</span>;
+}
+
 interface Props {
     dialog: DialogData;
 }
@@ -42,22 +61,31 @@ export function DialogInputBox(props: Props) {
             );
         }
     }
+
     return (
         <form onSubmit={handleSubmit} noValidate>
             <div className="skriv-melding">
                 <Textarea
-                    label="Skriv en melding til brukeren"
-                    placeholder="Skriv her .."
+                    label="Skriv en melding om arbeid og oppfølging"
+                    placeholder="Skriv en melding om arbeid og oppfølging"
+                    textareaClass="meldingsfelt"
+                    id="meldingIn"
+                    name="NyMelding"
                     {...melding.input}
-                    // TODO Lag PR til nav-frontend som fikser textarea sin onChange. Burde bruke `React.ChangeEvent` fremfor dagens `React.SyntheticEvent`.
                     onChange={melding.input.onChange as any}
+                    maxLength={5000}
+                    tellerTekst={defaultTellerTekst}
                 />
-                <Hovedknapp htmlType={'submit'} title="Send">
-                    Send
+                <Hovedknapp
+                    htmlType={"submit"}
+                    title="Send"
+                >Send
                 </Hovedknapp>
             </div>
         </form>
-    );
+
+    )
 }
 
 export const DialogInputBoxVisible = visibleIfHoc(DialogInputBox);
+
