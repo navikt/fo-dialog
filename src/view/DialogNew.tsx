@@ -37,7 +37,10 @@ export function DialogNew() {
                 overskrift: tema.input.value,
                 tekst: melding.input.value
             });
-            fetchData<DialogData>('/veilarbdialog/api/dialog/ny', { method: 'post', body });
+            fetchData<DialogData>('/veilarbdialog/api/dialog/ny', {
+                method: 'post',
+                body
+            });
         }
     }
 
