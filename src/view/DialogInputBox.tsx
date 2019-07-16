@@ -42,8 +42,8 @@ interface Props {
 }
 
 export function DialogInputBox(props: Props) {
-    const melding = useFieldState('', validerMelding);
     const dialoger = useDialogContext();
+    const melding = useFieldState('', validerMelding);
 
     function handleSubmit(event: FormEvent) {
         event.preventDefault();
@@ -57,6 +57,7 @@ export function DialogInputBox(props: Props) {
             });
             fetchData<DialogData>('/veilarbdialog/api/dialog/ny', { method: 'POST', body }).then(
                 function(response) {
+                    melding.setValue("");
                     console.log('Posted endret dialog!', response);
                     dialoger.refetch();
                     props.history.push("/"+response.id);
