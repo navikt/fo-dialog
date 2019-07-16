@@ -1,18 +1,19 @@
 import React from 'react';
-import Enzyme, { mount, shallow } from 'enzyme';
+import Enzyme, {mount, shallow} from 'enzyme';
 import Adapter from 'enzyme-adapter-react-16';
-import { MemoryRouter, RouteComponentProps } from 'react-router';
+import {MemoryRouter, RouteComponentProps} from 'react-router';
 import * as AppContext from '../Context';
-import { Dialog } from '../view/Dialog';
-import { Bruker, PeriodeData } from '../utils/typer';
-import { HenvendelseList } from '../view/HenvendelseList';
-import { DialogInputBox } from '../view/DialogInputBox';
-import { DialogHeader } from '../view/DialogHeader';
-import { AlertStripeContainer } from '../view/AlertStripeContainer';
-import { DialogOverview } from '../view/DialogOverview';
-import { DialogOverviewHeader } from '../view/DialogOverviewHeader';
-import { DialogPreview } from '../view/DialogPreview';
-import { Checkbox } from 'nav-frontend-skjema';
+import {Dialog} from '../view/Dialog';
+import {Bruker, DialogData, PeriodeData} from '../utils/typer';
+import {HenvendelseList} from '../view/HenvendelseList';
+import {DialogInputBox} from '../view/DialogInputBox';
+import {DialogHeader} from '../view/DialogHeader';
+import {AlertStripeContainer} from '../view/AlertStripeContainer';
+import {DialogOverview} from '../view/DialogOverview';
+import {DialogOverviewHeader} from '../view/DialogOverviewHeader';
+import {DialogPreview} from '../view/DialogPreview';
+import {Checkbox} from 'nav-frontend-skjema';
+import {Status, UseFetchHook} from "../utils/use-fetch";
 
 Enzyme.configure({ adapter: new Adapter() });
 
@@ -34,7 +35,6 @@ const oppfolgingData = {
     kanReaktiveres: false,
     inaktiveringsdato: '2018-08-31T10:46:10.971+01:00'
 };
-
 const dialoger = [
     {
         id: '1',
@@ -72,6 +72,13 @@ const dialoger = [
         egenskaper: []
     }
 ];
+const useFetchDialoger: UseFetchHook<DialogData[]> = {
+    status: Status.OK,
+    data: dialoger,
+    refetch(): void {
+    }
+};
+
 
 describe('<AlertStripeContainer/>', () => {
     test('Bruker uten oppf.perioder og ikke under oppf. viser en advarsel - veileder.', () => {
@@ -196,8 +203,9 @@ describe('<Dialog/>', () => {
                 begrunnelse: null
             }
         ];
+        jest.spyOn(AppContext, 'useDialogContext').mockImplementation(() => useFetchDialoger);
         jest.spyOn(AppContext, 'useOppfolgingContext').mockImplementation(() => oppfolgingData);
-        const wrapper = mount(<Dialog dialogData={dialoger} {...lagRouterProps('1')} />);
+        const wrapper = mount(<Dialog {...lagRouterProps('1')} />);
         expect(wrapper.find(DialogInputBox).exists()).toBeFalsy();
         expect(wrapper.find(HenvendelseList).exists()).toBeTruthy();
         expect(wrapper.find(Checkbox).exists()).toBeFalsy();
@@ -214,7 +222,7 @@ describe('<Dialog/>', () => {
             }
         ];
         jest.spyOn(AppContext, 'useOppfolgingContext').mockImplementation(() => oppfolgingData);
-        const wrapper = mount(<Dialog dialogData={dialoger} {...lagRouterProps('1')} />);
+        const wrapper = mount(<Dialog {...lagRouterProps('1')} />);
         expect(wrapper.find(DialogHeader).exists()).toBeTruthy();
         expect(wrapper.find(DialogInputBox).exists()).toBeTruthy();
         expect(wrapper.find(HenvendelseList).exists()).toBeTruthy();
