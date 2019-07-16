@@ -4,7 +4,7 @@ import { Provider } from './Context';
 import { DialogBanner } from './view/DialogBanner';
 import { DialogOverview } from './view/DialogOverview';
 import Dialog from './view/Dialog';
-import { DialogNew } from './view/DialogNew';
+import DialogNew from './view/DialogNew';
 import { AlertStripeContainer } from './view/AlertStripeContainer';
 
 import './App.less';

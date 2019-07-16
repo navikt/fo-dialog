@@ -3,10 +3,14 @@ import { Innholdstittel, Normaltekst } from 'nav-frontend-typografi';
 import { Input, Textarea } from 'nav-frontend-skjema';
 import { Hovedknapp } from 'nav-frontend-knapper';
 import useFieldState from '../utils/useFieldState';
-
-import './Dialog.less';
 import { DialogData } from '../utils/typer';
 import { fetchData } from '../utils/fetch';
+import {useDialogContext} from "../Context";
+import {RouteComponentProps, withRouter} from "react-router";
+
+import './Dialog.less';
+
+interface Props extends RouteComponentProps<{  }> {}
 
 function validerTema(tema: string): string | null {
     if (tema.trim().length === 0) {
@@ -23,9 +27,10 @@ function validerMelding(melding: string): string | null {
     }
 }
 
-export function DialogNew() {
+function DialogNew(props:Props) {
     const tema = useFieldState('', validerTema);
     const melding = useFieldState('', validerMelding);
+    const dialoger = useDialogContext();
 
     function handleSubmit(event: FormEvent) {
         event.preventDefault();
@@ -40,7 +45,8 @@ export function DialogNew() {
             fetchData<DialogData>('/veilarbdialog/api/dialog/ny', { method: 'post', body }).then(
                 function(response) {
                     console.log('Posted the new dialog!', response);
-                    //TODO refresh page with the new dialog
+                    dialoger.refetch();
+                    props.history.push("/"+response.id);
                 },
                 function(error) {
                     console.log('Failed posting the new dialog!', error);
@@ -74,3 +80,5 @@ export function DialogNew() {
         </>
     );
 }
+
+export default withRouter(DialogNew);

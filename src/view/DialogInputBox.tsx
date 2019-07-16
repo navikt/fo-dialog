@@ -5,6 +5,10 @@ import useFieldState from '../utils/useFieldState';
 import { DialogData } from '../utils/typer';
 import { visibleIfHoc } from '../component/hoc/visibleIfHoc';
 import { fetchData } from '../utils/fetch';
+import {useDialogContext} from "../Context";
+import {RouteComponentProps, withRouter} from "react-router";
+
+interface Props extends RouteComponentProps<{  }> {}
 
 function validerMelding(melding: string): string | null {
     if (melding.trim().length === 0) {
@@ -39,6 +43,7 @@ interface Props {
 
 export function DialogInputBox(props: Props) {
     const melding = useFieldState('', validerMelding);
+    const dialoger = useDialogContext();
 
     function handleSubmit(event: FormEvent) {
         event.preventDefault();
@@ -47,12 +52,14 @@ export function DialogInputBox(props: Props) {
         if (melding.input.feil === undefined) {
             const body = JSON.stringify({
                 tekst: melding.input.value,
+                dialogId: dialg.id,
                 overskrift: dialg.overskrift
             });
             fetchData<DialogData>('/veilarbdialog/api/dialog/ny', { method: 'POST', body }).then(
                 function(response) {
                     console.log('Posted endret dialog!', response);
-                    //TODO refresh page with the changed dialog
+                    dialoger.refetch();
+                    props.history.push("/"+response.id);
                 },
                 function(error) {
                     console.log('Failed posting endret dialog!', error);
@@ -87,5 +94,7 @@ export function DialogInputBox(props: Props) {
     )
 }
 
-export const DialogInputBoxVisible = visibleIfHoc(DialogInputBox);
+const DialogInputBoxVisible = visibleIfHoc(DialogInputBox);
+
+export default withRouter(DialogInputBoxVisible)
 

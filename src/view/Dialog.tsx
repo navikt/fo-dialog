@@ -1,23 +1,12 @@
 import React, { useEffect } from 'react';
 import { HenvendelseList } from './HenvendelseList';
 import { DialogHeader } from './DialogHeader';
-import { DialogInputBoxVisible } from './DialogInputBox';
 import { useDialogContext, useOppfolgingContext } from '../Context';
-import React from 'react';
-import { DialogData } from '../utils/typer';
-import { HenvendelseList } from './HenvendelseList';
-import { DialogHeader } from './DialogHeader';
-import { DialogInputBoxVisible } from './DialogInputBox';
-import { useOppfolgingContext } from '../Context';
 import { RouteComponentProps, withRouter } from 'react-router';
 import { Aktivitetskort } from './Aktivitetskort';
 import { Innholdstittel, Normaltekst } from 'nav-frontend-typografi';
-import { RouteComponentProps, withRouter } from 'react-router';
-import { Aktivitetskort } from './Aktivitetskort';
-import { AktivitetskortPreview } from './AktivitetskortPreview';
-import { Innholdstittel, Normaltekst } from 'nav-frontend-typografi';
-
 import './Dialog.less';
+import DialogInputBoxVisible from "./DialogInputBox";
 
 interface Props extends RouteComponentProps<{ dialogId?: string }> {}
 
@@ -40,7 +29,7 @@ export function Dialog(props: Props) {
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [valgtDialog]);
 
-    if (dialoger.length === 0) {
+    if (dialoger.data && dialoger.data.length === 0) {
         return (
             <div className="dialog">
                 <Innholdstittel>Dialog</Innholdstittel>
