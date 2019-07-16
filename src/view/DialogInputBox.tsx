@@ -5,10 +5,10 @@ import useFieldState from '../utils/useFieldState';
 import { DialogData } from '../utils/typer';
 import { visibleIfHoc } from '../component/hoc/visibleIfHoc';
 import { fetchData } from '../utils/fetch';
-import {useDialogContext} from "../Context";
-import {RouteComponentProps, withRouter} from "react-router";
+import { useDialogContext } from '../Context';
+import { RouteComponentProps, withRouter } from 'react-router';
 
-interface Props extends RouteComponentProps<{  }> {}
+interface Props extends RouteComponentProps<{}> {}
 
 function validerMelding(melding: string): string | null {
     if (melding.trim().length === 0) {
@@ -57,10 +57,10 @@ export function DialogInputBox(props: Props) {
             });
             fetchData<DialogData>('/veilarbdialog/api/dialog/ny', { method: 'POST', body }).then(
                 function(response) {
-                    melding.setValue("");
+                    melding.setValue('');
                     console.log('Posted endret dialog!', response);
                     dialoger.refetch();
-                    props.history.push("/"+response.id);
+                    props.history.push('/' + response.id);
                 },
                 function(error) {
                     console.log('Failed posting endret dialog!', error);
@@ -84,18 +84,14 @@ export function DialogInputBox(props: Props) {
                     maxLength={5000}
                     tellerTekst={defaultTellerTekst}
                 />
-                <Hovedknapp
-                    htmlType={"submit"}
-                    title="Send"
-                >Send
+                <Hovedknapp htmlType={'submit'} title="Send">
+                    Send
                 </Hovedknapp>
             </div>
         </form>
-
-    )
+    );
 }
 
 const DialogInputBoxVisible = visibleIfHoc(DialogInputBox);
 
-export default withRouter(DialogInputBoxVisible)
-
+export default withRouter(DialogInputBoxVisible);

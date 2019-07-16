@@ -9,7 +9,7 @@ interface Props {
 }
 
 export function AktivitetskortPreview(props: Props) {
-    if (props.dialog){
+    if (props.dialog) {
         return (
             <div className="aktivitetskortpreview">
                 <Lenke href="/dialog">
@@ -22,5 +22,5 @@ export function AktivitetskortPreview(props: Props) {
             </div>
         );
     }
-    return null
+    return null;
 }

@@ -5,12 +5,12 @@ import { Hovedknapp } from 'nav-frontend-knapper';
 import useFieldState from '../utils/useFieldState';
 import { DialogData } from '../utils/typer';
 import { fetchData } from '../utils/fetch';
-import {useDialogContext} from "../Context";
-import {RouteComponentProps, withRouter} from "react-router";
+import { useDialogContext } from '../Context';
+import { RouteComponentProps, withRouter } from 'react-router';
 
 import './Dialog.less';
 
-interface Props extends RouteComponentProps<{  }> {}
+interface Props extends RouteComponentProps<{}> {}
 
 function validerTema(tema: string): string | null {
     if (tema.trim().length === 0) {
@@ -27,7 +27,7 @@ function validerMelding(melding: string): string | null {
     }
 }
 
-function DialogNew(props:Props) {
+function DialogNew(props: Props) {
     const tema = useFieldState('', validerTema);
     const melding = useFieldState('', validerMelding);
     const dialoger = useDialogContext();
@@ -46,7 +46,7 @@ function DialogNew(props:Props) {
                 function(response) {
                     console.log('Posted the new dialog!', response);
                     dialoger.refetch();
-                    props.history.push("/"+response.id);
+                    props.history.push('/' + response.id);
                 },
                 function(error) {
                     console.log('Failed posting the new dialog!', error);

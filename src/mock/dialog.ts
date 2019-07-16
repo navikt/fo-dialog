@@ -168,7 +168,7 @@ export function lesDialog(dialogId: string): Promise<ResponseData> {
 }
 
 export function opprettEllerOppdaterDialog(update: NyDialogMeldingData): DialogData & JSONObject {
-    const dialogId = !update.dialogId || update.dialogId==="" ? rndId() : `${update.dialogId}`;
+    const dialogId = !update.dialogId || update.dialogId === '' ? rndId() : `${update.dialogId}`;
     const nyHenvendelse: HenvendelseData = {
         id: rndId(),
         dialogId: dialogId,

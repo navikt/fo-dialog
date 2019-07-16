@@ -6,7 +6,7 @@ import { RouteComponentProps, withRouter } from 'react-router';
 import { Aktivitetskort } from './Aktivitetskort';
 import { Innholdstittel, Normaltekst } from 'nav-frontend-typografi';
 import './Dialog.less';
-import DialogInputBoxVisible from "./DialogInputBox";
+import DialogInputBoxVisible from './DialogInputBox';
 
 interface Props extends RouteComponentProps<{ dialogId?: string }> {}
 

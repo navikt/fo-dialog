@@ -1,19 +1,19 @@
 import React from 'react';
-import Enzyme, {mount, shallow} from 'enzyme';
+import Enzyme, { mount, shallow } from 'enzyme';
 import Adapter from 'enzyme-adapter-react-16';
-import {MemoryRouter, RouteComponentProps} from 'react-router';
+import { MemoryRouter, RouteComponentProps } from 'react-router';
 import * as AppContext from '../Context';
-import {Dialog} from '../view/Dialog';
-import {Bruker, DialogData, PeriodeData} from '../utils/typer';
-import {HenvendelseList} from '../view/HenvendelseList';
-import {DialogInputBox} from '../view/DialogInputBox';
-import {DialogHeader} from '../view/DialogHeader';
-import {AlertStripeContainer} from '../view/AlertStripeContainer';
-import {DialogOverview} from '../view/DialogOverview';
-import {DialogOverviewHeader} from '../view/DialogOverviewHeader';
-import {DialogPreview} from '../view/DialogPreview';
-import {Checkbox} from 'nav-frontend-skjema';
-import {Status, UseFetchHook} from "../utils/use-fetch";
+import { Dialog } from '../view/Dialog';
+import { Bruker, DialogData, PeriodeData } from '../utils/typer';
+import { HenvendelseList } from '../view/HenvendelseList';
+import { DialogInputBox } from '../view/DialogInputBox';
+import { DialogHeader } from '../view/DialogHeader';
+import { AlertStripeContainer } from '../view/AlertStripeContainer';
+import { DialogOverview } from '../view/DialogOverview';
+import { DialogOverviewHeader } from '../view/DialogOverviewHeader';
+import { DialogPreview } from '../view/DialogPreview';
+import { Checkbox } from 'nav-frontend-skjema';
+import { Status, UseFetchHook } from '../utils/use-fetch';
 
 Enzyme.configure({ adapter: new Adapter() });
 
@@ -75,10 +75,8 @@ const dialoger = [
 const useFetchDialoger: UseFetchHook<DialogData[]> = {
     status: Status.OK,
     data: dialoger,
-    refetch(): void {
-    }
+    refetch(): void {}
 };
-
 
 describe('<AlertStripeContainer/>', () => {
     test('Bruker uten oppf.perioder og ikke under oppf. viser en advarsel - veileder.', () => {
