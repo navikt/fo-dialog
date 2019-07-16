@@ -5,7 +5,7 @@ import { ReactComponent as DialogIcon } from './dialog.svg';
 import './DialogBanner.less';
 
 export function DialogBanner() {
-    //legg til dialogbanner--dialogvisning i classname til dfor visning av dialog
+    //legg til dialogbanner--dialogvisning i classname til div for visning av dialog
     return (
         <div className="dialogbanner ">
             <DialogIcon className="dialogbanner__ikon" />
