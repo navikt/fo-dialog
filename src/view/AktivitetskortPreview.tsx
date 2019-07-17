@@ -1,26 +1,38 @@
 import React from 'react';
-import { DialogData } from '../utils/typer';
-import { Normaltekst, Undertittel } from 'nav-frontend-typografi';
-import { HoyreChevron } from 'nav-frontend-chevron';
+import {Aktivitet, DialogData} from '../utils/typer';
+import {Normaltekst, Undertekst, Undertittel} from 'nav-frontend-typografi';
+import {HoyreChevron} from 'nav-frontend-chevron';
 import Lenke from 'nav-frontend-lenker';
+import useFetch from "../utils/use-fetch";
+import {LenkepanelBase} from "nav-frontend-lenkepanel";
+import {ReactComponent as AktivitetsIkon} from './aktivitet_lest.svg';
+import {formaterDate} from "../utils/date";
 
 interface Props {
-    dialog: DialogData | null;
+    dialog: DialogData;
 }
 
 export function AktivitetskortPreview(props: Props) {
-    if (props.dialog) {
-        return (
-            <div className="aktivitetskortpreview">
-                <Lenke href="/dialog">
-                    <Undertittel>
-                        Aktivitet: {props.dialog.aktivitetId}
-                        <HoyreChevron />
-                    </Undertittel>
-                </Lenke>
-                <Normaltekst>Frist: 24.12. Arbeidsgiver: Julenissen</Normaltekst>
-            </div>
-        );
+
+    const aktiviteter = useFetch<Aktivitet[]>('/veilarbaktivitet/api/aktivitet');
+
+    if (aktiviteter.data !== null) {
+
+        const aktivitet = aktiviteter.data.find((aktivitet) => (aktivitet.id === props.dialog.aktivitetId));
+        const datoString = !!props.dialog.sisteDato ? formaterDate(props.dialog.sisteDato).substring(0,10) : '';
+
+        if (aktivitet) {
+            return (
+                <LenkepanelBase href={"fisk"} className="aktivitetskortpreview">
+                    <AktivitetsIkon className="aktivitetskortpreview__ikon"/>
+                    <div>
+                        <Undertittel children={aktivitet.tittel}/>
+                        <Undertekst>{datoString} | {aktivitet.arbeidsgiver}</Undertekst>
+                    </div>
+                </LenkepanelBase>
+            )
+        }
+
     }
     return null
 }

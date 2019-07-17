@@ -68,13 +68,13 @@ export interface PeriodeData {
 export interface Aktivitet {
     id: StringOrUndefinedOrNull;
     versjon: StringOrUndefinedOrNull;
-    tittel: StringOrUndefinedOrNull;
+    tittel: string;
     beskrivelse: StringOrUndefinedOrNull;
     lenke: StringOrUndefinedOrNull;
     type: StringOrUndefinedOrNull;
     status: StringOrUndefinedOrNull;
     fraDato: StringOrUndefinedOrNull;
-    tilDato: StringOrUndefinedOrNull;
+    tilDato: string;
     opprettetDato: StringOrUndefinedOrNull;
     endretDato: StringOrUndefinedOrNull;
     endretAv: StringOrUndefinedOrNull;

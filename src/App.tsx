@@ -18,7 +18,7 @@ function App() {
                     {(bruker, oppfolgingData, dialoger) => (
                         <>
                             <AlertStripeContainer />
-                            <div className="app__body ">
+                            <div className="app__body app__body--dialogvisning">
                                 <DialogOverview dialogData={dialoger.data!} />
                                 <Switch>
                                     <Route exact path="/" component={Dialog} />

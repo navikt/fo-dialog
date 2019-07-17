@@ -22,7 +22,7 @@ const aktiviteter: Aktivitet[] & JSONArray = [
         transaksjonsType: 'STATUS_ENDRET',
         etikett: null,
         kontaktperson: null,
-        arbeidsgiver: null,
+        arbeidsgiver: "Bris Consulting AS",
         arbeidssted: null,
         stillingsTittel: null,
         hensikt: null,

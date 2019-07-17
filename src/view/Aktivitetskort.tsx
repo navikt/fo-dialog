@@ -1,12 +1,15 @@
 import React from 'react';
-import { DialogData } from '../utils/typer';
+import {Aktivitet, DialogData} from '../utils/typer';
 import { Normaltekst } from 'nav-frontend-typografi';
+import useFetch from "../utils/use-fetch";
 
 interface Props {
-    dialog: DialogData | null;
+    dialog: DialogData;
 }
 
 export function Aktivitetskort(props: Props) {
+
+
     if (props.dialog) {
         return (
             <div className="aktivitetkort">
