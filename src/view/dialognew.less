@@ -1,0 +1,40 @@
+@import (reference) '~nav-frontend-core/less/core';
+
+.dialog-new{
+  display: flex;
+  flex-direction: column;
+  margin: 1rem;
+  width: 100%;
+  max-width: 50rem;
+  &__tittel{
+    margin-top: 1.5rem;
+    margin-bottom: 1rem;
+  }
+  &__infotekst{
+    width: 30rem;
+    margin-bottom: 1rem;
+  }
+  &__temafelt{
+    margin: 0 0 1rem 0;
+  }
+
+  &__skriv-melding{
+    display: flex;
+    flex-basis: 7rem;
+    bottom: 0;
+    align-items: center;
+    padding: 0;
+    .skjemaelement {
+      flex: 1;
+    }
+    .knapp--hoved {
+      padding: 0.5rem;
+      margin-left: 1rem;
+    }
+  }
+  @media (min-width: 800px) {
+    margin: 0 6% 0 6%;
+  }
+
+
+}

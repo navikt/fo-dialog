@@ -3,10 +3,10 @@ import { Innholdstittel, Normaltekst } from 'nav-frontend-typografi';
 import { Input, Textarea } from 'nav-frontend-skjema';
 import { Hovedknapp } from 'nav-frontend-knapper';
 import useFieldState from '../utils/useFieldState';
-
-import './Dialog.less';
 import { DialogData } from '../utils/typer';
 import { fetchData } from '../utils/fetch';
+
+import './dialognew.less';
 
 function validerTema(tema: string): string | null {
     if (tema.trim().length === 0) {
@@ -45,17 +45,17 @@ export function DialogNew() {
     }
 
     return (
-        <>
+        <div className="dialog-new">
             <form onSubmit={handleSubmit} noValidate>
-                <Innholdstittel>Ny Dialog</Innholdstittel>
-                <Normaltekst>
+                <Innholdstittel className="dialog-new__tittel">Ny Dialog</Innholdstittel>
+                <Normaltekst className="dialog-new__infotekst">
                     Her kan du skrive til din veileder om arbeid og oppfølging. Du vil få svar i løpet av noen dager.
                 </Normaltekst>
-                <Input label={'Hva er tema for dialogen?'} placeholder="Skriv her" {...tema.input} />
-                <div className="skriv-melding">
+                <Input className="dialog-new__temafelt" label={'Tema:'} placeholder="Skriv her" {...tema.input} />
+                <div className="dialog-new__skriv-melding">
                     <Textarea
-                        label="Skriv en melding til brukeren"
-                        placeholder="Skriv her"
+                        label="Melding"
+                        placeholder="Skriv en melding om arbeid og oppfølging"
                         {...melding.input}
                         // TODO Lag PR til nav-frontend som fikser textarea sin onChange. Burde bruke `React.ChangeEvent` fremfor dagens `React.SyntheticEvent`.
                         onChange={melding.input.onChange as any}
@@ -65,6 +65,6 @@ export function DialogNew() {
                     </Hovedknapp>
                 </div>
             </form>
-        </>
+        </div>
     );
 }
