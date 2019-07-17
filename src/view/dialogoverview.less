@@ -8,8 +8,10 @@
     &__header {
         display: flex;
         flex-basis: 4rem;
-        align-items: center;
-        .ny-dialog-knapp{
+        .header-panel{
+          display: flex;
+          align-items: center;
+          &__knapp{
             text-decoration: none;
             display: flex;
             align-items: center;
@@ -17,12 +19,13 @@
             color: @navMorkGra;
             margin-right: 1.5rem;
             svg{
-               margin-right: .5rem;
+              margin-right: .5rem;
             }
-
-        }
-        .skjemaelement {
+          }
+          .skjemaelement {
             margin-bottom: 0;
+          }
+
         }
 
     }
@@ -30,4 +33,11 @@
         overflow-y: scroll;
         flex: 1;
     }
+  @media (min-width: 800px){
+    &__header{
+      flex-basis: 7rem;
+      align-items: flex-end;
+      padding-bottom: 2rem;
+    }
+  }
 }

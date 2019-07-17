@@ -14,11 +14,13 @@ export function DialogOverviewHeader(props: Props) {
 
     return (
         <div className="dialog-overview__header">
-            <Link className="ny-dialog-knapp" to={'/ny'}>
-                <PlussIkon/>
-                Ny dialog
-            </Link>
-            <Checkbox label={'Viktige meldinger'} visible={brukerHarViktigeDialoger} />
+            <div className="header-panel">
+                <Link className="header-panel__knapp" to={'/ny'}>
+                    <PlussIkon/>
+                    Ny dialog
+                </Link>
+                <Checkbox label={'Viktige meldinger'} visible={brukerHarViktigeDialoger} />
+            </div>
         </div>
     );
 }
