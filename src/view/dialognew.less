@@ -5,25 +5,25 @@
   flex-direction: column;
   margin: 1rem;
   width: 100%;
-  max-width: 50rem;
   &__tittel{
     margin-top: 1.5rem;
     margin-bottom: 1rem;
   }
   &__infotekst{
-    width: 30rem;
     margin-bottom: 1rem;
   }
   &__temafelt{
     margin: 0 0 1rem 0;
+    width: 95%
   }
 
-  &__skriv-melding{
+  .skriv-melding{
     display: flex;
     flex-basis: 7rem;
     bottom: 0;
     align-items: center;
     padding: 0;
+    width: 95%;
     .skjemaelement {
       flex: 1;
     }
@@ -34,6 +34,17 @@
   }
   @media (min-width: 800px) {
     margin: 0 6% 0 6%;
+    &__infotekst{
+      max-width: 30rem;
+    }
+    @media (min-width: 1200px){
+      &__temafelt{
+        max-width: 50rem;
+      }
+      .skriv-melding{
+        max-width: 50rem;
+      }
+    }
   }
 
 

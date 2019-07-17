@@ -1,12 +1,12 @@
 import React, { FormEvent } from 'react';
 import { Innholdstittel, Normaltekst } from 'nav-frontend-typografi';
-import { Input, Textarea } from 'nav-frontend-skjema';
-import { Hovedknapp } from 'nav-frontend-knapper';
+import { Input} from 'nav-frontend-skjema';
 import useFieldState from '../utils/useFieldState';
 import { DialogData } from '../utils/typer';
 import { fetchData } from '../utils/fetch';
 
 import './dialognew.less';
+import HenvendelseInput from "../component/HenvendelseInput";
 
 function validerTema(tema: string): string | null {
     if (tema.trim().length === 0) {
@@ -52,18 +52,7 @@ export function DialogNew() {
                     Her kan du skrive til din veileder om arbeid og oppfølging. Du vil få svar i løpet av noen dager.
                 </Normaltekst>
                 <Input className="dialog-new__temafelt" label={'Tema:'} placeholder="Skriv her" {...tema.input} />
-                <div className="dialog-new__skriv-melding">
-                    <Textarea
-                        label="Melding"
-                        placeholder="Skriv en melding om arbeid og oppfølging"
-                        {...melding.input}
-                        // TODO Lag PR til nav-frontend som fikser textarea sin onChange. Burde bruke `React.ChangeEvent` fremfor dagens `React.SyntheticEvent`.
-                        onChange={melding.input.onChange as any}
-                    />
-                    <Hovedknapp htmlType={'submit'} title="Send">
-                        Send
-                    </Hovedknapp>
-                </div>
+                <HenvendelseInput melding={melding}/>
             </form>
         </div>
     );
