@@ -56,7 +56,18 @@ body,
         .aktivitetkort {
             display: block;
             width: 30%;
-            background-color: @navBlaLighten60;
+            background-color: @navLysGra;
+            padding: 1rem;
+
+            &__infobox__row{
+                display: flex;
+                flex-direction: row;
+                justify-content: space-between;
+                margin-bottom: 1rem;
+                &__item{
+                    width: calc(50% - 0.5rem);
+                }
+            }
         }
         .dialog {
             display: flex;

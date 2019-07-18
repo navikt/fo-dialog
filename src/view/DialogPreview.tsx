@@ -4,7 +4,7 @@ import { EtikettLiten, Normaltekst, Systemtittel } from 'nav-frontend-typografi'
 import { LenkepanelBase } from 'nav-frontend-lenkepanel';
 import { EtikettListe } from './EtikettListe';
 import './dialogpreview.less';
-import { formaterDate } from '../utils/date';
+import { formaterDateAndTime } from '../utils/date';
 import { ReactComponent as DialogIkon } from './Dialog_lest.svg';
 import { ReactComponent as AktivitetsIkon } from './aktivitet_lest.svg';
 import WrapInReactLink from '../component/hoc/wrapInReactLink';
@@ -23,7 +23,7 @@ function DialogPreviewIkon(props: Props) {
 }
 
 export function DialogPreview(props: Props) {
-    const datoString = !!props.dialog.sisteDato ? formaterDate(props.dialog.sisteDato) : '';
+    const datoString = !!props.dialog.sisteDato ? formaterDateAndTime(props.dialog.sisteDato) : '';
     const cls = classNames('dialog-preview', {
         'dialog-preview--lest': !props.dialog.lest
     });
