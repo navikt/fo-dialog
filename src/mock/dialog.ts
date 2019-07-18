@@ -211,4 +211,19 @@ export function opprettEllerOppdaterDialog(update: NyDialogMeldingData): DialogD
     }
 }
 
+export function setVenterPaSvar(dialogId: string, venterpasvar: boolean) {
+    const dialog = dialoger.find(dialog => dialog.id === dialogId);
+    if (dialog) {
+        dialog.venterPaSvar = venterpasvar;
+    }
+    return dialog as DialogData & JSONObject;
+}
+
+export function setFerdigBehandlet(dialogId: string, ferdigBehandlet: boolean) {
+    const dialog = dialoger.find(dialog => dialog.id === dialogId);
+    if (dialog) {
+        dialog.ferdigBehandlet = ferdigBehandlet;
+    }
+    return dialog as DialogData & JSONObject;
+}
 export default dialoger;

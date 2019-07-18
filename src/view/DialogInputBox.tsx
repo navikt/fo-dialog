@@ -4,6 +4,7 @@ import { Hovedknapp } from 'nav-frontend-knapper';
 import useFieldState from '../utils/useFieldState';
 import { DialogData } from '../utils/typer';
 import { visibleIfHoc } from '../component/hoc/visibleIfHoc';
+import { DialogMarkor } from './DialogMarkor';
 
 function validerMelding(melding: string): string | null {
     if (melding.trim().length === 0) {
@@ -56,24 +57,27 @@ export function DialogInputBox(props: Props) {
     }
 
     return (
-        <form onSubmit={handleSubmit} noValidate>
-            <div className="skriv-melding">
-                <Textarea
-                    label="Skriv en melding om arbeid og oppfølging"
-                    placeholder="Skriv en melding om arbeid og oppfølging"
-                    textareaClass="meldingsfelt"
-                    id="meldingIn"
-                    name="NyMelding"
-                    {...melding.input}
-                    onChange={melding.input.onChange as any}
-                    maxLength={5000}
-                    tellerTekst={defaultTellerTekst}
-                />
-                <Hovedknapp htmlType={'submit'} title="Send">
-                    Send
-                </Hovedknapp>
-            </div>
-        </form>
+        <>
+            <form onSubmit={handleSubmit} noValidate>
+                <div className="skriv-melding">
+                    <Textarea
+                        label="Skriv en melding om arbeid og oppfølging"
+                        placeholder="Skriv en melding om arbeid og oppfølging"
+                        textareaClass="meldingsfelt"
+                        id="meldingIn"
+                        name="NyMelding"
+                        {...melding.input}
+                        onChange={melding.input.onChange as any}
+                        maxLength={5000}
+                        tellerTekst={defaultTellerTekst}
+                    />
+                    <Hovedknapp htmlType={'submit'} title="Send">
+                        Send
+                    </Hovedknapp>
+                </div>
+            </form>
+            <DialogMarkor dialog={props.dialog} />
+        </>
     );
 }
 

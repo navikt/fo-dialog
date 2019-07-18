@@ -1,5 +1,5 @@
 import FetchMock, { Middleware, MiddlewareUtils } from 'yet-another-fetch-mock';
-import dialoger, { lesDialog, opprettEllerOppdaterDialog } from './dialog';
+import dialoger, { lesDialog, opprettEllerOppdaterDialog, setFerdigBehandlet, setVenterPaSvar } from './dialog';
 import bruker from './bruker';
 import oppfolging from './oppfolging';
 
@@ -33,6 +33,13 @@ mock.get('/veilarbdialog/api/dialog', dialoger);
 mock.post('/veilarbdialog/api/dialog/ny', ({ body }) => opprettEllerOppdaterDialog(body));
 
 mock.put('/veilarbdialog/api/dialog/lest', ({ body }) => lesDialog(body.dialogId));
+
+mock.put('/veilarbdialog/api/dialog/:dialogId/venter_pa_svar/:bool', ({ body }) =>
+    setVenterPaSvar(body.dialogId, body.venterPaSvar)
+);
+mock.put('/veilarbdialog/api/dialog/:dialogId/ferdigbehandlet/:bool', ({ body }) =>
+    setFerdigBehandlet(body.dialogId, body.ferdigBehandlet)
+);
 
 mock.get('/veilarboppfolging/api/oppfolging/me', bruker);
 
