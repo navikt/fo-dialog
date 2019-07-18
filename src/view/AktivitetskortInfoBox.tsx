@@ -1,7 +1,7 @@
 import React from 'react';
 import {Aktivitet} from "../utils/typer";
 import {EtikettLiten, Ingress, Undertekst, Undertittel} from "nav-frontend-typografi";
-import {formaterDateAndTime} from "../utils/date";
+import {formaterDate, formaterDateAndTime} from "../utils/date";
 
 interface Props{
     aktivitet: Aktivitet;
@@ -10,8 +10,8 @@ interface Props{
 export function AktivitetskortInfoBox(props: Props) {
 
 
-    const fraDato = props.aktivitet.fraDato ? formaterDateAndTime(props.aktivitet.fraDato).substring(0,10): null;
-    const tilDato = props.aktivitet.tilDato ? formaterDateAndTime(props.aktivitet.tilDato).substring(0,10): null;
+    const fraDato = props.aktivitet.fraDato ? formaterDate(props.aktivitet.fraDato): null;
+    const tilDato = props.aktivitet.tilDato ? formaterDate(props.aktivitet.tilDato): null;
 
     return( <>
         <div className="aktivitetkort__infobox__row">

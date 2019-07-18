@@ -71,7 +71,7 @@ export interface Aktivitet {
     tittel: string;
     beskrivelse: StringOrUndefinedOrNull;
     lenke: StringOrUndefinedOrNull;
-    type: StringOrUndefinedOrNull;
+    type: string;
     status: StringOrUndefinedOrNull;
     fraDato: StringOrUndefinedOrNull;
     tilDato: string;

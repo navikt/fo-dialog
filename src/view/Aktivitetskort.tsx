@@ -23,18 +23,30 @@ export function Aktivitetskort(props: Props) {
         if (aktivitet) {
             return (
                 <div className="aktivitetkort">
-                    <EtikettLiten> aktivitet /{aktivitet.status}/ </EtikettLiten>
+                    <EtikettLiten> aktivitet / {aktivitet.status} / {mapAktivitetsTypeToHumanReadableString(aktivitet.type)}</EtikettLiten>
                     <Innholdstittel>{aktivitet.stillingsTittel}</Innholdstittel>
                     <Lenke href={"temp"}>
                         Les mer i aktivitetsplanen
                         <HoyreChevron/>
                     </Lenke>
                     <AktivitetskortInfoBox aktivitet={aktivitet}/>
-                    <Normaltekst>Aktivitet: {props.dialog.aktivitetId} Frist: 24.12. Arbeidsgiver:
-                        Julenissen</Normaltekst>
                 </div>
             );
         }
     }
     return null;
+}
+
+function mapAktivitetsTypeToHumanReadableString(type : string){
+
+    switch (type) {
+        case "MOTE": return "Møte";
+        case "STILLING": return "Stilling";
+        case "SOKEAVTALE": return "Jobbsøking";
+        case "SAMTALEREFERAT": return "Samtalereferat"
+        case "BEHANDLING": return "Behandling"
+        case "EGEN": return "Egenaktivitet"
+        case "IJOBB": return "Nåværende stilling"//TODO: Bør kanskje finne et kortere alternativ til dette
+    }
+    return ""
 }

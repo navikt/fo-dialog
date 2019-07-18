@@ -6,7 +6,7 @@ import Lenke from 'nav-frontend-lenker';
 import useFetch from "../utils/use-fetch";
 import {LenkepanelBase} from "nav-frontend-lenkepanel";
 import {ReactComponent as AktivitetsIkon} from './aktivitet_lest.svg';
-import {formaterDateAndTime} from "../utils/date";
+import {formaterDate, formaterDateAndTime} from "../utils/date";
 
 interface Props {
     dialog: DialogData;
@@ -18,7 +18,7 @@ export function AktivitetskortPreview(props: Props) {
     if (aktiviteter.data !== null) {
 
         const aktivitet = aktiviteter.data.find((aktivitet) => (aktivitet.id === props.dialog.aktivitetId));
-        const datoString = !!props.dialog.sisteDato ? formaterDateAndTime(props.dialog.sisteDato).substring(0,10) : '';
+        const datoString = !!props.dialog.sisteDato ? formaterDate(props.dialog.sisteDato) : '';
 
         if (aktivitet) {
             return (
