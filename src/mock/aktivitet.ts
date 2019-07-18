@@ -6,7 +6,7 @@ const aktiviteter: Aktivitet[] & JSONArray = [
         id: '6871',
         versjon: '9389',
         tittel: 'Beste møtet ever',
-        beskrivelse: "En lukrativ konsulentjobb",
+        beskrivelse: "En lukrativ konsulentjobb der du kommer til å tjene masse gryn",
         lenke: "Definitivt ikke en viruslenke",
         type: 'STILLING',
         status: 'PLANLAGT',
