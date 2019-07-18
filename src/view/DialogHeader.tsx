@@ -3,7 +3,7 @@ import { VenstreChevron } from 'nav-frontend-chevron';
 import { DialogData } from '../utils/typer';
 import { AktivitetskortPreview } from './AktivitetskortPreview';
 import { Undertittel } from 'nav-frontend-typografi';
-import {Link} from "react-router-dom";
+import { Link } from 'react-router-dom';
 
 interface Props {
     dialog: DialogData;

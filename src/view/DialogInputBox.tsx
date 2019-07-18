@@ -2,7 +2,12 @@ import React, { FormEvent } from 'react';
 import useFieldState from '../utils/useFieldState';
 import { DialogData } from '../utils/typer';
 import { visibleIfHoc } from '../component/hoc/visibleIfHoc';
-import HenvendelseInput from "../component/HenvendelseInput";
+import HenvendelseInput from '../component/HenvendelseInput';
+import { fetchData } from '../utils/fetch';
+import { useDialogContext } from '../Context';
+import { RouteComponentProps, withRouter } from 'react-router';
+
+interface Props extends RouteComponentProps<{}> {}
 
 function validerMelding(melding: string): string | null {
     if (melding.trim().length === 0) {
@@ -17,6 +22,7 @@ interface Props {
 }
 
 export function DialogInputBox(props: Props) {
+    const dialoger = useDialogContext();
     const melding = useFieldState('', validerMelding);
 
     function handleSubmit(event: FormEvent) {
@@ -24,14 +30,23 @@ export function DialogInputBox(props: Props) {
         melding.validate();
         var dialg: DialogData = props.dialog;
         if (melding.input.feil === undefined) {
-            fetch('/veilarbdialog/api/dialog/ny', {
-                method: 'POST',
-                body: JSON.stringify({
-                    tekst: melding.input.value,
-                    dialogId: dialg.id,
-                    overskrift: dialg.overskrift
-                })
+            const body = JSON.stringify({
+                tekst: melding.input.value,
+                dialogId: dialg.id,
+                overskrift: dialg.overskrift
             });
+            fetchData<DialogData>('/veilarbdialog/api/dialog/ny', { method: 'POST', body }).then(
+                function(response) {
+                    melding.setValue('');
+                    console.log('Posted endret dialog!', response);
+                    dialoger.refetch();
+                    props.history.push('/' + response.id);
+                },
+                function(error) {
+                    console.log('Failed posting endret dialog!', error);
+                    //TODO inform with a user friendly message
+                }
+            );
         }
     }
 
@@ -41,5 +56,6 @@ export function DialogInputBox(props: Props) {
         </form>
     );
 }
+const DialogInputBoxVisible = visibleIfHoc(DialogInputBox);
 
-export const DialogInputBoxVisible = visibleIfHoc(DialogInputBox);
+export default withRouter(DialogInputBoxVisible);

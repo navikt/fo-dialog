@@ -1,12 +1,17 @@
 import React, { FormEvent } from 'react';
 import { Innholdstittel, Normaltekst } from 'nav-frontend-typografi';
-import { Input} from 'nav-frontend-skjema';
+import { Input } from 'nav-frontend-skjema';
 import useFieldState from '../utils/useFieldState';
 import { DialogData } from '../utils/typer';
 import { fetchData } from '../utils/fetch';
+import { useDialogContext } from '../Context';
+import { RouteComponentProps, withRouter } from 'react-router';
+import HenvendelseInput from '../component/HenvendelseInput';
 
 import './dialognew.less';
-import HenvendelseInput from "../component/HenvendelseInput";
+import './Dialog.less';
+
+interface Props extends RouteComponentProps<{}> {}
 
 function validerTema(tema: string): string | null {
     if (tema.trim().length === 0) {
@@ -23,9 +28,10 @@ function validerMelding(melding: string): string | null {
     }
 }
 
-export function DialogNew() {
+function DialogNew(props: Props) {
     const tema = useFieldState('', validerTema);
     const melding = useFieldState('', validerMelding);
+    const dialoger = useDialogContext();
 
     function handleSubmit(event: FormEvent) {
         event.preventDefault();
@@ -37,10 +43,17 @@ export function DialogNew() {
                 overskrift: tema.input.value,
                 tekst: melding.input.value
             });
-            fetchData<DialogData>('/veilarbdialog/api/dialog/ny', {
-                method: 'post',
-                body
-            });
+            fetchData<DialogData>('/veilarbdialog/api/dialog/ny', { method: 'post', body }).then(
+                function(response) {
+                    console.log('Posted the new dialog!', response);
+                    dialoger.refetch();
+                    props.history.push('/' + response.id);
+                },
+                function(error) {
+                    console.log('Failed posting the new dialog!', error);
+                    //TODO inform with a user friendly message
+                }
+            );
         }
     }
 
@@ -52,8 +65,10 @@ export function DialogNew() {
                     Her kan du skrive til din veileder om arbeid og oppfølging. Du vil få svar i løpet av noen dager.
                 </Normaltekst>
                 <Input className="dialog-new__temafelt" label={'Tema:'} placeholder="Skriv her" {...tema.input} />
-                <HenvendelseInput melding={melding}/>
+                <HenvendelseInput melding={melding} />
             </form>
         </div>
     );
 }
+
+export default withRouter(DialogNew);

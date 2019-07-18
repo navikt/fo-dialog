@@ -1,10 +1,10 @@
 import React from 'react';
-import {Textarea} from "nav-frontend-skjema";
-import {Hovedknapp} from "nav-frontend-knapper";
-import {FieldState} from "../utils/useFieldState";
+import { Textarea } from 'nav-frontend-skjema';
+import { Hovedknapp } from 'nav-frontend-knapper';
+import { FieldState } from '../utils/useFieldState';
 
 interface Props {
-    melding: FieldState
+    melding: FieldState;
 }
 
 function defaultTellerTekst(antallTegn: number, maxLength: number): React.ReactNode {
