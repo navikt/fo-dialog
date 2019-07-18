@@ -5,8 +5,9 @@ import { useDialogContext, useOppfolgingContext } from '../Context';
 import { RouteComponentProps, withRouter } from 'react-router';
 import { Aktivitetskort } from './Aktivitetskort';
 import { Innholdstittel, Normaltekst } from 'nav-frontend-typografi';
-import './Dialog.less';
 import DialogInputBoxVisible from './DialogInputBox';
+
+import './Dialog.less';
 
 interface Props extends RouteComponentProps<{ dialogId?: string }> {}
 

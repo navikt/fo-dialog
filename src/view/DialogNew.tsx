@@ -1,13 +1,14 @@
 import React, { FormEvent } from 'react';
 import { Innholdstittel, Normaltekst } from 'nav-frontend-typografi';
-import { Input, Textarea } from 'nav-frontend-skjema';
-import { Hovedknapp } from 'nav-frontend-knapper';
+import { Input } from 'nav-frontend-skjema';
 import useFieldState from '../utils/useFieldState';
 import { DialogData } from '../utils/typer';
 import { fetchData } from '../utils/fetch';
 import { useDialogContext } from '../Context';
 import { RouteComponentProps, withRouter } from 'react-router';
+import HenvendelseInput from '../component/HenvendelseInput';
 
+import './dialognew.less';
 import './Dialog.less';
 
 interface Props extends RouteComponentProps<{}> {}
@@ -57,27 +58,16 @@ function DialogNew(props: Props) {
     }
 
     return (
-        <>
+        <div className="dialog-new">
             <form onSubmit={handleSubmit} noValidate>
-                <Innholdstittel>Ny Dialog</Innholdstittel>
-                <Normaltekst>
+                <Innholdstittel className="dialog-new__tittel">Ny Dialog</Innholdstittel>
+                <Normaltekst className="dialog-new__infotekst">
                     Her kan du skrive til din veileder om arbeid og oppfølging. Du vil få svar i løpet av noen dager.
                 </Normaltekst>
-                <Input label={'Hva er tema for dialogen?'} placeholder="Skriv her" {...tema.input} />
-                <div className="skriv-melding">
-                    <Textarea
-                        label="Skriv en melding til brukeren"
-                        placeholder="Skriv her"
-                        {...melding.input}
-                        // TODO Lag PR til nav-frontend som fikser textarea sin onChange. Burde bruke `React.ChangeEvent` fremfor dagens `React.SyntheticEvent`.
-                        onChange={melding.input.onChange as any}
-                    />
-                    <Hovedknapp htmlType={'submit'} title="Send">
-                        Send
-                    </Hovedknapp>
-                </div>
+                <Input className="dialog-new__temafelt" label={'Tema:'} placeholder="Skriv her" {...tema.input} />
+                <HenvendelseInput melding={melding} />
             </form>
-        </>
+        </div>
     );
 }
 
