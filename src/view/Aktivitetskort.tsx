@@ -23,7 +23,7 @@ export function Aktivitetskort(props: Props) {
         if (aktivitet) {
             return (
                 <div className="aktivitetkort">
-                    <EtikettLiten> aktivitet / {aktivitet.status} / {mapAktivitetsTypeToHumanReadableString(aktivitet.type)}</EtikettLiten>
+                    <EtikettLiten> aktivitet / {aktivitet.status} / {mapAktivitetTypeToHumanReadableString(aktivitet.type)}</EtikettLiten>
                     <Innholdstittel>{aktivitet.stillingsTittel}</Innholdstittel>
                     <Lenke href={"temp"}>
                         Les mer i aktivitetsplanen
@@ -37,7 +37,7 @@ export function Aktivitetskort(props: Props) {
     return null;
 }
 
-function mapAktivitetsTypeToHumanReadableString(type : string){
+function mapAktivitetTypeToHumanReadableString(type : string){
 
     switch (type) {
         case "MOTE": return "Møte";

@@ -2,40 +2,70 @@ import React from 'react';
 import {Aktivitet} from "../utils/typer";
 import {EtikettLiten, Ingress, Undertekst, Undertittel} from "nav-frontend-typografi";
 import {formaterDate, formaterDateAndTime} from "../utils/date";
+import {DialogOverview} from "./DialogOverview";
+import {element} from "prop-types";
 
-interface Props{
+interface Props {
     aktivitet: Aktivitet;
 }
 
 export function AktivitetskortInfoBox(props: Props) {
 
-
-    const fraDato = props.aktivitet.fraDato ? formaterDate(props.aktivitet.fraDato): null;
-    const tilDato = props.aktivitet.tilDato ? formaterDate(props.aktivitet.tilDato): null;
-
-    return( <>
-        <div className="aktivitetkort__infobox__row">
-            <div className="aktivitetkort__infobox__row__item">
-                <EtikettLiten> Fra dato</EtikettLiten>
-                <Undertekst>{fraDato}</Undertekst>
+    const datapunkter: Array<Array<InfoElement>> = fjernTommeRaderOgKolonner(mapAktivietTypeToInfobox(props.aktivitet));
+    return (<>{
+        datapunkter.map((rad) => (
+            <div className="aktivitetkort__infobox__row">
+                {rad.map((element) => (
+                    <div className="aktivitetkort__infobox__row__item">
+                        <EtikettLiten children={element.label}/>
+                        <Undertekst children={element.data}/>
+                    </div>
+                ))}
             </div>
-            <div className="aktivitetkort__infobox__row__item">
-                <EtikettLiten> Frist</EtikettLiten>
-                <Undertekst>{tilDato}</Undertekst>
-            </div>
+        ))
+    }</>)
 
-        </div>
-        <div className="aktivitetkort__infobox__row">
-            <div className="aktivitetkort__infobox__row__item">
-                <EtikettLiten> Arbeidsgiver</EtikettLiten>
-                <Undertekst>{props.aktivitet.arbeidsgiver}</Undertekst>
-            </div>
-            <div className="aktivitetkort__infobox__row__item">
-                <EtikettLiten>Arbiedssted</EtikettLiten>
-                <Undertekst>{props.aktivitet.arbeidssted}</Undertekst>
-            </div>
+}
 
-        </div>
+interface InfoElement {
+    label: string;
+    data: string;
+}
 
-    </>)
+type Row<T> = Array<T>;
+type Column<T> = Array<T>;
+type GridConfig = Array<Array<InfoElement>>;
+
+function mapAktivietTypeToInfobox(aktivitet: Aktivitet): GridConfig {
+    switch (aktivitet.type) {
+        case "STILLING":
+            return [
+                [{label: "Fra dato", data: formaterDate(aktivitet.fraDato)}, {
+                    label: "Frist",
+                    data: formaterDate(aktivitet.tilDato)
+                }],
+                [{label: "Arbeidsgiver", data: aktivitet.arbeidsgiver!}, {
+                    label: "Arbeidssted",
+                    data: aktivitet.arbeidssted!
+                }],
+                [{label: "Beskrivelse", data: aktivitet.beskrivelse ? aktivitet.beskrivelse : ""}],
+                [{label: "Lenke", data: aktivitet.lenke ? aktivitet.lenke : ""}]
+            ];
+
+        case "MOTE":
+            return [
+                [{label: "Dato", data: formaterDate(aktivitet.fraDato)}]
+            ]
+    }
+    return []
+}
+function fjernTommeRaderOgKolonner(config: GridConfig):GridConfig {
+
+    config = config.filter((row) => (
+        row.filter((element) =>(
+            element.data !== ""
+        )).length !== 0
+    ));
+
+    return config;
 }

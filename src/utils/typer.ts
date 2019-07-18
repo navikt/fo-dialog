@@ -73,7 +73,7 @@ export interface Aktivitet {
     lenke: StringOrUndefinedOrNull;
     type: string;
     status: StringOrUndefinedOrNull;
-    fraDato: StringOrUndefinedOrNull;
+    fraDato: string;
     tilDato: string;
     opprettetDato: StringOrUndefinedOrNull;
     endretDato: StringOrUndefinedOrNull;
