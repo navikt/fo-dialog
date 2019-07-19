@@ -1,8 +1,8 @@
-import React, { FormEvent } from 'react';
+import React, { FormEvent, useEffect, useState } from 'react';
 import { Innholdstittel, Normaltekst } from 'nav-frontend-typografi';
 import { Input } from 'nav-frontend-skjema';
 import useFieldState from '../utils/useFieldState';
-import { DialogData } from '../utils/typer';
+import { DialogData, NyDialogMeldingData } from '../utils/typer';
 import { fetchData } from '../utils/fetch';
 import { useDialogContext } from '../Context';
 import { RouteComponentProps, withRouter } from 'react-router';
@@ -28,16 +28,40 @@ function validerMelding(melding: string): string | null {
     }
 }
 
+export function useNyDialogFormstatus(): String[] {
+    const [NyDialogFormIsValid, setNyDialogFormValid] = useState();
+    useEffect(() => {
+        function validerNyDialog(nyDialogData: NyDialogMeldingData): String[] {
+            var formErrors: String[] = [];
+            var temaError = nyDialogData.overskrift === undefined ? null : validerTema(nyDialogData.overskrift);
+            var meldingError = validerMelding(nyDialogData.tekst);
+            if (temaError !== null) {
+                formErrors.push(temaError);
+            }
+            if (meldingError !== null) {
+                formErrors.push(meldingError);
+            }
+            if (formErrors.length === 0 && temaError === null && meldingError === null) {
+                setNyDialogFormValid(['']);
+            } else {
+                setNyDialogFormValid(formErrors);
+            }
+            return formErrors;
+        }
+    });
+    return NyDialogFormIsValid;
+}
+
 function DialogNew(props: Props) {
     const tema = useFieldState('', validerTema);
     const melding = useFieldState('', validerMelding);
     const dialoger = useDialogContext();
+    const [NyDialogFormIsValid, setNyDialogFormValid] = useState();
 
     function handleSubmit(event: FormEvent) {
         event.preventDefault();
         tema.validate();
         melding.validate();
-
         if (tema.input.feil === undefined && melding.input.feil === undefined) {
             const body = JSON.stringify({
                 overskrift: tema.input.value,
@@ -51,7 +75,7 @@ function DialogNew(props: Props) {
                 },
                 function(error) {
                     console.log('Failed posting the new dialog!', error);
-                    //TODO inform with a user friendly message
+                    setNyDialogFormValid(['Failed establishing the new dialog!']);
                 }
             );
         }
