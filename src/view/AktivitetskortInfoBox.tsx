@@ -16,7 +16,7 @@ export function AktivitetskortInfoBox(props: Props) {
             {datapunkter.map(rad => (
                 <div className="aktivitetkort__infobox__row">
                     {rad.map(element => (
-                        <div className="aktivitetkort__infobox__row__item">
+                        <div className={"aktivitetkort__infobox__row__item"+ (rad.length === 1 ? "-solo": "")}>
                             <EtikettLiten children={element.label}/>
                             <Undertekst children={element.data}/>
                         </div>
