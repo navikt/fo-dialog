@@ -1,5 +1,6 @@
 export type ValueOrUndefinedOrNull<T> = T | null | undefined;
 export type StringOrUndefinedOrNull = ValueOrUndefinedOrNull<string>;
+export type NumberOrUndefinedOrNull = ValueOrUndefinedOrNull<number>;
 
 export interface NyDialogMeldingData {
     tekst: string;
@@ -101,4 +102,5 @@ export interface Aktivitet {
     behandlingOppfolging: StringOrUndefinedOrNull;
     kanal: StringOrUndefinedOrNull;
     erReferatPublisert: boolean;
+    varighet?: NumberOrUndefinedOrNull;
 }

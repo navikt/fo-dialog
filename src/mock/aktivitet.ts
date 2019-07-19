@@ -74,7 +74,8 @@ const aktiviteter: Aktivitet[] & JSONArray = [
         effekt: null,
         behandlingOppfolging: null,
         kanal: 'TELEFON',
-        erReferatPublisert: false
+        erReferatPublisert: false,
+        varighet: 75
     }
 ];
 

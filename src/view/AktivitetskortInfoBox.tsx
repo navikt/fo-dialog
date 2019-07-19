@@ -1,7 +1,7 @@
 import React from 'react';
 import {Aktivitet} from '../utils/typer';
 import {EtikettLiten, Ingress, Undertekst, Undertittel} from 'nav-frontend-typografi';
-import {formaterDate, formaterDateAndTime} from '../utils/date';
+import {formaterDate, formaterDateAndTime, konverterMinutterTilTimer} from '../utils/date';
 import {DialogOverview} from './DialogOverview';
 import {element} from 'prop-types';
 
@@ -59,7 +59,9 @@ function mapAktivietTypeToInfobox(aktivitet: Aktivitet): GridConfig {
             ];
 
         case 'MOTE':
-            return [[{label: 'Dato', data: formaterDate(aktivitet.fraDato)}]];
+            return [
+                [{label: 'Dato', data: formaterDateAndTime(aktivitet.fraDato)},
+                    {label: 'Varighet',data: konverterMinutterTilTimer(aktivitet.varighet!)}]]
         case 'SOKEAVTALE':
             return [
                 [
