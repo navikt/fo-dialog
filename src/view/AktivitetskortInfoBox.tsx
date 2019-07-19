@@ -60,8 +60,11 @@ function mapAktivietTypeToInfobox(aktivitet: Aktivitet): GridConfig {
 
         case 'MOTE':
             return [
-                [{label: 'Dato', data: formaterDateAndTime(aktivitet.fraDato)},
-                    {label: 'Varighet',data: konverterMinutterTilTimer(aktivitet.varighet!)}]]
+                [{label: 'Dato', data: formaterDate(aktivitet.fraDato)},
+                    {label: 'Klokkeslett',data: konverterMinutterTilTimer(aktivitet.klokkeslett!)}],
+            [{label: 'Møteform', data: mapKanalToString(aktivitet.kanal!)},{label: 'Varighet',data:konverterMinutterTilTimer(aktivitet.varighet!)}],
+            [{label: 'Møtested',data: aktivitet.adresse!}],
+            [{label: 'Hensikt med møtet', data: aktivitet.hensikt!}]];
         case 'SOKEAVTALE':
             return [
                 [
@@ -78,7 +81,7 @@ function mapAktivietTypeToInfobox(aktivitet: Aktivitet): GridConfig {
                     },
                     {label: 'Oppfølging fra nav', data: aktivitet.oppfolging!}
                 ],
-                [{label: 'Beskrivelse', data: aktivitet.beskrivelse!}]
+                [{label: 'Beskrivelse', data: aktivitet.beskrivelse!}],
             ];
         case 'BEHANDLING':
             return [
@@ -109,4 +112,12 @@ function fjernTommeRaderOgKolonner(config: GridConfig): GridConfig {
     config = config.filter(row => row.filter(element => element.data !== '').length !== 0);
 
     return config;
+}
+function mapKanalToString(kanal:string){
+    switch (kanal) {
+        case 'OPPMOTE': return 'Oppmøte';
+        case 'TELEFON': return 'Telefonmøte';
+        case 'INTERNETT': return 'Nettmøte';
+    }
+    return "";
 }

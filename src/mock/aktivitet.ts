@@ -5,7 +5,7 @@ const aktiviteter: Aktivitet[] & JSONArray = [
     {
         id: '6871',
         versjon: '9389',
-        tittel: 'Beste møtet ever',
+        tittel: 'Kunderådgiver',
         beskrivelse: "En lukrativ konsulentjobb der du kommer til å tjene masse gryn",
         lenke: "Definitivt ikke en viruslenke",
         type: 'STILLING',
@@ -36,7 +36,7 @@ const aktiviteter: Aktivitet[] & JSONArray = [
         behandlingSted: null,
         effekt: null,
         behandlingOppfolging: null,
-        kanal: 'TELEFON',
+        kanal: 'OPPMOTE',
         erReferatPublisert: false
     },
     {
@@ -62,7 +62,7 @@ const aktiviteter: Aktivitet[] & JSONArray = [
         arbeidsgiver: null,
         arbeidssted: null,
         stillingsTittel: null,
-        hensikt: null,
+        hensikt: 'Finne ut av hva vi skal gjøre med livet mitt.',
         oppfolging: null,
         antallStillingerSokes: null,
         avtaleOppfolging: null,
@@ -73,9 +73,11 @@ const aktiviteter: Aktivitet[] & JSONArray = [
         behandlingSted: null,
         effekt: null,
         behandlingOppfolging: null,
-        kanal: 'TELEFON',
+        kanal: 'OPPMOTE',
         erReferatPublisert: false,
-        varighet: 75
+        varighet: 75,
+        klokkeslett: 700,
+        adresse: "Rekegata 69"
     }
 ];
 

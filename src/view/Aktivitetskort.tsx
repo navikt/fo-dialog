@@ -25,7 +25,7 @@ export function Aktivitetskort(props: Props) {
                         {' '}
                         aktivitet / {aktivitet.status} / {mapAktivitetTypeToHumanReadableString(aktivitet.type)}
                     </EtikettLiten>
-                    <Innholdstittel>{aktivitet.stillingsTittel}</Innholdstittel>
+                    <Innholdstittel>{aktivitet.tittel}</Innholdstittel>
                     <Lenke href={'temp'}>
                         Les mer i aktivitetsplanen
                         <HoyreChevron />

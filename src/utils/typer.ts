@@ -103,4 +103,6 @@ export interface Aktivitet {
     kanal: StringOrUndefinedOrNull;
     erReferatPublisert: boolean;
     varighet?: NumberOrUndefinedOrNull;
+    klokkeslett?: NumberOrUndefinedOrNull;
+    adresse?: StringOrUndefinedOrNull;
 }
