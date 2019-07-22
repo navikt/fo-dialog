@@ -1,45 +1,31 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { Checkbox } from 'nav-frontend-skjema';
-import { DialogData } from '../utils/typer';
-import { fetchData } from '../utils/fetch';
+import { RouteComponentProps, withRouter } from 'react-router';
 
-interface Props {
-    dialog: DialogData;
+interface Props extends RouteComponentProps<{ dialogId?: string }> {
+    toggleFerdigBehandlet(ferdigBehandler: boolean): void;
+    toggleVenterPaSvar(venterPaSvar: boolean): void;
+    ferdigBehandlet: boolean;
+    venterPaSvar: boolean;
 }
 
 export function DialogMarkor(props: Props) {
-    const [ferdigBehandlet, setFerdigbehandlet] = useState(props.dialog.ferdigBehandlet);
-    const [venterPaSvar, setVenterPaSvar] = useState(props.dialog.venterPaSvar);
-
-    const toggleFerdigBehandlet = () => {
-        setFerdigbehandlet(!ferdigBehandlet);
-        fetchData<DialogData>('/veilarbdialog/api/dialog/:dialogId/ferdigbehandlet/:bool', {
-            method: 'put',
-            body: JSON.stringify({ dialogId: props.dialog.id, ferdigBehandlet: ferdigBehandlet })
-        });
-    };
-    const toggleVenterPaSvar = () => {
-        setVenterPaSvar(!venterPaSvar);
-        fetchData<DialogData>('/veilarbdialog/api/dialog/:dialogId/ferdigbehandlet/:bool', {
-            method: 'put',
-            body: JSON.stringify({ dialogId: props.dialog.id, venterPaSvar: venterPaSvar })
-        });
-    };
-
     return (
         <div className="checkbox-block">
             <Checkbox
                 label="Venter på svar fra NAV"
-                checked={!ferdigBehandlet}
+                checked={!props.ferdigBehandlet}
                 className="checkbox-block__item"
-                onChange={() => toggleFerdigBehandlet()}
+                onChange={() => props.toggleFerdigBehandlet(!props.ferdigBehandlet)}
             />
             <Checkbox
                 label="Venter på svar fra bruker"
-                checked={venterPaSvar}
+                checked={props.venterPaSvar}
                 className="checkbox-block__item"
-                onChange={toggleVenterPaSvar}
+                onChange={() => props.toggleVenterPaSvar(!props.venterPaSvar)}
             />
         </div>
     );
 }
+
+export default withRouter(DialogMarkor);
