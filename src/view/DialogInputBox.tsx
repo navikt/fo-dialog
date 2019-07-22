@@ -38,12 +38,14 @@ export function DialogInputBox(props: Props) {
                 method: 'put'
             }
         );
+        dialoger.refetch();
     };
     const toggleVenterPaSvar = (nyVenterPaSvarVerdi: boolean) => {
         setVenterPaSvar(nyVenterPaSvarVerdi);
         fetchData<DialogData>(`/veilarbdialog/api/dialog/${valgtDialog!.id}/venter_pa_svar/${nyVenterPaSvarVerdi}`, {
             method: 'put'
         });
+        dialoger.refetch();
     };
 
     function handleSubmit(event: FormEvent) {
