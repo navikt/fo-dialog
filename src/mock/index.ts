@@ -34,11 +34,11 @@ mock.post('/veilarbdialog/api/dialog/ny', ({ body }) => opprettEllerOppdaterDial
 
 mock.put('/veilarbdialog/api/dialog/lest', ({ body }) => lesDialog(body.dialogId));
 
-mock.put('/veilarbdialog/api/dialog/:dialogId/venter_pa_svar/:bool', ({ body }) =>
-    setVenterPaSvar(body.dialogId, body.venterPaSvar)
+mock.put('/veilarbdialog/api/dialog/:dialogId/venter_pa_svar/:bool', ({ pathParams }) =>
+    setVenterPaSvar(pathParams.dialogId, pathParams.bool === 'true')
 );
-mock.put('/veilarbdialog/api/dialog/:dialogId/ferdigbehandlet/:bool', ({ body }) =>
-    setFerdigBehandlet(body.dialogId, body.ferdigBehandlet)
+mock.put('/veilarbdialog/api/dialog/:dialogId/ferdigbehandlet/:bool', ({ pathParams }) =>
+    setFerdigBehandlet(pathParams.dialogId, pathParams.bool === 'true')
 );
 
 mock.get('/veilarboppfolging/api/oppfolging/me', bruker);

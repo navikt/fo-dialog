@@ -135,7 +135,7 @@ const dialoger: DialogData[] & JSONArray = [
                     '- i et møte med veilederen din på NAV-kontoret\n' +
                     '- i en telefonsamtale\n' +
                     '- her i dialogen\n' +
-                    'Skriv svaret ditt i feltet over. Hvis du velger "her i dialogen", kan du fortelle mer allerede nå.\n'
+                    'Skriv svaret ditt i feltet under. Hvis du velger "her i dialogen", kan du fortelle mer allerede nå.\n'
             },
             {
                 id: '6',
@@ -151,7 +151,7 @@ const dialoger: DialogData[] & JSONArray = [
                     '- i et møte med veilederen din på NAV-kontoret\n' +
                     '- i en telefonsamtale\n' +
                     '- her i dialogen\n' +
-                    'Skriv svaret ditt i feltet over. Hvis du velger "her i dialogen", kan du fortelle mer allerede nå.\n'
+                    'Skriv svaret ditt i feltet under. Hvis du velger "her i dialogen", kan du fortelle mer allerede nå.\n'
             }
         ],
         egenskaper: []
@@ -168,8 +168,7 @@ export function lesDialog(dialogId: string): Promise<ResponseData> {
 }
 
 export function opprettEllerOppdaterDialog(update: NyDialogMeldingData): DialogData & JSONObject {
-    const dialogId = update.dialogId === undefined ? rndId() : `${update.dialogId}`;
-
+    const dialogId = !update.dialogId || update.dialogId === '' ? rndId() : `${update.dialogId}`;
     const nyHenvendelse: HenvendelseData = {
         id: rndId(),
         dialogId: dialogId,
@@ -198,8 +197,8 @@ export function opprettEllerOppdaterDialog(update: NyDialogMeldingData): DialogD
             opprettetDato: new Date().toISOString(),
             historisk: false,
             lest: true,
-            venterPaSvar: true,
-            ferdigBehandlet: false,
+            venterPaSvar: false,
+            ferdigBehandlet: true,
             lestAvBrukerTidspunkt: null,
             erLestAvBruker: false,
             aktivitetId: null,
@@ -211,10 +210,10 @@ export function opprettEllerOppdaterDialog(update: NyDialogMeldingData): DialogD
     }
 }
 
-export function setVenterPaSvar(dialogId: string, venterpasvar: boolean) {
+export function setVenterPaSvar(dialogId: string, venterPaSvar: boolean) {
     const dialog = dialoger.find(dialog => dialog.id === dialogId);
     if (dialog) {
-        dialog.venterPaSvar = venterpasvar;
+        dialog.venterPaSvar = venterPaSvar;
     }
     return dialog as DialogData & JSONObject;
 }

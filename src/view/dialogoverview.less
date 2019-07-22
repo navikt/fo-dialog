@@ -8,15 +8,34 @@
     &__header {
         display: flex;
         flex-basis: 4rem;
-        justify-content: space-evenly;
-        align-items: center;
-        .skjemaelement {
-            margin-bottom: 0;
+        .header-panel {
+            display: flex;
+            align-items: center;
+            &__knapp {
+                text-decoration: none;
+                display: flex;
+                align-items: center;
+                font-weight: bold;
+                color: @navMorkGra;
+                margin-right: 1.5rem;
+                svg {
+                    margin-right: 0.5rem;
+                }
+            }
+            .skjemaelement {
+                margin-bottom: 0;
+            }
         }
     }
     &__preview-list {
         overflow-y: scroll;
-        height: 90%;
         flex: 1;
+    }
+    @media (min-width: 800px) {
+        &__header {
+            flex-basis: 7rem;
+            align-items: flex-end;
+            padding-bottom: 2rem;
+        }
     }
 }
