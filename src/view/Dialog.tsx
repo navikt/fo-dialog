@@ -6,10 +6,10 @@ import { RouteComponentProps, withRouter } from 'react-router';
 import { Aktivitetskort } from './Aktivitetskort';
 import { Normaltekst } from 'nav-frontend-typografi';
 import DialogInputBoxVisible from './DialogInputBox';
+import { ReactComponent as IngenDialoger } from './dialogIngen.svg';
+import { ReactComponent as IngenValgteDialoger } from './dialogIngenValgt.svg';
 
 import './Dialog.less';
-import { ReactComponent as IngenDialoger } from './add-circle.svg';
-import { ReactComponent as IngenValgteDialoger } from './add-circle.svg';
 
 interface Props extends RouteComponentProps<{ dialogId?: string }> {}
 
