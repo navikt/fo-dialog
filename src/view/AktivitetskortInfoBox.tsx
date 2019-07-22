@@ -32,8 +32,6 @@ interface InfoElement {
     data: string;
 }
 
-type Row<T> = Array<T>;
-type Column<T> = Array<T>;
 type GridConfig = Array<Array<InfoElement>>;
 
 function mapAktivietTypeToInfobox(aktivitet: Aktivitet): GridConfig {
@@ -61,10 +59,13 @@ function mapAktivietTypeToInfobox(aktivitet: Aktivitet): GridConfig {
         case 'MOTE':
             return [
                 [{label: 'Dato', data: formaterDate(aktivitet.fraDato)},
-                    {label: 'Klokkeslett',data: konverterMinutterTilTimer(aktivitet.klokkeslett!)}],
-            [{label: 'Møteform', data: mapKanalToString(aktivitet.kanal!)},{label: 'Varighet',data:konverterMinutterTilTimer(aktivitet.varighet!)}],
-            [{label: 'Møtested',data: aktivitet.adresse!}],
-            [{label: 'Hensikt med møtet', data: aktivitet.hensikt!}]];
+                    {label: 'Klokkeslett', data: konverterMinutterTilTimer(aktivitet.klokkeslett!)}],
+                [{label: 'Møteform', data: mapKanalToString(aktivitet.kanal!)}, {
+                    label: 'Varighet',
+                    data: konverterMinutterTilTimer(aktivitet.varighet!)
+                }],
+                [{label: 'Møtested', data: aktivitet.adresse!}],
+                [{label: 'Hensikt med møtet', data: aktivitet.hensikt!}]];
         case 'SOKEAVTALE':
             return [
                 [
@@ -86,8 +87,8 @@ function mapAktivietTypeToInfobox(aktivitet: Aktivitet): GridConfig {
         case 'BEHANDLING':
             return [
                 [
-                    {label: "Type behandling",data: aktivitet.behandlingType!},
-                    {label: "Behandlingssted",data: aktivitet.behandlingSted!}
+                    {label: "Type behandling", data: aktivitet.behandlingType!},
+                    {label: "Behandlingssted", data: aktivitet.behandlingSted!}
                 ],
                 [
                     {label: 'Fra dato', data: formaterDate(aktivitet.fraDato)},
@@ -97,14 +98,61 @@ function mapAktivietTypeToInfobox(aktivitet: Aktivitet): GridConfig {
                     }
                 ],
                 [
-                    {label: "Mål for behandlingen",data: aktivitet.effekt!},
-                    {label: "Oppfølging fra NAV",data: aktivitet.oppfolging!}
+                    {label: "Mål for behandlingen", data: aktivitet.effekt!},
+                    {label: "Oppfølging fra NAV", data: aktivitet.oppfolging!}
                 ],
                 [
-                    {label: "Beskrivelse",data: aktivitet.beskrivelse!}
+                    {label: "Beskrivelse", data: aktivitet.beskrivelse!}
                 ]
+            ];
+        case 'SAMTALEREFERAT':
+            return [
+                [
+                    {label: 'Dato', data: formaterDate(aktivitet.tilDato)},
+                    {label: 'Møteform', data: mapKanalToString(aktivitet.kanal!)}
+                ],
+                [{label: 'Samtalereferat', data: aktivitet.referat!}]
+            ];
+
+
+        case 'EGEN':
+            return [
+                [
+                    {label: 'Fra dato', data: formaterDate(aktivitet.fraDato)},
+                    {
+                        label: 'Til dato',
+                        data: formaterDate(aktivitet.tilDato)
+                    }
+                ],
+                [{label: 'Mål med aktiviteten', data: aktivitet.hensikt!}],
+                [{label: 'Min huskeliste', data: aktivitet.oppfolging!}],
+                [{label: 'Beskrivelse', data: aktivitet.beskrivelse!}],
+                [{label: 'Lenke', data: aktivitet.lenke!}]
+            ];
+        case 'IJOBB':
+            return [
+                [                    {label: 'Fra dato', data: formaterDate(aktivitet.fraDato)},
+                    {
+                        label: 'Til dato',
+                        data: formaterDate(aktivitet.tilDato)
+                    }],
+                [{label: 'Stillingsandel',data: aktivitet.jobbStatus!},
+                    {label: 'Arbeidsgiver',data: aktivitet.arbeidsgiver!}],
+                [{label: 'Beskrivelse', data: aktivitet.beskrivelse!}]
+            ];
+        case 'TILTAKSAKTIVITET':
+            return [
+                [                    {label: 'Fra dato', data: formaterDate(aktivitet.fraDato)},
+                    {
+                        label: 'Til dato',
+                        data: formaterDate(aktivitet.tilDato)
+                    }],
+                [{label: 'Arrangør',data: aktivitet.arrangoer!},{label: 'Deltakelse',data: aktivitet.deltakelseProsent!.toString()}],
+                [{label: 'Antall dager per uke', data: aktivitet.antallDagerPerUke!.toString()}],
+                [{label: 'Beskrivelse', data: aktivitet.beskrivelse!}]
             ]
     }
+
     return [];
 }
 

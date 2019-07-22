@@ -53,7 +53,9 @@ function mapAktivitetTypeToHumanReadableString(type: string) {
         case 'EGEN':
             return 'Egenaktivitet';
         case 'IJOBB':
-            return 'Nåværende stilling'; //TODO: Bør kanskje finne et kortere alternativ til dette
+            return 'Nåværende stilling';
+        case 'TILTAKSAKTIVITET':
+            return 'Tiltak gjennom NAV';
     }
     return '';
 }

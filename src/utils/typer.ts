@@ -105,4 +105,8 @@ export interface Aktivitet {
     varighet?: NumberOrUndefinedOrNull;
     klokkeslett?: NumberOrUndefinedOrNull;
     adresse?: StringOrUndefinedOrNull;
+    referat?: StringOrUndefinedOrNull;
+    arrangoer?: StringOrUndefinedOrNull;
+    deltakelseProsent?: NumberOrUndefinedOrNull;
+    antallDagerPerUke?: NumberOrUndefinedOrNull;
 }
