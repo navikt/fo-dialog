@@ -1,12 +1,17 @@
 import React, { FormEvent } from 'react';
 import { Innholdstittel, Normaltekst } from 'nav-frontend-typografi';
-import { Input, Textarea } from 'nav-frontend-skjema';
-import { Hovedknapp } from 'nav-frontend-knapper';
+import { Input } from 'nav-frontend-skjema';
 import useFieldState from '../utils/useFieldState';
-
-import './Dialog.less';
 import { DialogData } from '../utils/typer';
 import { fetchData } from '../utils/fetch';
+import { useDialogContext } from '../Context';
+import { RouteComponentProps, withRouter } from 'react-router';
+import HenvendelseInput from '../component/HenvendelseInput';
+
+import './dialognew.less';
+import './Dialog.less';
+
+interface Props extends RouteComponentProps<{}> {}
 
 function validerTema(tema: string): string | null {
     if (tema.trim().length === 0) {
@@ -23,9 +28,10 @@ function validerMelding(melding: string): string | null {
     }
 }
 
-export function DialogNew() {
+function DialogNew(props: Props) {
     const tema = useFieldState('', validerTema);
     const melding = useFieldState('', validerMelding);
+    const dialoger = useDialogContext();
 
     function handleSubmit(event: FormEvent) {
         event.preventDefault();
@@ -37,34 +43,32 @@ export function DialogNew() {
                 overskrift: tema.input.value,
                 tekst: melding.input.value
             });
-            fetchData<DialogData>('/veilarbdialog/api/dialog/ny', {
-                method: 'post',
-                body
-            });
+            fetchData<DialogData>('/veilarbdialog/api/dialog/ny', { method: 'post', body }).then(
+                function(response) {
+                    console.log('Posted the new dialog!', response);
+                    dialoger.refetch();
+                    props.history.push('/' + response.id);
+                },
+                function(error) {
+                    console.log('Failed posting the new dialog!', error);
+                    //TODO inform with a user friendly message
+                }
+            );
         }
     }
 
     return (
-        <>
+        <div className="dialog-new">
             <form onSubmit={handleSubmit} noValidate>
-                <Innholdstittel>Ny Dialog</Innholdstittel>
-                <Normaltekst>
+                <Innholdstittel className="dialog-new__tittel">Ny Dialog</Innholdstittel>
+                <Normaltekst className="dialog-new__infotekst">
                     Her kan du skrive til din veileder om arbeid og oppfølging. Du vil få svar i løpet av noen dager.
                 </Normaltekst>
-                <Input label={'Hva er tema for dialogen?'} placeholder="Skriv her" {...tema.input} />
-                <div className="skriv-melding">
-                    <Textarea
-                        label="Skriv en melding til brukeren"
-                        placeholder="Skriv her"
-                        {...melding.input}
-                        // TODO Lag PR til nav-frontend som fikser textarea sin onChange. Burde bruke `React.ChangeEvent` fremfor dagens `React.SyntheticEvent`.
-                        onChange={melding.input.onChange as any}
-                    />
-                    <Hovedknapp htmlType={'submit'} title="Send">
-                        Send
-                    </Hovedknapp>
-                </div>
+                <Input className="dialog-new__temafelt" label={'Tema:'} placeholder="Skriv her" {...tema.input} />
+                <HenvendelseInput melding={melding} />
             </form>
-        </>
+        </div>
     );
 }
+
+export default withRouter(DialogNew);

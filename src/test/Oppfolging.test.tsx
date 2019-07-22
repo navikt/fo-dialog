@@ -203,7 +203,11 @@ describe('<Dialog/>', () => {
         ];
         jest.spyOn(AppContext, 'useDialogContext').mockImplementation(() => useFetchDialoger);
         jest.spyOn(AppContext, 'useOppfolgingContext').mockImplementation(() => oppfolgingData);
-        const wrapper = mount(<Dialog {...lagRouterProps('1')} />);
+        const wrapper = mount(
+            <MemoryRouter>
+                <Dialog {...lagRouterProps('1')} />
+            </MemoryRouter>
+        );
         expect(wrapper.find(DialogInputBox).exists()).toBeFalsy();
         expect(wrapper.find(HenvendelseList).exists()).toBeTruthy();
         expect(wrapper.find(Checkbox).exists()).toBeFalsy();
@@ -220,7 +224,11 @@ describe('<Dialog/>', () => {
             }
         ];
         jest.spyOn(AppContext, 'useOppfolgingContext').mockImplementation(() => oppfolgingData);
-        const wrapper = mount(<Dialog {...lagRouterProps('1')} />);
+        const wrapper = mount(
+            <MemoryRouter>
+                <Dialog {...lagRouterProps('1')} />
+            </MemoryRouter>
+        );
         expect(wrapper.find(DialogHeader).exists()).toBeTruthy();
         expect(wrapper.find(DialogInputBox).exists()).toBeTruthy();
         expect(wrapper.find(HenvendelseList).exists()).toBeTruthy();

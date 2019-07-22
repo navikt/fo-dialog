@@ -7,11 +7,19 @@
     &__header {
         background-color: @navLysGra;
         flex-basis: 4rem;
-        box-shadow: 0px 5px 15px rgba(0,0,0,0.2);
+        box-shadow: 0px 5px 15px rgba(0, 0, 0, 0.2);
         z-index: 100;
         .dialog__tittel {
             padding: 1rem;
         }
+    }
+    .tilbake-til-oversikt {
+        text-decoration: none;
+        padding: 1rem;
+        display: flex;
+        align-items: center;
+        color: @navMorkGra;
+        font-weight: bold;
     }
 
     .aktivitetskortpreview {
@@ -20,7 +28,7 @@
         height: 4rem;
         margin: 0.5rem;
         border-radius: 0;
-        &__ikon{
+        &__ikon {
             flex-basis: 1.5rem;
             flex-shrink: 0;
         }
@@ -73,5 +81,5 @@
 }
 
 .meldingsfelt {
-  width: 100%;
+    width: 100%;
 }
