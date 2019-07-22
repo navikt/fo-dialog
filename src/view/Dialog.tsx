@@ -9,7 +9,7 @@ import DialogInputBoxVisible from './DialogInputBox';
 
 import './Dialog.less';
 import { ReactComponent as IngenDialoger } from './add-circle.svg';
-import { ReactComponent as IngenValteDialoger } from './add-circle.svg';
+import { ReactComponent as IngenValgteDialoger } from './add-circle.svg';
 
 interface Props extends RouteComponentProps<{ dialogId?: string }> {}
 
@@ -35,9 +35,6 @@ export function Dialog(props: Props) {
     if (dialoger.data && dialoger.data.length === 0) {
         return (
             <div className="dialog__tom">
-                <br />
-                <br />
-                <br />
                 <IngenDialoger />
                 <Normaltekst>Her kan du sende melding til veilederen din om arbeid og oppfølging.</Normaltekst>
                 <Normaltekst>Du kan forvente svar i løpet av noen dager.</Normaltekst>
@@ -47,10 +44,7 @@ export function Dialog(props: Props) {
         if (!valgtDialog) {
             return (
                 <div className="dialog__maavelges">
-                    <br />
-                    <br />
-                    <br />
-                    <IngenValteDialoger />
+                    <IngenValgteDialoger />
                     <Normaltekst>Velg en dialog for å lese den</Normaltekst>
                 </div>
             );
