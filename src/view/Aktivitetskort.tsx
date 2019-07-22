@@ -1,8 +1,7 @@
 import React from 'react';
 import { Aktivitet, DialogData } from '../utils/typer';
-import {EtikettLiten, Innholdstittel, Normaltekst, Element, Systemtittel} from 'nav-frontend-typografi';
+import {EtikettLiten, Element, Systemtittel} from 'nav-frontend-typografi';
 import useFetch from '../utils/use-fetch';
-import { formaterDate, formaterDateAndTime } from '../utils/date';
 import Lenke from 'nav-frontend-lenker';
 import { HoyreChevron } from 'nav-frontend-chevron';
 import { AktivitetskortInfoBox } from './AktivitetskortInfoBox';
@@ -16,7 +15,6 @@ export function Aktivitetskort(props: Props) {
 
     if (aktiviteter.data !== null) {
         const aktivitet = aktiviteter.data.find(aktivitet => aktivitet.id === props.dialog.aktivitetId);
-        const datoString = !!props.dialog.sisteDato ? formaterDate(props.dialog.sisteDato) : '';
 
         if (aktivitet) {
             return (

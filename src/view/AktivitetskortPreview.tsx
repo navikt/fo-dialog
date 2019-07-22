@@ -1,12 +1,11 @@
 import React from 'react';
 import { Aktivitet, DialogData } from '../utils/typer';
-import { Normaltekst, Undertekst, Undertittel } from 'nav-frontend-typografi';
-import { HoyreChevron } from 'nav-frontend-chevron';
-import Lenke from 'nav-frontend-lenker';
+import { Undertekst, Undertittel } from 'nav-frontend-typografi';
+
 import useFetch from '../utils/use-fetch';
 import { LenkepanelBase } from 'nav-frontend-lenkepanel';
 import { ReactComponent as AktivitetsIkon } from './aktivitet_lest.svg';
-import { formaterDate, formaterDateAndTime } from '../utils/date';
+import { formaterDate } from '../utils/date';
 
 interface Props {
     dialog: DialogData;

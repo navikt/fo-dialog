@@ -1,9 +1,8 @@
 import React from 'react';
 import {Aktivitet} from '../utils/typer';
-import {EtikettLiten, Ingress, Undertekst, Undertittel} from 'nav-frontend-typografi';
-import {formaterDate, formaterDateAndTime, konverterMinutterTilTimer} from '../utils/date';
-import {DialogOverview} from './DialogOverview';
-import {element} from 'prop-types';
+import {EtikettLiten,  Undertekst, } from 'nav-frontend-typografi';
+import {formaterDate,  konverterMinutterTilTimer} from '../utils/date';
+
 import Lenke from "nav-frontend-lenker";
 
 interface Props {
