@@ -1,6 +1,7 @@
 import React from 'react';
 import { Checkbox } from 'nav-frontend-skjema';
 import { RouteComponentProps, withRouter } from 'react-router';
+import {visibleIfHoc} from "../component/hoc/visibleIfHoc";
 
 interface Props extends RouteComponentProps<{ dialogId?: string }> {
     toggleFerdigBehandlet(ferdigBehandler: boolean): void;
@@ -9,7 +10,7 @@ interface Props extends RouteComponentProps<{ dialogId?: string }> {
     venterPaSvar: boolean;
 }
 
-export function DialogMarkor(props: Props) {
+export function DialogCheckboxes(props: Props) {
     return (
         <div className="checkbox-block">
             <Checkbox
@@ -27,5 +28,6 @@ export function DialogMarkor(props: Props) {
         </div>
     );
 }
+const DialogCheckboxesVisible = visibleIfHoc(DialogCheckboxes);
 
-export default withRouter(DialogMarkor);
+export default withRouter(DialogCheckboxesVisible);

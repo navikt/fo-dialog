@@ -7,10 +7,9 @@ import { fetchData } from '../utils/fetch';
 import { useDialogContext, useUserInfoContext } from '../Context';
 import { RouteComponentProps, withRouter } from 'react-router';
 import HenvendelseInput from '../component/HenvendelseInput';
-
+import DialogCheckboxesVisible from './DialogCheckboxes';
 import './dialognew.less';
 import './Dialog.less';
-import DialogMarkor from './DialogMarkor';
 
 interface Props extends RouteComponentProps<{ dialogId?: string }> {
     dialog: DialogData;
@@ -73,14 +72,14 @@ function DialogNew(props: Props) {
         }
     }
 
-    const toggleFerdigBehandlet = (erFerdigBehandlet: boolean) => {
-        setFerdigBehandlet(erFerdigBehandlet);
+    const toggleFerdigBehandlet = (nyFerdigBehandletVerdi: boolean) => {
+        setFerdigBehandlet(nyFerdigBehandletVerdi);
         console.log('hei, toggleFerdigBehandlet');
     };
 
-    const toggleVenterPaSvar = (update: boolean) => {
-        setVenterPaSvar(update);
-        console.log('venterpasvar', update);
+    const toggleVenterPaSvar = (nyVenterPaSvarVerdi: boolean) => {
+        setVenterPaSvar(nyVenterPaSvarVerdi);
+        console.log('venterpasvar', nyVenterPaSvarVerdi);
     };
 
     return (
@@ -92,11 +91,12 @@ function DialogNew(props: Props) {
                 </Normaltekst>
                 <Input className="dialog-new__temafelt" label={'Tema:'} placeholder="Skriv her" {...tema.input} />
                 <HenvendelseInput melding={melding} />
-                <DialogMarkor
+                <DialogCheckboxesVisible
                     toggleFerdigBehandlet={toggleFerdigBehandlet}
                     toggleVenterPaSvar={toggleVenterPaSvar}
                     ferdigBehandlet={ferdigBehandlet}
                     venterPaSvar={venterPaSvar}
+                    visible={bruker!.erVeileder}
                 />
             </form>
         </div>

@@ -4,9 +4,9 @@ import { DialogData } from '../utils/typer';
 import { visibleIfHoc } from '../component/hoc/visibleIfHoc';
 import HenvendelseInput from '../component/HenvendelseInput';
 import { fetchData } from '../utils/fetch';
-import { useDialogContext } from '../Context';
+import { useDialogContext, useUserInfoContext } from '../Context';
 import { RouteComponentProps, withRouter } from 'react-router';
-import DialogMarkor from './DialogMarkor';
+import DialogCheckboxesVisible from './DialogCheckboxes';
 
 interface Props extends RouteComponentProps<{ dialogId?: string }> {
     dialog: DialogData;
@@ -21,23 +21,27 @@ function validerMelding(melding: string): string | null {
 }
 
 export function DialogInputBox(props: Props) {
+    const bruker = useUserInfoContext();
     const dialoger = useDialogContext();
     const melding = useFieldState('', validerMelding);
     const dialogId = props.match.params.dialogId;
     const valgtDialog = dialoger.data!.find(dialog => dialog.id === dialogId);
 
-    const [ferdigBehandlet, setFerdigBehandlet] = useState(valgtDialog ? valgtDialog.ferdigBehandlet : false);
+    const [ferdigBehandlet, setFerdigBehandlet] = useState(valgtDialog ? valgtDialog.ferdigBehandlet : true);
     const [venterPaSvar, setVenterPaSvar] = useState(valgtDialog ? valgtDialog.venterPaSvar : false);
 
-    const toggleFerdigBehandlet = (update: boolean) => {
-        setFerdigBehandlet(update);
-        fetchData<DialogData>(`/veilarbdialog/api/dialog/${valgtDialog!.id}/ferdigbehandlet/${ferdigBehandlet}`, {
-            method: 'put'
-        });
+    const toggleFerdigBehandlet = (nyFerdigBehandletVerdi: boolean) => {
+        setFerdigBehandlet(nyFerdigBehandletVerdi);
+        fetchData<DialogData>(
+            `/veilarbdialog/api/dialog/${valgtDialog!.id}/ferdigbehandlet/${nyFerdigBehandletVerdi}`,
+            {
+                method: 'put'
+            }
+        );
     };
-    const toggleVenterPaSvar = (update: boolean) => {
-        setVenterPaSvar(update);
-        fetchData<DialogData>(`/veilarbdialog/api/dialog/${valgtDialog!.id}/venter_pa_svar/${venterPaSvar}`, {
+    const toggleVenterPaSvar = (nyVenterPaSvarVerdi: boolean) => {
+        setVenterPaSvar(nyVenterPaSvarVerdi);
+        fetchData<DialogData>(`/veilarbdialog/api/dialog/${valgtDialog!.id}/venter_pa_svar/${nyVenterPaSvarVerdi}`, {
             method: 'put'
         });
     };
@@ -56,6 +60,9 @@ export function DialogInputBox(props: Props) {
                 function(response) {
                     melding.setValue('');
                     console.log('Posted endret dialog!', response);
+                    if (bruker && !bruker.erVeileder) {
+                        toggleFerdigBehandlet(false);
+                    }
                     dialoger.refetch();
                     props.history.push('/' + response.id);
                 },
@@ -71,11 +78,12 @@ export function DialogInputBox(props: Props) {
             <form onSubmit={handleSubmit} noValidate>
                 <HenvendelseInput melding={melding} />
             </form>
-            <DialogMarkor
+            <DialogCheckboxesVisible
                 toggleFerdigBehandlet={toggleFerdigBehandlet}
                 toggleVenterPaSvar={toggleVenterPaSvar}
                 ferdigBehandlet={ferdigBehandlet}
                 venterPaSvar={venterPaSvar}
+                visible={bruker!.erVeileder}
             />
         </>
     );
