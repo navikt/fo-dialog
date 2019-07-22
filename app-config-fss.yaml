@@ -17,6 +17,9 @@ prometheus:
   path: arbeidsrettet-dialog/internal/metrics
 fasitResources:
   used:
+  - alias: loadbalancer:arbeidsrettet-dialog-fss
+    resourceType: loadbalancerconfig
+    
   - alias: appres.cms
     resourceType: baseurl
 
