@@ -1,6 +1,6 @@
 import React from 'react';
 import { Aktivitet, DialogData } from '../utils/typer';
-import { EtikettLiten, Innholdstittel, Normaltekst } from 'nav-frontend-typografi';
+import {EtikettLiten, Innholdstittel, Normaltekst, Element, Systemtittel} from 'nav-frontend-typografi';
 import useFetch from '../utils/use-fetch';
 import { formaterDate, formaterDateAndTime } from '../utils/date';
 import Lenke from 'nav-frontend-lenker';
@@ -21,15 +21,17 @@ export function Aktivitetskort(props: Props) {
         if (aktivitet) {
             return (
                 <div className="aktivitetkort">
-                    <EtikettLiten>
+                    <EtikettLiten className="aktivitetkort__brødsmulesti">
                         {' '}
                         aktivitet / {aktivitet.status} / {mapAktivitetTypeToHumanReadableString(aktivitet.type)}
                     </EtikettLiten>
-                    <Innholdstittel>{aktivitet.tittel}</Innholdstittel>
+                    <Systemtittel>{aktivitet.tittel}</Systemtittel>
+                    <Element className="aktivitetkort__link">
                     <Lenke href={'temp'}>
                         Les mer i aktivitetsplanen
                         <HoyreChevron />
                     </Lenke>
+                    </Element>
                     <AktivitetskortInfoBox aktivitet={aktivitet} />
                 </div>
             );
@@ -41,7 +43,7 @@ export function Aktivitetskort(props: Props) {
 function mapAktivitetTypeToHumanReadableString(type: string) {
     switch (type) {
         case 'MOTE':
-            return 'Møte';
+            return 'Møte med NAV';
         case 'STILLING':
             return 'Stilling';
         case 'SOKEAVTALE':

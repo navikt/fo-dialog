@@ -67,7 +67,7 @@ export interface PeriodeData {
 }
 
 export interface Aktivitet {
-    id: StringOrUndefinedOrNull;
+    id: string;
     versjon: StringOrUndefinedOrNull;
     tittel: string;
     beskrivelse: StringOrUndefinedOrNull;

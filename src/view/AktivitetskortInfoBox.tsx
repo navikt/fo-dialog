@@ -4,6 +4,7 @@ import {EtikettLiten, Ingress, Undertekst, Undertittel} from 'nav-frontend-typog
 import {formaterDate, formaterDateAndTime, konverterMinutterTilTimer} from '../utils/date';
 import {DialogOverview} from './DialogOverview';
 import {element} from 'prop-types';
+import Lenke from "nav-frontend-lenker";
 
 interface Props {
     aktivitet: Aktivitet;
@@ -16,9 +17,10 @@ export function AktivitetskortInfoBox(props: Props) {
             {datapunkter.map(rad => (
                 <div className="aktivitetkort__infobox__row">
                     {rad.map(element => (
-                        <div className={"aktivitetkort__infobox__row__item"+ (rad.length === 1 ? "-solo": "")}>
-                            <EtikettLiten children={element.label}/>
-                            <Undertekst children={element.data}/>
+                        <div className={"aktivitetkort__infobox__row__item"}>
+                            <EtikettLiten children={element.label} className="label"/>
+                            {element.label === "Lenke" ? <Lenke href={element.data} children={element.data}/> : <Undertekst children={element.data} className="data"/>}
+
                         </div>
                     ))}
                 </div>

@@ -14,6 +14,7 @@ body,
 .app {
     display: flex;
     flex-direction: column;
+    color: @navMorkGra;
 }
 
 .app__body {
@@ -58,7 +59,16 @@ body,
             display: block;
             width: 30%;
             background-color: @navLysGra;
-            padding: 1rem;
+            padding: 1rem 2rem;
+
+            &__link{
+                margin: 1rem 0;
+            }
+
+            &__brødsmulesti{
+                margin-bottom: 2rem;
+                color: @navGra60;
+            }
 
             &__infobox__row{
                 flex-grow: 1;
@@ -68,6 +78,9 @@ body,
                 &__item{
                     margin-bottom: 1rem;
                     min-width: 10rem;
+                    .label{
+                        color: @navGra60;
+                    }
                 }
 
             }
