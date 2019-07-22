@@ -4,10 +4,12 @@ import { DialogHeader } from './DialogHeader';
 import { useDialogContext, useOppfolgingContext } from '../Context';
 import { RouteComponentProps, withRouter } from 'react-router';
 import { Aktivitetskort } from './Aktivitetskort';
-import { Innholdstittel, Normaltekst } from 'nav-frontend-typografi';
+import { Normaltekst } from 'nav-frontend-typografi';
 import DialogInputBoxVisible from './DialogInputBox';
 
 import './Dialog.less';
+import { ReactComponent as IngenDialoger } from './add-circle.svg';
+import { ReactComponent as IngenValteDialoger } from './add-circle.svg';
 
 interface Props extends RouteComponentProps<{ dialogId?: string }> {}
 
@@ -32,21 +34,24 @@ export function Dialog(props: Props) {
 
     if (dialoger.data && dialoger.data.length === 0) {
         return (
-            <div className="dialog">
-                <Innholdstittel>Dialog</Innholdstittel>
+            <div className="dialog__tom">
+                <br />
+                <br />
+                <br />
+                <IngenDialoger />
                 <Normaltekst>Her kan du sende melding til veilederen din om arbeid og oppfølging.</Normaltekst>
                 <Normaltekst>Du kan forvente svar i løpet av noen dager.</Normaltekst>
-                <Normaltekst>Klikk på "Ny dialog"</Normaltekst>
             </div>
         );
     } else {
         if (!valgtDialog) {
             return (
-                <div className="dialog">
-                    <Innholdstittel>Dialog</Innholdstittel>
-                    <Normaltekst>Detaljer for valgt dialog vises her.</Normaltekst>
-                    <Normaltekst> - Du kan velge en dialog fra oversikten, </Normaltekst>
-                    <Normaltekst> - Du kan klikke på "Ny Dialog" for å starte en ny en.</Normaltekst>
+                <div className="dialog__maavelges">
+                    <br />
+                    <br />
+                    <br />
+                    <IngenValteDialoger />
+                    <Normaltekst>Velg en dialog for å lese den</Normaltekst>
                 </div>
             );
         }

@@ -1,12 +1,15 @@
 import React, { FormEvent } from 'react';
-import { Innholdstittel, Normaltekst, Undertittel } from 'nav-frontend-typografi';
+import { Innholdstittel, Normaltekst } from 'nav-frontend-typografi';
 import { Input } from 'nav-frontend-skjema';
-import useFieldState from '../utils/useFieldState';
+import useFieldState, { FieldState } from '../utils/useFieldState';
 import { DialogData, NyDialogMeldingData } from '../utils/typer';
 import { fetchData } from '../utils/fetch';
 import { useDialogContext } from '../Context';
 import { RouteComponentProps, withRouter } from 'react-router';
 import HenvendelseInput from '../component/HenvendelseInput';
+import DialogNewFeedbackSummary from './DialogNewFeedbackSummary';
+import { AlertStripeFeil } from 'nav-frontend-alertstriper';
+import { visibleIfHoc } from '../component/hoc/visibleIfHoc';
 
 import './dialognew.less';
 import './Dialog.less';
@@ -17,6 +20,11 @@ function DialogNew(props: Props) {
     const tema = useFieldState('', validerTema);
     const melding = useFieldState('', validerMelding);
     const dialoger = useDialogContext();
+    const nyDialogFeedback: {
+        tema: FieldState;
+        melding: FieldState;
+    } = { tema, melding };
+    var submitfeil: boolean = false;
 
     function validerTema(tema: string): string | null {
         if (tema.trim().length === 0) {
@@ -52,62 +60,35 @@ function DialogNew(props: Props) {
                 },
                 function(error) {
                     console.log('Failed posting the new dialog!', error);
+                    submitfeil = true;
                 }
             );
         }
     }
-    if (tema.input.feil !== undefined || melding.input.feil !== undefined) {
-        return (
-            <div className="dialog-new">
-                <form onSubmit={handleSubmit} noValidate>
-                    <Innholdstittel className="dialog-new__tittel">Ny Dialog</Innholdstittel>
-                    <Normaltekst className="dialog-new__infotekst">
-                        Her kan du skrive til din veileder om arbeid og oppfølging. Du vil få svar i løpet av noen
-                        dager.
-                    </Normaltekst>
-                    <div className="dialog-new__feedbacksummary">
-                        <Undertittel>Fyll ut obligatoriske felt</Undertittel>
-                        <ul>
-                            {tema.input.feil !== undefined ? (
-                                <li>
-                                    <Normaltekst className="dialog-new__errortekst">
-                                        {tema.input.feil.feilmelding}
-                                    </Normaltekst>
-                                </li>
-                            ) : (
-                                ''
-                            )}
-                            {melding.input.feil !== undefined ? (
-                                <li>
-                                    <Normaltekst className="dialog-new__errortekst">
-                                        {melding.input.feil.feilmelding}
-                                    </Normaltekst>
-                                </li>
-                            ) : (
-                                ''
-                            )}
-                        </ul>
-                    </div>
-                    <Input className="dialog-new__temafelt" label={'Tema:'} placeholder="Skriv her" {...tema.input} />
-                    <HenvendelseInput melding={melding} />
-                </form>
-            </div>
-        );
-    } else {
-        return (
-            <div className="dialog-new">
-                <form onSubmit={handleSubmit} noValidate>
-                    <Innholdstittel className="dialog-new__tittel">Ny Dialog</Innholdstittel>
-                    <Normaltekst className="dialog-new__infotekst">
-                        Her kan du skrive til din veileder om arbeid og oppfølging. Du vil få svar i løpet av noen
-                        dager.
-                    </Normaltekst>
-                    <Input className="dialog-new__temafelt" label={'Tema:'} placeholder="Skriv her" {...tema.input} />
-                    <HenvendelseInput melding={melding} />
-                </form>
-            </div>
-        );
-    }
+    return (
+        <div className="dialog-new">
+            <form onSubmit={handleSubmit} noValidate>
+                <Innholdstittel className="dialog-new__tittel">Ny dialog</Innholdstittel>
+                <Normaltekst className="dialog-new__infotekst">
+                    Her kan du skrive til din veileder om arbeid og oppfølging. Du vil få svar i løpet av noen dager.
+                </Normaltekst>
+                <DialogNewFeedbackSummary nyDialogFeedback={nyDialogFeedback} />
+                <Input
+                    id="temaIn"
+                    className="dialog-new__temafelt"
+                    label={'Tema:'}
+                    placeholder="Skriv her"
+                    {...tema.input}
+                />
+                <HenvendelseInput melding={melding} />
+                <AlertStripeFeilVisible visible={submitfeil}>
+                    Det skjedde en alvorlig feil. Prøv igjen senere
+                </AlertStripeFeilVisible>
+            </form>
+        </div>
+    );
 }
+
+const AlertStripeFeilVisible = visibleIfHoc(AlertStripeFeil);
 
 export default withRouter(DialogNew);

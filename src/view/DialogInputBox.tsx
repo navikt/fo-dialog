@@ -6,6 +6,7 @@ import HenvendelseInput from '../component/HenvendelseInput';
 import { fetchData } from '../utils/fetch';
 import { useDialogContext } from '../Context';
 import { RouteComponentProps, withRouter } from 'react-router';
+import { AlertStripeFeil } from 'nav-frontend-alertstriper';
 
 interface Props extends RouteComponentProps<{}> {}
 
@@ -24,6 +25,7 @@ interface Props {
 export function DialogInputBox(props: Props) {
     const dialoger = useDialogContext();
     const melding = useFieldState('', validerMelding);
+    var submitfeil: boolean = false;
 
     function handleSubmit(event: FormEvent) {
         event.preventDefault();
@@ -44,7 +46,7 @@ export function DialogInputBox(props: Props) {
                 },
                 function(error) {
                     console.log('Failed posting endret dialog!', error);
-                    //TODO inform with a user friendly message
+                    submitfeil = true;
                 }
             );
         }
@@ -53,9 +55,13 @@ export function DialogInputBox(props: Props) {
     return (
         <form onSubmit={handleSubmit} noValidate>
             <HenvendelseInput melding={melding} />
+            <AlertStripeFeilVisible visible={submitfeil}>
+                Det skjedde en alvorlig feil. Prøv igjen senere
+            </AlertStripeFeilVisible>
         </form>
     );
 }
 const DialogInputBoxVisible = visibleIfHoc(DialogInputBox);
+const AlertStripeFeilVisible = visibleIfHoc(AlertStripeFeil);
 
 export default withRouter(DialogInputBoxVisible);
