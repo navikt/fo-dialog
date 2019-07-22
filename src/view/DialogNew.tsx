@@ -7,6 +7,8 @@ import { fetchData } from '../utils/fetch';
 import { useDialogContext } from '../Context';
 import { RouteComponentProps, withRouter } from 'react-router';
 import HenvendelseInput from '../component/HenvendelseInput';
+import { VenstreChevron } from 'nav-frontend-chevron';
+import { Link } from 'react-router-dom';
 
 import './dialognew.less';
 import './Dialog.less';
@@ -59,14 +61,23 @@ function DialogNew(props: Props) {
 
     return (
         <div className="dialog-new">
-            <form onSubmit={handleSubmit} noValidate>
-                <Innholdstittel className="dialog-new__tittel">Ny Dialog</Innholdstittel>
-                <Normaltekst className="dialog-new__infotekst">
-                    Her kan du skrive til din veileder om arbeid og oppfølging. Du vil få svar i løpet av noen dager.
-                </Normaltekst>
-                <Input className="dialog-new__temafelt" label={'Tema:'} placeholder="Skriv her" {...tema.input} />
-                <HenvendelseInput melding={melding} />
-            </form>
+            <div className="dialog-new__header">
+                <Link to="/" className="tilbake-til-oversikt">
+                    <VenstreChevron stor className="tilbake-til-oversikt__pilknapp" />
+                    Oversikt
+                </Link>
+            </div>
+            <div className="container">
+                <form onSubmit={handleSubmit} noValidate>
+                    <Innholdstittel className="dialog-new__tittel">Ny Dialog</Innholdstittel>
+                    <Normaltekst className="dialog-new__infotekst">
+                        Her kan du skrive til din veileder om arbeid og oppfølging. Du vil få svar i løpet av noen
+                        dager.
+                    </Normaltekst>
+                    <Input className="dialog-new__temafelt" label={'Tema:'} placeholder="Skriv her" {...tema.input} />
+                    <HenvendelseInput melding={melding} />
+                </form>
+            </div>
         </div>
     );
 }
