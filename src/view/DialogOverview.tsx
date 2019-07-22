@@ -19,11 +19,12 @@ export function DialogOverview(props: Props) {
     if (!erUnderOppfolging && !harOppfolgingsPerioder) {
         return null;
     } else {
+        const sortedOppfolgingsData = props.dialogData.sort((a, b) => b.sisteDato.localeCompare(a.sisteDato));
         return (
             <div className="dialog-overview">
                 <DialogOverviewHeaderVisible dialogData={props.dialogData} visible={oppfolgingData!.underOppfolging} />
                 <div className="dialog-overview__preview-list">
-                    {props.dialogData.map(dialog => (
+                    {sortedOppfolgingsData.map(dialog => (
                         <DialogPreview dialog={dialog} key={dialog.id} />
                     ))}
                 </div>

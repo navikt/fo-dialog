@@ -12,7 +12,7 @@ export interface DialogData {
     aktivitetId: StringOrUndefinedOrNull;
     overskrift: StringOrUndefinedOrNull;
     sisteTekst: StringOrUndefinedOrNull;
-    sisteDato: StringOrUndefinedOrNull;
+    sisteDato: string;
     opprettetDato: StringOrUndefinedOrNull;
     historisk: boolean;
     lest: boolean;
