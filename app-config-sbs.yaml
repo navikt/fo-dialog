@@ -17,6 +17,9 @@ prometheus:
   path: /internal/metrics
 fasitResources:
   used:
+  - alias: loadbalancer:arbeidsrettet-dialog
+    resourceType: loadbalancerconfig
+    
   - alias: appres.cms
     resourceType: baseurl
   - alias: appdynamics
