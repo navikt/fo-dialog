@@ -15,6 +15,7 @@ body,
     display: flex;
     flex-direction: column;
     height: 100%;
+    color: @navMorkGra;
 }
 
 .app__body {
@@ -22,6 +23,7 @@ body,
     height: 100%;
     .dialog-overview {
         width: 100%;
+        z-index: 250;
     }
     .dialog {
         width: 100%;
@@ -62,7 +64,31 @@ body,
         .aktivitetkort {
             display: block;
             width: 30%;
-            background-color: @navBlaLighten60;
+            background-color: @navLysGra;
+            padding: 1rem 2rem;
+
+            &__link {
+                margin: 1rem 0;
+            }
+
+            &__brødsmulesti {
+                margin-bottom: 2rem;
+                color: @navGra60;
+            }
+
+            &__infobox__row {
+                flex-grow: 1;
+                justify-content: space-between;
+                display: flex;
+                flex-wrap: wrap;
+                &__item {
+                    margin-bottom: 1rem;
+                    min-width: 10rem;
+                    .label {
+                        color: @navGra60;
+                    }
+                }
+            }
         }
         .dialog {
             display: flex;
