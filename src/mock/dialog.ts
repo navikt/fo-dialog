@@ -1,6 +1,7 @@
 import { DialogData, HenvendelseData, NyDialogMeldingData } from '../utils/typer';
 import { rndId } from './utils';
 import { JSONArray, JSONObject, ResponseData } from 'yet-another-fetch-mock';
+import bruker from './bruker';
 
 const dialoger: DialogData[] & JSONArray = [
     {
@@ -186,6 +187,11 @@ export function opprettEllerOppdaterDialog(update: NyDialogMeldingData): DialogD
         oldDialog.sisteTekst = update.tekst;
         oldDialog.sisteDato = nyHenvendelse.sendt;
         oldDialog.henvendelser.push(nyHenvendelse);
+
+        if (!bruker.erVeileder) {
+            oldDialog.venterPaSvar = false;
+        }
+
         return oldDialog as DialogData & JSONObject;
     } else {
         const nyDialog: DialogData = {
