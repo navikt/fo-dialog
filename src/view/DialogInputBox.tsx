@@ -64,6 +64,9 @@ export function DialogInputBox(props: Props) {
                     console.log('Posted endret dialog!', response);
                     if (bruker && !bruker.erVeileder) {
                         toggleFerdigBehandlet(false);
+                        if (venterPaSvar) {
+                            toggleVenterPaSvar(false);
+                        }
                     }
                     dialoger.refetch();
                     props.history.push('/' + response.id);
