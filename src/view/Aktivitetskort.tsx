@@ -1,6 +1,6 @@
 import React from 'react';
 import { Aktivitet, DialogData } from '../utils/typer';
-import {EtikettLiten, Element, Systemtittel} from 'nav-frontend-typografi';
+import { EtikettLiten, Element, Systemtittel } from 'nav-frontend-typografi';
 import useFetch from '../utils/use-fetch';
 import Lenke from 'nav-frontend-lenker';
 import { HoyreChevron } from 'nav-frontend-chevron';
@@ -20,15 +20,14 @@ export function Aktivitetskort(props: Props) {
             return (
                 <div className="aktivitetkort">
                     <EtikettLiten className="aktivitetkort__brødsmulesti">
-                        {' '}
                         aktivitet / {aktivitet.status} / {mapAktivitetTypeToHumanReadableString(aktivitet.type)}
                     </EtikettLiten>
                     <Systemtittel>{aktivitet.tittel}</Systemtittel>
                     <Element className="aktivitetkort__link">
-                    <Lenke href={'temp'}>
-                        Les mer i aktivitetsplanen
-                        <HoyreChevron />
-                    </Lenke>
+                        <Lenke href={'temp'}>
+                            Les mer i aktivitetsplanen
+                            <HoyreChevron />
+                        </Lenke>
                     </Element>
                     <AktivitetskortInfoBox aktivitet={aktivitet} />
                 </div>
