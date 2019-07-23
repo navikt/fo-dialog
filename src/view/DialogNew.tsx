@@ -1,7 +1,7 @@
-import React, { FormEvent } from 'react';
+import React, { FormEvent, useState } from 'react';
 import { Innholdstittel, Normaltekst } from 'nav-frontend-typografi';
 import { Input } from 'nav-frontend-skjema';
-import useFieldState, { FieldState } from '../utils/useFieldState';
+import useFieldState from '../utils/useFieldState';
 import { DialogData, NyDialogMeldingData } from '../utils/typer';
 import { fetchData } from '../utils/fetch';
 import { useDialogContext } from '../Context';
@@ -35,12 +35,8 @@ function validerMelding(melding: string): string | null {
 function DialogNew(props: Props) {
     const tema = useFieldState('', validerTema);
     const melding = useFieldState('', validerMelding);
+    const [submitfeil, setSubmitfeil] = useState<boolean>(false);
     const dialoger = useDialogContext();
-    const nyDialogFeedback: {
-        tema: FieldState;
-        melding: FieldState;
-    } = { tema, melding };
-    var submitfeil: boolean = false;
 
     function handleSubmit(event: FormEvent) {
         event.preventDefault();
@@ -63,7 +59,7 @@ function DialogNew(props: Props) {
                 },
                 function(error) {
                     console.log('Failed posting the new dialog!', error);
-                    submitfeil = true;
+                    setSubmitfeil(true);
                 }
             );
         }
@@ -75,7 +71,7 @@ function DialogNew(props: Props) {
                 <Normaltekst className="dialog-new__infotekst">
                     Her kan du skrive til din veileder om arbeid og oppfølging. Du vil få svar i løpet av noen dager.
                 </Normaltekst>
-                <DialogNewFeedbackSummary nyDialogFeedback={nyDialogFeedback} />
+                <DialogNewFeedbackSummary tema={tema} melding={melding} />
                 <Input
                     id="temaIn"
                     className="dialog-new__temafelt"

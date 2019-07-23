@@ -1,4 +1,4 @@
-import React, { FormEvent } from 'react';
+import React, { FormEvent, useState } from 'react';
 import useFieldState from '../utils/useFieldState';
 import { DialogData } from '../utils/typer';
 import { visibleIfHoc } from '../component/hoc/visibleIfHoc';
@@ -25,7 +25,7 @@ interface Props {
 export function DialogInputBox(props: Props) {
     const dialoger = useDialogContext();
     const melding = useFieldState('', validerMelding);
-    var submitfeil: boolean = false;
+    const [submitfeil, setSubmitfeil] = useState<boolean>(false);
 
     function handleSubmit(event: FormEvent) {
         event.preventDefault();
@@ -45,8 +45,8 @@ export function DialogInputBox(props: Props) {
                     props.history.push('/' + response.id);
                 },
                 function(error) {
-                    console.log('Failed posting endret dialog!', error);
-                    submitfeil = true;
+                    console.log('Failed while posting endret dialog!', error);
+                    setSubmitfeil(true);
                 }
             );
         }

@@ -16,14 +16,6 @@
         margin: 0 0 1rem 0;
         width: 95%;
     }
-    &__feedbacksummary {
-        background-color: @redError;
-        border-radius: 4px;
-        color: white;
-        margin: 0 0 1rem 0;
-        padding: 24px;
-        width: 95%;
-    }
 
     .skriv-melding {
         display: flex;
@@ -40,6 +32,19 @@
             margin-left: 1rem;
         }
     }
+
+    .feedbacksummary {
+        background-color: @redError;
+        border-radius: 4px;
+        color: white;
+        margin: 0 0 1rem 0;
+        padding: 24px;
+        width: 95%;
+        &__lenke {
+            color: white;
+        }
+    }
+
     @media (min-width: 800px) {
         margin: 0 6% 0 6%;
         &__infotekst {

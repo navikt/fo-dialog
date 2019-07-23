@@ -1,39 +1,23 @@
-import { Normaltekst, Undertittel } from 'nav-frontend-typografi';
-import React, { ReactNode } from 'react';
+import { Undertittel } from 'nav-frontend-typografi';
+import React from 'react';
 import { FieldState } from '../utils/useFieldState';
 
-function feilmeldingslenke(feil: ReactNode, anchor: string) {
-    return (
-        <li>
-            <a href={anchor}>
-                <Normaltekst className="dialog-new__errortekst">{feil}</Normaltekst>
-            </a>
-        </li>
-    );
+import './dialognew.less';
+import Feilmeldingslenke from './Feilmeldingslenke';
+
+interface Props {
+    tema: FieldState;
+    melding: FieldState;
 }
 
-interface NyDialogFeedback {
-    nyDialogFeedback: {
-        tema: FieldState;
-        melding: FieldState;
-    };
-}
-
-function DialogNewFeedbackSummary(props: NyDialogFeedback) {
-    const temaInput = props.nyDialogFeedback.tema.input;
-    const meldingInput = props.nyDialogFeedback.melding.input;
-
-    if (temaInput.feil !== undefined || meldingInput.feil !== undefined) {
-        //TODO: ikke vis feedbacksummary visse ganger (f.eks. ikke før SEND
+function DialogNewFeedbackSummary(props: Props) {
+    //TODO: ikke vis feedbacksummary visse ganger (f.eks. ikke før SEND
+    if (props.tema.input.feil !== undefined || props.melding.input.feil !== undefined) {
         return (
-            <div className="dialog-new__feedbacksummary">
+            <div className="feedbacksummary">
                 <Undertittel>Fyll ut obligatoriske felt</Undertittel>
-                <ul>
-                    {temaInput.feil !== undefined ? feilmeldingslenke(temaInput.feil.feilmelding, '#temaIn') : ''}
-                    {meldingInput.feil !== undefined
-                        ? feilmeldingslenke(meldingInput.feil.feilmelding, '#meldingIn')
-                        : ''}
-                </ul>
+                <Feilmeldingslenke anchor="#temaIn" feil={props.tema.input.feil} />
+                <Feilmeldingslenke anchor="#meldingIn" feil={props.melding.input.feil} />
             </div>
         );
     }
