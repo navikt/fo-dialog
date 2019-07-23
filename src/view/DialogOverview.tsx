@@ -19,7 +19,7 @@ export function DialogOverview(props: Props) {
     if (!erUnderOppfolging && !harOppfolgingsPerioder) {
         return null;
     } else {
-        const sortedOppfolgingsData = props.dialogData.sort((a, b) => b.sisteDato.localeCompare(a.sisteDato));
+        const sortedOppfolgingsData = props.dialogData.sort((a, b) => sortDialoger(a, b));
         return (
             <div className="dialog-overview">
                 <DialogOverviewHeaderVisible dialogData={props.dialogData} visible={oppfolgingData!.underOppfolging} />
@@ -31,4 +31,10 @@ export function DialogOverview(props: Props) {
             </div>
         );
     }
+}
+
+function sortDialoger(a: DialogData, b: DialogData): number {
+    var adato = a.sisteDato === null ? '' : '' + a.sisteDato;
+    var bdato = b.sisteDato === null ? '' : '' + b.sisteDato;
+    return adato > bdato ? -1 : adato === bdato ? 0 : 1;
 }
