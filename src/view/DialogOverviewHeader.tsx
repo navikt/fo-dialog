@@ -15,7 +15,7 @@ export function DialogOverviewHeader(props: Props) {
     return (
         <div className="dialog-overview__header">
             <div className="header-panel">
-                <Link className="header-panel__knapp" to={'/ny'}>
+                <Link className="header-panel__knapp knapp--flat knapp" to={'/ny'}>
                     <PlussIkon />
                     Ny dialog
                 </Link>
