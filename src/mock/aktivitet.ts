@@ -6,8 +6,8 @@ const aktiviteter: Aktivitet[] & JSONArray = [
         id: '6871',
         versjon: '9389',
         tittel: 'Systemdesignutvikler',
-        beskrivelse: "En lukrativ konsulentjobb der du kommer til å tjene masse gryn",
-        lenke: "https://www.vg.no/",
+        beskrivelse: 'En lukrativ konsulentjobb der du kommer til å tjene masse gryn',
+        lenke: 'https://www.vg.no/',
         type: 'STILLING',
         status: 'PLANLAGT',
         fraDato: '2018-08-21T08:00:00+02:00',
@@ -22,8 +22,8 @@ const aktiviteter: Aktivitet[] & JSONArray = [
         transaksjonsType: 'STATUS_ENDRET',
         etikett: null,
         kontaktperson: null,
-        arbeidsgiver: "Bris Consulting AS er flott selskap som driver medd mye hyggelig",
-        arbeidssted: "Trondheim",
+        arbeidsgiver: 'Bris Consulting AS er flott selskap som driver medd mye hyggelig',
+        arbeidssted: 'Trondheim',
         stillingsTittel: 'Kunderådgiver',
         hensikt: null,
         oppfolging: null,
@@ -77,7 +77,8 @@ const aktiviteter: Aktivitet[] & JSONArray = [
         erReferatPublisert: false,
         varighet: 75,
         klokkeslett: 700,
-        adresse: "Rekegata 69 er en hyggelig lokasjon med god service og flinke veiledere en av dem heter Linn hun er designer og er utdannet på NTNU"
+        adresse:
+            'Rekegata 69 er en hyggelig lokasjon med god service og flinke veiledere en av dem heter Linn hun er designer og er utdannet på NTNU'
     }
 ];
 
