@@ -3,7 +3,7 @@ import { visibleIfHoc } from '../component/hoc/visibleIfHoc';
 import { DialogData } from '../utils/typer';
 import { Checkbox } from '../component/checkbox/Checkbox';
 import { Link } from 'react-router-dom';
-import { ReactComponent as PlussIkon } from './add-circle.svg';
+import { ReactComponent as PlussIkon } from './ikon_pluss.svg';
 
 interface Props {
     dialogData: DialogData[];
