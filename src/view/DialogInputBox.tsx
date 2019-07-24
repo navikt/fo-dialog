@@ -39,7 +39,7 @@ export function DialogInputBox(props: Props) {
                 function(response) {
                     melding.setValue('');
                     console.log('Posted endret dialog!', response);
-                    dialoger.refetch();
+                    dialoger.rerun();
                     props.history.push('/' + response.id);
                 },
                 function(error) {

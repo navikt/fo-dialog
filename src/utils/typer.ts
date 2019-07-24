@@ -1,5 +1,6 @@
 export type ValueOrUndefinedOrNull<T> = T | null | undefined;
 export type StringOrUndefinedOrNull = ValueOrUndefinedOrNull<string>;
+export type NumberOrUndefinedOrNull = ValueOrUndefinedOrNull<number>;
 
 export interface NyDialogMeldingData {
     tekst: string;
@@ -63,4 +64,49 @@ export interface PeriodeData {
     startDato: StringOrUndefinedOrNull;
     sluttDato: StringOrUndefinedOrNull;
     begrunnelse: StringOrUndefinedOrNull;
+}
+
+export interface Aktivitet {
+    id: string;
+    versjon: StringOrUndefinedOrNull;
+    tittel: string;
+    beskrivelse: StringOrUndefinedOrNull;
+    lenke: StringOrUndefinedOrNull;
+    type: string;
+    status: StringOrUndefinedOrNull;
+    fraDato: string;
+    tilDato: string;
+    opprettetDato: StringOrUndefinedOrNull;
+    endretDato: StringOrUndefinedOrNull;
+    endretAv: StringOrUndefinedOrNull;
+    historisk: boolean;
+    avsluttetKommentar: StringOrUndefinedOrNull;
+    avtalt: boolean;
+    lagtInnAv: StringOrUndefinedOrNull;
+    transaksjonsType: StringOrUndefinedOrNull;
+    etikett: StringOrUndefinedOrNull;
+    kontaktperson: StringOrUndefinedOrNull;
+    arbeidsgiver: StringOrUndefinedOrNull;
+    arbeidssted: StringOrUndefinedOrNull;
+    stillingsTittel: StringOrUndefinedOrNull;
+    hensikt: StringOrUndefinedOrNull;
+    oppfolging: StringOrUndefinedOrNull;
+    antallStillingerSokes: StringOrUndefinedOrNull;
+    avtaleOppfolging: StringOrUndefinedOrNull;
+    jobbStatus: StringOrUndefinedOrNull;
+    ansettelsesforhold: StringOrUndefinedOrNull;
+    arbeidstid: StringOrUndefinedOrNull;
+    behandlingType: StringOrUndefinedOrNull;
+    behandlingSted: StringOrUndefinedOrNull;
+    effekt: StringOrUndefinedOrNull;
+    behandlingOppfolging: StringOrUndefinedOrNull;
+    kanal: StringOrUndefinedOrNull;
+    erReferatPublisert: boolean;
+    varighet?: NumberOrUndefinedOrNull;
+    klokkeslett?: NumberOrUndefinedOrNull;
+    adresse?: StringOrUndefinedOrNull;
+    referat?: StringOrUndefinedOrNull;
+    arrangoer?: StringOrUndefinedOrNull;
+    deltakelseProsent?: NumberOrUndefinedOrNull;
+    antallDagerPerUke?: NumberOrUndefinedOrNull;
 }
