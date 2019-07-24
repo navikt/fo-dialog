@@ -4,11 +4,15 @@ import { DialogData } from '../utils/typer';
 import { visibleIfHoc } from '../component/hoc/visibleIfHoc';
 import HenvendelseInput from '../component/HenvendelseInput';
 import { fetchData } from '../utils/fetch';
-import { useDialogContext } from '../Context';
+import { useDialogContext, useUserInfoContext } from '../Context';
 import { RouteComponentProps, withRouter } from 'react-router';
+import DialogCheckboxesVisible from './DialogCheckboxes';
+import { hasData } from '@nutgaard/use-fetch';
 import { AlertStripeFeil } from 'nav-frontend-alertstriper';
 
-interface Props extends RouteComponentProps<{}> {}
+interface Props extends RouteComponentProps<{ dialogId?: string }> {
+    dialog: DialogData;
+}
 
 function validerMelding(melding: string): string | null {
     if (melding.trim().length === 0) {
@@ -18,14 +22,35 @@ function validerMelding(melding: string): string | null {
     }
 }
 
-interface Props {
-    dialog: DialogData;
-}
-
 export function DialogInputBox(props: Props) {
+    const bruker = useUserInfoContext();
     const dialoger = useDialogContext();
     const melding = useFieldState('', validerMelding);
     const [submitfeil, setSubmitfeil] = useState<boolean>(false);
+    const dialogData = hasData(dialoger) ? dialoger.data : [];
+    const dialogId = props.match.params.dialogId;
+    const valgtDialog = dialogData.find(dialog => dialog.id === dialogId);
+
+    const [ferdigBehandlet, setFerdigBehandlet] = useState(valgtDialog ? valgtDialog.ferdigBehandlet : true);
+    const [venterPaSvar, setVenterPaSvar] = useState(valgtDialog ? valgtDialog.venterPaSvar : false);
+
+    const toggleFerdigBehandlet = (nyFerdigBehandletVerdi: boolean) => {
+        setFerdigBehandlet(nyFerdigBehandletVerdi);
+        fetchData<DialogData>(
+            `/veilarbdialog/api/dialog/${valgtDialog!.id}/ferdigbehandlet/${nyFerdigBehandletVerdi}`,
+            {
+                method: 'put'
+            }
+        );
+        dialoger.rerun();
+    };
+    const toggleVenterPaSvar = (nyVenterPaSvarVerdi: boolean) => {
+        setVenterPaSvar(nyVenterPaSvarVerdi);
+        fetchData<DialogData>(`/veilarbdialog/api/dialog/${valgtDialog!.id}/venter_pa_svar/${nyVenterPaSvarVerdi}`, {
+            method: 'put'
+        });
+        dialoger.rerun();
+    };
 
     function handleSubmit(event: FormEvent) {
         event.preventDefault();
@@ -41,7 +66,7 @@ export function DialogInputBox(props: Props) {
                 function(response) {
                     melding.setValue('');
                     console.log('Posted endret dialog!', response);
-                    dialoger.refetch();
+                    dialoger.rerun();
                     props.history.push('/' + response.id);
                 },
                 function(error) {
@@ -51,14 +76,22 @@ export function DialogInputBox(props: Props) {
             );
         }
     }
-
     return (
-        <form onSubmit={handleSubmit} noValidate>
-            <HenvendelseInput melding={melding} />
-            <AlertStripeFeilVisible visible={submitfeil}>
-                Det skjedde en alvorlig feil. Prøv igjen senere
-            </AlertStripeFeilVisible>
-        </form>
+        <>
+            <form onSubmit={handleSubmit} noValidate>
+                <HenvendelseInput melding={melding} />
+                <DialogCheckboxesVisible
+                    toggleFerdigBehandlet={toggleFerdigBehandlet}
+                    toggleVenterPaSvar={toggleVenterPaSvar}
+                    ferdigBehandlet={ferdigBehandlet}
+                    venterPaSvar={venterPaSvar}
+                    visible={bruker!.erVeileder}
+                />
+                <AlertStripeFeilVisible visible={submitfeil}>
+                    Det skjedde en alvorlig feil. Prøv igjen senere
+                </AlertStripeFeilVisible>
+            </form>
+        </>
     );
 }
 const DialogInputBoxVisible = visibleIfHoc(DialogInputBox);

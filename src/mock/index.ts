@@ -1,7 +1,8 @@
 import FetchMock, { Middleware, MiddlewareUtils } from 'yet-another-fetch-mock';
-import dialoger, { lesDialog, opprettEllerOppdaterDialog } from './dialog';
+import dialoger, { lesDialog, opprettEllerOppdaterDialog, setFerdigBehandlet, setVenterPaSvar } from './dialog';
 import bruker from './bruker';
 import oppfolging from './oppfolging';
+import aktiviteter from './aktivitet';
 
 const loggingMiddleware: Middleware = (request, response) => {
     // tslint:disable
@@ -35,6 +36,15 @@ mock.post('/veilarbdialog/api/dialog/ny', ({ body }) => opprettEllerOppdaterDial
 
 mock.put('/veilarbdialog/api/dialog/lest', ({ body }) => lesDialog(body.dialogId));
 
+mock.put('/veilarbdialog/api/dialog/:dialogId/venter_pa_svar/:bool', ({ pathParams }) =>
+    setVenterPaSvar(pathParams.dialogId, pathParams.bool === 'true')
+);
+mock.put('/veilarbdialog/api/dialog/:dialogId/ferdigbehandlet/:bool', ({ pathParams }) =>
+    setFerdigBehandlet(pathParams.dialogId, pathParams.bool === 'true')
+);
+
 mock.get('/veilarboppfolging/api/oppfolging/me', bruker);
 
 mock.get('/veilarboppfolging/api/oppfolging', oppfolging);
+
+mock.get('/veilarbaktivitet/api/aktivitet', aktiviteter);

@@ -7,7 +7,8 @@
     &__header {
         background-color: @navLysGra;
         flex-basis: 4rem;
-
+        box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+        z-index: 100;
         .dialog__tittel {
             padding: 1rem;
         }
@@ -32,8 +33,15 @@
     }
 
     .aktivitetskortpreview {
-        background-color: @navBlaLighten60;
+        display: flex;
+        background-color: white;
         height: 4rem;
+        margin: 0.5rem;
+        border-radius: 0;
+        &__ikon {
+            flex-basis: 1.5rem;
+            flex-shrink: 0;
+        }
     }
     @media (min-width: 800px) {
         .tilbake-til-oversikt {
@@ -41,7 +49,7 @@
         }
     }
     @media (min-width: 1200px) {
-        .aktivitetskortpreview {
+        &__header {
             display: none;
         }
     }
@@ -84,4 +92,11 @@
 
 .meldingsfelt {
     width: 100%;
+}
+.checkbox-block {
+    display: flex;
+    padding-left: 1rem;
+    &__item {
+        padding-right: 2rem;
+    }
 }

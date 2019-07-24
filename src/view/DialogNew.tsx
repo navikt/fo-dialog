@@ -4,13 +4,13 @@ import { Input } from 'nav-frontend-skjema';
 import useFieldState from '../utils/useFieldState';
 import { DialogData, NyDialogMeldingData } from '../utils/typer';
 import { fetchData } from '../utils/fetch';
-import { useDialogContext } from '../Context';
+import { useDialogContext, useUserInfoContext } from '../Context';
 import { RouteComponentProps, withRouter } from 'react-router';
 import HenvendelseInput from '../component/HenvendelseInput';
+import DialogCheckboxesVisible from './DialogCheckboxes';
 import DialogNewFeedbackSummary from './DialogNewFeedbackSummary';
 import { AlertStripeFeil } from 'nav-frontend-alertstriper';
 import { visibleIfHoc } from '../component/hoc/visibleIfHoc';
-
 import './dialognew.less';
 import './Dialog.less';
 
@@ -37,6 +37,10 @@ function DialogNew(props: Props) {
     const melding = useFieldState('', validerMelding);
     const [submitfeil, setSubmitfeil] = useState<boolean>(false);
     const dialoger = useDialogContext();
+    const bruker = useUserInfoContext();
+
+    const [ferdigBehandlet, setFerdigBehandlet] = useState(true);
+    const [venterPaSvar, setVenterPaSvar] = useState(false);
 
     function handleSubmit(event: FormEvent) {
         event.preventDefault();
@@ -50,20 +54,47 @@ function DialogNew(props: Props) {
                 overskrift: tema.input.value,
                 tekst: melding.input.value
             };
-            const body = JSON.stringify(nyDialogData);
-            fetchData<DialogData>('/veilarbdialog/api/dialog/ny', { method: 'post', body }).then(
-                function(response) {
-                    console.log('Posted the new dialog!', response);
-                    dialoger.refetch();
-                    props.history.push('/' + response.id);
-                },
-                function(error) {
-                    console.log('Failed posting the new dialog!', error);
-                    setSubmitfeil(true);
-                }
-            );
+            fetchData<DialogData>('/veilarbdialog/api/dialog/ny', {
+                method: 'post',
+                body: JSON.stringify(nyDialogData)
+            })
+                .then((dialog: DialogData) => {
+                    if (bruker && bruker.erVeileder) {
+                        const updateFerdigbehandlet = fetchData<DialogData>(
+                            `/veilarbdialog/api/dialog/${dialog.id}/ferdigbehandlet/${ferdigBehandlet}`,
+                            { method: 'put' }
+                        );
+                        const updateVenterPaSvar = fetchData(
+                            `/veilarbdialog/api/dialog/${dialog.id}/venter_pa_svar/${venterPaSvar}`,
+                            { method: 'put' }
+                        );
+                        return Promise.all([updateFerdigbehandlet, updateVenterPaSvar]).then(() => dialog);
+                    }
+                    return dialog;
+                })
+                .then(
+                    function(dialog: DialogData) {
+                        dialoger.rerun();
+                        props.history.push('/' + dialog.id);
+                    },
+                    function(error) {
+                        console.log('Failed posting the new dialog!', error);
+                        setSubmitfeil(true);
+                    }
+                );
         }
     }
+
+    const toggleFerdigBehandlet = (nyFerdigBehandletVerdi: boolean) => {
+        setFerdigBehandlet(nyFerdigBehandletVerdi);
+        console.log('hei, toggleFerdigBehandlet');
+    };
+
+    const toggleVenterPaSvar = (nyVenterPaSvarVerdi: boolean) => {
+        setVenterPaSvar(nyVenterPaSvarVerdi);
+        console.log('venterpasvar', nyVenterPaSvarVerdi);
+    };
+
     return (
         <div className="dialog-new">
             <form onSubmit={handleSubmit} noValidate>
@@ -80,6 +111,13 @@ function DialogNew(props: Props) {
                     {...tema.input}
                 />
                 <HenvendelseInput melding={melding} />
+                <DialogCheckboxesVisible
+                    toggleFerdigBehandlet={toggleFerdigBehandlet}
+                    toggleVenterPaSvar={toggleVenterPaSvar}
+                    ferdigBehandlet={ferdigBehandlet}
+                    venterPaSvar={venterPaSvar}
+                    visible={bruker!.erVeileder}
+                />
                 <AlertStripeFeilVisible visible={submitfeil}>
                     Det skjedde en alvorlig feil. Prøv igjen senere
                 </AlertStripeFeilVisible>
