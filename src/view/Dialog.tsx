@@ -1,4 +1,5 @@
 import React, { useEffect } from 'react';
+import { hasData } from '@nutgaard/use-fetch';
 import { HenvendelseList } from './HenvendelseList';
 import { DialogHeader } from './DialogHeader';
 import { useDialogContext, useOppfolgingContext } from '../Context';
@@ -14,8 +15,9 @@ interface Props extends RouteComponentProps<{ dialogId?: string }> {}
 export function Dialog(props: Props) {
     const oppfolgingData = useOppfolgingContext();
     const dialoger = useDialogContext();
+    const dialogData = hasData(dialoger) ? dialoger.data : [];
     const dialogId = props.match.params.dialogId;
-    const valgtDialog = dialoger.data!.find(dialog => dialog.id === dialogId);
+    const valgtDialog = dialogData.find(dialog => dialog.id === dialogId);
 
     useEffect(() => {
         if (valgtDialog && !valgtDialog.lest) {
@@ -25,12 +27,12 @@ export function Dialog(props: Props) {
                     lest: true,
                     dialogId: valgtDialog.id
                 })
-            }).then(() => dialoger.refetch());
+            }).then(() => dialoger.rerun());
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [valgtDialog]);
 
-    if (dialoger.data && dialoger.data.length === 0) {
+    if (dialogData.length === 0) {
         return (
             <div className="dialog">
                 <Innholdstittel>Dialog</Innholdstittel>

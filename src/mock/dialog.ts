@@ -51,7 +51,7 @@ const dialoger: DialogData[] & JSONArray = [
         ferdigBehandlet: true,
         lestAvBrukerTidspunkt: null,
         erLestAvBruker: false,
-        aktivitetId: null,
+        aktivitetId: '10',
         henvendelser: [
             {
                 id: '4',
@@ -78,7 +78,7 @@ const dialoger: DialogData[] & JSONArray = [
         ferdigBehandlet: true,
         lestAvBrukerTidspunkt: null,
         erLestAvBruker: false,
-        aktivitetId: null,
+        aktivitetId: '123',
         henvendelser: [
             {
                 id: '3',
@@ -107,7 +107,7 @@ const dialoger: DialogData[] & JSONArray = [
         ferdigBehandlet: true,
         lestAvBrukerTidspunkt: null,
         erLestAvBruker: false,
-        aktivitetId: '1',
+        aktivitetId: '6871',
         henvendelser: [
             {
                 id: '4',

@@ -8,14 +8,14 @@ import { AlertStripeContainer } from './view/AlertStripeContainer';
 
 import './App.less';
 import classNames from 'classnames';
-import { UseFetchHook } from './utils/use-fetch';
-import { DialogData } from './utils/typer';
 
 function Routing() {
     return (
         <Router>
             <div className="app">
-                <Provider>{(bruker, oppfolgingData, dialoger) => <AppWithRouting dialoger={dialoger} />}</Provider>
+                <Provider>
+                    <AppWithRouting />
+                </Provider>
             </div>
         </Router>
     );
@@ -23,9 +23,7 @@ function Routing() {
 
 export default Routing;
 
-interface Props extends RouteComponentProps<{ dialogId?: string }> {
-    dialoger: UseFetchHook<DialogData[]>;
-}
+interface Props extends RouteComponentProps<{ dialogId?: string }> {}
 
 function App(props: Props) {
     const harDialogId = matchPath<{ dialogId: string }>(props.location.pathname, '/:dialogId');
@@ -41,7 +39,7 @@ function App(props: Props) {
         <>
             <AlertStripeContainer />
             <div className={appbodycls}>
-                <DialogOverview dialogData={props.dialoger.data!} />
+                <DialogOverview />
                 <Switch>
                     <Route exact path="/" component={Dialog} />
                     <Route path="/ny" component={DialogNew} />

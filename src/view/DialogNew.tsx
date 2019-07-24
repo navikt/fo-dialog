@@ -48,7 +48,7 @@ function DialogNew(props: Props) {
             fetchData<DialogData>('/veilarbdialog/api/dialog/ny', { method: 'post', body }).then(
                 function(response) {
                     console.log('Posted the new dialog!', response);
-                    dialoger.refetch();
+                    dialoger.rerun();
                     props.history.push('/' + response.id);
                 },
                 function(error) {
