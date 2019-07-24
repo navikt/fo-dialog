@@ -11,9 +11,7 @@ import DialogCheckboxesVisible from './DialogCheckboxes';
 import './dialognew.less';
 import './Dialog.less';
 
-interface Props extends RouteComponentProps<{ dialogId?: string }> {
-    dialog: DialogData;
-}
+interface Props extends RouteComponentProps<{}> {}
 
 function validerTema(tema: string): string | null {
     if (tema.trim().length === 0) {
@@ -49,7 +47,6 @@ function DialogNew(props: Props) {
                 overskrift: tema.input.value,
                 tekst: melding.input.value
             });
-
             fetchData<DialogData>('/veilarbdialog/api/dialog/ny', { method: 'post', body })
                 .then((dialog: DialogData) => {
                     if (bruker && bruker.erVeileder) {
@@ -65,10 +62,16 @@ function DialogNew(props: Props) {
                     }
                     return dialog;
                 })
-                .then(function(dialog: DialogData) {
-                    dialoger.refetch();
-                    props.history.push('/' + dialog.id);
-                });
+                .then(
+                    function(dialog: DialogData) {
+                        dialoger.rerun();
+                        props.history.push('/' + dialog.id);
+                    },
+                    function(error) {
+                        console.log('Failed posting the new dialog!', error);
+                        //TODO inform with a user friendly message
+                    }
+                );
         }
     }
 

@@ -7,6 +7,7 @@ import { fetchData } from '../utils/fetch';
 import { useDialogContext, useUserInfoContext } from '../Context';
 import { RouteComponentProps, withRouter } from 'react-router';
 import DialogCheckboxesVisible from './DialogCheckboxes';
+import { hasData } from '@nutgaard/use-fetch';
 
 interface Props extends RouteComponentProps<{ dialogId?: string }> {
     dialog: DialogData;
@@ -24,8 +25,9 @@ export function DialogInputBox(props: Props) {
     const bruker = useUserInfoContext();
     const dialoger = useDialogContext();
     const melding = useFieldState('', validerMelding);
+    const dialogData = hasData(dialoger) ? dialoger.data : [];
     const dialogId = props.match.params.dialogId;
-    const valgtDialog = dialoger.data!.find(dialog => dialog.id === dialogId);
+    const valgtDialog = dialogData.find(dialog => dialog.id === dialogId);
 
     const [ferdigBehandlet, setFerdigBehandlet] = useState(valgtDialog ? valgtDialog.ferdigBehandlet : true);
     const [venterPaSvar, setVenterPaSvar] = useState(valgtDialog ? valgtDialog.venterPaSvar : false);
@@ -38,14 +40,14 @@ export function DialogInputBox(props: Props) {
                 method: 'put'
             }
         );
-        dialoger.refetch();
+        dialoger.rerun();
     };
     const toggleVenterPaSvar = (nyVenterPaSvarVerdi: boolean) => {
         setVenterPaSvar(nyVenterPaSvarVerdi);
         fetchData<DialogData>(`/veilarbdialog/api/dialog/${valgtDialog!.id}/venter_pa_svar/${nyVenterPaSvarVerdi}`, {
             method: 'put'
         });
-        dialoger.refetch();
+        dialoger.rerun();
     };
 
     function handleSubmit(event: FormEvent) {
@@ -62,7 +64,7 @@ export function DialogInputBox(props: Props) {
                 function(response) {
                     melding.setValue('');
                     console.log('Posted endret dialog!', response);
-                    dialoger.refetch();
+                    dialoger.rerun();
                     props.history.push('/' + response.id);
                 },
                 function(error) {

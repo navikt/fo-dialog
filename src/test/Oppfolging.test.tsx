@@ -10,10 +10,10 @@ import { DialogInputBox } from '../view/DialogInputBox';
 import { DialogHeader } from '../view/DialogHeader';
 import { AlertStripeContainer } from '../view/AlertStripeContainer';
 import { DialogOverview } from '../view/DialogOverview';
-import { DialogOverviewHeader } from '../view/DialogOverviewHeader';
+import { DialogOverviewHeader, DialogOverviewHeaderVisible } from '../view/DialogOverviewHeader';
 import { DialogPreview } from '../view/DialogPreview';
 import { Checkbox } from 'nav-frontend-skjema';
-import { Status, UseFetchHook } from '../utils/use-fetch';
+import { FetchResult, Status } from '@nutgaard/use-fetch';
 
 Enzyme.configure({ adapter: new Adapter() });
 
@@ -72,10 +72,11 @@ const dialoger = [
         egenskaper: []
     }
 ];
-const useFetchDialoger: UseFetchHook<DialogData[]> = {
+const useFetchDialoger: FetchResult<DialogData[]> = {
     status: Status.OK,
+    statusCode: 0,
     data: dialoger,
-    refetch(): void {}
+    rerun(): void {}
 };
 
 describe('<AlertStripeContainer/>', () => {
@@ -142,10 +143,11 @@ describe('<DialogOverview/>', () => {
         jest.spyOn(AppContext, 'useOppfolgingContext').mockImplementation(() => oppfolgingData);
         const wrapper = mount(
             <MemoryRouter>
-                <DialogOverview dialogData={dialoger} />
+                <DialogOverview />
             </MemoryRouter>
         );
-        expect(wrapper.find(DialogOverviewHeader).exists()).toBeFalsy();
+        expect(wrapper.find(DialogOverviewHeaderVisible).exists()).toBeFalsy();
+        expect(wrapper.find(Dialog).exists()).toBeFalsy();
         expect(wrapper.find(DialogPreview).exists()).toBeFalsy();
     });
     test('Bruker ikke under oppf. skjuler knapper/checkbox', () => {
@@ -160,9 +162,10 @@ describe('<DialogOverview/>', () => {
             }
         ];
         jest.spyOn(AppContext, 'useOppfolgingContext').mockImplementation(() => oppfolgingData);
+        jest.spyOn(AppContext, 'useDialogContext').mockImplementation(() => useFetchDialoger);
         const wrapper = mount(
             <MemoryRouter>
-                <DialogOverview dialogData={dialoger} />
+                <DialogOverview />
             </MemoryRouter>
         );
         expect(wrapper.find(DialogOverviewHeader).exists()).toBeFalsy();
@@ -179,9 +182,11 @@ describe('<DialogOverview/>', () => {
                 begrunnelse: null
             }
         ];
+        jest.spyOn(AppContext, 'useOppfolgingContext').mockImplementation(() => oppfolgingData);
+        jest.spyOn(AppContext, 'useDialogContext').mockImplementation(() => useFetchDialoger);
         const wrapper = mount(
             <MemoryRouter>
-                <DialogOverview dialogData={dialoger} />
+                <DialogOverview />
             </MemoryRouter>
         );
         expect(wrapper.find(DialogOverviewHeader).exists()).toBeTruthy();
