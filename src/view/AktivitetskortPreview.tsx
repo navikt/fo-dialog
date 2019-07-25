@@ -4,7 +4,6 @@ import { Undertekst, Undertittel } from 'nav-frontend-typografi';
 
 import useFetch from '../utils/use-fetch';
 import { LenkepanelBase } from 'nav-frontend-lenkepanel';
-import { ReactComponent as AktivitetsIkon } from './aktivitet_lest.svg';
 import { formaterDate, konverterMinutterTilTimer } from '../utils/date';
 import Lenke from 'nav-frontend-lenker';
 
