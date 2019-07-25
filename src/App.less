@@ -20,7 +20,11 @@ body,
 
 .app__body {
     display: flex;
+    background-color: @navLysGra;
     height: 100%;
+    padding-left: 1rem;
+    padding-right: 1rem;
+    justify-content: center;
     .dialog-overview {
         width: 100%;
         z-index: 250;
@@ -28,6 +32,7 @@ body,
     .dialog {
         width: 100%;
         display: none;
+        background-color: white;
     }
     .aktivitetkort {
         display: none;
@@ -59,11 +64,18 @@ body,
     }
     @media (min-width: 1200px) {
         .dialog-overview {
-            max-width: 30rem;
+            width: 27%;
+            max-width: 27rem;
+        }
+        .dialog {
+            display: flex;
+            width: 46%;
+            max-width: 50rem;
         }
         .aktivitetkort {
             display: block;
-            width: 30%;
+            width: 27%;
+            max-width: 27rem;
             background-color: @navLysGra;
             padding: 1rem 2rem;
 
@@ -78,7 +90,6 @@ body,
 
             &__infobox__row {
                 flex-grow: 1;
-                justify-content: space-between;
                 display: flex;
                 flex-wrap: wrap;
                 &__item {
@@ -89,9 +100,6 @@ body,
                     }
                 }
             }
-        }
-        .dialog {
-            display: flex;
         }
     }
 }
