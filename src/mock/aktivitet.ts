@@ -5,10 +5,10 @@ const aktiviteter: Aktivitet[] & JSONArray = [
     {
         id: '6871',
         versjon: '9389',
-        tittel: 'Systemdesignutvikler',
-        beskrivelse: "En lukrativ konsulentjobb der du kommer til å tjene masse gryn",
-        lenke: "https://www.vg.no/",
-        type: 'STILLING',
+        tittel: 'Systemdesigner',
+        beskrivelse: 'En lukrativ konsulentjobb der du kommer til å tjene masse gryn',
+        lenke: 'https://www.vg.no/',
+        type: 'SAMTALEREFERAT',
         status: 'PLANLAGT',
         fraDato: '2018-08-21T08:00:00+02:00',
         tilDato: '2018-08-21T12:15:00+02:00',
@@ -22,8 +22,8 @@ const aktiviteter: Aktivitet[] & JSONArray = [
         transaksjonsType: 'STATUS_ENDRET',
         etikett: null,
         kontaktperson: null,
-        arbeidsgiver: "Bris Consulting AS er flott selskap som driver medd mye hyggelig",
-        arbeidssted: "Trondheim",
+        arbeidsgiver: 'Bris Consulting AS',
+        arbeidssted: 'Trondheim',
         stillingsTittel: 'Kunderådgiver',
         hensikt: null,
         oppfolging: null,
@@ -37,7 +37,8 @@ const aktiviteter: Aktivitet[] & JSONArray = [
         effekt: null,
         behandlingOppfolging: null,
         kanal: 'OPPMOTE',
-        erReferatPublisert: false
+        erReferatPublisert: false,
+        klokkeslett: 123
     },
     {
         id: '10',
@@ -45,7 +46,7 @@ const aktiviteter: Aktivitet[] & JSONArray = [
         tittel: 'Gamelt Beste møtet ever',
         beskrivelse: 'Vi ønsker å snakke med deg om aktiviteter du har gjennomført og videre oppfølging.',
         lenke: null,
-        type: 'MOTE',
+        type: 'SOKEAVTALE',
         status: 'PLANLAGT',
         fraDato: '2017-02-16T00:00:00+01:00',
         tilDato: '2017-02-16T00:00:00+02:00',
@@ -77,7 +78,8 @@ const aktiviteter: Aktivitet[] & JSONArray = [
         erReferatPublisert: false,
         varighet: 75,
         klokkeslett: 700,
-        adresse: "Rekegata 69 er en hyggelig lokasjon med god service og flinke veiledere en av dem heter Linn hun er designer og er utdannet på NTNU"
+        adresse:
+            'Rekegata 69 er en hyggelig lokasjon med god service og flinke veiledere en av dem heter Linn hun er designer og er utdannet på NTNU'
     }
 ];
 
