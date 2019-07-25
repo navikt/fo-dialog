@@ -11,6 +11,9 @@ import DialogCheckboxesVisible from './DialogCheckboxes';
 import DialogNewFeedbackSummary from './DialogNewFeedbackSummary';
 import { AlertStripeFeil } from 'nav-frontend-alertstriper';
 import { visibleIfHoc } from '../component/hoc/visibleIfHoc';
+import { VenstreChevron } from 'nav-frontend-chevron';
+import { Link } from 'react-router-dom';
+
 import './dialognew.less';
 import './Dialog.less';
 
@@ -97,6 +100,12 @@ function DialogNew(props: Props) {
 
     return (
         <div className="dialog-new">
+            <div className="dialog-new__header">
+                <Link to="/" className="tilbake-til-oversikt">
+                    <VenstreChevron stor className="tilbake-til-oversikt__pilknapp" />
+                    Oversikt
+                </Link>
+            </div>
             <form onSubmit={handleSubmit} noValidate>
                 <Innholdstittel className="dialog-new__tittel">Ny dialog</Innholdstittel>
                 <Normaltekst className="dialog-new__infotekst">
