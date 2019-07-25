@@ -8,6 +8,7 @@ export interface FieldState {
         onBlur: React.FocusEventHandler;
         feil?: SkjemaelementFeil;
     };
+    error: string | null;
     setValue(value: string): void;
     validate(): void;
 }
@@ -18,7 +19,7 @@ const noopValidator: Validator = () => null;
 export default function useFieldState(initialState: string, validate: Validator = noopValidator): FieldState {
     const [value, setValue] = useState(initialState);
     const [touched, setTouched] = useState<boolean>(false);
-    const [error, setError] = useState<string | null>(null);
+    const [error, setError] = useState<string | null>(validate(value));
 
     const onChange = useCallback(
         (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -50,6 +51,7 @@ export default function useFieldState(initialState: string, validate: Validator 
             feil: !touched || error === null ? undefined : { feilmelding: error }
         },
         validate: handleValidate,
+        error,
         setValue
     };
 }

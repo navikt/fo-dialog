@@ -30,6 +30,7 @@ const mock = FetchMock.configure({
 });
 
 mock.get('/veilarbdialog/api/dialog', dialoger);
+//mock.get('/veilarbdialog/api/dialog', []);   // alternativ til den ovenfor : "ingen dialoger å hente og vise"
 
 mock.post('/veilarbdialog/api/dialog/ny', ({ body }) => opprettEllerOppdaterDialog(body));
 
