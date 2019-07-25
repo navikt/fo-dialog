@@ -8,6 +8,9 @@ import { useDialogContext, useUserInfoContext } from '../Context';
 import { RouteComponentProps, withRouter } from 'react-router';
 import HenvendelseInput from '../component/HenvendelseInput';
 import DialogCheckboxesVisible from './DialogCheckboxes';
+import { VenstreChevron } from 'nav-frontend-chevron';
+import { Link } from 'react-router-dom';
+
 import './dialognew.less';
 import './Dialog.less';
 
@@ -87,6 +90,12 @@ function DialogNew(props: Props) {
 
     return (
         <div className="dialog-new">
+            <div className="dialog-new__header">
+                <Link to="/" className="tilbake-til-oversikt">
+                    <VenstreChevron stor className="tilbake-til-oversikt__pilknapp" />
+                    Oversikt
+                </Link>
+            </div>
             <form onSubmit={handleSubmit} noValidate>
                 <Innholdstittel className="dialog-new__tittel">Ny Dialog</Innholdstittel>
                 <Normaltekst className="dialog-new__infotekst">
