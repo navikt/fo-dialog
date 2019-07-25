@@ -57,7 +57,11 @@ export function Dialog(props: Props) {
                 <div className="dialog">
                     <DialogHeader dialog={valgtDialog} />
                     <HenvendelseList henvendelseDataList={valgtDialog.henvendelser} />
-                    <DialogInputBoxVisible dialog={valgtDialog} visible={oppfolgingData!.underOppfolging} />
+                    <DialogInputBoxVisible
+                        key={valgtDialog.id}
+                        dialog={valgtDialog}
+                        visible={oppfolgingData!.underOppfolging}
+                    />
                 </div>
                 <Aktivitetskort dialog={valgtDialog} />
             </>

@@ -1,6 +1,7 @@
 import { DialogData, HenvendelseData, NyDialogMeldingData } from '../utils/typer';
 import { rndId } from './utils';
 import { JSONArray, JSONObject, ResponseData } from 'yet-another-fetch-mock';
+import bruker from './bruker';
 
 const dialoger: DialogData[] & JSONArray = [
     {
@@ -186,6 +187,11 @@ export function opprettEllerOppdaterDialog(update: NyDialogMeldingData): DialogD
         oldDialog.sisteTekst = update.tekst;
         oldDialog.sisteDato = nyHenvendelse.sendt;
         oldDialog.henvendelser.push(nyHenvendelse);
+
+        if (!bruker.erVeileder) {
+            oldDialog.venterPaSvar = false;
+        }
+
         return oldDialog as DialogData & JSONObject;
     } else {
         const nyDialog: DialogData = {
@@ -197,8 +203,8 @@ export function opprettEllerOppdaterDialog(update: NyDialogMeldingData): DialogD
             opprettetDato: new Date().toISOString(),
             historisk: false,
             lest: true,
-            venterPaSvar: true,
-            ferdigBehandlet: false,
+            venterPaSvar: false,
+            ferdigBehandlet: true,
             lestAvBrukerTidspunkt: null,
             erLestAvBruker: false,
             aktivitetId: null,
@@ -210,4 +216,19 @@ export function opprettEllerOppdaterDialog(update: NyDialogMeldingData): DialogD
     }
 }
 
+export function setVenterPaSvar(dialogId: string, venterPaSvar: boolean) {
+    const dialog = dialoger.find(dialog => dialog.id === dialogId);
+    if (dialog) {
+        dialog.venterPaSvar = venterPaSvar;
+    }
+    return dialog as DialogData & JSONObject;
+}
+
+export function setFerdigBehandlet(dialogId: string, ferdigBehandlet: boolean) {
+    const dialog = dialoger.find(dialog => dialog.id === dialogId);
+    if (dialog) {
+        dialog.ferdigBehandlet = ferdigBehandlet;
+    }
+    return dialog as DialogData & JSONObject;
+}
 export default dialoger;
