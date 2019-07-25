@@ -56,7 +56,7 @@ export function DialogInputBox(props: Props) {
         event.preventDefault();
         melding.validate();
         var dialg: DialogData = props.dialog;
-        if (melding.input.feil === undefined) {
+        if (!melding.error) {
             const body = JSON.stringify({
                 tekst: melding.input.value,
                 dialogId: dialg.id,

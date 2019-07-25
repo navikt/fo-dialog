@@ -47,7 +47,9 @@ export function Dialog(props: Props) {
             return (
                 <div className="dialog__maavelges">
                     <IngenValgteDialoger />
-                    <Normaltekst>Velg en dialog for å lese den</Normaltekst>
+                    <div className="dialog__maavelgestekst">
+                        <Normaltekst>Velg en dialog for å lese den</Normaltekst>
+                    </div>
                 </div>
             );
         }
