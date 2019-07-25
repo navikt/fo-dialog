@@ -16,10 +16,19 @@ interface Props {
 
 function DialogPreviewIkon(props: Props) {
     const erAktivitet: boolean = props.dialog.aktivitetId !== null;
+    const cls = classNames('dialog-preview__ikon', { 'dialog-preview__ikon--lest': !props.dialog.lest });
     if (erAktivitet) {
-        return <AktivitetsIkon className="dialog-preview__ikon" />;
+        return (
+            <div className={cls}>
+                <AktivitetsIkon />
+            </div>
+        );
     }
-    return <DialogIkon className="dialog-preview__ikon" />;
+    return (
+        <div className={cls}>
+            <DialogIkon />
+        </div>
+    );
 }
 
 export function DialogPreview(props: Props) {

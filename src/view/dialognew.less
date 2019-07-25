@@ -3,20 +3,33 @@
 .dialog-new {
     display: flex;
     flex-direction: column;
-    margin: 1rem;
     width: 100%;
+    &__header {
+        background-color: @navLysGra;
+        display: flex;
+        flex-basis: 4rem;
+        .tilbake-til-oversikt {
+            text-decoration: none;
+            padding: 1rem 0;
+            display: flex;
+            align-items: center;
+            color: @navMorkGra;
+            font-weight: bold;
+        }
+    }
+    .container {
+        margin: 1rem;
+    }
     &__tittel {
-        margin-top: 1.5rem;
+        margin-top: 0.5rem;
         margin-bottom: 1rem;
     }
     &__infotekst {
-        margin-bottom: 1rem;
+        margin: 0 0 1rem 0;
     }
     &__temafelt {
-        margin: 0 0 1rem 0;
         width: 95%;
     }
-
     .skriv-melding {
         display: flex;
         flex-basis: 7rem;
@@ -33,6 +46,9 @@
         }
     }
     @media (min-width: 800px) {
+        &__header {
+            display: none;
+        }
         margin: 0 6% 0 6%;
         &__infotekst {
             max-width: 30rem;
