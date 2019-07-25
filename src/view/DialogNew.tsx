@@ -39,6 +39,7 @@ function DialogNew(props: Props) {
     const tema = useFieldState('', validerTema);
     const melding = useFieldState('', validerMelding);
     const [submitfeil, setSubmitfeil] = useState<boolean>(false);
+    const [submitting, setSubmitting] = useState<boolean>(false);
     const dialoger = useDialogContext();
     const bruker = useUserInfoContext();
 
@@ -52,6 +53,7 @@ function DialogNew(props: Props) {
 
         const harIngenFeil = !tema.error && !melding.error;
         if (harIngenFeil) {
+            setSubmitting(true);
             const nyDialogData: NyDialogMeldingData = {
                 dialogId: null,
                 overskrift: tema.input.value,
@@ -84,7 +86,8 @@ function DialogNew(props: Props) {
                         console.log('Failed posting the new dialog!', error);
                         setSubmitfeil(true);
                     }
-                );
+                )
+                .then(() => setSubmitting(false));
         }
     }
 
@@ -119,7 +122,7 @@ function DialogNew(props: Props) {
                     placeholder="Skriv her"
                     {...tema.input}
                 />
-                <HenvendelseInput melding={melding} />
+                <HenvendelseInput melding={melding} submitting={submitting} />
                 <DialogCheckboxesVisible
                     toggleFerdigBehandlet={toggleFerdigBehandlet}
                     toggleVenterPaSvar={toggleVenterPaSvar}
