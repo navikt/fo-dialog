@@ -48,7 +48,7 @@ function mapAktivitetTypeToPreview(aktivitet: Aktivitet): string {
         case 'BEHANDLING':
             return aktivitet.behandlingType!;
         case 'SAMTALEREFERAT':
-            return `Samtalereferat | ${aktivitet.fraDato}`;
+            return `Samtalereferat | ${formaterDate(aktivitet.fraDato)}`;
         case 'EGEN':
             return `Jobbrettet egenaktivitet`;
         case 'IJOBB':
