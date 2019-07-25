@@ -5,8 +5,10 @@ import { DialogHeader } from './DialogHeader';
 import { useDialogContext, useOppfolgingContext } from '../Context';
 import { RouteComponentProps, withRouter } from 'react-router';
 import { Aktivitetskort } from './Aktivitetskort';
-import { Innholdstittel, Normaltekst } from 'nav-frontend-typografi';
+import { Normaltekst } from 'nav-frontend-typografi';
 import DialogInputBoxVisible from './DialogInputBox';
+import { ReactComponent as IngenDialoger } from './dialogIngen.svg';
+import { ReactComponent as IngenValgteDialoger } from './dialogIngenValgt.svg';
 
 import './Dialog.less';
 
@@ -34,21 +36,20 @@ export function Dialog(props: Props) {
 
     if (dialogData.length === 0) {
         return (
-            <div className="dialog">
-                <Innholdstittel>Dialog</Innholdstittel>
+            <div className="dialog__tom">
+                <IngenDialoger />
                 <Normaltekst>Her kan du sende melding til veilederen din om arbeid og oppfølging.</Normaltekst>
                 <Normaltekst>Du kan forvente svar i løpet av noen dager.</Normaltekst>
-                <Normaltekst>Klikk på "Ny dialog"</Normaltekst>
             </div>
         );
     } else {
         if (!valgtDialog) {
             return (
-                <div className="dialog">
-                    <Innholdstittel>Dialog</Innholdstittel>
-                    <Normaltekst>Detaljer for valgt dialog vises her.</Normaltekst>
-                    <Normaltekst> - Du kan velge en dialog fra oversikten, </Normaltekst>
-                    <Normaltekst> - Du kan klikke på "Ny Dialog" for å starte en ny en.</Normaltekst>
+                <div className="dialog__maavelges">
+                    <IngenValgteDialoger />
+                    <div className="dialog__maavelgestekst">
+                        <Normaltekst>Velg en dialog for å lese den</Normaltekst>
+                    </div>
                 </div>
             );
         }
@@ -57,7 +58,11 @@ export function Dialog(props: Props) {
                 <div className="dialog">
                     <DialogHeader dialog={valgtDialog} />
                     <HenvendelseList henvendelseDataList={valgtDialog.henvendelser} />
-                    <DialogInputBoxVisible dialog={valgtDialog} visible={oppfolgingData!.underOppfolging} />
+                    <DialogInputBoxVisible
+                        key={valgtDialog.id}
+                        dialog={valgtDialog}
+                        visible={oppfolgingData!.underOppfolging}
+                    />
                 </div>
                 <Aktivitetskort dialog={valgtDialog} />
             </>

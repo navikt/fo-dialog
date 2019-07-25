@@ -1,5 +1,5 @@
 import FetchMock, { Middleware, MiddlewareUtils } from 'yet-another-fetch-mock';
-import dialoger, { lesDialog, opprettEllerOppdaterDialog } from './dialog';
+import dialoger, { lesDialog, opprettEllerOppdaterDialog, setFerdigBehandlet, setVenterPaSvar } from './dialog';
 import bruker from './bruker';
 import oppfolging from './oppfolging';
 import aktiviteter from './aktivitet';
@@ -30,10 +30,18 @@ const mock = FetchMock.configure({
 });
 
 mock.get('/veilarbdialog/api/dialog', dialoger);
+//mock.get('/veilarbdialog/api/dialog', []);   // alternativ til den ovenfor : "ingen dialoger å hente og vise"
 
 mock.post('/veilarbdialog/api/dialog/ny', ({ body }) => opprettEllerOppdaterDialog(body));
 
 mock.put('/veilarbdialog/api/dialog/lest', ({ body }) => lesDialog(body.dialogId));
+
+mock.put('/veilarbdialog/api/dialog/:dialogId/venter_pa_svar/:bool', ({ pathParams }) =>
+    setVenterPaSvar(pathParams.dialogId, pathParams.bool === 'true')
+);
+mock.put('/veilarbdialog/api/dialog/:dialogId/ferdigbehandlet/:bool', ({ pathParams }) =>
+    setFerdigBehandlet(pathParams.dialogId, pathParams.bool === 'true')
+);
 
 mock.get('/veilarboppfolging/api/oppfolging/me', bruker);
 
