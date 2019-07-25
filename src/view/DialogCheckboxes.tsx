@@ -1,7 +1,7 @@
 import React from 'react';
 import { Checkbox } from 'nav-frontend-skjema';
 import { RouteComponentProps, withRouter } from 'react-router';
-import {visibleIfHoc} from "../component/hoc/visibleIfHoc";
+import { visibleIfHoc } from '../component/hoc/visibleIfHoc';
 
 interface Props extends RouteComponentProps<{ dialogId?: string }> {
     toggleFerdigBehandlet(ferdigBehandler: boolean): void;
