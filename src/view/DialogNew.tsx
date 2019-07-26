@@ -2,12 +2,15 @@ import React, { FormEvent, useState } from 'react';
 import { Innholdstittel, Normaltekst } from 'nav-frontend-typografi';
 import { Input } from 'nav-frontend-skjema';
 import useFieldState from '../utils/useFieldState';
-import { DialogData } from '../utils/typer';
+import { DialogData, NyDialogMeldingData } from '../utils/typer';
 import { fetchData } from '../utils/fetch';
 import { useDialogContext, useUserInfoContext } from '../Context';
 import { RouteComponentProps, withRouter } from 'react-router';
 import HenvendelseInput from '../component/HenvendelseInput';
 import DialogCheckboxesVisible from './DialogCheckboxes';
+import DialogNewFeedbackSummary from './DialogNewFeedbackSummary';
+import { AlertStripeFeil } from 'nav-frontend-alertstriper';
+import { visibleIfHoc } from '../component/hoc/visibleIfHoc';
 import { VenstreChevron } from 'nav-frontend-chevron';
 import { Link } from 'react-router-dom';
 
@@ -23,6 +26,7 @@ function validerTema(tema: string): string | null {
         return null;
     }
 }
+
 function validerMelding(melding: string): string | null {
     if (melding.trim().length === 0) {
         return 'Melding må ha innhold.';
@@ -34,6 +38,7 @@ function validerMelding(melding: string): string | null {
 function DialogNew(props: Props) {
     const tema = useFieldState('', validerTema);
     const melding = useFieldState('', validerMelding);
+    const [submitfeil, setSubmitfeil] = useState<boolean>(false);
     const dialoger = useDialogContext();
     const bruker = useUserInfoContext();
 
@@ -45,12 +50,17 @@ function DialogNew(props: Props) {
         tema.validate();
         melding.validate();
 
-        if (tema.input.feil === undefined && melding.input.feil === undefined) {
-            const body = JSON.stringify({
+        const harIngenFeil = !tema.error && !melding.error;
+        if (harIngenFeil) {
+            const nyDialogData: NyDialogMeldingData = {
+                dialogId: null,
                 overskrift: tema.input.value,
                 tekst: melding.input.value
-            });
-            fetchData<DialogData>('/veilarbdialog/api/dialog/ny', { method: 'post', body })
+            };
+            fetchData<DialogData>('/veilarbdialog/api/dialog/ny', {
+                method: 'post',
+                body: JSON.stringify(nyDialogData)
+            })
                 .then((dialog: DialogData) => {
                     if (bruker && bruker.erVeileder) {
                         const updateFerdigbehandlet = fetchData<DialogData>(
@@ -72,7 +82,7 @@ function DialogNew(props: Props) {
                     },
                     function(error) {
                         console.log('Failed posting the new dialog!', error);
-                        //TODO inform with a user friendly message
+                        setSubmitfeil(true);
                     }
                 );
         }
@@ -97,11 +107,18 @@ function DialogNew(props: Props) {
                 </Link>
             </div>
             <form onSubmit={handleSubmit} noValidate>
-                <Innholdstittel className="dialog-new__tittel">Ny Dialog</Innholdstittel>
+                <Innholdstittel className="dialog-new__tittel">Ny dialog</Innholdstittel>
                 <Normaltekst className="dialog-new__infotekst">
                     Her kan du skrive til din veileder om arbeid og oppfølging. Du vil få svar i løpet av noen dager.
                 </Normaltekst>
-                <Input className="dialog-new__temafelt" label={'Tema:'} placeholder="Skriv her" {...tema.input} />
+                <DialogNewFeedbackSummary tema={tema} melding={melding} />
+                <Input
+                    id="temaIn"
+                    className="dialog-new__temafelt"
+                    label={'Tema:'}
+                    placeholder="Skriv her"
+                    {...tema.input}
+                />
                 <HenvendelseInput melding={melding} />
                 <DialogCheckboxesVisible
                     toggleFerdigBehandlet={toggleFerdigBehandlet}
@@ -110,9 +127,14 @@ function DialogNew(props: Props) {
                     venterPaSvar={venterPaSvar}
                     visible={bruker!.erVeileder}
                 />
+                <AlertStripeFeilVisible visible={submitfeil}>
+                    Det skjedde en alvorlig feil. Prøv igjen senere
+                </AlertStripeFeilVisible>
             </form>
         </div>
     );
 }
+
+const AlertStripeFeilVisible = visibleIfHoc(AlertStripeFeil);
 
 export default withRouter(DialogNew);
