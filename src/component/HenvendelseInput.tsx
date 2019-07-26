@@ -1,5 +1,5 @@
 import React from 'react';
-import { Textarea } from 'nav-frontend-skjema';
+import Textarea from './nav-frontend-textarea';
 import { Hovedknapp } from 'nav-frontend-knapper';
 import { FieldState } from '../utils/useFieldState';
 
@@ -11,7 +11,7 @@ function defaultTellerTekst(antallTegn: number, maxLength: number): React.ReactN
     const difference = antallTegn - maxLength;
     const remainingLetters = maxLength - antallTegn;
 
-    if (remainingLetters > 1000) {
+    if (remainingLetters > 4900) {
         return null;
     }
 
