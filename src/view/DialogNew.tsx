@@ -106,7 +106,7 @@ function DialogNew(props: Props) {
                     Oversikt
                 </Link>
             </div>
-            <form onSubmit={handleSubmit} noValidate>
+            <form onSubmit={handleSubmit} noValidate className="dialog-new__form">
                 <Innholdstittel className="dialog-new__tittel">Ny dialog</Innholdstittel>
                 <Normaltekst className="dialog-new__infotekst">
                     Her kan du skrive til din veileder om arbeid og oppfølging. Du vil få svar i løpet av noen dager.
