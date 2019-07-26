@@ -39,7 +39,7 @@ function DialogNew(props: Props) {
     const tema = useFieldState('', validerTema);
     const melding = useFieldState('', validerMelding);
     const [submitfeil, setSubmitfeil] = useState<boolean>(false);
-    const [submitHit, setSubmitHit] = useState<boolean>(false);
+    const [triedToSubmit, setTriedToSubmit] = useState<boolean>(false);
     const [submitting, setSubmitting] = useState<boolean>(false);
     const dialoger = useDialogContext();
     const bruker = useUserInfoContext();
@@ -49,7 +49,7 @@ function DialogNew(props: Props) {
 
     function handleSubmit(event: FormEvent) {
         event.preventDefault();
-        setSubmitHit(true);
+        setTriedToSubmit(true);
         tema.validate();
         melding.validate();
 
@@ -116,7 +116,7 @@ function DialogNew(props: Props) {
                 <Normaltekst className="dialog-new__infotekst">
                     Her kan du skrive til din veileder om arbeid og oppfølging. Du vil få svar i løpet av noen dager.
                 </Normaltekst>
-                <DialogNewFeedbackSummary tema={tema} melding={melding} submitHit={submitHit} />
+                <DialogNewFeedbackSummary tema={tema} melding={melding} triedToSubmit={triedToSubmit} />
                 <Input
                     id="temaIn"
                     className="dialog-new__temafelt"

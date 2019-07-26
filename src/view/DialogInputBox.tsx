@@ -66,7 +66,7 @@ export function DialogInputBox(props: Props) {
             });
             fetchData<DialogData>('/veilarbdialog/api/dialog/ny', {
                 method: 'POST',
-                body: body
+                body
             })
                 .then(
                     function(response) {

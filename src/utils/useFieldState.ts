@@ -51,7 +51,8 @@ export default function useFieldState(initialState: string, validate: Validator 
 
     const reInitialize = () => {
         setRawValue('');
-        setError(null);
+        setError(validate(''));
+        setTouched(false);
     };
 
     return {
