@@ -10,7 +10,6 @@ export function DialogBanner() {
     return (
         <div className="dialogbanner">
             <Lenke className="dialogbanner__lenke" href="https://www.nav.no/no/Ditt+NAV">
-                {' '}
                 <VenstreChevron />
                 Ditt NAV
             </Lenke>
