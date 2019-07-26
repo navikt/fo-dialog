@@ -8,11 +8,11 @@ import Feilmeldingslenke from './Feilmeldingslenke';
 interface Props {
     tema: FieldState;
     melding: FieldState;
+    triedToSubmit: boolean;
 }
 
 function DialogNewFeedbackSummary(props: Props) {
-    //TODO: ikke vis feedbacksummary visse ganger (f.eks. ikke før SEND
-    if (props.tema.input.feil !== undefined || props.melding.input.feil !== undefined) {
+    if (props.triedToSubmit && (props.tema.input.feil !== undefined || props.melding.input.feil !== undefined)) {
         return (
             <div className="feedbacksummary">
                 <Undertittel>Fyll ut obligatoriske felt</Undertittel>
