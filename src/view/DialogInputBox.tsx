@@ -60,14 +60,17 @@ export function DialogInputBox(props: Props) {
         if (!melding.error) {
             setSubmitting(true);
             const body = JSON.stringify({
-                tekst: melding.input.value,
                 dialogId: dialg.id,
-                overskrift: dialg.overskrift
+                overskrift: dialg.overskrift,
+                tekst: melding.input.value
             });
-            fetchData<DialogData>('/veilarbdialog/api/dialog/ny', { method: 'POST', body })
+            fetchData<DialogData>('/veilarbdialog/api/dialog/ny', {
+                method: 'POST',
+                body: body
+            })
                 .then(
                     function(response) {
-                        melding.setValue('');
+                        melding.reset();
                         console.log('Posted endret dialog!', response);
                         dialoger.rerun();
                         props.history.push('/' + response.id);

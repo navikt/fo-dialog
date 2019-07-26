@@ -8,6 +8,7 @@ export interface FieldState {
         onBlur: React.FocusEventHandler;
         feil?: SkjemaelementFeil;
     };
+    reset(): void;
     error: string | null;
     setValue(value: string): void;
     validate(): void;
@@ -48,6 +49,11 @@ export default function useFieldState(initialState: string, validate: Validator 
         setError(validate(value));
     };
 
+    const reInitialize = () => {
+        setRawValue('');
+        setError(null);
+    };
+
     return {
         input: {
             value,
@@ -55,6 +61,7 @@ export default function useFieldState(initialState: string, validate: Validator 
             onBlur,
             feil: !touched || error === null ? undefined : { feilmelding: error }
         },
+        reset: reInitialize,
         validate: handleValidate,
         error,
         setValue
