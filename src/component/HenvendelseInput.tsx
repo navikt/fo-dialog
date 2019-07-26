@@ -11,7 +11,7 @@ function defaultTellerTekst(antallTegn: number, maxLength: number): React.ReactN
     const difference = antallTegn - maxLength;
     const remainingLetters = maxLength - antallTegn;
 
-    if (remainingLetters > 4900) {
+    if (remainingLetters > 1000) {
         return null;
     }
 
