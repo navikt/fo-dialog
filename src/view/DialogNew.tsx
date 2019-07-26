@@ -121,6 +121,7 @@ function DialogNew(props: Props) {
                     label={'Tema:'}
                     placeholder="Skriv her"
                     {...tema.input}
+                    disabled={submitting}
                 />
                 <HenvendelseInput melding={melding} submitting={submitting} />
                 <DialogCheckboxesVisible
