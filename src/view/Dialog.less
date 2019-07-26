@@ -4,6 +4,28 @@
     display: flex;
     flex-direction: column;
     height: 100%;
+    &.dialog__tom {
+        align-items: center;
+        text-align: center;
+        padding-top: 5rem;
+        .infotekst {
+            width: 19rem;
+            margin-top: 1rem;
+        }
+        svg {
+            width: 10rem;
+        }
+    }
+    &.dialog__maavelges {
+        align-items: center;
+        padding-top: 10rem;
+        svg {
+            width: 10rem;
+        }
+        .infotekst {
+            margin-top: 3rem;
+        }
+    }
     &__header {
         background-color: @navLysGra;
         flex-basis: 4rem;
@@ -13,19 +35,7 @@
             padding: 1rem;
         }
     }
-    &__tom {
-        margin: 0 auto;
-        text-align: center;
-        padding-top: 8rem;
-    }
-    &__maavelges {
-        margin: 0 auto;
-        text-align: center;
-        padding-top: 8rem;
-        &tekst {
-            padding-top: 1rem;
-        }
-    }
+
     .tilbake-til-oversikt {
         text-decoration: none;
         padding: 1rem 0;
