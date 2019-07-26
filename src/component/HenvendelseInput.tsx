@@ -5,7 +5,7 @@ import { FieldState } from '../utils/useFieldState';
 
 interface Props {
     melding: FieldState;
-    submitting: Boolean;
+    submitting: boolean;
 }
 
 function defaultTellerTekst(antallTegn: number, maxLength: number): React.ReactNode {
@@ -40,13 +40,9 @@ function HenvendelseInput(props: Props) {
                 onChange={props.melding.input.onChange as any}
                 maxLength={5000}
                 tellerTekst={defaultTellerTekst}
+                disabled={props.submitting}
             />
-            <Hovedknapp
-                htmlType={'submit'}
-                title="Send"
-                autoDisableVedSpinner
-                spinner={props.submitting ? true : false}
-            >
+            <Hovedknapp title="Send" autoDisableVedSpinner spinner={props.submitting}>
                 Send
             </Hovedknapp>
         </div>
