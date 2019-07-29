@@ -4,6 +4,7 @@ import { JSONArray, JSONObject, ResponseData } from 'yet-another-fetch-mock';
 import bruker from './bruker';
 
 const dialoger: DialogData[] & JSONArray = [
+    //   ]; const dialogs : DialogData[] & JSONArray = [ // kommenter når "ingen dialoger" er testet ferdig
     {
         id: '1',
         overskrift: 'Memes',

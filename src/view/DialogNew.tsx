@@ -29,7 +29,7 @@ function validerTema(tema: string): string | null {
 
 function validerMelding(melding: string): string | null {
     if (melding.trim().length === 0) {
-        return 'Melding må ha innhold.';
+        return 'Du må fylle ut en melding.';
     } else {
         return null;
     }
