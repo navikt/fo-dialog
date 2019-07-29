@@ -7,26 +7,33 @@
     display: flex;
     justify-content: center;
     align-items: center;
-    flex-basis: 7rem;
-    .typo-sidetittel {
-        font-size: 1.7rem;
+    flex-basis: 5rem;
+    flex-direction: column;
+    &__lenke {
+        margin-right: 1rem;
+        align-self: flex-start;
     }
-
     &__ikon {
-        margin: 1rem;
-    }
-
-    &--dialogvisning {
         display: none;
+    }
+    &__tittel {
+        display: flex;
+        font-size: 1.7rem;
     }
 }
 
-@media (min-width: 700px) {
+@media (min-width: 800px) {
     .dialogbanner {
-        padding: 3rem 0 1rem 0;
-
-        .typo-sidetittel {
-            font-size: 2.5rem;
+        padding: 1rem;
+        &__lenke {
+        }
+        &__tittel {
+            display: flex;
+            font-size: 2rem;
+        }
+        &__ikon {
+            display: block;
+            margin-right: 1rem;
         }
     }
 }
