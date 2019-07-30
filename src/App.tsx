@@ -8,6 +8,7 @@ import { AlertStripeContainer } from './view/AlertStripeContainer';
 
 import './App.less';
 import classNames from 'classnames';
+import { DialogBanner } from './view/DialogBanner';
 
 function Routing() {
     return (
@@ -37,6 +38,7 @@ function App(props: Props) {
 
     return (
         <>
+            <DialogBanner />
             <AlertStripeContainer />
             <div className={appbodycls}>
                 <DialogOverview />

@@ -34,7 +34,7 @@ export function Aktivitetskort(props: Props) {
             );
         }
     }
-    return null;
+    return <span className="aktivitetkort" />;
 }
 
 function mapAktivitetTypeToHumanReadableString(type: string) {

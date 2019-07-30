@@ -36,18 +36,21 @@ export function Dialog(props: Props) {
 
     if (dialogData.length === 0) {
         return (
-            <div className="dialog__tom">
+            <div className="dialog dialog__tom">
+                <Normaltekst className="infotekst">
+                    Her kan du sende melding til veilederen din om arbeid og oppfølging.
+                </Normaltekst>
+                <Normaltekst className="infotekst">Du kan forvente svar i løpet av noen dager.</Normaltekst>
+                <Normaltekst className="infotekst">Klikk på "Ny dialog"</Normaltekst>
                 <IngenDialoger />
-                <Normaltekst>Her kan du sende melding til veilederen din om arbeid og oppfølging.</Normaltekst>
-                <Normaltekst>Du kan forvente svar i løpet av noen dager.</Normaltekst>
             </div>
         );
     } else {
         if (!valgtDialog) {
             return (
-                <div className="dialog__maavelges">
+                <div className="dialog dialog__maavelges">
                     <IngenValgteDialoger />
-                    <div className="dialog__maavelgestekst">
+                    <div className="infotekst">
                         <Normaltekst>Velg en dialog for å lese den</Normaltekst>
                     </div>
                 </div>
