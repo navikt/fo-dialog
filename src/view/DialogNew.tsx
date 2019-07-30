@@ -29,7 +29,7 @@ function validerTema(tema: string): string | null {
 
 function validerMelding(melding: string): string | null {
     if (melding.trim().length === 0) {
-        return 'Melding må ha innhold.';
+        return 'Du må fylle ut en melding.';
     } else {
         return null;
     }
@@ -39,6 +39,8 @@ function DialogNew(props: Props) {
     const tema = useFieldState('', validerTema);
     const melding = useFieldState('', validerMelding);
     const [submitfeil, setSubmitfeil] = useState<boolean>(false);
+    const [triedToSubmit, setTriedToSubmit] = useState<boolean>(false);
+    const [submitting, setSubmitting] = useState<boolean>(false);
     const dialoger = useDialogContext();
     const bruker = useUserInfoContext();
 
@@ -47,11 +49,13 @@ function DialogNew(props: Props) {
 
     function handleSubmit(event: FormEvent) {
         event.preventDefault();
+        setTriedToSubmit(true);
         tema.validate();
         melding.validate();
 
         const harIngenFeil = !tema.error && !melding.error;
         if (harIngenFeil) {
+            setSubmitting(true);
             const nyDialogData: NyDialogMeldingData = {
                 dialogId: null,
                 overskrift: tema.input.value,
@@ -84,7 +88,8 @@ function DialogNew(props: Props) {
                         console.log('Failed posting the new dialog!', error);
                         setSubmitfeil(true);
                     }
-                );
+                )
+                .then(() => setSubmitting(false));
         }
     }
 
@@ -106,20 +111,21 @@ function DialogNew(props: Props) {
                     Oversikt
                 </Link>
             </div>
-            <form onSubmit={handleSubmit} noValidate>
+            <form onSubmit={handleSubmit} noValidate className="dialog-new__form">
                 <Innholdstittel className="dialog-new__tittel">Ny dialog</Innholdstittel>
                 <Normaltekst className="dialog-new__infotekst">
                     Her kan du skrive til din veileder om arbeid og oppfølging. Du vil få svar i løpet av noen dager.
                 </Normaltekst>
-                <DialogNewFeedbackSummary tema={tema} melding={melding} />
+                <DialogNewFeedbackSummary tema={tema} melding={melding} triedToSubmit={triedToSubmit} />
                 <Input
                     id="temaIn"
                     className="dialog-new__temafelt"
                     label={'Tema:'}
                     placeholder="Skriv her"
                     {...tema.input}
+                    disabled={submitting}
                 />
-                <HenvendelseInput melding={melding} />
+                <HenvendelseInput melding={melding} submitting={submitting} />
                 <DialogCheckboxesVisible
                     toggleFerdigBehandlet={toggleFerdigBehandlet}
                     toggleVenterPaSvar={toggleVenterPaSvar}
