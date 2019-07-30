@@ -6,6 +6,7 @@ import { DialogOverviewHeaderVisible } from './DialogOverviewHeader';
 import { useDialogContext, useOppfolgingContext } from '../Context';
 
 import './dialogoverview.less';
+import Dialog from './Dialog';
 
 export function DialogOverview() {
     const oppfolgingData = useOppfolgingContext();
@@ -18,7 +19,7 @@ export function DialogOverview() {
     if (!erUnderOppfolging && !harOppfolgingsPerioder) {
         return null;
     } else {
-        const sortedOppfolgingsData = dialogData.sort((a, b) => sortDialoger(a, b));
+        const sortedOppfolgingsData = dialogData.sort((a: DialogData, b: DialogData) => sortDialoger(a, b));
         return (
             <div className="dialog-overview">
                 <DialogOverviewHeaderVisible dialogData={dialogData} visible={oppfolgingData!.underOppfolging} />
