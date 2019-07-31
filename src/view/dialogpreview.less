@@ -8,13 +8,12 @@
             font-weight: normal;
         }
     }
-    &--valgt {
+    &.dialog-preview--valgt {
         background-color: #e5eef2;
-        .lenkepanel__heading {
-            font-weight: bold;
-        }
     }
-
+    &.dialog-preview--valgt:hover {
+        background-color: #e5eef2;
+    }
     &.lenkepanel {
         padding: 0.5rem 0.5rem 0.5rem 0.5rem;
         margin-bottom: 0.5rem;
@@ -52,6 +51,9 @@
         font-size: 0.875rem;
         color: @navGra80;
     }
+    &__dato {
+        color: @navGra80;
+    }
     &__etikett {
         margin-right: 0.3rem;
         margin-bottom: 0.15rem;
@@ -67,4 +69,8 @@
             background-color: @navLillaLighten60;
         }
     }
+}
+
+.dialog-preview:hover {
+    background-color: @navDypBlaLighten80;
 }
