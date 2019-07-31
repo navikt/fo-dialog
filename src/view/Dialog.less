@@ -92,16 +92,25 @@
     display: flex;
     flex-basis: 7rem;
     bottom: 0;
-    align-items: center;
     padding: 1rem;
+    align-items: flex-end;
+    .autosizing-textarea {
+        flex: 1;
+        max-height: 7rem;
+        @media (min-width: 800px) {
+            max-height: 15rem;
+        }
+    }
     .skjemaelement {
         flex: 1;
+        margin-bottom: 0;
     }
     .textarea__container label {
         .sr-only();
     }
     .knapp--hoved {
         padding: 0.5rem;
+        height: 2.6rem;
         margin-left: 1rem;
     }
 }
@@ -112,6 +121,7 @@
 .checkbox-block {
     display: flex;
     padding-left: 1rem;
+    margin-top: 1rem;
     &__item {
         padding-right: 2rem;
     }
