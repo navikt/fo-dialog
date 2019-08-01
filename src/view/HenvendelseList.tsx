@@ -1,5 +1,5 @@
 import { HenvendelseData } from '../utils/typer';
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useEffect, useRef } from 'react';
 import { Henvendelse } from './Henvendelse';
 
 import './henvendelseList.less';
@@ -9,29 +9,36 @@ interface Props {
 }
 
 export function HenvendelseList(props: Props) {
-    const endOfMessages = useRef<HTMLDivElement>(null);
-    const [isFirstRender, setIsFirstRender] = useState(true);
+    const viewport = useRef<HTMLDivElement>(null);
+    const firstRender = useRef<boolean>(true);
 
-    const scrolllToBottom = () => {
-        if (endOfMessages.current !== null) {
-            endOfMessages.current.scrollIntoView({ behavior: isFirstRender ? 'auto' : 'smooth' });
-            setIsFirstRender(false);
+    const henvendelser = props.henvendelseDataList;
+
+    const last = henvendelser[henvendelser.length - 1];
+
+    const scrollToBottom = () => {
+        if (viewport.current) {
+            if (viewport.current.lastChild instanceof Element) {
+                viewport.current.lastChild.scrollIntoView({ behavior: firstRender.current ? 'auto' : 'smooth' });
+                firstRender.current = false;
+            }
         }
+        return function cleanup() {
+            firstRender.current = true;
+        };
     };
-    useEffect(scrolllToBottom, [props.henvendelseDataList.map(data => data.id)]);
+    useEffect(scrollToBottom, [viewport, last, firstRender]);
 
-    if (!props.henvendelseDataList) {
+    if (!henvendelser) {
         return null;
     }
+
     return (
         <div className="henvendelse-list">
-            <div className="henvendelse-list__viewport">
+            <div className="henvendelse-list__viewport" ref={viewport}>
                 {props.henvendelseDataList.map(henvendelse => (
-                    <div key={henvendelse.id} className="henvendelse-list__henvendelse">
-                        <Henvendelse henvendelseData={henvendelse} />
-                    </div>
+                    <Henvendelse key={henvendelse.id} henvendelseData={henvendelse} />
                 ))}
-                <div className="lastScroll" ref={endOfMessages} />
             </div>
         </div>
     );
