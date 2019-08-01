@@ -14,9 +14,9 @@ export function AktivitetskortInfoBox(props: Props) {
     return (
         <>
             {datapunkter.map(rad => (
-                <div className="aktivitetkort__infobox__row">
+                <div className="aktivitet-kort__infobox__row">
                     {rad.map(element => (
-                        <div className={'aktivitetkort__infobox__row__item'}>
+                        <div className={'aktivitet-kort__infobox__row__item'}>
                             <EtikettLiten children={element.label} className="label" />
                             {element.label === 'Lenke' ? (
                                 <Lenke href={element.data} children={element.data} />

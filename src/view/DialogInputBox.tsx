@@ -26,6 +26,7 @@ export function DialogInputBox(props: Props) {
     const bruker = useUserInfoContext();
     const dialoger = useDialogContext();
     const melding = useFieldState('', validerMelding);
+    const [submitting, setSubmitting] = useState<boolean>(false);
     const [submitfeil, setSubmitfeil] = useState<boolean>(false);
     const dialogData = hasData(dialoger) ? dialoger.data : [];
     const dialogId = props.match.params.dialogId;
@@ -57,29 +58,35 @@ export function DialogInputBox(props: Props) {
         melding.validate();
         var dialg: DialogData = props.dialog;
         if (!melding.error) {
+            setSubmitting(true);
             const body = JSON.stringify({
-                tekst: melding.input.value,
                 dialogId: dialg.id,
-                overskrift: dialg.overskrift
+                overskrift: dialg.overskrift,
+                tekst: melding.input.value
             });
-            fetchData<DialogData>('/veilarbdialog/api/dialog/ny', { method: 'POST', body }).then(
-                function(response) {
-                    melding.setValue('');
-                    console.log('Posted endret dialog!', response);
-                    dialoger.rerun();
-                    props.history.push('/' + response.id);
-                },
-                function(error) {
-                    console.log('Failed while posting endret dialog!', error);
-                    setSubmitfeil(true);
-                }
-            );
+            fetchData<DialogData>('/veilarbdialog/api/dialog/ny', {
+                method: 'POST',
+                body
+            })
+                .then(
+                    function(response) {
+                        melding.reset();
+                        console.log('Posted endret dialog!', response);
+                        dialoger.rerun();
+                        props.history.push('/' + response.id);
+                    },
+                    function(error) {
+                        console.log('Failed while posting endret dialog!', error);
+                        setSubmitfeil(true);
+                    }
+                )
+                .then(() => setSubmitting(false));
         }
     }
     return (
         <>
             <form onSubmit={handleSubmit} noValidate>
-                <HenvendelseInput melding={melding} />
+                <HenvendelseInput melding={melding} submitting={submitting} />
                 <DialogCheckboxesVisible
                     toggleFerdigBehandlet={toggleFerdigBehandlet}
                     toggleVenterPaSvar={toggleVenterPaSvar}

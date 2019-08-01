@@ -5,36 +5,44 @@ import useFetch from '../utils/use-fetch';
 import Lenke from 'nav-frontend-lenker';
 import { HoyreChevron } from 'nav-frontend-chevron';
 import { AktivitetskortInfoBox } from './AktivitetskortInfoBox';
+import './Aktivitetskort.less';
 
 interface Props {
-    dialog: DialogData;
+    dialog?: DialogData;
 }
 
 export function Aktivitetskort(props: Props) {
     const aktiviteter = useFetch<Aktivitet[]>('/veilarbaktivitet/api/aktivitet');
 
-    if (aktiviteter.data !== null) {
-        const aktivitet = aktiviteter.data.find(aktivitet => aktivitet.id === props.dialog.aktivitetId);
-
-        if (aktivitet) {
-            return (
-                <div className="aktivitetkort">
-                    <EtikettLiten className="aktivitetkort__brødsmulesti">
-                        aktivitet / {aktivitet.status} / {mapAktivitetTypeToHumanReadableString(aktivitet.type)}
-                    </EtikettLiten>
-                    <Systemtittel>{aktivitet.tittel}</Systemtittel>
-                    <Element className="aktivitetkort__link">
-                        <Lenke href={'temp'}>
-                            Les mer i aktivitetsplanen
-                            <HoyreChevron />
-                        </Lenke>
-                    </Element>
-                    <AktivitetskortInfoBox aktivitet={aktivitet} />
-                </div>
-            );
-        }
+    if (props.dialog === undefined) {
+        return null;
     }
-    return null;
+
+    if (aktiviteter.data === null) {
+        return null;
+    }
+
+    const aktivitet = aktiviteter.data.find(aktivitet => aktivitet.id === props.dialog!.aktivitetId);
+
+    if (!aktivitet) {
+        return null;
+    }
+
+    return (
+        <div className="aktivitet-kort">
+            <EtikettLiten className="aktivitet-kort__brødsmulesti">
+                aktivitet / {aktivitet.status} / {mapAktivitetTypeToHumanReadableString(aktivitet.type)}
+            </EtikettLiten>
+            <Systemtittel>{aktivitet.tittel}</Systemtittel>
+            <Element className="aktivitet-kort__link">
+                <Lenke href={'temp'}>
+                    Les mer i aktivitetsplanen
+                    <HoyreChevron />
+                </Lenke>
+            </Element>
+            <AktivitetskortInfoBox aktivitet={aktivitet} />
+        </div>
+    );
 }
 
 function mapAktivitetTypeToHumanReadableString(type: string) {

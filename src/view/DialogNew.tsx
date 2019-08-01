@@ -39,6 +39,8 @@ function DialogNew(props: Props) {
     const tema = useFieldState('', validerTema);
     const melding = useFieldState('', validerMelding);
     const [submitfeil, setSubmitfeil] = useState<boolean>(false);
+    const [triedToSubmit, setTriedToSubmit] = useState<boolean>(false);
+    const [submitting, setSubmitting] = useState<boolean>(false);
     const dialoger = useDialogContext();
     const bruker = useUserInfoContext();
 
@@ -47,11 +49,13 @@ function DialogNew(props: Props) {
 
     function handleSubmit(event: FormEvent) {
         event.preventDefault();
+        setTriedToSubmit(true);
         tema.validate();
         melding.validate();
 
         const harIngenFeil = !tema.error && !melding.error;
         if (harIngenFeil) {
+            setSubmitting(true);
             const nyDialogData: NyDialogMeldingData = {
                 dialogId: null,
                 overskrift: tema.input.value,
@@ -84,7 +88,8 @@ function DialogNew(props: Props) {
                         console.log('Failed posting the new dialog!', error);
                         setSubmitfeil(true);
                     }
-                );
+                )
+                .then(() => setSubmitting(false));
         }
     }
 
@@ -99,39 +104,43 @@ function DialogNew(props: Props) {
     };
 
     return (
-        <div className="dialog-new">
-            <div className="dialog-new__header">
-                <Link to="/" className="tilbake-til-oversikt">
-                    <VenstreChevron stor className="tilbake-til-oversikt__pilknapp" />
-                    Oversikt
-                </Link>
+        <>
+            <div className="dialog dialog-new">
+                <div className="dialog-new__header">
+                    <Link to="/" className="tilbake-til-oversikt">
+                        <VenstreChevron stor className="tilbake-til-oversikt__pilknapp" />
+                        Oversikt
+                    </Link>
+                </div>
+                <form onSubmit={handleSubmit} noValidate className="dialog-new__form">
+                    <Innholdstittel className="dialog-new__tittel">Ny dialog</Innholdstittel>
+                    <Normaltekst className="dialog-new__infotekst">
+                        Her kan du skrive til din veileder om arbeid og oppfølging. Du vil få svar i løpet av noen
+                        dager.
+                    </Normaltekst>
+                    <DialogNewFeedbackSummary tema={tema} melding={melding} triedToSubmit={triedToSubmit} />
+                    <Input
+                        id="temaIn"
+                        className="dialog-new__temafelt"
+                        label={'Tema:'}
+                        placeholder="Skriv her"
+                        {...tema.input}
+                        disabled={submitting}
+                    />
+                    <HenvendelseInput melding={melding} submitting={submitting} />
+                    <DialogCheckboxesVisible
+                        toggleFerdigBehandlet={toggleFerdigBehandlet}
+                        toggleVenterPaSvar={toggleVenterPaSvar}
+                        ferdigBehandlet={ferdigBehandlet}
+                        venterPaSvar={venterPaSvar}
+                        visible={bruker!.erVeileder}
+                    />
+                    <AlertStripeFeilVisible visible={submitfeil}>
+                        Det skjedde en alvorlig feil. Prøv igjen senere
+                    </AlertStripeFeilVisible>
+                </form>
             </div>
-            <form onSubmit={handleSubmit} noValidate>
-                <Innholdstittel className="dialog-new__tittel">Ny dialog</Innholdstittel>
-                <Normaltekst className="dialog-new__infotekst">
-                    Her kan du skrive til din veileder om arbeid og oppfølging. Du vil få svar i løpet av noen dager.
-                </Normaltekst>
-                <DialogNewFeedbackSummary tema={tema} melding={melding} />
-                <Input
-                    id="temaIn"
-                    className="dialog-new__temafelt"
-                    label={'Tema:'}
-                    placeholder="Skriv her"
-                    {...tema.input}
-                />
-                <HenvendelseInput melding={melding} />
-                <DialogCheckboxesVisible
-                    toggleFerdigBehandlet={toggleFerdigBehandlet}
-                    toggleVenterPaSvar={toggleVenterPaSvar}
-                    ferdigBehandlet={ferdigBehandlet}
-                    venterPaSvar={venterPaSvar}
-                    visible={bruker!.erVeileder}
-                />
-                <AlertStripeFeilVisible visible={submitfeil}>
-                    Det skjedde en alvorlig feil. Prøv igjen senere
-                </AlertStripeFeilVisible>
-            </form>
-        </div>
+        </>
     );
 }
 

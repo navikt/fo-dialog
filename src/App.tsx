@@ -1,13 +1,14 @@
 import React from 'react';
-import { BrowserRouter as Router, matchPath, Route, RouteComponentProps, Switch, withRouter } from 'react-router-dom';
+import { BrowserRouter as Router, matchPath, RouteComponentProps, withRouter } from 'react-router-dom';
 import { Provider } from './Context';
 import { DialogOverview } from './view/DialogOverview';
-import Dialog from './view/Dialog';
-import DialogNew from './view/DialogNew';
 import { AlertStripeContainer } from './view/AlertStripeContainer';
 
 import './App.less';
 import classNames from 'classnames';
+import { DialogBanner } from './view/DialogBanner';
+import AktivitetContainer from './view/AktivitetContainer';
+import DialogContainer from './view/DialogContainer';
 
 function Routing() {
     return (
@@ -30,6 +31,7 @@ function App(props: Props) {
     const skalViseNyDialog = !!matchPath(props.location.pathname, '/ny');
     const skalViseDialog = !!(harDialogId && !skalViseNyDialog);
 
+    const dialogbannercls = classNames('dialogbanner', { 'dialogbanner--dialogvisning': skalViseDialog });
     const appbodycls = classNames('app__body', {
         'app__body--dialogvisning': skalViseDialog,
         'app__body--nydialogvisning': skalViseNyDialog
@@ -37,14 +39,12 @@ function App(props: Props) {
 
     return (
         <>
+            <DialogBanner cls={dialogbannercls} />
             <AlertStripeContainer />
             <div className={appbodycls}>
                 <DialogOverview />
-                <Switch>
-                    <Route exact path="/" component={Dialog} />
-                    <Route path="/ny" component={DialogNew} />
-                    <Route path="/:dialogId" component={Dialog} />
-                </Switch>
+                <DialogContainer className="dialog-container" />
+                <AktivitetContainer />
             </div>
         </>
     );
