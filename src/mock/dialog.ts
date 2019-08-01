@@ -12,7 +12,7 @@ const dialoger: DialogData[] & JSONArray = [
         sisteDato: '2018-01-28T12:48:56.097+01:00',
         opprettetDato: '2018-02-27T12:48:56.081+01:00',
         historisk: false,
-        lest: true,
+        lest: false,
         venterPaSvar: false,
         ferdigBehandlet: false,
         lestAvBrukerTidspunkt: null,

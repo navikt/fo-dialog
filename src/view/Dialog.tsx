@@ -4,7 +4,6 @@ import { HenvendelseList } from './HenvendelseList';
 import { DialogHeader } from './DialogHeader';
 import { useDialogContext, useOppfolgingContext } from '../Context';
 import { RouteComponentProps, withRouter } from 'react-router';
-import { Aktivitetskort } from './Aktivitetskort';
 import { Normaltekst } from 'nav-frontend-typografi';
 import DialogInputBoxVisible from './DialogInputBox';
 import { ReactComponent as IngenDialoger } from './dialogIngen.svg';
@@ -60,14 +59,13 @@ export function Dialog(props: Props) {
             <>
                 <div className="dialog">
                     <DialogHeader dialog={valgtDialog} />
-                    <HenvendelseList henvendelseDataList={valgtDialog.henvendelser} />
+                    <HenvendelseList dialogData={valgtDialog} />
                     <DialogInputBoxVisible
                         key={valgtDialog.id}
                         dialog={valgtDialog}
                         visible={oppfolgingData!.underOppfolging}
                     />
                 </div>
-                <Aktivitetskort dialog={valgtDialog} />
             </>
         );
     }
