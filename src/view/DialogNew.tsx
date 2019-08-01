@@ -104,40 +104,43 @@ function DialogNew(props: Props) {
     };
 
     return (
-        <div className="dialog-new">
-            <div className="dialog-new__header">
-                <Link to="/" className="tilbake-til-oversikt">
-                    <VenstreChevron stor className="tilbake-til-oversikt__pilknapp" />
-                    Oversikt
-                </Link>
+        <>
+            <div className="dialog dialog-new">
+                <div className="dialog-new__header">
+                    <Link to="/" className="tilbake-til-oversikt">
+                        <VenstreChevron stor className="tilbake-til-oversikt__pilknapp" />
+                        Oversikt
+                    </Link>
+                </div>
+                <form onSubmit={handleSubmit} noValidate className="dialog-new__form">
+                    <Innholdstittel className="dialog-new__tittel">Ny dialog</Innholdstittel>
+                    <Normaltekst className="dialog-new__infotekst">
+                        Her kan du skrive til din veileder om arbeid og oppfølging. Du vil få svar i løpet av noen
+                        dager.
+                    </Normaltekst>
+                    <DialogNewFeedbackSummary tema={tema} melding={melding} triedToSubmit={triedToSubmit} />
+                    <Input
+                        id="temaIn"
+                        className="dialog-new__temafelt"
+                        label={'Tema:'}
+                        placeholder="Skriv her"
+                        {...tema.input}
+                        disabled={submitting}
+                    />
+                    <HenvendelseInput melding={melding} submitting={submitting} />
+                    <DialogCheckboxesVisible
+                        toggleFerdigBehandlet={toggleFerdigBehandlet}
+                        toggleVenterPaSvar={toggleVenterPaSvar}
+                        ferdigBehandlet={ferdigBehandlet}
+                        venterPaSvar={venterPaSvar}
+                        visible={bruker!.erVeileder}
+                    />
+                    <AlertStripeFeilVisible visible={submitfeil}>
+                        Det skjedde en alvorlig feil. Prøv igjen senere
+                    </AlertStripeFeilVisible>
+                </form>
             </div>
-            <form onSubmit={handleSubmit} noValidate className="dialog-new__form">
-                <Innholdstittel className="dialog-new__tittel">Ny dialog</Innholdstittel>
-                <Normaltekst className="dialog-new__infotekst">
-                    Her kan du skrive til din veileder om arbeid og oppfølging. Du vil få svar i løpet av noen dager.
-                </Normaltekst>
-                <DialogNewFeedbackSummary tema={tema} melding={melding} triedToSubmit={triedToSubmit} />
-                <Input
-                    id="temaIn"
-                    className="dialog-new__temafelt"
-                    label={'Tema:'}
-                    placeholder="Skriv her"
-                    {...tema.input}
-                    disabled={submitting}
-                />
-                <HenvendelseInput melding={melding} submitting={submitting} />
-                <DialogCheckboxesVisible
-                    toggleFerdigBehandlet={toggleFerdigBehandlet}
-                    toggleVenterPaSvar={toggleVenterPaSvar}
-                    ferdigBehandlet={ferdigBehandlet}
-                    venterPaSvar={venterPaSvar}
-                    visible={bruker!.erVeileder}
-                />
-                <AlertStripeFeilVisible visible={submitfeil}>
-                    Det skjedde en alvorlig feil. Prøv igjen senere
-                </AlertStripeFeilVisible>
-            </form>
-        </div>
+        </>
     );
 }
 
