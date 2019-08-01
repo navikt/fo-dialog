@@ -63,7 +63,7 @@ export function Dialog(props: Props) {
             <>
                 <div className="dialog">
                     <DialogHeader dialog={valgtDialog} />
-                    <HenvendelseList henvendelseDataList={valgtDialog.henvendelser} />
+                    <HenvendelseList dialogData={valgtDialog} />
                     <DialogInputBoxVisible
                         key={valgtDialog.id}
                         dialog={valgtDialog}
