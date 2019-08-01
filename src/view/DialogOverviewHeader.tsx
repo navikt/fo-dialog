@@ -1,7 +1,6 @@
 import React from 'react';
 import { visibleIfHoc } from '../component/hoc/visibleIfHoc';
 import { DialogData } from '../utils/typer';
-import { Checkbox } from '../component/checkbox/Checkbox';
 import { Link } from 'react-router-dom';
 import { ReactComponent as PlussIkon } from './ikon_pluss.svg';
 
@@ -19,7 +18,6 @@ export function DialogOverviewHeader(props: Props) {
                     <PlussIkon />
                     Ny dialog
                 </Link>
-                <Checkbox label={'Viktige meldinger'} visible={brukerHarViktigeDialoger} />
             </div>
         </div>
     );
