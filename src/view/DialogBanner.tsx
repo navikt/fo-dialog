@@ -6,9 +6,12 @@ import './DialogBanner.less';
 import Lenke from 'nav-frontend-lenker';
 import { VenstreChevron } from 'nav-frontend-chevron';
 
-export function DialogBanner() {
+interface Props {
+    cls: string;
+}
+export function DialogBanner(props: Props) {
     return (
-        <div className="dialogbanner">
+        <div className={props.cls}>
             <Lenke className="dialogbanner__lenke" href="https://www.nav.no/no/Ditt+NAV">
                 <VenstreChevron />
                 Ditt NAV
