@@ -1,5 +1,5 @@
 import React from 'react';
-import { Textarea } from 'nav-frontend-skjema';
+import Textarea from './nav-frontend-textarea';
 import { Hovedknapp } from 'nav-frontend-knapper';
 import { FieldState } from '../utils/useFieldState';
 
