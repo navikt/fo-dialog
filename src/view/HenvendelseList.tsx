@@ -22,7 +22,7 @@ function useScrollToLast(dialogData: DialogData) {
             console.log('scroll', behavior);
             elem.scrollIntoView({ block: 'nearest', behavior });
         }
-    }, [previousDialog, henvendelseLenge]);
+    }, [previousDialog, henvendelseLenge, dialogData.id]);
 }
 
 export function HenvendelseList(props: Props) {
