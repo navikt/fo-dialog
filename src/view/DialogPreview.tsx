@@ -49,7 +49,7 @@ export function DialogPreview(props: Props) {
             <div className="dialog-preview__internal-div">
                 <Systemtittel className="lenkepanel__heading"> {props.dialog.overskrift}</Systemtittel>
                 <Normaltekst className="dialog-preview__last-henvendelse">{props.dialog.sisteTekst}</Normaltekst>
-                <EtikettLiten>{datoString}</EtikettLiten>
+                <EtikettLiten className="dialog-preview__dato">{datoString}</EtikettLiten>
                 <EtikettListe dialog={props.dialog} />
             </div>
         </LenkepanelBase>

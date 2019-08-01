@@ -3,7 +3,6 @@
 .dialog-new {
     display: flex;
     flex-direction: column;
-    width: 100%;
     background-color: white;
     &__header {
         background-color: @navLysGra;
@@ -37,14 +36,25 @@
         display: flex;
         flex-basis: 7rem;
         bottom: 0;
-        align-items: center;
-        padding: 0;
-        width: 95%;
+        padding: 1rem;
+        align-items: flex-end;
+        .autosizing-textarea {
+            flex: 1;
+            max-height: 7rem;
+            @media (min-width: 800px) {
+                max-height: 15rem;
+            }
+        }
         .skjemaelement {
             flex: 1;
+            margin-bottom: 0;
+        }
+        .textarea__container label {
+            .sr-only();
         }
         .knapp--hoved {
             padding: 0.5rem;
+            height: 2.6rem;
             margin-left: 1rem;
         }
     }
@@ -65,7 +75,7 @@
         &__header {
             display: none;
         }
-        margin: 0 6% 0 6%;
+        padding: 0 6% 0 6%;
         &__infotekst {
             max-width: 30rem;
         }
