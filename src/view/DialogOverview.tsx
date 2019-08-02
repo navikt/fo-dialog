@@ -23,7 +23,7 @@ export function DialogOverview() {
         const sortedOppfolgingsData = dialogData.sort((a, b) => sortDialoger(a, b));
         return (
             <div className="dialog-overview">
-                <DialogOverviewHeaderVisible dialogData={dialogData} visible={oppfolgingData!.underOppfolging} />
+                <DialogOverviewHeaderVisible visible={oppfolgingData!.underOppfolging} />
                 <InfoVedIngenDialogerVisible visible={ingenDialoger} />
                 <div className="dialog-overview__preview-list">
                     {sortedOppfolgingsData.map(dialog => (
