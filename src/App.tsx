@@ -3,12 +3,12 @@ import { BrowserRouter as Router, matchPath, RouteComponentProps, withRouter } f
 import { Provider } from './Context';
 import { DialogOverview } from './view/DialogOverview';
 import { AlertStripeContainer } from './view/AlertStripeContainer';
-
-import './App.less';
 import classNames from 'classnames';
 import { DialogBanner } from './view/DialogBanner';
 import AktivitetContainer from './view/AktivitetContainer';
 import DialogContainer from './view/DialogContainer';
+
+import './App.less';
 
 function Routing() {
     return (
@@ -30,9 +30,11 @@ function App(props: Props) {
     const harDialogId = matchPath<{ dialogId: string }>(props.location.pathname, '/:dialogId');
     const skalViseNyDialog = !!matchPath(props.location.pathname, '/ny');
     const skalViseDialog = !!(harDialogId && !skalViseNyDialog);
+    const skalViseTom = matchPath(props.location.pathname, '/');
 
     const dialogbannercls = classNames('dialogbanner', { 'dialogbanner--dialogvisning': skalViseDialog });
     const appbodycls = classNames('app__body', {
+        'app__body--emptyState': skalViseTom,
         'app__body--dialogvisning': skalViseDialog,
         'app__body--nydialogvisning': skalViseNyDialog
     });
