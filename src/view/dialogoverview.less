@@ -5,7 +5,6 @@
     flex-direction: column;
     background-color: @navLysGra;
     padding-right: 0.8rem;
-
     &__header {
         display: flex;
         flex-basis: 4rem;
@@ -14,7 +13,6 @@
             align-items: center;
             &__knapp {
                 display: flex;
-                align-items: center;
                 margin-right: 1.5rem;
                 padding: 0.3rem 0.3rem 0.3rem 0;
                 svg {
@@ -24,6 +22,14 @@
             .skjemaelement {
                 margin-bottom: 0;
             }
+        }
+    }
+    .ingen-dialog-info {
+        margin: 0 auto;
+        padding-top: 8rem;
+        &-bilde {
+            text-align: center;
+            padding-bottom: 0.2rem;
         }
     }
     &__preview-list {
@@ -37,6 +43,9 @@
             flex-basis: 7rem;
             align-items: flex-end;
             padding-bottom: 2rem;
+        }
+        .ingen-dialog-info {
+            display: none;
         }
     }
 }

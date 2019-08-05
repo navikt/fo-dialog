@@ -6,16 +6,19 @@
     height: 100%;
     width: 100%;
     &.dialog__tom {
-        align-items: center;
         text-align: center;
         padding-top: 5rem;
+        width: 19rem;
         .infotekst {
-            width: 19rem;
+            text-align: center;
             margin-top: 1rem;
         }
         svg {
             width: 10rem;
         }
+    }
+    &__tom {
+        display: none;
     }
     &.dialog__maavelges {
         align-items: center;
@@ -63,6 +66,20 @@
         }
         &__header {
             box-shadow: none;
+        }
+        &__tom {
+            display: block;
+            margin: 0 auto;
+            text-align: center;
+            padding-top: 8rem;
+            width: 19rem;
+            .infotekst {
+                text-align: center;
+                margin-top: 1rem;
+            }
+            svg {
+                width: 10rem;
+            }
         }
     }
     @media (min-width: 1200px) {
