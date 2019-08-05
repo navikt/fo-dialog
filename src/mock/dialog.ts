@@ -15,7 +15,7 @@ const dialoger: DialogData[] & JSONArray = [
         lest: false,
         venterPaSvar: false,
         ferdigBehandlet: false,
-        lestAvBrukerTidspunkt: null,
+        lestAvBrukerTidspunkt: '2018-02-28T12:48:56.081+01:00',
         erLestAvBruker: false,
         aktivitetId: null,
         henvendelser: [

@@ -15,8 +15,10 @@ export function Henvendelse(props: Props) {
     const date: string = formaterDateAndTime(props.henvendelseData.sendt);
     const className: string = erMeldingFraBruker ? 'ikon bruker-ikon' : 'ikon veileder-ikon';
     return (
-        <Snakkeboble topp={date} pilHoyre={erMeldingFraBruker} ikonClass={className}>
-            <Normaltekst>{props.henvendelseData.tekst}</Normaltekst>
-        </Snakkeboble>
+        <>
+            <Snakkeboble topp={date} pilHoyre={erMeldingFraBruker} ikonClass={className}>
+                <Normaltekst>{props.henvendelseData.tekst}</Normaltekst>
+            </Snakkeboble>
+        </>
     );
 }
