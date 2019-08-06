@@ -59,6 +59,7 @@ export function HenvendelseList(props: Props) {
         lestAvBrukerTidspunkt &&
         henvendelserSynkende.find(henvendelse => datoComparator(lestAvBrukerTidspunkt, henvendelse.sendt) >= 0);
 
+    const id4SisteHenvendelseLestAvBruker = sisteHenvendelseLestAvBruker ? sisteHenvendelseLestAvBruker.id : null;
     return (
         <div className="henvendelse-list">
             <div className="henvendelse-list__viewport">
@@ -69,7 +70,7 @@ export function HenvendelseList(props: Props) {
                             visible={
                                 sisteHenvendelseLestAvBruker === null || sisteHenvendelseLestAvBruker === undefined
                                     ? false
-                                    : henvendelse.id === sisteHenvendelseLestAvBruker.id
+                                    : henvendelse.id === id4SisteHenvendelseLestAvBruker
                             }
                         />
                         <Henvendelse henvendelseData={henvendelse} />
