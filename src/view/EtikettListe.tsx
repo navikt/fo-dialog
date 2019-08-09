@@ -18,7 +18,7 @@ export function EtikettListe(props: Props) {
             <EtikettFokus
                 className="dialog-preview__etikett dialog-preview__etikett--nav-venter"
                 children="NAV venter på svar fra deg"
-                visible={!props.dialog.venterPaSvar}
+                visible={props.dialog.venterPaSvar}
             />
 
             <EtikettAdvarsel className="dialog-preview__etikett" children="Viktig melding" visible={dialogErViktig} />

@@ -1,10 +1,11 @@
 import React from 'react';
-import { Textarea } from 'nav-frontend-skjema';
+import Textarea from './nav-frontend-textarea';
 import { Hovedknapp } from 'nav-frontend-knapper';
 import { FieldState } from '../utils/useFieldState';
 
 interface Props {
     melding: FieldState;
+    submitting: boolean;
 }
 
 function defaultTellerTekst(antallTegn: number, maxLength: number): React.ReactNode {
@@ -39,8 +40,9 @@ function HenvendelseInput(props: Props) {
                 onChange={props.melding.input.onChange as any}
                 maxLength={5000}
                 tellerTekst={defaultTellerTekst}
+                disabled={props.submitting}
             />
-            <Hovedknapp htmlType={'submit'} title="Send">
+            <Hovedknapp title="Send" autoDisableVedSpinner spinner={props.submitting}>
                 Send
             </Hovedknapp>
         </div>

@@ -1,75 +1,61 @@
 import { DialogData, HenvendelseData, NyDialogMeldingData } from '../utils/typer';
 import { rndId } from './utils';
 import { JSONArray, JSONObject, ResponseData } from 'yet-another-fetch-mock';
+import bruker from './bruker';
 
 const dialoger: DialogData[] & JSONArray = [
+    //   ]; const dialogs : DialogData[] & JSONArray = [ // eks på ingen dialoger
     {
-        id: '1',
-        overskrift: 'Memes',
-        sisteTekst: 'Hei. Hva er status her? Har du finnet Kaptain Sabeltann?',
-        sisteDato: '2018-01-28T12:48:56.097+01:00',
+        id: '10',
+        overskrift: 'Systemutvikler',
+        sisteTekst: 'De ringte meg i går. Skal på intervju neste uke :)',
+        sisteDato: '2017-01-28T12:48:56.097+01:00',
         opprettetDato: '2018-02-27T12:48:56.081+01:00',
         historisk: false,
-        lest: true,
+        lest: false,
         venterPaSvar: false,
         ferdigBehandlet: false,
         lestAvBrukerTidspunkt: null,
         erLestAvBruker: false,
-        aktivitetId: null,
+        aktivitetId: '6871',
         henvendelser: [
             {
                 id: '1',
                 dialogId: '1',
-                avsender: 'VEILEDER',
+                avsender: 'BRUKER',
                 avsenderId: 'Z123456',
                 sendt: '2018-02-27T12:48:56.097+01:00',
                 lest: true,
-                tekst: 'Hei. Hva er status her? Har du finnet Kaptain Sabeltann?'
+                tekst: 'Hei, det virker som denne stillingen kunne passet for meg. Hva tenker du?'
             },
             {
                 id: '2',
                 dialogId: '1',
-                avsender: 'BRUKER',
+                avsender: 'VEILEDER',
                 avsenderId: '0102030405',
                 sendt: '2018-02-28T12:48:56.097+01:00',
                 lest: true,
-                tekst: 'Hei. Leter enda på sjøen :)'
+                tekst:
+                    'Ja, jeg vil så absolutt tro at du er kvalifisert til denne! Send dem en søknad og fortell meg' +
+                    'om du får noe respons!'
+            },
+            {
+                id: '3',
+                dialogId: '1',
+                avsender: 'BRUKER',
+                avsenderId: '0102030405',
+                sendt: '2018-03-28T12:48:56.097+01:00',
+                lest: false,
+                tekst: 'De ringte meg i går. Skal på intervju neste uke :)'
             }
         ],
         egenskaper: []
     },
     {
-        id: '3',
-        overskrift: 'NOT USED',
-        sisteTekst:
-            'Det er viktig at du gjennomfører denne aktiviteten med NAV. Gjør du ikke det, kan det medføre at stønaden du mottar fra NAV bortfaller for en periode eller stanses. Hvis du ikke kan gjennomføre aktiviteten, ber vi deg ta kontakt med veilederen din så snart som mulig.',
-        sisteDato: '2018-11-21T13:13:20.685+01:00',
-        opprettetDato: '2018-11-21T13:13:20.663+01:00',
-        historisk: false,
-        lest: false,
-        venterPaSvar: false,
-        ferdigBehandlet: true,
-        lestAvBrukerTidspunkt: null,
-        erLestAvBruker: false,
-        aktivitetId: '10',
-        henvendelser: [
-            {
-                id: '4',
-                dialogId: '3',
-                avsender: 'VEILEDER',
-                avsenderId: 'Z990286',
-                sendt: '2018-11-21T13:13:20.685+01:00',
-                lest: true,
-                tekst:
-                    'Det er viktig at du gjennomfører denne aktiviteten med NAV. Gjør du ikke det, kan det medføre at stønaden du mottar fra NAV bortfaller for en periode eller stanses. Hvis du ikke kan gjennomføre aktiviteten, ber vi deg ta kontakt med veilederen din så snart som mulig.'
-            }
-        ],
-        egenskaper: ['PARAGRAF8']
-    },
-    {
         id: '2',
         overskrift: 'Du har fått et varsel fra NAV',
-        sisteTekst: 'Jeg har ikke hørt noe fra deg i det siste. Har du forlist?\n',
+        sisteTekst:
+            'Det er viktig at du gjennomfører denne aktiviteten med NAV. Gjør du ikke det, kan det medføre at stønaden du mottar fra NAV bortfaller for en periode eller stanses. Hvis du ikke kan gjennomføre aktiviteten, ber vi deg ta kontakt med veilederen din så snart som mulig.',
         sisteDato: '2018-02-01T11:52:20.615+01:00',
         opprettetDato: '2018-02-01T11:52:20.535+01:00',
         historisk: false,
@@ -78,7 +64,7 @@ const dialoger: DialogData[] & JSONArray = [
         ferdigBehandlet: true,
         lestAvBrukerTidspunkt: null,
         erLestAvBruker: false,
-        aktivitetId: '123',
+        aktivitetId: null,
         henvendelser: [
             {
                 id: '3',
@@ -86,11 +72,11 @@ const dialoger: DialogData[] & JSONArray = [
                 avsender: 'VEILEDER',
                 avsenderId: 'Z123456',
                 sendt: '2018-02-01T11:52:20.615+01:00',
-                lest: true,
+                lest: false,
                 tekst: 'Jeg har ikke hørt noe fra deg i det siste. Har du forlist?\n'
             }
         ],
-        egenskaper: ['ESKALERINGSVARSEL']
+        egenskaper: ['PARAGRAF8']
     },
     {
         id: '4',
@@ -107,7 +93,7 @@ const dialoger: DialogData[] & JSONArray = [
         ferdigBehandlet: true,
         lestAvBrukerTidspunkt: null,
         erLestAvBruker: false,
-        aktivitetId: '6871',
+        aktivitetId: '0',
         henvendelser: [
             {
                 id: '4',
@@ -155,6 +141,136 @@ const dialoger: DialogData[] & JSONArray = [
             }
         ],
         egenskaper: []
+    },
+    {
+        id: '5',
+        overskrift: 'Gruppeaktivitet',
+        sisteTekst: 'Ja, jeg tror det er rimelig. Skal prøve å få kontakt med han som driver greia',
+        sisteDato: '2018-02-01T11:52:20.615+01:00',
+        opprettetDato: '2018-02-01T11:52:20.535+01:00',
+        historisk: false,
+        lest: false,
+        venterPaSvar: false,
+        ferdigBehandlet: true,
+        lestAvBrukerTidspunkt: null,
+        erLestAvBruker: false,
+        aktivitetId: '123',
+        henvendelser: [
+            {
+                id: '3',
+                dialogId: '2',
+                avsender: 'VEILEDER',
+                avsenderId: 'Z123456',
+                sendt: '2018-02-01T11:52:20.615+01:00',
+                lest: false,
+                tekst: 'Jeg har ikke hørt noe fra deg i det siste. Har du forlist?\n'
+            }
+        ],
+        egenskaper: []
+    },
+    {
+        id: '6',
+        overskrift: 'Fotballtrener',
+        sisteTekst: 'Tenker vi står over denne',
+        sisteDato: '2018-02-01T11:52:20.615+01:00',
+        opprettetDato: '2018-02-01T11:52:20.535+01:00',
+        historisk: false,
+        lest: true,
+        venterPaSvar: false,
+        ferdigBehandlet: true,
+        lestAvBrukerTidspunkt: null,
+        erLestAvBruker: false,
+        aktivitetId: '123',
+        henvendelser: [
+            {
+                id: '3',
+                dialogId: '2',
+                avsender: 'VEILEDER',
+                avsenderId: 'Z123456',
+                sendt: '2018-02-01T11:52:20.615+01:00',
+                lest: false,
+                tekst: 'Jeg har ikke hørt noe fra deg i det siste. Har du forlist?\n'
+            }
+        ],
+        egenskaper: []
+    },
+    {
+        id: '15',
+        overskrift: 'Været',
+        sisteTekst: 'Dæven det er varmt i dag. Tror ikke jeg orker å sitte så lenge på jobb',
+        sisteDato: '2018-02-01T11:52:20.615+01:00',
+        opprettetDato: '2018-02-01T11:52:20.535+01:00',
+        historisk: false,
+        lest: true,
+        venterPaSvar: false,
+        ferdigBehandlet: true,
+        lestAvBrukerTidspunkt: null,
+        erLestAvBruker: false,
+        aktivitetId: '123',
+        henvendelser: [
+            {
+                id: '3',
+                dialogId: '2',
+                avsender: 'VEILEDER',
+                avsenderId: 'Z123456',
+                sendt: '2018-02-01T11:52:20.615+01:00',
+                lest: false,
+                tekst: 'Jeg har ikke hørt noe fra deg i det siste. Har du forlist?\n'
+            }
+        ],
+        egenskaper: []
+    },
+    {
+        id: '7',
+        overskrift: 'Kiropraktortime',
+        sisteTekst: 'Har hatt litt vondt i ryggen, ja. De youtubevideoene med sånn knekking virker ganske nice',
+        sisteDato: '2018-02-01T11:52:20.615+01:00',
+        opprettetDato: '2018-02-01T11:52:20.535+01:00',
+        historisk: false,
+        lest: true,
+        venterPaSvar: true,
+        ferdigBehandlet: true,
+        lestAvBrukerTidspunkt: null,
+        erLestAvBruker: false,
+        aktivitetId: '123',
+        henvendelser: [
+            {
+                id: '3',
+                dialogId: '2',
+                avsender: 'VEILEDER',
+                avsenderId: 'Z123456',
+                sendt: '2018-02-01T11:52:20.615+01:00',
+                lest: false,
+                tekst: 'Jeg har ikke hørt noe fra deg i det siste. Har du forlist?\n'
+            }
+        ],
+        egenskaper: []
+    },
+    {
+        id: '11',
+        overskrift: 'Fiskeoppdrett',
+        sisteTekst: 'Dette er kanskje noe du kunne vurdert?',
+        sisteDato: '2018-02-01T11:52:20.615+01:00',
+        opprettetDato: '2018-02-01T11:52:20.535+01:00',
+        historisk: false,
+        lest: false,
+        venterPaSvar: true,
+        ferdigBehandlet: true,
+        lestAvBrukerTidspunkt: null,
+        erLestAvBruker: false,
+        aktivitetId: '123',
+        henvendelser: [
+            {
+                id: '3',
+                dialogId: '2',
+                avsender: 'VEILEDER',
+                avsenderId: 'Z123456',
+                sendt: '2018-02-01T11:52:20.615+01:00',
+                lest: false,
+                tekst: 'Jeg har ikke hørt noe fra deg i det siste. Har du forlist?\n'
+            }
+        ],
+        egenskaper: []
     }
 ];
 
@@ -186,6 +302,11 @@ export function opprettEllerOppdaterDialog(update: NyDialogMeldingData): DialogD
         oldDialog.sisteTekst = update.tekst;
         oldDialog.sisteDato = nyHenvendelse.sendt;
         oldDialog.henvendelser.push(nyHenvendelse);
+
+        if (!bruker.erVeileder) {
+            oldDialog.venterPaSvar = false;
+        }
+
         return oldDialog as DialogData & JSONObject;
     } else {
         const nyDialog: DialogData = {
@@ -197,8 +318,8 @@ export function opprettEllerOppdaterDialog(update: NyDialogMeldingData): DialogD
             opprettetDato: new Date().toISOString(),
             historisk: false,
             lest: true,
-            venterPaSvar: true,
-            ferdigBehandlet: false,
+            venterPaSvar: false,
+            ferdigBehandlet: true,
             lestAvBrukerTidspunkt: null,
             erLestAvBruker: false,
             aktivitetId: null,
@@ -210,4 +331,19 @@ export function opprettEllerOppdaterDialog(update: NyDialogMeldingData): DialogD
     }
 }
 
+export function setVenterPaSvar(dialogId: string, venterPaSvar: boolean) {
+    const dialog = dialoger.find(dialog => dialog.id === dialogId);
+    if (dialog) {
+        dialog.venterPaSvar = venterPaSvar;
+    }
+    return dialog as DialogData & JSONObject;
+}
+
+export function setFerdigBehandlet(dialogId: string, ferdigBehandlet: boolean) {
+    const dialog = dialoger.find(dialog => dialog.id === dialogId);
+    if (dialog) {
+        dialog.ferdigBehandlet = ferdigBehandlet;
+    }
+    return dialog as DialogData & JSONObject;
+}
 export default dialoger;

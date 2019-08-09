@@ -1,11 +1,13 @@
 import React, { useEffect } from 'react';
+import { hasData } from '@nutgaard/use-fetch';
 import { HenvendelseList } from './HenvendelseList';
 import { DialogHeader } from './DialogHeader';
 import { useDialogContext, useOppfolgingContext } from '../Context';
 import { RouteComponentProps, withRouter } from 'react-router';
-import { Aktivitetskort } from './Aktivitetskort';
-import { Innholdstittel, Normaltekst } from 'nav-frontend-typografi';
+import { Normaltekst } from 'nav-frontend-typografi';
 import DialogInputBoxVisible from './DialogInputBox';
+import InfoVedIngenDialogerVisible from './InfoVedIngenDialoger';
+import { ReactComponent as IngenValgteDialoger } from './dialogIngenValgt.svg';
 
 import './Dialog.less';
 
@@ -14,8 +16,9 @@ interface Props extends RouteComponentProps<{ dialogId?: string }> {}
 export function Dialog(props: Props) {
     const oppfolgingData = useOppfolgingContext();
     const dialoger = useDialogContext();
+    const dialogData = hasData(dialoger) ? dialoger.data : [];
     const dialogId = props.match.params.dialogId;
-    const valgtDialog = dialoger.data!.find(dialog => dialog.id === dialogId);
+    const valgtDialog = dialogData.find(dialog => dialog.id === dialogId);
 
     useEffect(() => {
         if (valgtDialog && !valgtDialog.lest) {
@@ -25,39 +28,43 @@ export function Dialog(props: Props) {
                     lest: true,
                     dialogId: valgtDialog.id
                 })
-            }).then(() => dialoger.refetch());
+            }).then(() => dialoger.rerun());
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [valgtDialog]);
 
-    if (dialoger.data && dialoger.data.length === 0) {
+    if (dialogData.length === 0) {
         return (
-            <div className="dialog">
-                <Innholdstittel>Dialog</Innholdstittel>
-                <Normaltekst>Her kan du sende melding til veilederen din om arbeid og oppfølging.</Normaltekst>
-                <Normaltekst>Du kan forvente svar i løpet av noen dager.</Normaltekst>
-                <Normaltekst>Klikk på "Ny dialog"</Normaltekst>
-            </div>
+            <>
+                <div className="dialog dialog__tom">
+                    <InfoVedIngenDialogerVisible visible={true} />
+                </div>
+            </>
         );
     } else {
         if (!valgtDialog) {
             return (
-                <div className="dialog">
-                    <Innholdstittel>Dialog</Innholdstittel>
-                    <Normaltekst>Detaljer for valgt dialog vises her.</Normaltekst>
-                    <Normaltekst> - Du kan velge en dialog fra oversikten, </Normaltekst>
-                    <Normaltekst> - Du kan klikke på "Ny Dialog" for å starte en ny en.</Normaltekst>
-                </div>
+                <>
+                    <div className="dialog dialog__maavelges">
+                        <IngenValgteDialoger />
+                        <div className="infotekst">
+                            <Normaltekst>Velg en dialog for å lese den</Normaltekst>
+                        </div>
+                    </div>
+                </>
             );
         }
         return (
             <>
                 <div className="dialog">
                     <DialogHeader dialog={valgtDialog} />
-                    <HenvendelseList henvendelseDataList={valgtDialog.henvendelser} />
-                    <DialogInputBoxVisible dialog={valgtDialog} visible={oppfolgingData!.underOppfolging} />
+                    <HenvendelseList dialogData={valgtDialog} />
+                    <DialogInputBoxVisible
+                        key={valgtDialog.id}
+                        dialog={valgtDialog}
+                        visible={oppfolgingData!.underOppfolging}
+                    />
                 </div>
-                <Aktivitetskort dialog={valgtDialog} />
             </>
         );
     }

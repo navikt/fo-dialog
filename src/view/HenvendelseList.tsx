@@ -1,27 +1,45 @@
-import { HenvendelseData } from '../utils/typer';
-import React from 'react';
+import { DialogData } from '../utils/typer';
+import React, { useEffect, useRef } from 'react';
 import { Henvendelse } from './Henvendelse';
 
 import './henvendelseList.less';
 
 interface Props {
-    henvendelseDataList: HenvendelseData[];
+    dialogData: DialogData;
+}
+
+function useScrollToLast(dialogData: DialogData) {
+    const previousDialog = useRef('');
+    const henvendelseLenge = dialogData.henvendelser.length;
+
+    useEffect(() => {
+        const isFirstRender = dialogData.id !== previousDialog.current;
+        previousDialog.current = dialogData.id;
+
+        const behavior: ScrollBehavior = isFirstRender ? 'auto' : 'smooth';
+        const elem = document.querySelector('.henvendelse-list__henvendelse:last-of-type');
+        if (elem !== null) {
+            console.log('scroll', behavior);
+            elem.scrollIntoView({ block: 'nearest', behavior });
+        }
+    }, [previousDialog, henvendelseLenge, dialogData.id]);
 }
 
 export function HenvendelseList(props: Props) {
-    if (!props.henvendelseDataList) {
+    useScrollToLast(props.dialogData);
+
+    if (!props.dialogData.henvendelser) {
         return null;
     }
-
-    const henvendelser = props.henvendelseDataList.map(henvendelse => (
-        <div key={henvendelse.id} className="henvendelse-list__henvendelse">
-            <Henvendelse henvendelseData={henvendelse} />
-        </div>
-    ));
-
     return (
         <div className="henvendelse-list">
-            <div className="henvendelse-list__viewport">{henvendelser}</div>
+            <div className="henvendelse-list__viewport">
+                {props.dialogData.henvendelser.map(henvendelse => (
+                    <div key={henvendelse.id} className={'henvendelse-list__henvendelse'}>
+                        <Henvendelse henvendelseData={henvendelse} />
+                    </div>
+                ))}
+            </div>
         </div>
     );
 }

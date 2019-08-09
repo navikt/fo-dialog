@@ -4,7 +4,7 @@
     display: flex;
     flex-direction: column;
     background-color: @navLysGra;
-    padding: 1rem;
+    padding-right: 0.8rem;
     &__header {
         display: flex;
         flex-basis: 4rem;
@@ -12,12 +12,9 @@
             display: flex;
             align-items: center;
             &__knapp {
-                text-decoration: none;
                 display: flex;
-                align-items: center;
-                font-weight: bold;
-                color: @navMorkGra;
                 margin-right: 1.5rem;
+                padding: 0.3rem 0.3rem 0.3rem 0;
                 svg {
                     margin-right: 0.5rem;
                 }
@@ -27,15 +24,28 @@
             }
         }
     }
+    .ingen-dialog-info {
+        margin: 0 auto;
+        padding-top: 8rem;
+        &-bilde {
+            text-align: center;
+            padding-bottom: 0.2rem;
+        }
+    }
     &__preview-list {
-        overflow-y: scroll;
+        padding: 0.2rem;
+        overflow-y: auto;
         flex: 1;
     }
     @media (min-width: 800px) {
+        padding-right: 1rem;
         &__header {
             flex-basis: 7rem;
             align-items: flex-end;
             padding-bottom: 2rem;
+        }
+        .ingen-dialog-info {
+            display: none;
         }
     }
 }

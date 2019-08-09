@@ -1,27 +1,46 @@
 @import (reference) '~nav-frontend-core/less/core';
 
 .dialog-preview {
-    border-left: 5px solid transparent;
+    border-left: 8px solid @navBla;
     &--lest {
-        border-left-color: @navBla;
+        border-left-color: transparent;
+        .lenkepanel__heading {
+            font-weight: normal;
+        }
     }
-
+    &.dialog-preview--valgt {
+        background-color: #e5eef2;
+    }
+    &.dialog-preview--valgt:hover {
+        background-color: #e5eef2;
+    }
     &.lenkepanel {
         padding: 0.5rem 0.5rem 0.5rem 0.5rem;
-        border-radius: 0;
         margin-bottom: 0.5rem;
     }
     &__ikon {
-        flex-basis: 2rem;
+        flex-basis: 1.5rem;
         flex-shrink: 0;
-        margin: 0 0 0 0;
+        margin: 1rem 1rem 1rem 0.7rem;
+        position: relative;
+        &--lest:after {
+            content: '';
+            height: 8px;
+            width: 8px;
+            background-color: @navRod;
+            border-radius: 50%;
+            display: block;
+            position: absolute;
+            top: 0;
+            right: -1px;
+        }
     }
     &__internal-div {
         flex: 1;
         overflow: hidden;
         text-align: left;
         .lenkepanel__heading {
-            font-size: 1.1rem;
+            font-size: 1rem;
         }
     }
 
@@ -29,12 +48,17 @@
         text-overflow: ellipsis;
         white-space: nowrap;
         overflow: hidden;
-        font-size: 0.9rem;
-        margin-bottom: 0.5rem;
+        font-size: 0.875rem;
+        color: @navGra80;
+    }
+    &__dato {
+        color: @navGra80;
     }
     &__etikett {
         margin-right: 0.3rem;
-        padding: 0.2rem 0.4rem;
+        margin-bottom: 0.15rem;
+        padding: 0 0.4rem;
+
         .typo-normal {
             font-size: 0.8rem;
         }
@@ -45,4 +69,8 @@
             background-color: @navLillaLighten60;
         }
     }
+}
+
+.dialog-preview:hover {
+    background-color: @navDypBlaLighten80;
 }
