@@ -4,7 +4,6 @@ import { JSONArray, JSONObject, ResponseData } from 'yet-another-fetch-mock';
 import bruker from './bruker';
 
 const dialoger: DialogData[] & JSONArray = [
-    //   ]; const dialogs : DialogData[] & JSONArray = [ // eks på ingen dialoger
     {
         id: '10',
         overskrift: 'Systemutvikler',
@@ -73,7 +72,8 @@ const dialoger: DialogData[] & JSONArray = [
                 avsenderId: 'Z123456',
                 sendt: '2018-02-01T11:52:20.615+01:00',
                 lest: false,
-                tekst: 'Jeg har ikke hørt noe fra deg i det siste. Har du forlist?\n'
+                tekst:
+                    'Det er viktig at du gjennomfører denne aktiviteten med NAV. Gjør du ikke det, kan det medføre at stønaden du mottar fra NAV bortfaller for en periode eller stanses. Hvis du ikke kan gjennomføre aktiviteten, ber vi deg ta kontakt med veilederen din så snart som mulig.'
             }
         ],
         egenskaper: ['PARAGRAF8']
@@ -163,7 +163,7 @@ const dialoger: DialogData[] & JSONArray = [
                 avsenderId: 'Z123456',
                 sendt: '2018-02-01T11:52:20.615+01:00',
                 lest: false,
-                tekst: 'Jeg har ikke hørt noe fra deg i det siste. Har du forlist?\n'
+                tekst: 'Ja, jeg tror det er rimelig. Skal prøve å få kontakt med han som driver greia'
             }
         ],
         egenskaper: []
@@ -189,33 +189,7 @@ const dialoger: DialogData[] & JSONArray = [
                 avsenderId: 'Z123456',
                 sendt: '2018-02-01T11:52:20.615+01:00',
                 lest: false,
-                tekst: 'Jeg har ikke hørt noe fra deg i det siste. Har du forlist?\n'
-            }
-        ],
-        egenskaper: []
-    },
-    {
-        id: '15',
-        overskrift: 'Været',
-        sisteTekst: 'Dæven det er varmt i dag. Tror ikke jeg orker å sitte så lenge på jobb',
-        sisteDato: '2018-02-01T11:52:20.615+01:00',
-        opprettetDato: '2018-02-01T11:52:20.535+01:00',
-        historisk: false,
-        lest: true,
-        venterPaSvar: false,
-        ferdigBehandlet: true,
-        lestAvBrukerTidspunkt: null,
-        erLestAvBruker: false,
-        aktivitetId: '123',
-        henvendelser: [
-            {
-                id: '3',
-                dialogId: '2',
-                avsender: 'VEILEDER',
-                avsenderId: 'Z123456',
-                sendt: '2018-02-01T11:52:20.615+01:00',
-                lest: false,
-                tekst: 'Jeg har ikke hørt noe fra deg i det siste. Har du forlist?\n'
+                tekst: 'Tenker vi står over denne'
             }
         ],
         egenskaper: []
@@ -241,7 +215,7 @@ const dialoger: DialogData[] & JSONArray = [
                 avsenderId: 'Z123456',
                 sendt: '2018-02-01T11:52:20.615+01:00',
                 lest: false,
-                tekst: 'Jeg har ikke hørt noe fra deg i det siste. Har du forlist?\n'
+                tekst: 'Har hatt litt vondt i ryggen, ja. De youtubevideoene med sånn knekking virker ganske nice'
             }
         ],
         egenskaper: []
@@ -267,7 +241,7 @@ const dialoger: DialogData[] & JSONArray = [
                 avsenderId: 'Z123456',
                 sendt: '2018-02-01T11:52:20.615+01:00',
                 lest: false,
-                tekst: 'Jeg har ikke hørt noe fra deg i det siste. Har du forlist?\n'
+                tekst: 'Dette er kanskje noe du kunne vurdert?'
             }
         ],
         egenskaper: []
