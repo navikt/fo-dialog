@@ -4,17 +4,21 @@
     display: flex;
     flex-direction: column;
     height: 100%;
+    width: 100%;
     &.dialog__tom {
-        align-items: center;
         text-align: center;
         padding-top: 5rem;
+        width: 19rem;
         .infotekst {
-            width: 19rem;
+            text-align: center;
             margin-top: 1rem;
         }
         svg {
             width: 10rem;
         }
+    }
+    &__tom {
+        display: none;
     }
     &.dialog__maavelges {
         align-items: center;
@@ -38,7 +42,7 @@
 
     .tilbake-til-oversikt {
         text-decoration: none;
-        padding: 1rem;
+        padding: 1rem 0.5rem 0.2rem 0.5rem;
         display: flex;
         align-items: center;
         color: @navMorkGra;
@@ -62,6 +66,20 @@
         }
         &__header {
             box-shadow: none;
+        }
+        &__tom {
+            display: block;
+            margin: 0 auto;
+            text-align: center;
+            padding-top: 8rem;
+            width: 19rem;
+            .infotekst {
+                text-align: center;
+                margin-top: 1rem;
+            }
+            svg {
+                width: 10rem;
+            }
         }
     }
     @media (min-width: 1200px) {
@@ -92,16 +110,25 @@
     display: flex;
     flex-basis: 7rem;
     bottom: 0;
-    align-items: center;
     padding: 1rem;
+    align-items: flex-end;
+    .autosizing-textarea {
+        flex: 1;
+        max-height: 7rem;
+        @media (min-width: 800px) {
+            max-height: 15rem;
+        }
+    }
     .skjemaelement {
         flex: 1;
+        margin-bottom: 0;
     }
     .textarea__container label {
         .sr-only();
     }
     .knapp--hoved {
         padding: 0.5rem;
+        height: 2.6rem;
         margin-left: 1rem;
     }
 }
@@ -112,6 +139,7 @@
 .checkbox-block {
     display: flex;
     padding-left: 1rem;
+    margin-top: 1rem;
     &__item {
         padding-right: 2rem;
     }

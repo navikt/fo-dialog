@@ -28,27 +28,49 @@ body,
         width: 100%;
         z-index: 250;
     }
-    .dialog {
-        width: 100%;
+    .dialog-container {
+        height: 100%;
         display: none;
         background-color: white;
     }
     .aktivitetkort {
         display: none;
     }
-
+    &--emptyState {
+        padding: 0;
+        .dialog-overview {
+            display: flex;
+            flex-direction: column;
+            width: 100%;
+        }
+        .dialog-container {
+            display: none;
+        }
+        .aktivitet-container {
+            display: none;
+        }
+    }
     &--dialogvisning {
         padding: 0;
         .dialog-overview {
             display: none;
         }
-        .dialog {
+        .dialog-container {
             display: flex;
+        }
+        .aktivitet-container {
+            display: none;
         }
     }
     &--nydialogvisning {
         padding: 0;
         .dialog-overview {
+            display: none;
+        }
+        .dialog-container {
+            display: flex;
+        }
+        .aktivitet-container {
             display: none;
         }
     }
@@ -59,9 +81,14 @@ body,
             display: flex;
             width: 35%;
         }
-        .dialog {
+        .dialog-container {
             display: flex;
             width: 65%;
+            &__tom {
+                margin: 0 auto;
+                text-align: center;
+                padding-top: 8rem;
+            }
         }
     }
     @media (min-width: 1200px) {
@@ -69,39 +96,16 @@ body,
             width: 27%;
             max-width: 27rem;
         }
-        .dialog {
+        .dialog-container {
             display: flex;
             width: 46%;
             max-width: 50rem;
         }
-        .aktivitetkort {
+
+        .aktivitet-container {
             display: block;
             width: 27%;
             max-width: 27rem;
-            background-color: @navLysGra;
-            padding: 1rem 2rem;
-
-            &__link {
-                margin: 1rem 0;
-            }
-
-            &__brødsmulesti {
-                margin-bottom: 2rem;
-                color: @navGra60;
-            }
-
-            &__infobox__row {
-                flex-grow: 1;
-                display: flex;
-                flex-wrap: wrap;
-                &__item {
-                    margin-bottom: 1rem;
-                    min-width: 10rem;
-                    .label {
-                        color: @navGra60;
-                    }
-                }
-            }
         }
     }
 }

@@ -4,7 +4,7 @@ import { JSONArray, JSONObject, ResponseData } from 'yet-another-fetch-mock';
 import bruker from './bruker';
 
 const dialoger: DialogData[] & JSONArray = [
-    //]; const dialogs: DialogData[] & JSONArray = [ // for å simulere 'ingen dialoger'
+    //   ]; const dialogs : DialogData[] & JSONArray = [ // eks på ingen dialoger
     {
         id: '10',
         overskrift: 'Systemutvikler',
@@ -12,7 +12,7 @@ const dialoger: DialogData[] & JSONArray = [
         sisteDato: '2017-01-28T12:48:56.097+01:00',
         opprettetDato: '2018-02-27T12:48:56.081+01:00',
         historisk: false,
-        lest: true,
+        lest: false,
         venterPaSvar: false,
         ferdigBehandlet: false,
         lestAvBrukerTidspunkt: null,
@@ -64,7 +64,7 @@ const dialoger: DialogData[] & JSONArray = [
         ferdigBehandlet: true,
         lestAvBrukerTidspunkt: null,
         erLestAvBruker: false,
-        aktivitetId: '123',
+        aktivitetId: null,
         henvendelser: [
             {
                 id: '3',

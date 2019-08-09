@@ -4,10 +4,9 @@ import { HenvendelseList } from './HenvendelseList';
 import { DialogHeader } from './DialogHeader';
 import { useDialogContext, useOppfolgingContext } from '../Context';
 import { RouteComponentProps, withRouter } from 'react-router';
-import { Aktivitetskort } from './Aktivitetskort';
 import { Normaltekst } from 'nav-frontend-typografi';
 import DialogInputBoxVisible from './DialogInputBox';
-import { ReactComponent as IngenDialoger } from './dialogIngen.svg';
+import InfoVedIngenDialogerVisible from './InfoVedIngenDialoger';
 import { ReactComponent as IngenValgteDialoger } from './dialogIngenValgt.svg';
 
 import './Dialog.less';
@@ -36,38 +35,36 @@ export function Dialog(props: Props) {
 
     if (dialogData.length === 0) {
         return (
-            <div className="dialog dialog__tom">
-                <Normaltekst className="infotekst">
-                    Her kan du sende melding til veilederen din om arbeid og oppfølging.
-                </Normaltekst>
-                <Normaltekst className="infotekst">Du kan forvente svar i løpet av noen dager.</Normaltekst>
-                <Normaltekst className="infotekst">Klikk på "Ny dialog"</Normaltekst>
-                <IngenDialoger />
-            </div>
+            <>
+                <div className="dialog dialog__tom">
+                    <InfoVedIngenDialogerVisible visible={true} />
+                </div>
+            </>
         );
     } else {
         if (!valgtDialog) {
             return (
-                <div className="dialog dialog__maavelges">
-                    <IngenValgteDialoger />
-                    <div className="infotekst">
-                        <Normaltekst>Velg en dialog for å lese den</Normaltekst>
+                <>
+                    <div className="dialog dialog__maavelges">
+                        <IngenValgteDialoger />
+                        <div className="infotekst">
+                            <Normaltekst>Velg en dialog for å lese den</Normaltekst>
+                        </div>
                     </div>
-                </div>
+                </>
             );
         }
         return (
             <>
                 <div className="dialog">
                     <DialogHeader dialog={valgtDialog} />
-                    <HenvendelseList henvendelseDataList={valgtDialog.henvendelser} />
+                    <HenvendelseList dialogData={valgtDialog} />
                     <DialogInputBoxVisible
                         key={valgtDialog.id}
                         dialog={valgtDialog}
                         visible={oppfolgingData!.underOppfolging}
                     />
                 </div>
-                <Aktivitetskort dialog={valgtDialog} />
             </>
         );
     }

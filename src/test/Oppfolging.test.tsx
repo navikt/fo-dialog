@@ -208,6 +208,7 @@ describe('<Dialog/>', () => {
         ];
         jest.spyOn(AppContext, 'useDialogContext').mockImplementation(() => useFetchDialoger);
         jest.spyOn(AppContext, 'useOppfolgingContext').mockImplementation(() => oppfolgingData);
+        Element.prototype.scrollIntoView = () => {};
         const wrapper = mount(
             <MemoryRouter>
                 <Dialog {...lagRouterProps('1')} />
@@ -229,6 +230,7 @@ describe('<Dialog/>', () => {
             }
         ];
         jest.spyOn(AppContext, 'useOppfolgingContext').mockImplementation(() => oppfolgingData);
+        Element.prototype.scrollIntoView = () => {};
         const wrapper = mount(
             <MemoryRouter>
                 <Dialog {...lagRouterProps('1')} />
