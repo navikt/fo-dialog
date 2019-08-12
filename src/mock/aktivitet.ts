@@ -8,7 +8,7 @@ const aktiviteter: Aktivitet[] & JSONArray = [
         tittel: 'Systemutvikler',
         beskrivelse: 'Utvikling av backendsystemer i Node.js og Spring med byggeverktøy som Gradle og Maven',
         lenke: 'https://www.finn.no/job/fulltime/ad.html?finnkode=152367651',
-        type: 'STILLING',
+        type: 'MOTE',
         status: 'PLANLAGT',
         fraDato: '2018-08-21T08:00:00+02:00',
         tilDato: '2018-08-21T12:15:00+02:00',
@@ -37,8 +37,7 @@ const aktiviteter: Aktivitet[] & JSONArray = [
         effekt: null,
         behandlingOppfolging: null,
         kanal: 'OPPMOTE',
-        erReferatPublisert: false,
-        klokkeslett: 123
+        erReferatPublisert: false
     },
     {
         id: '10',
@@ -76,8 +75,6 @@ const aktiviteter: Aktivitet[] & JSONArray = [
         behandlingOppfolging: null,
         kanal: 'OPPMOTE',
         erReferatPublisert: false,
-        varighet: 75,
-        klokkeslett: 700,
         adresse:
             'Rekegata 69 er en hyggelig lokasjon med god service og flinke veiledere en av dem heter Linn hun er designer og er utdannet på NTNU'
     }

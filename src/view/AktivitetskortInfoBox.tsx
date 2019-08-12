@@ -1,7 +1,7 @@
 import React from 'react';
 import { Aktivitet } from '../utils/typer';
 import { EtikettLiten, Undertekst } from 'nav-frontend-typografi';
-import { formaterDate, konverterMinutterTilTimer } from '../utils/date';
+import { formaterDate } from '../utils/date';
 
 import Lenke from 'nav-frontend-lenker';
 
@@ -11,6 +11,7 @@ interface Props {
 
 export function AktivitetskortInfoBox(props: Props) {
     const datapunkter: Array<Array<InfoElement>> = fjernTommeRaderOgKolonner(mapAktivietTypeToInfobox(props.aktivitet));
+
     return (
         <>
             {datapunkter.map(rad => (
@@ -62,15 +63,12 @@ function mapAktivietTypeToInfobox(aktivitet: Aktivitet): GridConfig {
 
         case 'MOTE':
             return [
-                [
-                    { label: 'Dato', data: formaterDate(aktivitet.fraDato) },
-                    { label: 'Klokkeslett', data: konverterMinutterTilTimer(aktivitet.klokkeslett!) }
-                ],
+                [{ label: 'Dato', data: formaterDate(aktivitet.fraDato) }, { label: 'Klokkeslett', data: '' }],
                 [
                     { label: 'Møteform', data: mapKanalToString(aktivitet.kanal!) },
                     {
                         label: 'Varighet',
-                        data: konverterMinutterTilTimer(aktivitet.varighet!)
+                        data: ''
                     }
                 ],
                 [{ label: 'Møtested', data: aktivitet.adresse ? aktivitet.adresse : '' }],

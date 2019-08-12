@@ -4,7 +4,7 @@ import { Undertekst, Undertittel } from 'nav-frontend-typografi';
 
 import useFetch from '../utils/use-fetch';
 import { LenkepanelBase } from 'nav-frontend-lenkepanel';
-import { formaterDate, konverterMinutterTilTimer } from '../utils/date';
+import { formaterDate } from '../utils/date';
 import Lenke from 'nav-frontend-lenker';
 
 interface Props {
@@ -39,9 +39,7 @@ function mapAktivitetTypeToPreview(aktivitet: Aktivitet): string {
         case 'STILLING':
             return `Stilling | ${aktivitet.arbeidsgiver}`;
         case 'MOTE':
-            return `Møte med NAV | ${formaterDate(aktivitet.fraDato)} | ${konverterMinutterTilTimer(
-                aktivitet.klokkeslett!
-            )}`;
+            return `Møte med NAV | ${formaterDate(aktivitet.fraDato)}`;
         case 'SOKEAVTALE':
             return `${formaterDate(aktivitet.fraDato)} - ${formaterDate(aktivitet.tilDato)}`;
         case 'BEHANDLING':
