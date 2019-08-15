@@ -102,8 +102,6 @@ export interface Aktivitet {
     behandlingOppfolging: StringOrUndefinedOrNull;
     kanal: StringOrUndefinedOrNull;
     erReferatPublisert: boolean;
-    varighet?: NumberOrUndefinedOrNull;
-    klokkeslett?: NumberOrUndefinedOrNull;
     adresse?: StringOrUndefinedOrNull;
     referat?: StringOrUndefinedOrNull;
     arrangoer?: StringOrUndefinedOrNull;

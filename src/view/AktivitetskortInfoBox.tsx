@@ -1,7 +1,7 @@
 import React from 'react';
 import { Aktivitet } from '../utils/typer';
 import { EtikettLiten, Undertekst } from 'nav-frontend-typografi';
-import { formaterDate, konverterMinutterTilTimer } from '../utils/date';
+import { formaterDate } from '../utils/date';
 
 import Lenke from 'nav-frontend-lenker';
 
@@ -11,6 +11,7 @@ interface Props {
 
 export function AktivitetskortInfoBox(props: Props) {
     const datapunkter: Array<Array<InfoElement>> = fjernTommeRaderOgKolonner(mapAktivietTypeToInfobox(props.aktivitet));
+
     return (
         <>
             {datapunkter.map(rad => (
@@ -57,24 +58,21 @@ function mapAktivietTypeToInfobox(aktivitet: Aktivitet): GridConfig {
                     }
                 ],
                 [{ label: 'Beskrivelse', data: aktivitet.beskrivelse ? aktivitet.beskrivelse : '' }],
-                [{ label: 'Lenke', data: aktivitet.lenke ? aktivitet.lenke : '' }] //TODO: Gjøre sånn at dette er en faktisk lenke
+                [{ label: 'Lenke', data: aktivitet.lenke ? aktivitet.lenke : '' }]
             ];
 
         case 'MOTE':
             return [
-                [
-                    { label: 'Dato', data: formaterDate(aktivitet.fraDato) },
-                    { label: 'Klokkeslett', data: konverterMinutterTilTimer(aktivitet.klokkeslett!) }
-                ],
+                [{ label: 'Dato', data: formaterDate(aktivitet.fraDato) }, { label: 'Klokkeslett', data: '' }],
                 [
                     { label: 'Møteform', data: mapKanalToString(aktivitet.kanal!) },
                     {
                         label: 'Varighet',
-                        data: konverterMinutterTilTimer(aktivitet.varighet!)
+                        data: ''
                     }
                 ],
-                [{ label: 'Møtested', data: aktivitet.adresse! }],
-                [{ label: 'Hensikt med møtet', data: aktivitet.hensikt! }]
+                [{ label: 'Møtested', data: aktivitet.adresse ? aktivitet.adresse : '' }],
+                [{ label: 'Hensikt med møtet', data: aktivitet.hensikt ? aktivitet.hensikt : '' }]
             ];
         case 'SOKEAVTALE':
             return [
@@ -173,7 +171,7 @@ function mapAktivietTypeToInfobox(aktivitet: Aktivitet): GridConfig {
 }
 
 function fjernTommeRaderOgKolonner(config: GridConfig): GridConfig {
-    config = config.filter(row => row.filter(element => element.data !== '').length !== 0);
+    config = config.filter(row => row.filter(element => element.data).length !== 0);
 
     return config;
 }
