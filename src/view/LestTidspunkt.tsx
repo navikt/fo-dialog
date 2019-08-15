@@ -11,9 +11,7 @@ function LestAvTidspunkt(props: Props) {
     const tidspunktMedRiktigFormat = formaterDateAndTime(props.tidspunkt);
     return (
         <div className={'henvendelser__lest-av-bruker--tittel  ::before'}>
-            <span>Lest av bruker</span>
-            <span>&nbsp;</span>
-            <span>{tidspunktMedRiktigFormat}</span>
+            <span>{`Lest av bruker ${tidspunktMedRiktigFormat}`}</span>
         </div>
     );
 }

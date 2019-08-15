@@ -20,7 +20,7 @@ export function DialogOverview() {
     if (!erUnderOppfolging && !harOppfolgingsPerioder) {
         return null;
     } else {
-        const sortedOppfolgingsData = dialogData.sort((a: DialogData, b: DialogData) => sortDialoger(a, b));
+        const sortedOppfolgingsData = dialogData.sort((a, b) => sortDialoger(a, b));
         return (
             <div className="dialog-overview">
                 <DialogOverviewHeaderVisible visible={oppfolgingData!.underOppfolging} />
