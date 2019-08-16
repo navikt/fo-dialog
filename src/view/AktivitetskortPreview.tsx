@@ -5,40 +5,11 @@ import { Undertekst, Undertittel } from 'nav-frontend-typografi';
 import useFetch from '../utils/use-fetch';
 import { LenkepanelBase } from 'nav-frontend-lenkepanel';
 import { ReactComponent as AktivitetsIkon } from './aktivitet_lest.svg';
-import { formaterDate, konverterMinutterTilTimer } from '../utils/date';
+import { formaterDate } from '../utils/date';
 import Lenke from 'nav-frontend-lenker';
 
 interface Props {
     dialog: DialogData;
-}
-
-function mapAktivitetTypeToPreviw(aktivitet: Aktivitet): string {
-    switch (aktivitet.type) {
-        case 'STILLING':
-            return `Stilling | ${aktivitet.arbeidsgiver}`;
-        case 'IJOBB':
-            return `Jobb jeg har nå | ${aktivitet.arbeidsgiver}`;
-        case 'EGEN':
-            return `Jobbrettet egenaktivitet`;
-        case 'SOKEAVTALE':
-            return `${formaterDate(aktivitet.fraDato)} - ${formaterDate(aktivitet.tilDato)}`;
-        case 'BEHANDLING':
-            return aktivitet.behandlingType!;
-        case 'MOTE':
-            return `Møte med NAV | ${formaterDate(aktivitet.fraDato)} | ${konverterMinutterTilTimer(
-                aktivitet.klokkeslett!
-            )}`;
-        case 'SAMTALEREFERAT':
-            return `Samtalereferat | ${formaterDate(aktivitet.fraDato)}`;
-        case 'TILTAKSAKTIVITET':
-            return 'Tiltak gjennom NAV';
-        case 'GRUPPEAKTIVITET':
-            return 'Gruppeaktivitet';
-        case 'UTDANNING':
-            return 'Utdanning';
-    }
-
-    return '';
 }
 
 export function AktivitetskortPreview(props: Props) {
@@ -70,7 +41,7 @@ export function AktivitetskortPreview(props: Props) {
     return null;
 }
 
-function mapAktivitetTypeToPreview(aktivitet: Aktivitet): string {
+function mapAktivitetTypeToPreviw(aktivitet: Aktivitet): string {
     switch (aktivitet.type) {
         case 'STILLING':
             return `Stilling | ${aktivitet.arbeidsgiver}`;

@@ -71,15 +71,12 @@ export function AktivitetskortInfoBox(props: Props) {
 
             case 'MOTE':
                 return [
-                    [
-                        { label: 'Dato', data: formaterDate(aktivitet.fraDato) },
-                        { label: 'Klokkeslett', data: konverterMinutterTilTimer(aktivitet.klokkeslett!) }
-                    ],
+                    [{ label: 'Dato', data: formaterDate(aktivitet.fraDato) }, { label: 'Klokkeslett', data: '' }],
                     [
                         { label: 'Møteform', data: mapKanalToString(aktivitet.kanal!) },
                         {
                             label: 'Varighet',
-                            data: konverterMinutterTilTimer(aktivitet.varighet!)
+                            data: ''
                         }
                     ],
                     [{ label: 'Møtested', data: aktivitet.adresse ? aktivitet.adresse : '' }],
@@ -198,5 +195,4 @@ export function AktivitetskortInfoBox(props: Props) {
         }
         return '';
     }
-
 }
