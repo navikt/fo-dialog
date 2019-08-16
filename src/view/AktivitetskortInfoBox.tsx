@@ -1,7 +1,7 @@
 import React from 'react';
 import { Aktivitet } from '../utils/typer';
 import { EtikettLiten, Undertekst } from 'nav-frontend-typografi';
-import { formaterDate, konverterMinutterTilTimer } from '../utils/date';
+import { formaterDate } from '../utils/date';
 
 import Lenke from 'nav-frontend-lenker';
 
@@ -11,6 +11,7 @@ interface Props {
 
 export function AktivitetskortInfoBox(props: Props) {
     const datapunkter: Array<Array<InfoElement>> = fjernTommeRaderOgKolonner(mapAktivietTypeToInfobox(props.aktivitet));
+
     return (
         <>
             {datapunkter.map(rad => (
@@ -197,4 +198,5 @@ export function AktivitetskortInfoBox(props: Props) {
         }
         return '';
     }
+
 }

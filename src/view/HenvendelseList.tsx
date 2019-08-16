@@ -1,6 +1,7 @@
-import { DialogData } from '../utils/typer';
+import { DialogData, HenvendelseData, StringOrUndefinedOrNull } from '../utils/typer';
 import React, { useEffect, useRef } from 'react';
 import { Henvendelse } from './Henvendelse';
+import LestAvTidspunktVisible from './LestTidspunkt';
 
 import './henvendelseList.less';
 
@@ -25,17 +26,39 @@ function useScrollToLast(dialogData: DialogData) {
     }, [previousDialog, henvendelseLenge, dialogData.id]);
 }
 
-export function HenvendelseList(props: Props) {
-    useScrollToLast(props.dialogData);
+function datoComparator(adato: string, bdato: string): number {
+    return adato > bdato ? -1 : adato === bdato ? 0 : 1;
+}
 
-    if (!props.dialogData.henvendelser) {
+function sisteLesteHenvendelse(lest: StringOrUndefinedOrNull, henvendelser: HenvendelseData[]) {
+    if (!lest) {
         return null;
     }
+
+    const sistleste = henvendelser.find(henvendelse => datoComparator(lest, henvendelse.sendt) >= 0);
+    return sistleste ? sistleste.id : null;
+}
+
+export function HenvendelseList(props: Props) {
+    const dialogData = props.dialogData;
+    const { lestAvBrukerTidspunkt, henvendelser } = dialogData;
+    useScrollToLast(dialogData);
+
+    if (!henvendelser) {
+        return null;
+    }
+    const henvendelserSynkende = henvendelser.sort((a, b) => datoComparator(a.sendt, b.sendt));
+    const sisteHenvendelseLestAvBruker = sisteLesteHenvendelse(lestAvBrukerTidspunkt, henvendelserSynkende);
+
     return (
         <div className="henvendelse-list">
             <div className="henvendelse-list__viewport">
-                {props.dialogData.henvendelser.map(henvendelse => (
+                {henvendelserSynkende.map(henvendelse => (
                     <div key={henvendelse.id} className={'henvendelse-list__henvendelse'}>
+                        <LestAvTidspunktVisible
+                            tidspunkt={lestAvBrukerTidspunkt!}
+                            visible={henvendelse.id === sisteHenvendelseLestAvBruker}
+                        />
                         <Henvendelse henvendelseData={henvendelse} />
                     </div>
                 ))}

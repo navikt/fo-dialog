@@ -69,3 +69,30 @@ export function AktivitetskortPreview(props: Props) {
     }
     return null;
 }
+
+function mapAktivitetTypeToPreview(aktivitet: Aktivitet): string {
+    switch (aktivitet.type) {
+        case 'STILLING':
+            return `Stilling | ${aktivitet.arbeidsgiver}`;
+        case 'MOTE':
+            return `Møte med NAV | ${formaterDate(aktivitet.fraDato)}`;
+        case 'SOKEAVTALE':
+            return `${formaterDate(aktivitet.fraDato)} - ${formaterDate(aktivitet.tilDato)}`;
+        case 'BEHANDLING':
+            return aktivitet.behandlingType!;
+        case 'SAMTALEREFERAT':
+            return `Samtalereferat | ${formaterDate(aktivitet.fraDato)}`;
+        case 'EGEN':
+            return `Jobbrettet egenaktivitet`;
+        case 'IJOBB':
+            return `Jobb jeg har nå | ${aktivitet.arbeidsgiver}`;
+        case 'TILTAKSAKTIVITET':
+            return 'Tiltak gjennom NAV';
+        case 'GRUPPEAKTIVITET':
+            return 'Gruppeaktivitet';
+        case 'UTDANNING':
+            return 'Utdanning';
+    }
+
+    return '';
+}
