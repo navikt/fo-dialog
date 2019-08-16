@@ -32,7 +32,6 @@ export function AktivitetskortInfoBox(props: Props) {
                                     <Undertekst children={element.data} className="data" />
                                 )}
                             </div>
-                            ))}
                         </div>
                     ))}
                 </div>
