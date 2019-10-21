@@ -1,4 +1,4 @@
-import FetchMock, { Middleware, MiddlewareUtils, ResponseUtils } from 'yet-another-fetch-mock';
+import FetchMock, { Middleware, ResponseUtils } from 'yet-another-fetch-mock';
 import dialoger, { lesDialog, opprettEllerOppdaterDialog, setFerdigBehandlet, setVenterPaSvar } from './dialog';
 import bruker from './bruker';
 import oppfolging from './oppfolging';
