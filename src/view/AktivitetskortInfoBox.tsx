@@ -36,7 +36,6 @@ interface InfoElement {
 type GridConfig = Array<InfoElement>;
 
 function mapAktivietTypeToInfobox(aktivitet: Aktivitet | ArenaAktivitet): GridConfig {
-    console.log('mapping: ', aktivitet.type === AktivitetTypes.MOTE);
     switch (aktivitet.type) {
         case AktivitetTypes.STILLING:
             return [
@@ -49,7 +48,6 @@ function mapAktivietTypeToInfobox(aktivitet: Aktivitet | ArenaAktivitet): GridCo
             ];
 
         case AktivitetTypes.MOTE:
-            console.log('møte');
             return [
                 { label: 'Dato', data: formaterDate(aktivitet.fraDato) },
                 { label: 'Klokkeslett', data: '' },
