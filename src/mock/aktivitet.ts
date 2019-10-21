@@ -1,7 +1,6 @@
-import { Aktivitet } from '../utils/typer';
 import { JSONArray } from 'yet-another-fetch-mock';
 
-const aktiviteter: Aktivitet[] & JSONArray = [
+const aktiviteter: JSONArray = [
     {
         id: '6871',
         versjon: '9389',
@@ -28,6 +27,7 @@ const aktiviteter: Aktivitet[] & JSONArray = [
         hensikt: null,
         oppfolging: null,
         antallStillingerSokes: null,
+        antallStillingerIUken: null,
         avtaleOppfolging: null,
         jobbStatus: null,
         ansettelsesforhold: null,
@@ -65,6 +65,7 @@ const aktiviteter: Aktivitet[] & JSONArray = [
         hensikt: 'Finne ut av hva vi skal gjøre med livet mitt.',
         oppfolging: null,
         antallStillingerSokes: null,
+        antallStillingerIUken: null,
         avtaleOppfolging: null,
         jobbStatus: null,
         ansettelsesforhold: null,
@@ -77,7 +78,48 @@ const aktiviteter: Aktivitet[] & JSONArray = [
         erReferatPublisert: false,
         adresse:
             'Rekegata 69 er en hyggelig lokasjon med god service og flinke veiledere en av dem heter Linn hun er designer og er utdannet på NTNU'
+    },
+    {
+        adresse: null,
+        ansettelsesforhold: null,
+        antallStillingerIUken: null,
+        antallStillingerSokes: null,
+        arbeidsgiver: 'NAV IKT',
+        arbeidssted: 'Sannergata',
+        arbeidstid: null,
+        avsluttetKommentar: null,
+        avtaleOppfolging: null,
+        avtalt: false,
+        behandlingOppfolging: null,
+        behandlingSted: null,
+        behandlingType: null,
+        beskrivelse: 'Tralala',
+        effekt: null,
+        endretAv: '1571400374040',
+        endretDato: '2019-10-18T12:06:14.040Z',
+        erReferatPublisert: false,
+        etikett: null,
+        forberedelser: null,
+        fraDato: '2019-10-17T22:00:00.000Z',
+        hensikt: null,
+        historisk: false,
+        id: '98942847',
+        jobbStatus: null,
+        kanal: null,
+        kontaktperson: 'Ole Duck',
+        lagtInnAv: 'BRUKER',
+        lenke: 'www.nav.no',
+        oppfolging: null,
+        opprettetDato: '2019-10-18T12:06:14.040Z',
+        referat: null,
+        status: 'PLANLAGT',
+        stillingsTittel: null,
+        tilDato: '2019-10-25T10:00:00.000Z',
+        tittel: 'Utvikler',
+        transaksjonsType: null,
+        type: 'STILLING',
+        versjon: '1',
+        malid: null
     }
 ];
-
 export default aktiviteter;

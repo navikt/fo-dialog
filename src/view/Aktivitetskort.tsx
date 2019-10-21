@@ -1,28 +1,32 @@
 import React from 'react';
-import { Aktivitet, DialogData } from '../utils/typer';
-import { EtikettLiten, Element, Systemtittel } from 'nav-frontend-typografi';
+import { Aktivitet, AktivitetTypes, ArenaAktivitet, ArenaAktivitetTypes, DialogData } from '../utils/typer';
+import { Element, EtikettLiten, Systemtittel } from 'nav-frontend-typografi';
 import useFetch from '../utils/use-fetch';
 import Lenke from 'nav-frontend-lenker';
 import { HoyreChevron } from 'nav-frontend-chevron';
 import { AktivitetskortInfoBox } from './AktivitetskortInfoBox';
 import './Aktivitetskort.less';
 
-interface Props {
+interface PropTypes {
     dialog?: DialogData;
 }
 
-export function Aktivitetskort(props: Props) {
-    const aktiviteter = useFetch<Aktivitet[]>('/veilarbaktivitet/api/aktivitet');
+export function Aktivitetskort(props: PropTypes) {
+    const { dialog } = props;
+    const aktiviteter = useFetch<Aktivitet[]>('/veilarbaktivitet/api/aktivitet').data;
+    const arenaAktiviteter = useFetch<ArenaAktivitet[]>('/veilarbaktivitet/api/aktivitet/arena').data;
 
-    if (props.dialog === undefined) {
+    if (dialog === undefined) {
         return null;
     }
 
-    if (aktiviteter.data === null) {
+    if (aktiviteter === null) {
         return null;
     }
 
-    const aktivitet = aktiviteter.data.find(aktivitet => aktivitet.id === props.dialog!.aktivitetId);
+    const aktivitet: Aktivitet | ArenaAktivitet | undefined =
+        aktiviteter.find(aktivitet => aktivitet.id === dialog!.aktivitetId) ||
+        arenaAktiviteter!.find(aktivitet => aktivitet.id === dialog!.aktivitetId);
 
     if (!aktivitet) {
         return null;
@@ -45,23 +49,23 @@ export function Aktivitetskort(props: Props) {
     );
 }
 
-function mapAktivitetTypeToHumanReadableString(type: string) {
+function mapAktivitetTypeToHumanReadableString(type: AktivitetTypes | ArenaAktivitetTypes) {
     switch (type) {
-        case 'MOTE':
+        case AktivitetTypes.MOTE:
             return 'Møte med NAV';
-        case 'STILLING':
+        case AktivitetTypes.STILLING:
             return 'Stilling';
-        case 'SOKEAVTALE':
+        case AktivitetTypes.SOKEAVTALE:
             return 'Jobbsøking';
-        case 'SAMTALEREFERAT':
+        case AktivitetTypes.SAMTALEREFERAT:
             return 'Samtalereferat';
-        case 'BEHANDLING':
+        case AktivitetTypes.BEHANDLING:
             return 'Behandling';
-        case 'EGEN':
+        case AktivitetTypes.EGEN:
             return 'Egenaktivitet';
-        case 'IJOBB':
+        case AktivitetTypes.IJOBB:
             return 'Nåværende stilling';
-        case 'TILTAKSAKTIVITET':
+        case ArenaAktivitetTypes.TILTAKSAKTIVITET:
             return 'Tiltak gjennom NAV';
     }
     return '';

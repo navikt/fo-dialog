@@ -1,25 +1,25 @@
-export type ValueOrUndefinedOrNull<T> = T | null | undefined;
-export type StringOrUndefinedOrNull = ValueOrUndefinedOrNull<string>;
-export type NumberOrUndefinedOrNull = ValueOrUndefinedOrNull<number>;
+export type ValueOrNull<T> = T | null;
+export type StringOrNull = ValueOrNull<string>;
+export type NumberOrNull = ValueOrNull<number>;
 
 export interface NyDialogMeldingData {
     tekst: string;
-    dialogId: StringOrUndefinedOrNull;
+    dialogId: StringOrNull;
     overskrift?: string;
 }
 
 export interface DialogData {
     id: string;
-    aktivitetId: StringOrUndefinedOrNull;
-    overskrift: StringOrUndefinedOrNull;
-    sisteTekst: StringOrUndefinedOrNull;
-    sisteDato: StringOrUndefinedOrNull;
-    opprettetDato: StringOrUndefinedOrNull;
+    aktivitetId: StringOrNull;
+    overskrift: StringOrNull;
+    sisteTekst: StringOrNull;
+    sisteDato: StringOrNull;
+    opprettetDato: StringOrNull;
     historisk: boolean;
     lest: boolean;
     venterPaSvar: boolean;
     ferdigBehandlet: boolean;
-    lestAvBrukerTidspunkt: StringOrUndefinedOrNull;
+    lestAvBrukerTidspunkt: StringOrNull;
     erLestAvBruker: boolean;
     henvendelser: HenvendelseData[];
     egenskaper: string[];
@@ -42,69 +42,124 @@ export interface Bruker {
 }
 
 export interface OppfolgingData {
-    fnr: StringOrUndefinedOrNull;
-    veilederId: StringOrUndefinedOrNull;
+    fnr: StringOrNull;
+    veilederId: StringOrNull;
     reservasjonKRR: boolean;
     manuell: boolean;
     underOppfolging: boolean;
     underKvp: boolean;
-    oppfolgingUtgang: StringOrUndefinedOrNull;
-    gjeldendeEskaleringsvarsel: StringOrUndefinedOrNull;
+    oppfolgingUtgang: StringOrNull;
+    gjeldendeEskaleringsvarsel: StringOrNull;
     kanStarteOppfolging: boolean;
-    avslutningStatus: StringOrUndefinedOrNull;
+    avslutningStatus: StringOrNull;
     oppfolgingsPerioder: PeriodeData[];
     harSkriveTilgang: boolean;
     kanReaktiveres: boolean;
-    inaktiveringsdato: StringOrUndefinedOrNull;
+    inaktiveringsdato: StringOrNull;
 }
 
 export interface PeriodeData {
     aktorId: string;
     veileder: boolean;
-    startDato: StringOrUndefinedOrNull;
-    sluttDato: StringOrUndefinedOrNull;
-    begrunnelse: StringOrUndefinedOrNull;
+    startDato: StringOrNull;
+    sluttDato: StringOrNull;
+    begrunnelse: StringOrNull;
+}
+
+export enum AktivitetTypes {
+    EGEN = 'EGEN',
+    STILLING = 'STILLING',
+    SOKEAVTALE = 'SOKEAVTALE',
+    IJOBB = 'IJOBB',
+    BEHANDLING = 'BEHANDLING',
+    MOTE = 'MOTE',
+    SAMTALEREFERAT = 'SAMTALEREFERAT'
 }
 
 export interface Aktivitet {
-    id: string;
-    versjon: StringOrUndefinedOrNull;
-    tittel: string;
-    beskrivelse: StringOrUndefinedOrNull;
-    lenke: StringOrUndefinedOrNull;
-    type: string;
-    status: StringOrUndefinedOrNull;
-    fraDato: string;
-    tilDato: string;
-    opprettetDato: StringOrUndefinedOrNull;
-    endretDato: StringOrUndefinedOrNull;
-    endretAv: StringOrUndefinedOrNull;
+    id: StringOrNull;
+    versjon: StringOrNull;
+
+    tittel: StringOrNull;
+    beskrivelse: StringOrNull;
+    lenke: StringOrNull;
+    type: AktivitetTypes;
+    status: StringOrNull;
+    fraDato: StringOrNull;
+    tilDato: StringOrNull;
+    opprettetDato: string;
+    endretDato: StringOrNull;
+    endretAv: StringOrNull;
     historisk: boolean;
-    avsluttetKommentar: StringOrUndefinedOrNull;
+    avsluttetKommentar: StringOrNull;
     avtalt: boolean;
-    lagtInnAv: StringOrUndefinedOrNull;
-    transaksjonsType: StringOrUndefinedOrNull;
-    etikett: StringOrUndefinedOrNull;
-    kontaktperson: StringOrUndefinedOrNull;
-    arbeidsgiver: StringOrUndefinedOrNull;
-    arbeidssted: StringOrUndefinedOrNull;
-    stillingsTittel: StringOrUndefinedOrNull;
-    hensikt: StringOrUndefinedOrNull;
-    oppfolging: StringOrUndefinedOrNull;
-    antallStillingerSokes: StringOrUndefinedOrNull;
-    avtaleOppfolging: StringOrUndefinedOrNull;
-    jobbStatus: StringOrUndefinedOrNull;
-    ansettelsesforhold: StringOrUndefinedOrNull;
-    arbeidstid: StringOrUndefinedOrNull;
-    behandlingType: StringOrUndefinedOrNull;
-    behandlingSted: StringOrUndefinedOrNull;
-    effekt: StringOrUndefinedOrNull;
-    behandlingOppfolging: StringOrUndefinedOrNull;
-    kanal: StringOrUndefinedOrNull;
+    lagtInnAv: StringOrNull;
+    transaksjonsType: StringOrNull;
+    malid: StringOrNull;
+
+    // stillingaktivitet
+    etikett: StringOrNull;
+    kontaktperson: StringOrNull;
+    arbeidsgiver: StringOrNull;
+    arbeidssted: StringOrNull;
+    stillingsTittel: StringOrNull;
+
+    // egenaktivitet
+    hensikt: StringOrNull;
+    oppfolging: StringOrNull;
+
+    //sokeAvtaleAktivitet
+    antallStillingerSokes: NumberOrNull;
+    antallStillingerIUken: NumberOrNull;
+    avtaleOppfolging: StringOrNull;
+
+    //iJobbAktivitet
+    jobbStatus: StringOrNull;
+    ansettelsesforhold: StringOrNull;
+    arbeidstid: StringOrNull;
+
+    //behandlingAktivitet
+    behandlingType: StringOrNull;
+    behandlingSted: StringOrNull;
+    effekt: StringOrNull;
+    behandlingOppfolging: StringOrNull;
+
+    //møte
+    adresse: StringOrNull;
+    forberedelser: StringOrNull;
+    kanal: StringOrNull;
+    referat: StringOrNull;
     erReferatPublisert: boolean;
-    adresse?: StringOrUndefinedOrNull;
-    referat?: StringOrUndefinedOrNull;
-    arrangoer?: StringOrUndefinedOrNull;
-    deltakelseProsent?: NumberOrUndefinedOrNull;
-    antallDagerPerUke?: NumberOrUndefinedOrNull;
+}
+
+export enum ArenaAktivitetTypes {
+    TILTAKSAKTIVITET = 'TILTAKSAKTIVITET',
+    GRUPPEAKTIVITET = 'GRUPPEAKTIVITET',
+    UTDANNINGSAKTIVITET = 'UTDANNING'
+}
+
+export interface ArenaAktivitet {
+    //Felles
+    id: StringOrNull;
+    status: StringOrNull;
+    type: ArenaAktivitetTypes;
+    tittel: StringOrNull;
+    beskrivelse: StringOrNull;
+    fraDato: StringOrNull;
+    tilDato: StringOrNull;
+    opprettetDato: StringOrNull;
+    avtalt: boolean;
+    etikett: StringOrNull;
+
+    // Tiltaksaktivitet
+    deltakelseProsent: NumberOrNull;
+    tiltaksnavn: StringOrNull;
+    tiltakLokaltNavn: StringOrNull;
+    arrangoer: StringOrNull;
+    bedriftsnummer: StringOrNull;
+    antallDagerPerUke: NumberOrNull;
+    statusSistEndret: StringOrNull;
+
+    // Gruppeaktivitet
+    moeteplanListe: object[] | null;
 }

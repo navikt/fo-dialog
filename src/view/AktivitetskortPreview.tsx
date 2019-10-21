@@ -1,5 +1,5 @@
 import React from 'react';
-import { Aktivitet, DialogData } from '../utils/typer';
+import { Aktivitet, AktivitetTypes, ArenaAktivitet, ArenaAktivitetTypes, DialogData } from '../utils/typer';
 import { Undertekst, Undertittel } from 'nav-frontend-typografi';
 
 import useFetch from '../utils/use-fetch';
@@ -34,27 +34,27 @@ export function AktivitetskortPreview(props: Props) {
     return null;
 }
 
-function mapAktivitetTypeToPreview(aktivitet: Aktivitet): string {
+function mapAktivitetTypeToPreview(aktivitet: Aktivitet | ArenaAktivitet): string {
     switch (aktivitet.type) {
-        case 'STILLING':
+        case AktivitetTypes.STILLING:
             return `Stilling | ${aktivitet.arbeidsgiver}`;
-        case 'MOTE':
+        case AktivitetTypes.MOTE:
             return `Møte med NAV | ${formaterDate(aktivitet.fraDato)}`;
-        case 'SOKEAVTALE':
+        case AktivitetTypes.SOKEAVTALE:
             return `${formaterDate(aktivitet.fraDato)} - ${formaterDate(aktivitet.tilDato)}`;
-        case 'BEHANDLING':
+        case AktivitetTypes.BEHANDLING:
             return aktivitet.behandlingType!;
-        case 'SAMTALEREFERAT':
+        case AktivitetTypes.SAMTALEREFERAT:
             return `Samtalereferat | ${formaterDate(aktivitet.fraDato)}`;
-        case 'EGEN':
+        case AktivitetTypes.EGEN:
             return `Jobbrettet egenaktivitet`;
-        case 'IJOBB':
+        case AktivitetTypes.IJOBB:
             return `Jobb jeg har nå | ${aktivitet.arbeidsgiver}`;
-        case 'TILTAKSAKTIVITET':
+        case ArenaAktivitetTypes.TILTAKSAKTIVITET:
             return 'Tiltak gjennom NAV';
-        case 'GRUPPEAKTIVITET':
+        case ArenaAktivitetTypes.GRUPPEAKTIVITET:
             return 'Gruppeaktivitet';
-        case 'UTDANNING':
+        case ArenaAktivitetTypes.UTDANNINGSAKTIVITET:
             return 'Utdanning';
     }
 

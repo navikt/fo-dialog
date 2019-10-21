@@ -93,7 +93,7 @@ const dialoger: DialogData[] & JSONArray = [
         ferdigBehandlet: true,
         lestAvBrukerTidspunkt: null,
         erLestAvBruker: false,
-        aktivitetId: '0',
+        aktivitetId: null,
         henvendelser: [
             {
                 id: '4',
