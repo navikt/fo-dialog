@@ -1,4 +1,4 @@
-import { DialogData, HenvendelseData, StringOrUndefinedOrNull } from '../utils/typer';
+import { DialogData, HenvendelseData, StringOrNull } from '../utils/typer';
 import React, { useEffect, useRef } from 'react';
 import { Henvendelse } from './Henvendelse';
 import LestAvTidspunktVisible from './LestTidspunkt';
@@ -30,7 +30,7 @@ function datoComparator(adato: string, bdato: string): number {
     return adato > bdato ? -1 : adato === bdato ? 0 : 1;
 }
 
-function sisteLesteHenvendelse(lest: StringOrUndefinedOrNull, henvendelser: HenvendelseData[]) {
+function sisteLesteHenvendelse(lest: StringOrNull, henvendelser: HenvendelseData[]) {
     if (!lest) {
         return null;
     }

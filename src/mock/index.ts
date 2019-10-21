@@ -1,8 +1,9 @@
-import FetchMock, { Middleware, MiddlewareUtils } from 'yet-another-fetch-mock';
+import FetchMock, { Middleware, ResponseUtils } from 'yet-another-fetch-mock';
 import dialoger, { lesDialog, opprettEllerOppdaterDialog, setFerdigBehandlet, setVenterPaSvar } from './dialog';
 import bruker from './bruker';
 import oppfolging from './oppfolging';
 import aktiviteter from './aktivitet';
+import { arenaAktiviteter } from './arena';
 
 const loggingMiddleware: Middleware = (request, response) => {
     // tslint:disable
@@ -26,10 +27,12 @@ const loggingMiddleware: Middleware = (request, response) => {
 
 const mock = FetchMock.configure({
     enableFallback: false, // default: true
-    middleware: MiddlewareUtils.combine(loggingMiddleware, MiddlewareUtils.delayMiddleware(1000))
+    middleware: loggingMiddleware
 });
 
-mock.get('/veilarbdialog/api/dialog', dialoger);
+const DELAY = 0;
+
+mock.get('/veilarbdialog/api/dialog', ResponseUtils.delayed(DELAY, dialoger));
 
 mock.post('/veilarbdialog/api/dialog/ny', ({ body }) => opprettEllerOppdaterDialog(body));
 
@@ -42,8 +45,10 @@ mock.put('/veilarbdialog/api/dialog/:dialogId/ferdigbehandlet/:bool', ({ pathPar
     setFerdigBehandlet(pathParams.dialogId, pathParams.bool === 'true')
 );
 
-mock.get('/veilarboppfolging/api/oppfolging/me', bruker);
+mock.get('/veilarboppfolging/api/oppfolging/me', ResponseUtils.delayed(DELAY, bruker));
 
-mock.get('/veilarboppfolging/api/oppfolging', oppfolging);
+mock.get('/veilarboppfolging/api/oppfolging', ResponseUtils.delayed(DELAY, oppfolging));
 
-mock.get('/veilarbaktivitet/api/aktivitet', aktiviteter);
+mock.get('/veilarbaktivitet/api/aktivitet', ResponseUtils.delayed(DELAY, aktiviteter));
+
+mock.get('/veilarbaktivitet/api/aktivitet/arena', ResponseUtils.delayed(DELAY, arenaAktiviteter));
