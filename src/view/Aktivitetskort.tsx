@@ -16,15 +16,15 @@ export function Aktivitetskort(props: PropTypes) {
     const aktiviteter = useFetch<Aktivitet[]>('/veilarbaktivitet/api/aktivitet').data;
     const arenaAktiviteter = useFetch<ArenaAktivitet[]>('/veilarbaktivitet/api/aktivitet/arena').data;
 
-    if (dialog === undefined) {
+    if (!dialog) {
         return null;
     }
 
-    if (aktiviteter === null) {
+    if (!aktiviteter) {
         return null;
     }
 
-    const aktivitet: Aktivitet | ArenaAktivitet | undefined =
+    const aktivitet =
         aktiviteter.find(aktivitet => aktivitet.id === dialog!.aktivitetId) ||
         arenaAktiviteter!.find(aktivitet => aktivitet.id === dialog!.aktivitetId);
 
