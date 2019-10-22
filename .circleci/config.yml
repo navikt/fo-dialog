@@ -1,0 +1,14 @@
+version: 2.1
+orbs:
+    pus: navikt/pus-orb@0.0.33
+
+workflows:
+    version: 2
+    commit:
+        jobs:
+          - pus/bygg-frontend:
+              context: pus
+              name: build
+
+          - pus/test-frontend:
+                  name: test
