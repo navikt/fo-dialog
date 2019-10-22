@@ -1,9 +1,7 @@
 import React from 'react';
-import { visibleIfHoc } from '../component/hoc/visibleIfHoc';
+import { visibleIfHoc } from '../felleskomponenter/visibleIfHoc';
 import { Normaltekst } from 'nav-frontend-typografi';
-import { ReactComponent as IngenDialoger } from './dialogIngen.svg';
-
-import './dialogoverview.less';
+import { ReactComponent as IngenDialoger } from '../fellesikoner/snakkebobler.svg';
 
 function InfoVedIngenDialoger() {
     return (
