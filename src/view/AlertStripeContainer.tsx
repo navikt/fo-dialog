@@ -1,7 +1,7 @@
 import React from 'react';
 import { AlertStripeAdvarsel, AlertStripeProps } from 'nav-frontend-alertstriper';
-import { useOppfolgingContext, useUserInfoContext } from '../Context';
-import { visibleIfHoc } from '../component/hoc/visibleIfHoc';
+import { useOppfolgingContext, useUserInfoContext } from './Provider';
+import { visibleIfHoc } from '../felleskomponenter/VisibleIfHoc';
 
 const AlertStripe = visibleIfHoc<AlertStripeProps>(AlertStripeAdvarsel);
 

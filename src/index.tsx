@@ -1,7 +1,6 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import './index.less';
-import Routing from './App';
+import Routing from './view/App';
 
 require('./mock');
 

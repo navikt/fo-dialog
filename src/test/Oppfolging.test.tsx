@@ -2,16 +2,16 @@ import React from 'react';
 import Enzyme, { mount, shallow } from 'enzyme';
 import Adapter from 'enzyme-adapter-react-16';
 import { MemoryRouter, RouteComponentProps } from 'react-router';
-import * as AppContext from '../Context';
-import { Dialog } from '../view/Dialog';
-import { Bruker, DialogData, PeriodeData } from '../utils/typer';
-import { HenvendelseList } from '../view/HenvendelseList';
-import { DialogInputBox } from '../view/DialogInputBox';
-import { DialogHeader } from '../view/DialogHeader';
+import * as AppContext from '../view/Provider';
+import { Dialog } from '../view/dialog/Dialog';
+import { Bruker, DialogData, PeriodeData } from '../utils/Typer';
+import { HenvendelseList } from '../view/henvendelse/HenvendelseList';
+import { DialogInputBox } from '../view/dialog/DialogInputBox';
+import { DialogHeader } from '../view/dialog/DialogHeader';
 import { AlertStripeContainer } from '../view/AlertStripeContainer';
-import { DialogOverview } from '../view/DialogOverview';
-import { DialogOverviewHeader, DialogOverviewHeaderVisible } from '../view/DialogOverviewHeader';
-import { DialogPreview } from '../view/DialogPreview';
+import { DialogOversikt } from '../view/dialogoversikt/DialogOversikt';
+import { DialogOverviewHeader, DialogOverviewHeaderVisible } from '../view/dialogoversikt/DialogOverviewHeader';
+import { DialogPreview } from '../view/dialogoversikt/DialogPreview';
 import { Checkbox } from 'nav-frontend-skjema';
 import { FetchResult, Status } from '@nutgaard/use-fetch';
 
@@ -136,14 +136,14 @@ describe('<AlertStripeContainer/>', () => {
     });
 });
 
-describe('<DialogOverview/>', () => {
+describe('<DialogOversikt/>', () => {
     test('Bruker uten oppf.perioder og ikke under oppf skjuler store deler av appen', () => {
         oppfolgingData.underOppfolging = false;
         oppfolgingData.oppfolgingsPerioder = [];
         jest.spyOn(AppContext, 'useOppfolgingContext').mockImplementation(() => oppfolgingData);
         const wrapper = mount(
             <MemoryRouter>
-                <DialogOverview />
+                <DialogOversikt />
             </MemoryRouter>
         );
         expect(wrapper.find(DialogOverviewHeaderVisible).exists()).toBeFalsy();
@@ -165,7 +165,7 @@ describe('<DialogOverview/>', () => {
         jest.spyOn(AppContext, 'useDialogContext').mockImplementation(() => useFetchDialoger);
         const wrapper = mount(
             <MemoryRouter>
-                <DialogOverview />
+                <DialogOversikt />
             </MemoryRouter>
         );
         expect(wrapper.find(DialogOverviewHeader).exists()).toBeFalsy();
@@ -186,7 +186,7 @@ describe('<DialogOverview/>', () => {
         jest.spyOn(AppContext, 'useDialogContext').mockImplementation(() => useFetchDialoger);
         const wrapper = mount(
             <MemoryRouter>
-                <DialogOverview />
+                <DialogOversikt />
             </MemoryRouter>
         );
         expect(wrapper.find(DialogOverviewHeader).exists()).toBeTruthy();

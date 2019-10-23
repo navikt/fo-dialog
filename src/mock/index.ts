@@ -1,9 +1,9 @@
 import FetchMock, { Middleware, ResponseUtils } from 'yet-another-fetch-mock';
-import dialoger, { lesDialog, opprettEllerOppdaterDialog, setFerdigBehandlet, setVenterPaSvar } from './dialog';
-import bruker from './bruker';
-import oppfolging from './oppfolging';
-import aktiviteter from './aktivitet';
-import { arenaAktiviteter } from './arena';
+import dialoger, { lesDialog, opprettEllerOppdaterDialog, setFerdigBehandlet, setVenterPaSvar } from './Dialog';
+import bruker from './Bruker';
+import oppfolging from './Oppfolging';
+import aktiviteter from './Aktivitet';
+import { arenaAktiviteter } from './Arena';
 
 const loggingMiddleware: Middleware = (request, response) => {
     // tslint:disable
