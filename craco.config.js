@@ -1,6 +1,5 @@
 const path = require('path');
 const CracoLessPlugin = require('craco-less');
-const NpmImportPlugin = require('less-plugin-npm-import');
 const BUILD_PATH = path.resolve(__dirname, './build');
 
 const removeCssHashPlugin = {
@@ -24,11 +23,19 @@ const removeCssHashPlugin = {
 
 module.exports = {
     plugins: [
+        { plugin: CracoLessPlugin },
         {
             plugin: CracoLessPlugin,
             options: {
-                lessLoaderOptions: {
-                    loader: new NpmImportPlugin({ prefix: '~' })
+                modifyLessRule: function(lessRule, _context) {
+                    lessRule.test = /\.(module)\.(less)$/;
+                    lessRule.exclude = /node_modules/;
+
+                    return lessRule;
+                },
+                cssLoaderOptions: {
+                    modules: true,
+                    localIdentName: '[local]_[hash:base64:5]'
                 }
             }
         },
