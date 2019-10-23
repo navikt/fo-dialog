@@ -1,6 +1,6 @@
 import { Undertittel } from 'nav-frontend-typografi';
 import React from 'react';
-import { FieldState } from '../../utils/useFieldState';
+import { FieldState } from '../../utils/UseFieldState';
 
 import Feilmeldingslenke from './Feilmeldingslenke';
 

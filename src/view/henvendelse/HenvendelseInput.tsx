@@ -1,7 +1,7 @@
 import React from 'react';
 import Textarea from '../../felleskomponenter/nav-frontend-textarea';
 import { Hovedknapp } from 'nav-frontend-knapper';
-import { FieldState } from '../../utils/useFieldState';
+import { FieldState } from '../../utils/UseFieldState';
 
 interface Props {
     melding: FieldState;

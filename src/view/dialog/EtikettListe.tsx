@@ -1,6 +1,6 @@
 import React, { useContext } from 'react';
 
-import { DialogData } from '../../utils/typer';
+import { DialogData } from '../../utils/Typer';
 import { EtikettFokus, EtikettAdvarsel } from '../../felleskomponenter/Etiketter';
 import { UserInfoContext } from '../Provider';
 

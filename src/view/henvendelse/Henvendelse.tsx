@@ -1,7 +1,7 @@
 import React from 'react';
 import Snakkeboble from 'nav-frontend-snakkeboble';
-import { HenvendelseData } from '../../utils/typer';
-import { formaterDateAndTime } from '../../utils/date';
+import { HenvendelseData } from '../../utils/Typer';
+import { formaterDateAndTime } from '../../utils/Date';
 import { Normaltekst } from 'nav-frontend-typografi';
 
 import './Henvendelse.less';

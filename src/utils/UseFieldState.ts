@@ -17,7 +17,7 @@ export interface FieldState {
 export type Validator = (value: string) => string | null;
 const noopValidator: Validator = () => null;
 
-export default function useFieldState(initialState: string, validate: Validator = noopValidator): FieldState {
+export default function UseFieldState(initialState: string, validate: Validator = noopValidator): FieldState {
     const [value, setRawValue] = useState(initialState);
     const [touched, setTouched] = useState<boolean>(false);
     const [error, setError] = useState<string | null>(validate(value));

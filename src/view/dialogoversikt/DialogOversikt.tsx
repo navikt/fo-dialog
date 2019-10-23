@@ -1,7 +1,7 @@
 import React from 'react';
 import { hasData } from '@nutgaard/use-fetch';
 import DialogPreview from './DialogPreview';
-import { DialogData } from '../../utils/typer';
+import { DialogData } from '../../utils/Typer';
 import { DialogOverviewHeaderVisible } from './DialogOverviewHeader';
 import InfoVedIngenDialogerVisible from '../InfoVedIngenDialoger';
 import { useDialogContext, useOppfolgingContext } from '../Provider';

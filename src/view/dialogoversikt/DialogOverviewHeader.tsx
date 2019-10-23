@@ -1,5 +1,5 @@
 import React from 'react';
-import { visibleIfHoc } from '../../felleskomponenter/visibleIfHoc';
+import { visibleIfHoc } from '../../felleskomponenter/VisibleIfHoc';
 import { Link } from 'react-router-dom';
 import { ReactComponent as PlussIkon } from './pluss.svg';
 

@@ -1,16 +1,16 @@
 import React, { FormEvent, useState } from 'react';
 import { Innholdstittel, Normaltekst } from 'nav-frontend-typografi';
 import { Input } from 'nav-frontend-skjema';
-import useFieldState from '../../utils/useFieldState';
-import { DialogData, NyDialogMeldingData } from '../../utils/typer';
-import { fetchData } from '../../utils/fetch';
+import UseFieldState from '../../utils/UseFieldState';
+import { DialogData, NyDialogMeldingData } from '../../utils/Typer';
+import { fetchData } from '../../utils/Fetch';
 import { useDialogContext, useUserInfoContext } from '../Provider';
 import { RouteComponentProps, withRouter } from 'react-router';
 import HenvendelseInput from '../henvendelse/HenvendelseInput';
 import DialogCheckboxesVisible from './DialogCheckboxes';
 import Valideringsboks from './Valideringsboks';
 import { AlertStripeFeil } from 'nav-frontend-alertstriper';
-import { visibleIfHoc } from '../../felleskomponenter/visibleIfHoc';
+import { visibleIfHoc } from '../../felleskomponenter/VisibleIfHoc';
 import { VenstreChevron } from 'nav-frontend-chevron';
 import { Link } from 'react-router-dom';
 
@@ -35,8 +35,8 @@ function validerMelding(melding: string): string | null {
 }
 
 function NyDialog(props: Props) {
-    const tema = useFieldState('', validerTema);
-    const melding = useFieldState('', validerMelding);
+    const tema = UseFieldState('', validerTema);
+    const melding = UseFieldState('', validerMelding);
     const [submitfeil, setSubmitfeil] = useState<boolean>(false);
     const [triedToSubmit, setTriedToSubmit] = useState<boolean>(false);
     const [submitting, setSubmitting] = useState<boolean>(false);

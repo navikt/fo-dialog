@@ -1,7 +1,7 @@
 import React from 'react';
-import { Aktivitet, AktivitetTypes, ArenaAktivitet, ArenaAktivitetTypes, DialogData } from '../../utils/typer';
+import { Aktivitet, AktivitetTypes, ArenaAktivitet, ArenaAktivitetTypes, DialogData } from '../../utils/Typer';
 import { Element, EtikettLiten, Systemtittel } from 'nav-frontend-typografi';
-import useFetch from '../../utils/use-fetch';
+import UseFetch from '../../utils/UseFetch';
 import Lenke from 'nav-frontend-lenker';
 import { HoyreChevron } from 'nav-frontend-chevron';
 import { AktivitetskortInfoBox } from './AktivitetskortInfoBox';
@@ -13,8 +13,8 @@ interface PropTypes {
 
 export function Aktivitetskort(props: PropTypes) {
     const { dialog } = props;
-    const aktiviteter = useFetch<Aktivitet[]>('/veilarbaktivitet/api/aktivitet').data;
-    const arenaAktiviteter = useFetch<ArenaAktivitet[]>('/veilarbaktivitet/api/aktivitet/arena').data;
+    const aktiviteter = UseFetch<Aktivitet[]>('/veilarbaktivitet/api/aktivitet').data;
+    const arenaAktiviteter = UseFetch<ArenaAktivitet[]>('/veilarbaktivitet/api/aktivitet/arena').data;
 
     if (!dialog) {
         return null;
@@ -24,7 +24,8 @@ export function Aktivitetskort(props: PropTypes) {
         return null;
     }
 
-    const aktivitet = aktiviteter.find(aktivitet => aktivitet.id === dialog!.aktivitetId) ||
+    const aktivitet =
+        aktiviteter.find(aktivitet => aktivitet.id === dialog!.aktivitetId) ||
         arenaAktiviteter!.find(aktivitet => aktivitet.id === dialog!.aktivitetId);
 
     if (!aktivitet) {

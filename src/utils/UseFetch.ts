@@ -45,7 +45,7 @@ export const initalData: UseFetchHook<any> = {
     refetch() {}
 };
 
-export default function useFetch<TYPE>(url: RequestInfo, option?: RequestInit): UseFetchHook<TYPE> {
+export default function UseFetch<TYPE>(url: RequestInfo, option?: RequestInit): UseFetchHook<TYPE> {
     const [rerun, setRerun] = useState(0);
     const [state, dispatch] = useReducer<FetchReducer<TYPE>>(fetchReducer, initalState);
 

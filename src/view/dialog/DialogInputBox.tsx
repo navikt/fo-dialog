@@ -1,9 +1,9 @@
 import React, { FormEvent, useState } from 'react';
-import useFieldState from '../../utils/useFieldState';
-import { DialogData } from '../../utils/typer';
-import { visibleIfHoc } from '../../felleskomponenter/visibleIfHoc';
+import UseFieldState from '../../utils/UseFieldState';
+import { DialogData } from '../../utils/Typer';
+import { visibleIfHoc } from '../../felleskomponenter/VisibleIfHoc';
 import HenvendelseInput from '../henvendelse/HenvendelseInput';
-import { fetchData } from '../../utils/fetch';
+import { fetchData } from '../../utils/Fetch';
 import { useDialogContext, useUserInfoContext } from '../Provider';
 import { RouteComponentProps, withRouter } from 'react-router';
 import DialogCheckboxesVisible from './DialogCheckboxes';
@@ -25,7 +25,7 @@ function validerMelding(melding: string): string | null {
 export function DialogInputBox(props: Props) {
     const bruker = useUserInfoContext();
     const dialoger = useDialogContext();
-    const melding = useFieldState('', validerMelding);
+    const melding = UseFieldState('', validerMelding);
     const [submitting, setSubmitting] = useState<boolean>(false);
     const [submitfeil, setSubmitfeil] = useState<boolean>(false);
     const dialogData = hasData(dialoger) ? dialoger.data : [];

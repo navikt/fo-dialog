@@ -1,6 +1,6 @@
 import { format } from 'date-fns';
 import * as norweigianLocale from 'date-fns/locale/nb';
-import { ValueOrNull } from './typer';
+import { ValueOrNull } from './Typer';
 
 const locale = { locale: norweigianLocale };
 

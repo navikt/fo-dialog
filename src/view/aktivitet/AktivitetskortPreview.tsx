@@ -1,10 +1,10 @@
 import React from 'react';
-import { Aktivitet, AktivitetTypes, ArenaAktivitet, ArenaAktivitetTypes, DialogData } from '../../utils/typer';
+import { Aktivitet, AktivitetTypes, ArenaAktivitet, ArenaAktivitetTypes, DialogData } from '../../utils/Typer';
 import { Undertekst, Undertittel } from 'nav-frontend-typografi';
 
-import useFetch from '../../utils/use-fetch';
+import UseFetch from '../../utils/UseFetch';
 import { LenkepanelBase } from 'nav-frontend-lenkepanel';
-import { formaterDate } from '../../utils/date';
+import { formaterDate } from '../../utils/Date';
 import Lenke from 'nav-frontend-lenker';
 
 interface Props {
@@ -12,7 +12,7 @@ interface Props {
 }
 
 export function AktivitetskortPreview(props: Props) {
-    const aktiviteter = useFetch<Aktivitet[]>('/veilarbaktivitet/api/aktivitet');
+    const aktiviteter = UseFetch<Aktivitet[]>('/veilarbaktivitet/api/aktivitet');
     if (aktiviteter.data !== null) {
         const aktivitet = aktiviteter.data.find(aktivitet => aktivitet.id === props.dialog.aktivitetId);
 

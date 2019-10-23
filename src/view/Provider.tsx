@@ -1,5 +1,5 @@
 import React, { PropsWithChildren, useContext } from 'react';
-import { Bruker, DialogData, OppfolgingData } from '../utils/typer';
+import { Bruker, DialogData, OppfolgingData } from '../utils/Typer';
 import NavFrontendSpinner from 'nav-frontend-spinner';
 import useFetch, { FetchResult, Status, isPending, hasError } from '@nutgaard/use-fetch';
 

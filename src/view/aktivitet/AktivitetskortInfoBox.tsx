@@ -1,7 +1,7 @@
 import React from 'react';
-import { Aktivitet, AktivitetTypes, ArenaAktivitet, ArenaAktivitetTypes } from '../../utils/typer';
+import { Aktivitet, AktivitetTypes, ArenaAktivitet, ArenaAktivitetTypes } from '../../utils/Typer';
 import { EtikettLiten, Undertekst } from 'nav-frontend-typografi';
-import { formaterDate } from '../../utils/date';
+import { formaterDate } from '../../utils/Date';
 
 import Lenke from 'nav-frontend-lenker';
 
@@ -15,9 +15,13 @@ export function AktivitetskortInfoBox(props: Props) {
     return (
         <>
             {datapunkter.map(rad => (
-                <div className='aktivitet-kort__infobox__row__item'>
+                <div className="aktivitet-kort__infobox__row__item">
                     <EtikettLiten children={rad.label} className="label" />
-                    {rad.label === 'Lenke' ? <Lenke href={rad.data} children={rad.data} /> : <Undertekst children={rad.data} className="data" />}
+                    {rad.label === 'Lenke' ? (
+                        <Lenke href={rad.data} children={rad.data} />
+                    ) : (
+                        <Undertekst children={rad.data} className="data" />
+                    )}
                 </div>
             ))}
         </>

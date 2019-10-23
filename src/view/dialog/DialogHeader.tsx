@@ -1,6 +1,6 @@
 import React from 'react';
 import { VenstreChevron } from 'nav-frontend-chevron';
-import { DialogData } from '../../utils/typer';
+import { DialogData } from '../../utils/Typer';
 import { AktivitetskortPreview } from '../aktivitet/AktivitetskortPreview';
 import { Undertittel } from 'nav-frontend-typografi';
 import { Link } from 'react-router-dom';

@@ -4,7 +4,7 @@ import Adapter from 'enzyme-adapter-react-16';
 import { MemoryRouter, RouteComponentProps } from 'react-router';
 import * as AppContext from '../view/Provider';
 import { Dialog } from '../view/dialog/Dialog';
-import { Bruker, DialogData, PeriodeData } from '../utils/typer';
+import { Bruker, DialogData, PeriodeData } from '../utils/Typer';
 import { HenvendelseList } from '../view/henvendelse/HenvendelseList';
 import { DialogInputBox } from '../view/dialog/DialogInputBox';
 import { DialogHeader } from '../view/dialog/DialogHeader';

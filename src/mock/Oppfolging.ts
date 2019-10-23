@@ -1,4 +1,4 @@
-import { PeriodeData } from '../utils/typer';
+import { PeriodeData } from '../utils/Typer';
 import { JSONArray } from 'yet-another-fetch-mock';
 
 const oppfPerioder: PeriodeData[] & JSONArray = [

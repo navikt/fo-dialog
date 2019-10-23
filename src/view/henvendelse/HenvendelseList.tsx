@@ -1,4 +1,4 @@
-import { DialogData, HenvendelseData, StringOrNull } from '../../utils/typer';
+import { DialogData, HenvendelseData, StringOrNull } from '../../utils/Typer';
 import React, { useEffect, useRef } from 'react';
 import { Henvendelse } from './Henvendelse';
 import LestAvTidspunktVisible from '../dialog/LestTidspunkt';

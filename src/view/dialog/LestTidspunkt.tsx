@@ -1,6 +1,6 @@
 import React from 'react';
-import { formaterDateAndTime } from '../../utils/date';
-import { visibleIfHoc } from '../../felleskomponenter/visibleIfHoc';
+import { formaterDateAndTime } from '../../utils/Date';
+import { visibleIfHoc } from '../../felleskomponenter/VisibleIfHoc';
 
 import '../henvendelse/henvendelseList.less';
 
