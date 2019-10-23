@@ -1,7 +1,7 @@
 import React from 'react';
 import { Aktivitet, AktivitetTypes, ArenaAktivitet, ArenaAktivitetTypes } from '../../utils/Typer';
 import { EtikettLiten, Undertekst } from 'nav-frontend-typografi';
-import { formaterDate } from '../../utils/Date';
+import { formaterDate, getKlokkeslett, getVarighet } from '../../utils/Date';
 
 import Lenke from 'nav-frontend-lenker';
 
@@ -15,7 +15,7 @@ export function AktivitetskortInfoBox(props: Props) {
     return (
         <>
             {datapunkter.map(rad => (
-                <div className="aktivitet-kort__infobox__row__item">
+                <div className="aktivitet-kort__infobox__row__item" key={rad.label}>
                     <EtikettLiten children={rad.label} className="label" />
                     {rad.label === 'Lenke' ? (
                         <Lenke href={rad.data} children={rad.data} />
@@ -50,9 +50,9 @@ function mapAktivietTypeToInfobox(aktivitet: Aktivitet | ArenaAktivitet): GridCo
         case AktivitetTypes.MOTE:
             return [
                 { label: 'Dato', data: formaterDate(aktivitet.fraDato) },
-                { label: 'Klokkeslett', data: '' },
+                { label: 'Klokkeslett', data: getKlokkeslett(aktivitet.fraDato) },
                 { label: 'Møteform', data: mapKanalToString(aktivitet.kanal!) },
-                { label: 'Varighet', data: '' },
+                { label: 'Varighet', data: getVarighet(aktivitet.fraDato, aktivitet.tilDato) },
                 { label: 'Møtested', data: aktivitet.adresse ? aktivitet.adresse : '' },
                 { label: 'Hensikt med møtet', data: aktivitet.hensikt ? aktivitet.hensikt : '' },
                 { label: 'Møtested', data: aktivitet.behandlingSted ? aktivitet.behandlingSted : '' }
