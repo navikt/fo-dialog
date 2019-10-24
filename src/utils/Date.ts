@@ -10,7 +10,8 @@ export function formaterDateAndTime(sendtDate: ValueOrNull<string>): string {
 }
 
 export function formaterDate(dato: ValueOrNull<string>): string {
-    return formaterDateAndTime(dato).substring(0, 10);
+    if (!dato) return '';
+    return format(new Date(dato), 'DD.MM.YYYY', locale);
 }
 
 export function getKlokkeslett(dato: ValueOrNull<string>): string {

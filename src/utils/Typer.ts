@@ -76,6 +76,12 @@ export enum AktivitetTypes {
     SAMTALEREFERAT = 'SAMTALEREFERAT'
 }
 
+export enum KanalTypes {
+    OPPMOTE = 'OPPMOTE',
+    TELEFON = 'TELEFON',
+    INTERNETT = 'INTERNETT'
+}
+
 export interface Aktivitet {
     id: StringOrNull;
     versjon: StringOrNull;
@@ -127,7 +133,7 @@ export interface Aktivitet {
     //møte
     adresse: StringOrNull;
     forberedelser: StringOrNull;
-    kanal: StringOrNull;
+    kanal: KanalTypes;
     referat: StringOrNull;
     erReferatPublisert: boolean;
 }
