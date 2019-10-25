@@ -5,7 +5,7 @@ import UseFetch from '../../utils/UseFetch';
 import Lenke from 'nav-frontend-lenker';
 import { HoyreChevron } from 'nav-frontend-chevron';
 import { AktivitetskortInfoBox } from './AktivitetskortInfoBox';
-import './Aktivitetskort.less';
+import styles from './Aktivitetskort.module.less';
 
 interface PropTypes {
     dialog?: DialogData;
@@ -33,12 +33,12 @@ export function Aktivitetskort(props: PropTypes) {
     }
 
     return (
-        <div className="aktivitet-kort">
-            <EtikettLiten className="aktivitet-kort__brødsmulesti">
+        <div className={styles.aktivitetskort}>
+            <EtikettLiten className={styles.brodsmulesti}>
                 aktivitet / {aktivitet.status} / {mapAktivitetTypeToHumanReadableString(aktivitet.type)}
             </EtikettLiten>
             <Systemtittel>{aktivitet.tittel}</Systemtittel>
-            <Element className="aktivitet-kort__link">
+            <Element className={styles.aktivitetkortlenke}>
                 <Lenke href={'temp'}>
                     Les mer i aktivitetsplanen
                     <HoyreChevron />
