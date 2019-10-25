@@ -16,6 +16,14 @@ export enum KanalTypes {
     INTERNETT = 'INTERNETT'
 }
 
+export enum AktivitetStatus {
+    PLANLAGT = 'PLANLAGT',
+    GJENNOMFORES = 'GJENNOMFORES',
+    FULLFORT = 'FULLFORT',
+    BRUKER_ER_INTERESSERT = 'BRUKER_ER_INTERESSERT',
+    AVBRUTT = 'AVBRUTT'
+}
+
 export interface Aktivitet {
     id: StringOrNull;
     versjon: StringOrNull;
@@ -24,7 +32,7 @@ export interface Aktivitet {
     beskrivelse: StringOrNull;
     lenke: StringOrNull;
     type: AktivitetTypes;
-    status: StringOrNull;
+    status: AktivitetStatus;
     fraDato: StringOrNull;
     tilDato: StringOrNull;
     opprettetDato: string;
@@ -81,7 +89,7 @@ export enum ArenaAktivitetTypes {
 export interface ArenaAktivitet {
     //Felles
     id: StringOrNull;
-    status: StringOrNull;
+    status: AktivitetStatus;
     type: ArenaAktivitetTypes;
     tittel: StringOrNull;
     beskrivelse: StringOrNull;

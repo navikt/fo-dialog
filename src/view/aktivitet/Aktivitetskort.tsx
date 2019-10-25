@@ -1,6 +1,12 @@
 import React from 'react';
 import { DialogData } from '../../utils/Typer';
-import { Aktivitet, AktivitetTypes, ArenaAktivitet, ArenaAktivitetTypes } from '../../utils/AktivitetTypes';
+import {
+    Aktivitet,
+    AktivitetStatus,
+    AktivitetTypes,
+    ArenaAktivitet,
+    ArenaAktivitetTypes
+} from '../../utils/AktivitetTypes';
 
 import { Element, EtikettLiten, Systemtittel } from 'nav-frontend-typografi';
 import UseFetch from '../../utils/UseFetch';
@@ -37,7 +43,7 @@ export function Aktivitetskort(props: PropTypes) {
     return (
         <div className={styles.aktivitetskort}>
             <EtikettLiten className={styles.brodsmulesti}>
-                aktivitet / {aktivitet.status} / {mapAktivitetTypeToHumanReadableString(aktivitet.type)}
+                aktivitet / {getStatusText(aktivitet.status)} / {getTypeText(aktivitet.type)}
             </EtikettLiten>
             <Systemtittel>{aktivitet.tittel}</Systemtittel>
             <Element className={styles.aktivitetkortlenke}>
@@ -51,7 +57,22 @@ export function Aktivitetskort(props: PropTypes) {
     );
 }
 
-function mapAktivitetTypeToHumanReadableString(type: AktivitetTypes | ArenaAktivitetTypes) {
+function getStatusText(status: AktivitetStatus) {
+    switch (status) {
+        case AktivitetStatus.PLANLAGT:
+            return 'Planlegger';
+        case AktivitetStatus.GJENNOMFORES:
+            return 'Gjennomfører';
+        case AktivitetStatus.FULLFORT:
+            return 'Fullført';
+        case AktivitetStatus.BRUKER_ER_INTERESSERT:
+            return 'Forslag';
+        case AktivitetStatus.AVBRUTT:
+            return 'Avbrutt';
+    }
+}
+
+function getTypeText(type: AktivitetTypes | ArenaAktivitetTypes) {
     switch (type) {
         case AktivitetTypes.MOTE:
             return 'Møte med NAV';
@@ -64,11 +85,15 @@ function mapAktivitetTypeToHumanReadableString(type: AktivitetTypes | ArenaAktiv
         case AktivitetTypes.BEHANDLING:
             return 'Behandling';
         case AktivitetTypes.EGEN:
-            return 'Egenaktivitet';
+            return 'Jobbrettet egenaktivitet';
         case AktivitetTypes.IJOBB:
-            return 'Nåværende stilling';
+            return 'Jobb jeg har nå';
         case ArenaAktivitetTypes.TILTAKSAKTIVITET:
             return 'Tiltak gjennom NAV';
+        case ArenaAktivitetTypes.GRUPPEAKTIVITET:
+            return 'Gruppeaktivitet';
+        case ArenaAktivitetTypes.UTDANNINGSAKTIVITET:
+            return 'Utdanningsaktivitet';
     }
     return '';
 }
