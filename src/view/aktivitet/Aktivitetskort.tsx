@@ -1,5 +1,7 @@
 import React from 'react';
-import { Aktivitet, AktivitetTypes, ArenaAktivitet, ArenaAktivitetTypes, DialogData } from '../../utils/Typer';
+import { DialogData } from '../../utils/Typer';
+import { Aktivitet, AktivitetTypes, ArenaAktivitet, ArenaAktivitetTypes } from '../../utils/AktivitetTypes';
+
 import { Element, EtikettLiten, Systemtittel } from 'nav-frontend-typografi';
 import UseFetch from '../../utils/UseFetch';
 import Lenke from 'nav-frontend-lenker';

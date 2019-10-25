@@ -2,7 +2,7 @@ import React from 'react';
 
 import GruppeAktivitet from './GruppeAktivitet';
 import Enzyme, { shallow } from 'enzyme';
-import { ArenaAktivitetTypes } from '../../utils/Typer';
+import { ArenaAktivitetTypes } from '../../utils/AktivitetTypes';
 import Adapter from 'enzyme-adapter-react-16';
 
 Enzyme.configure({ adapter: new Adapter() });

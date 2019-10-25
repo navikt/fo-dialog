@@ -1,5 +1,5 @@
 import React from 'react';
-import { Aktivitet } from '../../utils/Typer';
+import { Aktivitet } from '../../utils/AktivitetTypes';
 import InformasjonElement from './InformasjonElement';
 
 interface PropTypes {
