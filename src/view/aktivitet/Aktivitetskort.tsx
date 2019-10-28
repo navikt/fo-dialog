@@ -19,6 +19,8 @@ interface PropTypes {
     dialog?: DialogData;
 }
 
+export const aktivitetLenke = (aktivitetId: string) => `/aktivitetsplan/aktivitet/vis/${aktivitetId}`;
+
 export function Aktivitetskort(props: PropTypes) {
     const { dialog } = props;
     const aktiviteter = UseFetch<Aktivitet[]>('/veilarbaktivitet/api/aktivitet').data;
@@ -47,7 +49,7 @@ export function Aktivitetskort(props: PropTypes) {
             </EtikettLiten>
             <Systemtittel>{aktivitet.tittel}</Systemtittel>
             <Element className={styles.aktivitetkortlenke}>
-                <Lenke href={'temp'}>
+                <Lenke href={aktivitetLenke(aktivitet.id)}>
                     Les mer i aktivitetsplanen
                     <HoyreChevron />
                 </Lenke>

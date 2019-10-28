@@ -25,7 +25,7 @@ export enum AktivitetStatus {
 }
 
 export interface Aktivitet {
-    id: StringOrNull;
+    id: string;
     versjon: StringOrNull;
 
     tittel: StringOrNull;
@@ -88,7 +88,7 @@ export enum ArenaAktivitetTypes {
 
 export interface ArenaAktivitet {
     //Felles
-    id: StringOrNull;
+    id: string;
     status: AktivitetStatus;
     type: ArenaAktivitetTypes;
     tittel: StringOrNull;

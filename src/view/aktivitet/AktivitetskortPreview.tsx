@@ -7,6 +7,7 @@ import UseFetch from '../../utils/UseFetch';
 import { LenkepanelBase } from 'nav-frontend-lenkepanel';
 import { formaterDate } from '../../utils/Date';
 import Lenke from 'nav-frontend-lenker';
+import { aktivitetLenke } from './Aktivitetskort';
 
 interface Props {
     dialog: DialogData;
@@ -20,13 +21,17 @@ export function AktivitetskortPreview(props: Props) {
         if (aktivitet) {
             const info = mapAktivitetTypeToPreview(aktivitet);
             return (
-                <LenkepanelBase href={'fisk'} className="aktivitetskortpreview">
+                <LenkepanelBase href={aktivitetLenke(aktivitet.id)} className="aktivitetskortpreview">
                     <div className="aktivitetskortpreview__internal-div">
                         <div className="textdiv">
                             <Undertittel children={aktivitet.tittel} className="aktivitetskortpreview__info" />
                             <Undertekst children={info} className="aktivitetskortpreview__info" />
                         </div>
-                        <Lenke href={'aktivitetsplan'} className="aktivitetskortpreview__les-mer" children="Les mer" />
+                        <Lenke
+                            href={aktivitetLenke(aktivitet.id)}
+                            className="aktivitetskortpreview__les-mer"
+                            children="Les mer"
+                        />
                     </div>
                 </LenkepanelBase>
             );
