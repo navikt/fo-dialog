@@ -1,12 +1,6 @@
 import React from 'react';
 import { DialogData } from '../../utils/Typer';
-import {
-    Aktivitet,
-    AktivitetStatus,
-    AktivitetTypes,
-    ArenaAktivitet,
-    ArenaAktivitetTypes
-} from '../../utils/AktivitetTypes';
+import { Aktivitet, ArenaAktivitet } from '../../utils/AktivitetTypes';
 
 import { Element, EtikettLiten, Systemtittel } from 'nav-frontend-typografi';
 import UseFetch from '../../utils/UseFetch';
@@ -14,6 +8,7 @@ import Lenke from 'nav-frontend-lenker';
 import { HoyreChevron } from 'nav-frontend-chevron';
 import { AktivitetskortInfoBox } from './AktivitetskortInfoBox';
 import styles from './Aktivitetskort.module.less';
+import { getStatusText, getTypeText } from './TextUtils';
 
 interface PropTypes {
     dialog?: DialogData;
@@ -57,45 +52,4 @@ export function Aktivitetskort(props: PropTypes) {
             <AktivitetskortInfoBox aktivitet={aktivitet} />
         </div>
     );
-}
-
-function getStatusText(status: AktivitetStatus) {
-    switch (status) {
-        case AktivitetStatus.PLANLAGT:
-            return 'Planlegger';
-        case AktivitetStatus.GJENNOMFORES:
-            return 'Gjennomfører';
-        case AktivitetStatus.FULLFORT:
-            return 'Fullført';
-        case AktivitetStatus.BRUKER_ER_INTERESSERT:
-            return 'Forslag';
-        case AktivitetStatus.AVBRUTT:
-            return 'Avbrutt';
-    }
-}
-
-function getTypeText(type: AktivitetTypes | ArenaAktivitetTypes) {
-    switch (type) {
-        case AktivitetTypes.MOTE:
-            return 'Møte med NAV';
-        case AktivitetTypes.STILLING:
-            return 'Stilling';
-        case AktivitetTypes.SOKEAVTALE:
-            return 'Jobbsøking';
-        case AktivitetTypes.SAMTALEREFERAT:
-            return 'Samtalereferat';
-        case AktivitetTypes.BEHANDLING:
-            return 'Behandling';
-        case AktivitetTypes.EGEN:
-            return 'Jobbrettet egenaktivitet';
-        case AktivitetTypes.IJOBB:
-            return 'Jobb jeg har nå';
-        case ArenaAktivitetTypes.TILTAKSAKTIVITET:
-            return 'Tiltak gjennom NAV';
-        case ArenaAktivitetTypes.GRUPPEAKTIVITET:
-            return 'Gruppeaktivitet';
-        case ArenaAktivitetTypes.UTDANNINGSAKTIVITET:
-            return 'Utdanningsaktivitet';
-    }
-    return '';
 }

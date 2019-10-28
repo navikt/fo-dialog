@@ -5,63 +5,55 @@ import { Undertekst, Undertittel } from 'nav-frontend-typografi';
 
 import UseFetch from '../../utils/UseFetch';
 import { LenkepanelBase } from 'nav-frontend-lenkepanel';
-import { formaterDate } from '../../utils/Date';
-import Lenke from 'nav-frontend-lenker';
+import { formaterDate, getKlokkeslett } from '../../utils/Date';
 import { aktivitetLenke } from './Aktivitetskort';
+import styles from './AktivitetskortPreview.module.less';
+import { getTypeText } from './TextUtils';
 
 interface Props {
     dialog: DialogData;
 }
 
 export function AktivitetskortPreview(props: Props) {
-    const aktiviteter = UseFetch<Aktivitet[]>('/veilarbaktivitet/api/aktivitet');
-    if (aktiviteter.data !== null) {
-        const aktivitet = aktiviteter.data.find(aktivitet => aktivitet.id === props.dialog.aktivitetId);
+    const aktiviteter = UseFetch<Aktivitet[]>('/veilarbaktivitet/api/aktivitet').data;
 
-        if (aktivitet) {
-            const info = mapAktivitetTypeToPreview(aktivitet);
-            return (
-                <LenkepanelBase href={aktivitetLenke(aktivitet.id)} className="aktivitetskortpreview">
-                    <div className="aktivitetskortpreview__internal-div">
-                        <div className="textdiv">
-                            <Undertittel children={aktivitet.tittel} className="aktivitetskortpreview__info" />
-                            <Undertekst children={info} className="aktivitetskortpreview__info" />
-                        </div>
-                        <Lenke
-                            href={aktivitetLenke(aktivitet.id)}
-                            className="aktivitetskortpreview__les-mer"
-                            children="Les mer"
-                        />
-                    </div>
-                </LenkepanelBase>
-            );
-        }
-    }
-    return null;
+    if (!aktiviteter) return null;
+
+    const aktivitet = aktiviteter.find(aktivitet => aktivitet.id === props.dialog.aktivitetId);
+    if (!aktivitet) return null;
+
+    const info = getInfoText(aktivitet);
+    return (
+        <LenkepanelBase href={aktivitetLenke(aktivitet.id)} className={styles.lenkepanelbase}>
+            <div>
+                <Undertittel className={styles.tittel}>{aktivitet.tittel}</Undertittel>
+                <Undertekst>{info}</Undertekst>
+            </div>
+            <p className={styles.lesmer} children="Les mer" />
+        </LenkepanelBase>
+    );
 }
 
-function mapAktivitetTypeToPreview(aktivitet: Aktivitet | ArenaAktivitet): string {
+export function getInfoText(aktivitet: Aktivitet | ArenaAktivitet): string {
+    const typeTekst = getTypeText(aktivitet.type);
     switch (aktivitet.type) {
         case AktivitetTypes.STILLING:
-            return `Stilling | ${aktivitet.arbeidsgiver}`;
+            return `${aktivitet.tilDato ? formaterDate(aktivitet.tilDato) : typeTekst} / ${aktivitet.arbeidsgiver}`;
         case AktivitetTypes.MOTE:
-            return `Møte med NAV | ${formaterDate(aktivitet.fraDato)}`;
+            return `${typeTekst} / ${formaterDate(aktivitet.fraDato)} / ${getKlokkeslett(aktivitet.fraDato)}`;
         case AktivitetTypes.SOKEAVTALE:
             return `${formaterDate(aktivitet.fraDato)} - ${formaterDate(aktivitet.tilDato)}`;
         case AktivitetTypes.BEHANDLING:
-            return aktivitet.behandlingType!;
+            return aktivitet.behandlingType ? aktivitet.behandlingType : '';
         case AktivitetTypes.SAMTALEREFERAT:
-            return `Samtalereferat | ${formaterDate(aktivitet.fraDato)}`;
-        case AktivitetTypes.EGEN:
-            return `Jobbrettet egenaktivitet`;
+            return `${typeTekst} / ${formaterDate(aktivitet.fraDato)}`;
         case AktivitetTypes.IJOBB:
-            return `Jobb jeg har nå | ${aktivitet.arbeidsgiver}`;
-        case ArenaAktivitetTypes.TILTAKSAKTIVITET:
-            return 'Tiltak gjennom NAV';
-        case ArenaAktivitetTypes.GRUPPEAKTIVITET:
-            return 'Gruppeaktivitet';
-        case ArenaAktivitetTypes.UTDANNINGSAKTIVITET:
-            return 'Utdanning';
+            return `${typeTekst} / ${aktivitet.arbeidsgiver}`;
+        case ArenaAktivitetTypes.TILTAKSAKTIVITET ||
+            ArenaAktivitetTypes.UTDANNINGSAKTIVITET ||
+            ArenaAktivitetTypes.GRUPPEAKTIVITET ||
+            AktivitetTypes.EGEN:
+            return typeTekst;
     }
 
     return '';

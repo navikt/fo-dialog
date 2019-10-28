@@ -1,11 +1,10 @@
 import React from 'react';
 
 import GruppeAktivitet from './GruppeAktivitet';
-import Enzyme, { shallow } from 'enzyme';
+import { shallow } from 'enzyme';
 import { ArenaAktivitetTypes } from '../../utils/AktivitetTypes';
-import Adapter from 'enzyme-adapter-react-16';
+import '../../utils/SetupEnzyme';
 
-Enzyme.configure({ adapter: new Adapter() });
 describe('<GruppeAktivitet/>', () => {
     it('skal vise bare en dato hvis fraDato==tilDato', () => {
         const aktivitet: any = {
