@@ -1,7 +1,7 @@
 import React from 'react';
-import { visibleIfHoc } from '../felleskomponenter/VisibleIfHoc';
 import { Normaltekst } from 'nav-frontend-typografi';
 import { ReactComponent as Snakkebobler } from '../fellesikoner/snakkebobler.svg';
+import { visibleIfHoc } from '../felleskomponenter/VisibleIfHoc';
 
 function InfoVedIngenDialoger() {
     return (
@@ -17,6 +17,5 @@ function InfoVedIngenDialoger() {
         </div>
     );
 }
-const InfoVedIngenDialogerVisible = visibleIfHoc(InfoVedIngenDialoger);
 
-export default InfoVedIngenDialogerVisible;
+export default visibleIfHoc(InfoVedIngenDialoger);

@@ -8,7 +8,7 @@ import { HenvendelseList } from '../view/henvendelse/HenvendelseList';
 import { DialogInputBox } from '../view/dialog/DialogInputBox';
 import { DialogHeader } from '../view/dialog/DialogHeader';
 import { AlertStripeContainer } from '../view/AlertStripeContainer';
-import { DialogOversikt } from '../view/dialogoversikt/DialogOversikt';
+import DialogOversikt from '../view/dialogoversikt/DialogOversikt';
 import { DialogOverviewHeader, DialogOverviewHeaderVisible } from '../view/dialogoversikt/DialogOverviewHeader';
 import { DialogPreview } from '../view/dialogoversikt/DialogPreview';
 import { Checkbox } from 'nav-frontend-skjema';
