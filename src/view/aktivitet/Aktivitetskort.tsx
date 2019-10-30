@@ -21,17 +21,13 @@ export function Aktivitetskort(props: PropTypes) {
     const aktiviteter = UseFetch<Aktivitet[]>('/veilarbaktivitet/api/aktivitet').data;
     const arenaAktiviteter = UseFetch<ArenaAktivitet[]>('/veilarbaktivitet/api/aktivitet/arena').data;
 
-    if (!dialog) {
-        return null;
-    }
-
-    if (!aktiviteter) {
+    if (!aktiviteter && !arenaAktiviteter) {
         return null;
     }
 
     const aktivitet =
-        aktiviteter.find(aktivitet => aktivitet.id === dialog!.aktivitetId) ||
-        arenaAktiviteter!.find(aktivitet => aktivitet.id === dialog!.aktivitetId);
+        (aktiviteter && aktiviteter.find(aktivitet => aktivitet.id === dialog!.aktivitetId)) ||
+        (arenaAktiviteter && arenaAktiviteter.find(aktivitet => aktivitet.id === dialog!.aktivitetId));
 
     if (!aktivitet) {
         return null;
