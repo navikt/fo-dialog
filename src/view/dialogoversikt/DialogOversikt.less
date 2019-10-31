@@ -5,45 +5,62 @@
     flex-direction: column;
     background-color: @navLysGra;
     padding-right: 0.8rem;
+    width: 100%;
+    &__valgt {
+        display: none;
+    }
     &__header {
         display: flex;
         flex-basis: 4rem;
+
         .header-panel {
             display: flex;
             align-items: center;
+
             &__knapp {
                 display: flex;
                 margin-right: 1.5rem;
                 padding: 0.3rem 0.3rem 0.3rem 0;
+
                 svg {
                     margin-right: 0.5rem;
                 }
             }
+
             .skjemaelement {
                 margin-bottom: 0;
             }
         }
     }
+
     .ingen-dialog-info {
         margin: 0 auto;
         padding-top: 8rem;
+
         &-bilde {
             text-align: center;
             padding-bottom: 0.2rem;
         }
     }
+
     &__preview-list {
         padding: 0.2rem;
         overflow-y: auto;
         flex: 1;
     }
+
     @media (min-width: 800px) {
+        padding-left: 1rem;
         padding-right: 1rem;
+        display: flex;
+        width: 35%;
+
         &__header {
             flex-basis: 7rem;
             align-items: flex-end;
             padding-bottom: 2rem;
         }
+
         .ingen-dialog-info {
             display: none;
         }

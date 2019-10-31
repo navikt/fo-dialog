@@ -1,0 +1,54 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`<AktivitetskortPreview /> skal rendre stillingsaktivitet som i snapshot 1`] = `
+<AktivitetskortPreview
+  dialog={
+    Object {
+      "aktivitetId": "123",
+    }
+  }
+>
+  <LenkepanelBase
+    border={false}
+    href="/aktivitetsplan/aktivitet/vis/123"
+    linkCreator={[Function]}
+  >
+    <a
+      className="lenkepanel"
+      href="/aktivitetsplan/aktivitet/vis/123"
+    >
+      <div>
+        <Undertittel>
+          <TypografiBase
+            type="undertittel"
+          >
+            <h2
+              className="typo-undertittel"
+            >
+              Kantinemedarbeider
+            </h2>
+          </TypografiBase>
+        </Undertittel>
+        <Undertekst>
+          <TypografiBase
+            type="undertekst"
+          >
+            <p
+              className="typo-undertekst"
+            >
+              24.10.2019 / Testesen
+            </p>
+          </TypografiBase>
+        </Undertekst>
+      </div>
+      <p>
+        Les mer
+      </p>
+      <span
+        className="lenkepanel__indikator"
+        key="indikator"
+      />
+    </a>
+  </LenkepanelBase>
+</AktivitetskortPreview>
+`;

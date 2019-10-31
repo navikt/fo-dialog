@@ -1,6 +1,5 @@
 import React from 'react';
-import Enzyme, { mount, shallow } from 'enzyme';
-import Adapter from 'enzyme-adapter-react-16';
+import { mount, shallow } from 'enzyme';
 import { MemoryRouter, RouteComponentProps } from 'react-router';
 import * as AppContext from '../view/Provider';
 import { Dialog } from '../view/dialog/Dialog';
@@ -9,13 +8,12 @@ import { HenvendelseList } from '../view/henvendelse/HenvendelseList';
 import { DialogInputBox } from '../view/dialog/DialogInputBox';
 import { DialogHeader } from '../view/dialog/DialogHeader';
 import { AlertStripeContainer } from '../view/AlertStripeContainer';
-import { DialogOversikt } from '../view/dialogoversikt/DialogOversikt';
+import DialogOversikt from '../view/dialogoversikt/DialogOversikt';
 import { DialogOverviewHeader, DialogOverviewHeaderVisible } from '../view/dialogoversikt/DialogOverviewHeader';
 import { DialogPreview } from '../view/dialogoversikt/DialogPreview';
 import { Checkbox } from 'nav-frontend-skjema';
 import { FetchResult, Status } from '@nutgaard/use-fetch';
-
-Enzyme.configure({ adapter: new Adapter() });
+import '../utils/SetupEnzyme';
 
 const userInfo: Bruker = { id: '010101', erVeileder: true, erBruker: false };
 const oppfPerioder: PeriodeData[] = [];

@@ -1,6 +1,6 @@
 import React from 'react';
 import { formaterDate } from '../../utils/Date';
-import { ArenaAktivitet } from '../../utils/Typer';
+import { ArenaAktivitet } from '../../utils/AktivitetTypes';
 import InformasjonElement from './InformasjonElement';
 
 interface PropTypes {

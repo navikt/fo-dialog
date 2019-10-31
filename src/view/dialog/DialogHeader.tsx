@@ -9,6 +9,7 @@ interface Props {
     dialog: DialogData;
 }
 
+//TODO: Fikse, header vises bare når skjermen er liten eller middels stor
 export function DialogHeader(props: Props) {
     return (
         <div className="dialog__header">
