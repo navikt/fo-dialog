@@ -21,7 +21,7 @@ export default function StillingAktivitet(props: PropTypes) {
             <InformasjonElement merkelapptekst="Kontaktperson" verdi={kontaktperson} />
             <InformasjonElement merkelapptekst="Arbeidssted" verdi={arbeidssted} />
             <InformasjonElement merkelapptekst="Beskrivelse" verdi={beskrivelse} />
-            <InformasjonElement merkelapptekst="Lenke" verdi="">
+            <InformasjonElement merkelapptekst="Lenke">
                 <EksternLenke lenke={lenke} />
             </InformasjonElement>
         </>

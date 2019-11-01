@@ -1,43 +1,34 @@
 import React from 'react';
-import { mount } from 'enzyme';
+import { shallow } from 'enzyme';
 import EksternLenke from './EksternLenke';
-import Lenke from 'nav-frontend-lenker';
 import '../utils/SetupEnzyme';
 
 describe('<EksternLenke/>', () => {
     it('skal padde href med protokoll når det mangler', () => {
         const tekst = 'nav.no';
-        const wrapper = mount(<EksternLenke lenke={tekst} />);
-        const lenke = wrapper.find(Lenke);
+        const wrapper = shallow(<EksternLenke lenke={tekst} />);
 
-        expect(lenke.prop('href')).toEqual('http://nav.no');
-        expect(lenke.text()).toEqual(tekst);
+        expect(wrapper).toMatchSnapshot();
     });
 
     it('skal ikke padde href med protokoll, http', () => {
         const tekst = 'http://nav.no';
-        const wrapper = mount(<EksternLenke lenke={tekst} />);
-        const lenke = wrapper.find(Lenke);
+        const wrapper = shallow(<EksternLenke lenke={tekst} />);
 
-        expect(lenke.prop('href')).toEqual('http://nav.no');
-        expect(lenke.text()).toEqual(tekst);
+        expect(wrapper).toMatchSnapshot();
     });
 
     it('skal ikke padde href med protokoll, https', () => {
         const tekst = 'https://nav.no';
-        const wrapper = mount(<EksternLenke lenke={tekst} />);
-        const lenke = wrapper.find(Lenke);
+        const wrapper = shallow(<EksternLenke lenke={tekst} />);
 
-        expect(lenke.prop('href')).toEqual('https://nav.no');
-        expect(lenke.text()).toEqual(tekst);
+        expect(wrapper).toMatchSnapshot();
     });
 
-    it('skal padde href med protokoll når det mangler', () => {
+    it('skal padde href med protokoll når det mangler, www', () => {
         const tekst = 'www.nav.no';
-        const wrapper = mount(<EksternLenke lenke={tekst} />);
-        const lenke = wrapper.find(Lenke);
+        const wrapper = shallow(<EksternLenke lenke={tekst} />);
 
-        expect(lenke.prop('href')).toEqual('http://www.nav.no');
-        expect(lenke.text()).toEqual(tekst);
+        expect(wrapper).toMatchSnapshot();
     });
 });

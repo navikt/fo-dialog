@@ -18,7 +18,7 @@ export default function EgenAktivitet(props: PropTypes) {
             <InformasjonElement merkelapptekst="Mål med aktiviteten" verdi={hensikt} />
             <InformasjonElement merkelapptekst="Min huskeliste" verdi={oppfolging} />
             <InformasjonElement merkelapptekst="Beskrivelse" verdi={beskrivelse} />
-            <InformasjonElement merkelapptekst="Lenke" verdi="">
+            <InformasjonElement merkelapptekst="Lenke">
                 <EksternLenke lenke={lenke} />
             </InformasjonElement>
         </>

@@ -5,7 +5,7 @@ import { StringOrNull } from '../../utils/Typer';
 
 interface PropTypes {
     merkelapptekst: string;
-    verdi: StringOrNull;
+    verdi?: StringOrNull;
     children?: ReactNode;
 }
 

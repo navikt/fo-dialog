@@ -7,8 +7,8 @@ import '../../utils/SetupEnzyme';
 
 describe('<InformasjonElement />', () => {
     it('skal vise fritekst hvis det er oppgitt', () => {
-        const merkelapptekst = 'merkelappteksten',
-            verdi = 'Verdi på merkelapp';
+        const merkelapptekst = 'merkelappteksten';
+        const verdi = 'Verdi på merkelapp';
         const wrapper = mount(<InformasjonElement merkelapptekst={merkelapptekst} verdi={verdi} />);
 
         expect(wrapper.find(EtikettLiten).exists).toBeTruthy();
