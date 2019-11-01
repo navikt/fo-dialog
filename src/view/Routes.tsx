@@ -3,10 +3,10 @@ import Dialog from './dialog/Dialog';
 import DialogNew from './dialog/NyDialog';
 import React from 'react';
 import DialogInfoMelding from './dialog/DialogInfoMelding';
-
-function Routes(props: { className: string }) {
+import styles from './Routes.module.less';
+function Routes() {
     return (
-        <div className={props.className}>
+        <div className={styles.dialogContainer}>
             <Switch>
                 <Route exact path="/" component={DialogInfoMelding} />
                 <Route path="/ny" component={DialogNew} />
