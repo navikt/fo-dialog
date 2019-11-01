@@ -13,11 +13,11 @@ function App() {
         <Router>
             <div className="app">
                 <Provider>
-                    <AppBanner cls={'dialogbanner'} />
+                    <AppBanner />
                     <AlertStripeContainer />
-                    <div className={'app__body'}>
+                    <div className="app__body">
                         <DialogOversikt />
-                        <Routes className="dialog-container" />
+                        <Routes />
                         <AktivitetContainer />
                     </div>
                 </Provider>
