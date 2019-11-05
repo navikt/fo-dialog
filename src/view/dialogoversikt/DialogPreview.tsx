@@ -9,6 +9,8 @@ import { ReactComponent as AktivitetsIkon } from './aktivitet-dialog-lest.svg';
 import WrapInReactLink from '../../felleskomponenter/WrapInReactLink';
 import classNames from 'classnames';
 import { RouteComponentProps, withRouter } from 'react-router';
+import UseFetch from '../../utils/UseFetch';
+import { Aktivitet } from '../../utils/AktivitetTypes';
 
 import './DialogPreview.less';
 
@@ -38,20 +40,23 @@ function DialogPreviewIkon(props: IkonProps) {
 }
 
 export function DialogPreview(props: Props) {
-    const datoString = !!props.dialog.sisteDato ? formaterDate(props.dialog.sisteDato) : '';
-
+    const { dialog, valgtDialogId } = props;
+    const { id, sisteDato, aktivitetId, lest, overskrift, sisteTekst } = dialog;
+    const datoString = !!sisteDato ? formaterDate(sisteDato) : '';
+    const aktivitet = aktivitetId && UseFetch<Aktivitet>(`/veilarbaktivitet/api/aktivitet/${aktivitetId}`).data;
     const lenkepanelCls = classNames('dialog-preview', {
-        'dialog-preview--lest': props.dialog.lest,
-        'dialog-preview--valgt': props.dialog.id === props.valgtDialogId
+        'dialog-preview--lest': lest,
+        'dialog-preview--valgt': id === valgtDialogId
     });
+
     return (
-        <LenkepanelBase className={lenkepanelCls} href={`/${props.dialog.id}`} linkCreator={WrapInReactLink}>
-            <DialogPreviewIkon dialog={props.dialog} />
+        <LenkepanelBase className={lenkepanelCls} href={`/${id}`} linkCreator={WrapInReactLink}>
+            <DialogPreviewIkon dialog={dialog} />
             <div className="dialog-preview__internal-div">
-                <Systemtittel className="lenkepanel__heading"> {props.dialog.overskrift}</Systemtittel>
-                <Normaltekst className="dialog-preview__last-henvendelse">{props.dialog.sisteTekst}</Normaltekst>
+                <Systemtittel className="lenkepanel__heading">{aktivitet ? aktivitet.tittel : overskrift}</Systemtittel>
+                <Normaltekst className="dialog-preview__last-henvendelse">{sisteTekst}</Normaltekst>
                 <EtikettLiten className="dialog-preview__dato">{datoString}</EtikettLiten>
-                <EtikettListe dialog={props.dialog} />
+                <EtikettListe dialog={dialog} />
             </div>
         </LenkepanelBase>
     );

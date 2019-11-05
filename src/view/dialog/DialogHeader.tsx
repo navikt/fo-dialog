@@ -1,27 +1,39 @@
 import React from 'react';
 import { VenstreChevron } from 'nav-frontend-chevron';
-import { DialogData } from '../../utils/Typer';
+import { DialogData, StringOrNull } from '../../utils/Typer';
 import { AktivitetskortPreview } from '../aktivitet/AktivitetskortPreview';
 import { Undertittel } from 'nav-frontend-typografi';
 import { Link } from 'react-router-dom';
+import classNames from 'classnames';
+import styles from './DialogHeader.module.less';
 
-interface Props {
+interface DialogHeaderProps {
     dialog: DialogData;
 }
 
-//TODO: Fikse, header vises bare når skjermen er liten eller middels stor
-export function DialogHeader(props: Props) {
+interface DialogOverskriftProps {
+    tekst: StringOrNull;
+}
+
+function DialogOverskrift(props: DialogOverskriftProps) {
+    return <Undertittel className={styles.tittel}>{props.tekst}</Undertittel>;
+}
+
+export function DialogHeader(props: DialogHeaderProps) {
+    const { dialog } = props;
+    const { aktivitetId } = dialog;
+    const headerStyle = classNames(
+        styles.dialogHeader,
+        aktivitetId ? styles.skjulVedStorSkjem : styles.skjulVedMiddelsSkjem
+    );
+
     return (
-        <div className="dialog__header">
-            <Link to="/" className="tilbake-til-oversikt">
-                <VenstreChevron stor className="tilbake-til-oversikt__pilknapp" />
+        <div className={headerStyle}>
+            <Link to="/" className={styles.tilbakeTilOversikt}>
+                <VenstreChevron />
                 Oversikt
             </Link>
-            {props.dialog.aktivitetId == null ? (
-                <Undertittel className="dialog__tittel">{props.dialog.overskrift}</Undertittel>
-            ) : (
-                <AktivitetskortPreview dialog={props.dialog} />
-            )}
+            {aktivitetId ? <AktivitetskortPreview dialog={dialog} /> : <DialogOverskrift tekst={dialog.overskrift} />}
         </div>
     );
 }
