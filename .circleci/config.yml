@@ -26,4 +26,4 @@ workflows:
           filepath: ./nais-fss.yaml,./nais-sbs.yaml
           filters:
             branches:
-              only: master
+              only: dev

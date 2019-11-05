@@ -23,8 +23,7 @@ spec:
     enabled: true
     path: arbeidsrettet-dialog/internal/metrics
   ingresses:
-    - https://arbeidsrettet-dialog-{{namespace}}.nais.oera-q.local
-    - https://arbeidsrettet-dialog-{{namespace}}.dev-sbs.nais.io
+    - https://arbeidsrettet-dialog.nav.no
   vault:
     enabled: true
   webproxy: true
