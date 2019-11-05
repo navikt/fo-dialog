@@ -23,7 +23,7 @@ spec:
     enabled: true
     path: arbeidsrettet-dialog/internal/metrics
   ingresses:
-    - https://arbeidsrettet-dialo.nais.adeo.no
+    - https://arbeidsrettet-dialog.nais.adeo.no
     - https://app.adeo.no/arbeidsrettet-dialog
   vault:
     enabled: true
