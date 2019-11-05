@@ -1,4 +1,4 @@
-import { JSONArray } from 'yet-another-fetch-mock';
+import { JSONArray, JSONObject } from 'yet-another-fetch-mock';
 
 const aktiviteter: JSONArray = [
     {
@@ -383,4 +383,10 @@ const aktiviteter: JSONArray = [
         versjon: '214139'
     }
 ];
+
+export function getAktivitet(id: string): JSONObject {
+    //@ts-ignore
+    return aktiviteter.find(aktivitet => aktivitet!.id === id);
+}
+
 export default aktiviteter;

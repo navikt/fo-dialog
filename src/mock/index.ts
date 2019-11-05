@@ -2,7 +2,7 @@ import FetchMock, { Middleware, ResponseUtils } from 'yet-another-fetch-mock';
 import dialoger, { lesDialog, opprettEllerOppdaterDialog, setFerdigBehandlet, setVenterPaSvar } from './Dialog';
 import bruker from './Bruker';
 import oppfolging from './Oppfolging';
-import aktiviteter from './Aktivitet';
+import aktiviteter, { getAktivitet } from './Aktivitet';
 import { arenaAktiviteter } from './Arena';
 
 const loggingMiddleware: Middleware = (request, response) => {
@@ -50,5 +50,7 @@ mock.get('/veilarboppfolging/api/oppfolging/me', ResponseUtils.delayed(DELAY, br
 mock.get('/veilarboppfolging/api/oppfolging', ResponseUtils.delayed(DELAY, oppfolging));
 
 mock.get('/veilarbaktivitet/api/aktivitet', ResponseUtils.delayed(DELAY, aktiviteter));
+
+mock.get('/veilarbaktivitet/api/aktivitet/:aktivitetId', ({ pathParams }) => getAktivitet(pathParams.aktivitetId));
 
 mock.get('/veilarbaktivitet/api/aktivitet/arena', ResponseUtils.delayed(DELAY, arenaAktiviteter));
