@@ -6,53 +6,6 @@
     height: 100%;
     width: 100%;
     background: @white;
-
-    &__header {
-        background-color: @navLysGra;
-        flex-basis: 4rem;
-        box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
-        z-index: 100;
-        .dialog__tittel {
-            padding: 1rem;
-        }
-    }
-
-    .tilbake-til-oversikt {
-        text-decoration: none;
-        padding: 1rem 0.5rem 0.2rem 0.5rem;
-        display: flex;
-        align-items: center;
-        color: @navMorkGra;
-        font-weight: bold;
-    }
-
-    @media (min-width: 800px) {
-        .tilbake-til-oversikt {
-            display: none;
-        }
-        &__header {
-            box-shadow: none;
-        }
-        &__tom {
-            display: block;
-            margin: 0 auto;
-            text-align: center;
-            padding-top: 8rem;
-            width: 19rem;
-            .infotekst {
-                text-align: center;
-                margin-top: 1rem;
-            }
-            svg {
-                width: 10rem;
-            }
-        }
-    }
-    @media (min-width: 1200px) {
-        &__header {
-            display: none;
-        }
-    }
 }
 
 .henvendelse-list {

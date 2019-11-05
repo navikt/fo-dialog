@@ -1,0 +1,39 @@
+@import (reference) '~nav-frontend-core/less/core';
+
+.tilbakeTilOversikt {
+    text-decoration: none;
+    padding: 1rem 0.5rem 0.2rem 0.5rem;
+    display: flex;
+    align-items: center;
+    color: @navMorkGra;
+    font-weight: bold;
+    @media (min-width: 800px) {
+        display: none;
+    }
+}
+
+.dialogHeader {
+    background-color: @navLysGra;
+    flex-basis: 4rem;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+    z-index: 100;
+}
+
+.skjulVedMiddelsSkjem {
+    @media (min-width: 800px) {
+        display: none;
+    }
+}
+
+.skjulVedStorSkjem {
+    @media (min-width: 1200px) {
+        display: none;
+    }
+}
+
+.tittel {
+    padding: 1rem;
+    @media (min-width: 800px) {
+        display: none;
+    }
+}
