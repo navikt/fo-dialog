@@ -22,7 +22,7 @@ export function Provider(props: PropsWithChildren<{}>) {
     if (isPending(bruker) || isPending(oppfolgingData) || isPending(dialoger)) {
         return <NavFrontendSpinner />;
     } else if (hasError(bruker) || hasError(oppfolgingData) || hasError(dialoger)) {
-        return <p>Noe alvorlig gikk galt... :(</p>;
+        return <p>Kunne ikke laste data fra baksystemer. Prøv igjen senere</p>;
     }
 
     return (
