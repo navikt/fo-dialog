@@ -1,14 +1,29 @@
 version: 2.1
 orbs:
-    pus: navikt/pus-orb@0.0.33
+  pus: navikt/pus-orb@0.0.37
 
 workflows:
-    version: 2
-    commit:
-        jobs:
-          - pus/bygg-frontend:
-              context: pus
-              name: build
-
-          - pus/test-frontend:
-                  name: test
+  version: 2
+  commit:
+    jobs:
+      - pus/test-frontend:
+          name: test
+          context: pus
+      - pus/bygg-og-deploy-frontend:
+          name: deploy-dev
+          requires:
+            - test
+          context: pus
+          filepath: ./nais-q-fss.yaml,./nais-q-sbs.yaml
+          filters:
+            branches:
+              only: dev
+      - pus/bygg-og-deploy-frontend:
+          name: deploy-prod
+          requires:
+            - test
+          context: pus
+          filepath: ./nais-fss.yaml,./nais-sbs.yaml
+          filters:
+            branches:
+              only: master
