@@ -3,7 +3,7 @@ import { useDialogContext } from '../Provider';
 import { matchPath, RouteComponentProps, withRouter } from 'react-router';
 import { Aktivitetskort } from './Aktivitetskort';
 import { hasData } from '@nutgaard/use-fetch';
-
+import styles from './AktivitetContainer.module.less';
 interface Props extends RouteComponentProps<{ dialogId?: string }> {}
 
 function AktivitetContainer(props: Props) {
@@ -15,9 +15,7 @@ function AktivitetContainer(props: Props) {
     const valgtDialog = dialogData.find(dialog => dialog.id === dialogId);
 
     return (
-        <div className="aktivitet-container">
-            <Aktivitetskort dialog={valgtDialog} />
-        </div>
+        <div className={styles.aktivitetContainer}>{valgtDialog ? <Aktivitetskort dialog={valgtDialog} /> : null}</div>
     );
 }
 

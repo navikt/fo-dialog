@@ -8,7 +8,7 @@ import { ReactComponent as DialogIkon } from './snakkeboble.svg';
 import { ReactComponent as AktivitetsIkon } from './aktivitet-dialog-lest.svg';
 import WrapInReactLink from '../../felleskomponenter/WrapInReactLink';
 import classNames from 'classnames';
-import { matchPath, RouteComponentProps, withRouter } from 'react-router';
+import { RouteComponentProps, withRouter } from 'react-router';
 
 import './DialogPreview.less';
 
@@ -17,6 +17,7 @@ interface IkonProps {
 }
 interface Props extends RouteComponentProps<{ dialogId?: string }> {
     dialog: DialogData;
+    valgtDialogId: string | null;
 }
 
 function DialogPreviewIkon(props: IkonProps) {
@@ -38,11 +39,10 @@ function DialogPreviewIkon(props: IkonProps) {
 
 export function DialogPreview(props: Props) {
     const datoString = !!props.dialog.sisteDato ? formaterDate(props.dialog.sisteDato) : '';
-    const valgtDialogId = matchPath<{ dialogId: string }>(props.location.pathname, '/:dialogId');
 
     const lenkepanelCls = classNames('dialog-preview', {
         'dialog-preview--lest': props.dialog.lest,
-        'dialog-preview--valgt': valgtDialogId && props.dialog.id === valgtDialogId.params.dialogId
+        'dialog-preview--valgt': props.dialog.id === props.valgtDialogId
     });
     return (
         <LenkepanelBase className={lenkepanelCls} href={`/${props.dialog.id}`} linkCreator={WrapInReactLink}>

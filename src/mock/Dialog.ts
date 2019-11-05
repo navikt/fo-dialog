@@ -154,7 +154,7 @@ const dialoger: DialogData[] & JSONArray = [
         ferdigBehandlet: true,
         lestAvBrukerTidspunkt: null,
         erLestAvBruker: false,
-        aktivitetId: 'ARENAGA120719688',
+        aktivitetId: null,
         henvendelser: [
             {
                 id: '3',
@@ -180,7 +180,7 @@ const dialoger: DialogData[] & JSONArray = [
         ferdigBehandlet: true,
         lestAvBrukerTidspunkt: null,
         erLestAvBruker: false,
-        aktivitetId: '123',
+        aktivitetId: null,
         henvendelser: [
             {
                 id: '3',

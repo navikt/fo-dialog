@@ -1,0 +1,30 @@
+@import (reference) '~nav-frontend-core/less/core';
+
+.lenkepanelbase {
+    display: flex;
+    height: 71px;
+    border-radius: 4px;
+    box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.28);
+    margin: 0.75rem 1rem 0.75rem 1rem;
+
+    @media (min-width: 800px) {
+        margin: 0.75rem 3rem 0.75rem 3rem;
+    }
+
+    div {
+        width: calc(100% - 4rem);
+    }
+}
+
+.tittel {
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    overflow: hidden;
+}
+
+.lesmer {
+    text-align: right;
+    width: 4rem;
+    white-space: nowrap;
+    font-weight: bold;
+}

@@ -5,31 +5,8 @@
     flex-direction: column;
     height: 100%;
     width: 100%;
-    &.dialog__tom {
-        text-align: center;
-        padding-top: 5rem;
-        width: 19rem;
-        .infotekst {
-            text-align: center;
-            margin-top: 1rem;
-        }
-        svg {
-            width: 10rem;
-        }
-    }
-    &__tom {
-        display: none;
-    }
-    &.dialog__maavelges {
-        align-items: center;
-        padding-top: 10rem;
-        svg {
-            width: 10rem;
-        }
-        .infotekst {
-            margin-top: 3rem;
-        }
-    }
+    background: @white;
+
     &__header {
         background-color: @navLysGra;
         flex-basis: 4rem;
@@ -47,48 +24,6 @@
         align-items: center;
         color: @navMorkGra;
         font-weight: bold;
-    }
-
-    .aktivitetskortpreview {
-        display: flex;
-        min-width: 5rem;
-        background-color: white;
-        height: 4rem;
-        margin: 0.5rem;
-        border-radius: 0;
-
-        .lenkepanel__indikator {
-            color: @navBla;
-        }
-
-        @media (min-width: 800px) {
-            margin: 0.5rem 0.5rem 0.5rem 0;
-        }
-
-        &__internal-div {
-            width: 100%;
-            display: flex;
-            flex-direction: row;
-            justify-content: space-between;
-            flex: 1;
-            min-width: 0;
-            overflow: hidden;
-        }
-        &__les-mer {
-            text-align: right;
-            align-self: center;
-            white-space: nowrap;
-            width: 4rem;
-        }
-        .textdiv {
-            width: calc(100% - 4rem);
-        }
-
-        &__info {
-            text-overflow: ellipsis;
-            white-space: nowrap;
-            overflow: hidden;
-        }
     }
 
     @media (min-width: 800px) {

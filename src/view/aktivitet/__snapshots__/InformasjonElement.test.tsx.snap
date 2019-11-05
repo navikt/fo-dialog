@@ -1,0 +1,50 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`<InformasjonElement /> skal matche snapshot når EksternLenke er child 1`] = `
+<InformasjonElement
+  merkelapptekst="merkelappteksten"
+  verdi=""
+>
+  <div>
+    <EtikettLiten>
+      <TypografiBase
+        type="etikettLiten"
+      >
+        <p
+          className="typo-etikett-liten"
+        >
+          merkelappteksten
+        </p>
+      </TypografiBase>
+    </EtikettLiten>
+    <Undertekst>
+      <TypografiBase
+        type="undertekst"
+      >
+        <p
+          className="typo-undertekst"
+        />
+      </TypografiBase>
+    </Undertekst>
+    <EksternLenke
+      lenke="nav.no"
+    >
+      <Lenke
+        href="http://nav.no"
+      >
+        <a
+          className="lenke"
+          href="http://nav.no"
+        >
+          nav.no
+          <ForwardRef(SvgEksternLenke)>
+            <svg>
+              ekstern-lenke.svg
+            </svg>
+          </ForwardRef(SvgEksternLenke)>
+        </a>
+      </Lenke>
+    </EksternLenke>
+  </div>
+</InformasjonElement>
+`;

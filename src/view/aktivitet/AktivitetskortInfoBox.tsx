@@ -1,5 +1,5 @@
 import React from 'react';
-import { Aktivitet, AktivitetTypes, ArenaAktivitet, ArenaAktivitetTypes } from '../../utils/Typer';
+import { Aktivitet, AktivitetTypes, ArenaAktivitet, ArenaAktivitetTypes } from '../../utils/AktivitetTypes';
 import StillingAktivitet from './StillingAktivitet';
 import MoteAktivitet from './MoteAktivitet';
 import SokeAktivitet from './SokeAktivitet';
