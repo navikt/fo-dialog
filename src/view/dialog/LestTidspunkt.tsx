@@ -16,5 +16,4 @@ function LestAvTidspunkt(props: Props) {
     );
 }
 
-const LestAvTidspunktVisible = visibleIfHoc(LestAvTidspunkt);
-export default LestAvTidspunktVisible;
+export default visibleIfHoc(LestAvTidspunkt);

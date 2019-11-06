@@ -1,7 +1,7 @@
 import { DialogData, HenvendelseData, StringOrNull } from '../../utils/Typer';
 import React, { useEffect, useRef } from 'react';
 import { Henvendelse } from './Henvendelse';
-import LestAvTidspunktVisible from '../dialog/LestTidspunkt';
+import LestAvTidspunkt from '../dialog/LestTidspunkt';
 
 import './henvendelseList.less';
 
@@ -47,15 +47,15 @@ export function HenvendelseList(props: Props) {
     if (!henvendelser) {
         return null;
     }
-    const henvendelserSynkende = henvendelser.sort((a, b) => datoComparator(a.sendt, b.sendt));
-    const sisteHenvendelseLestAvBruker = sisteLesteHenvendelse(lestAvBrukerTidspunkt, henvendelserSynkende);
+    const sorterteHenvendelser = henvendelser.sort((a, b) => datoComparator(b.sendt, a.sendt));
+    const sisteHenvendelseLestAvBruker = sisteLesteHenvendelse(lestAvBrukerTidspunkt, sorterteHenvendelser);
 
     return (
         <div className="henvendelse-list">
             <div className="henvendelse-list__viewport">
-                {henvendelserSynkende.map(henvendelse => (
+                {sorterteHenvendelser.map(henvendelse => (
                     <div key={henvendelse.id} className={'henvendelse-list__henvendelse'}>
-                        <LestAvTidspunktVisible
+                        <LestAvTidspunkt
                             tidspunkt={lestAvBrukerTidspunkt!}
                             visible={henvendelse.id === sisteHenvendelseLestAvBruker}
                         />
