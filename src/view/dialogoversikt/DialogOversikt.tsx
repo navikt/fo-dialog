@@ -2,28 +2,24 @@ import React from 'react';
 import { hasData } from '@nutgaard/use-fetch';
 import DialogPreview from './DialogPreview';
 import { DialogData } from '../../utils/Typer';
-import { DialogOverviewHeaderVisible } from './DialogOverviewHeader';
-import InfoVedIngenDialoger from '../InfoVedIngenDialoger';
+import DialogOverviewHeader from './DialogOverviewHeader';
 import { useDialogContext, useOppfolgingContext } from '../Provider';
 
-import './DialogOversikt.less';
 import { matchPath, RouteComponentProps, withRouter } from 'react-router';
 import classNames from 'classnames';
+import styles from './DialogOversikt.module.less';
+
 interface Props extends RouteComponentProps<{ dialogId?: string }> {}
 
 export function DialogOversikt(props: Props) {
     const oppfolgingData = useOppfolgingContext();
     const dialoger = useDialogContext();
     const dialogData = hasData(dialoger) ? dialoger.data : [];
-    const ingenDialoger = dialogData.length === 0;
     const valgtDialogId = matchPath<{ dialogId: string }>(props.location.pathname, '/:dialogId');
     const dialogId = valgtDialogId ? valgtDialogId.params.dialogId : null;
     const erUnderOppfolging = oppfolgingData!.underOppfolging;
     const harOppfolgingsPerioder = oppfolgingData!.oppfolgingsPerioder.length > 0;
-
-    const visningCls = classNames('dialog-overview', {
-        'dialog-overview__valgt': valgtDialogId
-    });
+    const visningCls = valgtDialogId ? classNames(styles.dialogOversikt, styles.dialogValgt) : styles.dialogOversikt;
 
     if (!erUnderOppfolging && !harOppfolgingsPerioder) {
         return null;
@@ -31,9 +27,8 @@ export function DialogOversikt(props: Props) {
     const sortedOppfolgingsData = dialogData.sort((a, b) => sortDialoger(a, b));
     return (
         <div className={visningCls}>
-            <DialogOverviewHeaderVisible visible={oppfolgingData!.underOppfolging} />
-            <InfoVedIngenDialoger visible={ingenDialoger} />
-            <div className="dialog-overview__preview-list">
+            <DialogOverviewHeader visible={oppfolgingData!.underOppfolging} />
+            <div className={styles.listeContainer}>
                 {sortedOppfolgingsData.map(dialog => (
                     <DialogPreview dialog={dialog} key={dialog.id} valgtDialogId={dialogId} />
                 ))}
