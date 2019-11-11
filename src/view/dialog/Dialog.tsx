@@ -7,8 +7,18 @@ import { RouteComponentProps, withRouter } from 'react-router';
 import DialogInputBoxVisible from './DialogInputBox';
 
 import './Dialog.less';
+import { OppfolgingData } from '../../utils/Typer';
 
 interface Props extends RouteComponentProps<{ dialogId?: string }> {}
+
+function kansendeMelding(oppfolgingData: OppfolgingData | null): boolean {
+    return (
+        !!oppfolgingData &&
+        oppfolgingData.underOppfolging &&
+        !oppfolgingData.reservasjonKRR &&
+        oppfolgingData.kanVarsles
+    );
+}
 
 export function Dialog(props: Props) {
     const oppfolgingData = useOppfolgingContext();
@@ -39,7 +49,7 @@ export function Dialog(props: Props) {
             <DialogInputBoxVisible
                 key={valgtDialog.id}
                 dialog={valgtDialog}
-                visible={oppfolgingData!.underOppfolging}
+                visible={kansendeMelding(oppfolgingData)}
             />
         </div>
     );

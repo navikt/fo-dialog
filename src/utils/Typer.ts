@@ -43,8 +43,10 @@ export interface Bruker {
 
 export interface OppfolgingData {
     fnr: StringOrNull;
+    aktorId: StringOrNull;
     veilederId: StringOrNull;
     reservasjonKRR: boolean;
+    kanVarsles: boolean;
     manuell: boolean;
     underOppfolging: boolean;
     underKvp: boolean;
@@ -56,6 +58,9 @@ export interface OppfolgingData {
     harSkriveTilgang: boolean;
     kanReaktiveres: boolean;
     inaktiveringsdato: StringOrNull;
+    erSykmeldtMedArbeidsgiver: boolean;
+    servicegruppe: StringOrNull;
+    formidlingsgruppe: StringOrNull;
 }
 
 export interface PeriodeData {
