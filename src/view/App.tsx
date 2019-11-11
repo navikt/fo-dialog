@@ -1,12 +1,13 @@
 import React from 'react';
 import DialogOversikt from './dialogoversikt/DialogOversikt';
-import { AlertStripeContainer } from './AlertStripeContainer';
+import AlertStripeContainer from './alertstirper/AlertStripeContainer';
 import { AppBanner } from './banner/AppBanner';
 import AktivitetContainer from './aktivitet/AktivitetContainer';
 import Routes from './Routes';
 import './App.less';
 import { BrowserRouter as Router } from 'react-router-dom';
 import { Provider } from './Provider';
+import HidenIfBrukerAldriUnderOppfolging from './HidenIfBrukerAldriUnderOppfolging';
 
 function App() {
     return (
@@ -15,11 +16,11 @@ function App() {
                 <Provider>
                     <AppBanner />
                     <AlertStripeContainer />
-                    <div className="app__body">
+                    <HidenIfBrukerAldriUnderOppfolging>
                         <DialogOversikt />
                         <Routes />
                         <AktivitetContainer />
-                    </div>
+                    </HidenIfBrukerAldriUnderOppfolging>
                 </Provider>
             </div>
         </Router>

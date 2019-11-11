@@ -18,9 +18,13 @@ const oppfPerioder: PeriodeData[] & JSONArray = [
     }
 ];
 const oppfolgingData = {
+    aktorId: null,
+    erSykmeldtMedArbeidsgiver: false,
+    formidlingsgruppe: null,
+    servicegruppe: null,
     fnr: null,
     veilederId: '101010',
-    reservasjonKRR: false,
+    reservasjonKRR: true,
     manuell: false,
     underOppfolging: true, //eller false
     underKvp: false,
@@ -31,6 +35,7 @@ const oppfolgingData = {
     oppfolgingsPerioder: oppfPerioder,
     harSkriveTilgang: true,
     kanReaktiveres: false,
+    kanVarsles: true,
     inaktiveringsdato: '2018-08-31T10:46:10.971+01:00'
 };
 
