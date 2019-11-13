@@ -277,7 +277,7 @@ export function opprettEllerOppdaterDialog(update: NyDialogMeldingData): DialogD
         oldDialog.sisteDato = nyHenvendelse.sendt;
         oldDialog.henvendelser.push(nyHenvendelse);
 
-        if (!bruker.erVeileder) {
+        if (!bruker().erVeileder) {
             oldDialog.venterPaSvar = false;
         }
 

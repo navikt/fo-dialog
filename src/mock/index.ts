@@ -45,7 +45,7 @@ mock.put('/veilarbdialog/api/dialog/:dialogId/ferdigbehandlet/:bool', ({ pathPar
     setFerdigBehandlet(pathParams.dialogId, pathParams.bool === 'true')
 );
 
-mock.get('/veilarboppfolging/api/oppfolging/me', ResponseUtils.delayed(DELAY, bruker));
+mock.get('/veilarboppfolging/api/oppfolging/me', ResponseUtils.delayed(DELAY, bruker()));
 
 mock.get('/veilarboppfolging/api/oppfolging', ResponseUtils.delayed(DELAY, oppfolging));
 
