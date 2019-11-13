@@ -23,6 +23,11 @@ export interface TextareaProps extends React.TextareaHTMLAttributes<HTMLTextArea
     feil?: SkjemaelementFeil;
 }
 
+/*
+    Customize nav-frontend-textarea because it doesn't fit our need
+    We need it to grow until a certain point and no further.
+ */
+
 class Textarea extends React.Component<TextareaProps> {
     private tekstomrade: HTMLTextAreaElement | null = null;
 
@@ -32,8 +37,9 @@ class Textarea extends React.Component<TextareaProps> {
     }
 
     onChange(event: React.SyntheticEvent<EventTarget>) {
+        // Set height dynamically on tekstomrade based on the content
         if (!!this.tekstomrade) {
-            this.tekstomrade.style.height = 'inherit';
+            this.tekstomrade.style.height = 'inherit'; // reset the height
             this.tekstomrade.style.height = this.tekstomrade.scrollHeight + 'px';
         }
 
@@ -41,8 +47,8 @@ class Textarea extends React.Component<TextareaProps> {
     }
 
     render() {
-        const { label, maxLength, textareaClass, id, feil, tellerTekst, ...other } = this.props;
-        const antallTegn = other.value.length;
+        const { label, maxLength, textareaClass, id, value, feil, tellerTekst, ...textAreaProps } = this.props;
+        const antallTegn = value.length;
 
         return (
             <div className="skjemaelement textarea__container">
@@ -51,12 +57,13 @@ class Textarea extends React.Component<TextareaProps> {
                 </label>
                 <div className="textarea--medMeta__wrapper">
                     <textarea
-                        {...other}
+                        {...textAreaProps}
                         className={inputCls(textareaClass, feil)}
                         ref={textarea => {
                             this.tekstomrade = textarea;
                         }}
                         id={id}
+                        value={value}
                         onChange={this.onChange}
                     />
                     {!!maxLength && <Teller antallTegn={antallTegn} maxLength={maxLength} tellerTekst={tellerTekst} />}
