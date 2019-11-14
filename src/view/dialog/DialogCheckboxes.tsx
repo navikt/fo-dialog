@@ -1,9 +1,8 @@
 import React from 'react';
 import { Checkbox } from 'nav-frontend-skjema';
-import { RouteComponentProps, withRouter } from 'react-router';
 import { visibleIfHoc } from '../../felleskomponenter/VisibleIfHoc';
 
-interface Props extends RouteComponentProps<{ dialogId?: string }> {
+interface Props {
     toggleFerdigBehandlet(ferdigBehandler: boolean): void;
     toggleVenterPaSvar(venterPaSvar: boolean): void;
     ferdigBehandlet: boolean;
@@ -28,6 +27,5 @@ export function DialogCheckboxes(props: Props) {
         </div>
     );
 }
-const DialogCheckboxesVisible = visibleIfHoc(DialogCheckboxes);
 
-export default withRouter(DialogCheckboxesVisible);
+export default visibleIfHoc(DialogCheckboxes);
