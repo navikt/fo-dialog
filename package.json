@@ -67,6 +67,7 @@
         "eject": "craco eject",
         "heroku-serve": "serve -s build -l $PORT",
         "heroku-postbuild": "cross-env REACT_APP_MOCK=true craco build",
+        "now": "cross-env REACT_APP_MOCK=true craco build",
         "lint": "echo \"Not implemented\""
     },
     "eslintConfig": {
