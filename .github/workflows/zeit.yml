@@ -1,8 +1,9 @@
 name: deploy website
-on: [pull_request]
+on: [push]
 jobs:
-  deploy:
+  deploy-test:
     runs-on: ubuntu-latest
+    if: github.ref != 'refs/heads/dev'
     steps:
       - uses: actions/checkout@v1
       - uses: amondnet/now-deployment@v1
@@ -10,3 +11,15 @@ jobs:
           github-token: ${{ secrets.GITHUB_TOKEN }}
           zeit-token: ${{ secrets.ZEIT_TOKEN }}
           zeit-team-id: team_YEkucA1Qk5h2mD65VqMNXWcN
+    
+  deploy:
+    runs-on: ubuntu-latest
+    if: github.ref == 'refs/heads/dev'
+    steps:
+      - uses: actions/checkout@v1
+      - uses: amondnet/now-deployment@v1
+        with:
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+          zeit-token: ${{ secrets.ZEIT_TOKEN }}
+          zeit-team-id: team_YEkucA1Qk5h2mD65VqMNXWcN
+          now-args: '--prod'
