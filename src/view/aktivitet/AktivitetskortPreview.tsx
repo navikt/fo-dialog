@@ -38,7 +38,7 @@ export function getInfoText(aktivitet: Aktivitet | ArenaAktivitet): string {
     const typeTekst = getTypeText(aktivitet.type);
     switch (aktivitet.type) {
         case AktivitetTypes.STILLING:
-            return `${aktivitet.tilDato ? formaterDate(aktivitet.tilDato) : typeTekst} / ${aktivitet.arbeidsgiver}`;
+            return `${typeTekst} / ${aktivitet.arbeidsgiver}`;
         case AktivitetTypes.MOTE:
             return `${typeTekst} / ${formaterDate(aktivitet.fraDato)} / ${getKlokkeslett(aktivitet.fraDato)}`;
         case AktivitetTypes.SOKEAVTALE:

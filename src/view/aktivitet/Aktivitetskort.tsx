@@ -2,13 +2,13 @@ import React from 'react';
 import { DialogData } from '../../utils/Typer';
 import { Aktivitet, ArenaAktivitet } from '../../utils/AktivitetTypes';
 
-import { Element, EtikettLiten, Systemtittel } from 'nav-frontend-typografi';
+import { Element, EtikettLiten, Systemtittel, Undertekst } from 'nav-frontend-typografi';
 import UseFetch from '../../utils/UseFetch';
 import Lenke from 'nav-frontend-lenker';
 import { HoyreChevron } from 'nav-frontend-chevron';
 import { AktivitetskortInfoBox } from './AktivitetskortInfoBox';
 import styles from './Aktivitetskort.module.less';
-import { getStatusText, getTypeText } from './TextUtils';
+import { getAktivitetIngress, getStatusText, getTypeText } from './TextUtils';
 
 interface PropTypes {
     dialog?: DialogData;
@@ -45,6 +45,7 @@ export function Aktivitetskort(props: PropTypes) {
                     <HoyreChevron />
                 </Lenke>
             </Element>
+            <Undertekst className={styles.undertekst}>{getAktivitetIngress(aktivitet.type)}</Undertekst>
             <AktivitetskortInfoBox aktivitet={aktivitet} />
         </div>
     );
