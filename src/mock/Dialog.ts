@@ -16,7 +16,7 @@ const dialoger: DialogData[] & JSONArray = [
         ferdigBehandlet: false,
         lestAvBrukerTidspunkt: '2018-02-28T12:48:56.081+01:00',
         erLestAvBruker: false,
-        aktivitetId: '142193',
+        aktivitetId: 'STILLING1',
         henvendelser: [
             {
                 id: '1',
@@ -170,8 +170,8 @@ const dialoger: DialogData[] & JSONArray = [
     },
     {
         id: '6',
-        overskrift: 'Fotballtrener',
-        sisteTekst: 'Tenker vi står over denne',
+        overskrift: 'Samtale om søkekrav',
+        sisteTekst: 'Hei. Se referat etter samtalen vår',
         sisteDato: '2018-02-01T11:52:20.615+01:00',
         opprettetDato: '2018-02-01T11:52:20.535+01:00',
         historisk: false,
@@ -180,7 +180,7 @@ const dialoger: DialogData[] & JSONArray = [
         ferdigBehandlet: true,
         lestAvBrukerTidspunkt: null,
         erLestAvBruker: false,
-        aktivitetId: null,
+        aktivitetId: 'SAMTALEREFERAT1',
         henvendelser: [
             {
                 id: '3',
@@ -189,7 +189,7 @@ const dialoger: DialogData[] & JSONArray = [
                 avsenderId: 'Z123456',
                 sendt: '2018-02-01T11:52:20.615+01:00',
                 lest: false,
-                tekst: 'Tenker vi står over denne'
+                tekst: 'Hei. Se referat etter samtalen vår'
             }
         ],
         egenskaper: []
@@ -197,7 +197,7 @@ const dialoger: DialogData[] & JSONArray = [
     {
         id: '7',
         overskrift: 'Kiropraktortime',
-        sisteTekst: 'Har hatt litt vondt i ryggen, ja. De youtubevideoene med sånn knekking virker ganske nice',
+        sisteTekst: 'Hei. Jeg var hos kiropraktor i går. Han sa at jeg må komme tilbake om en uke',
         sisteDato: '2018-02-01T11:52:20.615+01:00',
         opprettetDato: '2018-02-01T11:52:20.535+01:00',
         historisk: false,
@@ -206,7 +206,7 @@ const dialoger: DialogData[] & JSONArray = [
         ferdigBehandlet: true,
         lestAvBrukerTidspunkt: null,
         erLestAvBruker: false,
-        aktivitetId: '142235',
+        aktivitetId: 'BEHANDLING1',
         henvendelser: [
             {
                 id: '3',
@@ -215,7 +215,7 @@ const dialoger: DialogData[] & JSONArray = [
                 avsenderId: 'Z123456',
                 sendt: '2018-02-01T11:52:20.615+01:00',
                 lest: false,
-                tekst: 'Har hatt litt vondt i ryggen, ja. De youtubevideoene med sånn knekking virker ganske nice'
+                tekst: 'Hei. Jeg var hos kiropraktor i går. Han sa at jeg må komme tilbake om en uke'
             }
         ],
         egenskaper: []
@@ -223,7 +223,8 @@ const dialoger: DialogData[] & JSONArray = [
     {
         id: '11',
         overskrift: 'Fiskeoppdrett',
-        sisteTekst: 'Dette er kanskje noe du kunne vurdert?',
+        sisteTekst:
+            'Hei. Jeg vil at du skal prøve å søke minst 5 stillinger i uken. Vi møtes igjen om en uke for å prate om hvordan det har gått. ',
         sisteDato: '2018-02-01T11:52:20.615+01:00',
         opprettetDato: '2018-02-01T11:52:20.535+01:00',
         historisk: false,
@@ -232,7 +233,7 @@ const dialoger: DialogData[] & JSONArray = [
         ferdigBehandlet: true,
         lestAvBrukerTidspunkt: null,
         erLestAvBruker: false,
-        aktivitetId: '142338',
+        aktivitetId: 'SOKEAVTALE2',
         henvendelser: [
             {
                 id: '3',
@@ -241,7 +242,8 @@ const dialoger: DialogData[] & JSONArray = [
                 avsenderId: 'Z123456',
                 sendt: '2018-02-01T11:52:20.615+01:00',
                 lest: false,
-                tekst: 'Dette er kanskje noe du kunne vurdert?'
+                tekst:
+                    'Hei. Jeg vil at du skal prøve å søke minst 5 stillinger i uken. Vi møtes igjen om en uke for å prate om hvordan det har gått. '
             }
         ],
         egenskaper: []
@@ -277,7 +279,7 @@ export function opprettEllerOppdaterDialog(update: NyDialogMeldingData): DialogD
         oldDialog.sisteDato = nyHenvendelse.sendt;
         oldDialog.henvendelser.push(nyHenvendelse);
 
-        if (!bruker.erVeileder) {
+        if (!bruker().erVeileder) {
             oldDialog.venterPaSvar = false;
         }
 

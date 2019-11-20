@@ -1,5 +1,6 @@
 import { PeriodeData } from '../utils/Typer';
 import { JSONArray } from 'yet-another-fetch-mock';
+import { erKRRBruker, erManuellBruker, erPrivatBruker, ingenOppfPerioder } from './demo/sessionstorage';
 
 const oppfPerioder: PeriodeData[] & JSONArray = [
     {
@@ -20,15 +21,15 @@ const oppfPerioder: PeriodeData[] & JSONArray = [
 const oppfolgingData = {
     fnr: null,
     veilederId: '101010',
-    reservasjonKRR: false,
-    manuell: false,
-    underOppfolging: true, //eller false
+    reservasjonKRR: erKRRBruker(),
+    manuell: erManuellBruker(),
+    underOppfolging: !erPrivatBruker(),
     underKvp: false,
     oppfolgingUtgang: null,
     gjeldendeEskaleringsvarsel: null,
     kanStarteOppfolging: false,
     avslutningStatus: null,
-    oppfolgingsPerioder: oppfPerioder,
+    oppfolgingsPerioder: ingenOppfPerioder() ? [] : oppfPerioder,
     harSkriveTilgang: true,
     kanReaktiveres: false,
     inaktiveringsdato: '2018-08-31T10:46:10.971+01:00'

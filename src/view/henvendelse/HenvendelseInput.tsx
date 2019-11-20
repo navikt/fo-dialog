@@ -1,5 +1,5 @@
 import React from 'react';
-import Textarea from '../../felleskomponenter/nav-frontend-textarea';
+import Textarea from '../../felleskomponenter/textarea/Textarea';
 import { Hovedknapp } from 'nav-frontend-knapper';
 import { FieldState } from '../../utils/UseFieldState';
 
@@ -8,23 +8,19 @@ interface Props {
     submitting: boolean;
 }
 
-function defaultTellerTekst(antallTegn: number, maxLength: number): React.ReactNode {
-    const difference = antallTegn - maxLength;
-    const remainingLetters = maxLength - antallTegn;
+function defaultTellerTekst(antallTegn: number, maxLength: number) {
+    const difference = maxLength - antallTegn;
 
-    if (remainingLetters > 1000) {
+    if (difference > 1000) {
         return null;
     }
 
-    const ariaAttrs: any = {};
-    if (antallTegn > maxLength) {
-        ariaAttrs['aria-live'] = 'assertive';
-        return <span {...ariaAttrs}>Du har {difference} tegn for mye</span>;
-    }
-    if (remainingLetters === 5 || remainingLetters === 10 || remainingLetters === 0) {
-        ariaAttrs['aria-live'] = 'polite';
-    }
-    return <span {...ariaAttrs}>Du har {remainingLetters} tegn igjen</span>;
+    return (
+        <span aria-live="polite">
+            {difference >= 0 && `Du har ${difference} tegn igjen`}
+            {difference < 0 && `Du har ${Math.abs(difference)} tegn for mye`}
+        </span>
+    );
 }
 
 function HenvendelseInput(props: Props) {
@@ -33,7 +29,7 @@ function HenvendelseInput(props: Props) {
             <Textarea
                 label="Skriv en melding om arbeid og oppfølging"
                 placeholder="Skriv en melding om arbeid og oppfølging"
-                textareaClass="meldingsfelt"
+                textareaClass="autosizing-textarea"
                 id="meldingIn"
                 name="NyMelding"
                 {...props.melding.input}
