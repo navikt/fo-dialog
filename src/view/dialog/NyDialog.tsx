@@ -5,7 +5,7 @@ import UseFieldState from '../../utils/UseFieldState';
 import { DialogData, NyDialogMeldingData } from '../../utils/Typer';
 import { fetchData } from '../../utils/Fetch';
 import { useDialogContext, useUserInfoContext } from '../Provider';
-import { RouteComponentProps, withRouter } from 'react-router';
+import { useHistory } from 'react-router';
 import HenvendelseInput from '../henvendelse/HenvendelseInput';
 import DialogCheckboxesVisible from './DialogCheckboxes';
 import Valideringsboks from './Valideringsboks';
@@ -16,7 +16,7 @@ import { Link } from 'react-router-dom';
 
 import './NyDialog.less';
 
-interface Props extends RouteComponentProps<{}> {}
+const AlertStripeFeilVisible = visibleIfHoc(AlertStripeFeil);
 
 function validerTema(tema: string): string | null {
     if (tema.trim().length === 0) {
@@ -34,7 +34,7 @@ function validerMelding(melding: string): string | null {
     }
 }
 
-function NyDialog(props: Props) {
+function NyDialog() {
     const tema = UseFieldState('', validerTema);
     const melding = UseFieldState('', validerMelding);
     const [submitfeil, setSubmitfeil] = useState<boolean>(false);
@@ -42,6 +42,7 @@ function NyDialog(props: Props) {
     const [submitting, setSubmitting] = useState<boolean>(false);
     const dialoger = useDialogContext();
     const bruker = useUserInfoContext();
+    const history = useHistory();
 
     const [ferdigBehandlet, setFerdigBehandlet] = useState(true);
     const [venterPaSvar, setVenterPaSvar] = useState(false);
@@ -81,7 +82,7 @@ function NyDialog(props: Props) {
                 .then(
                     function(dialog: DialogData) {
                         dialoger.rerun();
-                        props.history.push('/' + dialog.id);
+                        history.push('/' + dialog.id);
                     },
                     function(error) {
                         console.log('Failed posting the new dialog!', error);
@@ -143,6 +144,4 @@ function NyDialog(props: Props) {
     );
 }
 
-const AlertStripeFeilVisible = visibleIfHoc(AlertStripeFeil);
-
-export default withRouter(NyDialog);
+export default NyDialog;

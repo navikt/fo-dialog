@@ -14,6 +14,7 @@ import { DialogPreview } from '../view/dialogoversikt/DialogPreview';
 import { Checkbox } from 'nav-frontend-skjema';
 import { FetchResult, Status } from '@nutgaard/use-fetch';
 import '../utils/SetupEnzyme';
+import Routes from '../view/Routes';
 
 const userInfo: Bruker = { id: '010101', erVeileder: true, erBruker: false };
 const oppfPerioder: PeriodeData[] = [];
@@ -208,8 +209,8 @@ describe('<Dialog/>', () => {
         jest.spyOn(AppContext, 'useOppfolgingContext').mockImplementation(() => oppfolgingData);
         Element.prototype.scrollIntoView = () => {};
         const wrapper = mount(
-            <MemoryRouter>
-                <Dialog {...lagRouterProps('1')} />
+            <MemoryRouter initialEntries={['/1']}>
+                <Routes />
             </MemoryRouter>
         );
         expect(wrapper.find(DialogInputBox).exists()).toBeFalsy();
@@ -230,8 +231,8 @@ describe('<Dialog/>', () => {
         jest.spyOn(AppContext, 'useOppfolgingContext').mockImplementation(() => oppfolgingData);
         Element.prototype.scrollIntoView = () => {};
         const wrapper = mount(
-            <MemoryRouter>
-                <Dialog {...lagRouterProps('1')} />
+            <MemoryRouter initialEntries={['/1']}>
+                <Routes />
             </MemoryRouter>
         );
         expect(wrapper.find(DialogHeader).exists()).toBeTruthy();
@@ -239,11 +240,3 @@ describe('<Dialog/>', () => {
         expect(wrapper.find(HenvendelseList).exists()).toBeTruthy();
     });
 });
-
-function lagRouterProps(dialogId: string): RouteComponentProps<{ dialogId?: string }> {
-    return {
-        history: undefined as any,
-        location: undefined as any,
-        match: { params: { dialogId } } as any
-    };
-}

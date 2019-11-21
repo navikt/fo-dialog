@@ -1,17 +1,14 @@
 import React from 'react';
 import { useDialogContext } from '../Provider';
-import { matchPath, RouteComponentProps, withRouter } from 'react-router';
+import { useParams } from 'react-router';
 import { Aktivitetskort } from './Aktivitetskort';
 import { hasData } from '@nutgaard/use-fetch';
 import styles from './AktivitetContainer.module.less';
-interface Props extends RouteComponentProps<{ dialogId?: string }> {}
 
-function AktivitetContainer(props: Props) {
+function AktivitetContainer() {
     const dialoger = useDialogContext();
     const dialogData = hasData(dialoger) ? dialoger.data : [];
-    const match = matchPath<{ dialogId: string }>(props.location.pathname, '/:dialogId');
-    const dialogId = match ? match.params.dialogId : undefined;
-
+    const { dialogId } = useParams();
     const valgtDialog = dialogData.find(dialog => dialog.id === dialogId);
 
     return (
@@ -19,4 +16,4 @@ function AktivitetContainer(props: Props) {
     );
 }
 
-export default withRouter(AktivitetContainer);
+export default AktivitetContainer;
