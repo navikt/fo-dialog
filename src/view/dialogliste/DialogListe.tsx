@@ -3,30 +3,24 @@ import { hasData } from '@nutgaard/use-fetch';
 import DialogPreview from './DialogPreview';
 import { DialogData } from '../../utils/Typer';
 import DialogOverviewHeader from './NyDialogLink';
-import { dataOrUndefined, useDialogContext, useOppfolgingContext } from '../Provider';
+import { useDialogContext } from '../Provider';
 import { useParams } from 'react-router';
 import classNames from 'classnames';
 import styles from './DialogListe.module.less';
-import { kansendeMelding } from '../dialog/Dialog';
+import useKansendeMelding from '../../utils/UseKanSendeMelding';
 
 export function DialogListe() {
-    const oppfolgingContext = useOppfolgingContext();
+    const kanSendeMelding = useKansendeMelding();
     const dialoger = useDialogContext();
-    const oppfolgingData = dataOrUndefined(oppfolgingContext);
     const dialogData = hasData(dialoger) ? dialoger.data : [];
     const { dialogId } = useParams();
 
-    const erUnderOppfolging = oppfolgingData!.underOppfolging;
-    const harOppfolgingsPerioder = oppfolgingData!.oppfolgingsPerioder.length > 0;
     const visningCls = dialogId ? classNames(styles.dialogOversikt, styles.dialogValgt) : styles.dialogOversikt;
 
-    if (!erUnderOppfolging && !harOppfolgingsPerioder) {
-        return null;
-    }
     const sortedOppfolgingsData = dialogData.sort((a, b) => sortDialoger(a, b));
     return (
         <div className={visningCls}>
-            <DialogOverviewHeader visible={kansendeMelding(oppfolgingData)} />
+            <DialogOverviewHeader visible={kanSendeMelding} />
             <div className={styles.listeContainer}>
                 {sortedOppfolgingsData.map(dialog => (
                     <DialogPreview dialog={dialog} key={dialog.id} valgtDialogId={dialogId} />

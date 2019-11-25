@@ -2,26 +2,15 @@ import React, { useEffect } from 'react';
 import { hasData } from '@nutgaard/use-fetch';
 import { HenvendelseList } from '../henvendelse/HenvendelseList';
 import { DialogHeader } from './DialogHeader';
-import { dataOrUndefined, useDialogContext, useOppfolgingContext } from '../Provider';
+import { useDialogContext } from '../Provider';
 import { useParams } from 'react-router';
 import DialogInputBoxVisible from './DialogInputBox';
+import useKansendeMelding from '../../utils/UseKanSendeMelding';
 
 import './Dialog.less';
-import { OppfolgingData } from '../../utils/Typer';
-
-export function kansendeMelding(oppfolgingData: OppfolgingData | undefined): boolean {
-    return (
-        !!oppfolgingData &&
-        oppfolgingData.underOppfolging &&
-        !oppfolgingData.reservasjonKRR &&
-        oppfolgingData.kanVarsles &&
-        !oppfolgingData.manuell
-    );
-}
 
 export function Dialog() {
-    const oppfolgingContext = useOppfolgingContext();
-    const oppfolgingData = dataOrUndefined(oppfolgingContext);
+    const kanSendeMelding = useKansendeMelding();
     const dialoger = useDialogContext();
     const dialogData = hasData(dialoger) ? dialoger.data : [];
     const { dialogId } = useParams();
@@ -46,11 +35,7 @@ export function Dialog() {
         <div className="dialog">
             <DialogHeader dialog={valgtDialog} />
             <HenvendelseList dialogData={valgtDialog} />
-            <DialogInputBoxVisible
-                key={valgtDialog.id}
-                dialog={valgtDialog}
-                visible={kansendeMelding(oppfolgingData)}
-            />
+            <DialogInputBoxVisible key={valgtDialog.id} dialog={valgtDialog} visible={kanSendeMelding} />
         </div>
     );
 }
