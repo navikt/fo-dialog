@@ -3,13 +3,11 @@ import { hasData } from '@nutgaard/use-fetch';
 import { HenvendelseList } from '../henvendelse/HenvendelseList';
 import { DialogHeader } from './DialogHeader';
 import { dataOrUndefined, useDialogContext, useOppfolgingContext } from '../Provider';
-import { RouteComponentProps, withRouter } from 'react-router';
+import { useParams } from 'react-router';
 import DialogInputBoxVisible from './DialogInputBox';
 
 import './Dialog.less';
 import { OppfolgingData } from '../../utils/Typer';
-
-interface Props extends RouteComponentProps<{ dialogId?: string }> {}
 
 export function kansendeMelding(oppfolgingData: OppfolgingData | undefined): boolean {
     return (
@@ -21,12 +19,12 @@ export function kansendeMelding(oppfolgingData: OppfolgingData | undefined): boo
     );
 }
 
-export function Dialog(props: Props) {
+export function Dialog() {
     const oppfolgingContext = useOppfolgingContext();
     const oppfolgingData = dataOrUndefined(oppfolgingContext);
     const dialoger = useDialogContext();
     const dialogData = hasData(dialoger) ? dialoger.data : [];
-    const dialogId = props.match.params.dialogId;
+    const { dialogId } = useParams();
     const valgtDialog = dialogData.find(dialog => dialog.id === dialogId);
 
     useEffect(() => {
@@ -57,4 +55,4 @@ export function Dialog(props: Props) {
     );
 }
 
-export default withRouter(Dialog);
+export default Dialog;

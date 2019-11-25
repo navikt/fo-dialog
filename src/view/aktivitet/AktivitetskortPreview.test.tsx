@@ -6,21 +6,10 @@ import { mockFetch } from '../../utils/TestUtils';
 import '../../utils/SetupEnzyme';
 
 describe('getInfoText', () => {
-    it('skal returnere korrekt tekst for stillingsaktivitet når frist er satt', () => {
+    it('skal returnere korrekt tekst for stillingsaktivitet', () => {
         const aktivitet: any = {
             type: AktivitetTypes.STILLING,
             tilDato: '2019-10-24T15:44:21.993+02:00',
-            arbeidsgiver: 'Testesen'
-        };
-
-        const text = getInfoText(aktivitet);
-        expect(text).toEqual('24.10.2019 / Testesen');
-    });
-
-    it('skal returnere korrekt tekst for stillingsaktivitet når frist ikke er satt', () => {
-        const aktivitet: any = {
-            type: AktivitetTypes.STILLING,
-            tilDato: null,
             arbeidsgiver: 'Testesen'
         };
 

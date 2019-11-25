@@ -4,24 +4,21 @@ import DialogPreview from './DialogPreview';
 import { DialogData } from '../../utils/Typer';
 import DialogOverviewHeader from './DialogOverviewHeader';
 import { dataOrUndefined, useDialogContext, useOppfolgingContext } from '../Provider';
-
-import { matchPath, RouteComponentProps, withRouter } from 'react-router';
+import { useParams } from 'react-router';
 import classNames from 'classnames';
 import styles from './DialogOversikt.module.less';
 import { kansendeMelding } from '../dialog/Dialog';
 
-interface Props extends RouteComponentProps<{ dialogId?: string }> {}
-
-export function DialogOversikt(props: Props) {
+export function DialogOversikt() {
     const oppfolgingContext = useOppfolgingContext();
     const dialoger = useDialogContext();
     const oppfolgingData = dataOrUndefined(oppfolgingContext);
     const dialogData = hasData(dialoger) ? dialoger.data : [];
-    const valgtDialogId = matchPath<{ dialogId: string }>(props.location.pathname, '/:dialogId');
-    const dialogId = valgtDialogId ? valgtDialogId.params.dialogId : null;
+    const { dialogId } = useParams();
+
     const erUnderOppfolging = oppfolgingData!.underOppfolging;
     const harOppfolgingsPerioder = oppfolgingData!.oppfolgingsPerioder.length > 0;
-    const visningCls = valgtDialogId ? classNames(styles.dialogOversikt, styles.dialogValgt) : styles.dialogOversikt;
+    const visningCls = dialogId ? classNames(styles.dialogOversikt, styles.dialogValgt) : styles.dialogOversikt;
 
     if (!erUnderOppfolging && !harOppfolgingsPerioder) {
         return null;
@@ -40,9 +37,9 @@ export function DialogOversikt(props: Props) {
 }
 
 function sortDialoger(a: DialogData, b: DialogData): number {
-    var adato = a.sisteDato === null ? '' : '' + a.sisteDato;
-    var bdato = b.sisteDato === null ? '' : '' + b.sisteDato;
+    const adato = a.sisteDato === null ? '' : '' + a.sisteDato;
+    const bdato = b.sisteDato === null ? '' : '' + b.sisteDato;
     return adato > bdato ? -1 : adato === bdato ? 0 : 1;
 }
 
-export default withRouter(DialogOversikt);
+export default DialogOversikt;

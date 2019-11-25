@@ -1,23 +1,21 @@
 import React from 'react';
-import { mount } from 'enzyme';
+import { mount, shallow } from 'enzyme';
 import { MemoryRouter, RouteComponentProps } from 'react-router';
 import * as AppContext from '../view/Provider';
 import { Dialog } from '../view/dialog/Dialog';
-import { DialogData, OppfolgingData, PeriodeData } from '../utils/Typer';
+import { Bruker, DialogData, OppfolgingData, PeriodeData } from '../utils/Typer';
 import { HenvendelseList } from '../view/henvendelse/HenvendelseList';
 import { DialogInputBox } from '../view/dialog/DialogInputBox';
 import { DialogHeader } from '../view/dialog/DialogHeader';
 import DialogOversikt from '../view/dialogoversikt/DialogOversikt';
 import { DialogOverviewHeader } from '../view/dialogoversikt/DialogOverviewHeader';
-import { DialogPreview } from '../view/dialogoversikt/DialogPreview';
+import DialogPreview from '../view/dialogoversikt/DialogPreview';
 import { Checkbox } from 'nav-frontend-skjema';
 import { FetchResult, Status } from '@nutgaard/use-fetch';
 import '../utils/SetupEnzyme';
-const bruker = {
-    erVeileder: true,
-    erBruker: false,
-    id: 'kake'
-};
+import Routes from '../view/Routes';
+
+const userInfo: Bruker = { id: '010101', erVeileder: true, erBruker: false };
 const oppfPerioder: PeriodeData[] = [];
 const oppfolgingData: OppfolgingData = {
     fnr: null,
@@ -164,8 +162,8 @@ describe('<Dialog/>', () => {
         jest.spyOn(AppContext, 'useOppfolgingContext').mockImplementation(() => useFetchOppfolging);
         Element.prototype.scrollIntoView = () => {};
         const wrapper = mount(
-            <MemoryRouter>
-                <Dialog {...lagRouterProps('1')} />
+            <MemoryRouter initialEntries={['/1']}>
+                <Routes />
             </MemoryRouter>
         );
         expect(wrapper.find(DialogInputBox).exists()).toBeFalsy();
@@ -184,11 +182,11 @@ describe('<Dialog/>', () => {
             }
         ];
         jest.spyOn(AppContext, 'useOppfolgingContext').mockImplementation(() => useFetchOppfolging);
-        jest.spyOn(AppContext, 'useUserInfoContext').mockImplementation(() => bruker);
+        jest.spyOn(AppContext, 'useUserInfoContext').mockImplementation(() => userInfo);
         Element.prototype.scrollIntoView = () => {};
         const wrapper = mount(
-            <MemoryRouter>
-                <Dialog {...lagRouterProps('1')} />
+            <MemoryRouter initialEntries={['/1']}>
+                <Routes />
             </MemoryRouter>
         );
         expect(wrapper.find(DialogHeader).exists()).toBeTruthy();
@@ -196,11 +194,3 @@ describe('<Dialog/>', () => {
         expect(wrapper.find(HenvendelseList).exists()).toBeTruthy();
     });
 });
-
-function lagRouterProps(dialogId: string): RouteComponentProps<{ dialogId?: string }> {
-    return {
-        history: undefined as any,
-        location: undefined as any,
-        match: { params: { dialogId } } as any
-    };
-}

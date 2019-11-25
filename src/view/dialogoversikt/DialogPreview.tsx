@@ -8,7 +8,6 @@ import { ReactComponent as DialogIkon } from './snakkeboble.svg';
 import { ReactComponent as AktivitetsIkon } from './aktivitet-dialog-lest.svg';
 import WrapInReactLink from '../../felleskomponenter/WrapInReactLink';
 import classNames from 'classnames';
-import { RouteComponentProps, withRouter } from 'react-router';
 import UseFetch from '../../utils/UseFetch';
 import { Aktivitet } from '../../utils/AktivitetTypes';
 
@@ -17,9 +16,9 @@ import './DialogPreview.less';
 interface IkonProps {
     dialog: DialogData;
 }
-interface Props extends RouteComponentProps<{ dialogId?: string }> {
+interface Props {
     dialog: DialogData;
-    valgtDialogId: string | null;
+    valgtDialogId?: string;
 }
 
 function DialogPreviewIkon(props: IkonProps) {
@@ -39,7 +38,7 @@ function DialogPreviewIkon(props: IkonProps) {
     );
 }
 
-export function DialogPreview(props: Props) {
+function DialogPreview(props: Props) {
     const { dialog, valgtDialogId } = props;
     const { id, sisteDato, aktivitetId, lest, overskrift, sisteTekst } = dialog;
     const datoString = !!sisteDato ? formaterDate(sisteDato) : '';
@@ -62,4 +61,4 @@ export function DialogPreview(props: Props) {
     );
 }
 
-export default withRouter(DialogPreview);
+export default DialogPreview;
