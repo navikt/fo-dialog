@@ -2,10 +2,10 @@ import React from 'react';
 import { visibleIfHoc } from '../../felleskomponenter/VisibleIfHoc';
 import { Link } from 'react-router-dom';
 import { ReactComponent as PlussIkon } from './pluss.svg';
-import styles from './DialogOverviewHeader.module.less';
+import styles from './NyDialogLink.module.less';
 import classNames from 'classnames';
 
-export function DialogOverviewHeader() {
+export function NyDialogLink() {
     const knappCls = classNames(styles.knapp, 'knapp--flat', 'knapp');
     return (
         <div className={styles.header}>
@@ -19,4 +19,4 @@ export function DialogOverviewHeader() {
     );
 }
 
-export default visibleIfHoc(DialogOverviewHeader);
+export default visibleIfHoc(NyDialogLink);

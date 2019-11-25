@@ -2,14 +2,14 @@ import React from 'react';
 import { hasData } from '@nutgaard/use-fetch';
 import DialogPreview from './DialogPreview';
 import { DialogData } from '../../utils/Typer';
-import DialogOverviewHeader from './DialogOverviewHeader';
+import DialogOverviewHeader from './NyDialogLink';
 import { dataOrUndefined, useDialogContext, useOppfolgingContext } from '../Provider';
 import { useParams } from 'react-router';
 import classNames from 'classnames';
-import styles from './DialogOversikt.module.less';
+import styles from './DialogListe.module.less';
 import { kansendeMelding } from '../dialog/Dialog';
 
-export function DialogOversikt() {
+export function DialogListe() {
     const oppfolgingContext = useOppfolgingContext();
     const dialoger = useDialogContext();
     const oppfolgingData = dataOrUndefined(oppfolgingContext);
@@ -42,4 +42,4 @@ function sortDialoger(a: DialogData, b: DialogData): number {
     return adato > bdato ? -1 : adato === bdato ? 0 : 1;
 }
 
-export default DialogOversikt;
+export default DialogListe;

@@ -7,9 +7,9 @@ import { Bruker, DialogData, OppfolgingData, PeriodeData } from '../utils/Typer'
 import { HenvendelseList } from '../view/henvendelse/HenvendelseList';
 import { DialogInputBox } from '../view/dialog/DialogInputBox';
 import { DialogHeader } from '../view/dialog/DialogHeader';
-import DialogOversikt from '../view/dialogoversikt/DialogOversikt';
-import { DialogOverviewHeader } from '../view/dialogoversikt/DialogOverviewHeader';
-import DialogPreview from '../view/dialogoversikt/DialogPreview';
+import DialogListe from '../view/dialogliste/DialogListe';
+import { NyDialogLink } from '../view/dialogliste/NyDialogLink';
+import DialogPreview from '../view/dialogliste/DialogPreview';
 import { Checkbox } from 'nav-frontend-skjema';
 import { FetchResult, Status } from '@nutgaard/use-fetch';
 import '../utils/SetupEnzyme';
@@ -95,10 +95,10 @@ describe('<DialogOversikt/>', () => {
         jest.spyOn(AppContext, 'useOppfolgingContext').mockImplementation(() => useFetchOppfolging);
         const wrapper = mount(
             <MemoryRouter>
-                <DialogOversikt />
+                <DialogListe />
             </MemoryRouter>
         );
-        expect(wrapper.find(DialogOverviewHeader).exists()).toBeFalsy();
+        expect(wrapper.find(NyDialogLink).exists()).toBeFalsy();
         expect(wrapper.find(Dialog).exists()).toBeFalsy();
         expect(wrapper.find(DialogPreview).exists()).toBeFalsy();
     });
@@ -117,10 +117,10 @@ describe('<DialogOversikt/>', () => {
         jest.spyOn(AppContext, 'useDialogContext').mockImplementation(() => useFetchDialoger);
         const wrapper = mount(
             <MemoryRouter>
-                <DialogOversikt />
+                <DialogListe />
             </MemoryRouter>
         );
-        expect(wrapper.find(DialogOverviewHeader).exists()).toBeFalsy();
+        expect(wrapper.find(NyDialogLink).exists()).toBeFalsy();
         expect(wrapper.find(DialogPreview).exists()).toBeTruthy();
     });
     test('Bruker under oppf, elementer synes', () => {
@@ -138,10 +138,10 @@ describe('<DialogOversikt/>', () => {
         jest.spyOn(AppContext, 'useDialogContext').mockImplementation(() => useFetchDialoger);
         const wrapper = mount(
             <MemoryRouter>
-                <DialogOversikt />
+                <DialogListe />
             </MemoryRouter>
         );
-        expect(wrapper.find(DialogOverviewHeader).exists()).toBeTruthy();
+        expect(wrapper.find(NyDialogLink).exists()).toBeTruthy();
         expect(wrapper.find(DialogPreview).exists()).toBeTruthy();
     });
 });
