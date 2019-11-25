@@ -1,6 +1,7 @@
 import React from 'react';
 import { AlertStripeAdvarsel } from 'nav-frontend-alertstriper';
 import { Hovedknapp } from 'nav-frontend-knapper';
+import { useOppfolgingContext } from '../Provider';
 
 interface Props {
     erVeileder: boolean;
@@ -11,11 +12,14 @@ export default function ReservertKrr(props: Props) {
 }
 
 function BrukerKrr() {
+    const opppfolging = useOppfolgingContext();
+
     return (
         <AlertStripeAdvarsel>
-            For å ta i bruk den digitale aktivitetsplanen, må du fjerne reservasjonen din mot digital kommunikasjon.
+            For å ta i bruk den digitale dialogen med din veileder, må du fjerne reservasjonen din mot digital
+            kommunikasjon.
             <a href="https://www.norge.no/nn/reservasjon">Gå til Norge.no for å fjerne reservasjonen</a>
-            <Hovedknapp onClick={window.location.reload}>Jeg har fjerent reservasjonen</Hovedknapp>
+            <Hovedknapp onClick={opppfolging.rerun}>Jeg har fjerent reservasjonen</Hovedknapp>
         </AlertStripeAdvarsel>
     );
 }

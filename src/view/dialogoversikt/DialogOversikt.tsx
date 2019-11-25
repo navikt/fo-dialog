@@ -3,17 +3,19 @@ import { hasData } from '@nutgaard/use-fetch';
 import DialogPreview from './DialogPreview';
 import { DialogData } from '../../utils/Typer';
 import DialogOverviewHeader from './DialogOverviewHeader';
-import { useDialogContext, useOppfolgingContext } from '../Provider';
+import { dataOrUndefined, useDialogContext, useOppfolgingContext } from '../Provider';
 
 import { matchPath, RouteComponentProps, withRouter } from 'react-router';
 import classNames from 'classnames';
 import styles from './DialogOversikt.module.less';
+import { kansendeMelding } from '../dialog/Dialog';
 
 interface Props extends RouteComponentProps<{ dialogId?: string }> {}
 
 export function DialogOversikt(props: Props) {
-    const oppfolgingData = useOppfolgingContext();
+    const oppfolgingContext = useOppfolgingContext();
     const dialoger = useDialogContext();
+    const oppfolgingData = dataOrUndefined(oppfolgingContext);
     const dialogData = hasData(dialoger) ? dialoger.data : [];
     const valgtDialogId = matchPath<{ dialogId: string }>(props.location.pathname, '/:dialogId');
     const dialogId = valgtDialogId ? valgtDialogId.params.dialogId : null;
@@ -27,7 +29,7 @@ export function DialogOversikt(props: Props) {
     const sortedOppfolgingsData = dialogData.sort((a, b) => sortDialoger(a, b));
     return (
         <div className={visningCls}>
-            <DialogOverviewHeader visible={oppfolgingData!.underOppfolging} />
+            <DialogOverviewHeader visible={kansendeMelding(oppfolgingData)} />
             <div className={styles.listeContainer}>
                 {sortedOppfolgingsData.map(dialog => (
                     <DialogPreview dialog={dialog} key={dialog.id} valgtDialogId={dialogId} />

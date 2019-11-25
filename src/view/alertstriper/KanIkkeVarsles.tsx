@@ -6,9 +6,9 @@ interface Props {
 }
 
 export default function KanIkkeVarsles(props: Props) {
-    const veilederText = 'Bruker kan ikke få varsling om dialoger';
+    const veilederText = 'Bruker kan ikke få varsling om dialoger, For å endre dette må brukeren logge inn på Ditt NAV';
     const brukerText =
-        'Du kan ikke varsles om meldinger dette er en feil venligst ring teknisk bukerstøtte tlf: 55 55 33 39, tastevalg 3.';
+        'Du kan ikke varsles om meldinger.\nDette er en feil, vennligst ring teknisk bukerstøtte tlf: 55 55 33 39, tastevalg 3.';
 
     return <AlertStripeAdvarsel>{props.erVeileder ? veilederText : brukerText}</AlertStripeAdvarsel>;
 }

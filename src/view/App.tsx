@@ -1,6 +1,6 @@
 import React from 'react';
 import DialogOversikt from './dialogoversikt/DialogOversikt';
-import AlertStripeContainer from './alertstirper/AlertStripeContainer';
+import AlertStripeContainer from './alertstriper/AlertStripeContainer';
 import { AppBanner } from './banner/AppBanner';
 import AktivitetContainer from './aktivitet/AktivitetContainer';
 import Routes from './Routes';

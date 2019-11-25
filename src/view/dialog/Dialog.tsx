@@ -2,7 +2,7 @@ import React, { useEffect } from 'react';
 import { hasData } from '@nutgaard/use-fetch';
 import { HenvendelseList } from '../henvendelse/HenvendelseList';
 import { DialogHeader } from './DialogHeader';
-import { useDialogContext, useOppfolgingContext } from '../Provider';
+import { dataOrUndefined, useDialogContext, useOppfolgingContext } from '../Provider';
 import { RouteComponentProps, withRouter } from 'react-router';
 import DialogInputBoxVisible from './DialogInputBox';
 
@@ -11,17 +11,19 @@ import { OppfolgingData } from '../../utils/Typer';
 
 interface Props extends RouteComponentProps<{ dialogId?: string }> {}
 
-function kansendeMelding(oppfolgingData: OppfolgingData | null): boolean {
+export function kansendeMelding(oppfolgingData: OppfolgingData | undefined): boolean {
     return (
         !!oppfolgingData &&
         oppfolgingData.underOppfolging &&
         !oppfolgingData.reservasjonKRR &&
-        oppfolgingData.kanVarsles
+        oppfolgingData.kanVarsles &&
+        !oppfolgingData.manuell
     );
 }
 
 export function Dialog(props: Props) {
-    const oppfolgingData = useOppfolgingContext();
+    const oppfolgingContext = useOppfolgingContext();
+    const oppfolgingData = dataOrUndefined(oppfolgingContext);
     const dialoger = useDialogContext();
     const dialogData = hasData(dialoger) ? dialoger.data : [];
     const dialogId = props.match.params.dialogId;

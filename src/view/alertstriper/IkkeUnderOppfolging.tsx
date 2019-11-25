@@ -1,11 +1,11 @@
 import React from 'react';
 import { AlertStripeAdvarsel } from 'nav-frontend-alertstriper';
 
-interface ErVeileder {
+interface Props {
     erVeileder: boolean;
 }
 
-export default function IkkeUnderOppfolging(props: ErVeileder) {
+export default function IkkeUnderOppfolging(props: Props) {
     return props.erVeileder ? <HarPerioderVeileder /> : <HarPerioderBruker />;
 }
 
@@ -20,5 +20,5 @@ function HarPerioderBruker() {
 }
 
 function HarPerioderVeileder() {
-    return <AlertStripeAdvarsel>Denne brukeren er ikke under oppføllging.</AlertStripeAdvarsel>;
+    return <AlertStripeAdvarsel>Denne brukeren er ikke under oppfølging.</AlertStripeAdvarsel>;
 }

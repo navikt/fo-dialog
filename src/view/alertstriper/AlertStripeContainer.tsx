@@ -1,12 +1,14 @@
 import React from 'react';
-import { useOppfolgingContext, useUserInfoContext } from '../Provider';
+import { dataOrUndefined, useOppfolgingContext, useUserInfoContext } from '../Provider';
 import IkkeUnderOppfolging from './IkkeUnderOppfolging';
 import ReservertKrr from './ReservertKrr';
 import KanIkkeVarsles from './KanIkkeVarsles';
 import AldriUnderOppfolging from './AldriUnderOppfolging';
+import MannuelBruker from './Manuell';
 
 export default function AlertStripeContainer() {
-    const oppfolgingData = useOppfolgingContext();
+    const oppfolgingDataContext = useOppfolgingContext();
+    const oppfolgingData = dataOrUndefined(oppfolgingDataContext);
     const UserInfo = useUserInfoContext();
 
     if (!oppfolgingData || !UserInfo) {
@@ -18,6 +20,7 @@ export default function AlertStripeContainer() {
     const harOppfolgingsPerioder = oppfolgingData.oppfolgingsPerioder.length > 0;
     const erReservertKrr = oppfolgingData.reservasjonKRR;
     const kanVarsles = oppfolgingData.kanVarsles;
+    const manuellBruker = oppfolgingData.manuell;
 
     if (!erUnderOppfolging && !harOppfolgingsPerioder) {
         return <AldriUnderOppfolging erVeileder={erVeileder} />;
@@ -30,6 +33,9 @@ export default function AlertStripeContainer() {
     }
     if (!kanVarsles) {
         return <KanIkkeVarsles erVeileder={erVeileder} />;
+    }
+    if (manuellBruker) {
+        return <MannuelBruker erVeileder={erVeileder} />;
     }
 
     return null;

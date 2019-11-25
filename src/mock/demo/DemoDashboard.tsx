@@ -9,6 +9,7 @@ import {
     erKRRBruker,
     ingenOppfPerioder,
     hentFraSessionStorage,
+    brukerKanIkkeVarsles,
     BRUKER_TYPE
 } from './sessionstorage';
 import './DemoDashboard.less';
@@ -74,6 +75,11 @@ function DemoDashboard() {
                         label: 'Ingen oppfølgingsperioder',
                         id: SessionStorageElement.INGEN_OPPF_PERIODER,
                         checked: ingenOppfPerioder()
+                    },
+                    {
+                        label: 'Bruker kan ikke varsles',
+                        id: SessionStorageElement.KAN_IKKE_VARSLES,
+                        checked: brukerKanIkkeVarsles()
                     }
                 ]}
                 onChange={endreTilstand}
