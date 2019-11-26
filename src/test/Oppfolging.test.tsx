@@ -3,14 +3,13 @@ import { mount, shallow } from 'enzyme';
 import { MemoryRouter, RouteComponentProps } from 'react-router';
 import * as AppContext from '../view/Provider';
 import { Dialog } from '../view/dialog/Dialog';
-import { Bruker, DialogData, PeriodeData } from '../utils/Typer';
+import { Bruker, DialogData, OppfolgingData, PeriodeData } from '../utils/Typer';
 import { HenvendelseList } from '../view/henvendelse/HenvendelseList';
 import { DialogInputBox } from '../view/dialog/DialogInputBox';
 import { DialogHeader } from '../view/dialog/DialogHeader';
-import { AlertStripeContainer } from '../view/AlertStripeContainer';
-import DialogOversikt from '../view/dialogoversikt/DialogOversikt';
-import { DialogOverviewHeader } from '../view/dialogoversikt/DialogOverviewHeader';
-import { DialogPreview } from '../view/dialogoversikt/DialogPreview';
+import DialogListe from '../view/dialogliste/DialogListe';
+import { NyDialogLink } from '../view/dialogliste/NyDialogLink';
+import DialogPreview from '../view/dialogliste/DialogPreview';
 import { Checkbox } from 'nav-frontend-skjema';
 import { FetchResult, Status } from '@nutgaard/use-fetch';
 import '../utils/SetupEnzyme';
@@ -18,8 +17,8 @@ import Routes from '../view/Routes';
 
 const userInfo: Bruker = { id: '010101', erVeileder: true, erBruker: false };
 const oppfPerioder: PeriodeData[] = [];
-const oppfolgingData = {
-    fnr: null,
+const oppfolgingData: OppfolgingData = {
+    fnr: 'null',
     veilederId: '101010',
     reservasjonKRR: false,
     manuell: false,
@@ -32,7 +31,18 @@ const oppfolgingData = {
     oppfolgingsPerioder: oppfPerioder,
     harSkriveTilgang: true,
     kanReaktiveres: false,
-    inaktiveringsdato: '2018-08-31T10:46:10.971+01:00'
+    inaktiveringsdato: '2018-08-31T10:46:10.971+01:00',
+    aktorId: 'null',
+    erSykmeldtMedArbeidsgiver: false,
+    formidlingsgruppe: null,
+    kanVarsles: true,
+    servicegruppe: null
+};
+const useFetchOppfolging: FetchResult<OppfolgingData> = {
+    status: Status.OK,
+    statusCode: 0,
+    data: oppfolgingData,
+    rerun(): void {}
 };
 const dialoger = [
     {
@@ -78,80 +88,23 @@ const useFetchDialoger: FetchResult<DialogData[]> = {
     rerun(): void {}
 };
 
-describe('<AlertStripeContainer/>', () => {
-    test('Bruker uten oppf.perioder og ikke under oppf. viser en advarsel - veileder.', () => {
-        userInfo.erVeileder = true;
-        oppfolgingData.underOppfolging = false;
-        oppfolgingData.oppfolgingsPerioder = [];
-        jest.spyOn(AppContext, 'useUserInfoContext').mockImplementation(() => userInfo);
-        jest.spyOn(AppContext, 'useOppfolgingContext').mockImplementation(() => oppfolgingData);
-        const wrapper = shallow(<AlertStripeContainer />);
-        expect(wrapper.find('[data-ikke-reg-veileder-test]').props().visible).toBeTruthy();
-    });
-    test('Bruker uten oppf.perioder og ikke under oppf. viser en advarsel - bruker. ', () => {
-        userInfo.erVeileder = false;
-        oppfolgingData.underOppfolging = false;
-        oppfolgingData.oppfolgingsPerioder = [];
-        jest.spyOn(AppContext, 'useUserInfoContext').mockImplementation(() => userInfo);
-        jest.spyOn(AppContext, 'useOppfolgingContext').mockImplementation(() => oppfolgingData);
-        const wrapper = shallow(<AlertStripeContainer />);
-        expect(wrapper.find('[data-ikke-reg-bruker-test]').props().visible).toBeTruthy();
-    });
-    test('Bruker med oppf.perioder og ikke under oppf. viser en advarsel - bruker. ', () => {
-        userInfo.erVeileder = false;
-        oppfolgingData.underOppfolging = false;
-        oppfolgingData.oppfolgingsPerioder = [
-            {
-                aktorId: '1234567988888',
-                veileder: false,
-                startDato: '2017-01-30T10:46:10.971+01:00',
-                sluttDato: '2017-12-31T10:46:10.971+01:00',
-                begrunnelse: null
-            }
-        ];
-        jest.spyOn(AppContext, 'useUserInfoContext').mockImplementation(() => userInfo);
-        jest.spyOn(AppContext, 'useOppfolgingContext').mockImplementation(() => oppfolgingData);
-        const wrapper = shallow(<AlertStripeContainer />);
-        expect(wrapper.find('[data-har-oppfP-bruker-test]').props().visible).toBeTruthy();
-    });
-    test('Bruker med oppf.perioder, ikke under oppf. gir ingen feilmelding - veileder', () => {
-        userInfo.erVeileder = true;
-        oppfolgingData.underOppfolging = false;
-        oppfolgingData.oppfolgingsPerioder = [
-            {
-                aktorId: '1234567988888',
-                veileder: false,
-                startDato: '2017-01-30T10:46:10.971+01:00',
-                sluttDato: '2017-12-31T10:46:10.971+01:00',
-                begrunnelse: null
-            }
-        ];
-        jest.spyOn(AppContext, 'useUserInfoContext').mockImplementation(() => userInfo);
-        jest.spyOn(AppContext, 'useOppfolgingContext').mockImplementation(() => oppfolgingData);
-        const wrapper = shallow(<AlertStripeContainer />);
-        expect(wrapper.find('[data-ikke-reg-veileder-test]').props().visible).toBeFalsy();
-        expect(wrapper.find('[data-ikke-reg-bruker-test]').props().visible).toBeFalsy();
-        expect(wrapper.find('[data-har-oppfP-bruker-test]').props().visible).toBeFalsy();
-    });
-});
-
 describe('<DialogOversikt/>', () => {
     test('Bruker uten oppf.perioder og ikke under oppf skjuler store deler av appen', () => {
-        oppfolgingData.underOppfolging = false;
-        oppfolgingData.oppfolgingsPerioder = [];
-        jest.spyOn(AppContext, 'useOppfolgingContext').mockImplementation(() => oppfolgingData);
+        useFetchOppfolging.data.underOppfolging = false;
+        useFetchOppfolging.data.oppfolgingsPerioder = [];
+        jest.spyOn(AppContext, 'useOppfolgingContext').mockImplementation(() => useFetchOppfolging);
         const wrapper = mount(
             <MemoryRouter>
-                <DialogOversikt />
+                <DialogListe />
             </MemoryRouter>
         );
-        expect(wrapper.find(DialogOverviewHeader).exists()).toBeFalsy();
+        expect(wrapper.find(NyDialogLink).exists()).toBeFalsy();
         expect(wrapper.find(Dialog).exists()).toBeFalsy();
         expect(wrapper.find(DialogPreview).exists()).toBeFalsy();
     });
     test('Bruker ikke under oppf. skjuler knapper/checkbox', () => {
-        oppfolgingData.underOppfolging = false;
-        oppfolgingData.oppfolgingsPerioder = [
+        useFetchOppfolging.data.underOppfolging = false;
+        useFetchOppfolging.data.oppfolgingsPerioder = [
             {
                 aktorId: '1234567988888',
                 veileder: false,
@@ -160,19 +113,19 @@ describe('<DialogOversikt/>', () => {
                 begrunnelse: null
             }
         ];
-        jest.spyOn(AppContext, 'useOppfolgingContext').mockImplementation(() => oppfolgingData);
+        jest.spyOn(AppContext, 'useOppfolgingContext').mockImplementation(() => useFetchOppfolging);
         jest.spyOn(AppContext, 'useDialogContext').mockImplementation(() => useFetchDialoger);
         const wrapper = mount(
             <MemoryRouter>
-                <DialogOversikt />
+                <DialogListe />
             </MemoryRouter>
         );
-        expect(wrapper.find(DialogOverviewHeader).exists()).toBeFalsy();
+        expect(wrapper.find(NyDialogLink).exists()).toBeFalsy();
         expect(wrapper.find(DialogPreview).exists()).toBeTruthy();
     });
     test('Bruker under oppf, elementer synes', () => {
-        oppfolgingData.underOppfolging = true;
-        oppfolgingData.oppfolgingsPerioder = [
+        useFetchOppfolging.data.underOppfolging = true;
+        useFetchOppfolging.data.oppfolgingsPerioder = [
             {
                 aktorId: '1234567988888',
                 veileder: false,
@@ -181,22 +134,22 @@ describe('<DialogOversikt/>', () => {
                 begrunnelse: null
             }
         ];
-        jest.spyOn(AppContext, 'useOppfolgingContext').mockImplementation(() => oppfolgingData);
+        jest.spyOn(AppContext, 'useOppfolgingContext').mockImplementation(() => useFetchOppfolging);
         jest.spyOn(AppContext, 'useDialogContext').mockImplementation(() => useFetchDialoger);
         const wrapper = mount(
             <MemoryRouter>
-                <DialogOversikt />
+                <DialogListe />
             </MemoryRouter>
         );
-        expect(wrapper.find(DialogOverviewHeader).exists()).toBeTruthy();
+        expect(wrapper.find(NyDialogLink).exists()).toBeTruthy();
         expect(wrapper.find(DialogPreview).exists()).toBeTruthy();
     });
 });
 
 describe('<Dialog/>', () => {
     test('Bruker ikke under oppf. skjuler dialogcontroller og viser fortsatt henvendelser', () => {
-        oppfolgingData.underOppfolging = false;
-        oppfolgingData.oppfolgingsPerioder = [
+        useFetchOppfolging.data.underOppfolging = false;
+        useFetchOppfolging.data.oppfolgingsPerioder = [
             {
                 aktorId: '1234567988888',
                 veileder: false,
@@ -206,7 +159,7 @@ describe('<Dialog/>', () => {
             }
         ];
         jest.spyOn(AppContext, 'useDialogContext').mockImplementation(() => useFetchDialoger);
-        jest.spyOn(AppContext, 'useOppfolgingContext').mockImplementation(() => oppfolgingData);
+        jest.spyOn(AppContext, 'useOppfolgingContext').mockImplementation(() => useFetchOppfolging);
         Element.prototype.scrollIntoView = () => {};
         const wrapper = mount(
             <MemoryRouter initialEntries={['/1']}>
@@ -218,8 +171,8 @@ describe('<Dialog/>', () => {
         expect(wrapper.find(Checkbox).exists()).toBeFalsy();
     });
     test('Bruker under oppf. viser komponenter i Dialog', () => {
-        oppfolgingData.underOppfolging = true;
-        oppfolgingData.oppfolgingsPerioder = [
+        useFetchOppfolging.data.underOppfolging = true;
+        useFetchOppfolging.data.oppfolgingsPerioder = [
             {
                 aktorId: '1234567988888',
                 veileder: false,
@@ -228,7 +181,8 @@ describe('<Dialog/>', () => {
                 begrunnelse: null
             }
         ];
-        jest.spyOn(AppContext, 'useOppfolgingContext').mockImplementation(() => oppfolgingData);
+        jest.spyOn(AppContext, 'useOppfolgingContext').mockImplementation(() => useFetchOppfolging);
+        jest.spyOn(AppContext, 'useUserInfoContext').mockImplementation(() => userInfo);
         Element.prototype.scrollIntoView = () => {};
         const wrapper = mount(
             <MemoryRouter initialEntries={['/1']}>

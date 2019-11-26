@@ -38,7 +38,7 @@ function DialogPreviewIkon(props: IkonProps) {
     );
 }
 
-export function DialogPreview(props: Props) {
+function DialogPreview(props: Props) {
     const { dialog, valgtDialogId } = props;
     const { id, sisteDato, aktivitetId, lest, overskrift, sisteTekst } = dialog;
     const datoString = !!sisteDato ? formaterDate(sisteDato) : '';

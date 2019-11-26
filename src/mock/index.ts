@@ -32,6 +32,8 @@ const mock = FetchMock.configure({
 
 const DELAY = 0;
 
+mock.post('/veilarboppfolging/api/oppfolging/settDigital', ResponseUtils.delayed(DELAY, {}));
+
 mock.get('/veilarbdialog/api/dialog', ResponseUtils.delayed(DELAY, dialoger));
 
 mock.post('/veilarbdialog/api/dialog/ny', ({ body }) => opprettEllerOppdaterDialog(body));

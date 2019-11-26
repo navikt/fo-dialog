@@ -2,14 +2,15 @@ import React, { useEffect } from 'react';
 import { hasData } from '@nutgaard/use-fetch';
 import { HenvendelseList } from '../henvendelse/HenvendelseList';
 import { DialogHeader } from './DialogHeader';
-import { useDialogContext, useOppfolgingContext } from '../Provider';
+import { useDialogContext } from '../Provider';
 import { useParams } from 'react-router';
 import DialogInputBoxVisible from './DialogInputBox';
+import useKansendeMelding from '../../utils/UseKanSendeMelding';
 
 import './Dialog.less';
 
 export function Dialog() {
-    const oppfolgingData = useOppfolgingContext();
+    const kanSendeMelding = useKansendeMelding();
     const dialoger = useDialogContext();
     const dialogData = hasData(dialoger) ? dialoger.data : [];
     const { dialogId } = useParams();
@@ -34,11 +35,7 @@ export function Dialog() {
         <div className="dialog">
             <DialogHeader dialog={valgtDialog} />
             <HenvendelseList dialogData={valgtDialog} />
-            <DialogInputBoxVisible
-                key={valgtDialog.id}
-                dialog={valgtDialog}
-                visible={oppfolgingData!.underOppfolging}
-            />
+            <DialogInputBoxVisible key={valgtDialog.id} dialog={valgtDialog} visible={kanSendeMelding} />
         </div>
     );
 }

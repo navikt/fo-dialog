@@ -8,7 +8,6 @@ arbeidsrettet-dialog er et verktøy for veiledere og brukere i NAV. Verktøyet g
 
 Dette prosjektet er satt opp med [Create React App](https://github.com/facebook/create-react-app).
 
-
 ### Komme i gang
 
 ```sh
@@ -16,7 +15,7 @@ Dette prosjektet er satt opp med [Create React App](https://github.com/facebook/
 npm i
 
 # Bygge produksjons kode
-npm build 
+npm build
 
 # Lokal utvikling
 npm start
@@ -26,4 +25,3 @@ npm start
 ### Kontakt og spørsmål
 
 Opprett en issue i GitHub for eventuelle spørsmål.
-

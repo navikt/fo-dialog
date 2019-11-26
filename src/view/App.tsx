@@ -1,12 +1,10 @@
 import React from 'react';
-import DialogOversikt from './dialogoversikt/DialogOversikt';
-import { AlertStripeContainer } from './AlertStripeContainer';
+import AlertStripeContainer from './alertstriper/AlertStripeContainer';
 import { AppBanner } from './banner/AppBanner';
-import AktivitetContainer from './aktivitet/AktivitetContainer';
-import Routes from './Routes';
 import './App.less';
 import { BrowserRouter as Router } from 'react-router-dom';
 import { Provider } from './Provider';
+import DialogOversikt from './DialogOversikt';
 
 function App() {
     return (
@@ -15,11 +13,7 @@ function App() {
                 <Provider>
                     <AppBanner />
                     <AlertStripeContainer />
-                    <div className="app__body">
-                        <DialogOversikt />
-                        <Routes />
-                        <AktivitetContainer />
-                    </div>
+                    <DialogOversikt />
                 </Provider>
             </div>
         </Router>
