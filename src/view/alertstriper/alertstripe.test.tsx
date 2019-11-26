@@ -23,8 +23,8 @@ const oppfPerioder: PeriodeData[] = [
 ];
 const ingenPerioder: PeriodeData[] = [];
 const oppfolgingData: OppfolgingData = {
-    fnr: null,
-    aktorId: null,
+    fnr: 'null',
+    aktorId: 'null',
     veilederId: '101010',
     reservasjonKRR: true,
     kanVarsles: false,

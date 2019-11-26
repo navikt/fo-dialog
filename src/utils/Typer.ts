@@ -42,8 +42,8 @@ export interface Bruker {
 }
 
 export interface OppfolgingData {
-    fnr: StringOrNull;
-    aktorId: StringOrNull;
+    fnr: string;
+    aktorId: string;
     veilederId: StringOrNull;
     reservasjonKRR: boolean;
     kanVarsles: boolean;

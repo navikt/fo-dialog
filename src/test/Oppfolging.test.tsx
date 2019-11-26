@@ -18,7 +18,7 @@ import Routes from '../view/Routes';
 const userInfo: Bruker = { id: '010101', erVeileder: true, erBruker: false };
 const oppfPerioder: PeriodeData[] = [];
 const oppfolgingData: OppfolgingData = {
-    fnr: null,
+    fnr: 'null',
     veilederId: '101010',
     reservasjonKRR: false,
     manuell: false,
@@ -32,7 +32,7 @@ const oppfolgingData: OppfolgingData = {
     harSkriveTilgang: true,
     kanReaktiveres: false,
     inaktiveringsdato: '2018-08-31T10:46:10.971+01:00',
-    aktorId: null,
+    aktorId: 'null',
     erSykmeldtMedArbeidsgiver: false,
     formidlingsgruppe: null,
     kanVarsles: true,

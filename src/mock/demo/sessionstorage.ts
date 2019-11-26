@@ -4,7 +4,7 @@ export const SessionStorageElement = {
     MANUELL_BRUKER: 'manuellbruker',
     KRR_BRUKER: 'krrbruker',
     INGEN_OPPF_PERIODER: 'ingen_oppf_perioder',
-    KAN_IKKE_VARSLES: 'bruker_kan_varsles'
+    KAN_IKKE_VARSLES: 'bruker_kan_ikke_varsles'
 };
 
 export const BRUKER_TYPE = {

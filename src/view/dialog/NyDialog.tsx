@@ -50,13 +50,7 @@ function NyDialog() {
     const [venterPaSvar, setVenterPaSvar] = useState(false);
 
     if (!kanSendeMeldign) {
-        return (
-            <div className="dialog dialog-new">
-                Du kan ikke sende dialog
-                <br />
-                Se feilmelding over
-            </div>
-        );
+        return <div className="dialog dialog-new" />;
     }
 
     function handleSubmit(event: FormEvent) {

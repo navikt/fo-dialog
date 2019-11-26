@@ -19,7 +19,7 @@ function BrukerKrr() {
             For å ta i bruk den digitale dialogen med din veileder, må du fjerne reservasjonen din mot digital
             kommunikasjon.
             <a href="https://www.norge.no/nn/reservasjon">Gå til Norge.no for å fjerne reservasjonen</a>
-            <Hovedknapp onClick={opppfolging.rerun}>Jeg har fjerent reservasjonen</Hovedknapp>
+            <Hovedknapp onClick={opppfolging.rerun}>Jeg har fjernet reservasjonen</Hovedknapp>
         </AlertStripeAdvarsel>
     );
 }
