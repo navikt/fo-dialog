@@ -13,7 +13,7 @@ import DialogPreview from '../view/dialogliste/DialogPreview';
 import { Checkbox } from 'nav-frontend-skjema';
 import { FetchResult, Status } from '@nutgaard/use-fetch';
 import '../utils/SetupEnzyme';
-import Routes from '../view/Routes';
+import DialogOversikt from '../view/DialogOversikt';
 
 const userInfo: Bruker = { id: '010101', erVeileder: true, erBruker: false };
 const oppfPerioder: PeriodeData[] = [];
@@ -163,7 +163,7 @@ describe('<Dialog/>', () => {
         Element.prototype.scrollIntoView = () => {};
         const wrapper = mount(
             <MemoryRouter initialEntries={['/1']}>
-                <Routes />
+                <DialogOversikt />
             </MemoryRouter>
         );
         expect(wrapper.find(DialogInputBox).exists()).toBeFalsy();
@@ -186,7 +186,7 @@ describe('<Dialog/>', () => {
         Element.prototype.scrollIntoView = () => {};
         const wrapper = mount(
             <MemoryRouter initialEntries={['/1']}>
-                <Routes />
+                <DialogOversikt />
             </MemoryRouter>
         );
         expect(wrapper.find(DialogHeader).exists()).toBeTruthy();

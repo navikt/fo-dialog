@@ -4,7 +4,7 @@ import { AppBanner } from './banner/AppBanner';
 import './App.less';
 import { BrowserRouter as Router } from 'react-router-dom';
 import { Provider } from './Provider';
-import DialogOversikt from './DialogOversikt';
+import DialogContainer from './DialogContainer';
 
 function App() {
     return (
@@ -13,7 +13,7 @@ function App() {
                 <Provider>
                     <AppBanner />
                     <AlertStripeContainer />
-                    <DialogOversikt />
+                    <DialogContainer />
                 </Provider>
             </div>
         </Router>
