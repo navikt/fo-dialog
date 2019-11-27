@@ -1,34 +1,19 @@
+import { Route, Switch } from 'react-router';
+import Dialog from './dialog/Dialog';
+import DialogNew from './dialog/NyDialog';
 import React from 'react';
-import { dataOrUndefined, useOppfolgingContext, useUserInfoContext } from './Provider';
-import DialogListe from './dialogliste/DialogListe';
-import Routes from './Routes';
-import AktivitetContainer from './aktivitet/AktivitetContainer';
+import DialogInfoMelding from './dialog/DialogInfoMelding';
+import styles from './DialogOversikt.module.less';
 
-export default function DialogOversikt() {
-    const oppfolgingContext = useOppfolgingContext();
-    const brukerdata = useUserInfoContext();
-    const oppfolgingData = dataOrUndefined(oppfolgingContext);
-
-    if (!oppfolgingData || !brukerdata) {
-        return null;
-    }
-
-    const { underOppfolging, manuell, reservasjonKRR, oppfolgingsPerioder } = oppfolgingData;
-    const erBruker = brukerdata.erBruker;
-
-    const aldriOppfolging = !underOppfolging && oppfolgingsPerioder.length === 0;
-    const manuellBruker = erBruker && manuell;
-    const krrBruker = erBruker && reservasjonKRR;
-
-    if (aldriOppfolging || manuellBruker || krrBruker) {
-        return null;
-    }
-
+function DialogOversikt() {
     return (
-        <div className="app__body">
-            <DialogListe />
-            <Routes />
-            <AktivitetContainer />
+        <div className={styles.dialogContainer}>
+            <Switch>
+                <Route exact path="/" component={DialogInfoMelding} />
+                <Route path="/ny" component={DialogNew} />
+                <Route path="/:dialogId" component={Dialog} />
+            </Switch>
         </div>
     );
 }
+export default DialogOversikt;

@@ -1,23 +1,25 @@
 import React from 'react';
-import { DialogData } from '../../utils/Typer';
 import { Aktivitet, ArenaAktivitet } from '../../utils/AktivitetTypes';
-
 import { Element, EtikettLiten, Systemtittel, Undertekst } from 'nav-frontend-typografi';
 import UseFetch from '../../utils/UseFetch';
+import { hasData } from '@nutgaard/use-fetch';
 import Lenke from 'nav-frontend-lenker';
 import { HoyreChevron } from 'nav-frontend-chevron';
 import { AktivitetskortInfoBox } from './AktivitetskortInfoBox';
 import styles from './Aktivitetskort.module.less';
 import { getAktivitetIngress, getStatusText, getTypeText } from './TextUtils';
-
-interface PropTypes {
-    dialog?: DialogData;
-}
+import { useParams } from 'react-router';
+import { useDialogContext } from '../Provider';
 
 export const aktivitetLenke = (aktivitetId: string) => `/aktivitetsplan/aktivitet/vis/${aktivitetId}`;
 
-export function Aktivitetskort(props: PropTypes) {
-    const { dialog } = props;
+export function Aktivitetskort() {
+    const dialoger = useDialogContext();
+    const dialogData = hasData(dialoger) ? dialoger.data : [];
+    const { dialogId } = useParams();
+
+    const dialog = dialogData.find(dialog => dialog.id === dialogId);
+
     const aktiviteter = UseFetch<Aktivitet[]>('/veilarbaktivitet/api/aktivitet').data;
     const arenaAktiviteter = UseFetch<ArenaAktivitet[]>('/veilarbaktivitet/api/aktivitet/arena').data;
 
