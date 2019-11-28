@@ -8,10 +8,9 @@ import { ReactComponent as DialogIkon } from './snakkeboble.svg';
 import { ReactComponent as AktivitetsIkon } from './aktivitet-dialog-lest.svg';
 import WrapInReactLink from '../../felleskomponenter/WrapInReactLink';
 import classNames from 'classnames';
-import UseFetch from '../../utils/UseFetch';
-import { Aktivitet } from '../../utils/AktivitetTypes';
 
 import './DialogPreview.less';
+import { useFindAktivitet } from '../../api/UseAktivitet';
 
 interface IkonProps {
     dialog: DialogData;
@@ -41,8 +40,10 @@ function DialogPreviewIkon(props: IkonProps) {
 function DialogPreview(props: Props) {
     const { dialog, valgtDialogId } = props;
     const { id, sisteDato, aktivitetId, lest, overskrift, sisteTekst } = dialog;
+    const findAktivitet = useFindAktivitet();
+
     const datoString = !!sisteDato ? formaterDate(sisteDato) : '';
-    const aktivitet = aktivitetId && UseFetch<Aktivitet>(`/veilarbaktivitet/api/aktivitet/${aktivitetId}`).data;
+    const aktivitet = findAktivitet(aktivitetId);
     const lenkepanelCls = classNames('dialog-preview', {
         'dialog-preview--lest': lest,
         'dialog-preview--valgt': id === valgtDialogId
