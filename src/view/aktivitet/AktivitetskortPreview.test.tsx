@@ -73,7 +73,9 @@ describe('<AktivitetskortPreview />', () => {
             arbeidsgiver: 'Testesen'
         };
 
-        jest.spyOn(UseAktivitet, 'useFindAktivitet').mockReturnValue((a: any) => aktivitet);
+        jest.spyOn(UseAktivitet, 'useFindAktivitet').mockReturnValue((a: any) => {
+            return a === '123' ? aktivitet : undefined;
+        });
 
         const wrapper = mount(<AktivitetskortPreview dialog={dialog} />);
         expect(wrapper).toMatchSnapshot();
