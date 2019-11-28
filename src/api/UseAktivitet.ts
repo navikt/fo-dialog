@@ -16,9 +16,10 @@ export function useFindAktivitet() {
             return undefined;
         }
 
-        const aktivitet = aktivitetListe && aktivitetListe.find(a => a.id === aktivitetId);
-
-        return aktivitet ? aktivitet : arenaListe && arenaListe.find(a => a.id === aktivitetId);
+        if (aktivitetId.startsWith('ARENA')) {
+            return arenaListe && arenaListe.find(a => a.id === aktivitetId);
+        }
+        return aktivitetListe && aktivitetListe.find(a => a.id === aktivitetId);
     }
 
     return findAktiivtet;
