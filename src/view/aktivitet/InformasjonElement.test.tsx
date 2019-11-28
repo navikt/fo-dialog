@@ -35,7 +35,6 @@ describe('<InformasjonElement />', () => {
     it('skal skjules om hverken tekst eller children er oppgitt', () => {
         const merkelapptekst = 'merkelappteksten';
         const wrapper = shallow(<InformasjonElement merkelapptekst={merkelapptekst} verdi={null} />);
-        console.log(wrapper.debug());
         expect(wrapper.find(EtikettLiten).exists()).toBeFalsy();
     });
 

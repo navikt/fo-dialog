@@ -1,6 +1,12 @@
 import { PeriodeData } from '../utils/Typer';
 import { JSONArray } from 'yet-another-fetch-mock';
-import { erKRRBruker, erManuellBruker, erPrivatBruker, ingenOppfPerioder } from './demo/sessionstorage';
+import {
+    brukerKanIkkeVarsles,
+    erKRRBruker,
+    erManuellBruker,
+    erPrivatBruker,
+    ingenOppfPerioder
+} from './demo/sessionstorage';
 
 const oppfPerioder: PeriodeData[] & JSONArray = [
     {
@@ -32,6 +38,7 @@ const oppfolgingData = {
     oppfolgingsPerioder: ingenOppfPerioder() ? [] : oppfPerioder,
     harSkriveTilgang: true,
     kanReaktiveres: false,
+    kanVarsles: !brukerKanIkkeVarsles(),
     inaktiveringsdato: '2018-08-31T10:46:10.971+01:00'
 };
 

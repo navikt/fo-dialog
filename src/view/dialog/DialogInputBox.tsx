@@ -5,12 +5,14 @@ import { visibleIfHoc } from '../../felleskomponenter/VisibleIfHoc';
 import HenvendelseInput from '../henvendelse/HenvendelseInput';
 import { fetchData } from '../../utils/Fetch';
 import { useDialogContext, useUserInfoContext } from '../Provider';
-import { RouteComponentProps, withRouter } from 'react-router';
+import { useHistory, useParams } from 'react-router';
 import DialogCheckboxesVisible from './DialogCheckboxes';
 import { hasData } from '@nutgaard/use-fetch';
 import { AlertStripeFeil } from 'nav-frontend-alertstriper';
 
-interface Props extends RouteComponentProps<{ dialogId?: string }> {
+const AlertStripeFeilVisible = visibleIfHoc(AlertStripeFeil);
+
+interface Props {
     dialog: DialogData;
 }
 
@@ -29,7 +31,9 @@ export function DialogInputBox(props: Props) {
     const [submitting, setSubmitting] = useState<boolean>(false);
     const [submitfeil, setSubmitfeil] = useState<boolean>(false);
     const dialogData = hasData(dialoger) ? dialoger.data : [];
-    const dialogId = props.match.params.dialogId;
+    const { dialogId } = useParams();
+    const history = useHistory();
+
     const valgtDialog = dialogData.find(dialog => dialog.id === dialogId);
 
     const [ferdigBehandlet, setFerdigBehandlet] = useState(valgtDialog ? valgtDialog.ferdigBehandlet : true);
@@ -73,7 +77,7 @@ export function DialogInputBox(props: Props) {
                         melding.reset();
                         console.log('Posted endret dialog!', response);
                         dialoger.rerun();
-                        props.history.push('/' + response.id);
+                        history.push('/' + response.id);
                     },
                     function(error) {
                         console.log('Failed while posting endret dialog!', error);
@@ -101,7 +105,5 @@ export function DialogInputBox(props: Props) {
         </>
     );
 }
-const DialogInputBoxVisible = visibleIfHoc(DialogInputBox);
-const AlertStripeFeilVisible = visibleIfHoc(AlertStripeFeil);
 
-export default withRouter(DialogInputBoxVisible);
+export default visibleIfHoc(DialogInputBox);

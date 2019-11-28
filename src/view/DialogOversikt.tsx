@@ -3,8 +3,9 @@ import Dialog from './dialog/Dialog';
 import DialogNew from './dialog/NyDialog';
 import React from 'react';
 import DialogInfoMelding from './dialog/DialogInfoMelding';
-import styles from './Routes.module.less';
-function Routes() {
+import styles from './DialogOversikt.module.less';
+
+function DialogOversikt() {
     return (
         <div className={styles.dialogContainer}>
             <Switch>
@@ -15,4 +16,4 @@ function Routes() {
         </div>
     );
 }
-export default Routes;
+export default DialogOversikt;

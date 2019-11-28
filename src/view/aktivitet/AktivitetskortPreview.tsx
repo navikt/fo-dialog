@@ -15,12 +15,17 @@ interface Props {
 }
 
 export function AktivitetskortPreview(props: Props) {
-    const aktiviteter = UseFetch<Aktivitet[]>('/veilarbaktivitet/api/aktivitet').data;
+    const fetch = UseFetch<Aktivitet[]>('/veilarbaktivitet/api/aktivitet');
+    const aktiviteter = fetch.data;
 
-    if (!aktiviteter) return null;
+    if (!aktiviteter || !props.dialog.aktivitetId) {
+        return null;
+    }
 
     const aktivitet = aktiviteter.find(aktivitet => aktivitet.id === props.dialog.aktivitetId);
-    if (!aktivitet) return null;
+    if (!aktivitet) {
+        return null;
+    }
 
     const info = getInfoText(aktivitet);
     return (

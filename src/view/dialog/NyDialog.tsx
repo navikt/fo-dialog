@@ -5,7 +5,7 @@ import UseFieldState from '../../utils/UseFieldState';
 import { DialogData, NyDialogMeldingData } from '../../utils/Typer';
 import { fetchData } from '../../utils/Fetch';
 import { useDialogContext, useUserInfoContext } from '../Provider';
-import { RouteComponentProps, withRouter } from 'react-router';
+import { useHistory } from 'react-router';
 import HenvendelseInput from '../henvendelse/HenvendelseInput';
 import DialogCheckboxesVisible from './DialogCheckboxes';
 import Valideringsboks from './Valideringsboks';
@@ -15,8 +15,9 @@ import { VenstreChevron } from 'nav-frontend-chevron';
 import { Link } from 'react-router-dom';
 
 import './NyDialog.less';
+import useKansendeMelding from '../../utils/UseKanSendeMelding';
 
-interface Props extends RouteComponentProps<{}> {}
+const AlertStripeFeilVisible = visibleIfHoc(AlertStripeFeil);
 
 function validerTema(tema: string): string | null {
     if (tema.trim().length === 0) {
@@ -34,7 +35,7 @@ function validerMelding(melding: string): string | null {
     }
 }
 
-function NyDialog(props: Props) {
+function NyDialog() {
     const tema = UseFieldState('', validerTema);
     const melding = UseFieldState('', validerMelding);
     const [submitfeil, setSubmitfeil] = useState<boolean>(false);
@@ -42,9 +43,15 @@ function NyDialog(props: Props) {
     const [submitting, setSubmitting] = useState<boolean>(false);
     const dialoger = useDialogContext();
     const bruker = useUserInfoContext();
+    const history = useHistory();
+    const kanSendeMeldign = useKansendeMelding();
 
     const [ferdigBehandlet, setFerdigBehandlet] = useState(true);
     const [venterPaSvar, setVenterPaSvar] = useState(false);
+
+    if (!kanSendeMeldign) {
+        return <div className="dialog dialog-new" />;
+    }
 
     function handleSubmit(event: FormEvent) {
         event.preventDefault();
@@ -81,7 +88,7 @@ function NyDialog(props: Props) {
                 .then(
                     function(dialog: DialogData) {
                         dialoger.rerun();
-                        props.history.push('/' + dialog.id);
+                        history.push('/' + dialog.id);
                     },
                     function(error) {
                         console.log('Failed posting the new dialog!', error);
@@ -103,46 +110,41 @@ function NyDialog(props: Props) {
     };
 
     return (
-        <>
-            <div className="dialog dialog-new">
-                <div className="dialog-new__header">
-                    <Link to="/" className="tilbake-til-oversikt">
-                        <VenstreChevron stor className="tilbake-til-oversikt__pilknapp" />
-                        Oversikt
-                    </Link>
-                </div>
-                <form onSubmit={handleSubmit} noValidate className="dialog-new__form">
-                    <Innholdstittel className="dialog-new__tittel">Ny dialog</Innholdstittel>
-                    <Normaltekst className="dialog-new__infotekst">
-                        Her kan du skrive til din veileder om arbeid og oppfølging. Du vil få svar i løpet av noen
-                        dager.
-                    </Normaltekst>
-                    <Valideringsboks tema={tema} melding={melding} triedToSubmit={triedToSubmit} />
-                    <Input
-                        id="temaIn"
-                        className="dialog-new__temafelt"
-                        label={'Tema:'}
-                        placeholder="Skriv her"
-                        {...tema.input}
-                        disabled={submitting}
-                    />
-                    <HenvendelseInput melding={melding} submitting={submitting} />
-                    <DialogCheckboxesVisible
-                        toggleFerdigBehandlet={toggleFerdigBehandlet}
-                        toggleVenterPaSvar={toggleVenterPaSvar}
-                        ferdigBehandlet={ferdigBehandlet}
-                        venterPaSvar={venterPaSvar}
-                        visible={bruker!.erVeileder}
-                    />
-                    <AlertStripeFeilVisible visible={submitfeil}>
-                        Det skjedde en alvorlig feil. Prøv igjen senere
-                    </AlertStripeFeilVisible>
-                </form>
+        <div className="dialog dialog-new">
+            <div className="dialog-new__header">
+                <Link to="/" className="tilbake-til-oversikt">
+                    <VenstreChevron stor className="tilbake-til-oversikt__pilknapp" />
+                    Oversikt
+                </Link>
             </div>
-        </>
+            <form onSubmit={handleSubmit} noValidate className="dialog-new__form">
+                <Innholdstittel className="dialog-new__tittel">Ny dialog</Innholdstittel>
+                <Normaltekst className="dialog-new__infotekst">
+                    Her kan du skrive til din veileder om arbeid og oppfølging. Du vil få svar i løpet av noen dager.
+                </Normaltekst>
+                <Valideringsboks tema={tema} melding={melding} triedToSubmit={triedToSubmit} />
+                <Input
+                    id="temaIn"
+                    className="dialog-new__temafelt"
+                    label={'Tema:'}
+                    placeholder="Skriv her"
+                    {...tema.input}
+                    disabled={submitting}
+                />
+                <HenvendelseInput melding={melding} submitting={submitting} />
+                <DialogCheckboxesVisible
+                    toggleFerdigBehandlet={toggleFerdigBehandlet}
+                    toggleVenterPaSvar={toggleVenterPaSvar}
+                    ferdigBehandlet={ferdigBehandlet}
+                    venterPaSvar={venterPaSvar}
+                    visible={bruker!.erVeileder}
+                />
+                <AlertStripeFeilVisible visible={submitfeil}>
+                    Det skjedde en alvorlig feil. Prøv igjen senere
+                </AlertStripeFeilVisible>
+            </form>
+        </div>
     );
 }
 
-const AlertStripeFeilVisible = visibleIfHoc(AlertStripeFeil);
-
-export default withRouter(NyDialog);
+export default NyDialog;
