@@ -2,6 +2,7 @@ import React, { PropsWithChildren, useContext } from 'react';
 import { Bruker, DialogData, OppfolgingData } from '../utils/Typer';
 import NavFrontendSpinner from 'nav-frontend-spinner';
 import useFetch, { FetchResult, Status, isPending, hasError, hasData } from '@nutgaard/use-fetch';
+import { useFindAktivitet } from '../api/UseAktivitet';
 
 export const UserInfoContext = React.createContext<Bruker | null>(null);
 export const OppfolgingContext = React.createContext<FetchResult<OppfolgingData>>({
@@ -26,6 +27,7 @@ export function Provider(props: PropsWithChildren<{}>) {
     const bruker = useFetch<Bruker>('/veilarboppfolging/api/oppfolging/me');
     const oppfolgingData = useFetch<OppfolgingData>('/veilarboppfolging/api/oppfolging');
     const dialoger = useFetch<DialogData[]>('/veilarbdialog/api/dialog');
+    useFindAktivitet();
 
     if (isPending(bruker) || isPending(oppfolgingData) || isPending(dialoger)) {
         return <NavFrontendSpinner />;
