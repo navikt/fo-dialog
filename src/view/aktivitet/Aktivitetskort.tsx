@@ -20,8 +20,13 @@ export function Aktivitetskort() {
 
     const dialog = dialogData.find(dialog => dialog.id === dialogId);
 
+    //TODO Fix me, do not get if there is no dialog here
     const aktiviteter = UseFetch<Aktivitet[]>('/veilarbaktivitet/api/aktivitet').data;
     const arenaAktiviteter = UseFetch<ArenaAktivitet[]>('/veilarbaktivitet/api/aktivitet/arena').data;
+
+    if (!dialog) {
+        return null;
+    }
 
     if (!aktiviteter && !arenaAktiviteter) {
         return null;

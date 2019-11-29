@@ -1,10 +1,10 @@
-import React, { FormEvent, useState } from 'react';
+import React, { FormEvent, useEffect, useState } from 'react';
 import { Innholdstittel, Normaltekst } from 'nav-frontend-typografi';
 import { Input } from 'nav-frontend-skjema';
 import UseFieldState from '../../utils/UseFieldState';
 import { DialogData, NyDialogMeldingData } from '../../utils/Typer';
 import { fetchData } from '../../utils/Fetch';
-import { useDialogContext, useUserInfoContext } from '../Provider';
+import { useDialogContext, useUserInfoContext, useViewContext } from '../Provider';
 import { useHistory } from 'react-router';
 import HenvendelseInput from '../henvendelse/HenvendelseInput';
 import DialogCheckboxesVisible from './DialogCheckboxes';
@@ -16,6 +16,7 @@ import { Link } from 'react-router-dom';
 
 import './NyDialog.less';
 import useKansendeMelding from '../../utils/UseKanSendeMelding';
+import { ViewAction } from '../ViewState';
 
 const AlertStripeFeilVisible = visibleIfHoc(AlertStripeFeil);
 
@@ -46,8 +47,14 @@ function NyDialog() {
     const history = useHistory();
     const kanSendeMeldign = useKansendeMelding();
 
+    const { dispatch } = useViewContext();
+
     const [ferdigBehandlet, setFerdigBehandlet] = useState(true);
     const [venterPaSvar, setVenterPaSvar] = useState(false);
+
+    useEffect(() => {
+        dispatch({ type: ViewAction.changeDialogInView });
+    }, [dispatch]);
 
     if (!kanSendeMeldign) {
         return <div className="dialog dialog-new" />;
@@ -88,6 +95,7 @@ function NyDialog() {
                 .then(
                     function(dialog: DialogData) {
                         dialoger.rerun();
+                        dispatch({ type: ViewAction.newDialog });
                         history.push('/' + dialog.id);
                     },
                     function(error) {

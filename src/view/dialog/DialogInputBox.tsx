@@ -1,14 +1,16 @@
 import React, { FormEvent, useState } from 'react';
+import React, { FormEvent, useState } from 'react';
 import UseFieldState from '../../utils/UseFieldState';
 import { DialogData } from '../../utils/Typer';
 import { visibleIfHoc } from '../../felleskomponenter/VisibleIfHoc';
 import HenvendelseInput from '../henvendelse/HenvendelseInput';
 import { fetchData } from '../../utils/Fetch';
-import { useDialogContext, useUserInfoContext } from '../Provider';
-import { useHistory, useParams } from 'react-router';
+import { useDialogContext, useUserInfoContext, useViewContext } from '../Provider';
+import { useParams } from 'react-router';
 import DialogCheckboxesVisible from './DialogCheckboxes';
 import { hasData } from '@nutgaard/use-fetch';
 import { AlertStripeFeil } from 'nav-frontend-alertstriper';
+import { ViewAction } from '../ViewState';
 
 const AlertStripeFeilVisible = visibleIfHoc(AlertStripeFeil);
 
@@ -32,7 +34,8 @@ export function DialogInputBox(props: Props) {
     const [submitfeil, setSubmitfeil] = useState<boolean>(false);
     const dialogData = hasData(dialoger) ? dialoger.data : [];
     const { dialogId } = useParams();
-    const history = useHistory();
+
+    const { dispatch } = useViewContext();
 
     const valgtDialog = dialogData.find(dialog => dialog.id === dialogId);
 
@@ -76,8 +79,8 @@ export function DialogInputBox(props: Props) {
                     function(response) {
                         melding.reset();
                         console.log('Posted endret dialog!', response);
+                        dispatch({ type: ViewAction.newHenvendelse });
                         dialoger.rerun();
-                        history.push('/' + response.id);
                     },
                     function(error) {
                         console.log('Failed while posting endret dialog!', error);
