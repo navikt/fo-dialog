@@ -15,8 +15,7 @@ export function DialogListe() {
     const dialogData = hasData(dialoger) ? dialoger.data : [];
     const { dialogId } = useParams();
 
-    const visningCls = dialogId ? classNames(styles.dialogOversikt, styles.dialogValgt) : styles.dialogOversikt;
-
+    const visningCls = dialogId ? classNames(styles.dialogListe, styles.dialogValgt) : styles.dialogListe;
     const sortedOppfolgingsData = dialogData.sort((a, b) => sortDialoger(a, b));
     return (
         <div className={visningCls}>
