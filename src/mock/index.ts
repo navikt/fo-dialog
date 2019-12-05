@@ -1,4 +1,4 @@
-import FetchMock, { Middleware, ResponseUtils } from 'yet-another-fetch-mock';
+import FetchMock, { Middleware, MiddlewareUtils, ResponseUtils } from 'yet-another-fetch-mock';
 import dialoger, { lesDialog, opprettEllerOppdaterDialog, setFerdigBehandlet, setVenterPaSvar } from './Dialog';
 import bruker from './Bruker';
 import oppfolging from './Oppfolging';
@@ -27,7 +27,7 @@ const loggingMiddleware: Middleware = (request, response) => {
 
 const mock = FetchMock.configure({
     enableFallback: false, // default: true
-    middleware: loggingMiddleware
+    middleware: MiddlewareUtils.combine(loggingMiddleware, MiddlewareUtils.delayMiddleware(1000))
 });
 
 const DELAY = 0;
