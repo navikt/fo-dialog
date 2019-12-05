@@ -19,7 +19,7 @@ export default function AlertStripeContainer() {
     const erUnderOppfolging = oppfolgingData.underOppfolging;
     const harOppfolgingsPerioder = oppfolgingData.oppfolgingsPerioder.length > 0;
     const erReservertKrr = oppfolgingData.reservasjonKRR;
-    const kanVarsles = oppfolgingData.kanVarsles;
+    const kanVarsles = true; //TODO fisk denne oppfolgingData.kanVarsles;
     const manuellBruker = oppfolgingData.manuell;
 
     if (!erUnderOppfolging && !harOppfolgingsPerioder) {
