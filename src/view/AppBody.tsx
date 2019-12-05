@@ -1,10 +1,10 @@
 import React from 'react';
 import { dataOrUndefined, useOppfolgingContext, useUserInfoContext } from './Provider';
-import DialogListe from './dialogliste/DialogListe';
-import DialogOversikt from './DialogOversikt';
+import DialogContainer from './dialog/DialogContainer';
 import AktivitetContainer from './aktivitet/AktivitetContainer';
+import DialogListeContainer from './dialogliste/DialogListeContainer';
 
-export default function DialogContainer() {
+export default function AppBody() {
     const oppfolgingContext = useOppfolgingContext();
     const brukerdata = useUserInfoContext();
     const oppfolgingData = dataOrUndefined(oppfolgingContext);
@@ -26,8 +26,8 @@ export default function DialogContainer() {
 
     return (
         <div className="app__body">
-            <DialogListe />
-            <DialogOversikt />
+            <DialogListeContainer />
+            <DialogContainer />
             <AktivitetContainer />
         </div>
     );
