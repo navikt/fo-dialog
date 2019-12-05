@@ -29,7 +29,7 @@ export function Provider(props: PropsWithChildren<{}>) {
     const dialoger = useFetch<DialogData[]>('/veilarbdialog/api/dialog');
     useFindAktivitet();
 
-    if (isPending(bruker) || isPending(oppfolgingData) || isPending(dialoger)) {
+    if (isPending(bruker, false) || isPending(oppfolgingData, false) || isPending(dialoger, false)) {
         return <NavFrontendSpinner />;
     } else if (hasError(bruker) || hasError(oppfolgingData) || hasError(dialoger)) {
         return <p>Kunne ikke laste data fra baksystemer. Prøv igjen senere</p>;
