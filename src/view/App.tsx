@@ -1,5 +1,5 @@
 import React from 'react';
-import AlertStripeContainer from './alertstriper/AlertStripeContainer';
+import StatusAdvarsel from './statusAdvarsel/StatusAdvarsel';
 import { AppBanner } from './banner/AppBanner';
 import './App.less';
 import { BrowserRouter as Router } from 'react-router-dom';
@@ -10,9 +10,9 @@ function App() {
     return (
         <Router>
             <div className="app">
+                <AppBanner />
                 <Provider>
-                    <AppBanner />
-                    <AlertStripeContainer />
+                    <StatusAdvarsel />
                     <AppBody />
                 </Provider>
             </div>

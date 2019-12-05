@@ -1,4 +1,4 @@
-import FetchMock, { Middleware, MiddlewareUtils, ResponseUtils } from 'yet-another-fetch-mock';
+import FetchMock, { Middleware, MiddlewareUtils } from 'yet-another-fetch-mock';
 import dialoger, { lesDialog, opprettEllerOppdaterDialog, setFerdigBehandlet, setVenterPaSvar } from './Dialog';
 import bruker from './Bruker';
 import oppfolging from './Oppfolging';
@@ -29,8 +29,6 @@ const mock = FetchMock.configure({
     enableFallback: false, // default: true
     middleware: MiddlewareUtils.combine(loggingMiddleware, MiddlewareUtils.delayMiddleware(1000))
 });
-
-const DELAY = 0;
 
 mock.post('/veilarboppfolging/api/oppfolging/settDigital', {});
 

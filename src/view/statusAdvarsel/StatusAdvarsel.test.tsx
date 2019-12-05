@@ -1,7 +1,7 @@
 import { Bruker, OppfolgingData, PeriodeData } from '../../utils/Typer';
 import * as AppContext from '../Provider';
 import { shallow } from 'enzyme';
-import AlertStripeContainer from './AlertStripeContainer';
+import StatusAdvarsel from './StatusAdvarsel';
 import React from 'react';
 import '../../utils/SetupEnzyme';
 import AldriUnderOppfolging from './AldriUnderOppfolging';
@@ -55,14 +55,14 @@ describe('<AlertStripeContainer/>', () => {
         jest.spyOn(AppContext, 'useUserInfoContext').mockImplementation(() => veileder);
         jest.spyOn(AppContext, 'useOppfolgingContext').mockImplementation(() => useFetchOppfolging);
 
-        const wrapper = shallow(<AlertStripeContainer />);
+        const wrapper = shallow(<StatusAdvarsel />);
         expect(wrapper.matchesElement(<AldriUnderOppfolging erVeileder={true} />)).toBeTruthy();
     });
     test('Bruker uten oppf.perioder og ikke under oppf. viser en advarsel - bruker. ', () => {
         jest.spyOn(AppContext, 'useUserInfoContext').mockImplementation(() => bruker);
         jest.spyOn(AppContext, 'useOppfolgingContext').mockImplementation(() => useFetchOppfolging);
 
-        const wrapper = shallow(<AlertStripeContainer />);
+        const wrapper = shallow(<StatusAdvarsel />);
         expect(wrapper.matchesElement(<AldriUnderOppfolging erVeileder={false} />)).toBeTruthy();
     });
     test('Bruker med oppf.perioder og ikke under oppf. viser en advarsel - bruker. ', () => {
@@ -71,7 +71,7 @@ describe('<AlertStripeContainer/>', () => {
         jest.spyOn(AppContext, 'useUserInfoContext').mockImplementation(() => bruker);
         jest.spyOn(AppContext, 'useOppfolgingContext').mockImplementation(() => useFetchOppfolging);
 
-        const wrapper = shallow(<AlertStripeContainer />);
+        const wrapper = shallow(<StatusAdvarsel />);
         expect(wrapper.matchesElement(<IkkeUnderOppfolging erVeileder={false} />)).toBeTruthy();
     });
     test('Bruker med oppf.perioder, ikke under oppf. gir ingen feilmelding - veileder', () => {
@@ -80,7 +80,7 @@ describe('<AlertStripeContainer/>', () => {
         jest.spyOn(AppContext, 'useUserInfoContext').mockImplementation(() => veileder);
         jest.spyOn(AppContext, 'useOppfolgingContext').mockImplementation(() => useFetchOppfolging);
 
-        const wrapper = shallow(<AlertStripeContainer />);
+        const wrapper = shallow(<StatusAdvarsel />);
         expect(wrapper.matchesElement(<IkkeUnderOppfolging erVeileder={true} />)).toBeTruthy();
     });
 
@@ -90,7 +90,7 @@ describe('<AlertStripeContainer/>', () => {
         jest.spyOn(AppContext, 'useUserInfoContext').mockImplementation(() => veileder);
         jest.spyOn(AppContext, 'useOppfolgingContext').mockImplementation(() => useFetchOppfolging);
 
-        const wrapper = shallow(<AlertStripeContainer />);
+        const wrapper = shallow(<StatusAdvarsel />);
         expect(wrapper.matchesElement(<ReservertKrr erVeileder={true} />)).toBeTruthy();
     });
     test('Bruker registret KRR viser en advarsel - bruker. ', () => {
@@ -99,7 +99,7 @@ describe('<AlertStripeContainer/>', () => {
         jest.spyOn(AppContext, 'useUserInfoContext').mockImplementation(() => bruker);
         jest.spyOn(AppContext, 'useOppfolgingContext').mockImplementation(() => useFetchOppfolging);
 
-        const wrapper = shallow(<AlertStripeContainer />);
+        const wrapper = shallow(<StatusAdvarsel />);
         expect(wrapper.matchesElement(<ReservertKrr erVeileder={false} />)).toBeTruthy();
     });
     // test('Bruker kan ikke varsles viser en advarsel - bruker. ', () => {
@@ -131,7 +131,7 @@ describe('<AlertStripeContainer/>', () => {
         jest.spyOn(AppContext, 'useUserInfoContext').mockImplementation(() => veileder);
         jest.spyOn(AppContext, 'useOppfolgingContext').mockImplementation(() => useFetchOppfolging);
 
-        const wrapper = shallow(<AlertStripeContainer />);
+        const wrapper = shallow(<StatusAdvarsel />);
         expect(wrapper.isEmptyRender()).toBeTruthy();
     });
     test('ingen varsler for gyldig status - bruker. ', () => {
@@ -142,7 +142,7 @@ describe('<AlertStripeContainer/>', () => {
         jest.spyOn(AppContext, 'useUserInfoContext').mockImplementation(() => bruker);
         jest.spyOn(AppContext, 'useOppfolgingContext').mockImplementation(() => useFetchOppfolging);
 
-        const wrapper = shallow(<AlertStripeContainer />);
+        const wrapper = shallow(<StatusAdvarsel />);
         expect(wrapper.isEmptyRender()).toBeTruthy();
     });
 });
