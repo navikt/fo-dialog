@@ -311,7 +311,7 @@ const aktiviteter = {
 };
 
 export function getAktivitet(id: string): JSONObject {
-    const aktivitet = aktiviteter.aktiviteter.find(aktivitet => aktivitet!.id === id);
+    const aktivitet = aktiviteter.aktiviteter.find(aktivitet => aktivitet.id === id);
     return aktivitet ? aktivitet : {};
 }
 
