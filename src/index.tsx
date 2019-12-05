@@ -2,6 +2,7 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import App from './view/App';
 import DemoBanner from './mock/demo/DemoBanner';
+import NAVSPA from '@navikt/navspa';
 
 if (process.env.REACT_APP_MOCK === 'true') {
     require('./mock');
@@ -11,4 +12,4 @@ if (process.env.REACT_APP_MOCK === 'true') {
     ReactDOM.render(<DemoBanner />, elem);
 }
 
-ReactDOM.render(<App />, document.getElementById('root'));
+NAVSPA.eksporter('arbeidsrettet-dialog', App);

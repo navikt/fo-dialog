@@ -1,18 +1,18 @@
 import React from 'react';
-import AlertStripeContainer from './alertstriper/AlertStripeContainer';
-import { AppBanner } from './banner/AppBanner';
+import StatusFeilmeldinger from './statusFeilmeldinger/StatusFeilmeldinger';
 import './App.less';
 import { BrowserRouter as Router } from 'react-router-dom';
 import { Provider } from './Provider';
 import DialogContainer from './DialogContainer';
+import { AppBanner } from './banner/AppBanner';
 
 function App() {
     return (
-        <Router>
+        <Router basename={process.env.PUBLIC_URL}>
             <div className="app">
+                <AppBanner />
                 <Provider>
-                    <AppBanner />
-                    <AlertStripeContainer />
+                    <StatusFeilmeldinger />
                     <DialogContainer />
                 </Provider>
             </div>

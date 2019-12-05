@@ -6,7 +6,7 @@ import KanIkkeVarsles from './KanIkkeVarsles';
 import AldriUnderOppfolging from './AldriUnderOppfolging';
 import MannuelBruker from './Manuell';
 
-export default function AlertStripeContainer() {
+export default function StatusFeilmeldinger() {
     const oppfolgingDataContext = useOppfolgingContext();
     const oppfolgingData = dataOrUndefined(oppfolgingDataContext);
     const UserInfo = useUserInfoContext();
