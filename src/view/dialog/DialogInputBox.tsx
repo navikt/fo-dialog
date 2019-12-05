@@ -1,5 +1,4 @@
 import React, { FormEvent, useState } from 'react';
-import React, { FormEvent, useState } from 'react';
 import UseFieldState from '../../utils/UseFieldState';
 import { DialogData } from '../../utils/Typer';
 import { visibleIfHoc } from '../../felleskomponenter/VisibleIfHoc';

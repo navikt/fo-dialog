@@ -9,6 +9,7 @@ import useKansendeMelding from '../../utils/UseKanSendeMelding';
 
 import './Dialog.less';
 import { ViewAction } from '../ViewState';
+import DialogSendtBekreftelse from './DialogSendtBekreftelse';
 
 export function Dialog() {
     const kanSendeMelding = useKansendeMelding();
@@ -39,8 +40,7 @@ export function Dialog() {
         <div className="dialog">
             <DialogHeader dialog={valgtDialog} />
             <HenvendelseList dialogData={valgtDialog} />
-            {state.newHendvendelse ? 'works like a charm' : null}
-            {state.newDialog ? 'works like a charm2' : null}
+            <DialogSendtBekreftelse viewState={state} dialog={valgtDialog} />
             <DialogInputBoxVisible key={valgtDialog.id} dialog={valgtDialog} visible={kanSendeMelding} />
         </div>
     );
