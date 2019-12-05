@@ -1,11 +1,11 @@
 import { Route, Switch } from 'react-router';
-import Dialog from './dialog/Dialog';
-import DialogNew from './dialog/NyDialog';
+import Dialog from './Dialog';
+import DialogNew from './NyDialog';
 import React from 'react';
-import DialogInfoMelding from './dialog/DialogInfoMelding';
-import styles from './DialogOversikt.module.less';
+import DialogInfoMelding from './DialogInfoMelding';
+import styles from './DialogContainer.module.less';
 
-function DialogOversikt() {
+function DialogContainer() {
     return (
         <div className={styles.dialogContainer}>
             <Switch>
@@ -16,4 +16,4 @@ function DialogOversikt() {
         </div>
     );
 }
-export default DialogOversikt;
+export default DialogContainer;
