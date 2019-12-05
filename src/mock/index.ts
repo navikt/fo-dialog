@@ -38,7 +38,7 @@ mock.get('/veilarbdialog/api/dialog', dialoger);
 
 mock.post('/veilarbdialog/api/dialog/ny', ({ body }) => opprettEllerOppdaterDialog(body));
 
-mock.put('/veilarbdialog/api/dialog/lest', ({ body }) => lesDialog(body.dialogId));
+mock.put('/veilarbdialog/api/dialog/:dialogId/lest', ({ pathParams }) => lesDialog(pathParams.dialogId));
 
 mock.put('/veilarbdialog/api/dialog/:dialogId/venter_pa_svar/:bool', ({ pathParams }) =>
     setVenterPaSvar(pathParams.dialogId, pathParams.bool === 'true')
