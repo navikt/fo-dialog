@@ -298,7 +298,7 @@ const ijobbAktivitet = {
     versjon: '210077'
 };
 
-const aktiviteter: JSONObject = {
+const aktiviteter = {
     aktiviteter: [
         moteAktivitet,
         stilingAktivitet,
@@ -311,8 +311,8 @@ const aktiviteter: JSONObject = {
 };
 
 export function getAktivitet(id: string): JSONObject {
-    //@ts-ignore
-    return aktiviteter.find(aktivitet => aktivitet!.id === id);
+    const aktivitet = aktiviteter.aktiviteter.find(aktivitet => aktivitet.id === id);
+    return aktivitet ? aktivitet : {};
 }
 
 export default aktiviteter;

@@ -102,24 +102,47 @@ describe('<AlertStripeContainer/>', () => {
         const wrapper = shallow(<AlertStripeContainer />);
         expect(wrapper.matchesElement(<ReservertKrr erVeileder={false} />)).toBeTruthy();
     });
-    test('Bruker kan ikke varsles viser en advarsel - bruker. ', () => {
+    // test('Bruker kan ikke varsles viser en advarsel - bruker. ', () => {
+    //     useFetchOppfolging.data.underOppfolging = true;
+    //     useFetchOppfolging.data.reservasjonKRR = false;
+    //
+    //     jest.spyOn(AppContext, 'useUserInfoContext').mockImplementation(() => bruker);
+    //     jest.spyOn(AppContext, 'useOppfolgingContext').mockImplementation(() => useFetchOppfolging);
+    //
+    //     const wrapper = shallow(<AlertStripeContainer />);
+    //     expect(wrapper.matchesElement(<KanIkkeVarsles erVeileder={false} />)).toBeTruthy();
+    // });
+    // test('Bruker kan ikke varsles viser en advarsel - veileder', () => {
+    //     useFetchOppfolging.data.underOppfolging = true;
+    //     useFetchOppfolging.data.reservasjonKRR = false;
+    //
+    //     jest.spyOn(AppContext, 'useUserInfoContext').mockImplementation(() => veileder);
+    //     jest.spyOn(AppContext, 'useOppfolgingContext').mockImplementation(() => useFetchOppfolging);
+    //
+    //     const wrapper = shallow(<AlertStripeContainer />);
+    //     expect(wrapper.matchesElement(<KanIkkeVarsles erVeileder={true} />)).toBeTruthy();
+    // });
+
+    test('ingen varsler for gyldig status - veileder', () => {
         useFetchOppfolging.data.underOppfolging = true;
         useFetchOppfolging.data.reservasjonKRR = false;
-
-        jest.spyOn(AppContext, 'useUserInfoContext').mockImplementation(() => bruker);
-        jest.spyOn(AppContext, 'useOppfolgingContext').mockImplementation(() => useFetchOppfolging);
-
-        const wrapper = shallow(<AlertStripeContainer />);
-        expect(wrapper.matchesElement(<KanIkkeVarsles erVeileder={false} />)).toBeTruthy();
-    });
-    test('Bruker kan ikke varsles viser en advarsel - veileder', () => {
-        useFetchOppfolging.data.underOppfolging = true;
-        useFetchOppfolging.data.reservasjonKRR = false;
+        useFetchOppfolging.data.kanVarsles = true;
 
         jest.spyOn(AppContext, 'useUserInfoContext').mockImplementation(() => veileder);
         jest.spyOn(AppContext, 'useOppfolgingContext').mockImplementation(() => useFetchOppfolging);
 
         const wrapper = shallow(<AlertStripeContainer />);
-        expect(wrapper.matchesElement(<KanIkkeVarsles erVeileder={true} />)).toBeTruthy();
+        expect(wrapper.isEmptyRender()).toBeTruthy();
+    });
+    test('ingen varsler for gyldig status - bruker. ', () => {
+        useFetchOppfolging.data.underOppfolging = true;
+        useFetchOppfolging.data.reservasjonKRR = false;
+        useFetchOppfolging.data.kanVarsles = true;
+
+        jest.spyOn(AppContext, 'useUserInfoContext').mockImplementation(() => bruker);
+        jest.spyOn(AppContext, 'useOppfolgingContext').mockImplementation(() => useFetchOppfolging);
+
+        const wrapper = shallow(<AlertStripeContainer />);
+        expect(wrapper.isEmptyRender()).toBeTruthy();
     });
 });
