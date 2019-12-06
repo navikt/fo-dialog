@@ -4,7 +4,7 @@ import DialogPreview from './DialogPreview';
 import { DialogData } from '../../utils/Typer';
 import { useDialogContext } from '../Provider';
 import { useParams } from 'react-router';
-import styles from './DialogListe.module.less';
+import styles from './DialogOversikt.module.less';
 
 export function DialogListe() {
     const dialoger = useDialogContext();
@@ -14,7 +14,7 @@ export function DialogListe() {
     const sortedOppfolgingsData = dialogData.sort((a, b) => sortDialoger(a, b));
 
     return (
-        <div className={styles.listeContainer}>
+        <div className={styles.dialogListe}>
             {sortedOppfolgingsData.map(dialog => (
                 <DialogPreview dialog={dialog} key={dialog.id} valgtDialogId={dialogId} />
             ))}

@@ -4,7 +4,7 @@ import DialogOverviewHeader from './NyDialogLink';
 import { useDialogContext } from '../Provider';
 import { useParams } from 'react-router';
 import classNames from 'classnames';
-import styles from './DialogListe.module.less';
+import styles from './DialogOversikt.module.less';
 import useKansendeMelding from '../../utils/UseKanSendeMelding';
 import InfoVedIngenDialoger from '../InfoVedIngenDialoger';
 import DialogListe from './DialogListe';
@@ -16,7 +16,7 @@ export function DialogOversikt() {
     const dialogData = hasData(dialoger) ? dialoger.data : [];
     const { dialogId } = useParams();
 
-    const visningCls = dialogId ? classNames(styles.dialogListe, styles.dialogValgt) : styles.dialogListe;
+    const visningCls = dialogId ? classNames(styles.dialogOversikt, styles.dialogValgt) : styles.dialogOversikt;
 
     return (
         <div className={visningCls}>
