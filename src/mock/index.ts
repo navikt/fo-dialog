@@ -34,7 +34,7 @@ mock.post('/veilarboppfolging/api/oppfolging/settDigital', {});
 
 mock.get('/veilarbdialog/api/dialog', dialoger);
 
-mock.post('/veilarbdialog/api/dialog/ny', ({ body }) => opprettEllerOppdaterDialog(body));
+mock.post('/veilarbdialog/api/dialog', ({ body }) => opprettEllerOppdaterDialog(body));
 
 mock.put('/veilarbdialog/api/dialog/:dialogId/les', ({ pathParams }) => lesDialog(pathParams.dialogId));
 

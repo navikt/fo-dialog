@@ -67,7 +67,7 @@ function NyDialog() {
                 overskrift: tema.input.value,
                 tekst: melding.input.value
             };
-            fetchData<DialogData>('/veilarbdialog/api/dialog/ny', {
+            fetchData<DialogData>('/veilarbdialog/api/dialog', {
                 method: 'post',
                 body: JSON.stringify(nyDialogData)
             })
