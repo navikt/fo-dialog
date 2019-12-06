@@ -10,6 +10,7 @@ import {
     ingenOppfPerioder,
     hentFraSessionStorage,
     brukerKanIkkeVarsles,
+    harIngenDialoger,
     BRUKER_TYPE
 } from './sessionstorage';
 import './DemoDashboard.less';
@@ -80,6 +81,11 @@ function DemoDashboard() {
                         label: 'Bruker kan ikke varsles',
                         id: SessionStorageElement.KAN_IKKE_VARSLES,
                         checked: brukerKanIkkeVarsles()
+                    },
+                    {
+                        label: 'Ingen dialoger',
+                        id: SessionStorageElement.INGEN_DIALOGER,
+                        checked: harIngenDialoger()
                     }
                 ]}
                 onChange={endreTilstand}
