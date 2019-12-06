@@ -68,7 +68,7 @@ export function DialogInputBox(props: Props) {
                 overskrift: dialg.overskrift,
                 tekst: melding.input.value
             });
-            fetchData<DialogData>('/veilarbdialog/api/dialog/ny', {
+            fetchData<DialogData>('/veilarbdialog/api/dialog', {
                 method: 'POST',
                 body
             })

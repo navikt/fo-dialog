@@ -19,7 +19,7 @@ export function Dialog() {
 
     useEffect(() => {
         if (valgtDialog && !valgtDialog.lest) {
-            fetchData(`/veilarbdialog/api/dialog/${valgtDialog.id}/lest`, {
+            fetchData(`/veilarbdialog/api/dialog/${valgtDialog.id}/les`, {
                 method: 'PUT'
             }).then(() => dialoger.rerun());
         }
