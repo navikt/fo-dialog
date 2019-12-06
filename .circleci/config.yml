@@ -18,3 +18,13 @@ workflows:
           filters:
             branches:
               only: dev
+
+      - pus/bygg-og-deploy-frontend:
+          name: deploy-prod
+          requires:
+            - test
+          context: pus
+          filepath: ./nais-fss.yaml,./nais-sbs.yaml
+          filters:
+            branches:
+              only: master

@@ -3,26 +3,21 @@ import { DialogData } from '../../utils/Typer';
 import { Aktivitet, AktivitetTypes, ArenaAktivitet, ArenaAktivitetTypes } from '../../utils/AktivitetTypes';
 import { Undertekst, Undertittel } from 'nav-frontend-typografi';
 
-import UseFetch from '../../utils/UseFetch';
 import { LenkepanelBase } from 'nav-frontend-lenkepanel';
 import { formaterDate, getKlokkeslett } from '../../utils/Date';
 import { aktivitetLenke } from './Aktivitetskort';
 import styles from './AktivitetskortPreview.module.less';
 import { getTypeText } from './TextUtils';
+import { useFindAktivitet } from '../../api/UseAktivitet';
 
 interface Props {
     dialog: DialogData;
 }
 
 export function AktivitetskortPreview(props: Props) {
-    const fetch = UseFetch<Aktivitet[]>('/veilarbaktivitet/api/aktivitet');
-    const aktiviteter = fetch.data;
+    const findAktivitet = useFindAktivitet();
 
-    if (!aktiviteter || !props.dialog.aktivitetId) {
-        return null;
-    }
-
-    const aktivitet = aktiviteter.find(aktivitet => aktivitet.id === props.dialog.aktivitetId);
+    const aktivitet = findAktivitet(props.dialog.aktivitetId);
     if (!aktivitet) {
         return null;
     }

@@ -3,6 +3,7 @@ import { Bruker, DialogData, OppfolgingData } from '../utils/Typer';
 import NavFrontendSpinner from 'nav-frontend-spinner';
 import useFetch, { FetchResult, Status, isPending, hasError, hasData } from '@nutgaard/use-fetch';
 import { Action, initalState, reducer, ViewState } from './ViewState';
+import { useFindAktivitet } from '../api/UseAktivitet';
 
 export const UserInfoContext = React.createContext<Bruker | null>(null);
 export const OppfolgingContext = React.createContext<FetchResult<OppfolgingData>>({
@@ -40,10 +41,11 @@ export function Provider(props: PropsWithChildren<{}>) {
     const bruker = useFetch<Bruker>('/veilarboppfolging/api/oppfolging/me');
     const oppfolgingData = useFetch<OppfolgingData>('/veilarboppfolging/api/oppfolging');
     const dialoger = useFetch<DialogData[]>('/veilarbdialog/api/dialog');
-
     const [viewState, dispatch] = useReducer(reducer, initalState);
 
-    if (isPending(bruker) || isPending(oppfolgingData) || isPending(dialoger)) {
+    useFindAktivitet();
+
+    if (isPending(bruker, false) || isPending(oppfolgingData, false) || isPending(dialoger, false)) {
         return <NavFrontendSpinner />;
     } else if (hasError(bruker) || hasError(oppfolgingData) || hasError(dialoger)) {
         return <p>Kunne ikke laste data fra baksystemer. Prøv igjen senere</p>;
