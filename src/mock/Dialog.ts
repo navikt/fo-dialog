@@ -1,6 +1,6 @@
 import { DialogData, HenvendelseData, NyDialogMeldingData } from '../utils/Typer';
 import { rndId } from './Utils';
-import { JSONArray, JSONObject, ResponseData } from 'yet-another-fetch-mock';
+import { JSONArray, JSONObject, ResponseUtils } from 'yet-another-fetch-mock';
 import bruker from './Bruker';
 
 const dialoger: DialogData[] & JSONArray = [
@@ -250,11 +250,11 @@ const dialoger: DialogData[] & JSONArray = [
     }
 ];
 
-export function lesDialog(dialogId: string): Promise<ResponseData> {
-    const dialog = dialoger.find(dialog => dialog.id === dialogId);
+export function lesDialog(dialogId: string) {
+    const dialog: any = dialoger.find(dialog => dialog.id === dialogId);
     if (dialog) {
         dialog.lest = true;
-        return Promise.resolve({ status: 200 });
+        return ResponseUtils.jsonPromise(dialog);
     }
     return Promise.resolve({ status: 404 });
 }

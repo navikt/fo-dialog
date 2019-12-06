@@ -8,6 +8,7 @@ import DialogInputBoxVisible from './DialogInputBox';
 import useKansendeMelding from '../../utils/UseKanSendeMelding';
 
 import './Dialog.less';
+import { fetchData } from '../../utils/Fetch';
 
 export function Dialog() {
     const kanSendeMelding = useKansendeMelding();
@@ -18,12 +19,8 @@ export function Dialog() {
 
     useEffect(() => {
         if (valgtDialog && !valgtDialog.lest) {
-            fetch('/veilarbdialog/api/dialog/lest', {
-                method: 'PUT',
-                body: JSON.stringify({
-                    lest: true,
-                    dialogId: valgtDialog.id
-                })
+            fetchData(`/veilarbdialog/api/dialog/${valgtDialog.id}/lest`, {
+                method: 'PUT'
             }).then(() => dialoger.rerun());
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
