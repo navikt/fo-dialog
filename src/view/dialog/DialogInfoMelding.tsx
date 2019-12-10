@@ -2,8 +2,8 @@ import React from 'react';
 import { hasData } from '@nutgaard/use-fetch';
 import { useDialogContext } from '../Provider';
 import InfoVedIngenDialoger from '../InfoVedIngenDialoger';
-import { DeviceType } from '../../felleskomponenter/VisibleIfDeviceHoc';
 import DialogIkkeValgt from '../DialogIkkeValgt';
+import styles from './DialogInfoMelding.module.less';
 
 export default function DialogInfoMelding() {
     const dialoger = useDialogContext();
@@ -11,8 +11,8 @@ export default function DialogInfoMelding() {
 
     return (
         <>
-            <InfoVedIngenDialoger visible={!harDialoger} visibleFor={[DeviceType.desktop, DeviceType.tablet]} />
-            <DialogIkkeValgt visible={harDialoger} visibleFor={[DeviceType.desktop, DeviceType.tablet]} />
+            <InfoVedIngenDialoger className={styles.info} visible={!harDialoger} />
+            <DialogIkkeValgt className={styles.info} visible={harDialoger} />
         </>
     );
 }

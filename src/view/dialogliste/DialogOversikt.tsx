@@ -8,7 +8,6 @@ import styles from './DialogOversikt.module.less';
 import useKansendeMelding from '../../utils/UseKanSendeMelding';
 import InfoVedIngenDialoger from '../InfoVedIngenDialoger';
 import DialogListe from './DialogListe';
-import { DeviceType } from '../../felleskomponenter/VisibleIfDeviceHoc';
 
 export function DialogOversikt() {
     const kanSendeMelding = useKansendeMelding();
@@ -21,7 +20,7 @@ export function DialogOversikt() {
     return (
         <div className={visningCls}>
             <DialogOverviewHeader visible={kanSendeMelding} />
-            <InfoVedIngenDialoger visible={dialogData.length === 0} visibleFor={[DeviceType.mobile]} />
+            <InfoVedIngenDialoger className={styles.info} visible={dialogData.length === 0} />
             <DialogListe />
         </div>
     );

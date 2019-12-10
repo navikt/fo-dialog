@@ -1,12 +1,16 @@
 import React from 'react';
 import Veilederpanel from 'nav-frontend-veilederpanel';
 import styles from './InfoVedIngenDialoger.module.less';
-import { VisibleIfDeviceHoc } from '../felleskomponenter/VisibleIfDeviceHoc';
 import { visibleIfHoc } from '../felleskomponenter/VisibleIfHoc';
+import classNames from 'classnames';
 
-function InfoVedIngenDialoger() {
+interface PropTypes {
+    className: string;
+}
+
+function InfoVedIngenDialoger(props: PropTypes) {
     return (
-        <div className={styles.ingenDialoger}>
+        <div className={classNames(props.className, styles.ingenDialoger)}>
             <Veilederpanel
                 type={'plakat'}
                 kompakt
@@ -84,5 +88,4 @@ function InfoVedIngenDialoger() {
     );
 }
 
-const visibleIf = visibleIfHoc(InfoVedIngenDialoger);
-export default VisibleIfDeviceHoc(visibleIf);
+export default visibleIfHoc(InfoVedIngenDialoger);
