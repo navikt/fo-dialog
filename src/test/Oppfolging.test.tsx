@@ -1,6 +1,6 @@
 import React from 'react';
-import { mount, shallow } from 'enzyme';
-import { MemoryRouter, RouteComponentProps } from 'react-router';
+import { mount } from 'enzyme';
+import { MemoryRouter } from 'react-router';
 import * as AppContext from '../view/Provider';
 import { Dialog } from '../view/dialog/Dialog';
 import { Bruker, DialogData, OppfolgingData, PeriodeData } from '../utils/Typer';
@@ -14,6 +14,7 @@ import { Checkbox } from 'nav-frontend-skjema';
 import { FetchResult, Status } from '@nutgaard/use-fetch';
 import '../utils/SetupEnzyme';
 import DialogContainer from '../view/dialog/DialogContainer';
+import DialogOversikt from '../view/dialogliste/DialogOversikt';
 
 const userInfo: Bruker = { id: '010101', erVeileder: true, erBruker: false };
 const oppfPerioder: PeriodeData[] = [];
@@ -138,7 +139,7 @@ describe('<DialogContainer/>', () => {
         jest.spyOn(AppContext, 'useDialogContext').mockImplementation(() => useFetchDialoger);
         const wrapper = mount(
             <MemoryRouter>
-                <DialogListe />
+                <DialogOversikt />
             </MemoryRouter>
         );
         expect(wrapper.find(NyDialogLink).exists()).toBeTruthy();

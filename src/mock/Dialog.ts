@@ -2,6 +2,7 @@ import { DialogData, HenvendelseData, NyDialogMeldingData } from '../utils/Typer
 import { rndId } from './Utils';
 import { JSONArray, JSONObject, ResponseUtils } from 'yet-another-fetch-mock';
 import bruker from './Bruker';
+import { harIngenDialoger } from './demo/sessionstorage';
 
 const dialoger: DialogData[] & JSONArray = [
     {
@@ -322,4 +323,4 @@ export function setFerdigBehandlet(dialogId: string, ferdigBehandlet: boolean) {
     }
     return dialog as DialogData & JSONObject;
 }
-export default dialoger;
+export default harIngenDialoger() ? [] : dialoger;
