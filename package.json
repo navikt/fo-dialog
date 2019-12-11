@@ -1,7 +1,48 @@
 {
     "name": "arbeidsrettet-dialog",
     "version": "1.0.0",
-    "private": true,
+    "scripts": {
+        "start": "cross-env REACT_APP_MOCK=true craco start",
+        "build": "cross-env REACT_APP_MOCK=false craco build",
+        "test": "craco test",
+        "test:coverage": "npm test -- --coverage --watchAll=false",
+        "eject": "craco eject",
+        "heroku-serve": "serve -s build -l $PORT",
+        "heroku-postbuild": "cross-env REACT_APP_MOCK=true craco build",
+        "lint": "echo \"Not implemented\""
+    },
+    "husky": {
+        "hooks": {
+            "pre-commit": "lint-staged",
+            "commit-msg": "node commit-message-checker.js"
+        }
+    },
+    "lint-staged": {
+        "*.{js,ts,tsx,json,less,css,md}": [
+            "prettier --write",
+            "git add"
+        ]
+    },
+    "eslintConfig": {
+        "extends": "react-app"
+    },
+    "jest": {
+        "snapshotSerializers": [
+            "enzyme-to-json/serializer"
+        ]
+    },
+    "browserslist": {
+        "production": [
+            ">0.2%",
+            "not dead",
+            "not op_mini all"
+        ],
+        "development": [
+            "last 1 chrome version",
+            "last 1 firefox version",
+            "last 1 safari version"
+        ]
+    },
     "dependencies": {
         "@navikt/navspa": "^1.0.3",
         "babel-polyfill": "^6.26.0",
@@ -51,48 +92,6 @@
         "react-router-dom": "^5.1.2",
         "react-scripts": "3.2.0",
         "typescript": "^3.7.2"
-    },
-    "husky": {
-        "hooks": {
-            "pre-commit": "lint-staged",
-            "commit-msg": "node commit-message-checker.js"
-        }
-    },
-    "lint-staged": {
-        "*.{js,ts,tsx,json,less,css,md}": [
-            "prettier --write",
-            "git add"
-        ]
-    },
-    "scripts": {
-        "start": "cross-env REACT_APP_MOCK=true craco start",
-        "build": "cross-env REACT_APP_MOCK=false craco build",
-        "test": "craco test",
-        "test:coverage": "npm test -- --coverage --watchAll=false",
-        "eject": "craco eject",
-        "heroku-serve": "serve -s build -l $PORT",
-        "heroku-postbuild": "cross-env REACT_APP_MOCK=true craco build",
-        "lint": "echo \"Not implemented\""
-    },
-    "eslintConfig": {
-        "extends": "react-app"
-    },
-    "jest": {
-        "snapshotSerializers": [
-            "enzyme-to-json/serializer"
-        ]
-    },
-    "browserslist": {
-        "production": [
-            ">0.2%",
-            "not dead",
-            "not op_mini all"
-        ],
-        "development": [
-            "last 1 chrome version",
-            "last 1 firefox version",
-            "last 1 safari version"
-        ]
     },
     "devDependencies": {
         "@craco/craco": "^5.2.3",
