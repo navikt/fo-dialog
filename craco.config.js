@@ -13,8 +13,7 @@ const removeCssHashPlugin = {
             }
 
             if (options.filename && options.filename.endsWith('.css')) {
-                options.filename = 'static/css/[name].css';
-                options.chunkFilename = 'static/css/[name].chunk.css';
+                options.moduleFilename = () => 'static/css/[name].css';
             }
         });
         return webpackConfig;
@@ -43,6 +42,15 @@ module.exports = {
     ],
     webpack: {
         configure: {
+            optimization: {
+                splitChunks: {
+                    cacheGroups: {
+                        default: false,
+                        vendors: false
+                    }
+                },
+                runtimeChunk: false
+            },
             output: {
                 path: BUILD_PATH,
                 filename: 'static/js/[name].js',
