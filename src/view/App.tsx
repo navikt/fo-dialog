@@ -11,8 +11,10 @@ interface Props {
 }
 
 function App(props: Props) {
+    const baspath = props.fnr ? `/veilarbpersonflatefs/${props.fnr}/dialog/` : process.env.PUBLIC_URL;
+
     return (
-        <Router>
+        <Router basename={baspath}>
             <div className="app">
                 <AppBanner hidden={!!props.fnr} />
                 <Provider fnr={props.fnr}>
