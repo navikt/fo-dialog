@@ -6,12 +6,16 @@ import { BrowserRouter as Router } from 'react-router-dom';
 import { Provider } from './Provider';
 import AppBody from './AppBody';
 
-function App() {
+interface Props {
+    fnr?: string;
+}
+
+function App(props: Props) {
     return (
         <Router>
             <div className="app">
-                <AppBanner />
-                <Provider>
+                <AppBanner hidden={!!props.fnr} />
+                <Provider fnr={props.fnr}>
                     <StatusAdvarsel />
                     <AppBody />
                 </Provider>

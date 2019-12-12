@@ -8,7 +8,7 @@ import styles from './Aktivitetskort.module.less';
 import { getAktivitetIngress, getStatusText, getTypeText } from './TextUtils';
 import { useParams } from 'react-router';
 import { useDialogContext } from '../Provider';
-import { useFindAktivitet } from '../../api/UseAktivitet';
+import { useFetchAktivitetMedFnrContext } from '../../api/UseAktivitet';
 
 export const aktivitetLenke = (aktivitetId: string) => `/aktivitetsplan/aktivitet/vis/${aktivitetId}`;
 
@@ -16,7 +16,7 @@ export function Aktivitetskort() {
     const dialoger = useDialogContext();
     const dialogData = hasData(dialoger) ? dialoger.data : [];
     const { dialogId } = useParams();
-    const findAktivitet = useFindAktivitet();
+    const findAktivitet = useFetchAktivitetMedFnrContext();
 
     const dialog = dialogData.find(dialog => dialog.id === dialogId);
 

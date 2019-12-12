@@ -22,6 +22,10 @@ export function fetchData<T>(url: string, config: RequestInit = {}): Promise<T> 
         .then(toJson);
 }
 
+export function fnrQuery(fnr?: string): string {
+    return fnr ? `?fnr=${fnr}` : '';
+}
+
 export function sjekkStatuskode(response: Response) {
     if (response.status >= 200 && response.status < 300 && response.ok && !response.redirected) {
         return response;

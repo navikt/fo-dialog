@@ -8,14 +8,14 @@ import { formaterDate, getKlokkeslett } from '../../utils/Date';
 import { aktivitetLenke } from './Aktivitetskort';
 import styles from './AktivitetskortPreview.module.less';
 import { getTypeText } from './TextUtils';
-import { useFindAktivitet } from '../../api/UseAktivitet';
+import { useFetchAktivitetMedFnrContext } from '../../api/UseAktivitet';
 
 interface Props {
     dialog: DialogData;
 }
 
 export function AktivitetskortPreview(props: Props) {
-    const findAktivitet = useFindAktivitet();
+    const findAktivitet = useFetchAktivitetMedFnrContext();
 
     const aktivitet = findAktivitet(props.dialog.aktivitetId);
     if (!aktivitet) {

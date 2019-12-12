@@ -73,7 +73,7 @@ describe('<AktivitetskortPreview />', () => {
             arbeidsgiver: 'Testesen'
         };
 
-        jest.spyOn(UseAktivitet, 'useFindAktivitet').mockReturnValue((a: any) => {
+        jest.spyOn(UseAktivitet, 'useFetchAktivitetMedFnrContext').mockReturnValue((a: any) => {
             return a === '123' ? aktivitet : undefined;
         });
 

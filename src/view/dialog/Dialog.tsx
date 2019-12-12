@@ -2,13 +2,13 @@ import React, { useEffect } from 'react';
 import { hasData } from '@nutgaard/use-fetch';
 import { HenvendelseList } from '../henvendelse/HenvendelseList';
 import { DialogHeader } from './DialogHeader';
-import { useDialogContext } from '../Provider';
+import { useDialogContext, useFnrContext } from '../Provider';
 import { useParams } from 'react-router';
 import DialogInputBoxVisible from './DialogInputBox';
 import useKansendeMelding from '../../utils/UseKanSendeMelding';
 
 import './Dialog.less';
-import { fetchData } from '../../utils/Fetch';
+import { fetchData, fnrQuery } from '../../utils/Fetch';
 
 export function Dialog() {
     const kanSendeMelding = useKansendeMelding();
@@ -16,10 +16,12 @@ export function Dialog() {
     const dialogData = hasData(dialoger) ? dialoger.data : [];
     const { dialogId } = useParams();
     const valgtDialog = dialogData.find(dialog => dialog.id === dialogId);
+    const fnr = useFnrContext();
+    const query = fnrQuery(fnr);
 
     useEffect(() => {
         if (valgtDialog && !valgtDialog.lest) {
-            fetchData(`/veilarbdialog/api/dialog/${valgtDialog.id}/les`, {
+            fetchData(`/veilarbdialog/api/dialog/${valgtDialog.id}/les${query}`, {
                 method: 'PUT'
             }).then(() => dialoger.rerun());
         }
