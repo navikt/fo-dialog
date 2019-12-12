@@ -3,8 +3,8 @@ import { Innholdstittel, Normaltekst } from 'nav-frontend-typografi';
 import { Input } from 'nav-frontend-skjema';
 import UseFieldState from '../../utils/UseFieldState';
 import { DialogData, NyDialogMeldingData } from '../../utils/Typer';
-import { fetchData } from '../../utils/Fetch';
-import { useDialogContext, useUserInfoContext } from '../Provider';
+import { fetchData, fnrQuery } from '../../utils/Fetch';
+import { useDialogContext, useFnrContext, useUserInfoContext } from '../Provider';
 import { useHistory } from 'react-router';
 import HenvendelseInput from '../henvendelse/HenvendelseInput';
 import DialogCheckboxesVisible from './DialogCheckboxes';
@@ -45,6 +45,8 @@ function NyDialog() {
     const bruker = useUserInfoContext();
     const history = useHistory();
     const kanSendeMeldign = useKansendeMelding();
+    const fnr = useFnrContext();
+    const query = fnrQuery(fnr);
 
     const [ferdigBehandlet, setFerdigBehandlet] = useState(true);
     const [venterPaSvar, setVenterPaSvar] = useState(false);
@@ -67,18 +69,18 @@ function NyDialog() {
                 overskrift: tema.input.value,
                 tekst: melding.input.value
             };
-            fetchData<DialogData>('/veilarbdialog/api/dialog', {
+            fetchData<DialogData>(`/veilarbdialog/api/dialog${query}`, {
                 method: 'post',
                 body: JSON.stringify(nyDialogData)
             })
                 .then((dialog: DialogData) => {
                     if (bruker && bruker.erVeileder) {
                         const updateFerdigbehandlet = fetchData<DialogData>(
-                            `/veilarbdialog/api/dialog/${dialog.id}/ferdigbehandlet/${ferdigBehandlet}`,
+                            `/veilarbdialog/api/dialog/${dialog.id}/ferdigbehandlet/${ferdigBehandlet}${query}`,
                             { method: 'put' }
                         );
                         const updateVenterPaSvar = fetchData(
-                            `/veilarbdialog/api/dialog/${dialog.id}/venter_pa_svar/${venterPaSvar}`,
+                            `/veilarbdialog/api/dialog/${dialog.id}/venter_pa_svar/${venterPaSvar}${query}`,
                             { method: 'put' }
                         );
                         return Promise.all([updateFerdigbehandlet, updateVenterPaSvar]).then(() => dialog);

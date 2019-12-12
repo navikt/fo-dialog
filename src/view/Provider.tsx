@@ -1,10 +1,12 @@
-import React, { PropsWithChildren, useContext } from 'react';
+import React, { useContext } from 'react';
 import { Bruker, DialogData, OppfolgingData } from '../utils/Typer';
 import NavFrontendSpinner from 'nav-frontend-spinner';
-import useFetch, { FetchResult, Status, isPending, hasError, hasData } from '@nutgaard/use-fetch';
-import { useFindAktivitet } from '../api/UseAktivitet';
+import useFetch, { FetchResult, hasData, hasError, isPending, Status } from '@nutgaard/use-fetch';
+import { useFetchAktivitet } from '../api/UseAktivitet';
+import { fnrQuery } from '../utils/Fetch';
 
 export const UserInfoContext = React.createContext<Bruker | null>(null);
+export const FNRContext = React.createContext<string | undefined>(undefined);
 export const OppfolgingContext = React.createContext<FetchResult<OppfolgingData>>({
     status: Status.INIT,
     statusCode: 0,
@@ -18,16 +20,24 @@ export const DialogContext = React.createContext<FetchResult<DialogData[]>>({
 export const useUserInfoContext = () => useContext(UserInfoContext);
 export const useOppfolgingContext = () => useContext(OppfolgingContext);
 export const useDialogContext = () => useContext(DialogContext);
+export const useFnrContext = () => useContext(FNRContext);
 
 export function dataOrUndefined<T>(context: FetchResult<T>): T | undefined {
     return hasData(context) ? context.data : undefined;
 }
 
-export function Provider(props: PropsWithChildren<{}>) {
+interface Props {
+    fnr?: string;
+    children: React.ReactNode;
+}
+
+export function Provider(props: Props) {
+    const query = fnrQuery(props.fnr);
+
     const bruker = useFetch<Bruker>('/veilarboppfolging/api/oppfolging/me');
-    const oppfolgingData = useFetch<OppfolgingData>('/veilarboppfolging/api/oppfolging');
-    const dialoger = useFetch<DialogData[]>('/veilarbdialog/api/dialog');
-    useFindAktivitet();
+    const oppfolgingData = useFetch<OppfolgingData>('/veilarboppfolging/api/oppfolging' + query);
+    const dialoger = useFetch<DialogData[]>('/veilarbdialog/api/dialog' + query);
+    useFetchAktivitet(props.fnr);
 
     if (isPending(bruker, false) || isPending(oppfolgingData, false) || isPending(dialoger, false)) {
         return <NavFrontendSpinner />;
@@ -38,7 +48,9 @@ export function Provider(props: PropsWithChildren<{}>) {
     return (
         <DialogContext.Provider value={dialoger}>
             <OppfolgingContext.Provider value={oppfolgingData}>
-                <UserInfoContext.Provider value={bruker.data}>{props.children}</UserInfoContext.Provider>
+                <UserInfoContext.Provider value={bruker.data}>
+                    <FNRContext.Provider value={props.fnr}>{props.children}</FNRContext.Provider>
+                </UserInfoContext.Provider>
             </OppfolgingContext.Provider>
         </DialogContext.Provider>
     );

@@ -10,7 +10,7 @@ import WrapInReactLink from '../../felleskomponenter/WrapInReactLink';
 import classNames from 'classnames';
 
 import './DialogPreview.less';
-import { useFindAktivitet } from '../../api/UseAktivitet';
+import { useFetchAktivitetMedFnrContext } from '../../api/UseAktivitet';
 
 interface IkonProps {
     dialog: DialogData;
@@ -40,7 +40,7 @@ function DialogPreviewIkon(props: IkonProps) {
 function DialogPreview(props: Props) {
     const { dialog, valgtDialogId } = props;
     const { id, sisteDato, aktivitetId, lest, overskrift, sisteTekst } = dialog;
-    const findAktivitet = useFindAktivitet();
+    const findAktivitet = useFetchAktivitetMedFnrContext();
 
     const datoString = !!sisteDato ? formaterDate(sisteDato) : '';
     const aktivitet = findAktivitet(aktivitetId);
