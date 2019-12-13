@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { DialogData } from '../../utils/Typer';
 import { visibleIfHoc } from '../../felleskomponenter/VisibleIfHoc';
-import { useDialogContext, useFnrContext, useUserInfoContext } from '../Provider';
+import { useDialogContext, useFnrContext, useViewContext, useUserInfoContext } from '../Provider';
 import { useParams } from 'react-router';
 import DialogCheckboxesVisible from './DialogCheckboxes';
 import { hasData } from '@nutgaard/use-fetch';
@@ -10,6 +10,7 @@ import useFormstate from '@nutgaard/use-formstate';
 import { nyHenvendelse, oppdaterFerdigBehandlet, oppdaterVenterPaSvar } from '../../api/dialog';
 import Textarea from '../../felleskomponenter/input/textarea';
 import { Hovedknapp } from 'nav-frontend-knapper';
+import { sendtNyHenvendelse } from '../ViewState';
 
 const AlertStripeFeilVisible = visibleIfHoc(AlertStripeFeil);
 
@@ -38,6 +39,8 @@ export function DialogInputBox(props: Props) {
     const dialogData = hasData(dialoger) ? dialoger.data : [];
     const { dialogId } = useParams();
     const fnr = useFnrContext();
+
+    const { viewState, setViewState } = useViewContext();
 
     const valgtDialog = dialogData.find(dialog => dialog.id === dialogId);
 
@@ -68,6 +71,7 @@ export function DialogInputBox(props: Props) {
             .then(dialog => {
                 setNoeFeilet(false);
                 state.reinitialize(initalValues);
+                setViewState(sendtNyHenvendelse(viewState));
 
                 //Todo this should be a promise
                 return dialoger.rerun();
