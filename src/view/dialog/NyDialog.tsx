@@ -16,7 +16,7 @@ import { Link } from 'react-router-dom';
 
 import './NyDialog.less';
 import useKansendeMelding from '../../utils/UseKanSendeMelding';
-import { ViewAction } from '../ViewState';
+import { endreDialogSomVises, sendtNyDialog } from '../ViewState';
 
 const AlertStripeFeilVisible = visibleIfHoc(AlertStripeFeil);
 
@@ -49,14 +49,14 @@ function NyDialog() {
     const fnr = useFnrContext();
     const query = fnrQuery(fnr);
 
-    const { dispatch } = useViewContext();
+    const { viewState, setViewState } = useViewContext();
 
     const [ferdigBehandlet, setFerdigBehandlet] = useState(true);
     const [venterPaSvar, setVenterPaSvar] = useState(false);
 
     useEffect(() => {
-        dispatch({ type: ViewAction.changeDialogInView });
-    }, [dispatch]);
+        setViewState(endreDialogSomVises());
+    }, [setViewState]);
 
     if (!kanSendeMeldign) {
         return <div className="dialog dialog-new" />;
@@ -97,7 +97,7 @@ function NyDialog() {
                 .then(
                     function(dialog: DialogData) {
                         dialoger.rerun();
-                        dispatch({ type: ViewAction.newDialog });
+                        setViewState(sendtNyDialog(viewState));
                         history.push('/' + dialog.id);
                     },
                     function(error) {

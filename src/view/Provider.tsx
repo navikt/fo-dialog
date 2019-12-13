@@ -1,10 +1,10 @@
-import React, { Dispatch, useContext, useReducer } from 'react';
+import React, { Dispatch, SetStateAction, useContext, useState } from 'react';
 import { Bruker, DialogData, OppfolgingData } from '../utils/Typer';
 import NavFrontendSpinner from 'nav-frontend-spinner';
 import useFetch, { FetchResult, hasData, hasError, isPending, Status } from '@nutgaard/use-fetch';
 import { useFetchAktivitet } from '../api/UseAktivitet';
 import { fnrQuery } from '../utils/Fetch';
-import { Action, initalState, reducer, ViewState } from './ViewState';
+import { initalState, ViewState } from './ViewState';
 
 export const UserInfoContext = React.createContext<Bruker | null>(null);
 export const FNRContext = React.createContext<string | undefined>(undefined);
@@ -20,13 +20,13 @@ export const DialogContext = React.createContext<FetchResult<DialogData[]>>({
 });
 
 interface ViewContextType {
-    state: ViewState;
-    dispatch: Dispatch<Action>;
+    viewState: ViewState;
+    setViewState: Dispatch<SetStateAction<ViewState>>;
 }
 
 export const ViewContext = React.createContext<ViewContextType>({
-    state: initalState,
-    dispatch: () => {}
+    viewState: initalState,
+    setViewState: () => {}
 });
 
 export const useUserInfoContext = () => useContext(UserInfoContext);
@@ -50,7 +50,7 @@ export function Provider(props: Props) {
     const bruker = useFetch<Bruker>('/veilarboppfolging/api/oppfolging/me');
     const oppfolgingData = useFetch<OppfolgingData>('/veilarboppfolging/api/oppfolging' + query);
     const dialoger = useFetch<DialogData[]>('/veilarbdialog/api/dialog' + query);
-    const [viewState, dispatch] = useReducer(reducer, initalState);
+    const [viewState, setState] = useState(initalState);
 
     useFetchAktivitet(props.fnr);
 
@@ -65,7 +65,7 @@ export function Provider(props: Props) {
             <OppfolgingContext.Provider value={oppfolgingData}>
                 <UserInfoContext.Provider value={bruker.data}>
                     <FNRContext.Provider value={props.fnr}>
-                        <ViewContext.Provider value={{ state: viewState, dispatch: dispatch }}>
+                        <ViewContext.Provider value={{ viewState: viewState, setViewState: setState }}>
                             {props.children}
                         </ViewContext.Provider>
                     </FNRContext.Provider>

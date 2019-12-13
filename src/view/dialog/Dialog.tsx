@@ -9,7 +9,7 @@ import useKansendeMelding from '../../utils/UseKanSendeMelding';
 
 import './Dialog.less';
 import { fetchData, fnrQuery } from '../../utils/Fetch';
-import { ViewAction } from '../ViewState';
+import { endreDialogSomVises } from '../ViewState';
 import DialogSendtBekreftelse from './DialogSendtBekreftelse';
 
 export function Dialog() {
@@ -21,10 +21,10 @@ export function Dialog() {
     const fnr = useFnrContext();
     const query = fnrQuery(fnr);
 
-    const { state, dispatch } = useViewContext();
+    const { viewState, setViewState } = useViewContext();
 
     useEffect(() => {
-        dispatch({ type: ViewAction.changeDialogInView, payload: dialogId });
+        setViewState(endreDialogSomVises(viewState, dialogId));
         if (valgtDialog && !valgtDialog.lest) {
             fetchData(`/veilarbdialog/api/dialog/${valgtDialog.id}/les${query}`, {
                 method: 'PUT'
@@ -39,7 +39,7 @@ export function Dialog() {
         <div className="dialog">
             <DialogHeader dialog={valgtDialog} />
             <HenvendelseList dialogData={valgtDialog} />
-            <DialogSendtBekreftelse viewState={state} dialog={valgtDialog} />
+            <DialogSendtBekreftelse viewState={viewState} dialog={valgtDialog} />
             <DialogInputBoxVisible key={valgtDialog.id} dialog={valgtDialog} visible={kanSendeMelding} />
         </div>
     );

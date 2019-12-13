@@ -9,7 +9,7 @@ import { useParams } from 'react-router';
 import DialogCheckboxesVisible from './DialogCheckboxes';
 import { hasData } from '@nutgaard/use-fetch';
 import { AlertStripeFeil } from 'nav-frontend-alertstriper';
-import { ViewAction } from '../ViewState';
+import { sendtNyHenvendelse } from '../ViewState';
 
 const AlertStripeFeilVisible = visibleIfHoc(AlertStripeFeil);
 
@@ -36,7 +36,7 @@ export function DialogInputBox(props: Props) {
     const fnr = useFnrContext();
     const query = fnrQuery(fnr);
 
-    const { dispatch } = useViewContext();
+    const { viewState, setViewState } = useViewContext();
 
     const valgtDialog = dialogData.find(dialog => dialog.id === dialogId);
 
@@ -83,7 +83,7 @@ export function DialogInputBox(props: Props) {
                     function(response) {
                         melding.reset();
                         console.log('Posted endret dialog!', response);
-                        dispatch({ type: ViewAction.newHenvendelse });
+                        setViewState(sendtNyHenvendelse(viewState));
                         dialoger.rerun();
                     },
                     function(error) {
