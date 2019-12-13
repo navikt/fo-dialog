@@ -1,10 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { Innholdstittel, Normaltekst } from 'nav-frontend-typografi';
 import useFormstate from '@nutgaard/use-formstate';
-import { useDialogContext, useFnrContext, useUserInfoContext } from '../Provider';
-import { Input } from 'nav-frontend-skjema';
-import { DialogData, NyDialogMeldingData } from '../../utils/Typer';
-import { fetchData, fnrQuery } from '../../utils/Fetch';
+import { useDialogContext, useFnrContext, useUserInfoContext, useViewContext } from '../Provider';
 import { useHistory } from 'react-router';
 import { AlertStripeFeil } from 'nav-frontend-alertstriper';
 import { visibleIfHoc } from '../../felleskomponenter/VisibleIfHoc';
@@ -58,8 +55,6 @@ function NyDialog() {
 
     const { viewState, setViewState } = useViewContext();
 
-    const [ferdigBehandlet, setFerdigBehandlet] = useState(true);
-    const [venterPaSvar, setVenterPaSvar] = useState(false);
     //TODO should be possible to set status when creating in the api ?
 
     useEffect(() => {

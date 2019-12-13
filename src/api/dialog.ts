@@ -18,7 +18,7 @@ function sendMelding(fnr: string | undefined, melding: string, tema?: string, di
         tekst: melding
     };
 
-    return fetchData<DialogData>(`/veilarbdialog/api/dialog/ny${query}`, {
+    return fetchData<DialogData>(`/veilarbdialog/api/dialog${query}`, {
         method: 'post',
         body: JSON.stringify(nyDialogData)
     });
