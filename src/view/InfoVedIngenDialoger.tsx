@@ -13,11 +13,11 @@ function InfoVedIngenDialoger(props: PropTypes) {
     return (
         <div className={classNames(props.className, styles.ingenDialoger)}>
             <Veilederpanel type={'plakat'} kompakt fargetema="suksess" svg={<img src={veilederIkon} alt="" />}>
-                Her kan du sende meldinger til veilederen din om arbeid og oppfølging. Klikk på "ny dialog" for å komme
-                i gang.
-                <br />
-                <br />
-                Du kan forvente svar i løpet av noen dager.
+                <span className={styles.avsnitt}>
+                    Her kan du sende meldinger til veilederen din om arbeid og oppfølging. Klikk på "ny dialog" for å
+                    komme i gang.
+                </span>
+                <span className={styles.avsnitt}>Du kan forvente svar i løpet av noen dager.</span>
             </Veilederpanel>
         </div>
     );
