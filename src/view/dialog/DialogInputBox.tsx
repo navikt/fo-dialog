@@ -2,9 +2,7 @@ import React, { useState } from 'react';
 import { DialogData } from '../../utils/Typer';
 import { visibleIfHoc } from '../../felleskomponenter/VisibleIfHoc';
 import { useDialogContext, useFnrContext, useViewContext, useUserInfoContext } from '../Provider';
-import { useParams } from 'react-router';
 import DialogCheckboxesVisible from './DialogCheckboxes';
-import { hasData } from '@nutgaard/use-fetch';
 import { AlertStripeFeil } from 'nav-frontend-alertstriper';
 import useFormstate from '@nutgaard/use-formstate';
 import { nyHenvendelse, oppdaterFerdigBehandlet, oppdaterVenterPaSvar } from '../../api/dialog';
@@ -36,22 +34,16 @@ export function DialogInputBox(props: Props) {
     const bruker = useUserInfoContext();
     const dialoger = useDialogContext();
     const [noeFeilet, setNoeFeilet] = useState(false);
-    const dialogData = hasData(dialoger) ? dialoger.data : [];
-    const { dialogId } = useParams();
     const fnr = useFnrContext();
 
     const { viewState, setViewState } = useViewContext();
 
-    const valgtDialog = dialogData.find(dialog => dialog.id === dialogId);
+    const valgtDialog = props.dialog;
 
-    const [ferdigBehandlet, setFerdigBehandlet] = useState(valgtDialog ? valgtDialog.ferdigBehandlet : true);
-    const [venterPaSvar, setVenterPaSvar] = useState(valgtDialog ? valgtDialog.venterPaSvar : false);
+    const [ferdigBehandlet, setFerdigBehandlet] = useState(valgtDialog.ferdigBehandlet);
+    const [venterPaSvar, setVenterPaSvar] = useState(valgtDialog.venterPaSvar);
 
     const state = validator(initalValues);
-
-    if (!valgtDialog) {
-        return null;
-    }
 
     const toggleFerdigBehandlet = (nyFerdigBehandletVerdi: boolean) => {
         setFerdigBehandlet(nyFerdigBehandletVerdi);
