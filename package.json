@@ -45,6 +45,7 @@
     },
     "dependencies": {
         "@navikt/navspa": "^1.0.3",
+        "@nutgaard/use-formstate": "^2.2.1",
         "babel-polyfill": "^6.26.0",
         "babel-runtime": "^6.26.0",
         "date-fns": "^1.30.1",

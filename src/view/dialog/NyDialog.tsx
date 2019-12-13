@@ -1,114 +1,80 @@
-import React, { FormEvent, useState } from 'react';
+import React, { useState } from 'react';
 import { Innholdstittel, Normaltekst } from 'nav-frontend-typografi';
-import { Input } from 'nav-frontend-skjema';
-import UseFieldState from '../../utils/UseFieldState';
-import { DialogData, NyDialogMeldingData } from '../../utils/Typer';
-import { fetchData, fnrQuery } from '../../utils/Fetch';
+import useFormstate from '@nutgaard/use-formstate';
 import { useDialogContext, useFnrContext, useUserInfoContext } from '../Provider';
 import { useHistory } from 'react-router';
-import HenvendelseInput from '../henvendelse/HenvendelseInput';
-import DialogCheckboxesVisible from './DialogCheckboxes';
-import Valideringsboks from './Valideringsboks';
 import { AlertStripeFeil } from 'nav-frontend-alertstriper';
 import { visibleIfHoc } from '../../felleskomponenter/VisibleIfHoc';
 import { VenstreChevron } from 'nav-frontend-chevron';
 import { Link } from 'react-router-dom';
-
-import './NyDialog.less';
 import useKansendeMelding from '../../utils/UseKanSendeMelding';
+import FormErrorSummary from '../../felleskomponenter/form-error-summary/FormErrorSummary';
+import Textarea from '../../felleskomponenter/input/textarea';
+import { Hovedknapp } from 'nav-frontend-knapper';
+import Input from '../../felleskomponenter/input/input';
+import { nyDialog, oppdaterFerdigBehandlet, oppdaterVenterPaSvar } from '../../api/dialog';
+import './NyDialog.less';
+import Checkbox from '../../felleskomponenter/input/checkbox';
+import { div as HiddenIfDiv } from '../../felleskomponenter/HiddenIfHoc';
 
 const AlertStripeFeilVisible = visibleIfHoc(AlertStripeFeil);
 
-function validerTema(tema: string): string | null {
+function validerTema(tema: string) {
     if (tema.trim().length === 0) {
         return 'Tema må ha innhold.';
-    } else {
-        return null;
     }
 }
 
-function validerMelding(melding: string): string | null {
+function validerMelding(melding: string) {
     if (melding.trim().length === 0) {
         return 'Du må fylle ut en melding.';
-    } else {
-        return null;
     }
 }
 
+const validator = useFormstate({
+    tema: validerTema,
+    melding: validerMelding,
+    venterPaSvarFraNAV: () => undefined,
+    venterPaSvar: () => undefined
+});
+
 function NyDialog() {
-    const tema = UseFieldState('', validerTema);
-    const melding = UseFieldState('', validerMelding);
-    const [submitfeil, setSubmitfeil] = useState<boolean>(false);
-    const [triedToSubmit, setTriedToSubmit] = useState<boolean>(false);
-    const [submitting, setSubmitting] = useState<boolean>(false);
     const dialoger = useDialogContext();
     const bruker = useUserInfoContext();
     const history = useHistory();
-    const kanSendeMeldign = useKansendeMelding();
+    const [noeFeilet, setNoeFeilet] = useState(false);
+    const kansendeMelding = useKansendeMelding();
     const fnr = useFnrContext();
-    const query = fnrQuery(fnr);
+    const state = validator({
+        tema: '',
+        melding: '',
+        venterPaSvarFraNAV: 'false',
+        venterPaSvar: 'false'
+    });
 
-    const [ferdigBehandlet, setFerdigBehandlet] = useState(true);
-    const [venterPaSvar, setVenterPaSvar] = useState(false);
+    //TODO should be possible to set status when creating in the api ?
 
-    if (!kanSendeMeldign) {
+    if (!kansendeMelding) {
         return <div className="dialog dialog-new" />;
     }
 
-    function handleSubmit(event: FormEvent) {
-        event.preventDefault();
-        setTriedToSubmit(true);
-        tema.validate();
-        melding.validate();
-
-        const harIngenFeil = !tema.error && !melding.error;
-        if (harIngenFeil) {
-            setSubmitting(true);
-            const nyDialogData: NyDialogMeldingData = {
-                dialogId: null,
-                overskrift: tema.input.value,
-                tekst: melding.input.value
-            };
-            fetchData<DialogData>(`/veilarbdialog/api/dialog${query}`, {
-                method: 'post',
-                body: JSON.stringify(nyDialogData)
+    const onSubmit = (data: { tema: string; melding: string; venterPaSvarFraNAV: string; venterPaSvar: string }) => {
+        const { tema, melding, venterPaSvar, venterPaSvarFraNAV } = data;
+        return nyDialog(fnr, melding, tema)
+            .then(dialog => {
+                if (bruker && bruker.erVeileder) {
+                    const ferdigPromise = oppdaterFerdigBehandlet(fnr, dialog.id, venterPaSvarFraNAV === 'false');
+                    const venterPromise = oppdaterVenterPaSvar(fnr, dialog.id, venterPaSvar === 'true');
+                    return Promise.all([ferdigPromise, venterPromise]).then(() => dialog);
+                }
+                return dialog;
             })
-                .then((dialog: DialogData) => {
-                    if (bruker && bruker.erVeileder) {
-                        const updateFerdigbehandlet = fetchData<DialogData>(
-                            `/veilarbdialog/api/dialog/${dialog.id}/ferdigbehandlet/${ferdigBehandlet}${query}`,
-                            { method: 'put' }
-                        );
-                        const updateVenterPaSvar = fetchData(
-                            `/veilarbdialog/api/dialog/${dialog.id}/venter_pa_svar/${venterPaSvar}${query}`,
-                            { method: 'put' }
-                        );
-                        return Promise.all([updateFerdigbehandlet, updateVenterPaSvar]).then(() => dialog);
-                    }
-                    return dialog;
-                })
-                .then(
-                    function(dialog: DialogData) {
-                        dialoger.rerun();
-                        history.push('/' + dialog.id);
-                    },
-                    function(error) {
-                        console.log('Failed posting the new dialog!', error);
-                        setSubmitfeil(true);
-                    }
-                )
-                .then(() => setSubmitting(false));
-        }
-    }
-
-    const toggleFerdigBehandlet = (nyFerdigBehandletVerdi: boolean) => {
-        setFerdigBehandlet(nyFerdigBehandletVerdi);
-        console.log('hei, toggleFerdigBehandlet');
-    };
-
-    const toggleVenterPaSvar = (nyVenterPaSvarVerdi: boolean) => {
-        setVenterPaSvar(nyVenterPaSvarVerdi);
-        console.log('venterpasvar', nyVenterPaSvarVerdi);
+            .then(dialog => {
+                setNoeFeilet(false);
+                dialoger.rerun();
+                history.push('/' + dialog.id);
+            })
+            .catch(() => setNoeFeilet(true));
     };
 
     return (
@@ -119,29 +85,42 @@ function NyDialog() {
                     Oversikt
                 </Link>
             </div>
-            <form onSubmit={handleSubmit} noValidate className="dialog-new__form">
+            <form onSubmit={state.onSubmit(onSubmit)} className="dialog-new__form">
                 <Innholdstittel className="dialog-new__tittel">Ny dialog</Innholdstittel>
                 <Normaltekst className="dialog-new__infotekst">
                     Her kan du skrive til din veileder om arbeid og oppfølging. Du vil få svar i løpet av noen dager.
                 </Normaltekst>
-                <Valideringsboks tema={tema} melding={melding} triedToSubmit={triedToSubmit} />
-                <Input
-                    id="temaIn"
-                    className="dialog-new__temafelt"
-                    label={'Tema:'}
-                    placeholder="Skriv her"
-                    {...tema.input}
-                    disabled={submitting}
-                />
-                <HenvendelseInput melding={melding} submitting={submitting} />
-                <DialogCheckboxesVisible
-                    toggleFerdigBehandlet={toggleFerdigBehandlet}
-                    toggleVenterPaSvar={toggleVenterPaSvar}
-                    ferdigBehandlet={ferdigBehandlet}
-                    venterPaSvar={venterPaSvar}
-                    visible={bruker!.erVeileder}
-                />
-                <AlertStripeFeilVisible visible={submitfeil}>
+                <FormErrorSummary submittoken={state.submittoken} errors={state.errors} />
+
+                <Input className="dialog-new__temafelt" label="Tema:" placeholder="Skriv her" {...state.fields.tema} />
+                <div className="skriv-melding">
+                    <Textarea
+                        label="Skriv en melding om arbeid og oppfølging"
+                        placeholder="Skriv en melding om arbeid og oppfølging"
+                        textareaClass="autosizing-textarea"
+                        maxLength={5000}
+                        visTellerFra={1000}
+                        {...state.fields.melding}
+                    />
+                    <Hovedknapp title="Send" autoDisableVedSpinner spinner={state.submitting}>
+                        Send
+                    </Hovedknapp>
+                </div>
+
+                <HiddenIfDiv hidden={!!bruker && bruker.erBruker} className="checkbox-block">
+                    <Checkbox
+                        label="Venter på svar fra NAV"
+                        className="checkbox-block__item"
+                        {...state.fields.venterPaSvarFraNAV}
+                    />
+                    <Checkbox
+                        label="Venter på svar fra bruker"
+                        className="checkbox-block__item"
+                        {...state.fields.venterPaSvar}
+                    />
+                </HiddenIfDiv>
+
+                <AlertStripeFeilVisible visible={noeFeilet}>
                     Det skjedde en alvorlig feil. Prøv igjen senere
                 </AlertStripeFeilVisible>
             </form>
