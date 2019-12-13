@@ -3,8 +3,8 @@ import UseFieldState from '../../utils/UseFieldState';
 import { DialogData } from '../../utils/Typer';
 import { visibleIfHoc } from '../../felleskomponenter/VisibleIfHoc';
 import HenvendelseInput from '../henvendelse/HenvendelseInput';
-import { fetchData } from '../../utils/Fetch';
-import { useDialogContext, useUserInfoContext, useViewContext } from '../Provider';
+import { fetchData, fnrQuery } from '../../utils/Fetch';
+import { useDialogContext, useFnrContext, useViewContext, useUserInfoContext } from '../Provider';
 import { useParams } from 'react-router';
 import DialogCheckboxesVisible from './DialogCheckboxes';
 import { hasData } from '@nutgaard/use-fetch';
@@ -33,6 +33,8 @@ export function DialogInputBox(props: Props) {
     const [submitfeil, setSubmitfeil] = useState<boolean>(false);
     const dialogData = hasData(dialoger) ? dialoger.data : [];
     const { dialogId } = useParams();
+    const fnr = useFnrContext();
+    const query = fnrQuery(fnr);
 
     const { dispatch } = useViewContext();
 
@@ -44,7 +46,7 @@ export function DialogInputBox(props: Props) {
     const toggleFerdigBehandlet = (nyFerdigBehandletVerdi: boolean) => {
         setFerdigBehandlet(nyFerdigBehandletVerdi);
         fetchData<DialogData>(
-            `/veilarbdialog/api/dialog/${valgtDialog!.id}/ferdigbehandlet/${nyFerdigBehandletVerdi}`,
+            `/veilarbdialog/api/dialog/${valgtDialog!.id}/ferdigbehandlet/${nyFerdigBehandletVerdi}${query}`,
             {
                 method: 'put'
             }
@@ -53,9 +55,12 @@ export function DialogInputBox(props: Props) {
     };
     const toggleVenterPaSvar = (nyVenterPaSvarVerdi: boolean) => {
         setVenterPaSvar(nyVenterPaSvarVerdi);
-        fetchData<DialogData>(`/veilarbdialog/api/dialog/${valgtDialog!.id}/venter_pa_svar/${nyVenterPaSvarVerdi}`, {
-            method: 'put'
-        });
+        fetchData<DialogData>(
+            `/veilarbdialog/api/dialog/${valgtDialog!.id}/venter_pa_svar/${nyVenterPaSvarVerdi}${query}`,
+            {
+                method: 'put'
+            }
+        );
         dialoger.rerun();
     };
 
@@ -70,7 +75,7 @@ export function DialogInputBox(props: Props) {
                 overskrift: dialg.overskrift,
                 tekst: melding.input.value
             });
-            fetchData<DialogData>('/veilarbdialog/api/dialog/ny', {
+            fetchData<DialogData>(`/veilarbdialog/api/dialog${query}`, {
                 method: 'POST',
                 body
             })

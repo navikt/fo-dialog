@@ -6,7 +6,11 @@ import './AppBanner.less';
 import Lenke from 'nav-frontend-lenker';
 import { VenstreChevron } from 'nav-frontend-chevron';
 
-export function AppBanner() {
+export function AppBanner(props: { hidden?: boolean }) {
+    if (props.hidden) {
+        return null;
+    }
+
     return (
         <div className="dialogbanner">
             <Lenke className="dialogbanner__lenke" href="https://www.nav.no/no/Ditt+NAV">

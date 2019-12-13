@@ -6,6 +6,7 @@ function getCookie(name: string) {
 function getHeaders() {
     return new Headers({
         'Content-Type': 'application/json',
+        'Nav-Consumer-Id': 'arbeidsrettet-dialog',
         NAV_CSRF_PROTECTION: getCookie('NAV_CSRF_PROTECTION') // eslint-disable-line quote-props
     });
 }
@@ -19,6 +20,10 @@ export function fetchData<T>(url: string, config: RequestInit = {}): Promise<T> 
     return fetch(url, { ...config, ...CONFIG })
         .then(sjekkStatuskode)
         .then(toJson);
+}
+
+export function fnrQuery(fnr?: string): string {
+    return fnr ? `?fnr=${fnr}` : '';
 }
 
 export function sjekkStatuskode(response: Response) {

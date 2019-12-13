@@ -1,4 +1,4 @@
-import FetchMock, { Middleware, MiddlewareUtils, ResponseUtils } from 'yet-another-fetch-mock';
+import FetchMock, { Middleware, MiddlewareUtils } from 'yet-another-fetch-mock';
 import dialoger, { lesDialog, opprettEllerOppdaterDialog, setFerdigBehandlet, setVenterPaSvar } from './Dialog';
 import bruker from './Bruker';
 import oppfolging from './Oppfolging';
@@ -30,15 +30,13 @@ const mock = FetchMock.configure({
     middleware: MiddlewareUtils.combine(loggingMiddleware, MiddlewareUtils.delayMiddleware(1000))
 });
 
-const DELAY = 0;
-
 mock.post('/veilarboppfolging/api/oppfolging/settDigital', {});
 
 mock.get('/veilarbdialog/api/dialog', dialoger);
 
-mock.post('/veilarbdialog/api/dialog/ny', ({ body }) => opprettEllerOppdaterDialog(body));
+mock.post('/veilarbdialog/api/dialog', ({ body }) => opprettEllerOppdaterDialog(body));
 
-mock.put('/veilarbdialog/api/dialog/lest', ({ body }) => lesDialog(body.dialogId));
+mock.put('/veilarbdialog/api/dialog/:dialogId/les', ({ pathParams }) => lesDialog(pathParams.dialogId));
 
 mock.put('/veilarbdialog/api/dialog/:dialogId/venter_pa_svar/:bool', ({ pathParams }) =>
     setVenterPaSvar(pathParams.dialogId, pathParams.bool === 'true')
