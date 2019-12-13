@@ -5,6 +5,15 @@ import DemoBanner from './mock/demo/DemoBanner';
 import NAVSPA from '@navikt/navspa';
 import { erEksternBruker } from './mock/demo/sessionstorage';
 
+document.body.addEventListener('keydown', function(e: KeyboardEvent) {
+    if (!(e.key === 'Enter' && (e.metaKey || e.ctrlKey))) return;
+
+    const target: EventTarget & HTMLTextAreaElement | null = e.target as EventTarget & HTMLTextAreaElement | null;
+    if (target && target.form) {
+        target.form.dispatchEvent(new Event('submit'));
+    }
+});
+
 if (process.env.REACT_APP_MOCK === 'true') {
     require('./mock');
 
