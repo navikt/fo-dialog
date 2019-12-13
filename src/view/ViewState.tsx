@@ -16,7 +16,7 @@ export const initalState: ViewState = {
 
 export function endreDialogSomVises(state?: ViewState, dialogId?: string): ViewState {
     if (state && !state.dialogSomVises) {
-        return { ...initalState, dialogSomVises: dialogId, sistHandlingsType: HandlingsType.nyDialog };
+        return { ...initalState, dialogSomVises: dialogId, sistHandlingsType: state.sistHandlingsType };
     }
 
     return { ...initalState, dialogSomVises: dialogId };
