@@ -9,9 +9,9 @@ function DialogContainer() {
     return (
         <div className={styles.dialogContainer}>
             <Switch>
-                <Route exact path="/" component={DialogInfoMelding} />
                 <Route path="/ny" component={DialogNew} />
                 <Route path="/:dialogId" component={Dialog} />
+                <Route path="/" component={DialogInfoMelding} />
             </Switch>
         </div>
     );
