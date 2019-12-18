@@ -62,4 +62,20 @@ function DialogPreview(props: Props) {
     );
 }
 
+interface ListeProps {
+    dialoger: DialogData[];
+    valgDialog?: string;
+}
+
+export function DialogPreviewListe(props: ListeProps) {
+    const { dialoger, valgDialog } = props;
+    return (
+        <>
+            {dialoger.map(dialog => (
+                <DialogPreview dialog={dialog} key={dialog.id} valgtDialogId={valgDialog} />
+            ))}
+        </>
+    );
+}
+
 export default DialogPreview;

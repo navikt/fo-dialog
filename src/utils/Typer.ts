@@ -51,7 +51,7 @@ export interface OppfolgingData {
     underOppfolging: boolean;
     underKvp: boolean;
     oppfolgingUtgang: StringOrNull;
-    gjeldendeEskaleringsvarsel: StringOrNull;
+    gjeldendeEskaleringsvarsel: Eskaleringsvarsel | null;
     kanStarteOppfolging: boolean;
     avslutningStatus: StringOrNull;
     oppfolgingsPerioder: PeriodeData[];
@@ -61,6 +61,15 @@ export interface OppfolgingData {
     erSykmeldtMedArbeidsgiver: boolean;
     servicegruppe: StringOrNull;
     formidlingsgruppe: StringOrNull;
+}
+
+export interface Eskaleringsvarsel {
+    varselId: string;
+    aktorId: string;
+    opprettetAv: string;
+    opprettetDato: string;
+    avsluttetDato: StringOrNull;
+    tilhorendeDialogId: string;
 }
 
 export interface PeriodeData {
