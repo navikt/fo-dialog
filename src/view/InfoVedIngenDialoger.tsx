@@ -3,7 +3,7 @@ import Veilederpanel from 'nav-frontend-veilederpanel';
 import styles from './InfoVedIngenDialoger.module.less';
 import { visibleIfHoc } from '../felleskomponenter/VisibleIfHoc';
 import classNames from 'classnames';
-import veilederIkon from './veileder.svg';
+import { ReactComponent as VeilederIkon } from './veileder.svg';
 
 interface PropTypes {
     className: string;
@@ -12,7 +12,7 @@ interface PropTypes {
 function InfoVedIngenDialoger(props: PropTypes) {
     return (
         <div className={classNames(props.className, styles.ingenDialoger)}>
-            <Veilederpanel type={'plakat'} kompakt fargetema="suksess" svg={<img src={veilederIkon} alt="" />}>
+            <Veilederpanel type={'plakat'} kompakt fargetema="suksess" svg={<VeilederIkon />}>
                 <span className={styles.avsnitt}>
                     Her kan du sende meldinger til veilederen din om arbeid og oppfølging. Klikk på "ny dialog" for å
                     komme i gang.
