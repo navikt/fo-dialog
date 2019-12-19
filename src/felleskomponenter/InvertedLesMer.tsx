@@ -22,7 +22,9 @@ export default function InvertedLestMer(props: Props) {
 
     return (
         <div className={style.invertedLesMer}>
-            <LesMerToggle erApen={vis} onClick={toggle} apneTekst={apneTekst} lukkTekst={lukkTekst} />
+            <div className={style.toggle}>
+                <LesMerToggle erApen={vis} onClick={toggle} apneTekst={apneTekst} lukkTekst={lukkTekst} />
+            </div>
             <Collapse isOpened={vis}>{children}</Collapse>
         </div>
     );
