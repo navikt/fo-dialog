@@ -11,6 +11,7 @@ import './Dialog.less';
 import { fetchData, fnrQuery } from '../../utils/Fetch';
 import { endreDialogSomVises } from '../ViewState';
 import DialogSendtBekreftelse from './DialogSendtBekreftelse';
+import HistoriskInfo from './HistoriskInfo';
 
 export function Dialog() {
     const kanSendeMelding = useKansendeMelding();
@@ -33,14 +34,20 @@ export function Dialog() {
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [dialogId]);
 
-    if (!valgtDialog) return null;
+    if (!valgtDialog) {
+        return null;
+    }
+
+    const aktivDialog = !valgtDialog.historisk;
+    const kanSendeHenveldelse = kanSendeMelding && aktivDialog;
 
     return (
         <div className="dialog">
             <DialogHeader dialog={valgtDialog} />
             <HenvendelseList dialogData={valgtDialog} />
             <DialogSendtBekreftelse viewState={viewState} dialog={valgtDialog} />
-            <DialogInputBoxVisible key={valgtDialog.id} dialog={valgtDialog} visible={kanSendeMelding} />
+            <HistoriskInfo hiden={aktivDialog} />
+            <DialogInputBoxVisible key={valgtDialog.id} dialog={valgtDialog} visible={kanSendeHenveldelse} />
         </div>
     );
 }
