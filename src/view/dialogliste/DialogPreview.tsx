@@ -2,7 +2,7 @@ import React from 'react';
 import { DialogData } from '../../utils/Typer';
 import { EtikettLiten, Normaltekst, Systemtittel } from 'nav-frontend-typografi';
 import { LenkepanelBase } from 'nav-frontend-lenkepanel';
-import { EtikettListe } from '../dialog/EtikettListe';
+import { EtikettListe } from './EtikettListe';
 import { formaterDate } from '../../utils/Date';
 import { ReactComponent as DialogIkon } from './snakkeboble.svg';
 import { ReactComponent as AktivitetsIkon } from './aktivitet-dialog-lest.svg';
