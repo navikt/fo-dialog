@@ -5,10 +5,10 @@ import { Undertekst, Undertittel } from 'nav-frontend-typografi';
 
 import { LenkepanelBase } from 'nav-frontend-lenkepanel';
 import { formaterDate, getKlokkeslett } from '../../utils/Date';
-import { aktivitetLenke } from './Aktivitetskort';
 import styles from './AktivitetskortPreview.module.less';
 import { getTypeText } from './TextUtils';
 import { useFetchAktivitetMedFnrContext } from '../../api/UseAktivitet';
+import { aktivitetLenke } from './AktivitetskortLinke';
 
 interface Props {
     dialog: DialogData;
