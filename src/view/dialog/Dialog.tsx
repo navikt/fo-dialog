@@ -46,7 +46,7 @@ export function Dialog() {
             <DialogHeader dialog={valgtDialog} />
             <HenvendelseList dialogData={valgtDialog} />
             <DialogSendtBekreftelse viewState={viewState} dialog={valgtDialog} />
-            <HistoriskInfo hiden={aktivDialog} />
+            <HistoriskInfo hiden={aktivDialog} kanSendeMelding={kanSendeMelding} />
             <DialogInputBoxVisible key={valgtDialog.id} dialog={valgtDialog} visible={kanSendeHenveldelse} />
         </div>
     );
