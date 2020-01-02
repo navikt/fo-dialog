@@ -248,6 +248,34 @@ const dialoger: DialogData[] & JSONArray = [
             }
         ],
         egenskaper: []
+    },
+    {
+        id: '100',
+        overskrift: 'Fiskeoppdrett',
+        sisteTekst:
+            'Hei. Jeg vil at du skal prøve å søke minst 5 stillinger i uken. Vi møtes igjen om en uke for å prate om hvordan det har gått. ',
+        sisteDato: '2018-02-01T11:52:20.615+01:00',
+        opprettetDato: '2018-02-01T11:52:20.535+01:00',
+        historisk: true,
+        lest: false,
+        venterPaSvar: true,
+        ferdigBehandlet: true,
+        lestAvBrukerTidspunkt: null,
+        erLestAvBruker: false,
+        aktivitetId: 'SOKEAVTALE2',
+        henvendelser: [
+            {
+                id: '1000',
+                dialogId: '100',
+                avsender: 'VEILEDER',
+                avsenderId: 'Z123456',
+                sendt: '2018-02-01T11:52:20.615+01:00',
+                lest: false,
+                tekst:
+                    'Hei. Jeg vil at du skal prøve å søke minst 5 stillinger i uken. Vi møtes igjen om en uke for å prate om hvordan det har gått. '
+            }
+        ],
+        egenskaper: []
     }
 ];
 
