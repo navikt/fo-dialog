@@ -8,6 +8,29 @@
     &:hover {
         background-color: @navDypBlaLighten80;
     }
+
+    //for å få nokk specifisitet på insiden.
+    .content {
+        flex: 1;
+        overflow: hidden;
+        text-align: left;
+
+        .heading {
+            font-size: 1rem;
+        }
+
+        .sisteMelding {
+            text-overflow: ellipsis;
+            white-space: nowrap;
+            overflow: hidden;
+            font-size: 0.875rem;
+            color: @navGra80;
+        }
+
+        .dato {
+            color: @navGra80;
+        }
+    }
 }
 
 .lest {
@@ -17,32 +40,10 @@
     }
 }
 
-.heading {
-    font-size: 1rem;
-}
-
 .valgt {
     background-color: #e5eef2;
 
     &:hover {
         background-color: #e5eef2;
     }
-}
-
-.content {
-    flex: 1;
-    overflow: hidden;
-    text-align: left;
-}
-
-.dato {
-    color: @navGra80;
-}
-
-.sisteMelding {
-    text-overflow: ellipsis;
-    white-space: nowrap;
-    overflow: hidden;
-    font-size: 0.875rem;
-    color: @navGra80;
 }
