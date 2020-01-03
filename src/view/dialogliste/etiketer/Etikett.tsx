@@ -1,14 +1,9 @@
-import { Normaltekst } from 'nav-frontend-typografi';
 import React from 'react';
 import styles from './Etiketter.module.less';
 import classNames from 'classnames';
 
 interface Props {
     visible: boolean;
-}
-
-interface ChildString {
-    children: string;
 }
 
 interface EtiketProps {
@@ -22,19 +17,7 @@ function Etiket(props: EtiketProps) {
         return null;
     }
     const classname = classNames(styles.etikett, props.clasName);
-    return (
-        <div className={classname}>
-            <Text>{props.children}</Text>
-        </div>
-    );
-}
-
-function Text(props: ChildString) {
-    return (
-        <Normaltekst tag="span" className={styles.text}>
-            {props.children}
-        </Normaltekst>
-    );
+    return <div className={classname}>{props.children}</div>;
 }
 
 export function VenterSvarFraBruker(props: Props) {

@@ -4,37 +4,16 @@ import { EtikettLiten, Normaltekst, Systemtittel } from 'nav-frontend-typografi'
 import { LenkepanelBase } from 'nav-frontend-lenkepanel';
 import { EtikettListe } from './EtikettListe';
 import { formaterDate } from '../../utils/Date';
-import { ReactComponent as DialogIkon } from './snakkeboble.svg';
-import { ReactComponent as AktivitetsIkon } from './aktivitet-dialog-lest.svg';
 import WrapInReactLink from '../../felleskomponenter/WrapInReactLink';
 import classNames from 'classnames';
+import styles from './DialogPreview.module.less';
+import Ikon from './ikon/Ikon';
 
-import './DialogPreview.less';
 import { useFetchAktivitetMedFnrContext } from '../../api/UseAktivitet';
 
-interface IkonProps {
-    dialog: DialogData;
-}
 interface Props {
     dialog: DialogData;
     valgtDialogId?: string;
-}
-
-function DialogPreviewIkon(props: IkonProps) {
-    const erAktivitet: boolean = props.dialog.aktivitetId !== null;
-    const ikonCls = classNames('dialog-preview__ikon', { 'dialog-preview__ikon--lest': !props.dialog.lest });
-    if (erAktivitet) {
-        return (
-            <div className={ikonCls}>
-                <AktivitetsIkon />
-            </div>
-        );
-    }
-    return (
-        <div className={ikonCls}>
-            <DialogIkon />
-        </div>
-    );
 }
 
 function DialogPreview(props: Props) {
@@ -44,18 +23,18 @@ function DialogPreview(props: Props) {
 
     const datoString = !!sisteDato ? formaterDate(sisteDato) : '';
     const aktivitet = findAktivitet(aktivitetId);
-    const lenkepanelCls = classNames('dialog-preview', {
-        'dialog-preview--lest': lest,
-        'dialog-preview--valgt': id === valgtDialogId
+    const lenkepanelCls = classNames(styles.preview, {
+        [styles.lest]: lest,
+        [styles.valgt]: id === valgtDialogId
     });
 
     return (
         <LenkepanelBase className={lenkepanelCls} href={`/${id}`} linkCreator={WrapInReactLink}>
-            <DialogPreviewIkon dialog={dialog} />
-            <div className="dialog-preview__internal-div">
-                <Systemtittel className="lenkepanel__heading">{aktivitet ? aktivitet.tittel : overskrift}</Systemtittel>
-                <Normaltekst className="dialog-preview__last-henvendelse">{sisteTekst}</Normaltekst>
-                <EtikettLiten className="dialog-preview__dato">{datoString}</EtikettLiten>
+            <Ikon dialog={dialog} />
+            <div className={styles.content}>
+                <Systemtittel className={styles.heading}>{aktivitet ? aktivitet.tittel : overskrift}</Systemtittel>
+                <Normaltekst className={styles.sisteMelding}>{sisteTekst}</Normaltekst>
+                <EtikettLiten className={styles.dato}>{datoString}</EtikettLiten>
                 <EtikettListe dialog={dialog} />
             </div>
         </LenkepanelBase>
