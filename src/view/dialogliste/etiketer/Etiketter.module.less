@@ -1,6 +1,10 @@
 @import (reference) '~nav-frontend-core/less/_variabler';
+@import (reference) '~nav-frontend-typografi-style/src/mixins';
+@import (reference) '~nav-frontend-typografi-style/src/fontimports';
 
 .etikett {
+    .typo-normal-mixin();
+    font-size: 0.8rem;
     display: inline-block;
     border-radius: @border-radius-small;
     margin-right: 0.3rem;
@@ -18,8 +22,4 @@
 
 .viktigMelding {
     background-color: @redErrorLighten60;
-}
-
-.text {
-    font-size: 0.8rem;
 }
