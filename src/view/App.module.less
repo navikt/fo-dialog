@@ -1,0 +1,44 @@
+@import '~nav-frontend-core/less/core';
+
+//TODO sjekk denne mot veilarbpersonflatefs
+:global {
+    html,
+    body,
+    #root {
+        height: 100%;
+    }
+
+    #root {
+        display: flex;
+    }
+
+    body {
+        display: flex;
+        flex-direction: column;
+    }
+
+    #pagewrapper {
+        margin-bottom: 0 !important; //overstyrer decorator
+        padding-bottom: 0 !important; //overstyrer decorator
+        display: flex;
+        flex-direction: column;
+    }
+
+    #maincontent {
+        height: 100%;
+        overflow: hidden;
+    }
+}
+
+.app {
+    display: flex;
+    flex-direction: column;
+    flex-grow: 1;
+    overflow: hidden;
+}
+
+.app__body {
+    display: flex;
+    height: 100%;
+    overflow: hidden;
+}

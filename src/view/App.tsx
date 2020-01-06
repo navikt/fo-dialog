@@ -1,7 +1,7 @@
 import React from 'react';
 import StatusAdvarsel from './statusAdvarsel/StatusAdvarsel';
 import { AppBanner } from './banner/AppBanner';
-import './App.less';
+import styles from './App.module.less';
 import { BrowserRouter as Router } from 'react-router-dom';
 import { Provider } from './Provider';
 import AppBody from './AppBody';
@@ -15,7 +15,7 @@ function App(props: Props) {
 
     return (
         <Router basename={baspath}>
-            <div className="app">
+            <div className={styles.app}>
                 <AppBanner hidden={!!props.fnr} />
                 <Provider fnr={props.fnr}>
                     <StatusAdvarsel />

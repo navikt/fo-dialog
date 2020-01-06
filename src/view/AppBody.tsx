@@ -3,6 +3,7 @@ import { dataOrUndefined, useOppfolgingContext, useUserInfoContext } from './Pro
 import DialogContainer from './dialog/DialogContainer';
 import AktivitetContainer from './aktivitet/AktivitetContainer';
 import DialogOversiktContainer from './dialogliste/DialogOversiktContainer';
+import styles from './App.module.less';
 
 export default function AppBody() {
     const oppfolgingContext = useOppfolgingContext();
@@ -25,7 +26,7 @@ export default function AppBody() {
     }
 
     return (
-        <div className="app__body">
+        <div className={styles.app__body}>
             <DialogOversiktContainer />
             <DialogContainer />
             <AktivitetContainer />
