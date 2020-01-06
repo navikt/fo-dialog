@@ -12,15 +12,19 @@ interface Props {
 
 function App(props: Props) {
     const baspath = props.fnr ? `/veilarbpersonflatefs/${props.fnr}` : process.env.PUBLIC_URL;
+    const wraperClass = props.fnr ? styles.konteinerInside : styles.konteinerUtside;
+    const appstyle = props.fnr ? styles.appInside : styles.app;
 
     return (
         <Router basename={baspath}>
-            <div className={styles.app}>
-                <AppBanner hidden={!!props.fnr} />
-                <Provider fnr={props.fnr}>
-                    <StatusAdvarsel />
-                    <AppBody />
-                </Provider>
+            <div className={wraperClass}>
+                <div className={appstyle}>
+                    <AppBanner hidden={!!props.fnr} />
+                    <Provider fnr={props.fnr}>
+                        <StatusAdvarsel />
+                        <AppBody />
+                    </Provider>
+                </div>
             </div>
         </Router>
     );
