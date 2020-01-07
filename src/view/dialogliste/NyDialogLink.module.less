@@ -1,3 +1,5 @@
+@import (reference) '~nav-frontend-core/less/core';
+
 .header {
     display: flex;
     flex-basis: 4rem;
@@ -10,10 +12,15 @@
 
 .knapp {
     display: flex;
-    margin-right: 1.5rem;
-    padding: 0.3rem 0.3rem 0.3rem 0;
+    margin-left: 0.5rem;
+    padding: 0.3rem 1rem 0.3rem 1rem;
+    fill: white;
 
-    svg {
+    &:focus {
+        fill: @navBla;
+    }
+
+    .plusslogo {
         margin-right: 0.5rem;
     }
 }
