@@ -1,7 +1,8 @@
 import { DialogData, HenvendelseData, NyDialogMeldingData } from '../utils/Typer';
 import { rndId } from './Utils';
-import { JSONArray, JSONObject, ResponseData } from 'yet-another-fetch-mock';
+import { JSONArray, JSONObject, ResponseUtils } from 'yet-another-fetch-mock';
 import bruker from './Bruker';
+import { harIngenDialoger } from './demo/sessionstorage';
 
 const dialoger: DialogData[] & JSONArray = [
     {
@@ -247,14 +248,42 @@ const dialoger: DialogData[] & JSONArray = [
             }
         ],
         egenskaper: []
+    },
+    {
+        id: '100',
+        overskrift: 'Fiskeoppdrett',
+        sisteTekst:
+            'Hei. Jeg vil at du skal prøve å søke minst 5 stillinger i uken. Vi møtes igjen om en uke for å prate om hvordan det har gått. ',
+        sisteDato: '2018-02-01T11:52:20.615+01:00',
+        opprettetDato: '2018-02-01T11:52:20.535+01:00',
+        historisk: true,
+        lest: false,
+        venterPaSvar: true,
+        ferdigBehandlet: true,
+        lestAvBrukerTidspunkt: null,
+        erLestAvBruker: false,
+        aktivitetId: 'SOKEAVTALE2',
+        henvendelser: [
+            {
+                id: '1000',
+                dialogId: '100',
+                avsender: 'VEILEDER',
+                avsenderId: 'Z123456',
+                sendt: '2018-02-01T11:52:20.615+01:00',
+                lest: false,
+                tekst:
+                    'Hei. Jeg vil at du skal prøve å søke minst 5 stillinger i uken. Vi møtes igjen om en uke for å prate om hvordan det har gått. '
+            }
+        ],
+        egenskaper: []
     }
 ];
 
-export function lesDialog(dialogId: string): Promise<ResponseData> {
-    const dialog = dialoger.find(dialog => dialog.id === dialogId);
+export function lesDialog(dialogId: string) {
+    const dialog: any = dialoger.find(dialog => dialog.id === dialogId);
     if (dialog) {
         dialog.lest = true;
-        return Promise.resolve({ status: 200 });
+        return ResponseUtils.jsonPromise(dialog);
     }
     return Promise.resolve({ status: 404 });
 }
@@ -322,4 +351,4 @@ export function setFerdigBehandlet(dialogId: string, ferdigBehandlet: boolean) {
     }
     return dialog as DialogData & JSONObject;
 }
-export default dialoger;
+export default harIngenDialoger() ? [] : dialoger;

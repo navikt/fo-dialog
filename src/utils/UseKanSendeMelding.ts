@@ -8,7 +8,7 @@ export default function useKansendeMelding(): boolean {
         !!oppfolgingData &&
         oppfolgingData.underOppfolging &&
         !oppfolgingData.reservasjonKRR &&
-        oppfolgingData.kanVarsles &&
+        //TODO fiks denne oppfolgingData.kanVarsles &&
         !oppfolgingData.manuell
     );
 }

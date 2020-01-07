@@ -1,0 +1,33 @@
+@import (reference) '~nav-frontend-core/less/core';
+
+.dialogOversikt {
+    display: flex;
+    flex-direction: column;
+    background-color: @navLysGra;
+    width: 100%;
+
+    @media (min-width: 800px) {
+        display: flex;
+        width: 35%;
+    }
+}
+
+.dialogListe {
+    padding: 0.7rem;
+    overflow-y: auto;
+    flex: 1;
+}
+
+.dialogValgt {
+    display: none;
+    @media (min-width: 800px) {
+        display: flex;
+    }
+}
+
+.info {
+    display: none;
+    @media (max-width: 799px) {
+        display: block;
+    }
+}

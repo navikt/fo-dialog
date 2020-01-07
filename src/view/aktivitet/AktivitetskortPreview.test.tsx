@@ -2,7 +2,7 @@ import React from 'react';
 import { mount } from 'enzyme';
 import { AktivitetskortPreview, getInfoText } from './AktivitetskortPreview';
 import { AktivitetTypes } from '../../utils/AktivitetTypes';
-import { mockFetch } from '../../utils/TestUtils';
+import * as UseAktivitet from '../../api/UseAktivitet';
 import '../../utils/SetupEnzyme';
 
 describe('getInfoText', () => {
@@ -60,31 +60,24 @@ describe('getInfoText', () => {
 });
 
 describe('<AktivitetskortPreview />', () => {
-    it('skal rendre stillingsaktivitet som i snapshot', done => {
+    it('skal rendre stillingsaktivitet som i snapshot', () => {
         const dialog: any = {
             aktivitetId: '123'
         };
 
-        const aktivitetResponse = [
-            {
-                tittel: 'Kantinemedarbeider',
-                id: dialog.aktivitetId,
-                type: AktivitetTypes.STILLING,
-                tilDato: '2019-10-24T15:44:21.993+02:00',
-                arbeidsgiver: 'Testesen'
-            }
-        ];
+        const aktivitet: any = {
+            tittel: 'Kantinemedarbeider',
+            id: dialog.aktivitetId,
+            type: AktivitetTypes.STILLING,
+            tilDato: '2019-10-24T15:44:21.993+02:00',
+            arbeidsgiver: 'Testesen'
+        };
 
-        const spy = mockFetch(aktivitetResponse);
+        jest.spyOn(UseAktivitet, 'useFetchAktivitetMedFnrContext').mockReturnValue((a: any) => {
+            return a === '123' ? aktivitet : undefined;
+        });
 
         const wrapper = mount(<AktivitetskortPreview dialog={dialog} />);
-
-        process.nextTick(() => {
-            wrapper.update();
-            expect(spy).toHaveBeenCalledTimes(1);
-            expect(wrapper).toMatchSnapshot();
-            spy.mockClear();
-            done();
-        });
+        expect(wrapper).toMatchSnapshot();
     });
 });

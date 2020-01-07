@@ -1,32 +1,42 @@
 import React from 'react';
 import { hasData } from '@nutgaard/use-fetch';
-import DialogPreview from './DialogPreview';
+import { DialogPreviewListe } from './DialogPreview';
 import { DialogData } from '../../utils/Typer';
-import DialogOverviewHeader from './NyDialogLink';
 import { useDialogContext } from '../Provider';
 import { useParams } from 'react-router';
-import classNames from 'classnames';
-import styles from './DialogListe.module.less';
-import useKansendeMelding from '../../utils/UseKanSendeMelding';
+import styles from './DialogOversikt.module.less';
+import { Systemtittel } from 'nav-frontend-typografi';
+import InvertedLestMer from '../../felleskomponenter/InvertedLesMer';
+
+interface Res {
+    naaverende: DialogData[];
+    historiske: DialogData[];
+}
+
+function splitHistoriske(acc: Res, cur: DialogData) {
+    cur.historisk ? acc.historiske.push(cur) : acc.naaverende.push(cur);
+    return acc;
+}
 
 export function DialogListe() {
-    const kanSendeMelding = useKansendeMelding();
     const dialoger = useDialogContext();
     const dialogData = hasData(dialoger) ? dialoger.data : [];
     const { dialogId } = useParams();
 
-    const visningCls = dialogId ? classNames(styles.dialogOversikt, styles.dialogValgt) : styles.dialogOversikt;
+    const sorterteDialoger = dialogData.sort((a, b) => sortDialoger(a, b));
 
-    const sortedOppfolgingsData = dialogData.sort((a, b) => sortDialoger(a, b));
+    const { naaverende, historiske } = sorterteDialoger.reduce(splitHistoriske, { naaverende: [], historiske: [] });
+    const skulHistoriske = historiske.length === 0;
+
     return (
-        <div className={visningCls}>
-            <DialogOverviewHeader visible={kanSendeMelding} />
-            <div className={styles.listeContainer}>
-                {sortedOppfolgingsData.map(dialog => (
-                    <DialogPreview dialog={dialog} key={dialog.id} valgtDialogId={dialogId} />
-                ))}
-            </div>
-        </div>
+        <section className={styles.dialogListe}>
+            <DialogPreviewListe dialoger={naaverende} valgDialog={dialogId} />
+
+            <InvertedLestMer apneTekst="Se dialoger fra tidligere perioder" lukkTekst="Skjul" hidden={skulHistoriske}>
+                <Systemtittel tag="h1">Dialoger fra tidligere perioder</Systemtittel>
+                <DialogPreviewListe dialoger={historiske} valgDialog={dialogId} />
+            </InvertedLestMer>
+        </section>
     );
 }
 

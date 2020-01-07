@@ -1,14 +1,14 @@
-import React, { FormEvent, useState } from 'react';
-import UseFieldState from '../../utils/UseFieldState';
+import React, { useState } from 'react';
 import { DialogData } from '../../utils/Typer';
 import { visibleIfHoc } from '../../felleskomponenter/VisibleIfHoc';
-import HenvendelseInput from '../henvendelse/HenvendelseInput';
-import { fetchData } from '../../utils/Fetch';
-import { useDialogContext, useUserInfoContext } from '../Provider';
-import { useHistory, useParams } from 'react-router';
+import { useDialogContext, useFnrContext, useViewContext, useUserInfoContext } from '../Provider';
 import DialogCheckboxesVisible from './DialogCheckboxes';
-import { hasData } from '@nutgaard/use-fetch';
 import { AlertStripeFeil } from 'nav-frontend-alertstriper';
+import useFormstate from '@nutgaard/use-formstate';
+import { nyHenvendelse, oppdaterFerdigBehandlet, oppdaterVenterPaSvar } from '../../api/dialog';
+import Textarea from '../../felleskomponenter/input/textarea';
+import { Hovedknapp } from 'nav-frontend-knapper';
+import { sendtNyHenvendelse } from '../ViewState';
 
 const AlertStripeFeilVisible = visibleIfHoc(AlertStripeFeil);
 
@@ -16,81 +16,77 @@ interface Props {
     dialog: DialogData;
 }
 
-function validerMelding(melding: string): string | null {
+function validerMelding(melding: string) {
     if (melding.trim().length === 0) {
         return 'Du må fylle ut en melding.';
-    } else {
-        return null;
     }
 }
+
+const validator = useFormstate({
+    melding: validerMelding
+});
+
+const initalValues = {
+    melding: ''
+};
 
 export function DialogInputBox(props: Props) {
     const bruker = useUserInfoContext();
     const dialoger = useDialogContext();
-    const melding = UseFieldState('', validerMelding);
-    const [submitting, setSubmitting] = useState<boolean>(false);
-    const [submitfeil, setSubmitfeil] = useState<boolean>(false);
-    const dialogData = hasData(dialoger) ? dialoger.data : [];
-    const { dialogId } = useParams();
-    const history = useHistory();
+    const [noeFeilet, setNoeFeilet] = useState(false);
+    const fnr = useFnrContext();
 
-    const valgtDialog = dialogData.find(dialog => dialog.id === dialogId);
+    const { viewState, setViewState } = useViewContext();
 
-    const [ferdigBehandlet, setFerdigBehandlet] = useState(valgtDialog ? valgtDialog.ferdigBehandlet : true);
-    const [venterPaSvar, setVenterPaSvar] = useState(valgtDialog ? valgtDialog.venterPaSvar : false);
+    const valgtDialog = props.dialog;
+
+    const [ferdigBehandlet, setFerdigBehandlet] = useState(valgtDialog.ferdigBehandlet);
+    const [venterPaSvar, setVenterPaSvar] = useState(valgtDialog.venterPaSvar);
+
+    const state = validator(initalValues);
 
     const toggleFerdigBehandlet = (nyFerdigBehandletVerdi: boolean) => {
         setFerdigBehandlet(nyFerdigBehandletVerdi);
-        fetchData<DialogData>(
-            `/veilarbdialog/api/dialog/${valgtDialog!.id}/ferdigbehandlet/${nyFerdigBehandletVerdi}`,
-            {
-                method: 'put'
-            }
-        );
-        dialoger.rerun();
-    };
-    const toggleVenterPaSvar = (nyVenterPaSvarVerdi: boolean) => {
-        setVenterPaSvar(nyVenterPaSvarVerdi);
-        fetchData<DialogData>(`/veilarbdialog/api/dialog/${valgtDialog!.id}/venter_pa_svar/${nyVenterPaSvarVerdi}`, {
-            method: 'put'
-        });
+        oppdaterFerdigBehandlet(fnr, valgtDialog.id, nyFerdigBehandletVerdi);
         dialoger.rerun();
     };
 
-    function handleSubmit(event: FormEvent) {
-        event.preventDefault();
-        melding.validate();
-        var dialg: DialogData = props.dialog;
-        if (!melding.error) {
-            setSubmitting(true);
-            const body = JSON.stringify({
-                dialogId: dialg.id,
-                overskrift: dialg.overskrift,
-                tekst: melding.input.value
-            });
-            fetchData<DialogData>('/veilarbdialog/api/dialog/ny', {
-                method: 'POST',
-                body
+    const toggleVenterPaSvar = (nyVenterPaSvarVerdi: boolean) => {
+        setVenterPaSvar(nyVenterPaSvarVerdi);
+        oppdaterVenterPaSvar(fnr, valgtDialog.id, nyVenterPaSvarVerdi);
+        dialoger.rerun();
+    };
+
+    const onSubmit = (data: { melding: string }) => {
+        const { melding } = data;
+        return nyHenvendelse(fnr, melding, valgtDialog.id)
+            .then(dialog => {
+                setNoeFeilet(false);
+                state.reinitialize(initalValues);
+                setViewState(sendtNyHenvendelse(viewState));
+
+                //Todo this should be a promise
+                return dialoger.rerun();
             })
-                .then(
-                    function(response) {
-                        melding.reset();
-                        console.log('Posted endret dialog!', response);
-                        dialoger.rerun();
-                        history.push('/' + response.id);
-                    },
-                    function(error) {
-                        console.log('Failed while posting endret dialog!', error);
-                        setSubmitfeil(true);
-                    }
-                )
-                .then(() => setSubmitting(false));
-        }
-    }
+            .catch(() => setNoeFeilet(true));
+    };
+
     return (
         <>
-            <form onSubmit={handleSubmit} noValidate>
-                <HenvendelseInput melding={melding} submitting={submitting} />
+            <form onSubmit={state.onSubmit(onSubmit)} noValidate>
+                <div className="skriv-melding">
+                    <Textarea
+                        label="Skriv en melding om arbeid og oppfølging"
+                        placeholder="Skriv en melding om arbeid og oppfølging"
+                        textareaClass="autosizing-textarea"
+                        maxLength={5000}
+                        visTellerFra={1000}
+                        {...state.fields.melding}
+                    />
+                    <Hovedknapp title="Send" autoDisableVedSpinner spinner={state.submitting}>
+                        Send
+                    </Hovedknapp>
+                </div>
                 <DialogCheckboxesVisible
                     toggleFerdigBehandlet={toggleFerdigBehandlet}
                     toggleVenterPaSvar={toggleVenterPaSvar}
@@ -98,7 +94,7 @@ export function DialogInputBox(props: Props) {
                     venterPaSvar={venterPaSvar}
                     visible={bruker!.erVeileder}
                 />
-                <AlertStripeFeilVisible visible={submitfeil}>
+                <AlertStripeFeilVisible visible={noeFeilet}>
                     Det skjedde en alvorlig feil. Prøv igjen senere
                 </AlertStripeFeilVisible>
             </form>

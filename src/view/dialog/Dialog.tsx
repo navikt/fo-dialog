@@ -2,12 +2,16 @@ import React, { useEffect } from 'react';
 import { hasData } from '@nutgaard/use-fetch';
 import { HenvendelseList } from '../henvendelse/HenvendelseList';
 import { DialogHeader } from './DialogHeader';
-import { useDialogContext } from '../Provider';
+import { useDialogContext, useFnrContext, useViewContext } from '../Provider';
 import { useParams } from 'react-router';
 import DialogInputBoxVisible from './DialogInputBox';
 import useKansendeMelding from '../../utils/UseKanSendeMelding';
 
 import './Dialog.less';
+import { fetchData, fnrQuery } from '../../utils/Fetch';
+import { endreDialogSomVises } from '../ViewState';
+import DialogSendtBekreftelse from './DialogSendtBekreftelse';
+import HistoriskInfo from './HistoriskInfo';
 
 export function Dialog() {
     const kanSendeMelding = useKansendeMelding();
@@ -15,27 +19,35 @@ export function Dialog() {
     const dialogData = hasData(dialoger) ? dialoger.data : [];
     const { dialogId } = useParams();
     const valgtDialog = dialogData.find(dialog => dialog.id === dialogId);
+    const fnr = useFnrContext();
+    const query = fnrQuery(fnr);
+
+    const { viewState, setViewState } = useViewContext();
 
     useEffect(() => {
+        setViewState(endreDialogSomVises(viewState, dialogId));
         if (valgtDialog && !valgtDialog.lest) {
-            fetch('/veilarbdialog/api/dialog/lest', {
-                method: 'PUT',
-                body: JSON.stringify({
-                    lest: true,
-                    dialogId: valgtDialog.id
-                })
+            fetchData(`/veilarbdialog/api/dialog/${valgtDialog.id}/les${query}`, {
+                method: 'PUT'
             }).then(() => dialoger.rerun());
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [valgtDialog]);
+    }, [dialogId]);
 
-    if (!valgtDialog) return null;
+    if (!valgtDialog) {
+        return null;
+    }
+
+    const aktivDialog = !valgtDialog.historisk;
+    const kanSendeHenveldelse = kanSendeMelding && aktivDialog;
 
     return (
         <div className="dialog">
             <DialogHeader dialog={valgtDialog} />
             <HenvendelseList dialogData={valgtDialog} />
-            <DialogInputBoxVisible key={valgtDialog.id} dialog={valgtDialog} visible={kanSendeMelding} />
+            <DialogSendtBekreftelse viewState={viewState} dialog={valgtDialog} />
+            <HistoriskInfo hiden={aktivDialog} kanSendeMelding={kanSendeMelding} />
+            <DialogInputBoxVisible key={valgtDialog.id} dialog={valgtDialog} visible={kanSendeHenveldelse} />
         </div>
     );
 }

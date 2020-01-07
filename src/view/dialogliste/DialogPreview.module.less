@@ -1,0 +1,49 @@
+@import (reference) '~nav-frontend-core/less/_variabler';
+
+.preview {
+    border-left: 8px solid @navBla;
+    padding: 0.5rem 0.5rem 0.5rem 0.5rem;
+    margin-bottom: 0.5rem;
+
+    &:hover {
+        background-color: @navDypBlaLighten80;
+    }
+
+    //for å få nokk specifisitet på insiden.
+    .content {
+        flex: 1;
+        overflow: hidden;
+        text-align: left;
+
+        .heading {
+            font-size: 1rem;
+        }
+
+        .sisteMelding {
+            text-overflow: ellipsis;
+            white-space: nowrap;
+            overflow: hidden;
+            font-size: 0.875rem;
+            color: @navGra80;
+        }
+
+        .dato {
+            color: @navGra80;
+        }
+    }
+}
+
+.lest {
+    border-left-color: transparent;
+    .heading {
+        font-weight: normal;
+    }
+}
+
+.valgt {
+    background-color: #e5eef2;
+
+    &:hover {
+        background-color: #e5eef2;
+    }
+}

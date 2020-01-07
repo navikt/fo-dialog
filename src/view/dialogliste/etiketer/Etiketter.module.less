@@ -1,0 +1,25 @@
+@import (reference) '~nav-frontend-core/less/_variabler';
+@import (reference) '~nav-frontend-typografi-style/src/mixins';
+@import (reference) '~nav-frontend-typografi-style/src/fontimports';
+
+.etikett {
+    .typo-normal-mixin();
+    font-size: 0.8rem;
+    display: inline-block;
+    border-radius: @border-radius-small;
+    margin-right: 0.3rem;
+    margin-bottom: 0.15rem;
+    padding: 0 0.4rem;
+}
+
+.venterPaBruker {
+    background-color: @navLimeGronnLighten60;
+}
+
+.venterPaNav {
+    background-color: @navLillaLighten60;
+}
+
+.viktigMelding {
+    background-color: @redErrorLighten60;
+}

@@ -1,19 +1,24 @@
 import React from 'react';
-import { Normaltekst } from 'nav-frontend-typografi';
-import { ReactComponent as Snakkebobler } from '../fellesikoner/snakkebobler.svg';
+import Veilederpanel from 'nav-frontend-veilederpanel';
+import styles from './InfoVedIngenDialoger.module.less';
 import { visibleIfHoc } from '../felleskomponenter/VisibleIfHoc';
+import classNames from 'classnames';
+import { ReactComponent as VeilederIkon } from './veileder.svg';
 
-function InfoVedIngenDialoger() {
+interface PropTypes {
+    className: string;
+}
+
+function InfoVedIngenDialoger(props: PropTypes) {
     return (
-        <div className="ingen-dialog-info">
-            <div className="ingen-dialog-info-bilde">
-                <Snakkebobler />
-            </div>
-            <Normaltekst className="infotekst">
-                Her kan du sende melding til veilederen din om arbeid og oppfølging.
-            </Normaltekst>
-            <Normaltekst className="infotekst">Du kan forvente svar i løpet av noen dager.</Normaltekst>
-            <Normaltekst className="infotekst">Klikk på Ny dialog.</Normaltekst>
+        <div className={classNames(props.className, styles.ingenDialoger)}>
+            <Veilederpanel type={'plakat'} kompakt fargetema="suksess" svg={<VeilederIkon />}>
+                <span className={styles.avsnitt}>
+                    Her kan du sende meldinger til veilederen din om arbeid og oppfølging. Klikk på "ny dialog" for å
+                    komme i gang.
+                </span>
+                <span className={styles.avsnitt}>Du kan forvente svar i løpet av noen dager.</span>
+            </Veilederpanel>
         </div>
     );
 }

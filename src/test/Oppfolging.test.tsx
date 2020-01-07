@@ -1,6 +1,6 @@
 import React from 'react';
-import { mount, shallow } from 'enzyme';
-import { MemoryRouter, RouteComponentProps } from 'react-router';
+import { mount } from 'enzyme';
+import { MemoryRouter } from 'react-router';
 import * as AppContext from '../view/Provider';
 import { Dialog } from '../view/dialog/Dialog';
 import { Bruker, DialogData, OppfolgingData, PeriodeData } from '../utils/Typer';
@@ -13,7 +13,8 @@ import DialogPreview from '../view/dialogliste/DialogPreview';
 import { Checkbox } from 'nav-frontend-skjema';
 import { FetchResult, Status } from '@nutgaard/use-fetch';
 import '../utils/SetupEnzyme';
-import DialogOversikt from '../view/DialogOversikt';
+import DialogContainer from '../view/dialog/DialogContainer';
+import DialogOversikt from '../view/dialogliste/DialogOversikt';
 
 const userInfo: Bruker = { id: '010101', erVeileder: true, erBruker: false };
 const oppfPerioder: PeriodeData[] = [];
@@ -88,7 +89,7 @@ const useFetchDialoger: FetchResult<DialogData[]> = {
     rerun(): void {}
 };
 
-describe('<DialogOversikt/>', () => {
+describe('<DialogContainer/>', () => {
     test('Bruker uten oppf.perioder og ikke under oppf skjuler store deler av appen', () => {
         useFetchOppfolging.data.underOppfolging = false;
         useFetchOppfolging.data.oppfolgingsPerioder = [];
@@ -138,7 +139,7 @@ describe('<DialogOversikt/>', () => {
         jest.spyOn(AppContext, 'useDialogContext').mockImplementation(() => useFetchDialoger);
         const wrapper = mount(
             <MemoryRouter>
-                <DialogListe />
+                <DialogOversikt />
             </MemoryRouter>
         );
         expect(wrapper.find(NyDialogLink).exists()).toBeTruthy();
@@ -163,7 +164,7 @@ describe('<Dialog/>', () => {
         Element.prototype.scrollIntoView = () => {};
         const wrapper = mount(
             <MemoryRouter initialEntries={['/1']}>
-                <DialogOversikt />
+                <DialogContainer />
             </MemoryRouter>
         );
         expect(wrapper.find(DialogInputBox).exists()).toBeFalsy();
@@ -186,7 +187,7 @@ describe('<Dialog/>', () => {
         Element.prototype.scrollIntoView = () => {};
         const wrapper = mount(
             <MemoryRouter initialEntries={['/1']}>
-                <DialogOversikt />
+                <DialogContainer />
             </MemoryRouter>
         );
         expect(wrapper.find(DialogHeader).exists()).toBeTruthy();

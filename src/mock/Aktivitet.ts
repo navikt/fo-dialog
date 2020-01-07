@@ -1,4 +1,4 @@
-import { JSONArray, JSONObject } from 'yet-another-fetch-mock';
+import { JSONObject } from 'yet-another-fetch-mock';
 
 const moteAktivitet = {
     adresse: 'Nordre strandvei 56',
@@ -298,19 +298,21 @@ const ijobbAktivitet = {
     versjon: '210077'
 };
 
-const aktiviteter: JSONArray = [
-    moteAktivitet,
-    stilingAktivitet,
-    samtalereferatAktivitet,
-    behandlingAktivitet,
-    sokeavtaleAktivitet,
-    sokeavtaleAktivitet2,
-    ijobbAktivitet
-];
+const aktiviteter = {
+    aktiviteter: [
+        moteAktivitet,
+        stilingAktivitet,
+        samtalereferatAktivitet,
+        behandlingAktivitet,
+        sokeavtaleAktivitet,
+        sokeavtaleAktivitet2,
+        ijobbAktivitet
+    ]
+};
 
 export function getAktivitet(id: string): JSONObject {
-    //@ts-ignore
-    return aktiviteter.find(aktivitet => aktivitet!.id === id);
+    const aktivitet = aktiviteter.aktiviteter.find(aktivitet => aktivitet.id === id);
+    return aktivitet ? aktivitet : {};
 }
 
 export default aktiviteter;
