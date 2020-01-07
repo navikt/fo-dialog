@@ -25,7 +25,7 @@ function validerTema(tema: string) {
         return 'Tema må ha innhold.';
     }
     if (tema.trim().length > 100) {
-        return 'Tema kan maks vere 100 tegn.';
+        return 'Tema kan maks være 100 tegn.';
     }
 }
 
