@@ -15,7 +15,7 @@ npm i
 # Bygge produksjons kode
 npm build
 
-# Lokal utvikling
+# Lokal utvikling med mock
 npm start
 
 ```
