@@ -56,15 +56,15 @@ jobs:
         if: github.ref == 'refs/heads/master'  || github.ref == 'refs/heads/gh-actions'
         uses: nais/deploy/actions/deploy@v1
         env:
-          CLUSTER: dev-fss
-          RESOURCE: nais-q-fss.yaml
+          CLUSTER: prod-fss
+          RESOURCE: nais-fss.yaml
           VAR: namespace=q0,version={IMAGE_TAG}
 
       - name: deply prod sbs
         if: github.ref == 'refs/heads/master'  || github.ref == 'refs/heads/gh-actions'
         uses: nais/deploy/actions/deploy@v1
         env:
-          CLUSTER: dev-sbs
-          RESOURCE: nais-q-sbs.yaml
+          CLUSTER: prod-sbs
+          RESOURCE: nais-sbs.yaml
           VAR: namespace=q0,version={IMAGE_TAG}
 
