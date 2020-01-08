@@ -24,6 +24,7 @@ jobs:
       - run: npm run build
 
       - name: Build and publish Docker image
+        if: github.ref == 'refs/heads/master' || github.ref == 'refs/heads/dev' || github.ref == 'refs/heads/gh-actions'
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
