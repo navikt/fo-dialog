@@ -22,7 +22,7 @@ jobs:
         with:
           node-version: 12
       - name: Create image tag
-        run: echo "::set-env name=IMAGE_TAG::$(echo ${{ github.ref }} | cut -d '/' -f3).$(date '+%F-%H%M').$(echo $GITHUB_SHA | cut -c1-7)"
+        run: echo ::set-env name=IMAGE_TAG::$(echo ${{ github.ref }} | cut -d '/' -f3).$(date '+%F-%H%M').$(echo $GITHUB_SHA | cut -c1-7)
       - run: npm ci
       - run: npm run test
       - run: npm run build
