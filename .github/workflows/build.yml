@@ -3,7 +3,7 @@ name: Node CI
 on: [push]
 
 env:
-  IMAGE: docker.pkg.github.com/${{ github.repository }}/arbeidsrettet-dialog/
+  IMAGE: docker.pkg.github.com/${{ github.repository }}/arbeidsrettet-dialog
   TZ: Europe/Amsterdam 
   CI: true
 
