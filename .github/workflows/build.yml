@@ -3,6 +3,8 @@ name: Node CI
 on: [push]
 
 env:
+  IMAGE: docker.pkg.github.com/${{ github.repository }}/arbeidsrettet-dialog/
+  TZ: Europe/Amsterdam 
   CI: true
 
 jobs:
@@ -15,6 +17,18 @@ jobs:
       - uses: actions/setup-node@v1
         with:
           node-version: 12
+      - name: Create image tag
+        run: echo "::set-env name=IMAGE_TAG::$(echo ${{ github.ref }} | cut -d '/' -f3).$(date '+%F-%H%M').$(echo $GITHUB_SHA | cut -c1-7)"
       - run: npm ci
       - run: npm run test
       - run: npm run build
+
+      - name: Build and publish Docker image
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          docker build -t ${IMAGE}:${IMAGE_TAG} .
+          docker login docker.pkg.github.com -u ${GITHUB_REPOSITORY} -p ${GITHUB_TOKEN}
+          docker push ${IMAGE}:${IMAGE_TAG}
+      
+      
