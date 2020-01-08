@@ -16,7 +16,13 @@ jobs:
       PRINT_PAYLOAD: true
 
     steps:
-       - uses: actions/checkout@v1
+      - uses: actions/checkout@v1
+      - name: deply
+        uses: nais/deploy/actions/deploy@v1
+        env:
+          CLUSTER: dev-fss
+          RESOURCE: nais-q-fss.yaml
+          VAR: namespace=q0,version=gh-actions.2020-01-08-1039.9910223
 #      - uses: actions/setup-node@v1
 #        with:
 #          node-version: 12
@@ -34,10 +40,5 @@ jobs:
 #          docker build -t ${IMAGE_NAME}:${IMAGE_TAG} .
 #          docker login docker.pkg.github.com -u ${GITHUB_REPOSITORY} -p ${GITHUB_TOKEN}
 #          docker push ${IMAGE_NAME}:${IMAGE_TAG}
-#
-      - name: deply
-        uses: nais/deploy/actions/deploy@v1
-        env:
-          CLUSTER: dev-fss
-          RESOURCE: nais-q-fss.yaml
-          VAR: namespace=q0,version=gh-actions.2020-01-08-1039.9910223
+
+
