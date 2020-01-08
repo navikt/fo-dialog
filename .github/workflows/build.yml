@@ -11,6 +11,8 @@ jobs:
   build:
 
     runs-on: ubuntu-latest
+    env:
+      APIKEY: ${{ secrets.NAIS_DEPLOY_APIKEY }}
 
     steps:
       - uses: actions/checkout@v1
@@ -35,8 +37,6 @@ jobs:
       - name: deply
         uses: nais/deploy/actions/deploy@v1
         env:
-          IMAGE: ${IMAGE_NAME}:${IMAGE_TAG}
-          APIKEY: ${{ secrets.NAIS_DEPLOY_APIKEY }}
           CLUSTER: dev-fss
           RESOURCE: nais-q-fss.yaml
-          VAR: namespace=q0
+          VAR: namespace=q0,version=${{ IMAGE_TAG }}
