@@ -35,7 +35,7 @@ jobs:
       - name: deply
         uses: nais/deploy/actions/deploy@v1
         env:
-          IMAGE: ${IMAGE_NAME}:${IMAGE_TAG}
+          VERSION: ${IMAGE_TAG}
           APIKEY: ${{ secrets.NAIS_DEPLOY_APIKEY }}
           CLUSTER: dev-fss
           RESOURCE: nais-q-fss.yaml
