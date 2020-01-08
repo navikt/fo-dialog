@@ -39,4 +39,4 @@ jobs:
         env:
           CLUSTER: dev-fss
           RESOURCE: nais-q-fss.yaml
-          VAR: namespace=q0,version=${{ IMAGE_TAG }}
+          VAR: namespace=q0,version=${IMAGE_TAG}
