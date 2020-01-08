@@ -42,7 +42,7 @@ jobs:
         env:
           CLUSTER: dev-fss
           RESOURCE: nais-q-fss.yaml
-          VAR: namespace=q0,version={IMAGE_TAG}
+          VAR: namespace=q0,version=${IMAGE_TAG}
 
       - name: deply q0 sbs
         if: github.ref == 'refs/heads/dev'  || github.ref == 'refs/heads/gh-actions'
@@ -50,7 +50,7 @@ jobs:
         env:
           CLUSTER: dev-sbs
           RESOURCE: nais-q-sbs.yaml
-          VAR: namespace=q0,version={IMAGE_TAG}
+          VAR: namespace=q0,version=${IMAGE_TAG}
 
       - name: deply prod fss
         if: github.ref == 'refs/heads/master'  || github.ref == 'refs/heads/gh-actions'
@@ -58,7 +58,7 @@ jobs:
         env:
           CLUSTER: prod-fss
           RESOURCE: nais-fss.yaml
-          VAR: namespace=q0,version={IMAGE_TAG}
+          VAR: namespace=q0,version=${IMAGE_TAG}
 
       - name: deply prod sbs
         if: github.ref == 'refs/heads/master'  || github.ref == 'refs/heads/gh-actions'
@@ -66,5 +66,5 @@ jobs:
         env:
           CLUSTER: prod-sbs
           RESOURCE: nais-sbs.yaml
-          VAR: namespace=q0,version={IMAGE_TAG}
+          VAR: namespace=q0,version=${IMAGE_TAG}
 
