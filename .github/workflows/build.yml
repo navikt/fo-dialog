@@ -58,7 +58,6 @@ jobs:
         env:
           CLUSTER: prod-fss
           RESOURCE: nais-fss.yaml
-          VAR: namespace=q0
 
       - name: deply prod sbs
         if: github.ref == 'refs/heads/master'  || github.ref == 'refs/heads/gh-actions'
@@ -66,5 +65,4 @@ jobs:
         env:
           CLUSTER: prod-sbs
           RESOURCE: nais-sbs.yaml
-          VAR: namespace=q0
 
