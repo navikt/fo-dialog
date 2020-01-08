@@ -3,7 +3,6 @@ kind: 'Application'
 metadata:
   name: arbeidsrettet-dialog
   namespace: default
-  cluster: prod-sbs
   labels:
     team: pto
 spec:
