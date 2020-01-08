@@ -3,7 +3,7 @@ name: Node CI
 on: [push]
 
 env:
-  IMAGE: docker.pkg.github.com/${{ github.repository }}/arbeidsrettet-dialog
+  IMAGE_NAME: docker.pkg.github.com/${{ github.repository }}/arbeidsrettet-dialog
   TZ: Europe/Amsterdam 
   CI: true
 
@@ -28,13 +28,14 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
-          docker build -t ${IMAGE}:${IMAGE_TAG} .
+          docker build -t ${IMAGE_NAME}:${IMAGE_TAG} .
           docker login docker.pkg.github.com -u ${GITHUB_REPOSITORY} -p ${GITHUB_TOKEN}
-          docker push ${IMAGE}:${IMAGE_TAG}
+          docker push ${IMAGE_NAME}:${IMAGE_TAG}
       
       - name: deply
         uses: nais/deploy/actions/deploy@v1
         env:
+          IMAGE: ${IMAGE_NAME}:${IMAGE_TAG}
           APIKEY: ${{ secrets.NAIS_DEPLOY_APIKEY }}
           CLUSTER: dev-fss
           RESOURCE: nais-q-fss.yaml
