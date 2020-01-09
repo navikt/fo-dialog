@@ -1,4 +1,10 @@
-import { AktivitetStatus, AktivitetTypes, ArenaAktivitetTypes } from '../../utils/AktivitetTypes';
+import {
+    Aktivitet,
+    AktivitetStatus,
+    AktivitetTypes,
+    ArenaAktivitet,
+    ArenaAktivitetTypes
+} from '../../utils/AktivitetTypes';
 
 export function getStatusText(status: AktivitetStatus): string {
     switch (status) {
@@ -37,5 +43,18 @@ export function getTypeText(type: AktivitetTypes | ArenaAktivitetTypes): string 
             return 'Gruppeaktivitet';
         case ArenaAktivitetTypes.UTDANNINGSAKTIVITET:
             return 'Utdanningsaktivitet';
+    }
+}
+
+export function getDialogTitel(aktivitet: Aktivitet | ArenaAktivitet) {
+    const { type, tittel } = aktivitet;
+
+    if (type === AktivitetTypes.BEHANDLING || type === AktivitetTypes.SOKEAVTALE) {
+        return tittel;
+    }
+    if (type === AktivitetTypes.MOTE) {
+        return 'Møte: ' + tittel;
+    } else {
+        return getTypeText(type) + ': ' + tittel;
     }
 }

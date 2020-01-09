@@ -1,5 +1,5 @@
 import React from 'react';
-import { DialogData } from '../../utils/Typer';
+import { DialogData, StringOrNull } from '../../utils/Typer';
 import { EtikettLiten, Normaltekst, Systemtittel } from 'nav-frontend-typografi';
 import { LenkepanelBase } from 'nav-frontend-lenkepanel';
 import { EtikettListe } from './EtikettListe';
@@ -10,6 +10,18 @@ import styles from './DialogPreview.module.less';
 import Ikon from './ikon/Ikon';
 
 import { useFetchAktivitetMedFnrContext } from '../../api/UseAktivitet';
+import { getDialogTitel } from '../aktivitet/TextUtils';
+import { Aktivitet, ArenaAktivitet } from '../../utils/AktivitetTypes';
+
+interface TittelProps {
+    aktivitet?: Aktivitet | ArenaAktivitet;
+    tittel: StringOrNull;
+}
+
+function Tittel(props: TittelProps) {
+    const tittel = props.aktivitet ? getDialogTitel(props.aktivitet) : props.tittel;
+    return <Systemtittel className={styles.heading}>{tittel}</Systemtittel>;
+}
 
 interface Props {
     dialog: DialogData;
@@ -32,7 +44,7 @@ function DialogPreview(props: Props) {
         <LenkepanelBase className={lenkepanelCls} href={`/${id}`} linkCreator={WrapInReactLink}>
             <Ikon dialog={dialog} />
             <div className={styles.content}>
-                <Systemtittel className={styles.heading}>{aktivitet ? aktivitet.tittel : overskrift}</Systemtittel>
+                <Tittel tittel={overskrift} aktivitet={aktivitet} />
                 <Normaltekst className={styles.sisteMelding}>{sisteTekst}</Normaltekst>
                 <EtikettLiten className={styles.dato}>{datoString}</EtikettLiten>
                 <EtikettListe dialog={dialog} />

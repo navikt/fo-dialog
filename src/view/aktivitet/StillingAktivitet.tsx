@@ -3,6 +3,7 @@ import { formaterDate } from '../../utils/Date';
 import { Aktivitet } from '../../utils/AktivitetTypes';
 import InformasjonElement from './InformasjonElement';
 import EksternLenke from '../../felleskomponenter/EksternLenke';
+import SokeStatusEtikett from './etiketter/sokeStatusEtikett';
 
 interface PropTypes {
     aktivitet: Aktivitet;
@@ -11,7 +12,7 @@ interface PropTypes {
 //TODO: Må sette tekst "Dato ikke satt" på tildato?
 //TODO: Skal statusetikettene synes?
 export default function StillingAktivitet(props: PropTypes) {
-    const { fraDato, tilDato, arbeidsgiver, kontaktperson, arbeidssted, beskrivelse, lenke } = props.aktivitet;
+    const { fraDato, tilDato, arbeidsgiver, kontaktperson, arbeidssted, beskrivelse, lenke, etikett } = props.aktivitet;
 
     return (
         <>
@@ -24,6 +25,7 @@ export default function StillingAktivitet(props: PropTypes) {
             <InformasjonElement merkelapptekst="Lenke">
                 <EksternLenke lenke={lenke} />
             </InformasjonElement>
+            <SokeStatusEtikett etikett={etikett} />
         </>
     );
 }

@@ -18,32 +18,34 @@ exports[`<AktivitetskortPreview /> skal rendre stillingsaktivitet som i snapshot
       href="/aktivitetsplan/aktivitet/vis/123"
     >
       <div>
-        <Undertittel>
-          <TypografiBase
-            type="undertittel"
-          >
-            <h2
-              className="typo-undertittel"
+        <div>
+          <Undertittel>
+            <TypografiBase
+              type="undertittel"
             >
-              Kantinemedarbeider
-            </h2>
-          </TypografiBase>
-        </Undertittel>
-        <Undertekst>
-          <TypografiBase
-            type="undertekst"
-          >
-            <p
-              className="typo-undertekst"
+              <h2
+                className="typo-undertittel"
+              >
+                Kantinemedarbeider
+              </h2>
+            </TypografiBase>
+          </Undertittel>
+          <Undertekst>
+            <TypografiBase
+              type="undertekst"
             >
-              Stilling / Testesen
-            </p>
-          </TypografiBase>
-        </Undertekst>
+              <p
+                className="typo-undertekst"
+              >
+                Stilling / Testesen
+              </p>
+            </TypografiBase>
+          </Undertekst>
+        </div>
+        <p>
+          Se aktivitet
+        </p>
       </div>
-      <p>
-        Les mer
-      </p>
       <span
         className="lenkepanel__indikator"
         key="indikator"

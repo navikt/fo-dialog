@@ -10,14 +10,15 @@ interface Props {
 
 export function EtikettListe(props: Props) {
     const userInfo = useContext(UserInfoContext);
+    const erVeileder = !!userInfo && userInfo.erVeileder;
 
     const dialogErViktig = props.dialog.egenskaper.length > 0;
     const venterPaSvar = props.dialog.venterPaSvar;
-    const visVenterPaaNav = !!userInfo && !props.dialog.ferdigBehandlet && userInfo.erVeileder;
+    const visVenterPaaNav = !!userInfo && !props.dialog.ferdigBehandlet && erVeileder;
 
     return (
         <>
-            <VenterSvarFraBruker visible={venterPaSvar} />
+            <VenterSvarFraBruker visible={venterPaSvar} erVeileder={erVeileder} />
             <ViktigMelding visible={dialogErViktig} />
             <VenterSvarFraNAV visible={visVenterPaaNav} />
         </>

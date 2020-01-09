@@ -1,4 +1,4 @@
-import useFetch, { hasData } from '@nutgaard/use-fetch';
+import useFetch, { hasData, hasError, isPending } from '@nutgaard/use-fetch';
 import { Aktivitet, ArenaAktivitet } from '../utils/AktivitetTypes';
 import { StringOrNull } from '../utils/Typer';
 import { fnrQuery } from '../utils/Fetch';
@@ -10,7 +10,7 @@ interface AktivitetResponse {
 }
 export function useFetchAktivitetMedFnrContext() {
     const fnr = useFnrContext();
-    return useFetchAktivitet(fnr);
+    return useFetchAktivitet(fnr).findAktivitet;
 }
 
 export function useFetchAktivitet(fnr?: string) {
@@ -33,5 +33,13 @@ export function useFetchAktivitet(fnr?: string) {
         return aktivitetListe && aktivitetListe.find(a => a.id === aktivitetId);
     }
 
-    return findAktivitet;
+    function isAktivitetLoading(includeRealoade = true) {
+        return isPending(arenaAktiviteterFetch, includeRealoade) || isPending(aktiviteterFetch, includeRealoade);
+    }
+
+    function hasAktivitetError() {
+        return hasError(arenaAktiviteterFetch) || hasError(aktiviteterFetch);
+    }
+
+    return { findAktivitet, isAktivitetLoading, hasAktivitetError };
 }
