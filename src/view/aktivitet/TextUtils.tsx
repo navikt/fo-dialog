@@ -49,12 +49,15 @@ export function getTypeText(type: AktivitetTypes | ArenaAktivitetTypes): string 
 export function getDialogTitel(aktivitet: Aktivitet | ArenaAktivitet) {
     const { type, tittel } = aktivitet;
 
-    if (type === AktivitetTypes.BEHANDLING || type === AktivitetTypes.SOKEAVTALE) {
-        return tittel;
-    }
-    if (type === AktivitetTypes.MOTE) {
-        return 'Møte: ' + tittel;
-    } else {
-        return getTypeText(type) + ': ' + tittel;
+    switch (type) {
+        case AktivitetTypes.BEHANDLING:
+        case AktivitetTypes.SOKEAVTALE:
+            return tittel;
+        case AktivitetTypes.EGEN:
+            return `Egenaktivitet: ${tittel}`;
+        case AktivitetTypes.MOTE:
+            return `Møte: ${tittel}`;
+        default:
+            return `${getTypeText(type)}: ${tittel}`;
     }
 }
