@@ -6,6 +6,11 @@ interface Props {
     visible: boolean;
 }
 
+interface VenterSvarFraBrukerProps {
+    visible: boolean;
+    erVeileder: boolean;
+}
+
 interface EtiketProps {
     visible: boolean;
     children: string;
@@ -20,10 +25,12 @@ function Etiket(props: EtiketProps) {
     return <div className={classname}>{props.children}</div>;
 }
 
-export function VenterSvarFraBruker(props: Props) {
+export function VenterSvarFraBruker(props: VenterSvarFraBrukerProps) {
+    const tekst = props.erVeileder ? 'Venter på svar fra bruker' : 'NAV venter på svar fra deg';
+
     return (
         <Etiket visible={props.visible} clasName={styles.venterPaBruker}>
-            NAV venter på svar fra deg
+            {tekst}
         </Etiket>
     );
 }
