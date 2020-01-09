@@ -25,11 +25,13 @@ export function AktivitetskortPreview(props: Props) {
     const info = getInfoText(aktivitet);
     return (
         <LenkepanelBase href={aktivitetLenke(aktivitet.id)} className={styles.lenkepanelbase}>
-            <div>
-                <Undertittel className={styles.tittel}>{aktivitet.tittel}</Undertittel>
-                <Undertekst>{info}</Undertekst>
+            <div className={styles.spaceBetween}>
+                <div>
+                    <Undertittel className={styles.tittel}>{aktivitet.tittel}</Undertittel>
+                    <Undertekst>{info}</Undertekst>
+                </div>
+                <p className={styles.lesmer}>Se aktivitet</p>
             </div>
-            <p className={styles.lesmer} children="Les mer" />
         </LenkepanelBase>
     );
 }

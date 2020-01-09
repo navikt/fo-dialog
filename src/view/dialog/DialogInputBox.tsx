@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { DialogData } from '../../utils/Typer';
 import { visibleIfHoc } from '../../felleskomponenter/VisibleIfHoc';
-import { useDialogContext, useFnrContext, useViewContext, useUserInfoContext } from '../Provider';
+import { useDialogContext, useFnrContext, useUserInfoContext, useViewContext } from '../Provider';
 import DialogCheckboxesVisible from './DialogCheckboxes';
 import { AlertStripeFeil } from 'nav-frontend-alertstriper';
 import useFormstate from '@nutgaard/use-formstate';
@@ -74,7 +74,7 @@ export function DialogInputBox(props: Props) {
     return (
         <>
             <form onSubmit={state.onSubmit(onSubmit)} noValidate>
-                <div className="skriv-melding">
+                <div className="skriv-melding label-sr-only">
                     <Textarea
                         label="Skriv en melding om arbeid og oppfølging"
                         placeholder="Skriv en melding om arbeid og oppfølging"
