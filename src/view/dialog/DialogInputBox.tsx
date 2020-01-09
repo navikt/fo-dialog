@@ -12,11 +12,16 @@ import { sendtNyHenvendelse } from '../ViewState';
 
 const AlertStripeFeilVisible = visibleIfHoc(AlertStripeFeil);
 
+const maxMeldingsLengde = 5000;
+
 interface Props {
     dialog: DialogData;
 }
 
 function validerMelding(melding: string) {
+    if (melding.length > maxMeldingsLengde) {
+        return `Meldingen kan ikke være mere enn ${maxMeldingsLengde} tegn.`;
+    }
     if (melding.trim().length === 0) {
         return 'Du må fylle ut en melding.';
     }
@@ -79,7 +84,7 @@ export function DialogInputBox(props: Props) {
                         label="Skriv en melding om arbeid og oppfølging"
                         placeholder="Skriv en melding om arbeid og oppfølging"
                         textareaClass="autosizing-textarea"
-                        maxLength={5000}
+                        maxLength={maxMeldingsLengde}
                         visTellerFra={1000}
                         {...state.fields.melding}
                     />
