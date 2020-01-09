@@ -9,6 +9,7 @@ import { useFetchAktivitetMedFnrContext } from '../../api/UseAktivitet';
 import Brodsmulesti from './Brodsmulesti';
 import AktivitetskortLenke from './AktivitetskortLinke';
 import AktivitetIngress from './AktivitetIngress';
+import AvtaltMarkering from './etiketter/avtalt-markering';
 
 export function Aktivitetskort() {
     const dialoger = useDialogContext();
@@ -24,13 +25,16 @@ export function Aktivitetskort() {
         return null;
     }
 
+    const { status, tittel, type, avtalt, id } = aktivitet;
+
     return (
         <div className={styles.aktivitetskort}>
-            <Brodsmulesti status={aktivitet.status} type={aktivitet.type} />
-            <Systemtittel>{aktivitet.tittel}</Systemtittel>
-            <AktivitetskortLenke aktivitetId={aktivitet.id} />
-            <AktivitetIngress aktivitetType={aktivitet.type} />
+            <Brodsmulesti status={status} type={type} />
+            <Systemtittel>{tittel}</Systemtittel>
+            <AktivitetskortLenke aktivitetId={id} />
+            <AktivitetIngress aktivitetType={type} />
             <AktivitetskortInfoBox aktivitet={aktivitet} />
+            <AvtaltMarkering hidden={!avtalt} />
         </div>
     );
 }
