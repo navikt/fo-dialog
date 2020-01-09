@@ -49,6 +49,7 @@ function DialogPreview(props: Props) {
                 <EtikettLiten className={styles.dato}>{datoString}</EtikettLiten>
                 <EtikettListe dialog={dialog} />
             </div>
+            <Normaltekst>{dialog.henvendelser.length}</Normaltekst>
         </LenkepanelBase>
     );
 }
