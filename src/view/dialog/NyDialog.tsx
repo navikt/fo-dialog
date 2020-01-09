@@ -20,16 +20,21 @@ import { endreDialogSomVises, sendtNyDialog } from '../ViewState';
 
 const AlertStripeFeilVisible = visibleIfHoc(AlertStripeFeil);
 
+const maxMeldingsLengde = 5000;
+
 function validerTema(tema: string) {
     if (tema.trim().length === 0) {
         return 'Tema må ha innhold.';
     }
     if (tema.trim().length > 100) {
-        return 'Tema kan maks være 100 tegn.';
+        return 'Tema kan ikke være mer enn 100 tegn.';
     }
 }
 
 function validerMelding(melding: string) {
+    if (melding.length > maxMeldingsLengde) {
+        return `Meldingen kan ikke være mer enn ${maxMeldingsLengde} tegn.`;
+    }
     if (melding.trim().length === 0) {
         return 'Du må fylle ut en melding.';
     }
@@ -103,19 +108,16 @@ function NyDialog() {
                 </Normaltekst>
                 <FormErrorSummary submittoken={state.submittoken} errors={state.errors} />
 
-                <Input className="dialog-new__temafelt" label="Tema:" placeholder="Skriv her" {...state.fields.tema} />
+                <Input className="dialog-new__temafelt" label="Tema" placeholder="Skriv her" {...state.fields.tema} />
                 <div className="skriv-melding">
                     <Textarea
-                        label="Skriv en melding om arbeid og oppfølging"
+                        label="Melding"
                         placeholder="Skriv en melding om arbeid og oppfølging"
                         textareaClass="autosizing-textarea"
-                        maxLength={5000}
+                        maxLength={maxMeldingsLengde}
                         visTellerFra={1000}
                         {...state.fields.melding}
                     />
-                    <Hovedknapp title="Send" autoDisableVedSpinner spinner={state.submitting}>
-                        Send
-                    </Hovedknapp>
                 </div>
 
                 <HiddenIfDiv hidden={!!bruker && bruker.erBruker} className="checkbox-block">
@@ -130,6 +132,10 @@ function NyDialog() {
                         {...state.fields.venterPaSvar}
                     />
                 </HiddenIfDiv>
+
+                <Hovedknapp title="Send" autoDisableVedSpinner spinner={state.submitting}>
+                    Send
+                </Hovedknapp>
 
                 <AlertStripeFeilVisible visible={noeFeilet}>
                     Det skjedde en alvorlig feil. Prøv igjen senere
