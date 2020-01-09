@@ -20,7 +20,7 @@ interface Props {
 
 function validerMelding(melding: string) {
     if (melding.length > maxMeldingsLengde) {
-        return `Meldingen kan ikke være mere enn ${maxMeldingsLengde} tegn.`;
+        return `Meldingen kan ikke være mer enn ${maxMeldingsLengde} tegn.`;
     }
     if (melding.trim().length === 0) {
         return 'Du må fylle ut en melding.';

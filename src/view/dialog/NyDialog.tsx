@@ -27,13 +27,13 @@ function validerTema(tema: string) {
         return 'Tema må ha innhold.';
     }
     if (tema.trim().length > 100) {
-        return 'Tema kan ikke være mere enn 100 tegn.';
+        return 'Tema kan ikke være mer enn 100 tegn.';
     }
 }
 
 function validerMelding(melding: string) {
     if (melding.length > maxMeldingsLengde) {
-        return `Meldingen kan ikke være mere enn ${maxMeldingsLengde} tegn.`;
+        return `Meldingen kan ikke være mer enn ${maxMeldingsLengde} tegn.`;
     }
     if (melding.trim().length === 0) {
         return 'Du må fylle ut en melding.';
