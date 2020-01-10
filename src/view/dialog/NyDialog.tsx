@@ -21,6 +21,9 @@ import { endreDialogSomVises, sendtNyDialog } from '../ViewState';
 const AlertStripeFeilVisible = visibleIfHoc(AlertStripeFeil);
 
 const maxMeldingsLengde = 5000;
+const veilederInfoMelding = 'Skriv en melding til brukeren';
+const brukerinfomelding =
+    'Her kan du skrive til din veileder om arbeid og oppfølging. Du vil få svar i løpet av noen dager.';
 
 function validerTema(tema: string) {
     if (tema.trim().length === 0) {
@@ -63,6 +66,9 @@ function NyDialog() {
 
     const { viewState, setViewState } = useViewContext();
 
+    const erVeileder = !!bruker && bruker.erVeileder;
+    const infoTekst = erVeileder ? veilederInfoMelding : brukerinfomelding;
+
     //TODO should be possible to set status when creating in the api ?
 
     useEffect(() => {
@@ -103,9 +109,7 @@ function NyDialog() {
             </div>
             <form onSubmit={state.onSubmit(onSubmit)} className="dialog-new__form">
                 <Innholdstittel className="dialog-new__tittel">Ny dialog</Innholdstittel>
-                <Normaltekst className="dialog-new__infotekst">
-                    Her kan du skrive til din veileder om arbeid og oppfølging. Du vil få svar i løpet av noen dager.
-                </Normaltekst>
+                <Normaltekst className="dialog-new__infotekst">{infoTekst}</Normaltekst>
                 <FormErrorSummary submittoken={state.submittoken} errors={state.errors} />
 
                 <Input className="dialog-new__temafelt" label="Tema" placeholder="Skriv her" {...state.fields.tema} />
