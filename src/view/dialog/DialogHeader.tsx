@@ -31,7 +31,7 @@ export function DialogHeader(props: DialogHeaderProps) {
         <div className={headerStyle}>
             <Link to="/" className={styles.tilbakeTilOversikt}>
                 <VenstreChevron />
-                Oversikt
+                Til dialoger
             </Link>
             {aktivitetId ? <AktivitetskortPreview dialog={dialog} /> : <DialogOverskrift tekst={dialog.overskrift} />}
         </div>

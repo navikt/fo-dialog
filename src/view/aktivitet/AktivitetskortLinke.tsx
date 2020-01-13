@@ -15,7 +15,7 @@ export default function AktivitetskortLenke(props: Props) {
         <div className={styles.aktivitetkortlenke}>
             <Element>
                 <Lenke href={aktivitetLenke(props.aktivitetId)}>
-                    Les mer i aktivitetsplanen
+                    Se og endre aktivitet
                     <HoyreChevron />
                 </Lenke>
             </Element>
