@@ -1,9 +1,10 @@
 import React from 'react';
 import { mount, shallow } from 'enzyme';
-import InformasjonElement from './InformasjonElement';
-import { EtikettLiten, Undertekst } from 'nav-frontend-typografi';
+import InformasjonElement, { InformasjonElementRaw } from './InformasjonElement';
+import { EtikettLiten } from 'nav-frontend-typografi';
 import EksternLenke from '../../felleskomponenter/EksternLenke';
 import '../../utils/SetupEnzyme';
+import Tekstomrade from 'nav-frontend-tekstomrade';
 
 describe('<InformasjonElement />', () => {
     it('skal vise fritekst hvis det er oppgitt', () => {
@@ -14,16 +15,16 @@ describe('<InformasjonElement />', () => {
         expect(wrapper.find(EtikettLiten).exists).toBeTruthy();
         expect(wrapper.find(EtikettLiten).text()).toEqual(merkelapptekst);
 
-        expect(wrapper.find(Undertekst).exists()).toBeTruthy();
-        expect(wrapper.find(Undertekst).text()).toEqual(verdi);
+        expect(wrapper.find(Tekstomrade).exists()).toBeTruthy();
+        expect(wrapper.find(Tekstomrade).text()).toEqual(verdi);
     });
 
     it('skal vise children om det er oppgitt', () => {
         const merkelapptekst = 'merkelappteksten';
         const jsx = (
-            <InformasjonElement merkelapptekst={merkelapptekst} verdi="">
+            <InformasjonElementRaw merkelapptekst={merkelapptekst}>
                 <EksternLenke lenke="nav.no" />
-            </InformasjonElement>
+            </InformasjonElementRaw>
         );
         const wrapper = mount(jsx);
 
@@ -41,9 +42,9 @@ describe('<InformasjonElement />', () => {
     it('skal matche snapshot når EksternLenke er child', () => {
         const merkelapptekst = 'merkelappteksten';
         const jsx = (
-            <InformasjonElement merkelapptekst={merkelapptekst} verdi="">
+            <InformasjonElementRaw merkelapptekst={merkelapptekst}>
                 <EksternLenke lenke="nav.no" />
-            </InformasjonElement>
+            </InformasjonElementRaw>
         );
         const wrapper = mount(jsx);
 

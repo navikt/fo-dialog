@@ -2,7 +2,7 @@ import React from 'react';
 import Snakkeboble from 'nav-frontend-snakkeboble';
 import { HenvendelseData } from '../../utils/Typer';
 import { formaterDateAndTime } from '../../utils/Date';
-import { Normaltekst } from 'nav-frontend-typografi';
+import Tekstomrade from 'nav-frontend-tekstomrade';
 
 import './Henvendelse.less';
 
@@ -16,7 +16,7 @@ export function Henvendelse(props: Props) {
     const className: string = erMeldingFraBruker ? 'ikon bruker-ikon' : 'ikon veileder-ikon';
     return (
         <Snakkeboble topp={date} pilHoyre={erMeldingFraBruker} ikonClass={className}>
-            <Normaltekst>{props.henvendelseData.tekst}</Normaltekst>
+            <Tekstomrade>{props.henvendelseData.tekst}</Tekstomrade>
         </Snakkeboble>
     );
 }
