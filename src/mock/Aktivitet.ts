@@ -118,7 +118,8 @@ const samtalereferatAktivitet = {
     malid: null,
     oppfolging: null,
     opprettetDato: '2019-10-15T09:51:27.372+02:00',
-    referat: 'Vi ble enige om at det skal søkes minst 5 stillinger i uken den første perioden',
+    referat:
+        'Vi ble enige om at det skal søkes  https://www.nav.no/kake  minst 5 stillinger i uken den første perioden',
     status: 'BRUKER_ER_INTERESSERT',
     stillingsTittel: null,
     tilDato: null,

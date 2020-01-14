@@ -1,7 +1,7 @@
 import React from 'react';
 import { formaterDate } from '../../utils/Date';
 import { Aktivitet } from '../../utils/AktivitetTypes';
-import InformasjonElement from './InformasjonElement';
+import InformasjonElement, { InformasjonElementRaw } from './InformasjonElement';
 import EksternLenke from '../../felleskomponenter/EksternLenke';
 import SokeStatusEtikett from './etiketter/sokeStatusEtikett';
 
@@ -22,9 +22,9 @@ export default function StillingAktivitet(props: PropTypes) {
             <InformasjonElement merkelapptekst="Kontaktperson" verdi={kontaktperson} />
             <InformasjonElement merkelapptekst="Arbeidssted" verdi={arbeidssted} />
             <InformasjonElement merkelapptekst="Beskrivelse" verdi={beskrivelse} />
-            <InformasjonElement merkelapptekst="Lenke">
+            <InformasjonElementRaw merkelapptekst="Lenke">
                 <EksternLenke lenke={lenke} />
-            </InformasjonElement>
+            </InformasjonElementRaw>
             <SokeStatusEtikett etikett={etikett} />
         </>
     );
