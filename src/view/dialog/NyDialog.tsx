@@ -13,10 +13,10 @@ import Textarea from '../../felleskomponenter/input/textarea';
 import { Hovedknapp } from 'nav-frontend-knapper';
 import Input from '../../felleskomponenter/input/input';
 import { nyDialog, oppdaterFerdigBehandlet, oppdaterVenterPaSvar } from '../../api/dialog';
-import './NyDialog.less';
 import Checkbox from '../../felleskomponenter/input/checkbox';
 import { div as HiddenIfDiv } from '../../felleskomponenter/HiddenIfHoc';
 import { endreDialogSomVises, sendtNyDialog } from '../ViewState';
+import style from './NyDialog.module.less';
 
 const AlertStripeFeilVisible = visibleIfHoc(AlertStripeFeil);
 
@@ -76,7 +76,7 @@ function NyDialog() {
     }, [setViewState]);
 
     if (!kansendeMelding) {
-        return <div className="dialog dialog-new" />;
+        return <div className={'dialog ' + style.dialogNew} />;
     }
 
     const onSubmit = (data: { tema: string; melding: string; venterPaSvarFraNAV: string; venterPaSvar: string }) => {
@@ -100,24 +100,24 @@ function NyDialog() {
     };
 
     return (
-        <div className="dialog dialog-new">
-            <div className="dialog-new__header">
-                <Link to="/" className="tilbake-til-oversikt">
+        <div className={'dialog ' + style.nyDialog}>
+            <div className={style.header}>
+                <Link to="/" className={style.tilbakeTilOversikt}>
                     <VenstreChevron stor className="tilbake-til-oversikt__pilknapp" />
                     Oversikt
                 </Link>
             </div>
-            <form onSubmit={state.onSubmit(onSubmit)} className="dialog-new__form">
-                <Innholdstittel className="dialog-new__tittel">Ny dialog</Innholdstittel>
-                <Normaltekst className="dialog-new__infotekst">{infoTekst}</Normaltekst>
+            <form onSubmit={state.onSubmit(onSubmit)} className={style.form}>
+                <Innholdstittel className={style.tittel}>Ny dialog</Innholdstittel>
+                <Normaltekst className={style.infotekst}>{infoTekst}</Normaltekst>
                 <FormErrorSummary submittoken={state.submittoken} errors={state.errors} />
 
-                <Input className="dialog-new__temafelt" label="Tema" placeholder="Skriv her" {...state.fields.tema} />
-                <div className="skriv-melding">
+                <Input className={style.temafelt} label="Tema" placeholder="Skriv her" {...state.fields.tema} />
+                <div className={style.skrivMelding}>
                     <Textarea
                         label="Melding"
                         placeholder="Skriv en melding om arbeid og oppfølging"
-                        textareaClass="autosizing-textarea"
+                        textareaClass={style.autosizingTextarea}
                         maxLength={maxMeldingsLengde}
                         visTellerFra={1000}
                         {...state.fields.melding}
