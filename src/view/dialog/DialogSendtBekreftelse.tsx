@@ -26,7 +26,7 @@ interface Props {
     fnr?: string;
 }
 
-export function DialogSendtBekreftelse(props: Props) {
+function DialogSendtBekreftelse(props: Props) {
     const { viewState, dialog, fnr } = props;
     const erVeileder = !!fnr;
 
