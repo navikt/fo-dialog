@@ -38,6 +38,7 @@ export function AktivitetskortPreview(props: Props) {
 
 export function getInfoText(aktivitet: Aktivitet | ArenaAktivitet): string {
     const typeTekst = getTypeText(aktivitet.type);
+
     switch (aktivitet.type) {
         case AktivitetTypes.STILLING:
             return `${typeTekst} / ${aktivitet.arbeidsgiver}`;
@@ -51,12 +52,10 @@ export function getInfoText(aktivitet: Aktivitet | ArenaAktivitet): string {
             return `${typeTekst} / ${formaterDate(aktivitet.fraDato)}`;
         case AktivitetTypes.IJOBB:
             return `${typeTekst} / ${aktivitet.arbeidsgiver}`;
-        case ArenaAktivitetTypes.TILTAKSAKTIVITET ||
-            ArenaAktivitetTypes.UTDANNINGSAKTIVITET ||
-            ArenaAktivitetTypes.GRUPPEAKTIVITET ||
-            AktivitetTypes.EGEN:
+        case ArenaAktivitetTypes.TILTAKSAKTIVITET:
+        case ArenaAktivitetTypes.UTDANNINGSAKTIVITET:
+        case ArenaAktivitetTypes.GRUPPEAKTIVITET:
+        case AktivitetTypes.EGEN:
             return typeTekst;
     }
-
-    return '';
 }
