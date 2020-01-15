@@ -1,15 +1,17 @@
 @import (reference) '~nav-frontend-core/less/core';
 @import (reference) '../../variabler';
 
-.dialog-new {
+.nyDialog {
     display: flex;
     flex-direction: column;
     background-color: white;
-    &__header {
+
+    .header {
         background-color: @lysgraBakrund;
         display: flex;
         flex-basis: 4rem;
-        .tilbake-til-oversikt {
+
+        .tilbakeTilOversikt {
             text-decoration: none;
             padding: 1rem 0;
             display: flex;
@@ -18,57 +20,69 @@
             font-weight: bold;
         }
     }
-    &__form {
+
+    .form {
         margin: 1rem;
     }
-    &__tittel {
+
+    .tittel {
         margin-top: 0.5rem;
         margin-bottom: 1rem;
     }
-    &__infotekst {
+
+    .infotekst {
         margin: 0 0 2rem 0;
         width: 95%;
     }
-    &__temafelt {
+
+    .temafelt {
         width: 65%;
     }
 
-    .skriv-melding {
+    .skrivMelding {
         display: flex;
         flex-basis: 7rem;
         bottom: 0;
         padding: 1rem 1rem 1rem 0;
         align-items: flex-end;
-        .autosizing-textarea {
+
+        .autosizingTextarea {
             max-height: 7rem;
             @media (min-width: 800px) {
                 max-height: 15rem;
             }
         }
-        .skjemaelement {
-            flex: 1;
-            margin-bottom: 0;
-        }
-        .knapp--hoved {
-            padding: 0.5rem;
-            height: 2.6rem;
-            margin-left: 1rem;
+
+        :global {
+            .knapp--hoved {
+                padding: 0.5rem;
+                height: 2.6rem;
+                margin-left: 1rem;
+            }
+
+            .skjemaelement {
+                flex: 1;
+                margin-bottom: 0;
+            }
         }
     }
 
     @media (min-width: 800px) {
-        &__header {
+        .header {
             display: none;
         }
+
         padding: 0 6% 0 6%;
-        &__infotekst {
+        .infotekst {
             max-width: 30rem;
         }
+
         @media (min-width: 1200px) {
-            &__temafelt {
+            .temafelt {
                 max-width: 50rem;
             }
-            .skriv-melding {
+
+            .skrivMelding {
                 max-width: 50rem;
             }
         }
