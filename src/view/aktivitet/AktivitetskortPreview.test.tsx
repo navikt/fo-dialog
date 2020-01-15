@@ -4,6 +4,7 @@ import { AktivitetskortPreview, getInfoText } from './AktivitetskortPreview';
 import { AktivitetTypes } from '../../utils/AktivitetTypes';
 import * as UseAktivitet from '../../api/UseAktivitet';
 import '../../utils/SetupEnzyme';
+import { MemoryRouter } from 'react-router';
 
 describe('getInfoText', () => {
     it('skal returnere korrekt tekst for stillingsaktivitet', () => {
@@ -77,7 +78,18 @@ describe('<AktivitetskortPreview />', () => {
             return a === '123' ? aktivitet : undefined;
         });
 
-        const wrapper = mount(<AktivitetskortPreview dialog={dialog} />);
-        expect(wrapper).toMatchSnapshot();
+        const wrapper = mount(
+            <MemoryRouter>
+                <AktivitetskortPreview dialog={dialog} />
+            </MemoryRouter>
+        );
+        expect(
+            wrapper
+                .children()
+                .children()
+                .first()
+        ).toMatchSnapshot();
+        expect(wrapper.children().length).toBe(1);
+        expect(wrapper.children().children().length).toBe(1);
     });
 });
