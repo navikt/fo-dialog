@@ -8,7 +8,8 @@ import { formaterDate, getKlokkeslett } from '../../utils/Date';
 import styles from './AktivitetskortPreview.module.less';
 import { getTypeText } from './TextUtils';
 import { useFetchAktivitetMedFnrContext } from '../../api/UseAktivitet';
-import { aktivitetLenke } from './AktivitetskortLinke';
+import { aktivitetLenke, visAktivitetsplan } from './AktivitetskortLinke';
+import WrapInReactLink from '../../felleskomponenter/WrapInReactLink';
 
 interface Props {
     dialog: DialogData;
@@ -23,8 +24,14 @@ export function AktivitetskortPreview(props: Props) {
     }
 
     const info = getInfoText(aktivitet);
+    //TODO fiks linken for sluttbruker
     return (
-        <LenkepanelBase href={aktivitetLenke(aktivitet.id)} className={styles.lenkepanelbase}>
+        <LenkepanelBase
+            href={aktivitetLenke(aktivitet.id)}
+            className={styles.lenkepanelbase}
+            linkCreator={WrapInReactLink}
+            onClick={visAktivitetsplan}
+        >
             <div className={styles.spaceBetween}>
                 <div>
                     <Undertittel className={styles.tittel}>{aktivitet.tittel}</Undertittel>
