@@ -4,13 +4,13 @@ const selectHodefot = () => Array.from(document.querySelectorAll('.hodefot'));
 
 function skjulElementerForMobil() {
     selectHodefot().forEach(el => {
-        el.classList.add('hidden-sm');
+        el.classList.add('hidden-xs');
     });
 }
 
 function visElementer() {
     selectHodefot().forEach(el => {
-        el.classList.remove('hidden-sm');
+        el.classList.remove('hidden-xs');
     });
 }
 
