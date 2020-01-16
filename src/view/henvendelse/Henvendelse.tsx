@@ -11,12 +11,14 @@ interface Props {
 }
 
 export function Henvendelse(props: Props) {
-    const erMeldingFraBruker: boolean = props.henvendelseData.avsender === 'BRUKER';
-    const date: string = formaterDateAndTime(props.henvendelseData.sendt);
+    const { avsender, sendt, tekst, avsenderId } = props.henvendelseData;
+    const erMeldingFraBruker: boolean = avsender === 'BRUKER';
+    const date: string = formaterDateAndTime(sendt);
+    const toppTekst = erMeldingFraBruker || !avsenderId ? date : `${date} - ${avsenderId}`;
     const className: string = erMeldingFraBruker ? 'ikon bruker-ikon' : 'ikon veileder-ikon';
     return (
-        <Snakkeboble topp={date} pilHoyre={erMeldingFraBruker} ikonClass={className}>
-            <Tekstomrade>{props.henvendelseData.tekst}</Tekstomrade>
+        <Snakkeboble topp={toppTekst} pilHoyre={erMeldingFraBruker} ikonClass={className}>
+            <Tekstomrade>{tekst}</Tekstomrade>
         </Snakkeboble>
     );
 }
