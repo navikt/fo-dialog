@@ -44,6 +44,8 @@ interface Props {
     children: React.ReactNode;
 }
 
+export const useErInside = () => !!useFnrContext();
+
 export function Provider(props: Props) {
     const query = fnrQuery(props.fnr);
 

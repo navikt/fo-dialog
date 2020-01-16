@@ -10,63 +10,49 @@ exports[`<AktivitetskortPreview /> skal rendre stillingsaktivitet som i snapshot
 >
   <LenkepanelBase
     border={false}
-    href="/aktivitet/vis/123"
+    href="/aktivitetsplan/aktivitet/vis/123"
     linkCreator={[Function]}
     onClick={[Function]}
   >
-    <Link
+    <a
       className="lenkepanel"
-      href="/aktivitet/vis/123"
+      href="/aktivitetsplan/aktivitet/vis/123"
       onClick={[Function]}
-      to="/aktivitet/vis/123"
     >
-      <LinkAnchor
-        className="lenkepanel"
-        href="/aktivitet/vis/123"
-        navigate={[Function]}
-        onClick={[Function]}
-      >
-        <a
-          className="lenkepanel"
-          href="/aktivitet/vis/123"
-          onClick={[Function]}
-        >
-          <div>
-            <div>
-              <Undertittel>
-                <TypografiBase
-                  type="undertittel"
-                >
-                  <h2
-                    className="typo-undertittel"
-                  >
-                    Kantinemedarbeider
-                  </h2>
-                </TypografiBase>
-              </Undertittel>
-              <Undertekst>
-                <TypografiBase
-                  type="undertekst"
-                >
-                  <p
-                    className="typo-undertekst"
-                  >
-                    Stilling / Testesen
-                  </p>
-                </TypografiBase>
-              </Undertekst>
-            </div>
-            <p>
-              Se aktivitet
-            </p>
-          </div>
-          <span
-            className="lenkepanel__indikator"
-            key="indikator"
-          />
-        </a>
-      </LinkAnchor>
-    </Link>
+      <div>
+        <div>
+          <Undertittel>
+            <TypografiBase
+              type="undertittel"
+            >
+              <h2
+                className="typo-undertittel"
+              >
+                Kantinemedarbeider
+              </h2>
+            </TypografiBase>
+          </Undertittel>
+          <Undertekst>
+            <TypografiBase
+              type="undertekst"
+            >
+              <p
+                className="typo-undertekst"
+              >
+                Stilling / Testesen
+              </p>
+            </TypografiBase>
+          </Undertekst>
+        </div>
+        <p>
+          Se aktivitet
+        </p>
+      </div>
+      <span
+        className="lenkepanel__indikator"
+        key="indikator"
+      />
+    </a>
   </LenkepanelBase>
 </AktivitetskortPreview>
 `;
