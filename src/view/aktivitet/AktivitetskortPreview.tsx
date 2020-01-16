@@ -9,7 +9,7 @@ import styles from './AktivitetskortPreview.module.less';
 import { getTypeText } from './TextUtils';
 import { useFetchAktivitetMedFnrContext } from '../../api/UseAktivitet';
 import { aktivitetLenke, visAktivitetsplan } from './AktivitetskortLinke';
-import { useErInside } from '../Provider';
+import { useFnrContext } from '../Provider';
 
 interface Props {
     dialog: DialogData;
@@ -17,7 +17,7 @@ interface Props {
 
 export function AktivitetskortPreview(props: Props) {
     const findAktivitet = useFetchAktivitetMedFnrContext();
-    const erInside = useErInside();
+    const fnr = useFnrContext();
 
     const aktivitet = findAktivitet(props.dialog.aktivitetId);
     if (!aktivitet) {
@@ -30,7 +30,7 @@ export function AktivitetskortPreview(props: Props) {
         <LenkepanelBase
             href={aktivitetLenke(aktivitet.id)}
             className={styles.lenkepanelbase}
-            onClick={visAktivitetsplan(aktivitet.id, erInside)}
+            onClick={visAktivitetsplan(aktivitet.id, fnr)}
         >
             <div className={styles.spaceBetween}>
                 <div>
