@@ -9,7 +9,7 @@ import styles from './AktivitetskortPreview.module.less';
 import { getTypeText } from './TextUtils';
 import { useFetchAktivitetMedFnrContext } from '../../api/UseAktivitet';
 import { aktivitetLenke, visAktivitetsplan } from './AktivitetskortLinke';
-import WrapInReactLink from '../../felleskomponenter/WrapInReactLink';
+import { useErInside } from '../Provider';
 
 interface Props {
     dialog: DialogData;
@@ -17,6 +17,7 @@ interface Props {
 
 export function AktivitetskortPreview(props: Props) {
     const findAktivitet = useFetchAktivitetMedFnrContext();
+    const erInside = useErInside();
 
     const aktivitet = findAktivitet(props.dialog.aktivitetId);
     if (!aktivitet) {
@@ -29,8 +30,7 @@ export function AktivitetskortPreview(props: Props) {
         <LenkepanelBase
             href={aktivitetLenke(aktivitet.id)}
             className={styles.lenkepanelbase}
-            linkCreator={WrapInReactLink}
-            onClick={visAktivitetsplan(aktivitet.id)}
+            onClick={visAktivitetsplan(aktivitet.id, erInside)}
         >
             <div className={styles.spaceBetween}>
                 <div>
