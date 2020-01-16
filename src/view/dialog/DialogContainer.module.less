@@ -1,8 +1,10 @@
+@import (reference) '../../variabler';
+
 .dialogContainer {
     display: flex;
     flex-grow: 1;
 
-    @media (min-width: 800px) {
+    @media (min-width: @tabletMin) {
         width: 65%;
     }
 }

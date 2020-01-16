@@ -1,4 +1,5 @@
 @import (reference) '~nav-frontend-core/less/core';
+@import (reference) '../../variabler';
 
 .dialog {
     display: flex;
@@ -37,7 +38,7 @@
     .autosizing-textarea {
         max-height: 7rem;
         overflow: initial !important; //overwrite nav styling
-        @media (min-width: 800px) {
+        @media (min-width: @tabletMin) {
             max-height: 15rem;
         }
     }
