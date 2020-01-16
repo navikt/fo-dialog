@@ -104,7 +104,7 @@ function NyDialog() {
             <div className={style.header}>
                 <Link to="/" className={style.tilbakeTilOversikt}>
                     <VenstreChevron stor className="tilbake-til-oversikt__pilknapp" />
-                    Oversikt
+                    Til dialoger
                 </Link>
             </div>
             <form onSubmit={state.onSubmit(onSubmit)} className={style.form}>
