@@ -49,7 +49,7 @@
         .autosizingTextarea {
             overflow: initial !important; //overwrite nav styling
             max-height: 7rem;
-            @media (min-width: 800px) {
+            @media (min-width: @tabletMin) {
                 max-height: 15rem;
             }
         }
@@ -68,7 +68,7 @@
         }
     }
 
-    @media (min-width: 800px) {
+    @media (min-width: @tabletMin) {
         .header {
             display: none;
         }
@@ -78,7 +78,7 @@
             max-width: 30rem;
         }
 
-        @media (min-width: 1200px) {
+        @media (min-width: @desctopMin) {
             .temafelt {
                 max-width: 50rem;
             }

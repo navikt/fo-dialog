@@ -1,4 +1,5 @@
 @import (reference) '~nav-frontend-core/less/core';
+@import (reference) '../../variabler';
 
 .dialogbanner {
     background-color: @navDypBlaLighten80;
@@ -27,7 +28,7 @@
     }
 }
 
-@media (min-width: 800px) {
+@media (min-width: @tabletMin) {
     .dialogbanner {
         display: flex;
         padding: 1rem;
