@@ -4,7 +4,7 @@ import { Henvendelse } from './Henvendelse';
 import LestAvTidspunkt from '../dialog/LestTidspunkt';
 
 import './henvendelseList.less';
-import { useMobilVisning } from './useMobilVisning';
+import { useSkjulHodefotForMobilVisning } from '../utils/useSkjulHodefotForMobilVisning';
 
 interface Props {
     dialogData: DialogData;
@@ -44,7 +44,7 @@ export function HenvendelseList(props: Props) {
     const dialogData = props.dialogData;
     const { lestAvBrukerTidspunkt, henvendelser } = dialogData;
     useScrollToLast(dialogData);
-    useMobilVisning();
+    useSkjulHodefotForMobilVisning();
 
     if (!henvendelser) {
         return null;

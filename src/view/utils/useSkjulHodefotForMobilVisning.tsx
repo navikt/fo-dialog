@@ -14,7 +14,7 @@ function visElementer() {
     });
 }
 
-export function useMobilVisning() {
+export function useSkjulHodefotForMobilVisning() {
     useEffect(() => {
         skjulElementerForMobil();
         return () => visElementer();

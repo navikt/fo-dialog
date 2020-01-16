@@ -17,6 +17,7 @@ import Checkbox from '../../felleskomponenter/input/checkbox';
 import { div as HiddenIfDiv } from '../../felleskomponenter/HiddenIfHoc';
 import { endreDialogSomVises, sendtNyDialog } from '../ViewState';
 import style from './NyDialog.module.less';
+import { useSkjulHodefotForMobilVisning } from '../utils/useSkjulHodefotForMobilVisning';
 
 const AlertStripeFeilVisible = visibleIfHoc(AlertStripeFeil);
 
@@ -57,6 +58,8 @@ function NyDialog() {
     const [noeFeilet, setNoeFeilet] = useState(false);
     const kansendeMelding = useKansendeMelding();
     const fnr = useFnrContext();
+    useSkjulHodefotForMobilVisning();
+
     const state = validator({
         tema: '',
         melding: '',
