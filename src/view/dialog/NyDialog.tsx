@@ -2,11 +2,9 @@ import React, { useEffect, useState } from 'react';
 import { Innholdstittel, Normaltekst } from 'nav-frontend-typografi';
 import useFormstate from '@nutgaard/use-formstate';
 import { useDialogContext, useFnrContext, useUserInfoContext, useViewContext } from '../Provider';
-import { useHistory } from 'react-router';
+import { useHistory, useLocation } from 'react-router';
 import { AlertStripeFeil } from 'nav-frontend-alertstriper';
 import { visibleIfHoc } from '../../felleskomponenter/VisibleIfHoc';
-import { VenstreChevron } from 'nav-frontend-chevron';
-import { Link } from 'react-router-dom';
 import useKansendeMelding from '../../utils/UseKanSendeMelding';
 import FormErrorSummary from '../../felleskomponenter/form-error-summary/FormErrorSummary';
 import Textarea from '../../felleskomponenter/input/textarea';
@@ -18,6 +16,7 @@ import { div as HiddenIfDiv } from '../../felleskomponenter/HiddenIfHoc';
 import { endreDialogSomVises, sendtNyDialog } from '../ViewState';
 import style from './NyDialog.module.less';
 import { useSkjulHodefotForMobilVisning } from '../utils/useSkjulHodefotForMobilVisning';
+import { DialogHeader } from './DialogHeader';
 
 const AlertStripeFeilVisible = visibleIfHoc(AlertStripeFeil);
 
@@ -69,6 +68,10 @@ function NyDialog() {
 
     const { viewState, setViewState } = useViewContext();
 
+    const location = useLocation();
+    const query = new URLSearchParams(location.search);
+    const aktivitetId = query.get('aktivitetid');
+
     const erVeileder = !!bruker && bruker.erVeileder;
     const infoTekst = erVeileder ? veilederInfoMelding : brukerinfomelding;
 
@@ -104,12 +107,7 @@ function NyDialog() {
 
     return (
         <div className={'dialog ' + style.nyDialog}>
-            <div className={style.header}>
-                <Link to="/" className={style.tilbakeTilOversikt}>
-                    <VenstreChevron stor className="tilbake-til-oversikt__pilknapp" />
-                    Til dialoger
-                </Link>
-            </div>
+            <DialogHeader aktivitetId={aktivitetId} />
             <form onSubmit={state.onSubmit(onSubmit)} className={style.form}>
                 <Innholdstittel className={style.tittel}>Ny dialog</Innholdstittel>
                 <Normaltekst className={style.infotekst}>{infoTekst}</Normaltekst>

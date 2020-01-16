@@ -6,22 +6,10 @@
     flex-direction: column;
     background-color: white;
 
-    .header {
-        background-color: @lysgraBakrund;
-        display: flex;
-        flex-basis: 4rem;
-
-        .tilbakeTilOversikt {
-            text-decoration: none;
-            padding: 1rem 0;
-            display: flex;
-            align-items: center;
-            color: @navMorkGra;
-            font-weight: bold;
-        }
-    }
-
     .form {
+        @media (min-width: 800px) {
+            padding: 0 6% 0 6%;
+        }
         margin: 1rem;
     }
 
@@ -69,11 +57,6 @@
     }
 
     @media (min-width: 800px) {
-        .header {
-            display: none;
-        }
-
-        padding: 0 6% 0 6%;
         .infotekst {
             max-width: 30rem;
         }

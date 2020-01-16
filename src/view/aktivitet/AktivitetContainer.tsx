@@ -7,6 +7,7 @@ function AktivitetContainer() {
     return (
         <div className={styles.aktivitetContainer}>
             <Switch>
+                <Route path="/ny" component={Aktivitetskort} />
                 <Route path="/:dialogId" component={Aktivitetskort} />
             </Switch>
         </div>

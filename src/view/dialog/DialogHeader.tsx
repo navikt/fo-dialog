@@ -8,32 +8,41 @@ import classNames from 'classnames';
 import styles from './DialogHeader.module.less';
 
 interface DialogHeaderProps {
-    dialog: DialogData;
+    dialog?: DialogData;
+    aktivitetId?: StringOrNull;
 }
 
 interface DialogOverskriftProps {
-    tekst: StringOrNull;
+    tekst?: StringOrNull;
 }
 
 function DialogOverskrift(props: DialogOverskriftProps) {
+    if (!props.tekst) {
+        return null;
+    }
+
     return <Undertittel className={styles.tittel}>{props.tekst}</Undertittel>;
 }
 
 export function DialogHeader(props: DialogHeaderProps) {
-    const { dialog } = props;
-    const { aktivitetId } = dialog;
+    const { dialog, aktivitetId } = props;
+    const aktivitet = aktivitetId || dialog?.aktivitetId;
     const headerStyle = classNames(
         styles.dialogHeader,
-        aktivitetId ? styles.skjulVedStorSkjem : styles.skjulVedMiddelsSkjem
+        aktivitet ? styles.skjulVedStorSkjem : styles.skjulVedMiddelsSkjem
     );
 
     return (
         <div className={headerStyle}>
             <Link to="/" className={styles.tilbakeTilOversikt}>
-                <VenstreChevron />
+                <VenstreChevron stor />
                 Til dialoger
             </Link>
-            {aktivitetId ? <AktivitetskortPreview dialog={dialog} /> : <DialogOverskrift tekst={dialog.overskrift} />}
+            {aktivitetId ? (
+                <AktivitetskortPreview aktivitetId={aktivitet} />
+            ) : (
+                <DialogOverskrift tekst={dialog?.overskrift} />
+            )}
         </div>
     );
 }
