@@ -6,7 +6,7 @@
     background-color: @lysgraBakrund;
     width: 100%;
 
-    @media (min-width: 800px) {
+    @media (min-width: @tabletMin) {
         display: flex;
         width: 35%;
     }
@@ -14,20 +14,24 @@
 
 .dialogListe {
     padding: 0.7rem;
-    overflow-y: auto;
+
     flex: 1;
+
+    @media (min-width: @tabletMin) {
+        overflow-y: auto;
+    }
 }
 
 .dialogValgt {
     display: none;
-    @media (min-width: 800px) {
+    @media (min-width: @tabletMin) {
         display: flex;
     }
 }
 
 .info {
     display: none;
-    @media (max-width: 799px) {
+    @media (max-width: @mobilVisningMax) {
         display: block;
     }
 }

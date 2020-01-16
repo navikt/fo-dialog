@@ -1,4 +1,5 @@
 @import '~nav-frontend-core/less/core';
+@import (reference) '../variabler';
 
 //TODO sjekk denne mot veilarbpersonflatefs
 :global {
@@ -38,7 +39,10 @@
     display: flex;
     flex-direction: column;
     flex-grow: 1;
-    overflow: hidden;
+    overflow-x: hidden;
+    @media (min-width: @tabletMin) {
+        overflow: hidden;
+    }
 }
 
 .konteinerUtside {
@@ -61,5 +65,7 @@
 .app__body {
     display: flex;
     flex-grow: 1;
-    overflow: hidden;
+    @media (min-width: @tabletMin) {
+        overflow: hidden;
+    }
 }
