@@ -30,7 +30,7 @@ export function AktivitetskortPreview(props: Props) {
             href={aktivitetLenke(aktivitet.id)}
             className={styles.lenkepanelbase}
             linkCreator={WrapInReactLink}
-            onClick={visAktivitetsplan}
+            onClick={visAktivitetsplan(aktivitet.id)}
         >
             <div className={styles.spaceBetween}>
                 <div>

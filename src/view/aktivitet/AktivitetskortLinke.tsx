@@ -1,13 +1,16 @@
 import styles from './Aktivitetskort.module.less';
 import { HoyreChevron } from 'nav-frontend-chevron';
 import { Element } from 'nav-frontend-typografi';
-import React from 'react';
-import { Link } from 'react-router-dom';
+import React, { MouseEvent } from 'react';
+import Lenke from 'nav-frontend-lenker';
 
+//TODO fiks lenken for sluttbruker
 export const aktivitetLenke = (aktivitetId: string) => `/aktivitet/vis/${aktivitetId}`;
 
-export const visAktivitetsplan = () => {
-    window.dispatchEvent(new Event('visAktivitetsplan'));
+//TODO fiks lenken for sluttbruker
+export const visAktivitetsplan = (aktivitetID: string) => (event: MouseEvent) => {
+    event.preventDefault();
+    window.dispatchEvent(new CustomEvent('visAktivitetsplan', { detail: aktivitetID }));
 };
 
 interface Props {
@@ -16,13 +19,14 @@ interface Props {
 
 //TODO fiks lenken for sluttbruker
 export default function AktivitetskortLenke(props: Props) {
+    const aktivitetId = props.aktivitetId;
     return (
         <div className={styles.aktivitetkortlenke}>
             <Element>
-                <Link to={aktivitetLenke(props.aktivitetId)} onClick={visAktivitetsplan} className="lenke">
+                <Lenke href={aktivitetLenke(aktivitetId)} onClick={visAktivitetsplan(aktivitetId)} className="lenke">
                     Se og endre aktivitet
                     <HoyreChevron />
-                </Link>
+                </Lenke>
             </Element>
         </div>
     );
