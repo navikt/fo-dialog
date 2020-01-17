@@ -31,7 +31,7 @@ interface Props {
 function DialogPreview(props: Props) {
     const { dialog, valgtDialogId } = props;
     const { id, sisteDato, aktivitetId, lest, overskrift, sisteTekst } = dialog;
-    const findAktivitet = useFetchAktivitetMedFnrContext();
+    const { findAktivitet } = useFetchAktivitetMedFnrContext();
 
     const datoString = !!sisteDato ? formaterDate(sisteDato) : '';
     const aktivitet = findAktivitet(aktivitetId);

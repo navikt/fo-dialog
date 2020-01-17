@@ -15,7 +15,7 @@ interface Props {
 }
 
 export function AktivitetskortPreview(props: Props) {
-    const findAktivitet = useFetchAktivitetMedFnrContext();
+    const { findAktivitet } = useFetchAktivitetMedFnrContext();
     const fnr = useFnrContext();
 
     const aktivitet = findAktivitet(props.aktivitetId);

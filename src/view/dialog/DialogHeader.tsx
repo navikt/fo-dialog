@@ -38,7 +38,7 @@ export function DialogHeader(props: DialogHeaderProps) {
                 <VenstreChevron stor />
                 Til dialoger
             </Link>
-            {aktivitetId ? (
+            {aktivitet ? (
                 <AktivitetskortPreview aktivitetId={aktivitet} />
             ) : (
                 <DialogOverskrift tekst={dialog?.overskrift} />

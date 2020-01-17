@@ -10,7 +10,7 @@ interface AktivitetResponse {
 }
 export function useFetchAktivitetMedFnrContext() {
     const fnr = useFnrContext();
-    return useFetchAktivitet(fnr).findAktivitet;
+    return useFetchAktivitet(fnr);
 }
 
 export function useFetchAktivitet(fnr?: string) {

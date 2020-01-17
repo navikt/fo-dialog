@@ -6,6 +6,7 @@ export interface NyDialogMeldingData {
     tekst: string;
     dialogId: StringOrNull;
     overskrift?: string;
+    aktivitetId?: string;
 }
 
 export interface DialogData {
