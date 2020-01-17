@@ -5,6 +5,7 @@ import { AktivitetTypes } from '../../utils/AktivitetTypes';
 import * as UseAktivitet from '../../api/UseAktivitet';
 import '../../utils/SetupEnzyme';
 import { MemoryRouter } from 'react-router';
+import { StringOrNull } from '../../utils/Typer';
 
 describe('getInfoText', () => {
     it('skal returnere korrekt tekst for stillingsaktivitet', () => {
@@ -62,25 +63,23 @@ describe('getInfoText', () => {
 
 describe('<AktivitetskortPreview />', () => {
     it('skal rendre stillingsaktivitet som i snapshot', () => {
-        const dialog: any = {
-            aktivitetId: '123'
-        };
-
         const aktivitet: any = {
             tittel: 'Kantinemedarbeider',
-            id: dialog.aktivitetId,
+            id: '123',
             type: AktivitetTypes.STILLING,
             tilDato: '2019-10-24T15:44:21.993+02:00',
             arbeidsgiver: 'Testesen'
         };
 
-        jest.spyOn(UseAktivitet, 'useFetchAktivitetMedFnrContext').mockReturnValue((a: any) => {
-            return a === '123' ? aktivitet : undefined;
+        jest.spyOn(UseAktivitet, 'useFetchAktivitetMedFnrContext').mockReturnValue({
+            findAktivitet: (a?: StringOrNull) => (a === '123' ? aktivitet : undefined),
+            isAktivitetLoading: () => true,
+            hasAktivitetError: () => true
         });
 
         const wrapper = mount(
             <MemoryRouter>
-                <AktivitetskortPreview dialog={dialog} />
+                <AktivitetskortPreview aktivitetId={'123'} />
             </MemoryRouter>
         );
         expect(
