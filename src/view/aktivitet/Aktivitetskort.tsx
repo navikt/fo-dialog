@@ -10,16 +10,17 @@ import Brodsmulesti from './Brodsmulesti';
 import AktivitetskortLenke from './AktivitetskortLinke';
 import AktivitetIngress from './AktivitetIngress';
 import AvtaltMarkering from './etiketter/avtalt-markering';
+import { useAktivitetId } from '../utils/useAktivitetId';
 
 export function Aktivitetskort() {
     const dialoger = useDialogContext();
     const dialogData = hasData(dialoger) ? dialoger.data : [];
     const { dialogId } = useParams();
-    const findAktivitet = useFetchAktivitetMedFnrContext();
+    const { findAktivitet } = useFetchAktivitetMedFnrContext();
 
     const dialog = dialogData.find(dialog => dialog.id === dialogId);
-
-    const aktivitet = dialog && findAktivitet(dialog.aktivitetId);
+    const aktivitetId = useAktivitetId() ?? dialog?.aktivitetId;
+    const aktivitet = findAktivitet(aktivitetId);
 
     if (!aktivitet) {
         return null;

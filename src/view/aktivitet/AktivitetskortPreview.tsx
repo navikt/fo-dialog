@@ -1,8 +1,7 @@
 import React from 'react';
-import { DialogData } from '../../utils/Typer';
+import { StringOrNull } from '../../utils/Typer';
 import { Aktivitet, AktivitetTypes, ArenaAktivitet, ArenaAktivitetTypes } from '../../utils/AktivitetTypes';
 import { Undertekst, Undertittel } from 'nav-frontend-typografi';
-
 import { LenkepanelBase } from 'nav-frontend-lenkepanel';
 import { formaterDate, getKlokkeslett } from '../../utils/Date';
 import styles from './AktivitetskortPreview.module.less';
@@ -12,14 +11,14 @@ import { aktivitetLenke, visAktivitetsplan } from './AktivitetskortLinke';
 import { useFnrContext } from '../Provider';
 
 interface Props {
-    dialog: DialogData;
+    aktivitetId?: StringOrNull;
 }
 
 export function AktivitetskortPreview(props: Props) {
-    const findAktivitet = useFetchAktivitetMedFnrContext();
+    const { findAktivitet } = useFetchAktivitetMedFnrContext();
     const fnr = useFnrContext();
 
-    const aktivitet = findAktivitet(props.dialog.aktivitetId);
+    const aktivitet = findAktivitet(props.aktivitetId);
     if (!aktivitet) {
         return null;
     }
