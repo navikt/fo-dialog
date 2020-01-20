@@ -4,17 +4,19 @@ import useKansendeMelding from '../../utils/UseKanSendeMelding';
 import { endreDialogSomVises, sendtNyDialog } from '../ViewState';
 import { useSkjulHodefotForMobilVisning } from '../utils/useSkjulHodefotForMobilVisning';
 import { DialogHeader } from './DialogHeader';
-import { useFetchAktivitetMedFnrContext } from '../../api/UseAktivitet';
 import NyDialogForm from './NyDialogForm';
 import { useAktivitetId } from '../utils/useAktivitetId';
+import { findAktivitet, isLoadingData, useAktivitetContext } from '../AktivitetProvider';
 
 function NyDialog() {
     const kansendeMelding = useKansendeMelding();
     useSkjulHodefotForMobilVisning();
 
     const aktivitetId = useAktivitetId();
-    const { findAktivitet, isAktivitetLoading } = useFetchAktivitetMedFnrContext();
-    const aktivitet = findAktivitet(aktivitetId);
+    const aktivitetData = useAktivitetContext();
+
+    const aktivitet = findAktivitet(aktivitetData, aktivitetId);
+    const loadingData = isLoadingData(aktivitetData);
 
     const { viewState, setViewState } = useViewContext();
 
@@ -22,17 +24,17 @@ function NyDialog() {
         setViewState(endreDialogSomVises());
     }, [setViewState]);
 
-    if (!kansendeMelding || (aktivitetId && isAktivitetLoading())) {
+    if (!kansendeMelding || (aktivitetId && loadingData)) {
         return <div className="dialog" />;
     }
 
     return (
         <div className="dialog">
-            <DialogHeader aktivitetId={aktivitetId} />
+            <DialogHeader aktivitetId={aktivitet?.id} />
             <NyDialogForm
                 onSubmit={() => setViewState(sendtNyDialog(viewState))}
                 defaultTema={aktivitet?.tittel}
-                aktivitetId={aktivitetId}
+                aktivitetId={aktivitet?.id}
             />
         </div>
     );

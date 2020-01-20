@@ -1,30 +1,31 @@
 import React from 'react';
-import { StringOrNull } from '../../utils/Typer';
 import { Aktivitet, AktivitetTypes, ArenaAktivitet, ArenaAktivitetTypes } from '../../utils/AktivitetTypes';
 import { Undertekst, Undertittel } from 'nav-frontend-typografi';
 import { LenkepanelBase } from 'nav-frontend-lenkepanel';
 import { formaterDate, getKlokkeslett } from '../../utils/Date';
 import styles from './AktivitetskortPreview.module.less';
 import { getTypeText } from './TextUtils';
-import { useFetchAktivitetMedFnrContext } from '../../api/UseAktivitet';
 import { aktivitetLenke, visAktivitetsplan } from './AktivitetskortLinke';
 import { useFnrContext } from '../Provider';
+import { StringOrNull } from '../../utils/Typer';
+import { findAktivitet, useAktivitetContext } from '../AktivitetProvider';
 
 interface Props {
     aktivitetId?: StringOrNull;
 }
 
 export function AktivitetskortPreview(props: Props) {
-    const { findAktivitet } = useFetchAktivitetMedFnrContext();
+    const { aktivitetId } = props;
     const fnr = useFnrContext();
+    const aktvitetData = useAktivitetContext();
 
-    const aktivitet = findAktivitet(props.aktivitetId);
+    const aktivitet = findAktivitet(aktvitetData, aktivitetId);
     if (!aktivitet) {
         return null;
     }
 
     const info = getInfoText(aktivitet);
-    //TODO fiks linken for sluttbruker
+
     return (
         <LenkepanelBase
             href={aktivitetLenke(aktivitet.id)}
