@@ -22,7 +22,7 @@ spec:
     enabled: true
     path: arbeidsrettet-dialog/internal/metrics
   ingresses:
-    - https://arbeidsrettet-dialog.nav.no
+    - https://www.nav.no/arbeid/dialog
   vault:
     enabled: true
   webproxy: true
