@@ -8,10 +8,9 @@ import WrapInReactLink from '../../felleskomponenter/WrapInReactLink';
 import classNames from 'classnames';
 import styles from './DialogPreview.module.less';
 import Ikon from './ikon/Ikon';
-
-import { useFetchAktivitetMedFnrContext } from '../../api/UseAktivitet';
 import { getDialogTitel } from '../aktivitet/TextUtils';
 import { Aktivitet, ArenaAktivitet } from '../../utils/AktivitetTypes';
+import { findAktivitet, useAktivitetContext } from '../AktivitetProvider';
 
 interface TittelProps {
     aktivitet?: Aktivitet | ArenaAktivitet;
@@ -31,10 +30,10 @@ interface Props {
 function DialogPreview(props: Props) {
     const { dialog, valgtDialogId } = props;
     const { id, sisteDato, aktivitetId, lest, overskrift, sisteTekst } = dialog;
-    const findAktivitet = useFetchAktivitetMedFnrContext();
+    const aktivitetData = useAktivitetContext();
 
     const datoString = !!sisteDato ? formaterDate(sisteDato) : '';
-    const aktivitet = findAktivitet(aktivitetId);
+    const aktivitet = findAktivitet(aktivitetData, aktivitetId);
     const lenkepanelCls = classNames(styles.preview, {
         [styles.lest]: lest,
         [styles.valgt]: id === valgtDialogId
@@ -49,6 +48,7 @@ function DialogPreview(props: Props) {
                 <EtikettLiten className={styles.dato}>{datoString}</EtikettLiten>
                 <EtikettListe dialog={dialog} />
             </div>
+            <Normaltekst>{dialog.henvendelser.length}</Normaltekst>
         </LenkepanelBase>
     );
 }

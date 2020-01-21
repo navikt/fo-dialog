@@ -1,9 +1,8 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`<InformasjonElement /> skal matche snapshot når EksternLenke er child 1`] = `
-<InformasjonElement
+<InformasjonElementRaw
   merkelapptekst="merkelappteksten"
-  verdi=""
 >
   <div>
     <EtikettLiten>
@@ -17,15 +16,6 @@ exports[`<InformasjonElement /> skal matche snapshot når EksternLenke er child 
         </p>
       </TypografiBase>
     </EtikettLiten>
-    <Undertekst>
-      <TypografiBase
-        type="undertekst"
-      >
-        <p
-          className="typo-undertekst"
-        />
-      </TypografiBase>
-    </Undertekst>
     <EksternLenke
       lenke="nav.no"
     >
@@ -46,5 +36,5 @@ exports[`<InformasjonElement /> skal matche snapshot når EksternLenke er child 
       </Lenke>
     </EksternLenke>
   </div>
-</InformasjonElement>
+</InformasjonElementRaw>
 `;

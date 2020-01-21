@@ -1,23 +1,40 @@
 import styles from './AktivitetskortInfoBox.module.less';
-import { EtikettLiten, Undertekst } from 'nav-frontend-typografi';
+import { EtikettLiten } from 'nav-frontend-typografi';
 import React, { ReactNode } from 'react';
 import { StringOrNull } from '../../utils/Typer';
+import Tekstomrade from 'nav-frontend-tekstomrade';
+
+interface TekstomradeProps {
+    merkelapptekst: string;
+    verdi?: StringOrNull;
+}
+
+export default function InformasjonElement(props: TekstomradeProps) {
+    const { verdi, merkelapptekst } = props;
+    if (!verdi) {
+        return <InformasjonElementRaw {...props} />;
+    }
+
+    return (
+        <InformasjonElementRaw merkelapptekst={merkelapptekst}>
+            <Tekstomrade>{verdi}</Tekstomrade>
+        </InformasjonElementRaw>
+    );
+}
 
 interface PropTypes {
     merkelapptekst: string;
-    verdi?: StringOrNull;
     children?: ReactNode;
 }
 
-export default function InformasjonElement(props: PropTypes) {
-    const { merkelapptekst, verdi, children } = props;
+export function InformasjonElementRaw(props: PropTypes) {
+    const { merkelapptekst, children } = props;
 
-    if (!verdi && !children) return null;
+    if (!children) return null;
 
     return (
         <div className={styles.informasjonselement}>
             <EtikettLiten children={merkelapptekst} className={styles.merkelapp} />
-            <Undertekst children={verdi} />
             {children}
         </div>
     );

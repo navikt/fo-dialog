@@ -1,21 +1,22 @@
 import { fetchData, fnrQuery } from '../utils/Fetch';
 import { DialogData } from '../utils/Typer';
 
-export function nyDialog(fnr: string | undefined, melding: string, tema: string) {
-    return sendMelding(fnr, melding, tema);
+export function nyDialog(fnr: string | undefined, melding: string, tema: string, aktivitetId?: string) {
+    return sendMelding(fnr, melding, tema, undefined, aktivitetId);
 }
 
 export function nyHenvendelse(fnr: string | undefined, melding: string, dialogId: string) {
     return sendMelding(fnr, melding, undefined, dialogId);
 }
 
-function sendMelding(fnr: string | undefined, melding: string, tema?: string, dialogId?: string) {
+function sendMelding(fnr: string | undefined, melding: string, tema?: string, dialogId?: string, aktivitetId?: string) {
     const query = fnrQuery(fnr);
 
     const nyDialogData = {
         dialogId: dialogId,
         overskrift: tema,
-        tekst: melding
+        tekst: melding,
+        aktivitetId: aktivitetId
     };
 
     return fetchData<DialogData>(`/veilarbdialog/api/dialog${query}`, {

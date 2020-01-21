@@ -2,20 +2,18 @@
 
 exports[`<AktivitetskortPreview /> skal rendre stillingsaktivitet som i snapshot 1`] = `
 <AktivitetskortPreview
-  dialog={
-    Object {
-      "aktivitetId": "123",
-    }
-  }
+  aktivitetId="123"
 >
   <LenkepanelBase
     border={false}
     href="/aktivitetsplan/aktivitet/vis/123"
     linkCreator={[Function]}
+    onClick={[Function]}
   >
     <a
       className="lenkepanel"
       href="/aktivitetsplan/aktivitet/vis/123"
+      onClick={[Function]}
     >
       <div>
         <div>

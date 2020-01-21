@@ -1,30 +1,37 @@
 import React from 'react';
-import { DialogData } from '../../utils/Typer';
 import { Aktivitet, AktivitetTypes, ArenaAktivitet, ArenaAktivitetTypes } from '../../utils/AktivitetTypes';
 import { Undertekst, Undertittel } from 'nav-frontend-typografi';
-
 import { LenkepanelBase } from 'nav-frontend-lenkepanel';
 import { formaterDate, getKlokkeslett } from '../../utils/Date';
 import styles from './AktivitetskortPreview.module.less';
 import { getTypeText } from './TextUtils';
-import { useFetchAktivitetMedFnrContext } from '../../api/UseAktivitet';
-import { aktivitetLenke } from './AktivitetskortLinke';
+import { aktivitetLenke, visAktivitetsplan } from './AktivitetskortLinke';
+import { useFnrContext } from '../Provider';
+import { StringOrNull } from '../../utils/Typer';
+import { findAktivitet, useAktivitetContext } from '../AktivitetProvider';
 
 interface Props {
-    dialog: DialogData;
+    aktivitetId?: StringOrNull;
 }
 
 export function AktivitetskortPreview(props: Props) {
-    const findAktivitet = useFetchAktivitetMedFnrContext();
+    const { aktivitetId } = props;
+    const fnr = useFnrContext();
+    const aktvitetData = useAktivitetContext();
 
-    const aktivitet = findAktivitet(props.dialog.aktivitetId);
+    const aktivitet = findAktivitet(aktvitetData, aktivitetId);
     if (!aktivitet) {
         return null;
     }
 
     const info = getInfoText(aktivitet);
+
     return (
-        <LenkepanelBase href={aktivitetLenke(aktivitet.id)} className={styles.lenkepanelbase}>
+        <LenkepanelBase
+            href={aktivitetLenke(aktivitet.id)}
+            className={styles.lenkepanelbase}
+            onClick={visAktivitetsplan(aktivitet.id, fnr)}
+        >
             <div className={styles.spaceBetween}>
                 <div>
                     <Undertittel className={styles.tittel}>{aktivitet.tittel}</Undertittel>
@@ -38,6 +45,7 @@ export function AktivitetskortPreview(props: Props) {
 
 export function getInfoText(aktivitet: Aktivitet | ArenaAktivitet): string {
     const typeTekst = getTypeText(aktivitet.type);
+
     switch (aktivitet.type) {
         case AktivitetTypes.STILLING:
             return `${typeTekst} / ${aktivitet.arbeidsgiver}`;
@@ -51,12 +59,10 @@ export function getInfoText(aktivitet: Aktivitet | ArenaAktivitet): string {
             return `${typeTekst} / ${formaterDate(aktivitet.fraDato)}`;
         case AktivitetTypes.IJOBB:
             return `${typeTekst} / ${aktivitet.arbeidsgiver}`;
-        case ArenaAktivitetTypes.TILTAKSAKTIVITET ||
-            ArenaAktivitetTypes.UTDANNINGSAKTIVITET ||
-            ArenaAktivitetTypes.GRUPPEAKTIVITET ||
-            AktivitetTypes.EGEN:
+        case ArenaAktivitetTypes.TILTAKSAKTIVITET:
+        case ArenaAktivitetTypes.UTDANNINGSAKTIVITET:
+        case ArenaAktivitetTypes.GRUPPEAKTIVITET:
+        case AktivitetTypes.EGEN:
             return typeTekst;
     }
-
-    return '';
 }

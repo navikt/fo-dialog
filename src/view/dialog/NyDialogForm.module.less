@@ -1,0 +1,74 @@
+@import (reference) '~nav-frontend-core/less/core';
+@import (reference) '../../variabler';
+
+.nyDialog {
+    display: flex;
+    flex-direction: column;
+    background-color: white;
+
+    .form {
+        @media (min-width: 800px) {
+            padding: 0 6% 0 6%;
+        }
+        margin: 1rem;
+    }
+
+    .tittel {
+        margin-top: 0.5rem;
+        margin-bottom: 1rem;
+    }
+
+    .infotekst {
+        margin: 0 0 2rem 0;
+        width: 95%;
+    }
+
+    .temafelt {
+        width: 65%;
+    }
+
+    .skrivMelding {
+        display: flex;
+        flex-basis: 7rem;
+        bottom: 0;
+        padding: 1rem 1rem 1rem 0;
+        align-items: flex-end;
+
+        .autosizingTextarea {
+            overflow: initial !important; //overwrite nav styling
+            max-height: 7rem;
+            @media (min-width: 800px) {
+                max-height: 15rem;
+            }
+        }
+
+        :global {
+            .knapp--hoved {
+                padding: 0.5rem;
+                height: 2.6rem;
+                margin-left: 1rem;
+            }
+
+            .skjemaelement {
+                flex: 1;
+                margin-bottom: 0;
+            }
+        }
+    }
+
+    @media (min-width: 800px) {
+        .infotekst {
+            max-width: 30rem;
+        }
+
+        @media (min-width: 1200px) {
+            .temafelt {
+                max-width: 50rem;
+            }
+
+            .skrivMelding {
+                max-width: 50rem;
+            }
+        }
+    }
+}
