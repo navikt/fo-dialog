@@ -98,7 +98,7 @@ function NyDialogForm(props: Props) {
 
     return (
         <div className={style.nyDialog}>
-            <form onSubmit={state.onSubmit(handleSubmit)} className={style.form}>
+            <form onSubmit={state.onSubmit(handleSubmit)} className={style.form} autoComplete="off">
                 <Innholdstittel className={style.tittel}>Ny dialog</Innholdstittel>
                 <Normaltekst className={style.infotekst}>{infoTekst}</Normaltekst>
                 <FormErrorSummary submittoken={state.submittoken} errors={state.errors} />
@@ -106,6 +106,7 @@ function NyDialogForm(props: Props) {
                 <Input
                     className={style.temafelt}
                     label="Tema"
+                    autoComplete="off"
                     placeholder="Skriv her"
                     disabled={!!aktivitetId}
                     {...state.fields.tema}
