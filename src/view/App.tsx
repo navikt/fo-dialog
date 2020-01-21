@@ -20,7 +20,7 @@ function App(props: Props) {
         <Router basename={basepath}>
             <div className={wraperClass}>
                 <div className={appstyle}>
-                    <EventHandler basePath={basepath} />
+                    <EventHandler />
                     <AppBanner hidden={!!props.fnr} />
                     <Provider fnr={props.fnr}>
                         <StatusAdvarsel />
