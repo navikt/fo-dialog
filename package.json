@@ -1,6 +1,7 @@
 {
     "name": "arbeidsrettet-dialog",
     "version": "1.0.0",
+    "homepage": "/arbeid/dialog",
     "scripts": {
         "start": "cross-env REACT_APP_MOCK=true craco start",
         "build": "cross-env REACT_APP_MOCK=false craco build",
