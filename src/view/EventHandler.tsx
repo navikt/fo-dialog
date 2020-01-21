@@ -7,19 +7,14 @@ interface EventDetails {
     aktivitetId?: string;
 }
 
-interface Props {
-    basePath?: string;
-}
-
-export function EventHandler(props: Props) {
-    const { basePath } = props;
+export function EventHandler() {
     const history = useHistory();
     useEventListener<EventDetails>('visDialog', event => {
         const { dialogId, aktivitetId } = event.detail;
         if (!!dialogId) {
-            history.push(basePath + `/${dialogId}`);
+            history.push(`/${dialogId}`);
         } else if (!!aktivitetId) {
-            history.push(basePath + `/ny?aktivitetId=${aktivitetId}`);
+            history.push(`/ny?aktivitetId=${aktivitetId}`);
         }
     });
 
