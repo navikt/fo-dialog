@@ -54,3 +54,5 @@ mock.get('/veilarbaktivitet/api/aktivitet', aktiviteter);
 mock.get('/veilarbaktivitet/api/aktivitet/:aktivitetId', ({ pathParams }) => getAktivitet(pathParams.aktivitetId));
 
 mock.get('/veilarbaktivitet/api/aktivitet/arena', arenaAktiviteter);
+
+mock.get('/api/auth', { remainingSeconds: 60 * 60 });
