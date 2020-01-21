@@ -1,4 +1,4 @@
-contextPath: /arbeid/dialog
+contextPath: /
 
 auth:
   enforce: true
