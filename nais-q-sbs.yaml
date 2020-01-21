@@ -24,6 +24,7 @@ spec:
   ingresses:
     - https://arbeidsrettet-dialog-{{namespace}}.nais.oera-q.local
     - https://arbeidsrettet-dialog-{{namespace}}.dev-sbs.nais.io
+    - https://www-q0.nav.no/arbeid/dialog
   vault:
     enabled: true
   webproxy: true
