@@ -6,6 +6,7 @@ import { BrowserRouter as Router } from 'react-router-dom';
 import { Provider } from './Provider';
 import { EventHandler } from './EventHandler';
 import AppBody from './AppBody';
+import TimeoutModal from '../felleskomponenter/timeoutmodal/TimeoutModal';
 
 interface Props {
     fnr?: string;
@@ -26,6 +27,7 @@ function App(props: Props) {
                         <StatusAdvarsel />
                         <AppBody />
                     </Provider>
+                    <TimeoutModal hidden={!!props.fnr} />
                 </div>
             </div>
         </Router>
