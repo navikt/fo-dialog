@@ -1,5 +1,3 @@
-[![CircleCI](https://circleci.com/gh/navikt/arbeidsrettet-dialog/tree/master.svg?style=svg)](https://circleci.com/gh/navikt/arbeidsrettet-dialog/tree/master)
-
 # Arbeidsrettet-dialog
 
 arbeidsrettet-dialog er et verktøy for veiledere og brukere i NAV. Verktøyet gjør det mulig for brukere under arbeidsrettet oppfølging å kommunisere med veilederne deres.
