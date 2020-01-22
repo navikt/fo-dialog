@@ -27,7 +27,7 @@ function App(props: Props) {
                         <StatusAdvarsel />
                         <AppBody />
                     </Provider>
-                    <TimeoutModal visDemo={true} hidden={!!props.fnr} />
+                    <TimeoutModal hidden={!!props.fnr} />
                 </div>
             </div>
         </Router>
