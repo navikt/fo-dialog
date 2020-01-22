@@ -4,6 +4,7 @@ import App from './view/App';
 import DemoBanner from './mock/demo/DemoBanner';
 import NAVSPA from '@navikt/navspa';
 import { erEksternBruker } from './mock/demo/sessionstorage';
+import NavFrontendModal from 'nav-frontend-modal';
 
 /*
 document.body.addEventListener('keydown', function(e: KeyboardEvent) {
@@ -14,8 +15,9 @@ document.body.addEventListener('keydown', function(e: KeyboardEvent) {
         target.form.dispatchEvent(new Event('submit'));
     }
 });
-
 */
+
+NavFrontendModal.setAppElement(document.getElementById('modal-a11y-wrapper'));
 
 if (process.env.REACT_APP_MOCK === 'true') {
     require('./mock');

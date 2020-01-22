@@ -78,7 +78,7 @@ export function DialogInputBox(props: Props) {
 
     return (
         <>
-            <form onSubmit={state.onSubmit(onSubmit)} noValidate>
+            <form onSubmit={state.onSubmit(onSubmit)} noValidate autoComplete="off">
                 <div className="skriv-melding label-sr-only">
                     <Textarea
                         label="Skriv en melding om arbeid og oppfølging"

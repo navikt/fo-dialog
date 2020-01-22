@@ -9,10 +9,10 @@ spec:
   image: {{image}}
   port: 8080
   liveness:
-    path: arbeidsrettet-dialog/internal/isAlive
+    path: arbeid/dialog/internal/isAlive
     initialDelay: 20
   readiness:
-    path: arbeidsrettet-dialog/internal/selftest
+    path: arbeid/dialog/internal/selftest
     initialDelay: 20
   replicas:
     min: 2
@@ -20,10 +20,11 @@ spec:
     cpuThresholdPercentage: 50
   prometheus:
     enabled: true
-    path: arbeidsrettet-dialog/internal/metrics
+    path: arbeid/dialog/internal/metrics
   ingresses:
     - https://arbeidsrettet-dialog-{{namespace}}.nais.oera-q.local
     - https://arbeidsrettet-dialog-{{namespace}}.dev-sbs.nais.io
+    - https://www-{{namespace}}.nav.no/arbeid/dialog
   vault:
     enabled: true
   webproxy: true
