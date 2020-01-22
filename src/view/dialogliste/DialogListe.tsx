@@ -33,7 +33,9 @@ export function DialogListe() {
             <DialogPreviewListe dialoger={naaverende} valgDialog={dialogId} />
 
             <InvertedLestMer apneTekst="Se dialoger fra tidligere perioder" lukkTekst="Skjul" hidden={skulHistoriske}>
-                <Systemtittel tag="h1">Dialoger fra tidligere perioder</Systemtittel>
+                <Systemtittel className={styles.tidligerePeriodeTittel} tag="h1">
+                    Dialoger fra tidligere perioder
+                </Systemtittel>
                 <DialogPreviewListe dialoger={historiske} valgDialog={dialogId} />
             </InvertedLestMer>
         </section>
