@@ -7,7 +7,6 @@ import { Provider } from './Provider';
 import { EventHandler } from './EventHandler';
 import AppBody from './AppBody';
 import TimeoutModal from '../felleskomponenter/timeoutmodal/TimeoutModal';
-import ReactModal from 'react-modal';
 
 interface Props {
     fnr?: string;
@@ -17,11 +16,6 @@ function App(props: Props) {
     const basepath = props.fnr ? `/veilarbpersonflatefs/${props.fnr}` : process.env.PUBLIC_URL;
     const wraperClass = props.fnr ? styles.konteinerInside : styles.konteinerUtside;
     const appstyle = props.fnr ? styles.appInside : styles.app;
-
-    if (!props.fnr) {
-        const id = document.getElementById('root') ? '#root' : '#modal-a11y-wrapper';
-        ReactModal.setAppElement(id);
-    }
 
     return (
         <Router basename={basepath}>
