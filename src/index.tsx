@@ -17,7 +17,10 @@ document.body.addEventListener('keydown', function(e: KeyboardEvent) {
 });
 */
 
-NavFrontendModal.setAppElement(document.getElementById('modal-a11y-wrapper'));
+const modalAlly = document.getElementById('modal-a11y-wrapper');
+const root = document.getElementById('root');
+
+NavFrontendModal.setAppElement(modalAlly ? document.getElementById('modal-a11y-wrapper') : root);
 
 if (process.env.REACT_APP_MOCK === 'true') {
     require('./mock');
