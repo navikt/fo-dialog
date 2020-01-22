@@ -12,6 +12,7 @@ import { fetchData, fnrQuery } from '../../utils/Fetch';
 import { endreDialogSomVises } from '../ViewState';
 import DialogSendtBekreftelse from './DialogSendtBekreftelse';
 import HistoriskInfo from './HistoriskInfo';
+import { IngenDialog } from './IngenDialog';
 
 export function Dialog() {
     const kanSendeMelding = useKansendeMelding();
@@ -35,7 +36,7 @@ export function Dialog() {
     }, [dialogId]);
 
     if (!valgtDialog) {
-        return null;
+        return <IngenDialog />;
     }
 
     const aktivDialog = !valgtDialog.historisk;
