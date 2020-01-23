@@ -9,7 +9,7 @@
         "test:coverage": "npm test -- --coverage --watchAll=false",
         "eject": "craco eject",
         "heroku-serve": "serve -s build -l $PORT",
-        "heroku-postbuild": "cross-env REACT_APP_MOCK=true craco build",
+        "heroku-postbuild": "cross-env REACT_APP_MOCK=true PUBLIC_URL=/ craco build",
         "lint": "echo \"Not implemented\""
     },
     "husky": {
