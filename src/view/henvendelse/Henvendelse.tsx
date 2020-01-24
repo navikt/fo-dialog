@@ -2,9 +2,9 @@ import React from 'react';
 import Snakkeboble from 'nav-frontend-snakkeboble';
 import { HenvendelseData } from '../../utils/Typer';
 import { formaterDateAndTime } from '../../utils/Date';
-import Tekstomrade from 'nav-frontend-tekstomrade';
 
 import './Henvendelse.less';
+import Tekstomrade from '../../felleskomponenter/Tekstomrade';
 
 interface Props {
     henvendelseData: HenvendelseData;
@@ -18,9 +18,7 @@ export function Henvendelse(props: Props) {
     const className: string = erMeldingFraBruker ? 'ikon bruker-ikon' : 'ikon veileder-ikon';
     return (
         <Snakkeboble topp={toppTekst} pilHoyre={erMeldingFraBruker} ikonClass={className}>
-            <Tekstomrade ingenFormattering={true} inputMode={'text'}>
-                {tekst}
-            </Tekstomrade>
+            <Tekstomrade>{tekst}</Tekstomrade>
         </Snakkeboble>
     );
 }
