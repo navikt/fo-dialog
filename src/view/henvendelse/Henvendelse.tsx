@@ -2,9 +2,9 @@ import React from 'react';
 import Snakkeboble from 'nav-frontend-snakkeboble';
 import { HenvendelseData } from '../../utils/Typer';
 import { formaterDateAndTime } from '../../utils/Date';
-import Tekstomrade from 'nav-frontend-tekstomrade';
 
 import './Henvendelse.less';
+import Tekstomrade from '../../felleskomponenter/Tekstomrade';
 
 interface Props {
     henvendelseData: HenvendelseData;
