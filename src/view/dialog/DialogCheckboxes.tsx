@@ -7,6 +7,7 @@ interface Props {
     toggleVenterPaSvar(venterPaSvar: boolean): void;
     ferdigBehandlet: boolean;
     venterPaSvar: boolean;
+    disabled: boolean;
 }
 
 export function DialogCheckboxes(props: Props) {
@@ -16,12 +17,14 @@ export function DialogCheckboxes(props: Props) {
                 label="Venter på svar fra NAV"
                 checked={!props.ferdigBehandlet}
                 className="checkbox-block__item"
+                disabled={props.disabled}
                 onChange={() => props.toggleFerdigBehandlet(!props.ferdigBehandlet)}
             />
             <Checkbox
                 label="Venter på svar fra bruker"
                 checked={props.venterPaSvar}
                 className="checkbox-block__item"
+                disabled={props.disabled}
                 onChange={() => props.toggleVenterPaSvar(!props.venterPaSvar)}
             />
         </div>

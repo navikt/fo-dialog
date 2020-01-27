@@ -9,6 +9,7 @@ import { nyHenvendelse, oppdaterFerdigBehandlet, oppdaterVenterPaSvar } from '..
 import Textarea from '../../felleskomponenter/input/textarea';
 import { Hovedknapp } from 'nav-frontend-knapper';
 import { sendtNyHenvendelse } from '../ViewState';
+import { isPending } from '@nutgaard/use-async';
 
 const AlertStripeFeilVisible = visibleIfHoc(AlertStripeFeil);
 
@@ -38,6 +39,7 @@ const initalValues = {
 export function DialogInputBox(props: Props) {
     const bruker = useUserInfoContext();
     const dialoger = useDialogContext();
+    const dialogLaster = isPending(dialoger, true);
     const [noeFeilet, setNoeFeilet] = useState(false);
     const fnr = useFnrContext();
 
@@ -69,12 +71,12 @@ export function DialogInputBox(props: Props) {
                 setNoeFeilet(false);
                 state.reinitialize(initalValues);
                 setViewState(sendtNyHenvendelse(viewState));
-
-                //Todo this should be a promise
-                return dialoger.rerun();
+                dialoger.rerun();
             })
             .catch(() => setNoeFeilet(true));
     };
+
+    const laster = state.submitting || dialogLaster;
 
     return (
         <>
@@ -88,7 +90,7 @@ export function DialogInputBox(props: Props) {
                         visTellerFra={1000}
                         {...state.fields.melding}
                     />
-                    <Hovedknapp title="Send" autoDisableVedSpinner spinner={state.submitting}>
+                    <Hovedknapp title="Send" autoDisableVedSpinner spinner={laster}>
                         Send
                     </Hovedknapp>
                 </div>
@@ -98,6 +100,7 @@ export function DialogInputBox(props: Props) {
                     ferdigBehandlet={ferdigBehandlet}
                     venterPaSvar={venterPaSvar}
                     visible={bruker!.erVeileder}
+                    disabled={laster}
                 />
                 <AlertStripeFeilVisible visible={noeFeilet}>
                     Det skjedde en alvorlig feil. Prøv igjen senere

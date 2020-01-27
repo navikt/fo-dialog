@@ -53,6 +53,7 @@ export function Provider(props: Props) {
     const dialoger = useFetch<DialogData[]>('/veilarbdialog/api/dialog' + query);
     const [viewState, setState] = useState(initalState);
 
+    //Todo remove usefetch and use our own thing here. rerun need to be a promise
     if (isPending(bruker, false) || isPending(oppfolgingData, false) || isPending(dialoger, false)) {
         return <NavFrontendSpinner />;
     } else if (hasError(bruker) || hasError(oppfolgingData) || hasError(dialoger)) {
