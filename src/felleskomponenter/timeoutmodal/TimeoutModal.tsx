@@ -83,7 +83,7 @@ function TimeoutModal(props: Props) {
                         <Hovedknapp className="timeoutbox-modal__avbryt" onClick={() => setSkalVises(false)}>
                             Avbryt
                         </Hovedknapp>
-                        <Knapp onClick={() => window.location.reload()}>Start på nytt</Knapp>
+                        <Knapp onClick={() => window.location.reload()}>Start på nytt nå</Knapp>
                     </div>
                 </div>
             </Veilederpanel>
