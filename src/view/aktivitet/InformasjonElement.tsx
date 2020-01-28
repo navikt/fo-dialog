@@ -41,7 +41,7 @@ interface PropTypes {
     children?: ReactNode;
 }
 
-function InformasjonElementRaw(props: PropTypes) {
+export function InformasjonElementRaw(props: PropTypes) {
     const { merkelapptekst, children } = props;
 
     if (!children) return null;
