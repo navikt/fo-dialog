@@ -19,6 +19,7 @@ function getTellerTekst(antallTegn: number, maxLength: number, visTellerFra?: nu
 interface Props {
     initialValue?: string;
     pristine?: boolean;
+    autoFocus?: boolean;
     touched: boolean;
     error?: string;
     input: FieldState['input'];

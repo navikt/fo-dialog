@@ -104,6 +104,7 @@ function NyDialogForm(props: Props) {
                 <FormErrorSummary submittoken={state.submittoken} errors={state.errors} />
 
                 <Input
+                    autoFocus
                     className={style.temafelt}
                     label="Tema"
                     autoComplete="off"
