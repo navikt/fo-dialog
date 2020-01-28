@@ -21,7 +21,6 @@ function useScrollToLast(dialogData: DialogData) {
         const behavior: ScrollBehavior = isFirstRender ? 'auto' : 'smooth';
         const elem = document.querySelector('.henvendelse-list__henvendelse:last-of-type');
         if (elem !== null) {
-            console.log('scroll', behavior);
             elem.scrollIntoView({ block: 'nearest', behavior });
         }
     }, [previousDialog, henvendelseLenge, dialogData.id]);
