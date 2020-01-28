@@ -3,6 +3,7 @@ import { EtikettLiten } from 'nav-frontend-typografi';
 import React, { ReactNode } from 'react';
 import { StringOrNull } from '../../utils/Typer';
 import Tekstomrade from 'nav-frontend-tekstomrade';
+import EksternLenke from '../../felleskomponenter/EksternLenke';
 
 interface TekstomradeProps {
     merkelapptekst: string;
@@ -22,12 +23,25 @@ export default function InformasjonElement(props: TekstomradeProps) {
     );
 }
 
+export function LenkeInformasjonElement(props: TekstomradeProps) {
+    const { verdi, merkelapptekst } = props;
+    if (!verdi) {
+        return <InformasjonElementRaw {...props} />;
+    }
+
+    return (
+        <InformasjonElementRaw merkelapptekst={merkelapptekst}>
+            <EksternLenke lenke={verdi} />
+        </InformasjonElementRaw>
+    );
+}
+
 interface PropTypes {
     merkelapptekst: string;
     children?: ReactNode;
 }
 
-export function InformasjonElementRaw(props: PropTypes) {
+function InformasjonElementRaw(props: PropTypes) {
     const { merkelapptekst, children } = props;
 
     if (!children) return null;

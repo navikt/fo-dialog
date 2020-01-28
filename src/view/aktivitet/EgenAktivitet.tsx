@@ -1,8 +1,7 @@
 import React from 'react';
 import { formaterDate } from '../../utils/Date';
 import { Aktivitet } from '../../utils/AktivitetTypes';
-import InformasjonElement, { InformasjonElementRaw } from './InformasjonElement';
-import EksternLenke from '../../felleskomponenter/EksternLenke';
+import InformasjonElement, { LenkeInformasjonElement } from './InformasjonElement';
 
 interface PropTypes {
     aktivitet: Aktivitet;
@@ -18,9 +17,7 @@ export default function EgenAktivitet(props: PropTypes) {
             <InformasjonElement merkelapptekst="Mål med aktiviteten" verdi={hensikt} />
             <InformasjonElement merkelapptekst="Min huskeliste" verdi={oppfolging} />
             <InformasjonElement merkelapptekst="Beskrivelse" verdi={beskrivelse} />
-            <InformasjonElementRaw merkelapptekst="Lenke">
-                <EksternLenke lenke={lenke} />
-            </InformasjonElementRaw>
+            <LenkeInformasjonElement merkelapptekst="Lenke" verdi={lenke} />
         </>
     );
 }
