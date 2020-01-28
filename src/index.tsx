@@ -6,17 +6,6 @@ import NAVSPA from '@navikt/navspa';
 import { erEksternBruker } from './mock/demo/sessionstorage';
 import NavFrontendModal from 'nav-frontend-modal';
 
-/*
-document.body.addEventListener('keydown', function(e: KeyboardEvent) {
-    if (!(e.key === 'Enter' && (e.metaKey || e.ctrlKey))) return;
-
-    const target: EventTarget & HTMLTextAreaElement | null = e.target as EventTarget & HTMLTextAreaElement | null;
-    if (target && target.form) {
-        target.form.dispatchEvent(new Event('submit'));
-    }
-});
-*/
-
 const modalAlly = document.getElementById('modal-a11y-wrapper');
 const root = document.getElementById('root');
 
