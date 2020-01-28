@@ -68,9 +68,16 @@ export function DialogInputBox(props: Props) {
         const { melding } = data;
         return nyHenvendelse(fnr, melding, valgtDialog.id)
             .then(dialog => {
+                if (!dialog.ferdigBehandlet) {
+                    return oppdaterFerdigBehandlet(fnr, valgtDialog.id, true);
+                }
+                return Promise.resolve(dialog);
+            })
+            .then(dialog => {
                 setNoeFeilet(false);
                 state.reinitialize(initalValues);
                 setViewState(sendtNyHenvendelse(viewState));
+                setFerdigBehandlet(dialog.ferdigBehandlet);
                 dialoger.rerun();
             })
             .catch(() => setNoeFeilet(true));
