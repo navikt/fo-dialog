@@ -1,7 +1,7 @@
 import React from 'react';
 import Veilederpanel from 'nav-frontend-veilederpanel';
 import styles from './InfoVedIngenDialoger.module.less';
-import { visibleIfHoc } from '../felleskomponenter/VisibleIfHoc';
+import { visibleIfHoc } from '../../felleskomponenter/VisibleIfHoc';
 import classNames from 'classnames';
 import { ReactComponent as VeilederIkon } from './veileder.svg';
 

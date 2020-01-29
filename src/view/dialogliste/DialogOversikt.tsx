@@ -6,7 +6,7 @@ import { useParams } from 'react-router';
 import classNames from 'classnames';
 import styles from './DialogOversikt.module.less';
 import useKansendeMelding from '../../utils/UseKanSendeMelding';
-import InfoVedIngenDialoger from '../InfoVedIngenDialoger';
+import InfoVedIngenDialoger from '../info/InfoVedIngenDialoger';
 import DialogListe from './DialogListe';
 
 export function DialogOversikt() {
