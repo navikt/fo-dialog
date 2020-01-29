@@ -96,6 +96,8 @@ export function DialogInputBox(props: Props) {
                         textareaClass="autosizing-textarea"
                         maxLength={maxMeldingsLengde}
                         visTellerFra={1000}
+                        showErrorOnSubmit={true}
+                        submittoken={state.submittoken}
                         {...state.fields.melding}
                     />
                     <Hovedknapp title="Send" autoDisableVedSpinner spinner={laster}>
