@@ -1,15 +1,18 @@
 @import (reference) '~nav-frontend-core/less/_variabler';
 
 .preview {
-    border-left: 8px solid @navBla;
     padding: 0.5rem 0.5rem 0.5rem 0.5rem;
     margin-bottom: 0.5rem;
 
+    border: 1px solid transparent;
+
     &:hover {
-        background-color: @navDypBlaLighten80;
+        border: 1px solid @navBla;
+        .heading {
+            color: @navBla;
+        }
     }
 
-    //for å få nokk specifisitet på insiden.
     .content {
         flex: 1;
         overflow: hidden;
@@ -17,6 +20,7 @@
         padding-right: 0.5rem;
 
         .heading {
+            font-weight: normal;
             font-size: 1rem;
         }
 
@@ -34,17 +38,20 @@
     }
 }
 
-.lest {
-    border-left-color: transparent;
-    .heading {
-        font-weight: normal;
+.ulest {
+    border-left: 8px solid @navBla;
+
+    .content {
+        .heading {
+            font-weight: 600;
+        }
+    }
+    &:hover {
+        border-left: 8px solid @navBla;
     }
 }
 
 .valgt {
     background-color: #e5eef2;
-
-    &:hover {
-        background-color: #e5eef2;
-    }
+    border: 1px solid #99bdcd;
 }
