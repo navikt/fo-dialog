@@ -43,12 +43,19 @@ export function AktivitetskortPreview(props: Props) {
     );
 }
 
+function tekstGuard(tekst: StringOrNull) {
+    if (!!tekst) {
+        return ` / ${tekst}`;
+    }
+    return '';
+}
+
 export function getInfoText(aktivitet: Aktivitet | ArenaAktivitet): string {
     const typeTekst = getTypeText(aktivitet.type);
 
     switch (aktivitet.type) {
         case AktivitetTypes.STILLING:
-            return `${typeTekst} / ${aktivitet.arbeidsgiver}`;
+            return `${typeTekst}${tekstGuard(aktivitet.arbeidsgiver)}`;
         case AktivitetTypes.MOTE:
             return `${typeTekst} / ${formaterDate(aktivitet.fraDato)} / ${getKlokkeslett(aktivitet.fraDato)}`;
         case AktivitetTypes.SOKEAVTALE:

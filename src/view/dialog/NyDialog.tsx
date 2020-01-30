@@ -35,6 +35,7 @@ function NyDialog() {
                 onSubmit={() => setViewState(sendtNyDialog(viewState))}
                 defaultTema={aktivitet?.tittel}
                 aktivitetId={aktivitet?.id}
+                key={aktivitet?.id}
             />
         </div>
     );

@@ -1,4 +1,4 @@
-import { useEffect } from 'react';
+import { useLayoutEffect } from 'react';
 
 const selectHodefot = () => Array.from(document.querySelectorAll('.hodefot'));
 
@@ -15,7 +15,7 @@ function visElementer() {
 }
 
 export function useSkjulHodefotForMobilVisning() {
-    useEffect(() => {
+    useLayoutEffect(() => {
         skjulElementerForMobil();
         return () => visElementer();
     }, []);

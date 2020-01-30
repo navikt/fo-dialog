@@ -53,7 +53,7 @@ const stilingAktivitet = {
     arbeidstid: null,
     avsluttetKommentar: null,
     avtaleOppfolging: null,
-    avtalt: false,
+    avtalt: true,
     behandlingOppfolging: null,
     behandlingSted: null,
     behandlingType: null,

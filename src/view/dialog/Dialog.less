@@ -4,7 +4,6 @@
     display: flex;
     flex-direction: column;
     flex-grow: 1;
-    overflow: hidden;
     background: @white;
 }
 
@@ -39,6 +38,11 @@
         overflow: initial !important; //overwrite nav styling
         @media (min-width: 800px) {
             max-height: 15rem;
+        }
+    }
+    .skjemaelement__feilmelding {
+        @media (max-width: 560px) {
+            margin-top: 1.5rem;
         }
     }
     .skjemaelement {

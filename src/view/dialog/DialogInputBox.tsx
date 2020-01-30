@@ -9,6 +9,7 @@ import { nyHenvendelse, oppdaterFerdigBehandlet, oppdaterVenterPaSvar } from '..
 import Textarea from '../../felleskomponenter/input/textarea';
 import { Hovedknapp } from 'nav-frontend-knapper';
 import { sendtNyHenvendelse } from '../ViewState';
+import { isPending } from '@nutgaard/use-async';
 
 const AlertStripeFeilVisible = visibleIfHoc(AlertStripeFeil);
 
@@ -38,6 +39,7 @@ const initalValues = {
 export function DialogInputBox(props: Props) {
     const bruker = useUserInfoContext();
     const dialoger = useDialogContext();
+    const dialogLaster = isPending(dialoger, true);
     const [noeFeilet, setNoeFeilet] = useState(false);
     const fnr = useFnrContext();
 
@@ -66,29 +68,39 @@ export function DialogInputBox(props: Props) {
         const { melding } = data;
         return nyHenvendelse(fnr, melding, valgtDialog.id)
             .then(dialog => {
+                if (!dialog.ferdigBehandlet) {
+                    return oppdaterFerdigBehandlet(fnr, valgtDialog.id, true);
+                }
+                return Promise.resolve(dialog);
+            })
+            .then(dialog => {
                 setNoeFeilet(false);
                 state.reinitialize(initalValues);
                 setViewState(sendtNyHenvendelse(viewState));
-
-                //Todo this should be a promise
-                return dialoger.rerun();
+                setFerdigBehandlet(dialog.ferdigBehandlet);
+                dialoger.rerun();
             })
             .catch(() => setNoeFeilet(true));
     };
+
+    const laster = state.submitting || dialogLaster;
 
     return (
         <>
             <form onSubmit={state.onSubmit(onSubmit)} noValidate autoComplete="off">
                 <div className="skriv-melding label-sr-only">
                     <Textarea
+                        autoFocus
                         label="Skriv en melding om arbeid og oppfølging"
                         placeholder="Skriv en melding om arbeid og oppfølging"
                         textareaClass="autosizing-textarea"
                         maxLength={maxMeldingsLengde}
                         visTellerFra={1000}
+                        showErrorOnSubmit={true}
+                        submittoken={state.submittoken}
                         {...state.fields.melding}
                     />
-                    <Hovedknapp title="Send" autoDisableVedSpinner spinner={state.submitting}>
+                    <Hovedknapp title="Send" autoDisableVedSpinner spinner={laster}>
                         Send
                     </Hovedknapp>
                 </div>
@@ -98,6 +110,7 @@ export function DialogInputBox(props: Props) {
                     ferdigBehandlet={ferdigBehandlet}
                     venterPaSvar={venterPaSvar}
                     visible={bruker!.erVeileder}
+                    disabled={laster}
                 />
                 <AlertStripeFeilVisible visible={noeFeilet}>
                     Det skjedde en alvorlig feil. Prøv igjen senere

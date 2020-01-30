@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import NavFrontendModal from 'nav-frontend-modal';
 import Veilederpanel from 'nav-frontend-veilederpanel';
-import HovedKnapp from 'nav-frontend-knapper/lib/hovedknapp';
+import { Knapp, Hovedknapp } from 'nav-frontend-knapper';
 import { Normaltekst, Systemtittel } from 'nav-frontend-typografi';
 import { hiddenIfHoc } from '../HiddenIfHoc';
 import { ReactComponent as ObsSVG } from './obs.svg';
@@ -21,8 +21,8 @@ function getHeaders() {
     });
 }
 
-function utloptTidspunktMinusFemMinutter(remainingSeconds: number): number {
-    return (remainingSeconds - 300) * 1000;
+function utloptTidspunktMinusSeksMinutter(remainingSeconds: number): number {
+    return (remainingSeconds - 360) * 1000;
 }
 
 interface Props {
@@ -45,7 +45,7 @@ function TimeoutModal(props: Props) {
                 const { remainingSeconds } = authExp;
 
                 if (remainingSeconds) {
-                    const expirationInMillis = utloptTidspunktMinusFemMinutter(remainingSeconds);
+                    const expirationInMillis = utloptTidspunktMinusSeksMinutter(remainingSeconds);
                     const expiresAt = new Date().getTime() + expirationInMillis;
 
                     setTimeout(() => {
@@ -68,25 +68,23 @@ function TimeoutModal(props: Props) {
         <NavFrontendModal
             isOpen={apen}
             className="timeoutbox-modal"
-            contentLabel="Blir logget ut"
+            contentLabel="Du logges snart ut"
             shouldCloseOnOverlayClick={false}
             closeButton={false}
             onRequestClose={() => false}
         >
             <Veilederpanel svg={<ObsSVG />} type="plakat" kompakt={true}>
                 <div className="timeoutbox-nedtelling">
-                    <Systemtittel className="timeoutbox-modal__tittel">Sesjonen din har utløpt</Systemtittel>
+                    <Systemtittel className="timeoutbox-modal__tittel">Du logges snart ut</Systemtittel>
                     <Normaltekst className="timeoutbox-modal__beskrivelse">
-                        Du må starte på nytt for å fortsette.
+                        Du kan fortsette i 5 minutter til, før du blir logget ut.
                     </Normaltekst>
-                    <HovedKnapp
-                        className="timeoutbox-modal__knapp"
-                        onClick={() => {
-                            window.location.reload();
-                        }}
-                    >
-                        Start på nytt
-                    </HovedKnapp>
+                    <div className="timeoutbox-modal__button-row">
+                        <Hovedknapp className="timeoutbox-modal__avbryt" onClick={() => setSkalVises(false)}>
+                            Avbryt
+                        </Hovedknapp>
+                        <Knapp onClick={() => window.location.reload()}>Start på nytt nå</Knapp>
+                    </div>
                 </div>
             </Veilederpanel>
         </NavFrontendModal>

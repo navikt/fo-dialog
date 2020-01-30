@@ -1,5 +1,5 @@
 import { DialogData, HenvendelseData, StringOrNull } from '../../utils/Typer';
-import React, { useEffect, useRef } from 'react';
+import React, { useLayoutEffect, useRef } from 'react';
 import { Henvendelse } from './Henvendelse';
 import LestAvTidspunkt from '../dialog/LestTidspunkt';
 
@@ -14,14 +14,13 @@ function useScrollToLast(dialogData: DialogData) {
     const previousDialog = useRef('');
     const henvendelseLenge = dialogData.henvendelser.length;
 
-    useEffect(() => {
+    useLayoutEffect(() => {
         const isFirstRender = dialogData.id !== previousDialog.current;
         previousDialog.current = dialogData.id;
 
         const behavior: ScrollBehavior = isFirstRender ? 'auto' : 'smooth';
         const elem = document.querySelector('.henvendelse-list__henvendelse:last-of-type');
         if (elem !== null) {
-            console.log('scroll', behavior);
             elem.scrollIntoView({ block: 'nearest', behavior });
         }
     }, [previousDialog, henvendelseLenge, dialogData.id]);

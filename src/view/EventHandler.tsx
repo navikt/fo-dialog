@@ -1,10 +1,19 @@
-import React from 'react';
+import React, { useLayoutEffect } from 'react';
 import { useEventListener } from './utils/useEventListner';
 import { useHistory } from 'react-router';
 
 interface EventDetails {
     dialogId?: string;
     aktivitetId?: string;
+}
+
+function listener(e: KeyboardEvent) {
+    if (!(e.key === 'Enter' && (e.metaKey || e.ctrlKey))) return;
+
+    const target: (EventTarget & HTMLTextAreaElement) | null = e.target as (EventTarget & HTMLTextAreaElement) | null;
+    if (target && target.form) {
+        target.form.dispatchEvent(new Event('submit'));
+    }
 }
 
 export function EventHandler() {
@@ -17,6 +26,11 @@ export function EventHandler() {
             history.push(`/ny?aktivitetId=${aktivitetId}`);
         }
     });
+
+    useLayoutEffect(() => {
+        document.body.addEventListener('keydown', listener);
+        return () => document.body.removeEventListener('keydown', listener);
+    }, []);
 
     return <></>;
 }

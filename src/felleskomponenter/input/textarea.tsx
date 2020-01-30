@@ -19,6 +19,7 @@ function getTellerTekst(antallTegn: number, maxLength: number, visTellerFra?: nu
 interface Props {
     initialValue?: string;
     pristine?: boolean;
+    autoFocus?: boolean;
     touched: boolean;
     error?: string;
     input: FieldState['input'];
@@ -27,12 +28,26 @@ interface Props {
     textareaClass?: string;
     maxLength: number;
     label: any;
+    showErrorOnSubmit?: boolean;
+    submittoken?: string;
 }
 
 // pristine and initialValue isn't used, but we don't want to pass it to input
 function Textarea(props: Props) {
-    const { touched, error, input, pristine, initialValue, visTellerFra, ...rest } = props;
-    const feil = error && touched ? { feilmelding: error } : undefined;
+    const {
+        touched,
+        error,
+        input,
+        pristine,
+        initialValue,
+        visTellerFra,
+        submittoken,
+        showErrorOnSubmit,
+        ...rest
+    } = props;
+    const showError = showErrorOnSubmit ? !!submittoken : touched;
+
+    const feil = error && showError ? { feilmelding: error } : undefined;
     const inputProps = { ...input, ...rest };
 
     return (

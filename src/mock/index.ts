@@ -1,4 +1,4 @@
-import FetchMock, { Middleware, MiddlewareUtils } from 'yet-another-fetch-mock';
+import FetchMock, { Middleware, MiddlewareUtils, ResponseUtils } from 'yet-another-fetch-mock';
 import dialoger, { lesDialog, opprettEllerOppdaterDialog, setFerdigBehandlet, setVenterPaSvar } from './Dialog';
 import bruker from './Bruker';
 import oppfolging from './Oppfolging';
@@ -29,6 +29,15 @@ const mock = FetchMock.configure({
     enableFallback: false, // default: true
     middleware: MiddlewareUtils.combine(loggingMiddleware, MiddlewareUtils.delayMiddleware(1000))
 });
+
+// eslint-disable-next-line
+function fail() {
+    return ResponseUtils.combine(ResponseUtils.statusCode(401), {
+        id: '1',
+        type: 'random',
+        detaljer: 'et object med noe rart'
+    });
+}
 
 mock.post('/veilarboppfolging/api/oppfolging/settDigital', {});
 
