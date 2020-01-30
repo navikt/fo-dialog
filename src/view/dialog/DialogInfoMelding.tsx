@@ -11,7 +11,7 @@ export default function DialogInfoMelding() {
 
     return (
         <>
-            <InfoVedIngenDialoger className={styles.info} visible={!harDialoger} />
+            <InfoVedIngenDialoger uniqueName="info" className={styles.info} visible={!harDialoger} />
             <DialogIkkeValgt className={styles.info} visible={harDialoger} />
         </>
     );

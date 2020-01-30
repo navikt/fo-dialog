@@ -1,5 +1,5 @@
 import styles from './DialogIkkeValgt.module.less';
-import { ReactComponent as IngenValgteDialoger } from '../dialog/ingen-valgt.svg';
+import { ReactComponent as IngenValgteDialoger } from './ingen-valgt.svg';
 import { Normaltekst } from 'nav-frontend-typografi';
 import React from 'react';
 import { visibleIfHoc } from '../../felleskomponenter/VisibleIfHoc';

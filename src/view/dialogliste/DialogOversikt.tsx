@@ -20,7 +20,7 @@ export function DialogOversikt() {
     return (
         <div className={visningCls}>
             <DialogOverviewHeader visible={kanSendeMelding} />
-            <InfoVedIngenDialoger className={styles.info} visible={dialogData.length === 0} />
+            <InfoVedIngenDialoger uniqueName="oversikt" className={styles.info} visible={dialogData.length === 0} />
             <DialogListe />
         </div>
     );
