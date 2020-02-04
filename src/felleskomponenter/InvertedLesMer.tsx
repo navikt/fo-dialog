@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import LesMerToggle from 'nav-frontend-lesmerpanel/lib/lesmerpanelToggle';
-import { Collapse } from 'react-collapse';
+import { UnmountClosed } from 'react-collapse';
 import style from './InvertedLesMer.module.less';
 
 interface Props {
@@ -25,7 +25,7 @@ export default function InvertedLestMer(props: Props) {
             <div className={style.toggle}>
                 <LesMerToggle erApen={vis} onClick={toggle} apneTekst={apneTekst} lukkTekst={lukkTekst} />
             </div>
-            <Collapse isOpened={vis}>{children}</Collapse>
+            <UnmountClosed isOpened={vis}>{children}</UnmountClosed>
         </div>
     );
 }

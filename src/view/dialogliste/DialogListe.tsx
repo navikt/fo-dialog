@@ -7,6 +7,8 @@ import { useParams } from 'react-router';
 import styles from './DialogOversikt.module.less';
 import { Systemtittel } from 'nav-frontend-typografi';
 import InvertedLestMer from '../../felleskomponenter/InvertedLesMer';
+import NyDialogLink from './NyDialogLink';
+import useKansendeMelding from '../../utils/UseKanSendeMelding';
 
 interface Res {
     naaverende: DialogData[];
@@ -22,6 +24,7 @@ export function DialogListe() {
     const dialoger = useDialogContext();
     const dialogData = hasData(dialoger) ? dialoger.data : [];
     const { dialogId } = useParams();
+    const kanSendeMelding = useKansendeMelding();
 
     const sorterteDialoger = dialogData.sort((a, b) => sortDialoger(a, b));
 
@@ -30,6 +33,7 @@ export function DialogListe() {
 
     return (
         <section className={styles.dialogListe}>
+            <NyDialogLink visible={kanSendeMelding} className={styles.nyDialog} />
             <DialogPreviewListe dialoger={naaverende} valgDialog={dialogId} />
 
             <InvertedLestMer apneTekst="Se dialoger fra tidligere perioder" lukkTekst="Skjul" hidden={skulHistoriske}>
