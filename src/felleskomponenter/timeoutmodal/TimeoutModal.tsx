@@ -71,7 +71,7 @@ function TimeoutModal(props: Props) {
             contentLabel="Du logges snart ut"
             shouldCloseOnOverlayClick={false}
             closeButton={false}
-            onRequestClose={() => false}
+            onRequestClose={() => setSkalVises(false)}
         >
             <Veilederpanel svg={<ObsSVG />} type="plakat" kompakt={true}>
                 <div className="timeoutbox-nedtelling">

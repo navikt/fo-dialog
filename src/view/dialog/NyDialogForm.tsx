@@ -5,7 +5,6 @@ import { useDialogContext, useFnrContext, useUserInfoContext } from '../Provider
 import { useHistory } from 'react-router';
 import { AlertStripeFeil } from 'nav-frontend-alertstriper';
 import { visibleIfHoc } from '../../felleskomponenter/VisibleIfHoc';
-import FormErrorSummary from '../../felleskomponenter/form-error-summary/FormErrorSummary';
 import Textarea from '../../felleskomponenter/input/textarea';
 import { Hovedknapp } from 'nav-frontend-knapper';
 import Input from '../../felleskomponenter/input/input';
@@ -101,8 +100,6 @@ function NyDialogForm(props: Props) {
             <form onSubmit={state.onSubmit(handleSubmit)} className={style.form} autoComplete="off">
                 <Innholdstittel className={style.tittel}>Ny dialog</Innholdstittel>
                 <Normaltekst className={style.infotekst}>{infoTekst}</Normaltekst>
-                <FormErrorSummary submittoken={state.submittoken} errors={state.errors} />
-
                 <Input
                     autoFocus
                     className={style.temafelt}
