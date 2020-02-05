@@ -13,6 +13,7 @@ import { endreDialogSomVises } from '../ViewState';
 import DialogSendtBekreftelse from './DialogSendtBekreftelse';
 import HistoriskInfo from './HistoriskInfo';
 import { IngenDialog } from './IngenDialog';
+import { dispatchUpdate, UpdateTypes } from '../../utils/UpdateEvent';
 
 export function Dialog() {
     const kanSendeMelding = useKansendeMelding();
@@ -30,7 +31,9 @@ export function Dialog() {
         if (valgtDialog && !valgtDialog.lest) {
             fetchData(`/veilarbdialog/api/dialog/${valgtDialog.id}/les${query}`, {
                 method: 'PUT'
-            }).then(() => dialoger.rerun());
+            })
+                .then(() => dialoger.rerun())
+                .then(() => dispatchUpdate(UpdateTypes.Dialog));
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [dialogId]);

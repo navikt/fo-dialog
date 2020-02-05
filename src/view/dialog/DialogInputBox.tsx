@@ -10,6 +10,7 @@ import Textarea from '../../felleskomponenter/input/textarea';
 import { Hovedknapp } from 'nav-frontend-knapper';
 import { sendtNyHenvendelse } from '../ViewState';
 import { isPending } from '@nutgaard/use-async';
+import { dispatchUpdate, UpdateTypes } from '../../utils/UpdateEvent';
 
 const AlertStripeFeilVisible = visibleIfHoc(AlertStripeFeil);
 
@@ -79,6 +80,7 @@ export function DialogInputBox(props: Props) {
                 setViewState(sendtNyHenvendelse(viewState));
                 setFerdigBehandlet(dialog.ferdigBehandlet);
                 dialoger.rerun();
+                dispatchUpdate(UpdateTypes.Dialog);
             })
             .catch(() => setNoeFeilet(true));
     };
