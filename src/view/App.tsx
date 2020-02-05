@@ -7,6 +7,7 @@ import { Provider } from './Provider';
 import { EventHandler } from './EventHandler';
 import AppBody from './AppBody';
 import TimeoutModal from '../felleskomponenter/timeoutmodal/TimeoutModal';
+import { UppdateEventHandler } from '../utils/UpdateEvent';
 
 interface Props {
     fnr?: string;
@@ -26,6 +27,7 @@ function App(props: Props) {
                     <Provider fnr={props.fnr}>
                         <StatusAdvarsel />
                         <AppBody />
+                        <UppdateEventHandler />
                     </Provider>
                     <TimeoutModal hidden={!!props.fnr} />
                 </div>

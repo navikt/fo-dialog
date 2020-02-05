@@ -13,6 +13,7 @@ import Checkbox from '../../felleskomponenter/input/checkbox';
 import { div as HiddenIfDiv } from '../../felleskomponenter/HiddenIfHoc';
 import style from './NyDialogForm.module.less';
 import { StringOrNull } from '../../utils/Typer';
+import { dispatchUpdate, UpdateTypes } from '../../utils/UpdateEvent';
 
 const AlertStripeFeilVisible = visibleIfHoc(AlertStripeFeil);
 
@@ -91,6 +92,7 @@ function NyDialogForm(props: Props) {
                 dialoger.rerun();
                 onSubmit && onSubmit();
                 history.push('/' + dialog.id);
+                dispatchUpdate(UpdateTypes.Dialog);
             })
             .catch(() => setNoeFeilet(true));
     };

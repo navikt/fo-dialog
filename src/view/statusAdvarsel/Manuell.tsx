@@ -3,6 +3,7 @@ import React from 'react';
 import { Hovedknapp } from 'nav-frontend-knapper';
 import { fetchData } from '../../utils/Fetch';
 import { useOppfolgingContext } from '../Provider';
+import { dispatchUpdate, UpdateTypes } from '../../utils/UpdateEvent';
 
 interface Props {
     erVeileder: boolean;
@@ -22,7 +23,9 @@ function Bruker() {
     const fjernManuell = () => {
         fetchData('/veilarboppfolging/api/oppfolging/settDigital', {
             method: 'POST'
-        }).then(oppfolgingData.rerun);
+        })
+            .then(oppfolgingData.rerun)
+            .then(() => dispatchUpdate(UpdateTypes.Oppfolging));
     };
 
     return (
