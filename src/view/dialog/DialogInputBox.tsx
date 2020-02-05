@@ -55,14 +55,12 @@ export function DialogInputBox(props: Props) {
 
     const toggleFerdigBehandlet = (nyFerdigBehandletVerdi: boolean) => {
         setFerdigBehandlet(nyFerdigBehandletVerdi);
-        oppdaterFerdigBehandlet(fnr, valgtDialog.id, nyFerdigBehandletVerdi);
-        dialoger.rerun();
+        oppdaterFerdigBehandlet(fnr, valgtDialog.id, nyFerdigBehandletVerdi).then(dialoger.rerun);
     };
 
     const toggleVenterPaSvar = (nyVenterPaSvarVerdi: boolean) => {
         setVenterPaSvar(nyVenterPaSvarVerdi);
-        oppdaterVenterPaSvar(fnr, valgtDialog.id, nyVenterPaSvarVerdi);
-        dialoger.rerun();
+        oppdaterVenterPaSvar(fnr, valgtDialog.id, nyVenterPaSvarVerdi).then(dialoger.rerun);
     };
 
     const onSubmit = (data: { melding: string }) => {
