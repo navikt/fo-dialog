@@ -42,8 +42,6 @@ export function UppdateEventHandler() {
         const updateType = event.detail.uppdate;
         const avsennder = event.detail.avsender;
 
-        console.log(updateType);
-
         if (avsennder === 'dialog') {
             return;
         }
