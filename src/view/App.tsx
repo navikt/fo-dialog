@@ -2,11 +2,12 @@ import React from 'react';
 import StatusAdvarsel from './statusAdvarsel/StatusAdvarsel';
 import { AppBanner } from './banner/AppBanner';
 import styles from './App.module.less';
-import { BrowserRouter as Router } from 'react-router-dom';
+import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
 import { Provider } from './Provider';
 import { EventHandler } from './EventHandler';
 import AppBody from './AppBody';
 import TimeoutModal from '../felleskomponenter/timeoutmodal/TimeoutModal';
+import { InfoOmDialogSide } from './info/InfoOmDialogSide';
 
 interface Props {
     fnr?: string;
@@ -25,7 +26,10 @@ function App(props: Props) {
                     <AppBanner hidden={!!props.fnr} />
                     <Provider fnr={props.fnr}>
                         <StatusAdvarsel />
-                        <AppBody />
+                        <Switch>
+                            <Route path="/informasjon" component={InfoOmDialogSide} />
+                            <Route component={AppBody} />
+                        </Switch>
                     </Provider>
                     <TimeoutModal hidden={!!props.fnr} />
                 </div>
