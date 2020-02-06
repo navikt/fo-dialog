@@ -33,8 +33,10 @@ export function Dialog() {
                 method: 'PUT'
             })
                 .then(() => dialoger.rerun())
-                .then(() => dispatchUpdate(UpdateTypes.Dialog))
-                .then(() => window.dispatchEvent(new Event('aktivitetsplan.dialog.lest'))); //for teller i personflaten
+                .then(() => {
+                    dispatchUpdate(UpdateTypes.Dialog);
+                    window.dispatchEvent(new Event('aktivitetsplan.dialog.lest')); //lest teller i personflata
+                });
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [dialogId]);
