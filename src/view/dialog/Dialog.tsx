@@ -14,6 +14,7 @@ import DialogSendtBekreftelse from './DialogSendtBekreftelse';
 import HistoriskInfo from './HistoriskInfo';
 import { IngenDialog } from './IngenDialog';
 import { dispatchUpdate, UpdateTypes } from '../../utils/UpdateEvent';
+import useApiBasePath from '../../utils/UseApiBasePath';
 
 export function Dialog() {
     const kanSendeMelding = useKansendeMelding();
@@ -23,20 +24,21 @@ export function Dialog() {
     const valgtDialog = dialogData.find(dialog => dialog.id === dialogId);
     const fnr = useFnrContext();
     const query = fnrQuery(fnr);
+    const apiBasePath = useApiBasePath();
 
     const { viewState, setViewState } = useViewContext();
 
     useEffect(() => {
         setViewState(endreDialogSomVises(viewState, dialogId));
         if (valgtDialog && !valgtDialog.lest) {
-            fetchData(`/veilarbdialog/api/dialog/${valgtDialog.id}/les${query}`, {
+            fetchData(`${apiBasePath}/veilarbdialog/api/dialog/${valgtDialog.id}/les${query}`, {
                 method: 'PUT'
             })
                 .then(() => dialoger.rerun())
                 .then(() => dispatchUpdate(UpdateTypes.Dialog));
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [dialogId]);
+    }, [dialogId, apiBasePath]);
 
     if (!valgtDialog) {
         return <IngenDialog />;

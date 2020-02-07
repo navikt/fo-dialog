@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import NavFrontendModal from 'nav-frontend-modal';
 import Veilederpanel from 'nav-frontend-veilederpanel';
-import { Knapp, Hovedknapp } from 'nav-frontend-knapper';
+import { Hovedknapp, Knapp } from 'nav-frontend-knapper';
 import { Normaltekst, Systemtittel } from 'nav-frontend-typografi';
 import { hiddenIfHoc } from '../HiddenIfHoc';
 import { ReactComponent as ObsSVG } from './obs.svg';
@@ -26,16 +26,16 @@ function utloptTidspunktMinusSeksMinutter(remainingSeconds: number): number {
 }
 
 interface Props {
-    authUrl?: string;
+    apiBasePath: string;
     visDemo?: boolean;
 }
 
 function TimeoutModal(props: Props) {
-    const { authUrl, visDemo } = props;
+    const { apiBasePath, visDemo } = props;
     const [skalVises, setSkalVises] = useState(false);
 
     useEffect(() => {
-        fetch(authUrl || '/api/auth', {
+        fetch(apiBasePath + '/api/auth', {
             headers: getHeaders()
         })
             .then(response => {
@@ -61,7 +61,7 @@ function TimeoutModal(props: Props) {
             .catch(e => {
                 console.log('catch', e);
             });
-    }, [authUrl]);
+    }, [apiBasePath]);
 
     const apen = skalVises || !!visDemo;
     return (

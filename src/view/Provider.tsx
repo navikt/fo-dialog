@@ -42,15 +42,17 @@ export function dataOrUndefined<T>(context: FetchResult<T>): T | undefined {
 
 interface Props {
     fnr?: string;
+    apiBasePath: string;
     children: React.ReactNode;
 }
 
 export function Provider(props: Props) {
-    const query = fnrQuery(props.fnr);
+    const { fnr, apiBasePath, children } = props;
+    const query = fnrQuery(fnr);
 
-    const bruker = useFetch<Bruker>('/veilarboppfolging/api/oppfolging/me');
-    const oppfolgingData = useFetch<OppfolgingData>('/veilarboppfolging/api/oppfolging' + query);
-    const dialoger = useFetch<DialogData[]>('/veilarbdialog/api/dialog' + query);
+    const bruker = useFetch<Bruker>(`${apiBasePath}/veilarboppfolging/api/oppfolging/me`);
+    const oppfolgingData = useFetch<OppfolgingData>(`${apiBasePath}/veilarboppfolging/api/oppfolging${query}`);
+    const dialoger = useFetch<DialogData[]>(`${apiBasePath}/veilarbdialog/api/dialog${query}`);
     const [viewState, setState] = useState(initalState);
 
     //Todo remove usefetch and use our own thing here. rerun need to be a promise
@@ -64,10 +66,10 @@ export function Provider(props: Props) {
         <DialogContext.Provider value={dialoger}>
             <OppfolgingContext.Provider value={oppfolgingData}>
                 <UserInfoContext.Provider value={bruker.data}>
-                    <AktivitetProvider fnr={props.fnr}>
-                        <FNRContext.Provider value={props.fnr}>
+                    <AktivitetProvider fnr={fnr} apiBasePath={apiBasePath}>
+                        <FNRContext.Provider value={fnr}>
                             <ViewContext.Provider value={{ viewState: viewState, setViewState: setState }}>
-                                {props.children}
+                                {children}
                             </ViewContext.Provider>
                         </FNRContext.Provider>
                     </AktivitetProvider>
