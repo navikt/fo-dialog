@@ -2,11 +2,12 @@ import React from 'react';
 import { Innholdstittel, Normaltekst, Element } from 'nav-frontend-typografi';
 import Ekspanderbartpanel from 'nav-frontend-ekspanderbartpanel';
 import styles from './InfoOmDialogSide.module.less';
+import dialogStyle from '../dialog/Dialog.module.less';
 import { DialogHeader } from '../dialog/DialogHeader';
 
 export function InfoOmDialogSide() {
     return (
-        <div className="dialog">
+        <div className={dialogStyle.dialog}>
             <DialogHeader />
 
             <div className={styles.side}>
