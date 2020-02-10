@@ -6,17 +6,24 @@ auth:
 
 proxy:
   - contextPath: '/arbeid/dialog/veilarbaktivitet'
-    baseUrl: 'http://veilarbproxy'
+    baseUrl: 'http://veilarbproxy/veilarbaktivitet'
+    requestRewrite: REMOVE_CONTEXT_PATH
   - contextPath: '/arbeid/dialog/veilarbdialog'
-    baseUrl: 'http://veilarbproxy'
+    baseUrl: 'http://veilarbproxy/veilarbdialog'
+    requestRewrite: REMOVE_CONTEXT_PATH
   - contextPath: '/arbeid/dialog/veilarboppfolging'
-    baseUrl: 'http://veilarbproxy'
+    baseUrl: 'http://veilarbproxy/veilarboppfolging'
+    requestRewrite: REMOVE_CONTEXT_PATH
   - contextPath: '/arbeid/dialog/veilarblest'
-    baseUrl: 'http://veilarbproxy'
+    baseUrl: 'http://veilarbproxy/veilarblest'
+    requestRewrite: REMOVE_CONTEXT_PATH
   - contextPath: '/arbeid/dialog/veilarbstepup'
-    baseUrl: 'http://veilarbstepup'
+    baseUrl: 'http://veilarbstepup/veilarbstepup'
+    requestRewrite: REMOVE_CONTEXT_PATH
   - contextPath: '/arbeid/dialog/veilarbvedtakinfo'
-    baseUrl: 'http://veilarbproxy'
+    baseUrl: 'http://veilarbproxy/veilarbvedtakinfo'
+    requestRewrite: REMOVE_CONTEXT_PATH
+
 
 redirect:
   - from: /arbeid/dialog/aktivitetsplan
