@@ -14,6 +14,7 @@ import DialogSendtBekreftelse from './DialogSendtBekreftelse';
 import HistoriskInfo from './HistoriskInfo';
 import { IngenDialog } from './IngenDialog';
 import { dispatchUpdate, UpdateTypes } from '../../utils/UpdateEvent';
+import styles from './Dialog.module.less';
 import useApiBasePath from '../../utils/UseApiBasePath';
 
 export function Dialog() {
@@ -51,7 +52,7 @@ export function Dialog() {
     const kanSendeHenveldelse = kanSendeMelding && aktivDialog;
 
     return (
-        <div className="dialog">
+        <div className={styles.dialog}>
             <DialogHeader dialog={valgtDialog} />
             <HenvendelseList dialogData={valgtDialog} />
             <DialogSendtBekreftelse viewState={viewState} dialog={valgtDialog} fnr={fnr} />
