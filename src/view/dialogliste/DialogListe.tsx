@@ -7,7 +7,6 @@ import { useParams } from 'react-router';
 import styles from './DialogOversikt.module.less';
 import { Systemtittel } from 'nav-frontend-typografi';
 import InvertedLestMer from '../../felleskomponenter/InvertedLesMer';
-import { InfoOmDialog } from '../info/InfoOmDialog';
 
 interface Res {
     naaverende: DialogData[];
@@ -39,8 +38,6 @@ export function DialogListe() {
                 </Systemtittel>
                 <DialogPreviewListe dialoger={historiske} valgDialog={dialogId} />
             </InvertedLestMer>
-
-            <InfoOmDialog hidden={dialogData.length === 0} />
         </section>
     );
 }

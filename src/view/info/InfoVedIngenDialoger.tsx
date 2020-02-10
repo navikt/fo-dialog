@@ -4,7 +4,6 @@ import styles from './InfoVedIngenDialoger.module.less';
 import { visibleIfHoc } from '../../felleskomponenter/VisibleIfHoc';
 import classNames from 'classnames';
 import { ReactComponent as VeilederIkon } from './veileder.svg';
-import { InfoOmDialog } from './InfoOmDialog';
 import { Normaltekst } from 'nav-frontend-typografi';
 
 interface PropTypes {
@@ -20,7 +19,6 @@ function InfoVedIngenDialoger(props: PropTypes) {
                     komme i gang.
                 </Normaltekst>
                 <Normaltekst className={styles.avsnitt}>Du kan forvente svar i løpet av noen dager.</Normaltekst>
-                <InfoOmDialog hidden={false} />
             </Veilederpanel>
         </div>
     );

@@ -1,9 +1,9 @@
 import React from 'react';
 import { hasData } from '@nutgaard/use-fetch';
 import { useDialogContext } from '../Provider';
-import InfoVedIngenDialoger from '../info/InfoVedIngenDialoger';
 import DialogIkkeValgt from '../info/DialogIkkeValgt';
 import styles from './DialogInfoMelding.module.less';
+import InfoVedIngenDialoger from '../info/InfoVedIngenDialoger';
 
 export default function DialogInfoMelding() {
     const dialoger = useDialogContext();
