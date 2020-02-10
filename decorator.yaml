@@ -5,25 +5,25 @@ auth:
   loginUrl: {{ VEILARBSTEPUP_OIDC_URL }}
 
 proxy:
-  - contextPath: '/veilarbaktivitet'
+  - contextPath: '/arbeid/dialog/veilarbaktivitet'
     baseUrl: 'http://veilarbproxy'
-  - contextPath: '/veilarbdialog'
+  - contextPath: '/arbeid/dialog/veilarbdialog'
     baseUrl: 'http://veilarbproxy'
-  - contextPath: '/veilarboppfolging'
+  - contextPath: '/arbeid/dialog/veilarboppfolging'
     baseUrl: 'http://veilarbproxy'
-  - contextPath: '/veilarblest'
+  - contextPath: '/arbeid/dialog/veilarblest'
     baseUrl: 'http://veilarbproxy'
-  - contextPath: '/veilarbstepup'
+  - contextPath: '/arbeid/dialog/veilarbstepup'
     baseUrl: 'http://veilarbstepup'
-  - contextPath: '/veilarbvedtakinfo'
+  - contextPath: '/arbeid/dialog/veilarbvedtakinfo'
     baseUrl: 'http://veilarbproxy'
 
 redirect:
-  - from: /aktivitetsplan
+  - from: /arbeid/dialog/aktivitetsplan
     to: {{AKTIVITETSPLAN_URL}}
-  - from: /arbeidssokerregistrering
+  - from: /arbeid/dialog/arbeidssokerregistrering
     to: {{ARBEIDSSOKERREGISTRERING_URL}}
-  - from: /dittnav
+  - from: /arbeid/dialog/dittnav
     to: {{DITTNAV_LINK_URL}}
-  - from: /veientilarbeid
+  - from: /arbeid/dialog/veientilarbeid
     to: {{VEIENTILARBEID_URL}}
