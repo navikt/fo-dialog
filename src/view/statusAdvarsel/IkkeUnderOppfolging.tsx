@@ -1,5 +1,6 @@
 import React from 'react';
 import StatusAdvarselWrapper from './StatusAdvarselWrapper';
+import useApiBasePath from '../../utils/UseApiBasePath';
 
 interface Props {
     erVeileder: boolean;
@@ -10,12 +11,13 @@ export default function IkkeUnderOppfolging(props: Props) {
 }
 
 function HarPerioderBruker() {
+    const basePath = useApiBasePath();
     return (
         <StatusAdvarselWrapper>
             Du er ikke lenger registrert hos NAV. Hvis du fortsatt skal få oppfølging fra NAV og ha dialog med veileder
             må du være registrert.
             <br />
-            <a href="">Registrer deg hos NAV</a>
+            <a href={`${basePath}/arbeidssokerregistrering`}>Registrer deg hos NAV</a>
         </StatusAdvarselWrapper>
     );
 }
