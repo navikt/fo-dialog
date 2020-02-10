@@ -53,14 +53,18 @@ export function findAktivitet(aktivitetData: AktivitetContextType, aktivitetId?:
 
 interface Props {
     fnr?: string;
+    apiBasePath: string;
     children: React.ReactNode;
 }
 
 export function AktivitetProvider(props: Props) {
     const query = fnrQuery(props.fnr);
+    const apiBasePath = props.apiBasePath;
 
-    const aktiviteterFetch = useFetch<AktivitetResponse>('/veilarbaktivitet/api/aktivitet' + query);
-    const arenaAktiviteterFetch = useFetch<ArenaAktivitet[]>('/veilarbaktivitet/api/aktivitet/arena' + query);
+    const aktiviteterFetch = useFetch<AktivitetResponse>(`${apiBasePath}/veilarbaktivitet/api/aktivitet${query}`);
+    const arenaAktiviteterFetch = useFetch<ArenaAktivitet[]>(
+        `${apiBasePath}/veilarbaktivitet/api/aktivitet/arena${query}`
+    );
 
     return (
         <AktivitetContext.Provider value={{ aktiviteter: aktiviteterFetch, arenaAktiviter: arenaAktiviteterFetch }}>

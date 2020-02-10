@@ -14,6 +14,7 @@ interface Props {
 }
 
 function App(props: Props) {
+    const apiBasePath = props.fnr ? '' : process.env.PUBLIC_URL;
     const basepath = props.fnr ? `/veilarbpersonflatefs/${props.fnr}` : process.env.PUBLIC_URL;
     const wraperClass = props.fnr ? styles.konteinerInside : styles.konteinerUtside;
     const appstyle = props.fnr ? styles.appInside : styles.app;
@@ -24,12 +25,12 @@ function App(props: Props) {
                 <div className={appstyle}>
                     <EventHandler />
                     <AppBanner hidden={!!props.fnr} />
-                    <Provider fnr={props.fnr}>
+                    <Provider fnr={props.fnr} apiBasePath={apiBasePath}>
                         <StatusAdvarsel />
                         <AppBody />
                         <UppdateEventHandler />
                     </Provider>
-                    <TimeoutModal hidden={!!props.fnr} />
+                    <TimeoutModal hidden={!!props.fnr} apiBasePath={apiBasePath} />
                 </div>
             </div>
         </Router>

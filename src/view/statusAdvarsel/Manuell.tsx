@@ -4,6 +4,7 @@ import { Hovedknapp } from 'nav-frontend-knapper';
 import { fetchData } from '../../utils/Fetch';
 import { useOppfolgingContext } from '../Provider';
 import { dispatchUpdate, UpdateTypes } from '../../utils/UpdateEvent';
+import useApiBasePath from '../../utils/UseApiBasePath';
 
 interface Props {
     erVeileder: boolean;
@@ -19,9 +20,10 @@ function Veileder() {
 
 function Bruker() {
     const oppfolgingData = useOppfolgingContext();
+    const apiBasePath = useApiBasePath();
 
     const fjernManuell = () => {
-        fetchData('/veilarboppfolging/api/oppfolging/settDigital', {
+        fetchData(`${apiBasePath}/veilarboppfolging/api/oppfolging/settDigital`, {
             method: 'POST'
         })
             .then(oppfolgingData.rerun)
