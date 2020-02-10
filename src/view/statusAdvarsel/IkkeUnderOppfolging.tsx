@@ -1,24 +1,21 @@
 import React from 'react';
-import { AlertStripeAdvarsel } from 'nav-frontend-alertstriper';
+import StatusAdvarselWrapper from './StatusAdvarselWrapper';
 
 interface Props {
     erVeileder: boolean;
 }
 
 export default function IkkeUnderOppfolging(props: Props) {
-    return props.erVeileder ? <HarPerioderVeileder /> : <HarPerioderBruker />;
+    return props.erVeileder ? null : <HarPerioderBruker />;
 }
 
 function HarPerioderBruker() {
     return (
-        <AlertStripeAdvarsel>
-            Du er ikke lenger registrert hos NAV og din tidligere aktivitetsplan er lagt under "Mine tidligere planer".
-            Hvis du fortsatt skal motta ytelser, få oppfølging fra NAV og bruke aktivitetsplanen må du være registrert.
-            <a href="https://www.nav.no/Forsiden">www.nav.no</a>
-        </AlertStripeAdvarsel>
+        <StatusAdvarselWrapper>
+            Du er ikke lenger registrert hos NAV. Hvis du fortsatt skal få oppfølging fra NAV og ha dialog med veileder
+            må du være registrert.
+            <br />
+            <a href="">Registrer deg hos NAV</a>
+        </StatusAdvarselWrapper>
     );
-}
-
-function HarPerioderVeileder() {
-    return <AlertStripeAdvarsel>Denne brukeren er ikke under oppfølging.</AlertStripeAdvarsel>;
 }

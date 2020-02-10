@@ -6,6 +6,11 @@ import KanIkkeVarsles from './KanIkkeVarsles';
 import AldriUnderOppfolging from './AldriUnderOppfolging';
 import MannuelBruker from './Manuell';
 
+function erProd() {
+    //trengs da ingen av brukerne er registrert i krr i testmiljø
+    return window.location.hostname === 'www.nav.no' || window.location.hostname === 'app.adeo.no';
+}
+
 export default function StatusAdvarsel() {
     const oppfolgingDataContext = useOppfolgingContext();
     const oppfolgingData = dataOrUndefined(oppfolgingDataContext);
@@ -19,19 +24,20 @@ export default function StatusAdvarsel() {
     const erUnderOppfolging = oppfolgingData.underOppfolging;
     const harOppfolgingsPerioder = oppfolgingData.oppfolgingsPerioder.length > 0;
     const erReservertKrr = oppfolgingData.reservasjonKRR;
-    const kanVarsles = true; //TODO fisk denne oppfolgingData.kanVarsles;
+    const kanVarsles = oppfolgingData.kanVarsles;
     const manuellBruker = oppfolgingData.manuell;
+    const kanReaktiveres = oppfolgingData.kanReaktiveres;
 
     if (!erUnderOppfolging && !harOppfolgingsPerioder) {
         return <AldriUnderOppfolging erVeileder={erVeileder} />;
     }
-    if (!erUnderOppfolging) {
+    if (!erUnderOppfolging || kanReaktiveres) {
         return <IkkeUnderOppfolging erVeileder={erVeileder} />;
     }
     if (erReservertKrr) {
         return <ReservertKrr erVeileder={erVeileder} />;
     }
-    if (!kanVarsles) {
+    if (!kanVarsles && erProd()) {
         return <KanIkkeVarsles erVeileder={erVeileder} />;
     }
     if (manuellBruker) {
