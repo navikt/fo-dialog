@@ -8,7 +8,7 @@ import { Link } from 'react-router-dom';
 import styles from './OmDialogLenke.module.less';
 
 function OmDialogLenke() {
-    const knappCls = classNames('knapp knapp--flat knapp--mini', styles.omDialog);
+    const knappCls = classNames('knapp knapp--flat knapp--kompakt knapp--mini', styles.omDialog);
 
     return (
         <Link to="/informasjon" className={knappCls}>
