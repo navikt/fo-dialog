@@ -9,6 +9,7 @@ import { aktivitetLenke, visAktivitetsplan } from './AktivitetskortLinke';
 import { useFnrContext } from '../Provider';
 import { StringOrNull } from '../../utils/Typer';
 import { findAktivitet, useAktivitetContext } from '../AktivitetProvider';
+import useApiBasePath from '../../utils/UseApiBasePath';
 
 interface Props {
     aktivitetId?: StringOrNull;
@@ -18,6 +19,7 @@ export function AktivitetskortPreview(props: Props) {
     const { aktivitetId } = props;
     const fnr = useFnrContext();
     const aktvitetData = useAktivitetContext();
+    const apiBasePath = useApiBasePath();
 
     const aktivitet = findAktivitet(aktvitetData, aktivitetId);
     if (!aktivitet) {
@@ -28,7 +30,7 @@ export function AktivitetskortPreview(props: Props) {
 
     return (
         <LenkepanelBase
-            href={aktivitetLenke(aktivitet.id)}
+            href={aktivitetLenke(apiBasePath, aktivitet.id)}
             className={styles.lenkepanelbase}
             onClick={visAktivitetsplan(aktivitet.id, fnr)}
         >
