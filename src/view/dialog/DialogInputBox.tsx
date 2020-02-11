@@ -90,7 +90,6 @@ export function DialogInputBox(props: Props) {
             <form onSubmit={state.onSubmit(onSubmit)} noValidate autoComplete="off">
                 <div className="skriv-melding label-sr-only">
                     <Textarea
-                        autoFocus
                         label="Skriv en melding om arbeid og oppfølging"
                         placeholder="Skriv en melding om arbeid og oppfølging"
                         textareaClass="autosizing-textarea"
