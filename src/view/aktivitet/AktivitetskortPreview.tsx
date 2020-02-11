@@ -35,7 +35,7 @@ export function AktivitetskortPreview(props: Props) {
             onClick={visAktivitetsplan(aktivitet.id, fnr)}
         >
             <div className={styles.spaceBetween}>
-                <div>
+                <div className={styles.info}>
                     <Undertittel className={styles.tittel}>{aktivitet.tittel}</Undertittel>
                     <Undertekst>{info}</Undertekst>
                 </div>
