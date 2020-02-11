@@ -10,6 +10,7 @@
 
     #root {
         display: flex;
+        flex-grow: 1;
     }
 
     body {
@@ -25,8 +26,9 @@
     }
 
     #maincontent {
-        height: 100%;
-        overflow: hidden;
+        display: flex;
+        flex-direction: column;
+        flex-grow: 1;
     }
 
     .hidden-xs {
