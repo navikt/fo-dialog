@@ -1,36 +1,42 @@
-import { AlertStripeAdvarsel } from 'nav-frontend-alertstriper';
 import React from 'react';
 import { Hovedknapp } from 'nav-frontend-knapper';
 import { fetchData } from '../../utils/Fetch';
 import { useOppfolgingContext } from '../Provider';
+import { dispatchUpdate, UpdateTypes } from '../../utils/UpdateEvent';
+import useApiBasePath from '../../utils/UseApiBasePath';
+import StatusAdvarselWrapper, { KanIkkeKonteteElektroniskVeileder } from './StatusAdvarselWrapper';
+import styles from './AlertLess.module.less';
 
 interface Props {
     erVeileder: boolean;
 }
 
 function MannuelBruker(props: Props) {
-    return props.erVeileder ? <Veileder /> : <Bruker />;
-}
-
-function Veileder() {
-    return <AlertStripeAdvarsel>Manuell bruker</AlertStripeAdvarsel>;
+    return props.erVeileder ? <KanIkkeKonteteElektroniskVeileder /> : <Bruker />;
 }
 
 function Bruker() {
     const oppfolgingData = useOppfolgingContext();
+    const apiBasePath = useApiBasePath();
 
     const fjernManuell = () => {
-        fetchData('/veilarboppfolging/api/oppfolging/settDigital', {
+        fetchData(`${apiBasePath}/veilarboppfolging/api/oppfolging/settDigital`, {
             method: 'POST'
-        }).then(oppfolgingData.rerun);
+        })
+            .then(oppfolgingData.rerun)
+            .then(() => dispatchUpdate(UpdateTypes.Oppfolging));
     };
 
     return (
-        <AlertStripeAdvarsel>
-            Du får ikke digital oppfølging fra NAV og har derfor ikke tilgang til digital dialog med veileder. Klikk på
-            knappen under hvis du ønsker å endre dette.
-            <Hovedknapp onClick={fjernManuell}> Endre til digital oppfølging </Hovedknapp>
-        </AlertStripeAdvarsel>
+        <div className={styles.flexColum}>
+            <StatusAdvarselWrapper>
+                Du har ikke digital oppfølging fra NAV. Du kan derfor ikke ha digital dialog med veileder
+            </StatusAdvarselWrapper>
+            <Hovedknapp onClick={fjernManuell} className={styles.knapp}>
+                {' '}
+                Endre til digital oppfølging{' '}
+            </Hovedknapp>
+        </div>
     );
 }
 

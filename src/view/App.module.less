@@ -10,6 +10,7 @@
 
     #root {
         display: flex;
+        flex-grow: 1;
     }
 
     body {
@@ -25,6 +26,9 @@
     }
 
     #maincontent {
+        display: flex;
+        flex-direction: column;
+        flex-grow: 1;
         height: 100%;
         overflow: hidden;
     }
@@ -39,6 +43,7 @@
 }
 
 .app {
+    min-height: 30rem;
     display: flex;
     flex-direction: column;
     flex-grow: 1;

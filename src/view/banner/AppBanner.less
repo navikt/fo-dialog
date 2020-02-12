@@ -4,11 +4,6 @@
     background-color: @navDypBlaLighten80;
     box-sizing: border-box;
     border-bottom: 0.3rem solid @navDypBlaLighten60;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    flex-basis: 5rem;
-    flex-direction: column;
     height: 100px;
 
     &__lenke {
@@ -22,6 +17,8 @@
     &__tittel {
         display: flex;
         font-size: 1.7rem;
+        margin: 0 auto;
+        width: fit-content;
     }
     &--dialogvisning {
         display: none;
@@ -30,12 +27,8 @@
 
 @media (min-width: 800px) {
     .dialogbanner {
-        display: flex;
         padding: 1rem;
-        &__lenke {
-        }
         &__tittel {
-            display: flex;
             font-size: 2rem;
         }
         &__ikon {

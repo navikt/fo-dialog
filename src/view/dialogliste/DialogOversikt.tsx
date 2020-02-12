@@ -6,8 +6,9 @@ import { useParams } from 'react-router';
 import classNames from 'classnames';
 import styles from './DialogOversikt.module.less';
 import useKansendeMelding from '../../utils/UseKanSendeMelding';
-import InfoVedIngenDialoger from '../info/InfoVedIngenDialoger';
 import DialogListe from './DialogListe';
+import OmDialogLenke from '../info/OmDialogLenke';
+import InfoVedIngenDialoger from '../info/InfoVedIngenDialoger';
 
 export function DialogOversikt() {
     const kanSendeMelding = useKansendeMelding();
@@ -19,7 +20,10 @@ export function DialogOversikt() {
 
     return (
         <div className={visningCls}>
-            <DialogOverviewHeader visible={kanSendeMelding} />
+            <div className={styles.verktoylinje}>
+                <DialogOverviewHeader visible={kanSendeMelding} />
+                <OmDialogLenke />
+            </div>
             <InfoVedIngenDialoger className={styles.info} visible={dialogData.length === 0} />
             <DialogListe />
         </div>

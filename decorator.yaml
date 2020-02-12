@@ -5,25 +5,32 @@ auth:
   loginUrl: {{ VEILARBSTEPUP_OIDC_URL }}
 
 proxy:
-  - contextPath: '/veilarbaktivitet'
-    baseUrl: 'http://veilarbproxy'
-  - contextPath: '/veilarbdialog'
-    baseUrl: 'http://veilarbproxy'
-  - contextPath: '/veilarboppfolging'
-    baseUrl: 'http://veilarbproxy'
-  - contextPath: '/veilarblest'
-    baseUrl: 'http://veilarbproxy'
-  - contextPath: '/veilarbstepup'
-    baseUrl: 'http://veilarbstepup'
-  - contextPath: '/veilarbvedtakinfo'
-    baseUrl: 'http://veilarbproxy'
+  - contextPath: '/arbeid/dialog/veilarbaktivitet'
+    baseUrl: 'http://veilarbproxy/veilarbaktivitet'
+    requestRewrite: REMOVE_CONTEXT_PATH
+  - contextPath: '/arbeid/dialog/veilarbdialog'
+    baseUrl: 'http://veilarbproxy/veilarbdialog'
+    requestRewrite: REMOVE_CONTEXT_PATH
+  - contextPath: '/arbeid/dialog/veilarboppfolging'
+    baseUrl: 'http://veilarbproxy/veilarboppfolging'
+    requestRewrite: REMOVE_CONTEXT_PATH
+  - contextPath: '/arbeid/dialog/veilarblest'
+    baseUrl: 'http://veilarbproxy/veilarblest'
+    requestRewrite: REMOVE_CONTEXT_PATH
+  - contextPath: '/arbeid/dialog/veilarbstepup'
+    baseUrl: 'http://veilarbstepup/veilarbstepup'
+    requestRewrite: REMOVE_CONTEXT_PATH
+  - contextPath: '/arbeid/dialog/veilarbvedtakinfo'
+    baseUrl: 'http://veilarbproxy/veilarbvedtakinfo'
+    requestRewrite: REMOVE_CONTEXT_PATH
+
 
 redirect:
-  - from: /aktivitetsplan
+  - from: /arbeid/dialog/aktivitetsplan
     to: {{AKTIVITETSPLAN_URL}}
-  - from: /arbeidssokerregistrering
+  - from: /arbeid/dialog/arbeidssokerregistrering
     to: {{ARBEIDSSOKERREGISTRERING_URL}}
-  - from: /dittnav
+  - from: /arbeid/dialog/dittnav
     to: {{DITTNAV_LINK_URL}}
-  - from: /veientilarbeid
+  - from: /arbeid/dialog/veientilarbeid
     to: {{VEIENTILARBEID_URL}}

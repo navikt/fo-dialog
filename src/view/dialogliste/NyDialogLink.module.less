@@ -4,7 +4,6 @@
 
 .header {
     display: flex;
-    flex-basis: 4rem;
 }
 
 .panel {
@@ -29,5 +28,11 @@
         fill: white;
         margin-right: 0.5rem;
         align-self: center;
+    }
+
+    &:focus {
+        .plusslogo {
+            fill: @navBla;
+        }
     }
 }

@@ -10,6 +10,7 @@ import Textarea from '../../felleskomponenter/input/textarea';
 import { Hovedknapp } from 'nav-frontend-knapper';
 import { sendtNyHenvendelse } from '../ViewState';
 import { isPending } from '@nutgaard/use-async';
+import { dispatchUpdate, UpdateTypes } from '../../utils/UpdateEvent';
 
 const AlertStripeFeilVisible = visibleIfHoc(AlertStripeFeil);
 
@@ -54,14 +55,12 @@ export function DialogInputBox(props: Props) {
 
     const toggleFerdigBehandlet = (nyFerdigBehandletVerdi: boolean) => {
         setFerdigBehandlet(nyFerdigBehandletVerdi);
-        oppdaterFerdigBehandlet(fnr, valgtDialog.id, nyFerdigBehandletVerdi);
-        dialoger.rerun();
+        oppdaterFerdigBehandlet(fnr, valgtDialog.id, nyFerdigBehandletVerdi).then(dialoger.rerun);
     };
 
     const toggleVenterPaSvar = (nyVenterPaSvarVerdi: boolean) => {
         setVenterPaSvar(nyVenterPaSvarVerdi);
-        oppdaterVenterPaSvar(fnr, valgtDialog.id, nyVenterPaSvarVerdi);
-        dialoger.rerun();
+        oppdaterVenterPaSvar(fnr, valgtDialog.id, nyVenterPaSvarVerdi).then(dialoger.rerun);
     };
 
     const onSubmit = (data: { melding: string }) => {
@@ -79,6 +78,7 @@ export function DialogInputBox(props: Props) {
                 setViewState(sendtNyHenvendelse(viewState));
                 setFerdigBehandlet(dialog.ferdigBehandlet);
                 dialoger.rerun();
+                dispatchUpdate(UpdateTypes.Dialog);
             })
             .catch(() => setNoeFeilet(true));
     };
@@ -90,7 +90,6 @@ export function DialogInputBox(props: Props) {
             <form onSubmit={state.onSubmit(onSubmit)} noValidate autoComplete="off">
                 <div className="skriv-melding label-sr-only">
                     <Textarea
-                        autoFocus
                         label="Skriv en melding om arbeid og oppfølging"
                         placeholder="Skriv en melding om arbeid og oppfølging"
                         textareaClass="autosizing-textarea"
