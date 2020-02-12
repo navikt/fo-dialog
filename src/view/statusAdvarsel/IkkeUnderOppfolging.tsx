@@ -1,6 +1,7 @@
 import React from 'react';
 import StatusAdvarselWrapper from './StatusAdvarselWrapper';
 import useApiBasePath from '../../utils/UseApiBasePath';
+import Lenke from 'nav-frontend-lenker';
 
 interface Props {
     erVeileder: boolean;
@@ -17,7 +18,7 @@ function HarPerioderBruker() {
             Du er ikke lenger registrert hos NAV. Hvis du fortsatt skal få oppfølging fra NAV og ha dialog med veileder
             må du være registrert.
             <br />
-            <a href={`${basePath}/arbeidssokerregistrering`}>Registrer deg hos NAV</a>
+            <Lenke href={`${basePath}/arbeidssokerregistrering`}>Registrer deg hos NAV</Lenke>
         </StatusAdvarselWrapper>
     );
 }

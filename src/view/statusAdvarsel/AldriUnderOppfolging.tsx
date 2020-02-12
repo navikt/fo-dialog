@@ -20,7 +20,7 @@ function Bruker() {
 
     return (
         <StatusAdvarselWrapper>
-            Du må være registrert hos NAV for å bruke dialogen. <br />
+            Du må være registrert hos NAV for å ha digital dialog med veileder. <br />
             <Lenke href={`${basePath}/arbeidssokerregistrering`}>Registrer deg hos NAV</Lenke>
         </StatusAdvarselWrapper>
     );
