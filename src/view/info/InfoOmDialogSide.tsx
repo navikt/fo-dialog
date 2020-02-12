@@ -4,10 +4,15 @@ import Ekspanderbartpanel from 'nav-frontend-ekspanderbartpanel';
 import styles from './InfoOmDialogSide.module.less';
 import dialogStyle from '../dialog/Dialog.module.less';
 import { DialogHeader } from '../dialog/DialogHeader';
+import classNames from 'classnames';
+import { useSkjulHodefotForMobilVisning } from '../utils/useSkjulHodefotForMobilVisning';
+
+const cls = classNames(styles.container, dialogStyle.dialog);
 
 export function InfoOmDialogSide() {
+    useSkjulHodefotForMobilVisning();
     return (
-        <div className={dialogStyle.dialog}>
+        <div className={cls}>
             <DialogHeader />
 
             <div className={styles.side}>
