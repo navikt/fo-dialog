@@ -3,12 +3,13 @@ function getCookie(name: string) {
     const match = re.exec(document.cookie);
     return match !== null ? match[1] : '';
 }
+
 function getHeaders() {
-    return new Headers({
+    return {
         'Content-Type': 'application/json',
         'Nav-Consumer-Id': 'arbeidsrettet-dialog',
         NAV_CSRF_PROTECTION: getCookie('NAV_CSRF_PROTECTION') // eslint-disable-line quote-props
-    });
+    };
 }
 
 const CONFIG: RequestInit = {

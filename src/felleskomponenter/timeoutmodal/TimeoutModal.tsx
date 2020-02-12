@@ -14,11 +14,11 @@ export const getCookie = (name: string) => {
 };
 
 function getHeaders() {
-    return new Headers({
+    return {
         credentials: 'same-origin',
         'Content-Type': 'application/json',
         NAV_CSRF_PROTECTION: getCookie('NAV_CSRF_PROTECTION')
-    });
+    };
 }
 
 function utloptTidspunktMinusSeksMinutter(remainingSeconds: number): number {
