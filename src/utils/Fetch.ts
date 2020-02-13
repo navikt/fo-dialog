@@ -13,7 +13,7 @@ function getHeaders() {
 }
 
 const CONFIG: RequestInit = {
-    credentials: 'same-origin',
+    //credentials: 'same-origin',
     headers: getHeaders()
 };
 

@@ -15,7 +15,6 @@ export const getCookie = (name: string) => {
 
 function getHeaders() {
     return {
-        credentials: 'same-origin',
         'Content-Type': 'application/json',
         NAV_CSRF_PROTECTION: getCookie('NAV_CSRF_PROTECTION')
     };
@@ -36,6 +35,7 @@ function TimeoutModal(props: Props) {
 
     useEffect(() => {
         fetch(apiBasePath + '/api/auth', {
+            credentials: 'same-origin',
             headers: getHeaders()
         })
             .then(response => {
