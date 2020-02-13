@@ -1,7 +1,7 @@
 import React, { useContext } from 'react';
 import useFetch, { FetchResult, hasData, Status } from '@nutgaard/use-fetch';
 import { Aktivitet, ArenaAktivitet } from '../utils/AktivitetTypes';
-import { fnrQuery } from '../utils/Fetch';
+import { fnrQuery, REQUEST_CONFIG } from '../utils/Fetch';
 import { StringOrNull } from '../utils/Typer';
 
 export type MaybeAktivitet = Aktivitet | ArenaAktivitet | undefined;
@@ -61,9 +61,13 @@ export function AktivitetProvider(props: Props) {
     const query = fnrQuery(props.fnr);
     const apiBasePath = props.apiBasePath;
 
-    const aktiviteterFetch = useFetch<AktivitetResponse>(`${apiBasePath}/veilarbaktivitet/api/aktivitet${query}`);
+    const aktiviteterFetch = useFetch<AktivitetResponse>(
+        `${apiBasePath}/veilarbaktivitet/api/aktivitet${query}`,
+        REQUEST_CONFIG
+    );
     const arenaAktiviteterFetch = useFetch<ArenaAktivitet[]>(
-        `${apiBasePath}/veilarbaktivitet/api/aktivitet/arena${query}`
+        `${apiBasePath}/veilarbaktivitet/api/aktivitet/arena${query}`,
+        REQUEST_CONFIG
     );
 
     return (

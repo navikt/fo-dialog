@@ -2,7 +2,7 @@ import React, { Dispatch, SetStateAction, useContext, useState } from 'react';
 import { Bruker, DialogData, OppfolgingData } from '../utils/Typer';
 import NavFrontendSpinner from 'nav-frontend-spinner';
 import useFetch, { FetchResult, hasData, hasError, isPending, Status } from '@nutgaard/use-fetch';
-import { fnrQuery } from '../utils/Fetch';
+import { fnrQuery, REQUEST_CONFIG } from '../utils/Fetch';
 import { initalState, ViewState } from './ViewState';
 import { AktivitetProvider } from './AktivitetProvider';
 
@@ -50,9 +50,12 @@ export function Provider(props: Props) {
     const { fnr, apiBasePath, children } = props;
     const query = fnrQuery(fnr);
 
-    const bruker = useFetch<Bruker>(`${apiBasePath}/veilarboppfolging/api/oppfolging/me`);
-    const oppfolgingData = useFetch<OppfolgingData>(`${apiBasePath}/veilarboppfolging/api/oppfolging${query}`);
-    const dialoger = useFetch<DialogData[]>(`${apiBasePath}/veilarbdialog/api/dialog${query}`);
+    const bruker = useFetch<Bruker>(`${apiBasePath}/veilarboppfolging/api/oppfolging/me`, REQUEST_CONFIG);
+    const oppfolgingData = useFetch<OppfolgingData>(
+        `${apiBasePath}/veilarboppfolging/api/oppfolging${query}`,
+        REQUEST_CONFIG
+    );
+    const dialoger = useFetch<DialogData[]>(`${apiBasePath}/veilarbdialog/api/dialog${query}`, REQUEST_CONFIG);
     const [viewState, setState] = useState(initalState);
 
     //Todo remove usefetch and use our own thing here. rerun need to be a promise
