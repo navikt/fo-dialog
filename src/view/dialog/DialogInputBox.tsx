@@ -67,16 +67,23 @@ export function DialogInputBox(props: Props) {
         const { melding } = data;
         return nyHenvendelse(fnr, melding, valgtDialog.id)
             .then(dialog => {
-                if (!dialog.ferdigBehandlet) {
+                if (bruker!.erVeileder && dialog.ferdigBehandlet) {
                     return oppdaterFerdigBehandlet(fnr, valgtDialog.id, true);
                 }
-                return Promise.resolve(dialog);
+                return dialog;
+            })
+            .then(dialog => {
+                if (bruker!.erVeileder && !dialog.venterPaSvar) {
+                    return oppdaterVenterPaSvar(fnr, valgtDialog.id, true);
+                }
+                return dialog;
             })
             .then(dialog => {
                 setNoeFeilet(false);
                 state.reinitialize(initalValues);
                 setViewState(sendtNyHenvendelse(viewState));
                 setFerdigBehandlet(dialog.ferdigBehandlet);
+                setVenterPaSvar(dialog.venterPaSvar);
                 dialoger.rerun();
                 dispatchUpdate(UpdateTypes.Dialog);
             })

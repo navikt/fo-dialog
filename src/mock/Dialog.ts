@@ -309,6 +309,7 @@ export function opprettEllerOppdaterDialog(update: NyDialogMeldingData): DialogD
         oldDialog.henvendelser.push(nyHenvendelse);
 
         if (!bruker().erVeileder) {
+            oldDialog.ferdigBehandlet = false;
             oldDialog.venterPaSvar = false;
         }
 
@@ -324,7 +325,7 @@ export function opprettEllerOppdaterDialog(update: NyDialogMeldingData): DialogD
             historisk: false,
             lest: true,
             venterPaSvar: false,
-            ferdigBehandlet: true,
+            ferdigBehandlet: false,
             lestAvBrukerTidspunkt: null,
             erLestAvBruker: false,
             aktivitetId: update.aktivitetId || null,

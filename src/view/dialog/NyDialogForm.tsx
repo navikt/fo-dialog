@@ -9,8 +9,6 @@ import Textarea from '../../felleskomponenter/input/textarea';
 import { Hovedknapp } from 'nav-frontend-knapper';
 import Input from '../../felleskomponenter/input/input';
 import { nyDialog, oppdaterFerdigBehandlet, oppdaterVenterPaSvar } from '../../api/dialog';
-import Checkbox from '../../felleskomponenter/input/checkbox';
-import { div as HiddenIfDiv } from '../../felleskomponenter/HiddenIfHoc';
 import style from './NyDialogForm.module.less';
 import { StringOrNull } from '../../utils/Typer';
 import { dispatchUpdate, UpdateTypes } from '../../utils/UpdateEvent';
@@ -121,19 +119,6 @@ function NyDialogForm(props: Props) {
                         {...state.fields.melding}
                     />
                 </div>
-
-                <HiddenIfDiv hidden={!!bruker && bruker.erBruker} className="checkbox-block">
-                    <Checkbox
-                        label="Venter på svar fra NAV"
-                        className="checkbox-block__item"
-                        {...state.fields.venterPaSvarFraNAV}
-                    />
-                    <Checkbox
-                        label="Venter på svar fra bruker"
-                        className="checkbox-block__item"
-                        {...state.fields.venterPaSvar}
-                    />
-                </HiddenIfDiv>
 
                 <Hovedknapp title="Send" autoDisableVedSpinner spinner={state.submitting}>
                     Send
