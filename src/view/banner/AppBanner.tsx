@@ -23,10 +23,7 @@ export function AppBanner(props: { hidden?: boolean }) {
                 Ditt NAV
             </Lenke>
 
-            <Sidetittel className="dialogbanner__tittel">
-                <DialogIcon className="dialogbanner__ikon" />
-                Dialog med veileder
-            </Sidetittel>
+            <Sidetittel className="dialogbanner__tittel">Dialog med veilederen din</Sidetittel>
         </div>
     );
 }
