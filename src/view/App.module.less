@@ -23,6 +23,11 @@
         padding-bottom: 0 !important; //overstyrer decorator
         display: flex;
         flex-direction: column;
+        flex-grow: 1;
+
+        @media (max-width: @screen-xs-max) {
+            min-height: max-content;
+        }
     }
 
     #maincontent {

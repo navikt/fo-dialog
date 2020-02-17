@@ -1,3 +1,4 @@
+import './polyfill';
 import React from 'react';
 import ReactDOM from 'react-dom';
 import App from './view/App';
@@ -15,7 +16,7 @@ if (process.env.REACT_APP_MOCK === 'true') {
     require('./mock');
 
     const elem = document.createElement('div');
-    document.body.append(elem);
+    document.body.appendChild(elem);
     ReactDOM.render(<DemoBanner />, elem);
 
     const fnr = erEksternBruker() ? undefined : '12345678901';

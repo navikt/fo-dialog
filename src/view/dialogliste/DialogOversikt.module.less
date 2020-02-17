@@ -1,5 +1,4 @@
 @import (reference) '../../variabler';
-@import (reference) '~nav-frontend-core/less/core';
 
 .dialogOversikt {
     display: flex;
@@ -10,6 +9,7 @@
     @media (min-width: 800px) {
         display: flex;
         width: 35%;
+        max-width: 30rem;
     }
 }
 
@@ -17,6 +17,10 @@
     padding: 0.7rem;
     overflow-y: auto;
     flex: 1;
+}
+
+.nyDialog {
+    margin-bottom: 0.8rem;
 }
 
 .dialogValgt {

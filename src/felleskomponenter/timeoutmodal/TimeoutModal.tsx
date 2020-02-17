@@ -14,11 +14,10 @@ export const getCookie = (name: string) => {
 };
 
 function getHeaders() {
-    return new Headers({
-        credentials: 'same-origin',
+    return {
         'Content-Type': 'application/json',
         NAV_CSRF_PROTECTION: getCookie('NAV_CSRF_PROTECTION')
-    });
+    };
 }
 
 function utloptTidspunktMinusSeksMinutter(remainingSeconds: number): number {
@@ -36,6 +35,7 @@ function TimeoutModal(props: Props) {
 
     useEffect(() => {
         fetch(apiBasePath + '/api/auth', {
+            credentials: 'same-origin',
             headers: getHeaders()
         })
             .then(response => {
