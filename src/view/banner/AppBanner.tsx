@@ -1,6 +1,5 @@
 import React from 'react';
 import { Sidetittel } from 'nav-frontend-typografi';
-import { ReactComponent as DialogIcon } from '../../fellesikoner/snakkebobler.svg';
 
 import './AppBanner.less';
 import Lenke from 'nav-frontend-lenker';
