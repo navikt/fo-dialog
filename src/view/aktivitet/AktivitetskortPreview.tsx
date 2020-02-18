@@ -67,7 +67,7 @@ export function getInfoText(aktivitet: Aktivitet | ArenaAktivitet): string {
         case AktivitetTypes.SAMTALEREFERAT:
             return `${typeTekst} / ${formaterDate(aktivitet.fraDato)}`;
         case AktivitetTypes.IJOBB:
-            return `${typeTekst} / ${aktivitet.arbeidsgiver}`;
+            return `${typeTekst}${tekstGuard(aktivitet.arbeidsgiver)}`;
         case ArenaAktivitetTypes.TILTAKSAKTIVITET:
         case ArenaAktivitetTypes.UTDANNINGSAKTIVITET:
         case ArenaAktivitetTypes.GRUPPEAKTIVITET:
