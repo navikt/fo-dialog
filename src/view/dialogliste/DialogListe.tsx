@@ -5,7 +5,7 @@ import { DialogData } from '../../utils/Typer';
 import { useDialogContext } from '../Provider';
 import { useParams } from 'react-router';
 import styles from './DialogOversikt.module.less';
-import { Systemtittel } from 'nav-frontend-typografi';
+import { Undertittel } from 'nav-frontend-typografi';
 import InvertedLestMer from '../../felleskomponenter/InvertedLesMer';
 
 interface Res {
@@ -33,10 +33,12 @@ export function DialogListe() {
             <DialogPreviewListe dialoger={naaverende} valgDialog={dialogId} />
 
             <InvertedLestMer apneTekst="Se dialoger fra tidligere perioder" lukkTekst="Skjul" hidden={skulHistoriske}>
-                <Systemtittel className={styles.tidligerePeriodeTittel} tag="h1">
-                    Dialoger fra tidligere perioder
-                </Systemtittel>
-                <DialogPreviewListe dialoger={historiske} valgDialog={dialogId} />
+                <section>
+                    <Undertittel className={styles.tidligerePeriodeTittel} tag="h1">
+                        Dialoger fra tidligere perioder
+                    </Undertittel>
+                    <DialogPreviewListe dialoger={historiske} valgDialog={dialogId} />
+                </section>
             </InvertedLestMer>
         </section>
     );
