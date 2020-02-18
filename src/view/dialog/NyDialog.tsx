@@ -7,7 +7,10 @@ import { DialogHeader } from './DialogHeader';
 import NyDialogForm from './NyDialogForm';
 import { useAktivitetId } from '../utils/useAktivitetId';
 import { findAktivitet, isLoadingData, useAktivitetContext } from '../AktivitetProvider';
+import classNames from 'classnames';
 import styles from './Dialog.module.less';
+
+const cls = classNames(styles.dialog, styles.overflowAuto);
 
 function NyDialog() {
     const kansendeMelding = useKansendeMelding();
@@ -30,7 +33,7 @@ function NyDialog() {
     }
 
     return (
-        <div className={styles.dialog}>
+        <div className={cls}>
             <DialogHeader aktivitetId={aktivitet?.id} />
             <NyDialogForm
                 onSubmit={() => setViewState(sendtNyDialog(viewState))}

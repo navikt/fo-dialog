@@ -7,7 +7,7 @@ import { DialogHeader } from '../dialog/DialogHeader';
 import classNames from 'classnames';
 import { useSkjulHodefotForMobilVisning } from '../utils/useSkjulHodefotForMobilVisning';
 
-const cls = classNames(styles.container, dialogStyle.dialog);
+const cls = classNames(dialogStyle.overflowAuto, dialogStyle.dialog);
 
 export function InfoOmDialogSide() {
     useSkjulHodefotForMobilVisning();
