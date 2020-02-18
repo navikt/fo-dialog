@@ -31,6 +31,6 @@ redirect:
   - from: /arbeid/dialog/arbeidssokerregistrering
     to: {{ARBEIDSSOKERREGISTRERING_URL}}
   - from: /arbeid/dialog/dittnav
-    to: {{DITTNAV_LINK_URL}}
+    to: {{DITTNAV_URL}}
   - from: /arbeid/dialog/veientilarbeid
     to: {{VEIENTILARBEID_URL}}
