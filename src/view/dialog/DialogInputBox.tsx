@@ -84,7 +84,7 @@ export function DialogInputBox(props: Props) {
     };
 
     const laster = state.submitting || dialogLaster;
-    const match = window.matchMedia(`(min-width: 768px)`).matches;
+    const match = window.matchMedia ? window.matchMedia(`(min-width: 768px)`).matches : false;
 
     return (
         <>
