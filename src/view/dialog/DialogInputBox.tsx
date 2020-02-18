@@ -84,6 +84,7 @@ export function DialogInputBox(props: Props) {
     };
 
     const laster = state.submitting || dialogLaster;
+    const match = window.matchMedia(`(min-width: 768px)`).matches;
 
     return (
         <>
@@ -96,6 +97,7 @@ export function DialogInputBox(props: Props) {
                         maxLength={maxMeldingsLengde}
                         visTellerFra={1000}
                         showErrorOnSubmit={true}
+                        autoFocus={match}
                         submittoken={state.submittoken}
                         {...state.fields.melding}
                     />
