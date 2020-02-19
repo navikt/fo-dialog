@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import OkMessage from '../../felleskomponenter/mesage/OkMessage';
 import { HandlingsType, ViewState } from '../ViewState';
 import { DialogData, StringOrNull } from '../../utils/Typer';
@@ -17,7 +17,6 @@ function getTekst(handling: HandlingsType, erVeileder: boolean, overskrift: Stri
         }
         return `Meldingen om "${overskrift}" er sendt. Du kan forvente svar i løpet av noen dager`;
     }
-    return null;
 }
 
 interface Props {
@@ -26,18 +25,15 @@ interface Props {
     fnr?: string;
 }
 
-function DialogSendtBekreftelse(props: Props) {
-    const { viewState, dialog, fnr } = props;
-    const erVeileder = !!fnr;
+function Melding(props: { tekst?: string; erVeileder: boolean }) {
+    const [hasRendred, setHasRendred] = useState(false);
+    useEffect(() => {
+        setHasRendred(true);
+    }, []);
 
-    const tekst = getTekst(viewState.sistHandlingsType, erVeileder, dialog.overskrift);
-
-    if (!tekst) {
-        return null;
-    }
-
-    return (
-        <div>
+    const { tekst, erVeileder } = props;
+    return !tekst ? null : (
+        <div aria-hidden={!hasRendred}>
             <OkMessage>
                 <Normaltekst>{tekst}</Normaltekst>
                 <Hjelpetekst className={styles.hjelpeTekst} hidden={!erVeileder}>
@@ -53,6 +49,19 @@ function DialogSendtBekreftelse(props: Props) {
                     </div>
                 </Hjelpetekst>
             </OkMessage>
+        </div>
+    );
+}
+
+function DialogSendtBekreftelse(props: Props) {
+    const { viewState, dialog, fnr } = props;
+    const erVeileder = !!fnr;
+
+    const tekst = getTekst(viewState.sistHandlingsType, erVeileder, dialog.overskrift);
+
+    return (
+        <div role="alert">
+            <Melding erVeileder={erVeileder} tekst={tekst} />
         </div>
     );
 }
