@@ -35,8 +35,9 @@ function sisteLesteHenvendelse(lest: StringOrNull, henvendelser: HenvendelseData
         return null;
     }
 
-    const sistleste = henvendelser.find(henvendelse => datoComparator(lest, henvendelse.sendt) >= 0);
-    return sistleste ? sistleste.id : null;
+    const lesteMeldinger = henvendelser.filter(henvendelse => datoComparator(henvendelse.sendt, lest) >= 0);
+    const sistLeste = lesteMeldinger[lesteMeldinger.length - 1];
+    return sistLeste ? sistLeste.id : null;
 }
 
 export function HenvendelseList(props: Props) {
@@ -56,11 +57,11 @@ export function HenvendelseList(props: Props) {
             <div className="henvendelse-list__viewport">
                 {sorterteHenvendelser.map(henvendelse => (
                     <div key={henvendelse.id} className={'henvendelse-list__henvendelse'}>
+                        <Henvendelse henvendelseData={henvendelse} />
                         <LestAvTidspunkt
                             tidspunkt={lestAvBrukerTidspunkt!}
                             visible={henvendelse.id === sisteHenvendelseLestAvBruker}
                         />
-                        <Henvendelse henvendelseData={henvendelse} />
                     </div>
                 ))}
             </div>

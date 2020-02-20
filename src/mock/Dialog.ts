@@ -33,7 +33,7 @@ const dialoger: DialogData[] & JSONArray = [
                 dialogId: '1',
                 avsender: 'VEILEDER',
                 avsenderId: '0102030405',
-                sendt: '2018-02-28T12:48:56.097+01:00',
+                sendt: '2018-02-28T12:48:55.097+01:00',
                 lest: true,
                 tekst:
                     'Ja, jeg vil så absolutt tro at du er kvalifisert til denne! Send dem en søknad og fortell meg' +
@@ -62,8 +62,8 @@ const dialoger: DialogData[] & JSONArray = [
         lest: true,
         venterPaSvar: true,
         ferdigBehandlet: true,
-        lestAvBrukerTidspunkt: null,
-        erLestAvBruker: false,
+        lestAvBrukerTidspunkt: '2018-02-02T11:50:20.615+01:00',
+        erLestAvBruker: true,
         aktivitetId: null,
         henvendelser: [
             {
@@ -72,7 +72,7 @@ const dialoger: DialogData[] & JSONArray = [
                 avsender: 'VEILEDER',
                 avsenderId: 'Z123456',
                 sendt: '2018-02-01T11:52:20.615+01:00',
-                lest: false,
+                lest: true,
                 tekst:
                     'Det er viktig at du gjennomfører denne aktiviteten med NAV. Gjør du ikke det, kan det medføre at stønaden du mottar fra NAV bortfaller for en periode eller stanses. Hvis du ikke kan gjennomføre aktiviteten, ber vi deg ta kontakt med veilederen din så snart som mulig.'
             }
