@@ -1,27 +1,28 @@
 import classNames from 'classnames';
 import styles from './Ikon.module.less';
-import { ReactComponent as AktivitetsIkon } from './aktivitet-dialog-lest.svg';
-import { ReactComponent as DialogIkon } from './snakkeboble.svg';
 import React from 'react';
 import { DialogData } from '../../../utils/Typer';
+import DialogAktivitetIkon from './DialogAktivitetIkon';
+import DialogSnakkebobleIkon from './DialogSnakkebobleIkon';
 
 interface IkonProps {
     dialog: DialogData;
 }
 
 function DialogPreviewIkon(props: IkonProps) {
-    const erAktivitet: boolean = props.dialog.aktivitetId !== null;
-    const ikonCls = classNames(styles.ikon, { [styles.lestIkon]: !props.dialog.lest });
+    const lest = props.dialog.lest;
+    const erAktivitet = props.dialog.aktivitetId !== null;
+    const ikonCls = classNames(styles.ikon, { [styles.lestIkon]: !lest });
     if (erAktivitet) {
         return (
             <div className={ikonCls}>
-                <AktivitetsIkon />
+                <DialogAktivitetIkon lest={lest} />
             </div>
         );
     }
     return (
         <div className={ikonCls}>
-            <DialogIkon />
+            <DialogSnakkebobleIkon lest={lest} />
         </div>
     );
 }
