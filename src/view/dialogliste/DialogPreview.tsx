@@ -29,7 +29,7 @@ interface Props {
 
 function DialogPreview(props: Props) {
     const { dialog, valgtDialogId } = props;
-    const { id, sisteDato, aktivitetId, lest, overskrift, sisteTekst } = dialog;
+    const { id, sisteDato, aktivitetId, lest, overskrift } = dialog;
     const aktivitetData = useAktivitetContext();
 
     const datoString = !!sisteDato ? formaterDate(sisteDato) : '';
@@ -44,7 +44,6 @@ function DialogPreview(props: Props) {
             <Ikon dialog={dialog} />
             <div className={styles.content}>
                 <Tittel tittel={overskrift} aktivitet={aktivitet} />
-                <Normaltekst className={styles.sisteMelding}>{sisteTekst}</Normaltekst>
                 <EtikettLiten className={styles.dato}>{datoString}</EtikettLiten>
                 <EtikettListe dialog={dialog} />
             </div>
