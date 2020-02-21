@@ -69,18 +69,13 @@ function NyDialogForm(props: Props) {
     const erVeileder = !!bruker && bruker.erVeileder;
     const infoTekst = erVeileder ? veilederInfoMelding : brukerinfomelding;
 
-    const handleSubmit = (data: {
-        tema: string;
-        melding: string;
-        venterPaSvarFraNAV: string;
-        venterPaSvar: string;
-    }) => {
-        const { tema, melding, venterPaSvar, venterPaSvarFraNAV } = data;
+    const handleSubmit = (data: { tema: string; melding: string }) => {
+        const { tema, melding } = data;
         return nyDialog(fnr, melding, tema, aktivitetId)
             .then(dialog => {
-                if (bruker && bruker.erVeileder) {
-                    const ferdigPromise = oppdaterFerdigBehandlet(fnr, dialog.id, venterPaSvarFraNAV === 'false');
-                    const venterPromise = oppdaterVenterPaSvar(fnr, dialog.id, venterPaSvar === 'true');
+                if (bruker!.erVeileder) {
+                    const ferdigPromise = oppdaterFerdigBehandlet(fnr, dialog.id, true);
+                    const venterPromise = oppdaterVenterPaSvar(fnr, dialog.id, true);
                     return Promise.all([ferdigPromise, venterPromise]).then(() => dialog);
                 }
                 return dialog;
