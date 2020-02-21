@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useLayoutEffect } from 'react';
 import { Innholdstittel, Normaltekst, Element } from 'nav-frontend-typografi';
 import Ekspanderbartpanel from 'nav-frontend-ekspanderbartpanel';
 import styles from './InfoOmDialogSide.module.less';
@@ -11,8 +11,13 @@ const cls = classNames(dialogStyle.overflowAuto, dialogStyle.dialog);
 
 export function InfoOmDialogSide() {
     useSkjulHodefotForMobilVisning();
+
+    useLayoutEffect(() => {
+        document.getElementById('om-dialog')?.focus();
+    });
+
     return (
-        <div className={cls}>
+        <div id="om-dialog" className={cls} tabIndex={-1}>
             <DialogHeader />
 
             <div className={styles.side}>

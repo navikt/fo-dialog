@@ -60,7 +60,7 @@ function DialogSendtBekreftelse(props: Props) {
     const tekst = getTekst(viewState.sistHandlingsType, erVeileder, dialog.overskrift);
 
     return (
-        <div role="alert">
+        <div role="status">
             <Melding erVeileder={erVeileder} tekst={tekst} />
         </div>
     );
