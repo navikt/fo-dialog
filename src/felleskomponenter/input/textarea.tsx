@@ -28,26 +28,14 @@ interface Props {
     textareaClass?: string;
     maxLength: number;
     label: any;
-    showErrorOnSubmit?: boolean;
     submittoken?: string;
 }
 
 // pristine and initialValue isn't used, but we don't want to pass it to input
 function Textarea(props: Props) {
-    const {
-        touched,
-        error,
-        input,
-        pristine,
-        initialValue,
-        visTellerFra,
-        submittoken,
-        showErrorOnSubmit,
-        ...rest
-    } = props;
-    const showError = showErrorOnSubmit ? !!submittoken : touched;
+    const { touched, error, input, pristine, initialValue, visTellerFra, submittoken, ...rest } = props;
 
-    const feil = error && showError ? { feilmelding: error } : undefined;
+    const feil = error && !!submittoken ? { feilmelding: error } : undefined;
     const inputProps = { ...input, ...rest };
 
     return (

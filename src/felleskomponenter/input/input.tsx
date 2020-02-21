@@ -9,12 +9,13 @@ interface Props {
     input: FieldState['input'];
     pristine?: boolean;
     initialValue?: string;
+    submittoken?: string;
 }
 
 // pristine and initialValue isn't used, but we don't want to pass it to input
 function Input(props: Props & NavFrontendInputProps) {
-    const { touched, error, input, pristine, initialValue, ...rest } = props;
-    const feil = error && touched ? { feilmelding: error } : undefined;
+    const { touched, error, input, pristine, initialValue, submittoken, ...rest } = props;
+    const feil = error && !!submittoken ? { feilmelding: error } : undefined;
     const inputProps = { ...input, ...rest };
     return <NavInput {...inputProps} feil={feil} />;
 }

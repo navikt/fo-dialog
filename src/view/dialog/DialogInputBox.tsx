@@ -96,7 +96,6 @@ export function DialogInputBox(props: Props) {
                         textareaClass="autosizing-textarea"
                         maxLength={maxMeldingsLengde}
                         visTellerFra={1000}
-                        showErrorOnSubmit={true}
                         autoFocus={match}
                         submittoken={state.submittoken}
                         {...state.fields.melding}
