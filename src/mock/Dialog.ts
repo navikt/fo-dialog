@@ -325,7 +325,7 @@ export function opprettEllerOppdaterDialog(update: NyDialogMeldingData): DialogD
             historisk: false,
             lest: true,
             venterPaSvar: false,
-            ferdigBehandlet: false,
+            ferdigBehandlet: bruker().erVeileder,
             lestAvBrukerTidspunkt: null,
             erLestAvBruker: false,
             aktivitetId: update.aktivitetId || null,

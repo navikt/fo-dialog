@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Bruker, DialogData } from '../../utils/Typer';
+import { DialogData } from '../../utils/Typer';
 import { visibleIfHoc } from '../../felleskomponenter/VisibleIfHoc';
 import { useDialogContext, useFnrContext, useUserInfoContext, useViewContext } from '../Provider';
 import DialogCheckboxesVisible from './DialogCheckboxes';
@@ -26,28 +26,6 @@ function validerMelding(melding: string) {
     }
     if (melding.trim().length === 0) {
         return 'Du må fylle ut en melding.';
-    }
-}
-
-// On reply from NAV, clear the "waiting on answer from NAV" flag. On reply from user, set the "waiting on answer from NAV" flag.
-function resolveFerdigBehandlet(bruker: Bruker | null, dialog: DialogData) {
-    if (bruker!.erVeileder && !dialog.ferdigBehandlet) {
-        return true;
-    } else if (bruker!.erBruker && dialog.ferdigBehandlet) {
-        return false;
-    } else {
-        return dialog.ferdigBehandlet;
-    }
-}
-
-// On reply from NAV, set the "waiting on answer from user" flag. On reply from user, clear the "waiting on answer from user" flag.
-function resolveVenterPaSvar(bruker: Bruker | null, dialog: DialogData) {
-    if (bruker!.erVeileder && !dialog.venterPaSvar) {
-        return true;
-    } else if (bruker!.erBruker && dialog.venterPaSvar) {
-        return false;
-    } else {
-        return dialog.venterPaSvar;
     }
 }
 
@@ -89,12 +67,20 @@ export function DialogInputBox(props: Props) {
         const { melding } = data;
         return nyHenvendelse(fnr, melding, valgtDialog.id)
             .then(dialog => {
-                const ferdigBehandlet = resolveFerdigBehandlet(bruker, dialog);
-                return oppdaterFerdigBehandlet(fnr, valgtDialog.id, ferdigBehandlet);
-            })
-            .then(dialog => {
-                const venterPaSvar = resolveVenterPaSvar(bruker, dialog);
-                return oppdaterVenterPaSvar(fnr, valgtDialog.id, venterPaSvar);
+                if (bruker?.erVeileder) {
+                    if (!dialog.venterPaSvar && !dialog.ferdigBehandlet) {
+                        return oppdaterVenterPaSvar(fnr, valgtDialog.id, true).then(() =>
+                            oppdaterFerdigBehandlet(fnr, valgtDialog.id, true)
+                        );
+                    }
+                    if (!dialog.venterPaSvar) {
+                        return oppdaterVenterPaSvar(fnr, valgtDialog.id, true);
+                    }
+                    if (!dialog.ferdigBehandlet) {
+                        return oppdaterFerdigBehandlet(fnr, valgtDialog.id, true);
+                    }
+                }
+                return dialog;
             })
             .then(dialog => {
                 setNoeFeilet(false);
