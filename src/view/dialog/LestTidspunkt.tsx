@@ -10,7 +10,7 @@ interface Props {
 function LestAvTidspunkt(props: Props) {
     const tidspunktMedRiktigFormat = formaterDateAndTime(props.tidspunkt);
     return (
-        <div className={'henvendelser__lest-av-bruker--tittel  ::before'}>
+        <div className="henvendelser__lest-av-bruker--tittel henvendelse-item">
             <Undertekst>
                 <span>{`Lest av bruker ${tidspunktMedRiktigFormat}`}</span>
             </Undertekst>

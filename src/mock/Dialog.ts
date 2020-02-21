@@ -24,12 +24,21 @@ const dialoger: DialogData[] & JSONArray = [
                 dialogId: '1',
                 avsender: 'BRUKER',
                 avsenderId: 'Z123456',
-                sendt: '2018-02-27T12:48:56.097+01:00',
+                sendt: '2018-02-27T12:47:56.097+01:00',
                 lest: true,
                 tekst: 'Hei, det virker som denne stillingen kunne passet for meg. Hva tenker du?'
             },
             {
                 id: '2',
+                dialogId: '1',
+                avsender: 'BRUKER',
+                avsenderId: 'Z123456',
+                sendt: '2018-02-27T12:48:56.097+01:00',
+                lest: true,
+                tekst: 'Hei, det virker som denne stillingen kunne passet for meg. Hva tenker du?'
+            },
+            {
+                id: '3',
                 dialogId: '1',
                 avsender: 'VEILEDER',
                 avsenderId: '0102030405',
@@ -40,7 +49,7 @@ const dialoger: DialogData[] & JSONArray = [
                     'om du får noe respons!'
             },
             {
-                id: '3',
+                id: '4',
                 dialogId: '1',
                 avsender: 'BRUKER',
                 avsenderId: '0102030405',
