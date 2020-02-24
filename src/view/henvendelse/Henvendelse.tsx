@@ -4,7 +4,7 @@ import { HenvendelseData } from '../../utils/Typer';
 import { formaterDateAndTime } from '../../utils/Date';
 
 import './Henvendelse.less';
-import Tekstomrade from '../../felleskomponenter/tekstomrade/Tekstomrade';
+import Tekstomrade from 'nav-frontend-tekstomrade';
 
 interface Props {
     henvendelseData: HenvendelseData;
@@ -18,7 +18,7 @@ export function Henvendelse(props: Props) {
     const className = erMeldingFraBruker ? 'ikon bruker-ikon' : 'ikon veileder-ikon';
     return (
         <Snakkeboble topp={toppTekst} pilHoyre={erMeldingFraBruker} ikonClass={className}>
-            <Tekstomrade>{tekst}</Tekstomrade>
+            <Tekstomrade className="blokk-xs">{tekst}</Tekstomrade>
         </Snakkeboble>
     );
 }

@@ -8,7 +8,7 @@ import useFormstate from '@nutgaard/use-formstate';
 import { nyHenvendelse, oppdaterFerdigBehandlet, oppdaterVenterPaSvar } from '../../api/dialog';
 import Textarea from '../../felleskomponenter/input/textarea';
 import { Hovedknapp } from 'nav-frontend-knapper';
-import { sendtNyHenvendelse } from '../ViewState';
+import { HandlingsType, sendtNyHenvendelse } from '../ViewState';
 import { isPending } from '@nutgaard/use-async';
 import { dispatchUpdate, UpdateTypes } from '../../utils/UpdateEvent';
 
@@ -85,6 +85,7 @@ export function DialogInputBox(props: Props) {
 
     const laster = state.submitting || dialogLaster;
     const match = window.matchMedia ? window.matchMedia(`(min-width: 768px)`).matches : false;
+    const autoFocus = match && viewState.sistHandlingsType !== HandlingsType.nyDialog;
 
     return (
         <>
@@ -96,8 +97,7 @@ export function DialogInputBox(props: Props) {
                         textareaClass="autosizing-textarea"
                         maxLength={maxMeldingsLengde}
                         visTellerFra={1000}
-                        showErrorOnSubmit={true}
-                        autoFocus={match}
+                        autoFocus={autoFocus}
                         submittoken={state.submittoken}
                         {...state.fields.melding}
                     />

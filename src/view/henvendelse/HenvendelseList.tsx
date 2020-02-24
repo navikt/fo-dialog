@@ -1,9 +1,7 @@
 import { DialogData, HenvendelseData, StringOrNull } from '../../utils/Typer';
 import React, { useLayoutEffect, useRef } from 'react';
 import { Henvendelse } from './Henvendelse';
-import LestAvTidspunkt from '../dialog/LestTidspunkt';
-
-import './henvendelseList.less';
+import LestAvTidspunkt from '../lest/LestTidspunkt';
 import { useSkjulHodefotForMobilVisning } from '../utils/useSkjulHodefotForMobilVisning';
 
 interface Props {
@@ -19,7 +17,7 @@ function useScrollToLast(dialogData: DialogData) {
         previousDialog.current = dialogData.id;
 
         const behavior: ScrollBehavior = isFirstRender ? 'auto' : 'smooth';
-        const elem = document.querySelector('.henvendelse-list__henvendelse:last-of-type');
+        const elem = document.querySelector('.henvendelse-item:last-of-type');
         if (elem !== null) {
             elem.scrollIntoView({ block: 'nearest', behavior });
         }
@@ -35,8 +33,9 @@ function sisteLesteHenvendelse(lest: StringOrNull, henvendelser: HenvendelseData
         return null;
     }
 
-    const sistleste = henvendelser.find(henvendelse => datoComparator(lest, henvendelse.sendt) >= 0);
-    return sistleste ? sistleste.id : null;
+    const lesteMeldinger = henvendelser.filter(henvendelse => datoComparator(henvendelse.sendt, lest) >= 0);
+    const sistLeste = lesteMeldinger[lesteMeldinger.length - 1];
+    return sistLeste ? sistLeste.id : null;
 }
 
 export function HenvendelseList(props: Props) {
@@ -55,13 +54,15 @@ export function HenvendelseList(props: Props) {
         <div className="henvendelse-list">
             <div className="henvendelse-list__viewport">
                 {sorterteHenvendelser.map(henvendelse => (
-                    <div key={henvendelse.id} className={'henvendelse-list__henvendelse'}>
+                    <React.Fragment key={henvendelse.id}>
+                        <div className="henvendelse-list__henvendelse henvendelse-item">
+                            <Henvendelse henvendelseData={henvendelse} />
+                        </div>
                         <LestAvTidspunkt
                             tidspunkt={lestAvBrukerTidspunkt!}
                             visible={henvendelse.id === sisteHenvendelseLestAvBruker}
                         />
-                        <Henvendelse henvendelseData={henvendelse} />
-                    </div>
+                    </React.Fragment>
                 ))}
             </div>
         </div>

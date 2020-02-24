@@ -109,6 +109,7 @@ function NyDialogForm(props: Props) {
                     autoComplete="off"
                     placeholder="Skriv her"
                     disabled={!!aktivitetId}
+                    submittoken={state.submittoken}
                     {...state.fields.tema}
                 />
                 <div className={style.skrivMelding}>
@@ -118,6 +119,7 @@ function NyDialogForm(props: Props) {
                         textareaClass={style.autosizingTextarea}
                         maxLength={maxMeldingsLengde}
                         visTellerFra={1000}
+                        submittoken={state.submittoken}
                         {...state.fields.melding}
                     />
                 </div>
