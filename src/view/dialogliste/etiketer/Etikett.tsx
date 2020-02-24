@@ -26,7 +26,7 @@ function Etiket(props: EtiketProps) {
 }
 
 export function VenterSvarFraBruker(props: VenterSvarFraBrukerProps) {
-    const tekst = props.erVeileder ? 'Venter på svar fra bruker' : 'NAV venter på svar fra deg';
+    const tekst = props.erVeileder ? 'Venter på svar fra bruker' : 'Venter på svar fra deg';
 
     return (
         <Etiket visible={props.visible} clasName={styles.venterPaBruker}>

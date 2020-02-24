@@ -8,9 +8,7 @@ import { visibleIfHoc } from '../../felleskomponenter/VisibleIfHoc';
 import Textarea from '../../felleskomponenter/input/textarea';
 import { Hovedknapp } from 'nav-frontend-knapper';
 import Input from '../../felleskomponenter/input/input';
-import { nyDialog, oppdaterFerdigBehandlet, oppdaterVenterPaSvar } from '../../api/dialog';
-import Checkbox from '../../felleskomponenter/input/checkbox';
-import { div as HiddenIfDiv } from '../../felleskomponenter/HiddenIfHoc';
+import { nyDialog, oppdaterVenterPaSvar } from '../../api/dialog';
 import style from './NyDialogForm.module.less';
 import { StringOrNull } from '../../utils/Typer';
 import { dispatchUpdate, UpdateTypes } from '../../utils/UpdateEvent';
@@ -42,9 +40,7 @@ function validerMelding(melding: string) {
 
 const validator = useFormstate({
     tema: validerTema,
-    melding: validerMelding,
-    venterPaSvarFraNAV: () => undefined,
-    venterPaSvar: () => undefined
+    melding: validerMelding
 });
 
 interface Props {
@@ -63,27 +59,18 @@ function NyDialogForm(props: Props) {
 
     const state = validator({
         tema: defaultTema ?? '',
-        melding: '',
-        venterPaSvarFraNAV: 'false',
-        venterPaSvar: 'false'
+        melding: ''
     });
 
     const erVeileder = !!bruker && bruker.erVeileder;
     const infoTekst = erVeileder ? veilederInfoMelding : brukerinfomelding;
 
-    const handleSubmit = (data: {
-        tema: string;
-        melding: string;
-        venterPaSvarFraNAV: string;
-        venterPaSvar: string;
-    }) => {
-        const { tema, melding, venterPaSvar, venterPaSvarFraNAV } = data;
+    const handleSubmit = (data: { tema: string; melding: string }) => {
+        const { tema, melding } = data;
         return nyDialog(fnr, melding, tema, aktivitetId)
             .then(dialog => {
-                if (bruker && bruker.erVeileder) {
-                    const ferdigPromise = oppdaterFerdigBehandlet(fnr, dialog.id, venterPaSvarFraNAV === 'false');
-                    const venterPromise = oppdaterVenterPaSvar(fnr, dialog.id, venterPaSvar === 'true');
-                    return Promise.all([ferdigPromise, venterPromise]).then(() => dialog);
+                if (bruker?.erVeileder) {
+                    return oppdaterVenterPaSvar(fnr, dialog.id, true);
                 }
                 return dialog;
             })
@@ -123,19 +110,6 @@ function NyDialogForm(props: Props) {
                         {...state.fields.melding}
                     />
                 </div>
-
-                <HiddenIfDiv hidden={!!bruker && bruker.erBruker} className="checkbox-block">
-                    <Checkbox
-                        label="Venter på svar fra NAV"
-                        className="checkbox-block__item"
-                        {...state.fields.venterPaSvarFraNAV}
-                    />
-                    <Checkbox
-                        label="Venter på svar fra bruker"
-                        className="checkbox-block__item"
-                        {...state.fields.venterPaSvar}
-                    />
-                </HiddenIfDiv>
 
                 <Hovedknapp title="Send" autoDisableVedSpinner spinner={state.submitting}>
                     Send
