@@ -43,7 +43,10 @@ export function oppdaterVenterPaSvar(fnr: string | undefined, dialogId: string, 
     const query = fnrQuery(fnr);
     const apiBasePath = baseApiPath(fnr);
 
-    return fetchData(`${apiBasePath}/veilarbdialog/api/dialog/${dialogId}/venter_pa_svar/${venterPaSvar}${query}`, {
-        method: 'put'
-    });
+    return fetchData<DialogData>(
+        `${apiBasePath}/veilarbdialog/api/dialog/${dialogId}/venter_pa_svar/${venterPaSvar}${query}`,
+        {
+            method: 'put'
+        }
+    );
 }
