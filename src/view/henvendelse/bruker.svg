@@ -1,20 +1,20 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <svg width="36px" height="36px" viewBox="0 0 36 36" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
-    <!-- Generator: Sketch 55.2 (78181) - https://sketchapp.com -->
-    <title>Group 2</title>
+    <!-- Generator: Sketch 62 (91390) - https://sketch.com -->
+    <title>ikon/bruker8</title>
     <desc>Created with Sketch.</desc>
     <defs>
-        <path d="M0,18 C0,27.9406154 8.05915385,36 18.0002308,36 L18.0002308,36 C27.9410769,36 36,27.9410769 36,18 L36,18 C36,8.05961538 27.9408462,0 18.0002308,0 L18.0002308,0 C8.05984615,0 0,8.05915385 0,18 L0,18 Z" id="path-1"></path>
+        <circle id="path-1" cx="17.1" cy="17.1" r="17.1"></circle>
     </defs>
-    <g id="Ikoner-dialog" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
-        <g id="ikoner-dialog" transform="translate(-564.000000, -694.000000)">
-            <g id="Group-2" transform="translate(564.000000, 694.000000)">
-                <mask id="mask-2" fill="white">
-                    <use xlink:href="#path-1"></use>
-                </mask>
-                <use id="Clip-5" fill="#99BDCD" xlink:href="#path-1"></use>
-                <path d="M20.5293771,22.2546337 C23.7083079,22.9155227 26,24.7888408 26,26.9976177 C26,26.9984118 25.9999997,26.9992059 25.9999991,27 L10.0000008,27 C10.0000003,26.9992059 10,26.9984118 10,26.9976177 C10,24.7908054 12.2920808,22.9177585 15.4687234,22.2557402 C13.4202095,20.9825236 12,18.2105848 12,14.9987294 C12,10.5804966 14.6841019,7 17.9971412,7 C21.3101805,7 24,10.5804966 24,14.9987294 C24,18.2106549 22.5784673,20.9811912 20.5293771,22.2546337 Z" id="Combined-Shape" fill="#FFFFFF"></path>
-            </g>
+    <g id="ikon/bruker8" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <circle id="Oval" fill="#99BDCD" cx="18" cy="18" r="18"></circle>
+        <g id="Group-2" transform="translate(0.500000, 0.500000)">
+            <mask id="mask-2" fill="white">
+                <use xlink:href="#path-1"></use>
+            </mask>
+            <g id="Mask"></g>
+            <path d="M31,41 L4,41 C3.172,41 2.5,40.2669091 2.5,39.3636364 C2.5,29.3850909 7.318,24.5643636 11.989,22.5647273 C9.871,20.768 8.5,17.9665455 8.5,14.8181818 C8.5,9.40509091 12.538,5 17.5,5 C22.462,5 26.5,9.40509091 26.5,14.8181818 C26.5,17.9665455 25.129,20.768 23.011,22.5647273 C27.682,24.5610909 32.5,29.3850909 32.5,39.3636364 C32.5,40.2669091 31.828,41 31,41 Z" id="Path" fill="#FFFFFF" fill-rule="nonzero" mask="url(#mask-2)"></path>
         </g>
+        <circle id="Oval" stroke="#99BDCD" stroke-width="0.969" cx="18" cy="18" r="17.5"></circle>
     </g>
 </svg>
