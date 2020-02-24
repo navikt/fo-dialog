@@ -1,9 +1,7 @@
 import { DialogData, HenvendelseData, StringOrNull } from '../../utils/Typer';
 import React, { useLayoutEffect, useRef } from 'react';
 import { Henvendelse } from './Henvendelse';
-import LestAvTidspunkt from '../dialog/LestTidspunkt';
-
-import './henvendelseList.less';
+import LestAvTidspunkt from '../lest/LestTidspunkt';
 import { useSkjulHodefotForMobilVisning } from '../utils/useSkjulHodefotForMobilVisning';
 
 interface Props {
@@ -56,15 +54,15 @@ export function HenvendelseList(props: Props) {
         <div className="henvendelse-list">
             <div className="henvendelse-list__viewport">
                 {sorterteHenvendelser.map(henvendelse => (
-                    <>
-                        <div key={henvendelse.id} className="henvendelse-list__henvendelse henvendelse-item">
+                    <React.Fragment key={henvendelse.id}>
+                        <div className="henvendelse-list__henvendelse henvendelse-item">
                             <Henvendelse henvendelseData={henvendelse} />
                         </div>
                         <LestAvTidspunkt
                             tidspunkt={lestAvBrukerTidspunkt!}
                             visible={henvendelse.id === sisteHenvendelseLestAvBruker}
                         />
-                    </>
+                    </React.Fragment>
                 ))}
             </div>
         </div>
