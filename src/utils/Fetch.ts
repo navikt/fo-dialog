@@ -41,3 +41,7 @@ export function toJson(response: Response) {
     }
     return response;
 }
+
+export function getApiBasePath(fnr?: string) {
+    return fnr ? '' : process.env.PUBLIC_URL;
+}
