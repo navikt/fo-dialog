@@ -1,13 +1,12 @@
 import React from 'react';
-import { hasData } from '@nutgaard/use-fetch';
-import { useDialogContext } from '../Provider';
 import DialogIkkeValgt from '../info/DialogIkkeValgt';
 import styles from './DialogInfoMelding.module.less';
 import InfoVedIngenDialoger from '../info/InfoVedIngenDialoger';
+import { useDialogContext } from '../DialogProvider';
 
 export default function DialogInfoMelding() {
-    const dialoger = useDialogContext();
-    const harDialoger = hasData(dialoger) && dialoger.data.length > 0;
+    const { dialoger } = useDialogContext();
+    const harDialoger = dialoger.length > 0;
 
     return (
         <>

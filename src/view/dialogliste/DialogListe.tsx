@@ -1,12 +1,11 @@
 import React from 'react';
-import { hasData } from '@nutgaard/use-fetch';
 import { DialogPreviewListe } from './DialogPreview';
 import { DialogData } from '../../utils/Typer';
-import { useDialogContext } from '../Provider';
 import { useParams } from 'react-router';
 import styles from './DialogOversikt.module.less';
 import { Undertittel } from 'nav-frontend-typografi';
 import InvertedLestMer from '../../felleskomponenter/InvertedLesMer';
+import { useDialogContext } from '../DialogProvider';
 
 interface Res {
     naaverende: DialogData[];
@@ -19,11 +18,10 @@ function splitHistoriske(acc: Res, cur: DialogData) {
 }
 
 export function DialogListe() {
-    const dialoger = useDialogContext();
-    const dialogData = hasData(dialoger) ? dialoger.data : [];
+    const { dialoger } = useDialogContext();
     const { dialogId } = useParams();
 
-    const sorterteDialoger = dialogData.sort((a, b) => sortDialoger(a, b));
+    const sorterteDialoger = dialoger.sort((a, b) => sortDialoger(a, b));
 
     const { naaverende, historiske } = sorterteDialoger.reduce(splitHistoriske, { naaverende: [], historiske: [] });
     const skulHistoriske = historiske.length === 0;
