@@ -10,7 +10,7 @@ enum Status {
     ERROR
 }
 
-interface DialogDataProviderType {
+export interface DialogDataProviderType {
     status: Status;
     dialoger: DialogData[];
     hentDialoger: () => Promise<DialogData[]>;
