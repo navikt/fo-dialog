@@ -1,7 +1,8 @@
 import { useEventListener } from '../view/utils/useEventListner';
 import { useAktivitetContext } from '../view/AktivitetProvider';
-import { useDialogContext, useOppfolgingContext } from '../view/Provider';
+import { useOppfolgingContext } from '../view/Provider';
 import React from 'react';
+import { useDialogContext } from '../view/DialogProvider';
 
 export enum UpdateTypes {
     Dialog = 'DIALOG',
@@ -23,11 +24,7 @@ export function dispatchUpdate(update: UpdateTypes) {
 }
 
 function isUpdateEvent(toBeDetermined: CustomEvent): toBeDetermined is CustomEvent<UpdateEventType> {
-    if ((toBeDetermined as CustomEvent<UpdateEventType>).type) {
-        return true;
-    }
-
-    return false;
+    return !!(toBeDetermined as CustomEvent<UpdateEventType>).type;
 }
 
 export function UppdateEventHandler() {
@@ -50,7 +47,7 @@ export function UppdateEventHandler() {
             case UpdateTypes.Aktivitet:
                 return aktiviteter.rerun();
             case UpdateTypes.Dialog:
-                return dialogContext.rerun();
+                return dialogContext.hentDialoger();
             case UpdateTypes.Oppfolging:
                 return oppfolgingContext.rerun();
         }
