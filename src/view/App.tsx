@@ -11,6 +11,7 @@ import { UppdateEventHandler } from '../utils/UpdateEvent';
 
 interface Props {
     fnr?: string;
+    enhet?: string;
 }
 
 function App(props: Props) {
@@ -25,7 +26,7 @@ function App(props: Props) {
                 <div className={appstyle}>
                     <EventHandler />
                     <AppBanner hidden={!!props.fnr} />
-                    <Provider fnr={props.fnr} apiBasePath={apiBasePath}>
+                    <Provider fnr={props.fnr} apiBasePath={apiBasePath} enhet={props.enhet}>
                         <StatusAdvarsel />
                         <AppBody />
                         <UppdateEventHandler />

@@ -11,6 +11,7 @@ import { Hovedknapp } from 'nav-frontend-knapper';
 import { HandlingsType, sendtNyHenvendelse } from '../ViewState';
 import { isPending } from '@nutgaard/use-async';
 import { dispatchUpdate, UpdateTypes } from '../../utils/UpdateEvent';
+import UseHenvendelseStartTekst from './UseHenvendelseStartTekst';
 
 const AlertStripeFeilVisible = visibleIfHoc(AlertStripeFeil);
 
@@ -20,12 +21,15 @@ interface Props {
     dialog: DialogData;
 }
 
-function validerMelding(melding: string) {
+function validerMelding(melding: string, resten: any, props: { startTekst?: string }) {
     if (melding.length > maxMeldingsLengde) {
         return `Meldingen kan ikke være mer enn ${maxMeldingsLengde} tegn.`;
     }
     if (melding.trim().length === 0) {
         return 'Du må fylle ut en melding.';
+    }
+    if (melding.trim() === props.startTekst?.trim()) {
+        return 'Du må endre på meldingen';
     }
 }
 
@@ -33,16 +37,13 @@ const validator = useFormstate({
     melding: validerMelding
 });
 
-const initalValues = {
-    melding: ''
-};
-
 export function DialogInputBox(props: Props) {
     const bruker = useUserInfoContext();
     const dialoger = useDialogContext();
     const dialogLaster = isPending(dialoger, true);
     const [noeFeilet, setNoeFeilet] = useState(false);
     const fnr = useFnrContext();
+    const startTekst = UseHenvendelseStartTekst();
 
     const { viewState, setViewState } = useViewContext();
 
@@ -51,7 +52,11 @@ export function DialogInputBox(props: Props) {
     const [ferdigBehandlet, setFerdigBehandlet] = useState(valgtDialog.ferdigBehandlet);
     const [venterPaSvar, setVenterPaSvar] = useState(valgtDialog.venterPaSvar);
 
-    const state = validator(initalValues);
+    const initalValues = {
+        melding: startTekst
+    };
+
+    const state = validator(initalValues, { startTekst });
 
     const toggleFerdigBehandlet = (nyFerdigBehandletVerdi: boolean) => {
         setFerdigBehandlet(nyFerdigBehandletVerdi);
