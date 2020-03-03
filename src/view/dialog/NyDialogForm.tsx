@@ -12,7 +12,7 @@ import style from './NyDialogForm.module.less';
 import { StringOrNull } from '../../utils/Typer';
 import { dispatchUpdate, UpdateTypes } from '../../utils/UpdateEvent';
 import { useDialogContext } from '../DialogProvider';
-import UseHenvendelseStartTekst from './UseHenvendelseStartTekst';
+import useHenvendelseStartTekst from './UseHenvendelseStartTekst';
 
 const AlertStripeFeilVisible = visibleIfHoc(AlertStripeFeil);
 
@@ -59,7 +59,7 @@ function NyDialogForm(props: Props) {
     const bruker = useUserInfoContext();
     const history = useHistory();
     const [noeFeilet, setNoeFeilet] = useState(false);
-    const startTekst = UseHenvendelseStartTekst();
+    const startTekst = useHenvendelseStartTekst();
 
     const state = validator(
         {

@@ -10,7 +10,7 @@ import { Hovedknapp } from 'nav-frontend-knapper';
 import { HandlingsType, sendtNyHenvendelse } from '../ViewState';
 import { dispatchUpdate, UpdateTypes } from '../../utils/UpdateEvent';
 import { isDialogPendingOrReloading, useDialogContext } from '../DialogProvider';
-import UseHenvendelseStartTekst from './UseHenvendelseStartTekst';
+import useHenvendelseStartTekst from './UseHenvendelseStartTekst';
 
 const AlertStripeFeilVisible = visibleIfHoc(AlertStripeFeil);
 
@@ -41,7 +41,7 @@ export function DialogInputBox(props: Props) {
     const { hentDialoger, nyHenvendelse, setFerdigBehandlet, setVenterPaSvar, status } = useDialogContext();
     const dialogLaster = isDialogPendingOrReloading(status);
     const [noeFeilet, setNoeFeilet] = useState(false);
-    const startTekst = UseHenvendelseStartTekst();
+    const startTekst = useHenvendelseStartTekst();
 
     const { viewState, setViewState } = useViewContext();
 

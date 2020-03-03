@@ -1,6 +1,6 @@
 import { useVeilederDataContext } from '../Provider';
 
-const UseHenvendelseStartTekst = () => {
+const useHenvendelseStartTekst = () => {
     const veilederData = useVeilederDataContext();
     const { veilederNavn } = veilederData;
 
@@ -8,8 +8,7 @@ const UseHenvendelseStartTekst = () => {
         return '';
     }
 
-    const navn = '\nHilsen ' + veilederNavn;
-    return navn;
+    return '\nHilsen ' + veilederNavn;
 };
 
-export default UseHenvendelseStartTekst;
+export default useHenvendelseStartTekst;
