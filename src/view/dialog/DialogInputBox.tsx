@@ -10,6 +10,7 @@ import { Hovedknapp } from 'nav-frontend-knapper';
 import { HandlingsType, sendtNyHenvendelse } from '../ViewState';
 import { dispatchUpdate, UpdateTypes } from '../../utils/UpdateEvent';
 import { isDialogPendingOrReloading, useDialogContext } from '../DialogProvider';
+import useHenvendelseStartTekst from './UseHenvendelseStartTekst';
 
 const AlertStripeFeilVisible = visibleIfHoc(AlertStripeFeil);
 
@@ -19,12 +20,15 @@ interface Props {
     dialog: DialogData;
 }
 
-function validerMelding(melding: string) {
+function validerMelding(melding: string, resten: any, props: { startTekst?: string }) {
     if (melding.length > maxMeldingsLengde) {
         return `Meldingen kan ikke være mer enn ${maxMeldingsLengde} tegn.`;
     }
     if (melding.trim().length === 0) {
         return 'Du må fylle ut en melding.';
+    }
+    if (melding.trim() === props.startTekst?.trim()) {
+        return 'Du må endre på meldingen';
     }
 }
 
@@ -32,20 +36,22 @@ const validator = useFormstate({
     melding: validerMelding
 });
 
-const initalValues = {
-    melding: ''
-};
-
 export function DialogInputBox(props: Props) {
     const bruker = useUserInfoContext();
     const { hentDialoger, nyHenvendelse, setFerdigBehandlet, setVenterPaSvar, status } = useDialogContext();
     const dialogLaster = isDialogPendingOrReloading(status);
     const [noeFeilet, setNoeFeilet] = useState(false);
+    const startTekst = useHenvendelseStartTekst();
 
     const { viewState, setViewState } = useViewContext();
 
     const valgtDialog = props.dialog;
-    const state = validator(initalValues);
+
+    const initalValues = {
+        melding: startTekst
+    };
+
+    const state = validator(initalValues, { startTekst });
 
     const onSubmit = (data: { melding: string }) => {
         const { melding } = data;

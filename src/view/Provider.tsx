@@ -6,9 +6,15 @@ import { fnrQuery, getApiBasePath, REQUEST_CONFIG } from '../utils/Fetch';
 import { initalState, ViewState } from './ViewState';
 import { AktivitetProvider } from './AktivitetProvider';
 import { DialogContext, hasDialogError, isDialogPending, useDialogDataProvider } from './DialogProvider';
+import useFetchVeilederNavn from '../api/useHentVeilederData';
+
+interface VeilederData {
+    veilederNavn?: string;
+}
 
 export const UserInfoContext = React.createContext<Bruker | null>(null);
 export const FNRContext = React.createContext<string | undefined>(undefined);
+export const VeilederDataContext = React.createContext<VeilederData>({});
 
 function init<T>(): FetchResult<T> {
     return {
@@ -34,6 +40,7 @@ export const useUserInfoContext = () => useContext(UserInfoContext);
 export const useOppfolgingContext = () => useContext(OppfolgingContext);
 export const useFnrContext = () => useContext(FNRContext);
 export const useViewContext = () => useContext(ViewContext);
+export const useVeilederDataContext = () => useContext(VeilederDataContext);
 
 export function dataOrUndefined<T>(context: FetchResult<T>): T | undefined {
     return hasData(context) ? context.data : undefined;
@@ -41,6 +48,7 @@ export function dataOrUndefined<T>(context: FetchResult<T>): T | undefined {
 
 interface Props {
     fnr?: string;
+    enhet?: string;
     children: React.ReactNode;
 }
 
@@ -49,6 +57,7 @@ export function Provider(props: Props) {
     const apiBasePath = getApiBasePath(fnr);
     const query = fnrQuery(fnr);
 
+    const veilederNavn = useFetchVeilederNavn(!!fnr);
     const bruker = useFetch<Bruker>(`${apiBasePath}/veilarboppfolging/api/oppfolging/me`, REQUEST_CONFIG);
     const oppfolgingData = useFetch<OppfolgingData>(
         `${apiBasePath}/veilarboppfolging/api/oppfolging${query}`,
@@ -73,11 +82,13 @@ export function Provider(props: Props) {
             <OppfolgingContext.Provider value={oppfolgingData}>
                 <UserInfoContext.Provider value={bruker.data}>
                     <AktivitetProvider fnr={fnr} apiBasePath={apiBasePath}>
-                        <FNRContext.Provider value={fnr}>
-                            <ViewContext.Provider value={{ viewState: viewState, setViewState: setState }}>
-                                {children}
-                            </ViewContext.Provider>
-                        </FNRContext.Provider>
+                        <VeilederDataContext.Provider value={{ veilederNavn }}>
+                            <FNRContext.Provider value={fnr}>
+                                <ViewContext.Provider value={{ viewState: viewState, setViewState: setState }}>
+                                    {children}
+                                </ViewContext.Provider>
+                            </FNRContext.Provider>
+                        </VeilederDataContext.Provider>
                     </AktivitetProvider>
                 </UserInfoContext.Provider>
             </OppfolgingContext.Provider>

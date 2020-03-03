@@ -12,6 +12,7 @@ import style from './NyDialogForm.module.less';
 import { StringOrNull } from '../../utils/Typer';
 import { dispatchUpdate, UpdateTypes } from '../../utils/UpdateEvent';
 import { useDialogContext } from '../DialogProvider';
+import useHenvendelseStartTekst from './UseHenvendelseStartTekst';
 
 const AlertStripeFeilVisible = visibleIfHoc(AlertStripeFeil);
 
@@ -29,12 +30,15 @@ function validerTema(tema: string) {
     }
 }
 
-function validerMelding(melding: string) {
+function validerMelding(melding: string, resten: any, props: { startTekst?: string }) {
     if (melding.length > maxMeldingsLengde) {
         return `Meldingen kan ikke være mer enn ${maxMeldingsLengde} tegn.`;
     }
     if (melding.trim().length === 0) {
         return 'Du må fylle ut en melding.';
+    }
+    if (melding.trim() === props.startTekst?.trim()) {
+        return 'Du må endre på meldingen';
     }
 }
 
@@ -55,11 +59,15 @@ function NyDialogForm(props: Props) {
     const bruker = useUserInfoContext();
     const history = useHistory();
     const [noeFeilet, setNoeFeilet] = useState(false);
+    const startTekst = useHenvendelseStartTekst();
 
-    const state = validator({
-        tema: defaultTema ?? '',
-        melding: ''
-    });
+    const state = validator(
+        {
+            tema: defaultTema ?? '',
+            melding: startTekst
+        },
+        { startTekst }
+    );
 
     const erVeileder = !!bruker && bruker.erVeileder;
     const infoTekst = erVeileder ? veilederInfoMelding : brukerinfomelding;
