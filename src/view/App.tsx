@@ -11,26 +11,27 @@ import { UppdateEventHandler } from '../utils/UpdateEvent';
 
 interface Props {
     fnr?: string;
+    enhet?: string;
 }
 
 function App(props: Props) {
-    const apiBasePath = props.fnr ? '' : process.env.PUBLIC_URL;
-    const basepath = props.fnr ? `/veilarbpersonflatefs/${props.fnr}` : process.env.PUBLIC_URL;
-    const wraperClass = props.fnr ? styles.konteinerInside : styles.konteinerUtside;
-    const appstyle = props.fnr ? styles.appInside : styles.app;
+    const { fnr } = props;
+    const basename = fnr ? `/veilarbpersonflatefs/${fnr}` : process.env.PUBLIC_URL;
+    const wraperClass = fnr ? styles.konteinerInside : styles.konteinerUtside;
+    const appstyle = fnr ? styles.appInside : styles.app;
 
     return (
-        <Router basename={basepath}>
+        <Router basename={basename}>
             <div className={wraperClass}>
                 <div className={appstyle}>
                     <EventHandler />
-                    <AppBanner hidden={!!props.fnr} />
-                    <Provider fnr={props.fnr} apiBasePath={apiBasePath}>
+                    <AppBanner hidden={!!fnr} />
+                    <Provider fnr={fnr}>
                         <StatusAdvarsel />
                         <AppBody />
                         <UppdateEventHandler />
                     </Provider>
-                    <TimeoutModal hidden={!!props.fnr} apiBasePath={apiBasePath} />
+                    <TimeoutModal hidden={!!fnr} fnr={fnr} />
                 </div>
             </div>
         </Router>
