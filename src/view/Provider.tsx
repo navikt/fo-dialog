@@ -1,10 +1,11 @@
-import React, { Dispatch, SetStateAction, useContext, useState } from 'react';
-import { Bruker, DialogData, OppfolgingData } from '../utils/Typer';
+import React, { Dispatch, SetStateAction, useContext, useEffect, useState } from 'react';
+import { Bruker, OppfolgingData } from '../utils/Typer';
 import NavFrontendSpinner from 'nav-frontend-spinner';
 import useFetch, { FetchResult, hasData, hasError, isPending, Status } from '@nutgaard/use-fetch';
-import { fnrQuery, REQUEST_CONFIG } from '../utils/Fetch';
+import { fnrQuery, getApiBasePath, REQUEST_CONFIG } from '../utils/Fetch';
 import { initalState, ViewState } from './ViewState';
 import { AktivitetProvider } from './AktivitetProvider';
+import { DialogContext, hasDialogError, isDialogPending, useDialogDataProvider } from './DialogProvider';
 import useFetchVeilederNavn from '../api/useHentVeilederData';
 
 interface VeilederData {
@@ -24,7 +25,6 @@ function init<T>(): FetchResult<T> {
 }
 
 export const OppfolgingContext = React.createContext(init<OppfolgingData>());
-export const DialogContext = React.createContext(init<DialogData[]>());
 
 interface ViewContextType {
     viewState: ViewState;
@@ -38,7 +38,6 @@ export const ViewContext = React.createContext<ViewContextType>({
 
 export const useUserInfoContext = () => useContext(UserInfoContext);
 export const useOppfolgingContext = () => useContext(OppfolgingContext);
-export const useDialogContext = () => useContext(DialogContext);
 export const useFnrContext = () => useContext(FNRContext);
 export const useViewContext = () => useContext(ViewContext);
 export const useVeilederDataContext = () => useContext(VeilederDataContext);
@@ -50,12 +49,12 @@ export function dataOrUndefined<T>(context: FetchResult<T>): T | undefined {
 interface Props {
     fnr?: string;
     enhet?: string;
-    apiBasePath: string;
     children: React.ReactNode;
 }
 
 export function Provider(props: Props) {
-    const { fnr, apiBasePath, children } = props;
+    const { fnr, children } = props;
+    const apiBasePath = getApiBasePath(fnr);
     const query = fnrQuery(fnr);
 
     const veilederNavn = useFetchVeilederNavn(!!fnr);
@@ -64,18 +63,22 @@ export function Provider(props: Props) {
         `${apiBasePath}/veilarboppfolging/api/oppfolging${query}`,
         REQUEST_CONFIG
     );
-    const dialoger = useFetch<DialogData[]>(`${apiBasePath}/veilarbdialog/api/dialog${query}`, REQUEST_CONFIG);
     const [viewState, setState] = useState(initalState);
 
-    //Todo remove usefetch and use our own thing here. rerun need to be a promise
-    if (isPending(bruker, false) || isPending(oppfolgingData, false) || isPending(dialoger, false)) {
+    const dialogDataProvider = useDialogDataProvider(fnr);
+    const hentDialoger = dialogDataProvider.hentDialoger;
+    useEffect(() => {
+        hentDialoger();
+    }, [hentDialoger]);
+
+    if (isDialogPending(dialogDataProvider.status) || isPending(bruker, false) || isPending(oppfolgingData, false)) {
         return <NavFrontendSpinner />;
-    } else if (hasError(bruker) || hasError(oppfolgingData) || hasError(dialoger)) {
+    } else if (hasError(bruker) || hasError(oppfolgingData) || hasDialogError(dialogDataProvider.status)) {
         return <p>Kunne ikke laste data fra baksystemer. Prøv igjen senere</p>;
     }
 
     return (
-        <DialogContext.Provider value={dialoger}>
+        <DialogContext.Provider value={dialogDataProvider}>
             <OppfolgingContext.Provider value={oppfolgingData}>
                 <UserInfoContext.Provider value={bruker.data}>
                     <AktivitetProvider fnr={fnr} apiBasePath={apiBasePath}>

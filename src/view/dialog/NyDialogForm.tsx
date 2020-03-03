@@ -1,17 +1,17 @@
 import React, { useState } from 'react';
 import { Innholdstittel, Normaltekst } from 'nav-frontend-typografi';
 import useFormstate from '@nutgaard/use-formstate';
-import { useDialogContext, useFnrContext, useUserInfoContext } from '../Provider';
+import { useUserInfoContext } from '../Provider';
 import { useHistory } from 'react-router';
 import { AlertStripeFeil } from 'nav-frontend-alertstriper';
 import { visibleIfHoc } from '../../felleskomponenter/VisibleIfHoc';
 import Textarea from '../../felleskomponenter/input/textarea';
 import { Hovedknapp } from 'nav-frontend-knapper';
 import Input from '../../felleskomponenter/input/input';
-import { nyDialog, oppdaterVenterPaSvar } from '../../api/dialog';
 import style from './NyDialogForm.module.less';
 import { StringOrNull } from '../../utils/Typer';
 import { dispatchUpdate, UpdateTypes } from '../../utils/UpdateEvent';
+import { useDialogContext } from '../DialogProvider';
 import UseHenvendelseStartTekst from './UseHenvendelseStartTekst';
 
 const AlertStripeFeilVisible = visibleIfHoc(AlertStripeFeil);
@@ -55,11 +55,10 @@ interface Props {
 
 function NyDialogForm(props: Props) {
     const { defaultTema, onSubmit, aktivitetId } = props;
-    const dialoger = useDialogContext();
+    const { hentDialoger, nyDialog, setVenterPaSvar } = useDialogContext();
     const bruker = useUserInfoContext();
     const history = useHistory();
     const [noeFeilet, setNoeFeilet] = useState(false);
-    const fnr = useFnrContext();
     const startTekst = UseHenvendelseStartTekst();
 
     const state = validator(
@@ -75,20 +74,20 @@ function NyDialogForm(props: Props) {
 
     const handleSubmit = (data: { tema: string; melding: string }) => {
         const { tema, melding } = data;
-        return nyDialog(fnr, melding, tema, aktivitetId)
+        return nyDialog(melding, tema, aktivitetId)
             .then(dialog => {
-                if (bruker?.erVeileder) {
-                    return oppdaterVenterPaSvar(fnr, dialog.id, true);
-                }
-                return dialog;
-            })
-            .then(dialog => {
-                setNoeFeilet(false);
-                dialoger.rerun();
                 onSubmit && onSubmit();
                 history.push('/' + dialog.id);
                 dispatchUpdate(UpdateTypes.Dialog);
+                return dialog;
             })
+            .then(dialog => {
+                if (bruker?.erVeileder) {
+                    return setVenterPaSvar(dialog, true);
+                }
+                return dialog;
+            })
+            .then(hentDialoger)
             .catch(() => setNoeFeilet(true));
     };
 

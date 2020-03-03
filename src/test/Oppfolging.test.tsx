@@ -2,6 +2,7 @@ import React from 'react';
 import { mount } from 'enzyme';
 import { MemoryRouter } from 'react-router';
 import * as AppContext from '../view/Provider';
+import * as DialogProvider from '../view/DialogProvider';
 import { Dialog } from '../view/dialog/Dialog';
 import { Bruker, DialogData, OppfolgingData, PeriodeData } from '../utils/Typer';
 import { HenvendelseList } from '../view/henvendelse/HenvendelseList';
@@ -11,10 +12,11 @@ import DialogListe from '../view/dialogliste/DialogListe';
 import { NyDialogLink } from '../view/dialogliste/NyDialogLink';
 import DialogPreview from '../view/dialogliste/DialogPreview';
 import { Checkbox } from 'nav-frontend-skjema';
-import { FetchResult, Status } from '@nutgaard/use-fetch';
+import { FetchResult, Status as FetchMockStatus } from '@nutgaard/use-fetch';
 import '../utils/SetupEnzyme';
 import DialogContainer from '../view/dialog/DialogContainer';
 import DialogOversikt from '../view/dialogliste/DialogOversikt';
+import { DialogDataProviderType } from '../view/DialogProvider';
 
 const userInfo: Bruker = { id: '010101', erVeileder: true, erBruker: false };
 const oppfPerioder: PeriodeData[] = [];
@@ -40,7 +42,7 @@ const oppfolgingData: OppfolgingData = {
     servicegruppe: null
 };
 const useFetchOppfolging: FetchResult<OppfolgingData> = {
-    status: Status.OK,
+    status: FetchMockStatus.OK,
     statusCode: 0,
     data: oppfolgingData,
     rerun(): void {}
@@ -82,11 +84,15 @@ const dialoger = [
         egenskaper: []
     }
 ];
-const useFetchDialoger: FetchResult<DialogData[]> = {
-    status: Status.OK,
-    statusCode: 0,
-    data: dialoger,
-    rerun(): void {}
+const useDialogContext: DialogDataProviderType = {
+    status: 3,
+    dialoger: dialoger,
+    hentDialoger: () => Promise.resolve([]),
+    nyDialog: (melding: string, tema: string, aktivitetId?: string) => Promise.resolve({} as any),
+    nyHenvendelse: (melding: string, dialog: DialogData) => Promise.resolve(dialog),
+    lesDialog: (dialog: DialogData) => Promise.resolve(dialog),
+    setFerdigBehandlet: (dialog: DialogData, ferdigBehandlet: boolean) => Promise.resolve(dialog),
+    setVenterPaSvar: (dialog: DialogData, venterPaSvar: boolean) => Promise.resolve(dialog)
 };
 
 describe('<DialogContainer/>', () => {
@@ -115,7 +121,7 @@ describe('<DialogContainer/>', () => {
             }
         ];
         jest.spyOn(AppContext, 'useOppfolgingContext').mockImplementation(() => useFetchOppfolging);
-        jest.spyOn(AppContext, 'useDialogContext').mockImplementation(() => useFetchDialoger);
+        jest.spyOn(DialogProvider, 'useDialogContext').mockImplementation(() => useDialogContext);
         const wrapper = mount(
             <MemoryRouter>
                 <DialogListe />
@@ -136,7 +142,7 @@ describe('<DialogContainer/>', () => {
             }
         ];
         jest.spyOn(AppContext, 'useOppfolgingContext').mockImplementation(() => useFetchOppfolging);
-        jest.spyOn(AppContext, 'useDialogContext').mockImplementation(() => useFetchDialoger);
+        jest.spyOn(DialogProvider, 'useDialogContext').mockImplementation(() => useDialogContext);
         const wrapper = mount(
             <MemoryRouter>
                 <DialogOversikt />
@@ -159,7 +165,7 @@ describe('<Dialog/>', () => {
                 begrunnelse: null
             }
         ];
-        jest.spyOn(AppContext, 'useDialogContext').mockImplementation(() => useFetchDialoger);
+        jest.spyOn(DialogProvider, 'useDialogContext').mockImplementation(() => useDialogContext);
         jest.spyOn(AppContext, 'useOppfolgingContext').mockImplementation(() => useFetchOppfolging);
         Element.prototype.scrollIntoView = () => {};
         const wrapper = mount(
