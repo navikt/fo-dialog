@@ -23,12 +23,12 @@ const defultTekst = {
 
 const bareKVPTekst = {
     knapptekst: 'Se dialoger fra perioden du var i Kvalifiseringsprogrammet',
-    tittel: 'Dialoger fra tidligere oppfølgingsperioder og fra perioden du var i Kvalifiseringsprogrammet'
+    tittel: 'Dialoger fra perioden du var i Kvalifiseringsprogrammet'
 };
 
 const KVPOgHistoriskTekst = {
     knapptekst: 'Se dialoger fra tidligere perioder og fra perioden du var i Kvalifiseringsprogrammet',
-    tittel: 'Dialoger fra perioden du var i Kvalifiseringsprogrammet'
+    tittel: 'Dialoger fra tidligere oppfølgingsperioder og fra perioden du var i Kvalifiseringsprogrammet'
 };
 
 function useTekst(): HistoriskeDialogerTekst {
