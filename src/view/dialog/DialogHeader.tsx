@@ -21,7 +21,11 @@ function DialogOverskrift(props: DialogOverskriftProps) {
         return null;
     }
 
-    return <Undertittel className={styles.tittel}>{props.tekst}</Undertittel>;
+    return (
+        <Undertittel id="dialog_header_2" className={styles.tittel}>
+            {props.tekst}
+        </Undertittel>
+    );
 }
 
 export function DialogHeader(props: DialogHeaderProps) {
@@ -38,6 +42,9 @@ export function DialogHeader(props: DialogHeaderProps) {
                 <VenstreChevron stor />
                 Til dialoger
             </Link>
+            <div id="dialog_header_1" className="hide">
+                Dialog om:
+            </div>
             {aktivitet ? (
                 <AktivitetskortPreview aktivitetId={aktivitet} />
             ) : (

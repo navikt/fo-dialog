@@ -3,7 +3,7 @@ import { DialogPreviewListe } from './DialogPreview';
 import { DialogData } from '../../utils/Typer';
 import { useParams } from 'react-router';
 import styles from './DialogOversikt.module.less';
-import { Undertittel } from 'nav-frontend-typografi';
+import { Systemtittel, Undertittel } from 'nav-frontend-typografi';
 import InvertedLestMer from '../../felleskomponenter/InvertedLesMer';
 import { useDialogContext } from '../DialogProvider';
 
@@ -27,18 +27,17 @@ export function DialogListe() {
     const skulHistoriske = historiske.length === 0;
 
     return (
-        <section className={styles.dialogListe}>
+        <div className={styles.dialogListe} role="navigation" aria-label="Dialoger">
+            <Systemtittel className="visually-hidden">Dialogliste</Systemtittel>
             <DialogPreviewListe dialoger={naaverende} valgDialog={dialogId} />
 
             <InvertedLestMer apneTekst="Se dialoger fra tidligere perioder" lukkTekst="Skjul" hidden={skulHistoriske}>
                 <section>
-                    <Undertittel className={styles.tidligerePeriodeTittel} tag="h1">
-                        Dialoger fra tidligere perioder
-                    </Undertittel>
+                    <Undertittel className={styles.tidligerePeriodeTittel}>Dialoger fra tidligere perioder</Undertittel>
                     <DialogPreviewListe dialoger={historiske} valgDialog={dialogId} />
                 </section>
             </InvertedLestMer>
-        </section>
+        </div>
     );
 }
 

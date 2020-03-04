@@ -19,7 +19,25 @@ interface TittelProps {
 
 function Tittel(props: TittelProps) {
     const tittel = props.aktivitet ? getDialogTitel(props.aktivitet) : props.tittel;
-    return <Systemtittel className={styles.heading}>{tittel}</Systemtittel>;
+    return (
+        <Systemtittel tag="p" className={styles.heading}>
+            {tittel}
+        </Systemtittel>
+    );
+}
+
+function typeText(dialog: DialogData) {
+    if (dialog.aktivitetId) {
+        return dialog.lest ? 'Dialog om aktivitet' : 'Ulest dialog om aktivitet';
+    }
+    return dialog.lest ? 'Dialog' : 'Ulest dialog';
+}
+
+function meldingerText(length: number) {
+    if (length <= 1) {
+        return `${length} melding i dialogen`;
+    }
+    return `${length} meldinger i dialogen`;
 }
 
 interface Props {
@@ -40,15 +58,19 @@ function DialogPreview(props: Props) {
     });
 
     return (
-        <LenkepanelBase className={lenkepanelCls} href={`/${id}`} linkCreator={WrapInReactLink}>
-            <Ikon dialog={dialog} />
-            <div className={styles.content}>
-                <Tittel tittel={overskrift} aktivitet={aktivitet} />
-                <EtikettLiten className={styles.dato}>{datoString}</EtikettLiten>
-                <EtikettListe dialog={dialog} />
-            </div>
-            <Normaltekst>{dialog.henvendelser.length}</Normaltekst>
-        </LenkepanelBase>
+        <div role="listitem">
+            <LenkepanelBase className={lenkepanelCls} href={`/${id}`} linkCreator={WrapInReactLink}>
+                <Ikon dialog={dialog} />
+                <div className={styles.content}>
+                    <Normaltekst className="visually-hidden">{typeText(dialog)}</Normaltekst>
+                    <Tittel tittel={overskrift} aktivitet={aktivitet} />
+                    <EtikettLiten className={styles.dato}>{datoString}</EtikettLiten>
+                    <EtikettListe dialog={dialog} />
+                    <Normaltekst className="visually-hidden">{meldingerText(dialog.henvendelser.length)}</Normaltekst>
+                </div>
+                <Normaltekst aria-hidden="true">{dialog.henvendelser.length}</Normaltekst>
+            </LenkepanelBase>
+        </div>
     );
 }
 
@@ -60,11 +82,11 @@ interface ListeProps {
 export function DialogPreviewListe(props: ListeProps) {
     const { dialoger, valgDialog } = props;
     return (
-        <>
+        <div role="list" aria-label="Dialogliste">
             {dialoger.map(dialog => (
                 <DialogPreview dialog={dialog} key={dialog.id} valgtDialogId={valgDialog} />
             ))}
-        </>
+        </div>
     );
 }
 

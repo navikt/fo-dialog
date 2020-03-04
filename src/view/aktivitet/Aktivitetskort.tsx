@@ -27,13 +27,14 @@ export function Aktivitetskort() {
     const { status, tittel, type, avtalt, id } = aktivitet;
 
     return (
-        <div className={styles.aktivitetskort}>
+        <section aria-label="Aktivitet knyttet til dialog" className={styles.aktivitetskort}>
+            <Systemtittel className="visually-hidden">Aktivitet knyttet til dialog</Systemtittel>
             <Brodsmulesti status={status} type={type} />
             <Systemtittel>{tittel}</Systemtittel>
             <AktivitetskortLenke aktivitetId={id} />
             <AktivitetIngress aktivitetType={type} />
             <AktivitetskortInfoBox aktivitet={aktivitet} />
             <AvtaltMarkering hidden={!avtalt} />
-        </div>
+        </section>
     );
 }
