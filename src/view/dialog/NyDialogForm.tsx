@@ -55,7 +55,7 @@ interface Props {
 
 function NyDialogForm(props: Props) {
     const { defaultTema, onSubmit, aktivitetId } = props;
-    const { hentDialoger, nyDialog, setVenterPaSvar } = useDialogContext();
+    const { hentDialoger, nyDialog } = useDialogContext();
     const bruker = useUserInfoContext();
     const history = useHistory();
     const [noeFeilet, setNoeFeilet] = useState(false);
@@ -79,12 +79,6 @@ function NyDialogForm(props: Props) {
                 onSubmit && onSubmit();
                 history.push('/' + dialog.id);
                 dispatchUpdate(UpdateTypes.Dialog);
-                return dialog;
-            })
-            .then(dialog => {
-                if (bruker?.erVeileder) {
-                    return setVenterPaSvar(dialog, true);
-                }
                 return dialog;
             })
             .then(hentDialoger)
