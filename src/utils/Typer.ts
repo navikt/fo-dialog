@@ -79,4 +79,10 @@ export interface PeriodeData {
     startDato: StringOrNull;
     sluttDato: StringOrNull;
     begrunnelse: StringOrNull;
+    kvpPerioder: KvpPerioder[];
+}
+
+interface KvpPerioder {
+    opprettetDato: StringOrNull;
+    avsluttetDato: StringOrNull;
 }

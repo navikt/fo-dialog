@@ -3,9 +3,8 @@ import { DialogPreviewListe } from './DialogPreview';
 import { DialogData } from '../../utils/Typer';
 import { useParams } from 'react-router';
 import styles from './DialogOversikt.module.less';
-import { Undertittel } from 'nav-frontend-typografi';
-import InvertedLestMer from '../../felleskomponenter/InvertedLesMer';
 import { useDialogContext } from '../DialogProvider';
+import HistoriskeDialogerOversikt from './HistoriskDialogListe';
 
 interface Res {
     naaverende: DialogData[];
@@ -22,22 +21,12 @@ export function DialogListe() {
     const { dialogId } = useParams();
 
     const sorterteDialoger = dialoger.sort((a, b) => sortDialoger(a, b));
-
     const { naaverende, historiske } = sorterteDialoger.reduce(splitHistoriske, { naaverende: [], historiske: [] });
-    const skulHistoriske = historiske.length === 0;
 
     return (
         <section className={styles.dialogListe}>
             <DialogPreviewListe dialoger={naaverende} valgDialog={dialogId} />
-
-            <InvertedLestMer apneTekst="Se dialoger fra tidligere perioder" lukkTekst="Skjul" hidden={skulHistoriske}>
-                <section>
-                    <Undertittel className={styles.tidligerePeriodeTittel} tag="h1">
-                        Dialoger fra tidligere perioder
-                    </Undertittel>
-                    <DialogPreviewListe dialoger={historiske} valgDialog={dialogId} />
-                </section>
-            </InvertedLestMer>
+            <HistoriskeDialogerOversikt historiske={historiske} valgDialog={dialogId} />
         </section>
     );
 }

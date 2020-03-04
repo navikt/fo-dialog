@@ -58,12 +58,6 @@ export function DialogInputBox(props: Props) {
         return nyHenvendelse(melding, valgtDialog)
             .then(dialog => {
                 if (bruker?.erVeileder) {
-                    if (!dialog.venterPaSvar && !dialog.ferdigBehandlet) {
-                        return setVenterPaSvar(valgtDialog, true).then(() => setFerdigBehandlet(valgtDialog, true));
-                    }
-                    if (!dialog.venterPaSvar) {
-                        return setVenterPaSvar(valgtDialog, true);
-                    }
                     if (!dialog.ferdigBehandlet) {
                         return setFerdigBehandlet(valgtDialog, true);
                     }
