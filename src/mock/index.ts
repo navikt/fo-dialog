@@ -4,6 +4,7 @@ import bruker from './Bruker';
 import oppfolging from './Oppfolging';
 import aktiviteter, { getAktivitet } from './Aktivitet';
 import { arenaAktiviteter } from './Arena';
+import { veilederMe } from './Veileder';
 
 const loggingMiddleware: Middleware = (request, response) => {
     // tslint:disable
@@ -65,3 +66,5 @@ mock.get('/veilarbaktivitet/api/aktivitet/:aktivitetId', ({ pathParams }) => get
 mock.get('/veilarbaktivitet/api/aktivitet/arena', arenaAktiviteter);
 
 mock.get('/api/auth', { remainingSeconds: 60 * 60 });
+
+mock.get('/veilarbveileder/api/veileder/me', veilederMe);

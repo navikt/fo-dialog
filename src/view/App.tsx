@@ -11,6 +11,7 @@ import { UppdateEventHandler } from '../utils/UpdateEvent';
 
 interface Props {
     fnr?: string;
+    enhet?: string;
 }
 
 function App(props: Props) {
