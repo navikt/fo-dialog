@@ -79,7 +79,7 @@ export function DialogInputBox(props: Props) {
     const autoFocus = match && viewState.sistHandlingsType !== HandlingsType.nyDialog;
 
     return (
-        <>
+        <section aria-label="Ny melding">
             <form onSubmit={state.onSubmit(onSubmit)} noValidate autoComplete="off">
                 <div className="skriv-melding label-sr-only">
                     <Textarea
@@ -108,7 +108,7 @@ export function DialogInputBox(props: Props) {
                     Det skjedde en alvorlig feil. Prøv igjen senere
                 </AlertStripeFeilVisible>
             </form>
-        </>
+        </section>
     );
 }
 

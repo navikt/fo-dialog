@@ -3,6 +3,7 @@ import { DialogPreviewListe } from './DialogPreview';
 import { DialogData } from '../../utils/Typer';
 import { useParams } from 'react-router';
 import styles from './DialogOversikt.module.less';
+import { Systemtittel } from 'nav-frontend-typografi';
 import { useDialogContext } from '../DialogProvider';
 import HistoriskeDialogerOversikt from './HistoriskDialogListe';
 
@@ -24,10 +25,11 @@ export function DialogListe() {
     const { naaverende, historiske } = sorterteDialoger.reduce(splitHistoriske, { naaverende: [], historiske: [] });
 
     return (
-        <section className={styles.dialogListe}>
+        <div className={styles.dialogListe} role="navigation" aria-label="Dialoger">
+            <Systemtittel className="visually-hidden">Dialogliste</Systemtittel>
             <DialogPreviewListe dialoger={naaverende} valgDialog={dialogId} />
             <HistoriskeDialogerOversikt historiske={historiske} valgDialog={dialogId} />
-        </section>
+        </div>
     );
 }
 

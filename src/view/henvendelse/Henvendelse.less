@@ -29,18 +29,8 @@
 }
 
 .veileder-ikon {
-    font-size: 14px;
-    border-radius: 50%;
-    background: @navLysBlaDarken80;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-
-    &:before {
-        content: 'NAV';
-        color: @white;
-        font-style: normal;
-    }
+    background: no-repeat data-uri('nav.svg');
+    background-size: cover;
 }
 
 @media (max-width: 700px) {
