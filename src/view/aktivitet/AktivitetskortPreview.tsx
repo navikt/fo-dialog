@@ -10,6 +10,7 @@ import { useFnrContext } from '../Provider';
 import { StringOrNull } from '../../utils/Typer';
 import { findAktivitet, useAktivitetContext } from '../AktivitetProvider';
 import useApiBasePath from '../../utils/UseApiBasePath';
+import { dialogHeaderID2 } from '../dialog/DialogHeader';
 
 interface Props {
     aktivitetId?: StringOrNull;
@@ -38,7 +39,7 @@ export function AktivitetskortPreview(props: Props) {
             >
                 <div className={styles.spaceBetween}>
                     <div className={styles.info}>
-                        <Undertittel id="dialog_header_2" className={styles.tittel}>
+                        <Undertittel id={dialogHeaderID2} className={styles.tittel}>
                             {aktivitet.tittel}
                         </Undertittel>
                         <Undertekst>{info}</Undertekst>

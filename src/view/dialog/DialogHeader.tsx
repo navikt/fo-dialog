@@ -7,6 +7,9 @@ import { Link } from 'react-router-dom';
 import classNames from 'classnames';
 import styles from './DialogHeader.module.less';
 
+export const dialogHeaderID1 = 'dialog_header_1';
+export const dialogHeaderID2 = 'dialog_header_2';
+
 interface DialogHeaderProps {
     dialog?: DialogData;
     aktivitetId?: StringOrNull;
@@ -22,7 +25,7 @@ function DialogOverskrift(props: DialogOverskriftProps) {
     }
 
     return (
-        <Undertittel id="dialog_header_2" className={styles.tittel}>
+        <Undertittel id={dialogHeaderID2} className={styles.tittel}>
             {props.tekst}
         </Undertittel>
     );
@@ -42,7 +45,7 @@ export function DialogHeader(props: DialogHeaderProps) {
                 <VenstreChevron stor />
                 Til dialoger
             </Link>
-            <div id="dialog_header_1" className="hide">
+            <div id={dialogHeaderID1} className="hide">
                 Dialog om:
             </div>
             {aktivitet ? (

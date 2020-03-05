@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react';
 import { HenvendelseList } from '../henvendelse/HenvendelseList';
-import { DialogHeader } from './DialogHeader';
+import { DialogHeader, dialogHeaderID1, dialogHeaderID2 } from './DialogHeader';
 import { useFnrContext, useViewContext } from '../Provider';
 import { useParams } from 'react-router';
 import DialogInputBoxVisible from './DialogInputBox';
@@ -44,9 +44,9 @@ export function Dialog() {
     const kanSendeHenveldelse = kanSendeMelding && aktivDialog;
 
     return (
-        <section aria-labelledby="dialog_header_1 dialog_header_2" className={styles.dialog}>
-            <Systemtittel className="visually-hidden" aria-labelledby="dialog_header_1 dialog_header_2">
-                .
+        <section aria-labelledby={`${dialogHeaderID1} ${dialogHeaderID2}`} className={styles.dialog}>
+            <Systemtittel className="visually-hidden" aria-labelledby={`${dialogHeaderID1} ${dialogHeaderID2}`}>
+                Dialog Header
             </Systemtittel>
             <DialogHeader dialog={valgtDialog} />
             <HenvendelseList dialogData={valgtDialog} />
