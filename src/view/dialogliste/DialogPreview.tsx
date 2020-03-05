@@ -35,7 +35,8 @@ function DialogPreview(props: Props) {
     const datoString = !!sisteDato ? formaterDate(sisteDato) : '';
     const aktivitet = findAktivitet(aktivitetData, aktivitetId);
     const lenkepanelCls = classNames(styles.preview, {
-        [styles.ulest]: !lest,
+        [styles.lest]: lest,
+        [styles.ulest]: !lest && id !== valgtDialogId,
         [styles.valgt]: id === valgtDialogId
     });
 
