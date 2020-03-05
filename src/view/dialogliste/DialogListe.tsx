@@ -3,8 +3,7 @@ import { DialogPreviewListe } from './DialogPreview';
 import { DialogData } from '../../utils/Typer';
 import { useParams } from 'react-router';
 import styles from './DialogOversikt.module.less';
-import { Systemtittel, Undertittel } from 'nav-frontend-typografi';
-import InvertedLestMer from '../../felleskomponenter/InvertedLesMer';
+import { Systemtittel } from 'nav-frontend-typografi';
 import { useDialogContext } from '../DialogProvider';
 import HistoriskeDialogerOversikt from './HistoriskDialogListe';
 
