@@ -3,6 +3,7 @@ import { mount } from 'enzyme';
 import { MemoryRouter } from 'react-router';
 import * as AppContext from '../view/Provider';
 import * as DialogProvider from '../view/DialogProvider';
+import { DialogDataProviderType } from '../view/DialogProvider';
 import { Dialog } from '../view/dialog/Dialog';
 import { Bruker, DialogData, OppfolgingData, PeriodeData } from '../utils/Typer';
 import { HenvendelseList } from '../view/henvendelse/HenvendelseList';
@@ -16,7 +17,6 @@ import { FetchResult, Status as FetchMockStatus } from '@nutgaard/use-fetch';
 import '../utils/SetupEnzyme';
 import DialogContainer from '../view/dialog/DialogContainer';
 import DialogOversikt from '../view/dialogliste/DialogOversikt';
-import { DialogDataProviderType } from '../view/DialogProvider';
 
 const userInfo: Bruker = { id: '010101', erVeileder: true, erBruker: false };
 const oppfPerioder: PeriodeData[] = [];
@@ -173,7 +173,7 @@ describe('<Dialog/>', () => {
                 <DialogContainer />
             </MemoryRouter>
         );
-        expect(wrapper.find(DialogInputBox).exists()).toBeFalsy();
+        expect(wrapper.find(DialogInputBox).exists()).toBeTruthy();
         expect(wrapper.find(HenvendelseList).exists()).toBeTruthy();
         expect(wrapper.find(Checkbox).exists()).toBeFalsy();
     });
