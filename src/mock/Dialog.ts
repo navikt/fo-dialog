@@ -2,7 +2,7 @@ import { DialogData, HenvendelseData, NyDialogMeldingData } from '../utils/Typer
 import { rndId } from './Utils';
 import { JSONArray, JSONObject, ResponseUtils } from 'yet-another-fetch-mock';
 import bruker from './Bruker';
-import { harIngenDialoger } from './demo/sessionstorage';
+import { erEksternBruker, harIngenDialoger } from './demo/sessionstorage';
 
 const dialoger: DialogData[] & JSONArray = [
     {
@@ -302,7 +302,7 @@ export function opprettEllerOppdaterDialog(update: NyDialogMeldingData): DialogD
     const nyHenvendelse: HenvendelseData = {
         id: rndId(),
         dialogId: dialogId,
-        avsender: 'BRUKER',
+        avsender: erEksternBruker() ? 'BRUKER' : 'NAV',
         avsenderId: 'Z123456',
         sendt: new Date().toISOString(),
         lest: true,
