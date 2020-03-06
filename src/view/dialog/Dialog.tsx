@@ -52,7 +52,11 @@ export function Dialog() {
             <HenvendelseList dialogData={valgtDialog} />
             <DialogSendtBekreftelse viewState={viewState} dialog={valgtDialog} fnr={fnr} />
             <HistoriskInfo hidden={aktivDialog} kanSendeMelding={kanSendeMelding} />
-            <DialogInputBoxVisible key={valgtDialog.id} dialog={valgtDialog} visible={kanSendeHenveldelse} />
+            <DialogInputBoxVisible
+                key={valgtDialog.id}
+                dialog={valgtDialog}
+                kanSendeHenveldelse={kanSendeHenveldelse}
+            />
         </section>
     );
 }
