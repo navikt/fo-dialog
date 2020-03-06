@@ -90,7 +90,7 @@ export function DialogInputBox(props: Props) {
 
     const state = validator(initalValues, { startTekst });
 
-    if (!oppfolging?.underOppfolging) {
+    if (!oppfolging?.underOppfolging || valgtDialog.historisk) {
         return null;
     }
 
