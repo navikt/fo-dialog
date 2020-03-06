@@ -17,7 +17,7 @@ export function InfoOmDialogSide() {
     });
 
     return (
-        <div id="om-dialog" className={cls} tabIndex={-1}>
+        <section aria-label="Om dialog" id="om-dialog" className={cls} tabIndex={-1}>
             <DialogHeader />
 
             <div className={styles.side}>
@@ -126,6 +126,6 @@ export function InfoOmDialogSide() {
                     </Normaltekst>
                 </Ekspanderbartpanel>
             </div>
-        </div>
+        </section>
     );
 }

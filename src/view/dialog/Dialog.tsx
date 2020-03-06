@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react';
 import { HenvendelseList } from '../henvendelse/HenvendelseList';
-import { DialogHeader } from './DialogHeader';
+import { DialogHeader, dialogHeaderID1, dialogHeaderID2 } from './DialogHeader';
 import { useFnrContext, useViewContext } from '../Provider';
 import { useParams } from 'react-router';
 import DialogInputBoxVisible from './DialogInputBox';
@@ -14,6 +14,7 @@ import { IngenDialog } from './IngenDialog';
 import { dispatchUpdate, UpdateTypes } from '../../utils/UpdateEvent';
 import styles from './Dialog.module.less';
 import { useDialogContext } from '../DialogProvider';
+import { Systemtittel } from 'nav-frontend-typografi';
 
 export function Dialog() {
     const kanSendeMelding = useKansendeMelding();
@@ -43,13 +44,16 @@ export function Dialog() {
     const kanSendeHenveldelse = kanSendeMelding && aktivDialog;
 
     return (
-        <div className={styles.dialog}>
+        <section aria-labelledby={`${dialogHeaderID1} ${dialogHeaderID2}`} className={styles.dialog}>
+            <Systemtittel className="visually-hidden" aria-labelledby={`${dialogHeaderID1} ${dialogHeaderID2}`}>
+                Dialog Header
+            </Systemtittel>
             <DialogHeader dialog={valgtDialog} />
             <HenvendelseList dialogData={valgtDialog} />
             <DialogSendtBekreftelse viewState={viewState} dialog={valgtDialog} fnr={fnr} />
             <HistoriskInfo hidden={aktivDialog} kanSendeMelding={kanSendeMelding} />
             <DialogInputBoxVisible key={valgtDialog.id} dialog={valgtDialog} visible={kanSendeHenveldelse} />
-        </div>
+        </section>
     );
 }
 

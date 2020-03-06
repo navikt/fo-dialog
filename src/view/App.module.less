@@ -1,5 +1,6 @@
 @import (reference) '~nav-frontend-core/less/core';
 @import (reference) '~nav-frontend-typografi-style/src/index';
+@import (reference) '../variabler';
 
 //TODO sjekk denne mot veilarbpersonflatefs
 :global {
@@ -39,12 +40,25 @@
         overflow: hidden;
     }
 
+    .hide {
+        .hide();
+    }
+
     .hidden-xs {
         .hidden-xs();
     }
 
     .blokk-xs {
         .blokk-xs();
+    }
+
+    .visually-hidden {
+        position: absolute !important;
+        height: 1px;
+        width: 1px;
+        overflow: hidden;
+        clip: rect(1px, 1px, 1px, 1px);
+        white-space: nowrap;
     }
 }
 
@@ -55,6 +69,8 @@
     overflow: hidden;
     color: @navMorkGra;
     font-family: @font-family;
+    align-items: center;
+    background-color: @lysgraBakrund;
 }
 
 .konteinerUtside {
@@ -79,4 +95,6 @@
     display: flex;
     flex-grow: 1;
     overflow: hidden;
+    width: 100%;
+    max-width: 1920px;
 }

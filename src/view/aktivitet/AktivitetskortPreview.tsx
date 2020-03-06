@@ -1,6 +1,6 @@
 import React from 'react';
 import { Aktivitet, AktivitetTypes, ArenaAktivitet, ArenaAktivitetTypes } from '../../utils/AktivitetTypes';
-import { Undertekst, Undertittel } from 'nav-frontend-typografi';
+import { Systemtittel, Undertekst, Undertittel } from 'nav-frontend-typografi';
 import { LenkepanelBase } from 'nav-frontend-lenkepanel';
 import { formaterDate, getKlokkeslett } from '../../utils/Date';
 import styles from './AktivitetskortPreview.module.less';
@@ -10,6 +10,7 @@ import { useFnrContext } from '../Provider';
 import { StringOrNull } from '../../utils/Typer';
 import { findAktivitet, useAktivitetContext } from '../AktivitetProvider';
 import useApiBasePath from '../../utils/UseApiBasePath';
+import { dialogHeaderID2 } from '../dialog/DialogHeader';
 
 interface Props {
     aktivitetId?: StringOrNull;
@@ -29,19 +30,24 @@ export function AktivitetskortPreview(props: Props) {
     const info = getInfoText(aktivitet);
 
     return (
-        <LenkepanelBase
-            href={aktivitetLenke(apiBasePath, aktivitet.id)}
-            className={styles.lenkepanelbase}
-            onClick={visAktivitetsplan(aktivitet.id, fnr)}
-        >
-            <div className={styles.spaceBetween}>
-                <div className={styles.info}>
-                    <Undertittel className={styles.tittel}>{aktivitet.tittel}</Undertittel>
-                    <Undertekst>{info}</Undertekst>
+        <section aria-label="Aktivitet knyttet til dialog">
+            <Systemtittel className="visually-hidden">Aktivitet knyttet til dialog</Systemtittel>
+            <LenkepanelBase
+                href={aktivitetLenke(apiBasePath, aktivitet.id)}
+                className={styles.lenkepanelbase}
+                onClick={visAktivitetsplan(aktivitet.id, fnr)}
+            >
+                <div className={styles.spaceBetween}>
+                    <div className={styles.info}>
+                        <Undertittel id={dialogHeaderID2} className={styles.tittel}>
+                            {aktivitet.tittel}
+                        </Undertittel>
+                        <Undertekst>{info}</Undertekst>
+                    </div>
+                    <p className={styles.lesmer}>Se aktivitet</p>
                 </div>
-                <p className={styles.lesmer}>Se aktivitet</p>
-            </div>
-        </LenkepanelBase>
+            </LenkepanelBase>
+        </section>
     );
 }
 
