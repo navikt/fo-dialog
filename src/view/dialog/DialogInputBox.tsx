@@ -1,10 +1,10 @@
 import React, { useState } from 'react';
 import { DialogData } from '../../utils/Typer';
 import { visibleIfHoc } from '../../felleskomponenter/VisibleIfHoc';
-import { useUserInfoContext, useViewContext } from '../Provider';
+import { dataOrUndefined, useOppfolgingContext, useUserInfoContext, useViewContext } from '../Provider';
 import DialogCheckboxesVisible from './DialogCheckboxes';
 import { AlertStripeFeil } from 'nav-frontend-alertstriper';
-import useFormstate from '@nutgaard/use-formstate';
+import useFormstate, { Formstate } from '@nutgaard/use-formstate';
 import Textarea from '../../felleskomponenter/input/textarea';
 import { Hovedknapp } from 'nav-frontend-knapper';
 import { HandlingsType, sendtNyHenvendelse } from '../ViewState';
@@ -18,6 +18,7 @@ const maxMeldingsLengde = 5000;
 
 interface Props {
     dialog: DialogData;
+    kanSendeHenveldelse: boolean;
 }
 
 function validerMelding(melding: string, resten: any, props: { startTekst?: string }) {
@@ -36,8 +37,43 @@ const validator = useFormstate({
     melding: validerMelding
 });
 
+interface HenvendelseInputProps {
+    autoFocus: false | boolean;
+    state: Formstate<{ [p: string]: any }>;
+    laster: boolean;
+    kanSendeHenvendelse: boolean;
+}
+
+function HenvendelseInput(props: HenvendelseInputProps) {
+    const { autoFocus, state, laster, kanSendeHenvendelse } = props;
+
+    if (!kanSendeHenvendelse) {
+        return null;
+    }
+
+    return (
+        <div className="skriv-melding label-sr-only">
+            <Textarea
+                label="Skriv en melding om arbeid og oppfølging"
+                placeholder="Skriv en melding om arbeid og oppfølging"
+                textareaClass="autosizing-textarea"
+                maxLength={maxMeldingsLengde}
+                visTellerFra={1000}
+                autoFocus={autoFocus}
+                submittoken={state.submittoken}
+                {...state.fields.melding}
+            />
+            <Hovedknapp title="Send" autoDisableVedSpinner spinner={laster}>
+                Send
+            </Hovedknapp>
+        </div>
+    );
+}
+
 export function DialogInputBox(props: Props) {
     const bruker = useUserInfoContext();
+    const oppfolgingContext = useOppfolgingContext();
+    const oppfolging = dataOrUndefined(oppfolgingContext);
     const { hentDialoger, nyHenvendelse, setFerdigBehandlet, setVenterPaSvar, status } = useDialogContext();
     const dialogLaster = isDialogPendingOrReloading(status);
     const [noeFeilet, setNoeFeilet] = useState(false);
@@ -46,12 +82,17 @@ export function DialogInputBox(props: Props) {
     const { viewState, setViewState } = useViewContext();
 
     const valgtDialog = props.dialog;
+    const kanSendeHenveldelse = props.kanSendeHenveldelse;
 
     const initalValues = {
         melding: startTekst
     };
 
     const state = validator(initalValues, { startTekst });
+
+    if (!oppfolging?.underOppfolging) {
+        return null;
+    }
 
     const onSubmit = (data: { melding: string }) => {
         const { melding } = data;
@@ -81,21 +122,12 @@ export function DialogInputBox(props: Props) {
     return (
         <section aria-label="Ny melding">
             <form onSubmit={state.onSubmit(onSubmit)} noValidate autoComplete="off">
-                <div className="skriv-melding label-sr-only">
-                    <Textarea
-                        label="Skriv en melding om arbeid og oppfølging"
-                        placeholder="Skriv en melding om arbeid og oppfølging"
-                        textareaClass="autosizing-textarea"
-                        maxLength={maxMeldingsLengde}
-                        visTellerFra={1000}
-                        autoFocus={autoFocus}
-                        submittoken={state.submittoken}
-                        {...state.fields.melding}
-                    />
-                    <Hovedknapp title="Send" autoDisableVedSpinner spinner={laster}>
-                        Send
-                    </Hovedknapp>
-                </div>
+                <HenvendelseInput
+                    laster={laster}
+                    state={state}
+                    autoFocus={autoFocus}
+                    kanSendeHenvendelse={kanSendeHenveldelse}
+                />
                 <DialogCheckboxesVisible
                     toggleFerdigBehandlet={ferdigBehandlet => setFerdigBehandlet(valgtDialog, ferdigBehandlet)}
                     toggleVenterPaSvar={venterPaSvar => setVenterPaSvar(valgtDialog, venterPaSvar)}
@@ -112,4 +144,4 @@ export function DialogInputBox(props: Props) {
     );
 }
 
-export default visibleIfHoc(DialogInputBox);
+export default DialogInputBox;
