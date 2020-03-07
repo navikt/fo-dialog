@@ -95,7 +95,7 @@ function NyDialogForm(props: Props) {
                     className={style.temafelt}
                     label="Tema"
                     autoComplete="off"
-                    placeholder="Skriv her"
+                    placeholder="Skriv hva meldingen handler om"
                     disabled={!!aktivitetId}
                     submittoken={state.submittoken}
                     {...state.fields.tema}
