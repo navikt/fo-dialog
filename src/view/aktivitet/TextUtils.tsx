@@ -46,7 +46,10 @@ export function getTypeText(type: AktivitetTypes | ArenaAktivitetTypes): string 
     }
 }
 
-export function getDialogTitel(aktivitet: Aktivitet | ArenaAktivitet) {
+export function getDialogTittel(aktivitet: Aktivitet | ArenaAktivitet | undefined) {
+    if (!aktivitet) {
+        return '';
+    }
     const { type, tittel } = aktivitet;
 
     switch (type) {

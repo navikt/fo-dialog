@@ -8,7 +8,7 @@ import WrapInReactLink from '../../felleskomponenter/WrapInReactLink';
 import classNames from 'classnames';
 import styles from './DialogPreview.module.less';
 import Ikon from './ikon/Ikon';
-import { getDialogTitel } from '../aktivitet/TextUtils';
+import { getDialogTittel } from '../aktivitet/TextUtils';
 import { Aktivitet, ArenaAktivitet } from '../../utils/AktivitetTypes';
 import { findAktivitet, useAktivitetContext } from '../AktivitetProvider';
 
@@ -18,7 +18,7 @@ interface TittelProps {
 }
 
 function Tittel(props: TittelProps) {
-    const tittel = props.aktivitet ? getDialogTitel(props.aktivitet) : props.tittel;
+    const tittel = props.aktivitet ? getDialogTittel(props.aktivitet) : props.tittel;
     return <Systemtittel className={styles.heading}>{tittel}</Systemtittel>;
 }
 
