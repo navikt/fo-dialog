@@ -11,6 +11,7 @@ import { HandlingsType, sendtNyHenvendelse } from '../ViewState';
 import { dispatchUpdate, UpdateTypes } from '../../utils/UpdateEvent';
 import { isDialogPendingOrReloading, useDialogContext } from '../DialogProvider';
 import useHenvendelseStartTekst from './UseHenvendelseStartTekst';
+import loggEvent from '../../felleskomponenter/logging';
 
 const AlertStripeFeilVisible = visibleIfHoc(AlertStripeFeil);
 
@@ -96,6 +97,7 @@ export function DialogInputBox(props: Props) {
 
     const onSubmit = (data: { melding: string }) => {
         const { melding } = data;
+        loggEvent('arbeidsrettet-dialog.ny.henvendelse', { paaAktivitet: !!valgtDialog.aktivitetId });
         return nyHenvendelse(melding, valgtDialog)
             .then(dialog => {
                 if (bruker?.erVeileder) {

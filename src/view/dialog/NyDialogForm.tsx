@@ -13,6 +13,7 @@ import { StringOrNull } from '../../utils/Typer';
 import { dispatchUpdate, UpdateTypes } from '../../utils/UpdateEvent';
 import { useDialogContext } from '../DialogProvider';
 import useHenvendelseStartTekst from './UseHenvendelseStartTekst';
+import loggEvent from '../../felleskomponenter/logging';
 
 const AlertStripeFeilVisible = visibleIfHoc(AlertStripeFeil);
 
@@ -74,6 +75,7 @@ function NyDialogForm(props: Props) {
 
     const handleSubmit = (data: { tema: string; melding: string }) => {
         const { tema, melding } = data;
+        loggEvent('arbeidsrettet-dialog.ny.dialog', { paaAktivitet: !!aktivitetId });
         return nyDialog(melding, tema, aktivitetId)
             .then(dialog => {
                 onSubmit && onSubmit();
@@ -95,7 +97,7 @@ function NyDialogForm(props: Props) {
                     className={style.temafelt}
                     label="Tema"
                     autoComplete="off"
-                    placeholder="Skriv her"
+                    placeholder="Skriv hva meldingen handler om"
                     disabled={!!aktivitetId}
                     submittoken={state.submittoken}
                     {...state.fields.tema}
