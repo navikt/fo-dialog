@@ -1,4 +1,6 @@
 @import (reference) '../../variabler';
+@import (reference) '~nav-frontend-knapper-style/src/index';
+@import (reference) '~nav-frontend-knapper-style/src/mixins';
 
 .dialogOversikt {
     display: flex;
@@ -52,13 +54,17 @@
 
 .dintnav {
     display: block;
-    margin-left: -0.2rem;
-    margin-top: 1rem;
-    text-decoration: none;
+    margin-left: -0.4rem;
 
-    &:hover {
-        text-decoration: underline;
-    }
+    margin-top: 1rem;
+
+    //flat knapp
+    .knapp();
+    .knappmini-mixin();
+    .knappflat-mixin(@navBla, @white, @navDypBla);
+
+    padding-left: 0;
+    padding-right: 0.5rem;
 }
 
 .titel {
