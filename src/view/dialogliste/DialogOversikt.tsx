@@ -38,7 +38,9 @@ export function DialogOversikt() {
         <div className={visningCls}>
             <div className={styles.hedder}>
                 <DitNavLenke erVeileder={erVeileder} />
-                <Systemtittel tag="h1">Dialog med veilederen din</Systemtittel>
+                <Systemtittel tag="h1" className={styles.titel}>
+                    Dialog med veilederen din
+                </Systemtittel>
 
                 <div className={styles.verktoylinje}>
                     <DialogOverviewHeader visible={kanSendeMelding} />
