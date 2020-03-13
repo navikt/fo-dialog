@@ -4,7 +4,6 @@ import { DialogData, StringOrNull } from '../../utils/Typer';
 import { AktivitetskortPreview } from '../aktivitet/AktivitetskortPreview';
 import { Undertittel } from 'nav-frontend-typografi';
 import { Link } from 'react-router-dom';
-import classNames from 'classnames';
 import styles from './DialogHeader.module.less';
 
 export const dialogHeaderID1 = 'dialog_header_1';
@@ -34,16 +33,11 @@ function DialogOverskrift(props: DialogOverskriftProps) {
 export function DialogHeader(props: DialogHeaderProps) {
     const { dialog, aktivitetId } = props;
     const aktivitet = aktivitetId || dialog?.aktivitetId;
-    const headerStyle = classNames(
-        styles.dialogHeader,
-        aktivitet ? styles.skjulVedStorSkjem : styles.skjulVedMiddelsSkjem
-    );
 
     return (
-        <div className={headerStyle}>
-            <Link to="/" className={styles.tilbakeTilOversikt}>
+        <div className={styles.dialogHeader}>
+            <Link to="/" title="Til dialoger" className={styles.skjulVedMiddelsSkjem}>
                 <VenstreChevron stor />
-                Til dialoger
             </Link>
             <div id={dialogHeaderID1} className="hide">
                 Dialog om:

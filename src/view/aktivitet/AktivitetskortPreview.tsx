@@ -1,6 +1,6 @@
 import React from 'react';
 import { Aktivitet, AktivitetTypes, ArenaAktivitet, ArenaAktivitetTypes } from '../../utils/AktivitetTypes';
-import { Systemtittel, Undertekst, Undertittel } from 'nav-frontend-typografi';
+import { EtikettLiten, Systemtittel, Undertekst, Undertittel } from 'nav-frontend-typografi';
 import { LenkepanelBase } from 'nav-frontend-lenkepanel';
 import { formaterDate, getKlokkeslett } from '../../utils/Date';
 import styles from './AktivitetskortPreview.module.less';
@@ -27,11 +27,15 @@ export function AktivitetskortPreview(props: Props) {
         return null;
     }
 
-    const info = getInfoText(aktivitet);
+    const typeTekst = getTypeText(aktivitet.type);
+    const infotekst = getInfoText(aktivitet);
 
     return (
-        <section aria-label="Aktivitet knyttet til dialog">
+        <section aria-label="Aktivitet knyttet til dialog" className={styles.flexgrow}>
             <Systemtittel className="visually-hidden">Aktivitet knyttet til dialog</Systemtittel>
+            <Undertittel className={styles.storSkjermTittel}>
+                {typeTekst}: {aktivitet?.tittel}
+            </Undertittel>
             <LenkepanelBase
                 href={aktivitetLenke(apiBasePath, aktivitet.id)}
                 className={styles.lenkepanelbase}
@@ -39,45 +43,37 @@ export function AktivitetskortPreview(props: Props) {
             >
                 <div className={styles.spaceBetween}>
                     <div className={styles.info}>
+                        <EtikettLiten>{typeTekst}</EtikettLiten>
                         <Undertittel id={dialogHeaderID2} className={styles.tittel}>
                             {aktivitet.tittel}
                         </Undertittel>
-                        <Undertekst>{info}</Undertekst>
+                        <Undertekst>{infotekst}</Undertekst>
                     </div>
-                    <p className={styles.lesmer}>Se aktivitet</p>
+                    <p className={styles.lesmer}>Gå til aktiviteten</p>
                 </div>
             </LenkepanelBase>
         </section>
     );
 }
 
-function tekstGuard(tekst: StringOrNull) {
-    if (!!tekst) {
-        return ` / ${tekst}`;
-    }
-    return '';
-}
-
-export function getInfoText(aktivitet: Aktivitet | ArenaAktivitet): string {
-    const typeTekst = getTypeText(aktivitet.type);
-
+export function getInfoText(aktivitet: Aktivitet | ArenaAktivitet): string | null {
     switch (aktivitet.type) {
         case AktivitetTypes.STILLING:
-            return `${typeTekst}${tekstGuard(aktivitet.arbeidsgiver)}`;
+            return aktivitet.arbeidsgiver;
         case AktivitetTypes.MOTE:
-            return `${typeTekst} / ${formaterDate(aktivitet.fraDato)} / ${getKlokkeslett(aktivitet.fraDato)}`;
+            return `${formaterDate(aktivitet.fraDato)} / ${getKlokkeslett(aktivitet.fraDato)}`;
         case AktivitetTypes.SOKEAVTALE:
             return `${formaterDate(aktivitet.fraDato)} - ${formaterDate(aktivitet.tilDato)}`;
         case AktivitetTypes.BEHANDLING:
-            return aktivitet.behandlingType ? aktivitet.behandlingType : '';
+            return aktivitet.behandlingType;
         case AktivitetTypes.SAMTALEREFERAT:
-            return `${typeTekst} / ${formaterDate(aktivitet.fraDato)}`;
+            return `${formaterDate(aktivitet.fraDato)}`;
         case AktivitetTypes.IJOBB:
-            return `${typeTekst}${tekstGuard(aktivitet.arbeidsgiver)}`;
+            return aktivitet.arbeidsgiver;
         case ArenaAktivitetTypes.TILTAKSAKTIVITET:
         case ArenaAktivitetTypes.UTDANNINGSAKTIVITET:
         case ArenaAktivitetTypes.GRUPPEAKTIVITET:
         case AktivitetTypes.EGEN:
-            return typeTekst;
+            return null;
     }
 }
