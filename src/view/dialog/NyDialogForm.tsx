@@ -14,6 +14,7 @@ import { dispatchUpdate, UpdateTypes } from '../../utils/UpdateEvent';
 import { useDialogContext } from '../DialogProvider';
 import useHenvendelseStartTekst from './UseHenvendelseStartTekst';
 import loggEvent from '../../felleskomponenter/logging';
+import { KoronaInfo } from '../../felleskomponenter/info/KoronaInfo';
 
 const AlertStripeFeilVisible = visibleIfHoc(AlertStripeFeil);
 
@@ -92,6 +93,7 @@ function NyDialogForm(props: Props) {
             <form onSubmit={state.onSubmit(handleSubmit)} className={style.form} autoComplete="off">
                 <Innholdstittel className={style.tittel}>Ny dialog</Innholdstittel>
                 <Normaltekst className={style.infotekst}>{infoTekst}</Normaltekst>
+                <KoronaInfo className={style.infotekst} hidden={erVeileder} />
                 <Input
                     autoFocus
                     className={style.temafelt}
