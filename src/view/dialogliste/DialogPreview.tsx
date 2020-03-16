@@ -35,12 +35,14 @@ function DialogPreview(props: Props) {
     const datoString = !!sisteDato ? formaterDate(sisteDato) : '';
     const aktivitet = findAktivitet(aktivitetData, aktivitetId);
     const lenkepanelCls = classNames(styles.preview, {
-        [styles.ulest]: !lest,
-        [styles.valgt]: id === valgtDialogId
+        [styles.innholdUlest]: !lest,
+        [styles.innholdValgt]: id === valgtDialogId
     });
+    const markoer = lest ? styles.markoerLest : styles.markoerUlest;
 
     return (
         <LenkepanelBase className={lenkepanelCls} href={`/${id}`} linkCreator={WrapInReactLink}>
+            <div className={markoer}>&nbsp;</div>
             <Ikon dialog={dialog} />
             <div className={styles.content}>
                 <Tittel tittel={overskrift} aktivitet={aktivitet} />
