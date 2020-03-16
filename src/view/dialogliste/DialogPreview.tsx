@@ -42,7 +42,7 @@ function DialogPreview(props: Props) {
 
     return (
         <LenkepanelBase className={lenkepanelCls} href={`/${id}`} linkCreator={WrapInReactLink}>
-            <div className={markoer}>&nbsp;</div>
+            <div className={markoer} />
             <Ikon dialog={dialog} />
             <div className={styles.content}>
                 <Tittel tittel={overskrift} aktivitet={aktivitet} />
