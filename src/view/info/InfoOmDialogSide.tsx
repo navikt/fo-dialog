@@ -9,7 +9,6 @@ import { useSkjulHodefotForMobilVisning } from '../utils/useSkjulHodefotForMobil
 import Lenke from 'nav-frontend-lenker';
 import useApiBasePath from '../../utils/UseApiBasePath';
 import { KoronaInfo } from '../../felleskomponenter/info/KoronaInfo';
-import { useUserInfoContext } from '../Provider';
 
 const cls = classNames(dialogStyle.overflowAuto, dialogStyle.dialog);
 
@@ -19,9 +18,6 @@ export function InfoOmDialogSide() {
         document.getElementById('om-dialog')?.focus();
     });
     const apiBasePath = useApiBasePath();
-
-    const bruker = useUserInfoContext();
-    const erVeileder = !!bruker && bruker.erVeileder;
 
     return (
         <section aria-label="Om dialog" id="om-dialog" className={cls} tabIndex={-1}>
@@ -45,7 +41,7 @@ export function InfoOmDialogSide() {
                     </Normaltekst>
                 </div>
 
-                <KoronaInfo className={styles.info} hidden={erVeileder} />
+                <KoronaInfo className={styles.info} />
 
                 <div className={styles.seksjon}>
                     <Element>Hvem skriver jeg til? </Element>
