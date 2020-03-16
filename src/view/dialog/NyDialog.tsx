@@ -9,6 +9,7 @@ import { useAktivitetId } from '../utils/useAktivitetId';
 import { findAktivitet, isLoadingData, useAktivitetContext } from '../AktivitetProvider';
 import classNames from 'classnames';
 import styles from './Dialog.module.less';
+import { getDialogTittel } from '../aktivitet/TextUtils';
 
 const cls = classNames(styles.dialog, styles.overflowAuto);
 
@@ -20,6 +21,7 @@ function NyDialog() {
     const aktivitetData = useAktivitetContext();
 
     const aktivitet = findAktivitet(aktivitetData, aktivitetId);
+    const defaultTema = getDialogTittel(aktivitet);
     const loadingData = isLoadingData(aktivitetData);
 
     const { viewState, setViewState } = useViewContext();
@@ -37,7 +39,7 @@ function NyDialog() {
             <DialogHeader aktivitetId={aktivitet?.id} />
             <NyDialogForm
                 onSubmit={() => setViewState(sendtNyDialog(viewState))}
-                defaultTema={aktivitet?.tittel}
+                defaultTema={defaultTema}
                 aktivitetId={aktivitet?.id}
                 key={aktivitet?.id}
             />

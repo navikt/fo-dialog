@@ -38,21 +38,34 @@
     }
 }
 
-.ulest {
-    border-left: 8px solid @navBla;
-
+.innholdUlest {
     .content {
         .heading {
             font-weight: 600;
         }
     }
-    &:hover {
-        border-left: 8px solid @navBla;
-    }
 }
 
-.valgt {
+.innholdValgt {
     background-color: @navDypBlaLighten80;
     border: 1px solid transparent;
     box-shadow: 0 0 0 3px @navDypBlaLighten60;
+}
+
+.markoer {
+    left: -1px;
+    position: absolute;
+    width: 8px;
+    height: calc(100% + 2px);
+    border-top-left-radius: 4px;
+    border-bottom-left-radius: 4px;
+}
+
+.markoerUlest {
+    &:extend(.markoer);
+    background-color: @navBla;
+}
+.markoerLest {
+    &:extend(.markoer);
+    background-color: transparent;
 }
