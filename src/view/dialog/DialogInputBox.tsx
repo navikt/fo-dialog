@@ -1,16 +1,17 @@
 import React, { useState } from 'react';
 import { DialogData } from '../../utils/Typer';
 import { visibleIfHoc } from '../../felleskomponenter/VisibleIfHoc';
-import { useDialogContext, useFnrContext, useUserInfoContext, useViewContext } from '../Provider';
+import { dataOrUndefined, useOppfolgingContext, useUserInfoContext, useViewContext } from '../Provider';
 import DialogCheckboxesVisible from './DialogCheckboxes';
 import { AlertStripeFeil } from 'nav-frontend-alertstriper';
-import useFormstate from '@nutgaard/use-formstate';
-import { nyHenvendelse, oppdaterFerdigBehandlet, oppdaterVenterPaSvar } from '../../api/dialog';
+import useFormstate, { Formstate } from '@nutgaard/use-formstate';
 import Textarea from '../../felleskomponenter/input/textarea';
 import { Hovedknapp } from 'nav-frontend-knapper';
 import { HandlingsType, sendtNyHenvendelse } from '../ViewState';
-import { isPending } from '@nutgaard/use-async';
 import { dispatchUpdate, UpdateTypes } from '../../utils/UpdateEvent';
+import { isDialogPendingOrReloading, useDialogContext } from '../DialogProvider';
+import useHenvendelseStartTekst from './UseHenvendelseStartTekst';
+import loggEvent from '../../felleskomponenter/logging';
 
 const AlertStripeFeilVisible = visibleIfHoc(AlertStripeFeil);
 
@@ -18,14 +19,18 @@ const maxMeldingsLengde = 5000;
 
 interface Props {
     dialog: DialogData;
+    kanSendeHenveldelse: boolean;
 }
 
-function validerMelding(melding: string) {
+function validerMelding(melding: string, resten: any, props: { startTekst?: string }) {
     if (melding.length > maxMeldingsLengde) {
         return `Meldingen kan ikke være mer enn ${maxMeldingsLengde} tegn.`;
     }
     if (melding.trim().length === 0) {
         return 'Du må fylle ut en melding.';
+    }
+    if (melding.trim() === props.startTekst?.trim()) {
+        return 'Du må endre på meldingen';
     }
 }
 
@@ -33,62 +38,80 @@ const validator = useFormstate({
     melding: validerMelding
 });
 
-const initalValues = {
-    melding: ''
-};
+interface HenvendelseInputProps {
+    autoFocus: false | boolean;
+    state: Formstate<{ [p: string]: any }>;
+    laster: boolean;
+    kanSendeHenvendelse: boolean;
+}
+
+function HenvendelseInput(props: HenvendelseInputProps) {
+    const { autoFocus, state, laster, kanSendeHenvendelse } = props;
+
+    if (!kanSendeHenvendelse) {
+        return null;
+    }
+
+    return (
+        <div className="skriv-melding label-sr-only">
+            <Textarea
+                label="Skriv en melding om arbeid og oppfølging"
+                placeholder="Skriv en melding om arbeid og oppfølging"
+                textareaClass="autosizing-textarea"
+                maxLength={maxMeldingsLengde}
+                visTellerFra={1000}
+                autoFocus={autoFocus}
+                submittoken={state.submittoken}
+                {...state.fields.melding}
+            />
+            <Hovedknapp title="Send" autoDisableVedSpinner spinner={laster}>
+                Send
+            </Hovedknapp>
+        </div>
+    );
+}
 
 export function DialogInputBox(props: Props) {
     const bruker = useUserInfoContext();
-    const dialoger = useDialogContext();
-    const dialogLaster = isPending(dialoger, true);
+    const oppfolgingContext = useOppfolgingContext();
+    const oppfolging = dataOrUndefined(oppfolgingContext);
+    const { hentDialoger, nyHenvendelse, setFerdigBehandlet, setVenterPaSvar, status } = useDialogContext();
+    const dialogLaster = isDialogPendingOrReloading(status);
     const [noeFeilet, setNoeFeilet] = useState(false);
-    const fnr = useFnrContext();
+    const startTekst = useHenvendelseStartTekst();
 
     const { viewState, setViewState } = useViewContext();
 
     const valgtDialog = props.dialog;
+    const kanSendeHenveldelse = props.kanSendeHenveldelse;
 
-    const [ferdigBehandlet, setFerdigBehandlet] = useState(valgtDialog.ferdigBehandlet);
-    const [venterPaSvar, setVenterPaSvar] = useState(valgtDialog.venterPaSvar);
-
-    const state = validator(initalValues);
-
-    const toggleFerdigBehandlet = (nyFerdigBehandletVerdi: boolean) => {
-        setFerdigBehandlet(nyFerdigBehandletVerdi);
-        oppdaterFerdigBehandlet(fnr, valgtDialog.id, nyFerdigBehandletVerdi).then(dialoger.rerun);
+    const initalValues = {
+        melding: startTekst
     };
 
-    const toggleVenterPaSvar = (nyVenterPaSvarVerdi: boolean) => {
-        setVenterPaSvar(nyVenterPaSvarVerdi);
-        oppdaterVenterPaSvar(fnr, valgtDialog.id, nyVenterPaSvarVerdi).then(dialoger.rerun);
-    };
+    const state = validator(initalValues, { startTekst });
+
+    if (!oppfolging?.underOppfolging || valgtDialog.historisk) {
+        return null;
+    }
 
     const onSubmit = (data: { melding: string }) => {
         const { melding } = data;
-        return nyHenvendelse(fnr, melding, valgtDialog.id)
+        loggEvent('arbeidsrettet-dialog.ny.henvendelse', { paaAktivitet: !!valgtDialog.aktivitetId });
+        return nyHenvendelse(melding, valgtDialog)
             .then(dialog => {
                 if (bruker?.erVeileder) {
-                    if (!dialog.venterPaSvar && !dialog.ferdigBehandlet) {
-                        return oppdaterVenterPaSvar(fnr, valgtDialog.id, true).then(() =>
-                            oppdaterFerdigBehandlet(fnr, valgtDialog.id, true)
-                        );
-                    }
-                    if (!dialog.venterPaSvar) {
-                        return oppdaterVenterPaSvar(fnr, valgtDialog.id, true);
-                    }
                     if (!dialog.ferdigBehandlet) {
-                        return oppdaterFerdigBehandlet(fnr, valgtDialog.id, true);
+                        return setFerdigBehandlet(valgtDialog, true);
                     }
                 }
                 return dialog;
             })
-            .then(dialog => {
+            .then(hentDialoger)
+            .then(() => {
                 setNoeFeilet(false);
                 state.reinitialize(initalValues);
                 setViewState(sendtNyHenvendelse(viewState));
-                setFerdigBehandlet(dialog.ferdigBehandlet);
-                setVenterPaSvar(dialog.venterPaSvar);
-                dialoger.rerun();
                 dispatchUpdate(UpdateTypes.Dialog);
             })
             .catch(() => setNoeFeilet(true));
@@ -99,28 +122,19 @@ export function DialogInputBox(props: Props) {
     const autoFocus = match && viewState.sistHandlingsType !== HandlingsType.nyDialog;
 
     return (
-        <>
+        <section aria-label="Ny melding">
             <form onSubmit={state.onSubmit(onSubmit)} noValidate autoComplete="off">
-                <div className="skriv-melding label-sr-only">
-                    <Textarea
-                        label="Skriv en melding om arbeid og oppfølging"
-                        placeholder="Skriv en melding om arbeid og oppfølging"
-                        textareaClass="autosizing-textarea"
-                        maxLength={maxMeldingsLengde}
-                        visTellerFra={1000}
-                        autoFocus={autoFocus}
-                        submittoken={state.submittoken}
-                        {...state.fields.melding}
-                    />
-                    <Hovedknapp title="Send" autoDisableVedSpinner spinner={laster}>
-                        Send
-                    </Hovedknapp>
-                </div>
+                <HenvendelseInput
+                    laster={laster}
+                    state={state}
+                    autoFocus={autoFocus}
+                    kanSendeHenvendelse={kanSendeHenveldelse}
+                />
                 <DialogCheckboxesVisible
-                    toggleFerdigBehandlet={toggleFerdigBehandlet}
-                    toggleVenterPaSvar={toggleVenterPaSvar}
-                    ferdigBehandlet={ferdigBehandlet}
-                    venterPaSvar={venterPaSvar}
+                    toggleFerdigBehandlet={ferdigBehandlet => setFerdigBehandlet(valgtDialog, ferdigBehandlet)}
+                    toggleVenterPaSvar={venterPaSvar => setVenterPaSvar(valgtDialog, venterPaSvar)}
+                    ferdigBehandlet={valgtDialog.ferdigBehandlet}
+                    venterPaSvar={valgtDialog.venterPaSvar}
                     visible={bruker!.erVeileder}
                     disabled={laster}
                 />
@@ -128,8 +142,8 @@ export function DialogInputBox(props: Props) {
                     Det skjedde en alvorlig feil. Prøv igjen senere
                 </AlertStripeFeilVisible>
             </form>
-        </>
+        </section>
     );
 }
 
-export default visibleIfHoc(DialogInputBox);
+export default DialogInputBox;

@@ -1,12 +1,11 @@
 import React from 'react';
-import { hasData } from '@nutgaard/use-fetch';
 import { DialogPreviewListe } from './DialogPreview';
 import { DialogData } from '../../utils/Typer';
-import { useDialogContext } from '../Provider';
 import { useParams } from 'react-router';
 import styles from './DialogOversikt.module.less';
-import { Undertittel } from 'nav-frontend-typografi';
-import InvertedLestMer from '../../felleskomponenter/InvertedLesMer';
+import { Systemtittel } from 'nav-frontend-typografi';
+import { useDialogContext } from '../DialogProvider';
+import HistoriskeDialogerOversikt from './HistoriskDialogListe';
 
 interface Res {
     naaverende: DialogData[];
@@ -19,28 +18,18 @@ function splitHistoriske(acc: Res, cur: DialogData) {
 }
 
 export function DialogListe() {
-    const dialoger = useDialogContext();
-    const dialogData = hasData(dialoger) ? dialoger.data : [];
+    const { dialoger } = useDialogContext();
     const { dialogId } = useParams();
 
-    const sorterteDialoger = dialogData.sort((a, b) => sortDialoger(a, b));
-
+    const sorterteDialoger = dialoger.sort((a, b) => sortDialoger(a, b));
     const { naaverende, historiske } = sorterteDialoger.reduce(splitHistoriske, { naaverende: [], historiske: [] });
-    const skulHistoriske = historiske.length === 0;
 
     return (
-        <section className={styles.dialogListe}>
+        <div className={styles.dialogListe} role="navigation" aria-label="Dialoger">
+            <Systemtittel className="visually-hidden">Dialogliste</Systemtittel>
             <DialogPreviewListe dialoger={naaverende} valgDialog={dialogId} />
-
-            <InvertedLestMer apneTekst="Se dialoger fra tidligere perioder" lukkTekst="Skjul" hidden={skulHistoriske}>
-                <section>
-                    <Undertittel className={styles.tidligerePeriodeTittel} tag="h1">
-                        Dialoger fra tidligere perioder
-                    </Undertittel>
-                    <DialogPreviewListe dialoger={historiske} valgDialog={dialogId} />
-                </section>
-            </InvertedLestMer>
-        </section>
+            <HistoriskeDialogerOversikt historiske={historiske} valgDialog={dialogId} />
+        </div>
     );
 }
 

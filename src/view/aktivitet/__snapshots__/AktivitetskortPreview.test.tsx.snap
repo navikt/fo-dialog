@@ -4,51 +4,73 @@ exports[`<AktivitetskortPreview /> skal rendre stillingsaktivitet som i snapshot
 <AktivitetskortPreview
   aktivitetId="123"
 >
-  <LenkepanelBase
-    border={false}
-    href="/aktivitetsplan/aktivitet/vis/123"
-    linkCreator={[Function]}
-    onClick={[Function]}
+  <section
+    aria-label="Aktivitet knyttet til dialog"
   >
-    <a
-      className="lenkepanel"
+    <Systemtittel
+      className="visually-hidden"
+    >
+      <TypografiBase
+        className="visually-hidden"
+        type="systemtittel"
+      >
+        <h2
+          className="typo-systemtittel visually-hidden"
+        >
+          Aktivitet knyttet til dialog
+        </h2>
+      </TypografiBase>
+    </Systemtittel>
+    <LenkepanelBase
+      border={false}
       href="/aktivitetsplan/aktivitet/vis/123"
+      linkCreator={[Function]}
       onClick={[Function]}
     >
-      <div>
+      <a
+        className="lenkepanel"
+        href="/aktivitetsplan/aktivitet/vis/123"
+        onClick={[Function]}
+      >
         <div>
-          <Undertittel>
-            <TypografiBase
-              type="undertittel"
+          <div>
+            <Undertittel
+              id="dialog_header_2"
             >
-              <h2
-                className="typo-undertittel"
+              <TypografiBase
+                id="dialog_header_2"
+                type="undertittel"
               >
-                Kantinemedarbeider
-              </h2>
-            </TypografiBase>
-          </Undertittel>
-          <Undertekst>
-            <TypografiBase
-              type="undertekst"
-            >
-              <p
-                className="typo-undertekst"
+                <h2
+                  className="typo-undertittel"
+                  id="dialog_header_2"
+                >
+                  Kantinemedarbeider
+                </h2>
+              </TypografiBase>
+            </Undertittel>
+            <Undertekst>
+              <TypografiBase
+                type="undertekst"
               >
-                Stilling / Testesen
-              </p>
-            </TypografiBase>
-          </Undertekst>
+                <p
+                  className="typo-undertekst"
+                >
+                  Stilling / Testesen
+                </p>
+              </TypografiBase>
+            </Undertekst>
+          </div>
+          <p>
+            Se aktivitet
+          </p>
         </div>
-        <p>
-          Se aktivitet
-        </p>
-      </div>
-      <span
-        className="lenkepanel__indikator"
-        key="indikator"
-      />
-    </a>
-  </LenkepanelBase>
+        <span
+          className="lenkepanel__indikator"
+          key="indikator"
+        />
+      </a>
+    </LenkepanelBase>
+  </section>
 </AktivitetskortPreview>
 `;

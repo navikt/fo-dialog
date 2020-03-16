@@ -35,7 +35,7 @@ function NyDialog() {
     }
 
     return (
-        <div className={cls}>
+        <section aria-label="Ny dialog" className={cls}>
             <DialogHeader aktivitetId={aktivitet?.id} />
             <NyDialogForm
                 onSubmit={() => setViewState(sendtNyDialog(viewState))}
@@ -43,7 +43,7 @@ function NyDialog() {
                 aktivitetId={aktivitet?.id}
                 key={aktivitet?.id}
             />
-        </div>
+        </section>
     );
 }
 

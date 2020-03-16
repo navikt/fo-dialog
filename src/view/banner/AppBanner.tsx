@@ -16,7 +16,7 @@ export function AppBanner(props: { hidden?: boolean }) {
 
     const cls = classNames('dialogbanner', { 'hidden-xs': location.pathname !== '/' });
     return (
-        <div className={cls}>
+        <div role="banner" aria-label="Dialog" className={cls}>
             <Lenke className="dialogbanner__lenke" href="/arbeid/dialog/dittnav">
                 <VenstreChevron />
                 Ditt NAV

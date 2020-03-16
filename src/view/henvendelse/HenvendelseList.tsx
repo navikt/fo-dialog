@@ -3,6 +3,7 @@ import React, { useLayoutEffect, useRef } from 'react';
 import { Henvendelse } from './Henvendelse';
 import LestAvTidspunkt from '../lest/LestTidspunkt';
 import { useSkjulHodefotForMobilVisning } from '../utils/useSkjulHodefotForMobilVisning';
+import { Systemtittel } from 'nav-frontend-typografi';
 
 interface Props {
     dialogData: DialogData;
@@ -51,7 +52,8 @@ export function HenvendelseList(props: Props) {
     const sisteHenvendelseLestAvBruker = sisteLesteHenvendelse(lestAvBrukerTidspunkt, sorterteHenvendelser);
 
     return (
-        <div className="henvendelse-list">
+        <section aria-label="Meldinger" className="henvendelse-list">
+            <Systemtittel className="visually-hidden">Meldinger</Systemtittel>
             <div className="henvendelse-list__viewport">
                 {sorterteHenvendelser.map(henvendelse => (
                     <React.Fragment key={henvendelse.id}>
@@ -65,6 +67,6 @@ export function HenvendelseList(props: Props) {
                     </React.Fragment>
                 ))}
             </div>
-        </div>
+        </section>
     );
 }

@@ -6,6 +6,7 @@ import { Normaltekst, Systemtittel } from 'nav-frontend-typografi';
 import { hiddenIfHoc } from '../HiddenIfHoc';
 import { ReactComponent as ObsSVG } from './obs.svg';
 import './Timeoutmodal.less';
+import { getApiBasePath } from '../../utils/Fetch';
 
 export const getCookie = (name: string) => {
     const re = new RegExp(`${name}=([^;]+)`);
@@ -25,16 +26,16 @@ function utloptTidspunktMinusSeksMinutter(remainingSeconds: number): number {
 }
 
 interface Props {
-    apiBasePath: string;
+    fnr?: string;
     visDemo?: boolean;
 }
 
 function TimeoutModal(props: Props) {
-    const { apiBasePath, visDemo } = props;
+    const { visDemo, fnr } = props;
     const [skalVises, setSkalVises] = useState(false);
 
     useEffect(() => {
-        fetch(apiBasePath + '/api/auth', {
+        fetch(getApiBasePath(fnr) + '/api/auth', {
             credentials: 'same-origin',
             headers: getHeaders()
         })
@@ -61,7 +62,7 @@ function TimeoutModal(props: Props) {
             .catch(e => {
                 console.log('catch', e);
             });
-    }, [apiBasePath]);
+    }, [fnr]);
 
     const apen = skalVises || !!visDemo;
     return (
