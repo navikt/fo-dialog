@@ -18,7 +18,7 @@ interface TittelProps {
 }
 
 function Tittel(props: TittelProps) {
-    const tittel = props.aktivitet ? getDialogTitel(props.aktivitet) : props.tittel;
+    const tittel = props.aktivitet ? getDialogTittel(props.aktivitet) : props.tittel;
     return (
         <Systemtittel tag="p" className={styles.heading}>
             {tittel}
