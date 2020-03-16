@@ -8,6 +8,7 @@ import classNames from 'classnames';
 import { useSkjulHodefotForMobilVisning } from '../utils/useSkjulHodefotForMobilVisning';
 import Lenke from 'nav-frontend-lenker';
 import useApiBasePath from '../../utils/UseApiBasePath';
+import { KoronaInfo } from '../../felleskomponenter/info/KoronaInfo';
 
 const cls = classNames(dialogStyle.overflowAuto, dialogStyle.dialog);
 
@@ -39,6 +40,8 @@ export function InfoOmDialogSide() {
                         55 55 33 33.
                     </Normaltekst>
                 </div>
+
+                <KoronaInfo className={styles.info} />
 
                 <div className={styles.seksjon}>
                     <Element>Hvem skriver jeg til? </Element>

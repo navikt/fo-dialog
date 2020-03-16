@@ -8,7 +8,7 @@ import WrapInReactLink from '../../felleskomponenter/WrapInReactLink';
 import classNames from 'classnames';
 import styles from './DialogPreview.module.less';
 import Ikon from './ikon/Ikon';
-import { getDialogTitel } from '../aktivitet/TextUtils';
+import { getDialogTittel } from '../aktivitet/TextUtils';
 import { Aktivitet, ArenaAktivitet } from '../../utils/AktivitetTypes';
 import { findAktivitet, useAktivitetContext } from '../AktivitetProvider';
 
@@ -18,7 +18,7 @@ interface TittelProps {
 }
 
 function Tittel(props: TittelProps) {
-    const tittel = props.aktivitet ? getDialogTitel(props.aktivitet) : props.tittel;
+    const tittel = props.aktivitet ? getDialogTittel(props.aktivitet) : props.tittel;
     return (
         <Systemtittel tag="p" className={styles.heading}>
             {tittel}
@@ -53,13 +53,15 @@ function DialogPreview(props: Props) {
     const datoString = !!sisteDato ? formaterDate(sisteDato) : '';
     const aktivitet = findAktivitet(aktivitetData, aktivitetId);
     const lenkepanelCls = classNames(styles.preview, {
-        [styles.ulest]: !lest,
-        [styles.valgt]: id === valgtDialogId
+        [styles.innholdUlest]: !lest,
+        [styles.innholdValgt]: id === valgtDialogId
     });
+    const markoer = lest ? styles.markoerLest : styles.markoerUlest;
 
     return (
         <div role="listitem">
             <LenkepanelBase className={lenkepanelCls} href={`/${id}`} linkCreator={WrapInReactLink}>
+                <div className={markoer} />
                 <Ikon dialog={dialog} />
                 <div className={styles.content}>
                     <Normaltekst className="visually-hidden">{typeText(dialog)}</Normaltekst>

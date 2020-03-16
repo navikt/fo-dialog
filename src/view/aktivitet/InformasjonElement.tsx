@@ -18,7 +18,7 @@ export default function InformasjonElement(props: TekstomradeProps) {
 
     return (
         <InformasjonElementRaw merkelapptekst={merkelapptekst}>
-            <Tekstomrade>{verdi}</Tekstomrade>
+            <Tekstomrade className={styles.overflowEllipse}>{verdi}</Tekstomrade>
         </InformasjonElementRaw>
     );
 }
