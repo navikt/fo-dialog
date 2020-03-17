@@ -14,6 +14,7 @@ import {
     settSessionStorage
 } from './sessionstorage';
 import './DemoDashboard.less';
+import { Hovedknapp } from 'nav-frontend-knapper';
 
 function reload() {
     window.location.reload();
@@ -34,7 +35,11 @@ function endreTilstand(event: React.SyntheticEvent<EventTarget>) {
     reload();
 }
 
-function DemoDashboard() {
+interface DemoDashboardProps {
+    skul: () => void;
+}
+
+function DemoDashboard(props: DemoDashboardProps) {
     return (
         <section className="demodashboard">
             <Innholdstittel className="blokk-s">DEMO</Innholdstittel>
@@ -90,6 +95,9 @@ function DemoDashboard() {
                 ]}
                 onChange={endreTilstand}
             />
+            <div>
+                <Hovedknapp onClick={props.skul}>Skul demo banner</Hovedknapp>
+            </div>
         </section>
     );
 }
