@@ -41,7 +41,7 @@ export function AktivitetskortPreview(props: Props) {
                 className={styles.lenkepanelbase}
                 onClick={visAktivitetsplan(aktivitet.id, fnr)}
             >
-                <div className={styles.spaceBetween}>
+                <div className={styles.aktivteskortWrapper}>
                     <div className={styles.info}>
                         <EtikettLiten>{typeTekst}</EtikettLiten>
                         <Undertittel id={dialogHeaderID2} className={styles.tittel}>

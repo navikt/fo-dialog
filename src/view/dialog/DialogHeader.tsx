@@ -2,8 +2,9 @@ import React from 'react';
 import { VenstreChevron } from 'nav-frontend-chevron';
 import { DialogData, StringOrNull } from '../../utils/Typer';
 import { AktivitetskortPreview } from '../aktivitet/AktivitetskortPreview';
-import { Undertittel } from 'nav-frontend-typografi';
+import { Systemtittel, Undertittel } from 'nav-frontend-typografi';
 import { Link } from 'react-router-dom';
+import classNames from 'classnames';
 import styles from './DialogHeader.module.less';
 
 export const dialogHeaderID1 = 'dialog_header_1';
@@ -12,6 +13,7 @@ export const dialogHeaderID2 = 'dialog_header_2';
 interface DialogHeaderProps {
     dialog?: DialogData;
     aktivitetId?: StringOrNull;
+    visSkygge?: boolean;
 }
 
 interface DialogOverskriftProps {
@@ -31,14 +33,11 @@ function DialogOverskrift(props: DialogOverskriftProps) {
 }
 
 export function DialogHeader(props: DialogHeaderProps) {
-    const { dialog, aktivitetId } = props;
+    const { dialog, aktivitetId, visSkygge } = props;
     const aktivitet = aktivitetId || dialog?.aktivitetId;
 
     return (
-        <div className={styles.dialogHeader}>
-            <Link to="/" title="Til dialoger" className={styles.skjulVedMiddelsSkjem}>
-                <VenstreChevron stor />
-            </Link>
+        <Headder visSkygge={visSkygge}>
             <div id={dialogHeaderID1} className="hide">
                 Dialog om:
             </div>
@@ -47,6 +46,26 @@ export function DialogHeader(props: DialogHeaderProps) {
             ) : (
                 <DialogOverskrift tekst={dialog?.overskrift} />
             )}
+        </Headder>
+    );
+}
+
+function Headder(props: { children?: React.ReactNode; visSkygge?: boolean; className?: string }) {
+    const { children, visSkygge, className } = props;
+    return (
+        <div className={classNames(styles.dialogHeader, { [styles.dialogHeaderShadow]: visSkygge }, className)}>
+            <Link to="/" title="Til dialoger" className={styles.tilbakeTilOversikt}>
+                <VenstreChevron stor />
+            </Link>
+            <div className={styles.flexgrow1}>{children}</div>
         </div>
+    );
+}
+
+export function TittelHeader(props: { children?: string }) {
+    return (
+        <Headder className={styles.tittelHeader}>
+            <Systemtittel>{props.children}</Systemtittel>
+        </Headder>
     );
 }

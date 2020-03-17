@@ -2,15 +2,16 @@
 @import (reference) '../../variabler';
 
 .tilbakeTilOversikt {
-    text-decoration: none;
-    padding: 1rem 0.5rem 0.2rem 0.5rem;
-    display: flex;
-    align-items: center;
+    padding: 1rem 0.35rem 1rem 0.25rem;
     color: @navMorkGra;
-    font-weight: bold;
     @media (min-width: 800px) {
         display: none;
     }
+}
+
+.flexgrow1 {
+    flex-grow: 1;
+    overflow: hidden;
 }
 
 .dialogHeader {
@@ -18,14 +19,24 @@
     align-items: center;
     background-color: @lysgraBakrund;
     min-height: 3rem;
-    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
     z-index: 0;
 }
 
-.skjulVedMiddelsSkjem {
+.tittelHeader {
+    text-align: center;
+
     @media (min-width: 800px) {
-        display: none;
+        background-color: white;
+        margin-top: 1rem;
     }
+}
+
+.overflowHidden {
+    overflow: hidden;
+}
+
+.dialogHeaderShadow {
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
 }
 
 .tittel {

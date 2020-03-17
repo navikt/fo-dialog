@@ -1,9 +1,9 @@
 import React, { useLayoutEffect } from 'react';
-import { Innholdstittel, Normaltekst, Element } from 'nav-frontend-typografi';
+import { Element, Normaltekst } from 'nav-frontend-typografi';
 import Ekspanderbartpanel from 'nav-frontend-ekspanderbartpanel';
 import styles from './InfoOmDialogSide.module.less';
 import dialogStyle from '../dialog/Dialog.module.less';
-import { DialogHeader } from '../dialog/DialogHeader';
+import { TittelHeader } from '../dialog/DialogHeader';
 import classNames from 'classnames';
 import { useSkjulHodefotForMobilVisning } from '../utils/useSkjulHodefotForMobilVisning';
 import Lenke from 'nav-frontend-lenker';
@@ -20,11 +20,10 @@ export function InfoOmDialogSide() {
 
     return (
         <section aria-label="Om dialog" id="om-dialog" className={cls} tabIndex={-1}>
-            <DialogHeader />
+            <TittelHeader>Om dialog</TittelHeader>
 
             <div className={styles.side}>
                 <div className={styles.seksjon}>
-                    <Innholdstittel>Om dialog</Innholdstittel>
                     <Normaltekst>
                         I dialogen kan du og veilederen din skrive til hverandre om arbeid og oppfølging. Dere kan blant
                         annet sende meldinger om aktivitetene dine i{' '}

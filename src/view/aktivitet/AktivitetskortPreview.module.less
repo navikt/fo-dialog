@@ -13,9 +13,9 @@
 
 .lenkepanelbase {
     display: flex;
-    height: 71px;
+    height: 80px;
     border-radius: 4px;
-    margin: 0.75rem 1rem 0.75rem 1rem;
+    margin: 0.75rem 1rem 0.75rem 0;
     border: 1px @navGra60 solid;
 
     @media (min-width: 800px) {
@@ -24,6 +24,11 @@
 
     @media (min-width: 1200px) {
         display: none;
+    }
+    :global {
+        .lenkepanel__indikator {
+            color: @navBla;
+        }
     }
 
     &:hover {
@@ -36,12 +41,14 @@
 
 .flexgrow {
     flex-grow: 1;
+    overflow: hidden;
 }
 
-.spaceBetween {
+.aktivteskortWrapper {
     display: flex;
-    width: 100%;
     justify-content: space-between;
+    flex-grow: 1;
+    overflow: hidden;
 }
 
 .tittel {
@@ -53,6 +60,10 @@
 .info {
     overflow: hidden;
     margin-right: 1rem;
+
+    @media (max-width: 799px) {
+        margin-right: 0.5rem;
+    }
 }
 
 .lesmer {

@@ -1,6 +1,7 @@
 import React from 'react';
 import { Checkbox } from 'nav-frontend-skjema';
-import { visibleIfHoc } from '../../felleskomponenter/VisibleIfHoc';
+import { DialogData } from '../../utils/Typer';
+import { useDialogContext } from '../DialogProvider';
 
 interface Props {
     toggleFerdigBehandlet(ferdigBehandler: boolean): void;
@@ -31,4 +32,35 @@ export function DialogCheckboxes(props: Props) {
     );
 }
 
-export default visibleIfHoc(DialogCheckboxes);
+interface ManagedProps {
+    dialog: DialogData;
+    visible: boolean;
+}
+
+export default function MannagegDialogCheckboxes(props: ManagedProps) {
+    const dialogContext = useDialogContext();
+
+    const { visible, dialog } = props;
+
+    if (!visible) {
+        return null;
+    }
+
+    const toggleFerdigBehandlet = (ferdigBehandlet: boolean) => {
+        dialogContext.setFerdigBehandlet(dialog, ferdigBehandlet).then(dialogContext.hentDialoger);
+    };
+    const toggleVenterPaSvar = (venterPaSvar: boolean) => {
+        dialogContext.setVenterPaSvar(dialog, venterPaSvar).then(dialogContext.hentDialoger);
+    };
+    const disabled = dialog.historisk;
+
+    return (
+        <DialogCheckboxes
+            disabled={disabled}
+            toggleFerdigBehandlet={toggleFerdigBehandlet}
+            toggleVenterPaSvar={toggleVenterPaSvar}
+            ferdigBehandlet={dialog.ferdigBehandlet}
+            venterPaSvar={dialog.venterPaSvar}
+        />
+    );
+}

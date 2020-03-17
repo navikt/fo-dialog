@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react';
 import { HenvendelseList } from '../henvendelse/HenvendelseList';
 import { DialogHeader, dialogHeaderID1, dialogHeaderID2 } from './DialogHeader';
-import { useFnrContext, useViewContext } from '../Provider';
+import { useFnrContext, useUserInfoContext, useViewContext } from '../Provider';
 import { useParams } from 'react-router';
 import DialogInputBoxVisible from './DialogInputBox';
 import useKansendeMelding from '../../utils/UseKanSendeMelding';
@@ -15,6 +15,7 @@ import { dispatchUpdate, UpdateTypes } from '../../utils/UpdateEvent';
 import styles from './Dialog.module.less';
 import { useDialogContext } from '../DialogProvider';
 import { Systemtittel } from 'nav-frontend-typografi';
+import MannagegDialogCheckboxes from './DialogCheckboxes';
 
 export function Dialog() {
     const kanSendeMelding = useKansendeMelding();
@@ -22,6 +23,7 @@ export function Dialog() {
     const { dialogId } = useParams();
     const valgtDialog = dialoger.find(dialog => dialog.id === dialogId);
     const fnr = useFnrContext();
+    const bruker = useUserInfoContext();
 
     const { viewState, setViewState } = useViewContext();
 
@@ -48,7 +50,8 @@ export function Dialog() {
             <Systemtittel className="visually-hidden" aria-labelledby={`${dialogHeaderID1} ${dialogHeaderID2}`}>
                 Dialog Header
             </Systemtittel>
-            <DialogHeader dialog={valgtDialog} />
+            <DialogHeader dialog={valgtDialog} visSkygge={!!bruker?.erBruker} />
+            <MannagegDialogCheckboxes dialog={valgtDialog} visible={!!bruker?.erVeileder} />
             <HenvendelseList dialogData={valgtDialog} />
             <DialogSendtBekreftelse viewState={viewState} dialog={valgtDialog} fnr={fnr} />
             <HistoriskInfo hidden={aktivDialog} kanSendeMelding={kanSendeMelding} />
