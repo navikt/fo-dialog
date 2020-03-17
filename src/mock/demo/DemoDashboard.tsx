@@ -2,16 +2,16 @@ import React from 'react';
 import { Innholdstittel } from 'nav-frontend-typografi';
 import { CheckboksPanelGruppe, RadioPanelGruppe } from 'nav-frontend-skjema';
 import {
-    SessionStorageElement,
-    settSessionStorage,
-    erPrivatBruker,
-    erManuellBruker,
-    erKRRBruker,
-    ingenOppfPerioder,
-    hentFraSessionStorage,
+    BRUKER_TYPE,
     brukerKanIkkeVarsles,
+    erEksternBruker,
+    erKRRBruker,
+    erManuellBruker,
+    erPrivatBruker,
     harIngenDialoger,
-    BRUKER_TYPE
+    ingenOppfPerioder,
+    SessionStorageElement,
+    settSessionStorage
 } from './sessionstorage';
 import './DemoDashboard.less';
 
@@ -25,7 +25,7 @@ function endreBrukerType(value: string) {
 }
 
 function getBrukerType() {
-    return hentFraSessionStorage(SessionStorageElement.BRUKER_TYPE) || BRUKER_TYPE.EKSTERN;
+    return erEksternBruker() ? BRUKER_TYPE.EKSTERN : BRUKER_TYPE.INTERN;
 }
 
 function endreTilstand(event: React.SyntheticEvent<EventTarget>) {
