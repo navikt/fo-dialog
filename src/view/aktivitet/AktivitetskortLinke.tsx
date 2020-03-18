@@ -33,8 +33,12 @@ export default function AktivitetskortLenke(props: Props) {
     return (
         <div className={styles.aktivitetkortlenke}>
             <Element>
-                <Lenke href={aktivitetLenke(apiBasePath, aktivitetId)} onClick={visAktivitetsplan(aktivitetId, fnr)}>
-                    Se og endre aktivitet
+                <Lenke
+                    className={styles.flatLenke}
+                    href={aktivitetLenke(apiBasePath, aktivitetId)}
+                    onClick={visAktivitetsplan(aktivitetId, fnr)}
+                >
+                    Gå til aktiviteten
                     <HoyreChevron />
                 </Lenke>
             </Element>

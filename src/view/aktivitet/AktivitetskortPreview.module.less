@@ -1,14 +1,34 @@
 @import (reference) '~nav-frontend-core/less/core';
 
+.storSkjermTittel {
+    display: none;
+    padding: 1rem;
+    flex-grow: 1;
+    text-align: center;
+
+    @media (min-width: 1200px) {
+        display: block;
+    }
+}
+
 .lenkepanelbase {
     display: flex;
-    height: 71px;
+    height: 80px;
     border-radius: 4px;
-    box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.28);
-    margin: 0.75rem 1rem 0.75rem 1rem;
+    margin: 0.75rem 1rem 0.75rem 0;
+    border: 1px @navGra60 solid;
 
     @media (min-width: 800px) {
         margin: 0.75rem 3rem 0.75rem 3rem;
+    }
+
+    @media (min-width: 1200px) {
+        display: none;
+    }
+    :global {
+        .lenkepanel__indikator {
+            color: @navBla;
+        }
     }
 
     &:hover {
@@ -19,10 +39,16 @@
     }
 }
 
-.spaceBetween {
+.aktivitetSeksjon {
+    flex-grow: 1;
+    overflow: hidden;
+}
+
+.aktivteskortWrapper {
     display: flex;
-    width: 100%;
     justify-content: space-between;
+    flex-grow: 1;
+    overflow: hidden;
 }
 
 .tittel {
@@ -33,10 +59,21 @@
 
 .info {
     overflow: hidden;
+    margin-right: 1rem;
+
+    @media (max-width: 799px) {
+        margin-right: 0.5rem;
+    }
 }
 
 .lesmer {
+    color: @navBla;
     text-align: right;
-    white-space: nowrap;
     font-weight: bold;
+    align-self: center;
+
+    @media (max-width: 799px) {
+        max-width: 5rem;
+        text-align: center;
+    }
 }

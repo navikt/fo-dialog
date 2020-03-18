@@ -2,18 +2,19 @@ import React from 'react';
 import { Innholdstittel } from 'nav-frontend-typografi';
 import { CheckboksPanelGruppe, RadioPanelGruppe } from 'nav-frontend-skjema';
 import {
-    SessionStorageElement,
-    settSessionStorage,
-    erPrivatBruker,
-    erManuellBruker,
-    erKRRBruker,
-    ingenOppfPerioder,
-    hentFraSessionStorage,
+    BRUKER_TYPE,
     brukerKanIkkeVarsles,
+    erEksternBruker,
+    erKRRBruker,
+    erManuellBruker,
+    erPrivatBruker,
     harIngenDialoger,
-    BRUKER_TYPE
+    ingenOppfPerioder,
+    SessionStorageElement,
+    settSessionStorage
 } from './sessionstorage';
 import './DemoDashboard.less';
+import { Hovedknapp } from 'nav-frontend-knapper';
 
 function reload() {
     window.location.reload();
@@ -25,7 +26,7 @@ function endreBrukerType(value: string) {
 }
 
 function getBrukerType() {
-    return hentFraSessionStorage(SessionStorageElement.BRUKER_TYPE) || BRUKER_TYPE.EKSTERN;
+    return erEksternBruker() ? BRUKER_TYPE.EKSTERN : BRUKER_TYPE.INTERN;
 }
 
 function endreTilstand(event: React.SyntheticEvent<EventTarget>) {
@@ -34,7 +35,11 @@ function endreTilstand(event: React.SyntheticEvent<EventTarget>) {
     reload();
 }
 
-function DemoDashboard() {
+interface DemoDashboardProps {
+    skul: () => void;
+}
+
+function DemoDashboard(props: DemoDashboardProps) {
     return (
         <section className="demodashboard">
             <Innholdstittel className="blokk-s">DEMO</Innholdstittel>
@@ -90,6 +95,9 @@ function DemoDashboard() {
                 ]}
                 onChange={endreTilstand}
             />
+            <div>
+                <Hovedknapp onClick={props.skul}>Skul demo banner</Hovedknapp>
+            </div>
         </section>
     );
 }

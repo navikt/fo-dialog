@@ -5,11 +5,22 @@ import DemoDashboard from './DemoDashboard';
 
 function DemoBanner() {
     const [open, setOpen] = useState(false);
+    const [skult, setSkult] = useState(false);
+
+    if (skult) {
+        return null;
+    }
+
     return (
         <div>
             <DemoIkon onClick={() => setOpen(true)} />
             <Modal isOpen={open} contentLabel={''} onRequestClose={() => setOpen(false)} closeButton={true}>
-                <DemoDashboard />
+                <DemoDashboard
+                    skul={() => {
+                        setSkult(true);
+                        setOpen(false);
+                    }}
+                />
             </Modal>
         </div>
     );

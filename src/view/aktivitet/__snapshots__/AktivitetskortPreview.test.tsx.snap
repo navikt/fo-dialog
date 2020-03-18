@@ -21,6 +21,19 @@ exports[`<AktivitetskortPreview /> skal rendre stillingsaktivitet som i snapshot
         </h2>
       </TypografiBase>
     </Systemtittel>
+    <Undertittel>
+      <TypografiBase
+        type="undertittel"
+      >
+        <h2
+          className="typo-undertittel"
+        >
+          Stilling
+          : 
+          Kantinemedarbeider
+        </h2>
+      </TypografiBase>
+    </Undertittel>
     <LenkepanelBase
       border={false}
       href="/aktivitetsplan/aktivitet/vis/123"
@@ -34,6 +47,17 @@ exports[`<AktivitetskortPreview /> skal rendre stillingsaktivitet som i snapshot
       >
         <div>
           <div>
+            <EtikettLiten>
+              <TypografiBase
+                type="etikettLiten"
+              >
+                <p
+                  className="typo-etikett-liten"
+                >
+                  Stilling
+                </p>
+              </TypografiBase>
+            </EtikettLiten>
             <Undertittel
               id="dialog_header_2"
             >
@@ -56,13 +80,13 @@ exports[`<AktivitetskortPreview /> skal rendre stillingsaktivitet som i snapshot
                 <p
                   className="typo-undertekst"
                 >
-                  Stilling / Testesen
+                  Testesen
                 </p>
               </TypografiBase>
             </Undertekst>
           </div>
           <p>
-            Se aktivitet
+            Gå til aktiviteten
           </p>
         </div>
         <span

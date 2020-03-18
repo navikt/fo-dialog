@@ -2,39 +2,49 @@
 @import (reference) '../../variabler';
 
 .tilbakeTilOversikt {
-    text-decoration: none;
-    padding: 1rem 0.5rem 0.2rem 0.5rem;
-    display: flex;
-    align-items: center;
+    padding: 1rem 0.35rem 1rem 0.25rem;
     color: @navMorkGra;
-    font-weight: bold;
     @media (min-width: 800px) {
         display: none;
     }
+}
+
+.hederContent {
+    flex-grow: 1;
+    overflow: hidden;
 }
 
 .dialogHeader {
+    display: flex;
+    align-items: center;
     background-color: @lysgraBakrund;
     min-height: 3rem;
-    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
     z-index: 0;
 }
 
-.skjulVedMiddelsSkjem {
+.tittelHeader {
+    text-align: center;
+
     @media (min-width: 800px) {
-        display: none;
+        background-color: white;
+        margin-top: 1rem;
     }
 }
 
-.skjulVedStorSkjem {
-    @media (min-width: 1200px) {
-        display: none;
-    }
+.overflowHidden {
+    overflow: hidden;
+}
+
+.dialogHeaderShadow {
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
 }
 
 .tittel {
     padding: 1rem;
-    @media (min-width: 800px) {
-        display: none;
+    flex-grow: 1;
+    text-align: center;
+
+    @media (max-width: 799px) {
+        margin-left: -2.35rem;
     }
 }
