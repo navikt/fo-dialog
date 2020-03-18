@@ -57,7 +57,7 @@ function Header(props: { children?: React.ReactNode; visSkygge?: boolean; classN
             <Link to="/" title="Til dialoger" className={styles.tilbakeTilOversikt}>
                 <VenstreChevron stor />
             </Link>
-            <div className={styles.hedderContent}>{children}</div>
+            <div className={styles.hederContent}>{children}</div>
         </div>
     );
 }
