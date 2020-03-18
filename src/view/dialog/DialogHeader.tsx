@@ -37,7 +37,7 @@ export function DialogHeader(props: DialogHeaderProps) {
     const aktivitet = aktivitetId || dialog?.aktivitetId;
 
     return (
-        <Headder visSkygge={visSkygge}>
+        <Header visSkygge={visSkygge}>
             <div id={dialogHeaderID1} className="hide">
                 Dialog om:
             </div>
@@ -46,26 +46,26 @@ export function DialogHeader(props: DialogHeaderProps) {
             ) : (
                 <DialogOverskrift tekst={dialog?.overskrift} />
             )}
-        </Headder>
+        </Header>
     );
 }
 
-function Headder(props: { children?: React.ReactNode; visSkygge?: boolean; className?: string }) {
+function Header(props: { children?: React.ReactNode; visSkygge?: boolean; className?: string }) {
     const { children, visSkygge, className } = props;
     return (
         <div className={classNames(styles.dialogHeader, { [styles.dialogHeaderShadow]: visSkygge }, className)}>
             <Link to="/" title="Til dialoger" className={styles.tilbakeTilOversikt}>
                 <VenstreChevron stor />
             </Link>
-            <div className={styles.flexgrow1}>{children}</div>
+            <div className={styles.hedderContent}>{children}</div>
         </div>
     );
 }
 
 export function TittelHeader(props: { children?: string }) {
     return (
-        <Headder className={styles.tittelHeader}>
+        <Header className={styles.tittelHeader}>
             <Systemtittel className={styles.tittel}>{props.children}</Systemtittel>
-        </Headder>
+        </Header>
     );
 }

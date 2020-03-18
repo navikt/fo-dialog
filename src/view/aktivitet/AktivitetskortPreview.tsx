@@ -31,7 +31,7 @@ export function AktivitetskortPreview(props: Props) {
     const infotekst = getInfoText(aktivitet);
 
     return (
-        <section aria-label="Aktivitet knyttet til dialog" className={styles.flexgrow}>
+        <section aria-label="Aktivitet knyttet til dialog" className={styles.aktivitetSeksjon}>
             <Systemtittel className="visually-hidden">Aktivitet knyttet til dialog</Systemtittel>
             <Undertittel className={styles.storSkjermTittel}>
                 {typeTekst}: {aktivitet?.tittel}
