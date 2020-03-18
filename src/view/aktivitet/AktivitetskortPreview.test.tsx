@@ -5,8 +5,8 @@ import { Aktivitet, AktivitetStatus, AktivitetTypes, KanalTypes } from '../../ut
 import '../../utils/SetupEnzyme';
 import { MemoryRouter } from 'react-router';
 import * as AppContext from '../AktivitetProvider';
-import { Status } from '@nutgaard/use-fetch';
 import { AktivitetContextType } from '../AktivitetProvider';
+import { Status } from '@nutgaard/use-fetch';
 
 describe('getInfoText', () => {
     it('skal returnere korrekt tekst for stillingsaktivitet', () => {
@@ -17,7 +17,7 @@ describe('getInfoText', () => {
         };
 
         const text = getInfoText(aktivitet);
-        expect(text).toEqual('Stilling / Testesen');
+        expect(text).toEqual('Testesen');
     });
 
     it('skal returnere korrekt tekst for møteaktivitet', () => {
@@ -27,7 +27,7 @@ describe('getInfoText', () => {
         };
 
         const text = getInfoText(aktivitet);
-        expect(text).toEqual('Møte med NAV / 24.10.2019 / 15:44');
+        expect(text).toEqual('24.10.2019 / 15:44');
     });
 
     it('skal returnere korrekt tekst for søkeavtale', () => {
@@ -58,7 +58,7 @@ describe('getInfoText', () => {
         };
 
         const text = getInfoText(aktivitet);
-        expect(text).toEqual('Samtalereferat / 24.10.2019');
+        expect(text).toEqual('24.10.2019');
     });
 });
 

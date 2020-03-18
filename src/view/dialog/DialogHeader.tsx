@@ -2,7 +2,7 @@ import React from 'react';
 import { VenstreChevron } from 'nav-frontend-chevron';
 import { DialogData, StringOrNull } from '../../utils/Typer';
 import { AktivitetskortPreview } from '../aktivitet/AktivitetskortPreview';
-import { Undertittel } from 'nav-frontend-typografi';
+import { Systemtittel, Undertittel } from 'nav-frontend-typografi';
 import { Link } from 'react-router-dom';
 import classNames from 'classnames';
 import styles from './DialogHeader.module.less';
@@ -13,6 +13,7 @@ export const dialogHeaderID2 = 'dialog_header_2';
 interface DialogHeaderProps {
     dialog?: DialogData;
     aktivitetId?: StringOrNull;
+    visSkygge?: boolean;
 }
 
 interface DialogOverskriftProps {
@@ -32,19 +33,11 @@ function DialogOverskrift(props: DialogOverskriftProps) {
 }
 
 export function DialogHeader(props: DialogHeaderProps) {
-    const { dialog, aktivitetId } = props;
+    const { dialog, aktivitetId, visSkygge } = props;
     const aktivitet = aktivitetId || dialog?.aktivitetId;
-    const headerStyle = classNames(
-        styles.dialogHeader,
-        aktivitet ? styles.skjulVedStorSkjem : styles.skjulVedMiddelsSkjem
-    );
 
     return (
-        <div className={headerStyle}>
-            <Link to="/" className={styles.tilbakeTilOversikt}>
-                <VenstreChevron stor />
-                Til dialoger
-            </Link>
+        <Header visSkygge={visSkygge}>
             <div id={dialogHeaderID1} className="hide">
                 Dialog om:
             </div>
@@ -53,6 +46,26 @@ export function DialogHeader(props: DialogHeaderProps) {
             ) : (
                 <DialogOverskrift tekst={dialog?.overskrift} />
             )}
+        </Header>
+    );
+}
+
+function Header(props: { children?: React.ReactNode; visSkygge?: boolean; className?: string }) {
+    const { children, visSkygge, className } = props;
+    return (
+        <div className={classNames(styles.dialogHeader, { [styles.dialogHeaderShadow]: visSkygge }, className)}>
+            <Link to="/" title="Til dialoger" className={styles.tilbakeTilOversikt}>
+                <VenstreChevron stor />
+            </Link>
+            <div className={styles.hederContent}>{children}</div>
         </div>
+    );
+}
+
+export function TittelHeader(props: { children?: string }) {
+    return (
+        <Header className={styles.tittelHeader}>
+            <Systemtittel className={styles.tittel}>{props.children}</Systemtittel>
+        </Header>
     );
 }

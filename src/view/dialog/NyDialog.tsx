@@ -3,7 +3,7 @@ import { useViewContext } from '../Provider';
 import useKansendeMelding from '../../utils/UseKanSendeMelding';
 import { endreDialogSomVises, sendtNyDialog } from '../ViewState';
 import { useSkjulHodefotForMobilVisning } from '../utils/useSkjulHodefotForMobilVisning';
-import { DialogHeader } from './DialogHeader';
+import { TittelHeader } from './DialogHeader';
 import NyDialogForm from './NyDialogForm';
 import { useAktivitetId } from '../utils/useAktivitetId';
 import { findAktivitet, isLoadingData, useAktivitetContext } from '../AktivitetProvider';
@@ -36,7 +36,7 @@ function NyDialog() {
 
     return (
         <section aria-label="Ny dialog" className={cls}>
-            <DialogHeader aktivitetId={aktivitet?.id} />
+            <TittelHeader>Ny dialog</TittelHeader>
             <NyDialogForm
                 onSubmit={() => setViewState(sendtNyDialog(viewState))}
                 defaultTema={defaultTema}

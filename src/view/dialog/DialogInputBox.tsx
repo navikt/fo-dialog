@@ -2,7 +2,6 @@ import React, { useState } from 'react';
 import { DialogData } from '../../utils/Typer';
 import { visibleIfHoc } from '../../felleskomponenter/VisibleIfHoc';
 import { dataOrUndefined, useOppfolgingContext, useUserInfoContext, useViewContext } from '../Provider';
-import DialogCheckboxesVisible from './DialogCheckboxes';
 import { AlertStripeFeil } from 'nav-frontend-alertstriper';
 import useFormstate, { Formstate } from '@nutgaard/use-formstate';
 import Textarea from '../../felleskomponenter/input/textarea';
@@ -75,7 +74,7 @@ export function DialogInputBox(props: Props) {
     const bruker = useUserInfoContext();
     const oppfolgingContext = useOppfolgingContext();
     const oppfolging = dataOrUndefined(oppfolgingContext);
-    const { hentDialoger, nyHenvendelse, setFerdigBehandlet, setVenterPaSvar, status } = useDialogContext();
+    const { hentDialoger, nyHenvendelse, setFerdigBehandlet, status } = useDialogContext();
     const dialogLaster = isDialogPendingOrReloading(status);
     const [noeFeilet, setNoeFeilet] = useState(false);
     const startTekst = useHenvendelseStartTekst();
@@ -129,14 +128,6 @@ export function DialogInputBox(props: Props) {
                     state={state}
                     autoFocus={autoFocus}
                     kanSendeHenvendelse={kanSendeHenveldelse}
-                />
-                <DialogCheckboxesVisible
-                    toggleFerdigBehandlet={ferdigBehandlet => setFerdigBehandlet(valgtDialog, ferdigBehandlet)}
-                    toggleVenterPaSvar={venterPaSvar => setVenterPaSvar(valgtDialog, venterPaSvar)}
-                    ferdigBehandlet={valgtDialog.ferdigBehandlet}
-                    venterPaSvar={valgtDialog.venterPaSvar}
-                    visible={bruker!.erVeileder}
-                    disabled={laster}
                 />
                 <AlertStripeFeilVisible visible={noeFeilet}>
                     Det skjedde en alvorlig feil. Prøv igjen senere

@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Innholdstittel, Normaltekst } from 'nav-frontend-typografi';
+import { Normaltekst } from 'nav-frontend-typografi';
 import useFormstate from '@nutgaard/use-formstate';
 import { useUserInfoContext } from '../Provider';
 import { useHistory } from 'react-router';
@@ -91,7 +91,6 @@ function NyDialogForm(props: Props) {
     return (
         <div className={style.nyDialog}>
             <form onSubmit={state.onSubmit(handleSubmit)} className={style.form} autoComplete="off">
-                <Innholdstittel className={style.tittel}>Ny dialog</Innholdstittel>
                 <Normaltekst className={style.infotekst}>{infoTekst}</Normaltekst>
                 <KoronaInfo className={style.infotekst} hidden={erVeileder} />
                 <Input
