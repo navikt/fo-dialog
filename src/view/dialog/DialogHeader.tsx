@@ -65,7 +65,7 @@ function Headder(props: { children?: React.ReactNode; visSkygge?: boolean; class
 export function TittelHeader(props: { children?: string }) {
     return (
         <Headder className={styles.tittelHeader}>
-            <Systemtittel>{props.children}</Systemtittel>
+            <Systemtittel className={styles.tittel}>{props.children}</Systemtittel>
         </Headder>
     );
 }
