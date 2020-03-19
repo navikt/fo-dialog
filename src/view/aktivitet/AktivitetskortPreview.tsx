@@ -63,6 +63,7 @@ export function getInfoText(aktivitet: Aktivitet | ArenaAktivitet): string | nul
         case AktivitetTypes.MOTE:
             return `${formaterDate(aktivitet.fraDato)} / ${getKlokkeslett(aktivitet.fraDato)}`;
         case AktivitetTypes.SOKEAVTALE:
+        case AktivitetTypes.EGEN:
             return `${formaterDate(aktivitet.fraDato)} - ${formaterDate(aktivitet.tilDato)}`;
         case AktivitetTypes.BEHANDLING:
             return aktivitet.behandlingType;
@@ -73,7 +74,6 @@ export function getInfoText(aktivitet: Aktivitet | ArenaAktivitet): string | nul
         case ArenaAktivitetTypes.TILTAKSAKTIVITET:
         case ArenaAktivitetTypes.UTDANNINGSAKTIVITET:
         case ArenaAktivitetTypes.GRUPPEAKTIVITET:
-        case AktivitetTypes.EGEN:
             return null;
     }
 }
