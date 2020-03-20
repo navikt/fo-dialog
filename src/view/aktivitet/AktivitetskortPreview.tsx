@@ -43,11 +43,11 @@ export function AktivitetskortPreview(props: Props) {
             >
                 <div className={styles.aktivteskortWrapper}>
                     <div className={styles.info}>
-                        <EtikettLiten>{typeTekst}</EtikettLiten>
+                        <EtikettLiten className={styles.tittel}>{typeTekst}</EtikettLiten>
                         <Undertittel id={dialogHeaderID2} className={styles.tittel}>
                             {aktivitet.tittel}
                         </Undertittel>
-                        <Undertekst>{infotekst}</Undertekst>
+                        <Undertekst className={styles.tittel}>{infotekst}</Undertekst>
                     </div>
                     <p className={styles.lesmer}>Gå til aktiviteten</p>
                 </div>
