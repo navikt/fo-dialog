@@ -13,15 +13,20 @@ import { VenstreChevron } from 'nav-frontend-chevron';
 import { Systemtittel } from 'nav-frontend-typografi';
 import { useUserInfoContext } from '../Provider';
 
-function DitNavLenke(props: { erVeileder: boolean }) {
+function DialogOversiktHeader(props: { erVeileder: boolean }) {
     if (props.erVeileder) {
-        return null;
+        return <div className={styles.veiledrpadding} />;
     }
     return (
-        <Lenke href="/arbeid/dialog/dittnav" className={styles.dintnav}>
-            <VenstreChevron />
-            Ditt NAV
-        </Lenke>
+        <>
+            <Lenke href="/arbeid/dialog/dittnav" className={styles.dintnav}>
+                <VenstreChevron />
+                Ditt NAV
+            </Lenke>
+            <Systemtittel tag="h1" className={styles.tittel}>
+                Dialog med veilederen din
+            </Systemtittel>
+        </>
     );
 }
 
@@ -37,11 +42,7 @@ export function DialogOversikt() {
     return (
         <div className={visningCls}>
             <div className={styles.header}>
-                <DitNavLenke erVeileder={erVeileder} />
-                <Systemtittel tag="h1" className={styles.tittel}>
-                    Dialog med veilederen din
-                </Systemtittel>
-
+                <DialogOversiktHeader erVeileder={erVeileder} />
                 <div className={styles.verktoylinje}>
                     <DialogOverviewHeader visible={kanSendeMelding} />
                     <OmDialogLenke />

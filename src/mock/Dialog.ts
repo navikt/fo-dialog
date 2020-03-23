@@ -6,6 +6,137 @@ import { erEksternBruker, harIngenDialoger } from './demo/sessionstorage';
 
 const dialoger: DialogData[] & JSONArray = [
     {
+        id: '100',
+        overskrift: 'Lang dialog',
+        sisteTekst: 'De ringte meg i går. Skal på intervju neste uke :)',
+        sisteDato: '2017-01-28T12:48:56.097+01:00',
+        opprettetDato: '2018-02-27T12:48:56.081+01:00',
+        historisk: false,
+        lest: false,
+        venterPaSvar: false,
+        ferdigBehandlet: false,
+        lestAvBrukerTidspunkt: '2018-02-28T12:48:56.081+01:00',
+        erLestAvBruker: false,
+        aktivitetId: null,
+        henvendelser: [
+            {
+                id: '1',
+                dialogId: '1',
+                avsender: 'BRUKER',
+                avsenderId: 'Z123456',
+                sendt: '2018-02-27T12:47:56.097+01:00',
+                lest: true,
+                tekst: 'Hei, det virker som denne stillingen kunne passet for meg. Hva tenker du?'
+            },
+            {
+                id: '2',
+                dialogId: '1',
+                avsender: 'BRUKER',
+                avsenderId: 'Z123456',
+                sendt: '2018-02-27T12:48:56.097+01:00',
+                lest: true,
+                tekst: 'Hei, det virker som denne stillingen kunne passet for meg. Hva tenker du?'
+            },
+            {
+                id: '3',
+                dialogId: '1',
+                avsender: 'VEILEDER',
+                avsenderId: '0102030405',
+                sendt: '2018-02-28T12:48:55.097+01:00',
+                lest: true,
+                tekst:
+                    'Ja, jeg vil så absolutt tro at du er kvalifisert til denne! Send dem en søknad og fortell meg' +
+                    'om du får noe respons!'
+            },
+            {
+                id: '4',
+                dialogId: '1',
+                avsender: 'BRUKER',
+                avsenderId: '0102030405',
+                sendt: '2018-03-28T12:48:56.097+01:00',
+                lest: false,
+                tekst: 'De ringte meg i går. Skal på intervju neste uke :)'
+            },
+            {
+                id: '5',
+                dialogId: '1',
+                avsender: 'BRUKER',
+                avsenderId: 'Z123456',
+                sendt: '2018-02-27T12:47:56.097+01:00',
+                lest: true,
+                tekst: 'Hei, det virker som denne stillingen kunne passet for meg. Hva tenker du?'
+            },
+            {
+                id: '6',
+                dialogId: '1',
+                avsender: 'BRUKER',
+                avsenderId: 'Z123456',
+                sendt: '2018-02-27T12:48:56.097+01:00',
+                lest: true,
+                tekst: 'Hei, det virker som denne stillingen kunne passet for meg. Hva tenker du?'
+            },
+            {
+                id: '7',
+                dialogId: '1',
+                avsender: 'VEILEDER',
+                avsenderId: '0102030405',
+                sendt: '2018-02-28T12:48:55.097+01:00',
+                lest: true,
+                tekst:
+                    'Ja, jeg vil så absolutt tro at du er kvalifisert til denne! Send dem en søknad og fortell meg' +
+                    'om du får noe respons!'
+            },
+            {
+                id: '8',
+                dialogId: '1',
+                avsender: 'BRUKER',
+                avsenderId: '0102030405',
+                sendt: '2018-03-28T12:48:56.097+01:00',
+                lest: false,
+                tekst: 'De ringte meg i går. Skal på intervju neste uke :)'
+            },
+            {
+                id: '9',
+                dialogId: '1',
+                avsender: 'BRUKER',
+                avsenderId: 'Z123456',
+                sendt: '2018-02-27T12:47:56.097+01:00',
+                lest: true,
+                tekst: 'Hei, det virker som denne stillingen kunne passet for meg. Hva tenker du?'
+            },
+            {
+                id: '10',
+                dialogId: '1',
+                avsender: 'BRUKER',
+                avsenderId: 'Z123456',
+                sendt: '2018-02-27T12:48:56.097+01:00',
+                lest: true,
+                tekst: 'Hei, det virker som denne stillingen kunne passet for meg. Hva tenker du?'
+            },
+            {
+                id: '11',
+                dialogId: '1',
+                avsender: 'VEILEDER',
+                avsenderId: '0102030405',
+                sendt: '2018-02-28T12:48:55.097+01:00',
+                lest: true,
+                tekst:
+                    'Ja, jeg vil så absolutt tro at du er kvalifisert til denne! Send dem en søknad og fortell meg' +
+                    'om du får noe respons!'
+            },
+            {
+                id: '12',
+                dialogId: '1',
+                avsender: 'BRUKER',
+                avsenderId: '0102030405',
+                sendt: '2018-03-28T12:48:56.097+01:00',
+                lest: false,
+                tekst: 'De ringte meg i går. Skal på intervju neste uke :)'
+            }
+        ],
+        egenskaper: []
+    },
+    {
         id: '10',
         overskrift: 'Systemutvikler',
         sisteTekst: 'De ringte meg i går. Skal på intervju neste uke :)',
