@@ -70,7 +70,7 @@ export function getInfoText(aktivitet: Aktivitet | ArenaAktivitet): string | nul
         case AktivitetTypes.SAMTALEREFERAT:
             return `${formaterDate(aktivitet.fraDato)}`;
         case AktivitetTypes.IJOBB:
-            return aktivitet.arbeidsgiver;
+            return aktivitet.ansettelsesforhold;
         case ArenaAktivitetTypes.TILTAKSAKTIVITET:
         case ArenaAktivitetTypes.UTDANNINGSAKTIVITET:
         case ArenaAktivitetTypes.GRUPPEAKTIVITET:
