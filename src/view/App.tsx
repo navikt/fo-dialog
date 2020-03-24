@@ -1,6 +1,5 @@
 import React from 'react';
 import StatusAdvarsel from './statusAdvarsel/StatusAdvarsel';
-import { AppBanner } from './banner/AppBanner';
 import styles from './App.module.less';
 import { BrowserRouter as Router } from 'react-router-dom';
 import { Provider } from './Provider';
@@ -25,7 +24,6 @@ function App(props: Props) {
             <div className={wraperClass}>
                 <div className={appstyle}>
                     <EventHandler />
-                    <AppBanner hidden={!!fnr} />
                     <Provider fnr={fnr}>
                         <StatusAdvarsel />
                         <AppBody />

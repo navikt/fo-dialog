@@ -1,4 +1,7 @@
 @import (reference) '../../variabler';
+@import (reference) '~nav-frontend-knapper-style/src/index';
+@import (reference) '~nav-frontend-knapper-style/src/mixins';
+@import (reference) '~nav-frontend-core/less/_variabler';
 
 .dialogOversikt {
     display: flex;
@@ -14,13 +17,11 @@
 }
 
 .dialogListe {
-    padding: 0.7rem;
+    padding-top: 0.2rem;
+    padding-left: 0.7rem;
+    padding-right: 0.7rem;
     overflow-y: auto;
     flex: 1;
-}
-
-.nyDialog {
-    margin-bottom: 0.8rem;
 }
 
 .dialogValgt {
@@ -41,7 +42,38 @@
     padding-bottom: 1rem;
 }
 
+.header {
+    margin-left: 0.6rem;
+}
+
 .verktoylinje {
     display: flex;
-    margin: 1rem 0.5rem 0.5rem 0;
+    margin-top: 1rem;
+    margin-bottom: 0.7rem;
+}
+
+.veiledrpadding {
+    padding-top: 3rem;
+}
+
+.dintnav {
+    display: block;
+    margin-left: -0.4rem;
+
+    margin-top: 1rem;
+
+    //flat knapp
+    .knapp();
+    .knappmini-mixin();
+    .knappflat-mixin(@navBla, @white, @navDypBla);
+
+    //overide flatknapp
+    padding-left: 0;
+    padding-right: 0.5rem;
+    font-weight: 400;
+}
+
+.tittel {
+    padding-top: 0.8rem; //litt mindre en aktivitestittelen pga skriftsørlse
+    margin-bottom: 1rem;
 }

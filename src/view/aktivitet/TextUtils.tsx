@@ -42,7 +42,7 @@ export function getTypeText(type: AktivitetTypes | ArenaAktivitetTypes): string 
         case ArenaAktivitetTypes.GRUPPEAKTIVITET:
             return 'Gruppeaktivitet';
         case ArenaAktivitetTypes.UTDANNINGSAKTIVITET:
-            return 'Utdanningsaktivitet';
+            return 'Utdanning';
     }
 }
 
