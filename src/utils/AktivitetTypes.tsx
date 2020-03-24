@@ -92,7 +92,7 @@ export interface Aktivitet {
 export enum ArenaAktivitetTypes {
     TILTAKSAKTIVITET = 'TILTAKSAKTIVITET',
     GRUPPEAKTIVITET = 'GRUPPEAKTIVITET',
-    UTDANNINGSAKTIVITET = 'UTDANNING'
+    UTDANNINGSAKTIVITET = 'UTDANNINGSAKTIVITET'
 }
 
 export interface ArenaAktivitet {
