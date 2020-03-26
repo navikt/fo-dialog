@@ -1,4 +1,4 @@
-import { DialogData, HenvendelseData, NyDialogMeldingData } from '../utils/Typer';
+import { DialogData, HenvendelseData, KladdData, NyDialogMeldingData } from '../utils/Typer';
 import { rndId } from './Utils';
 import { JSONArray, JSONObject, ResponseUtils } from 'yet-another-fetch-mock';
 import bruker from './Bruker';
@@ -493,3 +493,22 @@ export function setFerdigBehandlet(dialogId: string, ferdigBehandlet: boolean) {
     return dialog as DialogData & JSONObject;
 }
 export default harIngenDialoger() ? [] : dialoger;
+
+export const kladder: KladdData[] & JSONArray = [
+    {
+        dialogId: null,
+        aktivitetId: 'SOKEAVTALE1',
+        overskrift: 'Begynte på en tekst',
+        tekst: 'Her er mer tekst'
+    },
+    {
+        dialogId: '6',
+        aktivitetId: null,
+        overskrift: null,
+        tekst: 'Jeg lurer på masse rart'
+    }
+];
+
+export function oppdaterKladd(data: KladdData) {
+    return null;
+}
