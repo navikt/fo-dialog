@@ -11,6 +11,7 @@ import { dispatchUpdate, UpdateTypes } from '../../utils/UpdateEvent';
 import { isDialogPendingOrReloading, useDialogContext } from '../DialogProvider';
 import useHenvendelseStartTekst from './UseHenvendelseStartTekst';
 import loggEvent from '../../felleskomponenter/logging';
+import { useKladdContext } from '../KladdProvider';
 
 const AlertStripeFeilVisible = visibleIfHoc(AlertStripeFeil);
 
@@ -79,13 +80,16 @@ export function DialogInputBox(props: Props) {
     const [noeFeilet, setNoeFeilet] = useState(false);
     const startTekst = useHenvendelseStartTekst();
 
+    const { kladder } = useKladdContext();
+    const kladd = kladder.find(k => k.aktivitetId === props.dialog.aktivitetId && k.dialogId === props.dialog.id);
+
     const { viewState, setViewState } = useViewContext();
 
     const valgtDialog = props.dialog;
     const kanSendeHenveldelse = props.kanSendeHenveldelse;
 
     const initalValues = {
-        melding: startTekst
+        melding: !!kladd?.tekst ? kladd.tekst : startTekst
     };
 
     const state = validator(initalValues, { startTekst });

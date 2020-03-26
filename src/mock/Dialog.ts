@@ -503,7 +503,7 @@ export const kladder: KladdData[] & JSONArray = [
     },
     {
         dialogId: '6',
-        aktivitetId: null,
+        aktivitetId: 'SAMTALEREFERAT1',
         overskrift: null,
         tekst: 'Jeg lurer på masse rart'
     }
