@@ -113,6 +113,7 @@ function NyDialogForm(props: Props) {
         setTmpInput({ tema: newTema, melding: newMelding });
         timer.current && clearInterval(timer.current);
         callback.current = () => {
+            timer.current = undefined;
             oppdaterKladd(null, props.aktivitetId, newTema, newMelding);
         };
         timer.current = window.setTimeout(callback.current, 500);

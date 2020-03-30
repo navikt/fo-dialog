@@ -158,6 +158,7 @@ export function DialogInputBox(props: Props) {
         const value = e.target.value;
         timer.current && clearInterval(timer.current);
         callback.current = () => {
+            timer.current = undefined;
             oppdaterKladd(props.dialog.id, props.dialog.aktivitetId, null, value);
         };
         timer.current = window.setTimeout(callback.current, 500);
