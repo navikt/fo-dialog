@@ -7,6 +7,7 @@ import { initalState, ViewState } from './ViewState';
 import { AktivitetProvider } from './AktivitetProvider';
 import { DialogContext, hasDialogError, isDialogPending, useDialogDataProvider } from './DialogProvider';
 import useFetchVeilederNavn from '../api/useHentVeilederData';
+import { KladdContext, useKladdDataProvider } from './KladdProvider';
 
 interface VeilederData {
     veilederNavn?: string;
@@ -66,10 +67,14 @@ export function Provider(props: Props) {
     const [viewState, setState] = useState(initalState);
 
     const dialogDataProvider = useDialogDataProvider(fnr);
+    const kladdDataProvider = useKladdDataProvider(fnr);
+
     const hentDialoger = dialogDataProvider.hentDialoger;
+    const hentKladder = kladdDataProvider.hentKladder;
     useEffect(() => {
         hentDialoger();
-    }, [hentDialoger]);
+        hentKladder();
+    }, [hentDialoger, hentKladder]);
 
     if (isDialogPending(dialogDataProvider.status) || isPending(bruker, false) || isPending(oppfolgingData, false)) {
         return <NavFrontendSpinner />;
@@ -83,11 +88,13 @@ export function Provider(props: Props) {
                 <UserInfoContext.Provider value={bruker.data}>
                     <AktivitetProvider fnr={fnr} apiBasePath={apiBasePath}>
                         <VeilederDataContext.Provider value={{ veilederNavn }}>
-                            <FNRContext.Provider value={fnr}>
-                                <ViewContext.Provider value={{ viewState: viewState, setViewState: setState }}>
-                                    {children}
-                                </ViewContext.Provider>
-                            </FNRContext.Provider>
+                            <KladdContext.Provider value={kladdDataProvider}>
+                                <FNRContext.Provider value={fnr}>
+                                    <ViewContext.Provider value={{ viewState: viewState, setViewState: setState }}>
+                                        {children}
+                                    </ViewContext.Provider>
+                                </FNRContext.Provider>
+                            </KladdContext.Provider>
                         </VeilederDataContext.Provider>
                     </AktivitetProvider>
                 </UserInfoContext.Provider>

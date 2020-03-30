@@ -1,5 +1,12 @@
 import FetchMock, { Middleware, MiddlewareUtils, ResponseUtils } from 'yet-another-fetch-mock';
-import dialoger, { lesDialog, opprettEllerOppdaterDialog, setFerdigBehandlet, setVenterPaSvar } from './Dialog';
+import dialoger, {
+    kladder,
+    lesDialog,
+    oppdaterKladd,
+    opprettEllerOppdaterDialog,
+    setFerdigBehandlet,
+    setVenterPaSvar
+} from './Dialog';
 import bruker from './Bruker';
 import oppfolging from './Oppfolging';
 import aktiviteter, { getAktivitet } from './Aktivitet';
@@ -41,6 +48,12 @@ function fail() {
 }
 
 mock.post('/veilarboppfolging/api/oppfolging/settDigital', {});
+
+mock.get('/veilarbdialog/api/kladd', kladder);
+mock.post(
+    '/veilarbdialog/api/kladd',
+    ResponseUtils.combine(ResponseUtils.statusCode(204), ({ body }) => oppdaterKladd(body))
+);
 
 mock.get('/veilarbdialog/api/dialog', dialoger);
 
