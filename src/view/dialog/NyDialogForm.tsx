@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { Normaltekst } from 'nav-frontend-typografi';
 import useFormstate from '@nutgaard/use-formstate';
 import { useUserInfoContext } from '../Provider';
@@ -15,6 +15,7 @@ import { useDialogContext } from '../DialogProvider';
 import useHenvendelseStartTekst from './UseHenvendelseStartTekst';
 import loggEvent from '../../felleskomponenter/logging';
 import { KoronaInfo } from '../../felleskomponenter/info/KoronaInfo';
+import { findKladd, useKladdContext } from '../KladdProvider';
 
 const AlertStripeFeilVisible = visibleIfHoc(AlertStripeFeil);
 
@@ -63,13 +64,30 @@ function NyDialogForm(props: Props) {
     const [noeFeilet, setNoeFeilet] = useState(false);
     const startTekst = useHenvendelseStartTekst();
 
+    const { kladder, oppdaterKladd, slettKladd } = useKladdContext();
+    const kladd = findKladd(kladder, null, aktivitetId);
+
+    const [tmpInput, setTmpInput] = useState<{ tema?: StringOrNull; melding?: StringOrNull }>({
+        tema: kladd?.overskrift,
+        melding: kladd?.tekst
+    });
+    const timer = useRef<number | undefined>();
+    const callback = useRef<() => any>();
+
     const state = validator(
         {
-            tema: defaultTema ?? '',
-            melding: startTekst
+            tema: kladd?.overskrift ?? defaultTema ?? '',
+            melding: !!kladd?.tekst ? kladd.tekst : startTekst
         },
         { startTekst }
     );
+
+    useEffect(() => {
+        return () => {
+            timer.current && clearInterval(timer.current);
+            timer.current && callback.current && callback.current();
+        };
+    }, []);
 
     const erVeileder = !!bruker && bruker.erVeileder;
     const infoTekst = erVeileder ? veilederInfoMelding : brukerinfomelding;
@@ -79,6 +97,7 @@ function NyDialogForm(props: Props) {
         loggEvent('arbeidsrettet-dialog.ny.dialog', { paaAktivitet: !!aktivitetId });
         return nyDialog(melding, tema, aktivitetId)
             .then(dialog => {
+                slettKladd(null, props.aktivitetId);
                 onSubmit && onSubmit();
                 history.push('/' + dialog.id);
                 dispatchUpdate(UpdateTypes.Dialog);
@@ -86,6 +105,17 @@ function NyDialogForm(props: Props) {
             })
             .then(hentDialoger)
             .catch(() => setNoeFeilet(true));
+    };
+
+    const onChange = (tema?: string, melding?: string) => {
+        const newTema = !!tema ? tema : tmpInput.tema;
+        const newMelding = !!melding ? melding : tmpInput.melding;
+        setTmpInput({ tema: newTema, melding: newMelding });
+        timer.current && clearInterval(timer.current);
+        callback.current = () => {
+            oppdaterKladd(null, props.aktivitetId, newTema, newMelding);
+        };
+        timer.current = window.setTimeout(callback.current, 500);
     };
 
     return (
@@ -101,6 +131,7 @@ function NyDialogForm(props: Props) {
                     placeholder="Skriv hva meldingen handler om"
                     disabled={!!aktivitetId}
                     submittoken={state.submittoken}
+                    onChange={e => onChange(e.target.value, undefined)}
                     {...state.fields.tema}
                 />
                 <div className={style.skrivMelding}>
@@ -111,6 +142,7 @@ function NyDialogForm(props: Props) {
                         maxLength={maxMeldingsLengde}
                         visTellerFra={1000}
                         submittoken={state.submittoken}
+                        onChange={e => onChange(undefined, e.target.value)}
                         {...state.fields.melding}
                     />
                 </div>

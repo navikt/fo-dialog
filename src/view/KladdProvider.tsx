@@ -1,6 +1,7 @@
 import React, { useCallback, useContext, useMemo, useState } from 'react';
-import { DialogData, KladdData, StringOrNull } from '../utils/Typer';
+import { KladdData, StringOrNull } from '../utils/Typer';
 import { fetchData, fnrQuery, getApiBasePath } from '../utils/Fetch';
+import { valueOrNull } from '../utils/TypeHelper';
 
 enum Status {
     INITIAL,
@@ -15,18 +16,25 @@ export interface KladdDataProviderType {
     kladder: KladdData[];
     hentKladder: () => Promise<KladdData[]>;
     oppdaterKladd: (
-        dialogId: StringOrNull,
-        aktivitetId: StringOrNull,
-        tema: StringOrNull,
-        melding: StringOrNull
+        dialogId?: StringOrNull,
+        aktivitetId?: StringOrNull,
+        tema?: StringOrNull,
+        melding?: StringOrNull
     ) => void;
+    slettKladd: (dialogId?: StringOrNull, aktivitetId?: StringOrNull) => void;
 }
 
 export const KladdContext = React.createContext<KladdDataProviderType>({
     status: Status.INITIAL,
     kladder: [],
     hentKladder: () => Promise.resolve([]),
-    oppdaterKladd: (dialogId: StringOrNull, aktivitetId: StringOrNull, tema: StringOrNull, melding: StringOrNull) => {}
+    oppdaterKladd: (
+        dialogId?: StringOrNull,
+        aktivitetId?: StringOrNull,
+        tema?: StringOrNull,
+        melding?: StringOrNull
+    ) => {},
+    slettKladd: (dialogId?: StringOrNull, aktivitetId?: StringOrNull) => {}
 });
 
 export const useKladdContext = () => useContext(KladdContext);
@@ -66,24 +74,21 @@ export function useKladdDataProvider(fnr?: string): KladdDataProviderType {
     }, [baseUrl, setState]);
 
     const oppdaterKladd = useCallback(
-        (dialogId: StringOrNull, aktivitetId: StringOrNull, tema: StringOrNull, melding: StringOrNull) => {
+        (dialogId?: StringOrNull, aktivitetId?: StringOrNull, tema?: StringOrNull, melding?: StringOrNull) => {
             const kladdData: KladdData = {
-                dialogId: dialogId,
-                overskrift: tema,
-                tekst: melding,
-                aktivitetId: aktivitetId
+                dialogId: valueOrNull(dialogId),
+                aktivitetId: valueOrNull(aktivitetId),
+                overskrift: valueOrNull(tema),
+                tekst: valueOrNull(melding)
             };
 
             setState(prevState => {
                 const kladder = prevState.kladder;
-                const ny = [
-                    ...kladder.filter(k => !(k.dialogId === dialogId && k.aktivitetId === aktivitetId)),
-                    kladdData
-                ];
-                return { status: Status.OK, kladder: ny };
+                const ny = [...kladder.filter(k => !eqKladd(k, dialogId, aktivitetId)), kladdData];
+                return { ...prevState, kladder: ny };
             });
 
-            fetchData<DialogData>(baseUrl, {
+            fetchData<void>(baseUrl, {
                 method: 'post',
                 body: JSON.stringify(kladdData)
             });
@@ -91,16 +96,44 @@ export function useKladdDataProvider(fnr?: string): KladdDataProviderType {
         [setState, baseUrl]
     );
 
+    const slettKladd = useCallback(
+        (dialogId?: StringOrNull, aktivitetId?: StringOrNull) => {
+            setState(prevState => {
+                const kladder = prevState.kladder;
+                const ny = kladder.filter(k => !eqKladd(k, dialogId, aktivitetId));
+                return { ...prevState, kladder: ny };
+            });
+        },
+        [setState]
+    );
+
     return useMemo(() => {
         return {
             status: state.status,
             kladder: state.kladder,
             hentKladder,
-            oppdaterKladd
+            oppdaterKladd,
+            slettKladd
         };
-    }, [state, hentKladder, oppdaterKladd]);
+    }, [state, hentKladder, oppdaterKladd, slettKladd]);
 }
 
 function isKladdReloading(status: Status) {
     return status === Status.OK || status === Status.RELOADING;
+}
+
+export function eqKladd(kladd: KladdData, dialogId?: StringOrNull, aktivitetId?: StringOrNull): boolean {
+    const dId = valueOrNull(dialogId);
+    const aId = valueOrNull(aktivitetId);
+    return kladd.dialogId === dId && kladd.aktivitetId === aId;
+}
+
+export function findKladd(
+    kladder: KladdData[],
+    dialogId?: StringOrNull,
+    aktivitetId?: StringOrNull
+): KladdData | undefined {
+    const dId = valueOrNull(dialogId);
+    const aId = valueOrNull(aktivitetId);
+    return kladder.find(k => k.dialogId === dId && k.aktivitetId === aId);
 }

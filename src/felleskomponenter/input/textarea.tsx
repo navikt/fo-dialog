@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { ChangeEvent } from 'react';
 import { Textarea as NavTextArea } from 'nav-frontend-skjema';
 import { FieldState } from '@nutgaard/use-formstate';
 
@@ -29,20 +29,27 @@ interface Props {
     maxLength: number;
     label: any;
     submittoken?: string;
+    onChange?: (e: ChangeEvent<HTMLTextAreaElement>) => void;
 }
 
 // pristine and initialValue isn't used, but we don't want to pass it to input
 function Textarea(props: Props) {
-    const { touched, error, input, pristine, initialValue, visTellerFra, submittoken, ...rest } = props;
+    const { touched, error, input, pristine, initialValue, visTellerFra, onChange, submittoken, ...rest } = props;
 
     const feil = error && !!submittoken ? { feilmelding: error } : undefined;
     const inputProps = { ...input, ...rest };
+
+    const _onChange = (e: ChangeEvent<HTMLTextAreaElement>) => {
+        !!onChange && onChange(e);
+        input.onChange(e);
+    };
 
     return (
         <NavTextArea
             tellerTekst={(antallTegn, max) => getTellerTekst(antallTegn, max, visTellerFra)}
             feil={feil}
             {...inputProps}
+            onChange={_onChange}
         />
     );
 }
