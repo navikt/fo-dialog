@@ -1,5 +1,7 @@
 @import (reference) '~nav-frontend-core/less/core';
 @import (reference) '../../variabler';
+@import (reference) '~nav-frontend-knapper-style/src/index';
+@import (reference) '~nav-frontend-knapper-style/src/mixins';
 
 .tilbakeTilOversikt {
     padding: 1rem 0.35rem 1rem 0.25rem;
@@ -10,8 +12,19 @@
 }
 
 .lukkeknapp {
-    margin-right: 1rem;
     align-self: start;
+    background-color: white;
+    margin-top: 0.5rem;
+    margin-right: 0.2rem;
+
+    .knapp();
+    .knappmini-mixin();
+    .knappflat-mixin(@navBla, @white, @navDypBla);
+
+    //overide flatknapp
+    font-weight: 400;
+    padding-top: 0.5rem;
+    padding-bottom: 0.5rem;
 
     @media (max-width: 799px) {
         display: none;
@@ -36,7 +49,6 @@
 
     @media (min-width: 800px) {
         background-color: white;
-        margin-top: 1rem;
     }
 }
 
@@ -52,6 +64,10 @@
     padding: 1rem;
     flex-grow: 1;
     text-align: center;
+
+    @media (min-width: 800px) {
+        margin-top: 1rem;
+    }
 
     @media (max-width: 799px) {
         margin-left: -2.58rem;
