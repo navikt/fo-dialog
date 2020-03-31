@@ -24,7 +24,11 @@ const veilederInfoMelding = 'Skriv en melding til brukeren';
 const brukerinfomelding =
     'Her kan du skrive til din veileder om arbeid og oppfølging. Du vil få svar i løpet av noen dager.';
 
-function validerTema(tema: string) {
+function validerTema(tema: string, rest: any, props: { disabled?: boolean }) {
+    if (props.disabled) {
+        return undefined;
+    }
+
     if (tema.trim().length === 0) {
         return 'Tema må ha innhold.';
     }
@@ -79,7 +83,7 @@ function NyDialogForm(props: Props) {
             tema: kladd?.overskrift ?? defaultTema ?? '',
             melding: !!kladd?.tekst ? kladd.tekst : startTekst
         },
-        { startTekst }
+        { disabled: !!aktivitetId, startTekst }
     );
 
     useEffect(() => {

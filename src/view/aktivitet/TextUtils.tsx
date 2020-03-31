@@ -46,7 +46,7 @@ export function getTypeText(type: AktivitetTypes | ArenaAktivitetTypes): string 
     }
 }
 
-export function getDialogTittel(aktivitet: Aktivitet | ArenaAktivitet | undefined) {
+export function getDialogTittel(aktivitet: Aktivitet | ArenaAktivitet | undefined): string {
     if (!aktivitet) {
         return '';
     }
@@ -55,7 +55,7 @@ export function getDialogTittel(aktivitet: Aktivitet | ArenaAktivitet | undefine
     switch (type) {
         case AktivitetTypes.BEHANDLING:
         case AktivitetTypes.SOKEAVTALE:
-            return tittel;
+            return tittel ?? '';
         case AktivitetTypes.EGEN:
             return `Egenaktivitet: ${tittel}`;
         case AktivitetTypes.MOTE:
