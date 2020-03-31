@@ -9,15 +9,10 @@ interface Props {
     className: string;
 }
 
-function Svg(props: { title: string }) {
-    // @ts-ignore
-    return <IngenValgteDialoger title={props.title} />;
-}
-
 function DialogIkkeValgt(props: Props) {
     return (
         <div className={classNames(props.className, styles.dialogIkkeValgt)}>
-            <Svg title="Ingen dialog valgt" />
+            <IngenValgteDialoger />
             <Normaltekst>Velg en dialog for å lese den</Normaltekst>
         </div>
     );
