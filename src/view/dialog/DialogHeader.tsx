@@ -6,6 +6,7 @@ import { Systemtittel, Undertittel } from 'nav-frontend-typografi';
 import { Link } from 'react-router-dom';
 import classNames from 'classnames';
 import styles from './DialogHeader.module.less';
+import { ReactComponent as Lukk } from '../../fellesikoner/lukk.svg';
 
 export const dialogHeaderID1 = 'dialog_header_1';
 export const dialogHeaderID2 = 'dialog_header_2';
@@ -64,8 +65,16 @@ function Header(props: { children?: React.ReactNode; visSkygge?: boolean; classN
 
 export function TittelHeader(props: { children?: string }) {
     return (
-        <Header className={styles.tittelHeader}>
-            <Systemtittel className={styles.tittel}>{props.children}</Systemtittel>
-        </Header>
+        <div className={classNames(styles.dialogHeader, styles.tittelHeader)}>
+            <Link to="/" title="Til dialoger" className={styles.tilbakeTilOversikt}>
+                <VenstreChevron stor />
+            </Link>
+            <div className={styles.hederContent}>
+                <Systemtittel className={styles.tittel}>{props.children}</Systemtittel>
+            </div>
+            <Link to="/" title="lukk" className={styles.lukkeknapp}>
+                <Lukk />
+            </Link>
+        </div>
     );
 }
