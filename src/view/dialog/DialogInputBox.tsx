@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useLayoutEffect, useRef, useState } from 'react';
 import { DialogData } from '../../utils/Typer';
 import { visibleIfHoc } from '../../felleskomponenter/VisibleIfHoc';
 import { dataOrUndefined, useOppfolgingContext, useUserInfoContext, useViewContext } from '../Provider';
@@ -11,6 +11,7 @@ import { dispatchUpdate, UpdateTypes } from '../../utils/UpdateEvent';
 import { isDialogPendingOrReloading, useDialogContext } from '../DialogProvider';
 import useHenvendelseStartTekst from './UseHenvendelseStartTekst';
 import loggEvent from '../../felleskomponenter/logging';
+import { useKladdContext } from '../KladdProvider';
 
 const AlertStripeFeilVisible = visibleIfHoc(AlertStripeFeil);
 
@@ -38,14 +39,15 @@ const validator = useFormstate({
 });
 
 interface HenvendelseInputProps {
-    autoFocus: false | boolean;
+    autoFocus?: boolean;
     state: Formstate<{ [p: string]: any }>;
     laster: boolean;
     kanSendeHenvendelse: boolean;
+    onChange?: React.ChangeEventHandler;
 }
 
 function HenvendelseInput(props: HenvendelseInputProps) {
-    const { autoFocus, state, laster, kanSendeHenvendelse } = props;
+    const { autoFocus, state, laster, onChange, kanSendeHenvendelse } = props;
 
     if (!kanSendeHenvendelse) {
         return null;
@@ -61,6 +63,7 @@ function HenvendelseInput(props: HenvendelseInputProps) {
                 visTellerFra={1000}
                 autoFocus={autoFocus}
                 submittoken={state.submittoken}
+                onChange={onChange}
                 {...state.fields.melding}
             />
             <Hovedknapp title="Send" autoDisableVedSpinner spinner={laster}>
@@ -79,16 +82,44 @@ export function DialogInputBox(props: Props) {
     const [noeFeilet, setNoeFeilet] = useState(false);
     const startTekst = useHenvendelseStartTekst();
 
+    const { kladder, oppdaterKladd, slettKladd } = useKladdContext();
+    const kladd = kladder.find(k => k.aktivitetId === props.dialog.aktivitetId && k.dialogId === props.dialog.id);
+
     const { viewState, setViewState } = useViewContext();
 
     const valgtDialog = props.dialog;
     const kanSendeHenveldelse = props.kanSendeHenveldelse;
+    const timer = useRef<number | undefined>();
+    const callback = useRef<() => any>();
 
     const initalValues = {
-        melding: startTekst
+        melding: !!kladd?.tekst ? kladd.tekst : startTekst
     };
 
     const state = validator(initalValues, { startTekst });
+
+    useLayoutEffect(() => {
+        const match = window.matchMedia ? window.matchMedia(`(min-width: 768px)`).matches : false;
+        const autoFocus = match && viewState.sistHandlingsType !== HandlingsType.nyDialog;
+
+        if (autoFocus) {
+            const el = document.getElementsByClassName('autosizing-textarea')[0] as HTMLInputElement;
+            if (el) {
+                el.focus();
+                if (kladd?.tekst) {
+                    el.selectionStart = el.selectionEnd = el.value.length;
+                }
+            }
+        }
+        // eslint-disable-next-line
+    }, []);
+
+    useEffect(() => {
+        return () => {
+            timer.current && clearInterval(timer.current);
+            timer.current && callback.current && callback.current();
+        };
+    }, []);
 
     if (!oppfolging?.underOppfolging || valgtDialog.historisk) {
         return null;
@@ -96,6 +127,10 @@ export function DialogInputBox(props: Props) {
 
     const onSubmit = (data: { melding: string }) => {
         const { melding } = data;
+
+        timer.current && clearInterval(timer.current);
+        timer.current = undefined;
+
         loggEvent('arbeidsrettet-dialog.ny.henvendelse', { paaAktivitet: !!valgtDialog.aktivitetId });
         return nyHenvendelse(melding, valgtDialog)
             .then(dialog => {
@@ -104,12 +139,13 @@ export function DialogInputBox(props: Props) {
                         return setFerdigBehandlet(valgtDialog, true);
                     }
                 }
+                slettKladd(valgtDialog.id, valgtDialog.aktivitetId);
                 return dialog;
             })
             .then(hentDialoger)
             .then(() => {
                 setNoeFeilet(false);
-                state.reinitialize(initalValues);
+                state.reinitialize({ melding: startTekst });
                 setViewState(sendtNyHenvendelse(viewState));
                 dispatchUpdate(UpdateTypes.Dialog);
             })
@@ -117,8 +153,16 @@ export function DialogInputBox(props: Props) {
     };
 
     const laster = state.submitting || dialogLaster;
-    const match = window.matchMedia ? window.matchMedia(`(min-width: 768px)`).matches : false;
-    const autoFocus = match && viewState.sistHandlingsType !== HandlingsType.nyDialog;
+
+    const onChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+        const value = e.target.value;
+        timer.current && clearInterval(timer.current);
+        callback.current = () => {
+            timer.current = undefined;
+            oppdaterKladd(props.dialog.id, props.dialog.aktivitetId, null, value);
+        };
+        timer.current = window.setTimeout(callback.current, 500);
+    };
 
     return (
         <section aria-label="Ny melding">
@@ -126,7 +170,7 @@ export function DialogInputBox(props: Props) {
                 <HenvendelseInput
                     laster={laster}
                     state={state}
-                    autoFocus={autoFocus}
+                    onChange={onChange}
                     kanSendeHenvendelse={kanSendeHenveldelse}
                 />
                 <AlertStripeFeilVisible visible={noeFeilet}>

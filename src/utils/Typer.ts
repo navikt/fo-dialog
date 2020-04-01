@@ -86,3 +86,10 @@ interface KvpPerioder {
     opprettetDato: StringOrNull;
     avsluttetDato: StringOrNull;
 }
+
+export interface KladdData {
+    dialogId: StringOrNull;
+    aktivitetId: StringOrNull;
+    overskrift: StringOrNull;
+    tekst: StringOrNull;
+}
