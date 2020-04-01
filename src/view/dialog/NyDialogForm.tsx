@@ -135,6 +135,7 @@ function NyDialogForm(props: Props) {
                     autoComplete="off"
                     placeholder="Skriv hva meldingen handler om"
                     disabled={!!aktivitetId}
+                    maxLength={!aktivitetId ? 101 : undefined}
                     submittoken={state.submittoken}
                     onChange={e => onChange(e.target.value, undefined)}
                     {...state.fields.tema}
