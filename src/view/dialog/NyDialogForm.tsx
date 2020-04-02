@@ -112,8 +112,8 @@ function NyDialogForm(props: Props) {
     };
 
     const onChange = (tema?: string, melding?: string) => {
-        const newTema = !!tema ? tema : tmpInput.tema;
-        const newMelding = !!melding ? melding : tmpInput.melding;
+        const newTema = tema !== undefined ? tema : tmpInput.tema;
+        const newMelding = melding !== undefined ? melding : tmpInput.melding;
         setTmpInput({ tema: newTema, melding: newMelding });
         timer.current && clearInterval(timer.current);
         callback.current = () => {
@@ -135,6 +135,7 @@ function NyDialogForm(props: Props) {
                     autoComplete="off"
                     placeholder="Skriv hva meldingen handler om"
                     disabled={!!aktivitetId}
+                    maxLength={!aktivitetId ? 101 : undefined}
                     submittoken={state.submittoken}
                     onChange={e => onChange(e.target.value, undefined)}
                     {...state.fields.tema}
