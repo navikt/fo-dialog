@@ -130,7 +130,7 @@ export function eqKladd(kladd: KladdData, dialogId?: StringOrNull, aktivitetId?:
         return kladd.dialogId === dId;
     }
 
-    return kladd.aktivitetId === aId;
+    return kladd.dialogId === null && kladd.aktivitetId === aId;
 }
 
 export function findKladd(
