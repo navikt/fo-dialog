@@ -98,6 +98,10 @@ function NyDialogForm(props: Props) {
 
     const handleSubmit = (data: { tema: string; melding: string }) => {
         const { tema, melding } = data;
+
+        timer.current && clearInterval(timer.current);
+        timer.current = undefined;
+
         loggEvent('arbeidsrettet-dialog.ny.dialog', { paaAktivitet: !!aktivitetId });
         return nyDialog(melding, tema, aktivitetId)
             .then(dialog => {

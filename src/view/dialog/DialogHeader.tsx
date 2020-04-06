@@ -58,7 +58,7 @@ function Header(props: { children?: React.ReactNode; visSkygge?: boolean; classN
             <Link to="/" title="Til dialoger" className={styles.tilbakeTilOversikt}>
                 <VenstreChevron stor />
             </Link>
-            <div className={styles.hederContent}>{children}</div>
+            <div className={styles.headerContent}>{children}</div>
         </div>
     );
 }
@@ -69,8 +69,8 @@ export function TittelHeader(props: { children?: string }) {
             <Link to="/" title="Til dialoger" className={styles.tilbakeTilOversikt}>
                 <VenstreChevron stor />
             </Link>
-            <div className={styles.hederContent}>
-                <Systemtittel className={styles.tittel}>{props.children}</Systemtittel>
+            <div className={styles.headerContent}>
+                <Systemtittel className={styles.tittel}>{props.children ?? ''}</Systemtittel>
             </div>
             <Link to="/" title="lukk" className={styles.lukkeknapp}>
                 <Lukk />
