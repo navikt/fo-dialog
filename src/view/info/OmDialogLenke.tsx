@@ -13,7 +13,7 @@ function OmDialogLenke() {
     return (
         <Link to="/informasjon" className={knappCls}>
             <span>Om dialog</span>
-            <Ikon kind={'help-circle'} />
+            <Ikon kind="help-circle" />
         </Link>
     );
 }

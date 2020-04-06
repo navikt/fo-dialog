@@ -95,6 +95,12 @@ export function InfoOmDialogSide() {
 
                 <Ekspanderbartpanel tittel="Rettigheter og personvern" border>
                     <div className={styles.seksjon}>
+                        <Normaltekst>
+                            Informasjon du gir i meldinger til veilederen din brukes til å vurdere behovet ditt for
+                            hjelp fra NAV.
+                        </Normaltekst>
+                    </div>
+                    <div className={styles.seksjon}>
                         <Element>Manuell oppfølging</Element>
                         <Normaltekst>
                             NAV henter informasjon om deg fra Folkeregisteret og sjekker mot Kontakt- og
