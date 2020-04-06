@@ -125,7 +125,12 @@ function isKladdReloading(status: Status) {
 export function eqKladd(kladd: KladdData, dialogId?: StringOrNull, aktivitetId?: StringOrNull): boolean {
     const dId = valueOrNull(dialogId);
     const aId = valueOrNull(aktivitetId);
-    return kladd.dialogId === dId && kladd.aktivitetId === aId;
+
+    if (!!dialogId) {
+        return kladd.dialogId === dId;
+    }
+
+    return kladd.aktivitetId === aId;
 }
 
 export function findKladd(
@@ -133,7 +138,5 @@ export function findKladd(
     dialogId?: StringOrNull,
     aktivitetId?: StringOrNull
 ): KladdData | undefined {
-    const dId = valueOrNull(dialogId);
-    const aId = valueOrNull(aktivitetId);
-    return kladder.find(k => k.dialogId === dId && k.aktivitetId === aId);
+    return kladder.find(k => eqKladd(k, dialogId, aktivitetId));
 }
