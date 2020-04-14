@@ -5,7 +5,8 @@ export const SessionStorageElement = {
     KRR_BRUKER: 'krrbruker',
     INGEN_OPPF_PERIODER: 'ingen_oppf_perioder',
     KAN_IKKE_VARSLES: 'bruker_kan_ikke_varsles',
-    INGEN_DIALOGER: 'ingen_dialoger'
+    INGEN_DIALOGER: 'ingen_dialoger',
+    HODEFOT: 'hodefot'
 };
 
 export const BRUKER_TYPE = {
@@ -38,3 +39,5 @@ export const brukerKanIkkeVarsles = () => erSatt(SessionStorageElement.KAN_IKKE_
 export const erEksternBruker = () => hentFraSessionStorage(SessionStorageElement.BRUKER_TYPE) === BRUKER_TYPE.EKSTERN;
 
 export const harIngenDialoger = () => erSatt(SessionStorageElement.INGEN_DIALOGER);
+
+export const harHodeFotSkruddPa = () => erSatt(SessionStorageElement.HODEFOT);
