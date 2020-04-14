@@ -2,16 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { DemoIkon } from './DemoIkon';
 import Modal from 'nav-frontend-modal';
 import DemoDashboard from './DemoDashboard';
-import ReactDOM from 'react-dom';
 import { harHodeFotSkruddPa } from './sessionstorage';
-
-function Hode() {
-    return <div className="hodefot hode-mock"></div>;
-}
-
-function Fot() {
-    return <div className="hodefot fot-mock"></div>;
-}
 
 function DemoBanner() {
     const [open, setOpen] = useState(false);
@@ -28,8 +19,10 @@ function DemoBanner() {
         pageWrapper.id = 'pagewrapper';
 
         const hode = document.createElement('div');
+        hode.className = 'hodefot hode-mock';
         const main = document.createElement('div');
         const fot = document.createElement('div');
+        fot.className = 'hodefot fot-mock';
 
         main.id = 'maincontent';
         main.appendChild(document.getElementById('root')!);
@@ -38,8 +31,6 @@ function DemoBanner() {
         pageWrapper.appendChild(main);
         document.body.appendChild(pageWrapper);
         document.body.appendChild(fot);
-        ReactDOM.render(<Hode />, hode);
-        ReactDOM.render(<Fot />, fot);
         return () => {
             document.body.appendChild(document.getElementById('root')!);
             document.body.removeChild(pageWrapper);
