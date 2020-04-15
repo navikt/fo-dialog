@@ -51,13 +51,12 @@ export function InfoOmDialogSide() {
                 </div>
 
                 <div className={styles.seksjon}>
-                    <Element>Dialogen skal ikke handle om økonomi</Element>
+                    <Element>Dialogen skal handle om arbeid og veiledning</Element>
                     <Normaltekst>
-                        Du skal bare skrive om det som handler om å komme i jobb eller aktivitet. Du kan ikke stille
-                        spørsmål her om økonomi eller boligsituasjonen din.
+                        Meldingene i dialogen skal bare handle om det som er relevant for å komme i jobb eller
+                        aktivitet. Har du spørsmål om økonomisk støtte, økonomisk sosialhjelp, boligsituasjon eller
+                        annet, kan du
                     </Normaltekst>
-
-                    <Normaltekst>Har du spørsmål om økonomi, kan du</Normaltekst>
                     <ul>
                         <Normaltekst tag="li">
                             kontakte NAV i tjenesten{' '}
