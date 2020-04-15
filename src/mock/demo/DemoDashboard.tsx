@@ -8,6 +8,7 @@ import {
     erKRRBruker,
     erManuellBruker,
     erPrivatBruker,
+    harHodeFotSkruddPa,
     harIngenDialoger,
     ingenOppfPerioder,
     SessionStorageElement,
@@ -91,6 +92,18 @@ function DemoDashboard(props: DemoDashboardProps) {
                         label: 'Ingen dialoger',
                         id: SessionStorageElement.INGEN_DIALOGER,
                         checked: harIngenDialoger()
+                    }
+                ]}
+                onChange={endreTilstand}
+            />
+
+            <CheckboksPanelGruppe
+                legend="Teknisk"
+                checkboxes={[
+                    {
+                        label: 'HodeFot mock',
+                        id: SessionStorageElement.HODEFOT,
+                        checked: harHodeFotSkruddPa()
                     }
                 ]}
                 onChange={endreTilstand}
