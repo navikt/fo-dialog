@@ -1,4 +1,5 @@
 @import (reference) '~nav-frontend-core/less/core';
+@import (reference) '../variabler';
 
 .storSkjermTittel {
     display: none;
@@ -6,7 +7,7 @@
     flex-grow: 1;
     text-align: center;
 
-    @media (min-width: 1200px) {
+    @media (min-width: @lg-min) {
         display: block;
     }
 }
@@ -21,11 +22,11 @@
     border-radius: 4px;
     border: 1px @navGra60 solid;
 
-    @media (min-width: 800px) {
+    @media (min-width: @md-min) {
         margin: 0.75rem 3rem 0.75rem 3rem;
     }
 
-    @media (min-width: 1200px) {
+    @media (min-width: @lg-min) {
         display: none;
     }
     :global {
@@ -64,7 +65,7 @@
     overflow: hidden;
     margin-right: 1rem;
 
-    @media (max-width: 799px) {
+    @media (max-width: @md-max) {
         margin-right: 0.5rem;
     }
 }
@@ -76,7 +77,7 @@
     align-self: center;
     margin: 0;
 
-    @media (max-width: 799px) {
+    @media (max-width: @md-max) {
         max-width: 5rem;
         text-align: center;
     }

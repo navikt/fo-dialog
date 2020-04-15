@@ -1,6 +1,6 @@
 @import (reference) '~nav-frontend-core/less/core';
 @import (reference) '~nav-frontend-typografi-style/src/index';
-@import (reference) '../variabler';
+@import (reference) 'variabler';
 
 //TODO sjekk denne mot veilarbpersonflatefs
 :global {
@@ -46,8 +46,10 @@
         .hide();
     }
 
-    .hidden-xs {
-        .hidden-xs();
+    @media (max-width: @md-max) {
+        .hide-on-smaller-then-md {
+            display: none !important;
+        }
     }
 
     .blokk-xs {

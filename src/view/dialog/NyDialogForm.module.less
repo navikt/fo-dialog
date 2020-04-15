@@ -1,5 +1,5 @@
 @import (reference) '~nav-frontend-core/less/core';
-@import (reference) '../../variabler';
+@import (reference) '../variabler';
 
 .nyDialog {
     display: flex;
@@ -7,7 +7,7 @@
     background-color: white;
 
     .form {
-        @media (min-width: 800px) {
+        @media (min-width: @md-min) {
             padding: 0 6% 0 6%;
         }
         margin: 1rem;
@@ -40,7 +40,7 @@
         .autosizingTextarea {
             overflow: initial !important; //overwrite nav styling
             max-height: 7rem;
-            @media (min-width: 800px) {
+            @media (min-width: @md-min) {
                 max-height: 15rem;
             }
         }
@@ -59,19 +59,9 @@
         }
     }
 
-    @media (min-width: 800px) {
+    @media (min-width: @md-min) {
         .infotekst {
             max-width: 30rem;
-        }
-
-        @media (min-width: 1200px) {
-            .temafelt {
-                max-width: 50rem;
-            }
-
-            .skrivMelding {
-                max-width: 50rem;
-            }
         }
     }
 }

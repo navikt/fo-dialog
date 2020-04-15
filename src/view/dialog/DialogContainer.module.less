@@ -1,3 +1,5 @@
+@import (reference) '../variabler';
+
 .dialogContainer {
     background-color: white;
     overflow: auto;
@@ -5,7 +7,7 @@
     flex-grow: 1;
     max-height: 100vh;
 
-    @media (min-width: 800px) {
+    @media (min-width: @md-min) {
         width: 65%;
     }
 }
