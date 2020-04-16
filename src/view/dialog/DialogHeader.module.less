@@ -1,14 +1,12 @@
 @import (reference) '~nav-frontend-core/less/core';
-@import (reference) '../../variabler';
+@import (reference) '../variabler';
 @import (reference) '~nav-frontend-knapper-style/src/index';
 @import (reference) '~nav-frontend-knapper-style/src/mixins';
 
 .tilbakeTilOversikt {
     padding: 1rem 0.35rem 1rem 0.25rem;
     color: @navMorkGra;
-    @media (min-width: 800px) {
-        display: none;
-    }
+    .min-responsive({display: none;});
 }
 
 .lukkeknapp {
@@ -25,9 +23,7 @@
     font-weight: 400;
     padding: 0.5rem;
 
-    @media (max-width: 799px) {
-        display: none;
-    }
+    .max-responsive({display: none;});
 }
 
 .headerContent {
@@ -39,20 +35,13 @@
     display: flex;
     align-items: center;
     background-color: @lysgraBakrund;
-    min-height: 3rem;
     z-index: 0;
 }
 
 .tittelHeader {
     text-align: center;
 
-    @media (min-width: 800px) {
-        background-color: white;
-    }
-}
-
-.overflowHidden {
-    overflow: hidden;
+    .min-responsive({background-color: white;});
 }
 
 .dialogHeaderShadow {
@@ -64,11 +53,7 @@
     flex-grow: 1;
     text-align: center;
 
-    @media (min-width: 800px) {
-        margin-top: 1rem;
-    }
+    .min-responsive({margin-top: 1rem;});
 
-    @media (max-width: 799px) {
-        margin-left: -2.58rem;
-    }
+    .max-responsive({margin-left: -2.58rem;});
 }

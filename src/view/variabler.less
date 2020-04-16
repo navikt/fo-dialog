@@ -1,0 +1,33 @@
+@lysgraBakrund: #f4f4f4;
+
+//medium screen size
+@md-min-x: 900px;
+@md-max-x: (@md-min-x - 1);
+
+@md-min-y: 600px;
+@md-max-y: (@md-min-y - 1);
+
+@show-scroll-when-height-smaller-then: 400px;
+
+// Large screen size
+@lg-min: 1200px;
+
+// Hvis størrelsen er større en md-min så kjøres disse reglene
+.min-responsive(@rules) {
+    @media (min-width: @md-min-x) and (min-height: @md-min-y) {
+        @rules();
+    }
+}
+
+// Hvis størrelsen er mindre enn md-max så kjøres disse reglene
+.max-responsive(@rules) {
+    @media (max-width: @md-max-x), (max-height: @md-max-y) {
+        @rules();
+    }
+}
+
+.medium-responsive(@rules) {
+    @media (min-width: @lg-min) and (min-height: @md-min-y) {
+        @rules();
+    }
+}
