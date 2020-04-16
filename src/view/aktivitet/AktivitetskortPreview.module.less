@@ -7,9 +7,7 @@
     flex-grow: 1;
     text-align: center;
 
-    @media (min-width: @lg-min) {
-        display: block;
-    }
+    .medium-responsive({display: block;});
 }
 
 .lenkepanelbase {
@@ -22,13 +20,10 @@
     border-radius: 4px;
     border: 1px @navGra60 solid;
 
-    @media (min-width: @md-min) {
-        margin: 0.75rem 3rem 0.75rem 3rem;
-    }
+    .min-responsive({margin: 0.75rem 3rem 0.75rem 3rem;});
 
-    @media (min-width: @lg-min) {
-        display: none;
-    }
+    .medium-responsive({display: none;});
+
     :global {
         .lenkepanel__indikator {
             color: @navBla;
@@ -65,9 +60,7 @@
     overflow: hidden;
     margin-right: 1rem;
 
-    @media (max-width: @md-max) {
-        margin-right: 0.5rem;
-    }
+    .max-responsive({margin-right: 0.5rem;});
 }
 
 .lesmer {
@@ -77,8 +70,5 @@
     align-self: center;
     margin: 0;
 
-    @media (max-width: @md-max) {
-        max-width: 5rem;
-        text-align: center;
-    }
+    .max-responsive({max-width: 5rem; text-align: center;});
 }

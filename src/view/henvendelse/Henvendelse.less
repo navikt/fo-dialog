@@ -1,4 +1,5 @@
 @import (reference) '~nav-frontend-core/less/core';
+@import (reference) '../variabler';
 
 .snakkeboble {
     margin-left: 0;
@@ -10,8 +11,7 @@
         overflow: hidden;
         overflow-wrap: break-word;
 
-        &__tekst {
-        }
+        .max-responsive({flex-basis: 100%;});
     }
 
     &--hoyre {
@@ -36,14 +36,4 @@
 .veileder-ikon {
     background: no-repeat data-uri('nav.svg');
     background-size: cover;
-}
-
-@media (max-width: 700px) {
-    .snakkeboble {
-        margin-left: 0;
-        margin-right: 0;
-        .snakkeboble-panel {
-            flex-basis: 100%;
-        }
-    }
 }

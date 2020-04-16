@@ -2,7 +2,6 @@
 @import (reference) '~nav-frontend-typografi-style/src/index';
 @import (reference) 'variabler';
 
-//TODO sjekk denne mot veilarbpersonflatefs
 :global {
     html,
     body,
@@ -29,9 +28,7 @@
         height: auto; //samme som decorator
         min-height: 100%; //samme som decorator
 
-        @media (max-width: @screen-xs-max) {
-            min-height: max-content;
-        }
+        .max-responsive({min-height: max-content;});
     }
 
     #maincontent {
@@ -46,11 +43,7 @@
         .hide();
     }
 
-    @media (max-width: @md-max) {
-        .hide-on-smaller-then-md {
-            display: none !important;
-        }
-    }
+    .max-responsive({.hide-on-smaller-then-md {display: none;}}) !important;
 
     .blokk-xs {
         .blokk-xs();
@@ -82,6 +75,7 @@
     display: flex;
     width: 100%;
 }
+
 .konteinerInside {
     position: relative;
     height: 100%;

@@ -7,6 +7,10 @@
     overflow-y: scroll;
     border-bottom: 2px solid @navLysGra;
 
+    @media (max-height: @show-scroll-when-height-smaller-then) {
+        overflow-y: initial;
+    }
+
     &__viewport {
         height: 100%;
         display: flex;
@@ -30,9 +34,7 @@
     .autosizing-textarea {
         max-height: 7rem;
         overflow: initial !important; //overwrite nav styling
-        @media (min-width: @md-min) {
-            max-height: 15rem;
-        }
+        .min-responsive({max-height: 15rem;});
     }
     .skjemaelement__feilmelding {
         @media (max-width: 560px) {

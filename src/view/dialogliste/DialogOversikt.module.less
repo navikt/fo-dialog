@@ -9,11 +9,7 @@
     background-color: @lysgraBakrund;
     width: 100%;
 
-    @media (min-width: @md-min) {
-        display: flex;
-        width: 35%;
-        max-width: 30rem;
-    }
+    .min-responsive({width: 35%; max-width: 30rem;});
 }
 
 .dialogListe {
@@ -25,17 +21,13 @@
 }
 
 .dialogValgt {
-    display: none;
-    @media (min-width: @md-min) {
-        display: flex;
-    }
+    display: flex;
+    .max-responsive({display: none;});
 }
 
 .info {
-    display: none;
-    @media (max-width: @md-max) {
-        display: block;
-    }
+    display: block;
+    .min-responsive({display: none;});
 }
 
 .tidligerePeriodeTittel {

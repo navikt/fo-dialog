@@ -7,9 +7,7 @@
     background-color: white;
 
     .form {
-        @media (min-width: @md-min) {
-            padding: 0 6% 0 6%;
-        }
+        .min-responsive({padding: 0 6% 0 6%;});
         margin: 1rem;
     }
 
@@ -40,9 +38,7 @@
         .autosizingTextarea {
             overflow: initial !important; //overwrite nav styling
             max-height: 7rem;
-            @media (min-width: @md-min) {
-                max-height: 15rem;
-            }
+            .min-responsive({max-height: 15rem;});
         }
 
         :global {
@@ -59,9 +55,5 @@
         }
     }
 
-    @media (min-width: @md-min) {
-        .infotekst {
-            max-width: 30rem;
-        }
-    }
+    .min-responsive({.infotekst {max-width: 30rem;}});
 }
