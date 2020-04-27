@@ -43,7 +43,11 @@
         .hide();
     }
 
-    .max-responsive({.hide-on-smaller-then-md {display: none;}}) !important;
+    @media (max-width: @md-max-x), (max-height: @md-max-y) {
+        .hide-on-smaller-then-md {
+            display: none !important;
+        }
+    }
 
     .blokk-xs {
         .blokk-xs();
