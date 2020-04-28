@@ -56,6 +56,42 @@ const dialoger: DialogData[] & JSONArray = [
                 sendt: '2018-03-28T12:48:56.097+01:00',
                 lest: false,
                 tekst: 'De ringte meg i går. Skal på intervju neste uke :)'
+            },
+            {
+                id: '4a',
+                dialogId: '1',
+                avsender: 'BRUKER',
+                avsenderId: '0102030405',
+                sendt: '2018-03-28T12:48:57.097+01:00',
+                lest: false,
+                tekst: 'De ringte meg i går!. Skal på intervju neste uke :)'
+            },
+            {
+                id: '4b',
+                dialogId: '1',
+                avsender: 'BRUKER',
+                avsenderId: '0102030405',
+                sendt: '2018-03-28T12:48:58.097+01:00',
+                lest: false,
+                tekst: 'De ringte meg i går!!. Skal på intervju neste uke :)'
+            },
+            {
+                id: '4c',
+                dialogId: '1',
+                avsender: 'BRUKER',
+                avsenderId: '0102030405',
+                sendt: '2018-03-28T12:48:59.097+01:00',
+                lest: false,
+                tekst: 'De ringte meg i går!!!. Skal på intervju neste uke :)'
+            },
+            {
+                id: '4d',
+                dialogId: '1',
+                avsender: 'BRUKER',
+                avsenderId: '0102030405',
+                sendt: '2018-03-28T12:49:01.097+01:00',
+                lest: false,
+                tekst: 'De ringte meg i går!!!!. Skal på intervju neste uke :)'
             }
         ],
         egenskaper: []
