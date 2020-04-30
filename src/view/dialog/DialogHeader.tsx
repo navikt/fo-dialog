@@ -54,11 +54,13 @@ export function DialogHeader(props: DialogHeaderProps) {
 function Header(props: { children?: React.ReactNode; visSkygge?: boolean; className?: string }) {
     const { children, visSkygge, className } = props;
     return (
-        <div className={classNames(styles.dialogHeader, { [styles.dialogHeaderShadow]: visSkygge }, className)}>
-            <Link to="/" title="Til dialoger" className={styles.tilbakeTilOversikt}>
-                <VenstreChevron stor />
-            </Link>
-            <div className={styles.headerContent}>{children}</div>
+        <div className={styles.dialogHeaderContainer}>
+            <div className={classNames(styles.dialogHeader, { [styles.dialogHeaderShadow]: visSkygge }, className)}>
+                <Link to="/" title="Til dialoger" className={styles.tilbakeTilOversikt}>
+                    <VenstreChevron stor />
+                </Link>
+                <div className={styles.headerContent}>{children}</div>
+            </div>
         </div>
     );
 }
