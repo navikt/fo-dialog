@@ -5,7 +5,6 @@ import { DialogData, StringOrNull } from '../../utils/Typer';
 import { Normaltekst } from 'nav-frontend-typografi';
 import Hjelpetekst from '../../felleskomponenter/Hjelpetekst';
 import styles from './DialogSendtBekreftelse.module.less';
-import { KoronaInfo } from '../../felleskomponenter/info/KoronaInfo';
 
 function getTekst(handling: HandlingsType, erVeileder: boolean, overskrift: StringOrNull) {
     if (erVeileder && HandlingsType.ingen !== handling) {
@@ -34,7 +33,6 @@ function Melding(props: { tekst?: string; erVeileder: boolean }) {
 
     const { tekst, erVeileder } = props;
 
-    //Todo remove classname when corona info is gone
     return !tekst ? null : (
         <div className={styles.meldingContainer} aria-hidden={!hasRendred}>
             <OkMessage>
@@ -65,7 +63,6 @@ function DialogSendtBekreftelse(props: Props) {
     return (
         <div role="status">
             <Melding erVeileder={erVeileder} tekst={tekst} />
-            <KoronaInfo hidden={erVeileder || !tekst} />
         </div>
     );
 }
