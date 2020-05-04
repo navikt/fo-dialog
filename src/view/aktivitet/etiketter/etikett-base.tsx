@@ -1,6 +1,5 @@
 import React from 'react';
 import classNames from 'classnames';
-import { Normaltekst } from 'nav-frontend-typografi';
 import styles from './etikett.module.less';
 
 interface Props {
