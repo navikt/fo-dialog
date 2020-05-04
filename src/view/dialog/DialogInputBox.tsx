@@ -148,6 +148,12 @@ export function DialogInputBox(props: Props) {
                 state.reinitialize({ melding: startTekst });
                 setViewState(sendtNyHenvendelse(viewState));
                 dispatchUpdate(UpdateTypes.Dialog);
+
+                const elem = document.querySelector('.henvendelse-list');
+                if (elem !== null) {
+                    console.log(elem);
+                    elem.scrollTo({ top: elem.scrollHeight, behavior: 'smooth' });
+                }
             })
             .catch(() => setNoeFeilet(true));
     };
