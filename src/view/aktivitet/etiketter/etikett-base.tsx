@@ -17,9 +17,7 @@ function EtikettBase(props: Props) {
 
     return (
         <div className={classNames(styles.etikett, className)}>
-            <Normaltekst tag="span" className={styles.etikettTekst}>
-                {children}
-            </Normaltekst>
+            <span className={styles.etikettTekst}>{children}</span>
         </div>
     );
 }
