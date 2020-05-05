@@ -1,5 +1,5 @@
 import { DialogData, HenvendelseData, StringOrNull } from '../../utils/Typer';
-import React, { Component, useLayoutEffect } from 'react';
+import React, { Component } from 'react';
 import { Henvendelse } from './Henvendelse';
 import LestAvTidspunkt from '../lest/LestTidspunkt';
 import { useSkjulHodefotForMobilVisning } from '../utils/useSkjulHodefotForMobilVisning';
