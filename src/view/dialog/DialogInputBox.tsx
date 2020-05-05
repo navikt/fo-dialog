@@ -99,7 +99,7 @@ export function DialogInputBox(props: Props) {
     const state = validator(initalValues, { startTekst });
 
     useLayoutEffect(() => {
-        const match = window.matchMedia ? window.matchMedia(`(min-width: 768px)`).matches : false;
+        const match = window.matchMedia ? window.matchMedia(`(min-width: 900px)`).matches : false;
         const autoFocus = match && viewState.sistHandlingsType !== HandlingsType.nyDialog;
 
         if (autoFocus) {

@@ -1,5 +1,5 @@
 import { DialogData, HenvendelseData, StringOrNull } from '../../utils/Typer';
-import React, { Component } from 'react';
+import React, { useLayoutEffect } from 'react';
 import { Henvendelse } from './Henvendelse';
 import LestAvTidspunkt from '../lest/LestTidspunkt';
 import { useSkjulHodefotForMobilVisning } from '../utils/useSkjulHodefotForMobilVisning';
@@ -23,38 +23,20 @@ function sisteLesteHenvendelse(lest: StringOrNull, henvendelser: HenvendelseData
     return sistLeste ? sistLeste.id : null;
 }
 
-function scroll() {
-    const elem = document.querySelector('.henvendelse-list');
-    if (elem !== null) {
-        elem.scrollTop = elem.scrollHeight;
-    }
-}
-
-interface ScrollProps {
-    id?: string;
-}
-
-class ScrollToBottom extends Component<ScrollProps> {
-    componentDidMount() {
-        scroll();
-    }
-
-    componentDidUpdate(prevProps: ScrollProps) {
-        if (prevProps.id !== this.props.id) {
-            scroll();
-        }
-    }
-
-    render() {
-        return <div />;
-    }
-}
-
 export function HenvendelseList(props: Props) {
     const dialogData = props.dialogData;
-    const { lestAvBrukerTidspunkt, henvendelser } = dialogData;
+    const { lestAvBrukerTidspunkt, henvendelser, id } = dialogData;
 
     useSkjulHodefotForMobilVisning();
+    useLayoutEffect(() => {
+        //safari will not scroll correctly without waiting until next animation frame
+        requestAnimationFrame(() => {
+            const elem = document.querySelector('.henvendelse-list');
+            if (elem !== null) {
+                elem.scrollTop = elem.scrollHeight;
+            }
+        });
+    }, [id]);
 
     if (!henvendelser) {
         return null;
@@ -65,7 +47,6 @@ export function HenvendelseList(props: Props) {
 
     return (
         <section aria-label="Meldinger" className="henvendelse-list">
-            <ScrollToBottom id={dialogData.id} />
             <Systemtittel className="visually-hidden">Meldinger</Systemtittel>
             <div className="henvendelse-list__viewport">
                 {sorterteHenvendelser.map(henvendelse => (
