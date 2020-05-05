@@ -151,7 +151,6 @@ export function DialogInputBox(props: Props) {
 
                 const elem = document.querySelector('.henvendelse-list');
                 if (elem !== null) {
-                    console.log(elem);
                     elem.scrollTo({ top: elem.scrollHeight, behavior: 'smooth' });
                 }
             })

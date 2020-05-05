@@ -23,18 +23,25 @@ function sisteLesteHenvendelse(lest: StringOrNull, henvendelser: HenvendelseData
     return sistLeste ? sistLeste.id : null;
 }
 
-class ScrollToBottom extends Component {
+function scroll() {
+    const elem = document.querySelector('.henvendelse-list');
+    if (elem !== null) {
+        elem.scrollTop = elem.scrollHeight;
+    }
+}
+
+interface ScrollProps {
+    id?: string;
+}
+
+class ScrollToBottom extends Component<ScrollProps> {
     componentDidMount() {
-        const elem = document.querySelector('.henvendelse-list');
-        if (elem !== null) {
-            elem.scrollTop = elem.scrollHeight;
-        }
+        scroll();
     }
 
-    componentDidUpdate() {
-        const elem = document.querySelector('.henvendelse-list');
-        if (elem !== null) {
-            elem.scrollTop = elem.scrollHeight;
+    componentDidUpdate(prevProps: ScrollProps) {
+        if (prevProps.id !== this.props.id) {
+            scroll();
         }
     }
 
@@ -58,7 +65,7 @@ export function HenvendelseList(props: Props) {
 
     return (
         <section aria-label="Meldinger" className="henvendelse-list">
-            <ScrollToBottom />
+            <ScrollToBottom id={dialogData.id} />
             <Systemtittel className="visually-hidden">Meldinger</Systemtittel>
             <div className="henvendelse-list__viewport">
                 {sorterteHenvendelser.map(henvendelse => (
