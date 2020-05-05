@@ -1,5 +1,5 @@
 import { DialogData, HenvendelseData, StringOrNull } from '../../utils/Typer';
-import React, { useLayoutEffect } from 'react';
+import React, { Component, useLayoutEffect } from 'react';
 import { Henvendelse } from './Henvendelse';
 import LestAvTidspunkt from '../lest/LestTidspunkt';
 import { useSkjulHodefotForMobilVisning } from '../utils/useSkjulHodefotForMobilVisning';
@@ -23,27 +23,42 @@ function sisteLesteHenvendelse(lest: StringOrNull, henvendelser: HenvendelseData
     return sistLeste ? sistLeste.id : null;
 }
 
+class ScrollToBottom extends Component {
+    componentDidMount() {
+        const elem = document.querySelector('.henvendelse-list');
+        if (elem !== null) {
+            elem.scrollTop = elem.scrollHeight;
+        }
+    }
+
+    componentDidUpdate() {
+        const elem = document.querySelector('.henvendelse-list');
+        if (elem !== null) {
+            elem.scrollTop = elem.scrollHeight;
+        }
+    }
+
+    render() {
+        return <div />;
+    }
+}
+
 export function HenvendelseList(props: Props) {
     const dialogData = props.dialogData;
     const { lestAvBrukerTidspunkt, henvendelser } = dialogData;
 
     useSkjulHodefotForMobilVisning();
 
-    useLayoutEffect(() => {
-        const elem = document.querySelector('.henvendelse-list');
-        if (elem !== null) {
-            elem.scrollTop = elem.scrollHeight;
-        }
-    }, [dialogData.id]);
-
     if (!henvendelser) {
         return null;
     }
+
     const sorterteHenvendelser = henvendelser.sort((a, b) => datoComparator(b.sendt, a.sendt));
     const sisteHenvendelseLestAvBruker = sisteLesteHenvendelse(lestAvBrukerTidspunkt, sorterteHenvendelser);
 
     return (
         <section aria-label="Meldinger" className="henvendelse-list">
+            <ScrollToBottom />
             <Systemtittel className="visually-hidden">Meldinger</Systemtittel>
             <div className="henvendelse-list__viewport">
                 {sorterteHenvendelser.map(henvendelse => (
