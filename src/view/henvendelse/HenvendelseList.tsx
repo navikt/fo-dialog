@@ -25,20 +25,23 @@ function sisteLesteHenvendelse(lest: StringOrNull, henvendelser: HenvendelseData
 
 export function HenvendelseList(props: Props) {
     const dialogData = props.dialogData;
-    const { lestAvBrukerTidspunkt, henvendelser } = dialogData;
+    const { lestAvBrukerTidspunkt, henvendelser, id } = dialogData;
 
     useSkjulHodefotForMobilVisning();
-
     useLayoutEffect(() => {
-        const elem = document.querySelector('.henvendelse-list');
-        if (elem !== null) {
-            elem.scrollTop = elem.scrollHeight;
-        }
-    }, [dialogData.id]);
+        //safari will not scroll correctly without waiting until next animation frame
+        requestAnimationFrame(() => {
+            const elem = document.querySelector('.henvendelse-list');
+            if (elem !== null) {
+                elem.scrollTop = elem.scrollHeight;
+            }
+        });
+    }, [id]);
 
     if (!henvendelser) {
         return null;
     }
+
     const sorterteHenvendelser = henvendelser.sort((a, b) => datoComparator(b.sendt, a.sendt));
     const sisteHenvendelseLestAvBruker = sisteLesteHenvendelse(lestAvBrukerTidspunkt, sorterteHenvendelser);
 
