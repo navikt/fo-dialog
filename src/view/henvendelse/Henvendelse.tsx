@@ -4,7 +4,7 @@ import { HenvendelseData } from '../../utils/Typer';
 import { formaterDateAndTime } from '../../utils/Date';
 
 import './Henvendelse.less';
-import Tekstomrade, { LinkRule, ParagraphRule } from 'nav-frontend-tekstomrade';
+import Tekstomrade, { LinkRule, ParagraphRule, LinebreakRule } from 'nav-frontend-tekstomrade';
 import { Undertittel } from 'nav-frontend-typografi';
 import { useUserInfoContext } from '../Provider';
 import { markdownLink } from './CustomRules';
@@ -37,7 +37,7 @@ export function Henvendelse(props: Props) {
                 {accessibleText(erBruker, erMeldingFraBruker)}
             </Undertittel>
             <Snakkeboble topp={toppTekst} pilHoyre={erMeldingFraBruker} ikonClass={className}>
-                <Tekstomrade rules={[LinkRule, ParagraphRule, markdownLink]} className="blokk-xs">
+                <Tekstomrade rules={[LinkRule, LinebreakRule, ParagraphRule, markdownLink]} className="blokk-xs">
                     {tekst}
                 </Tekstomrade>
             </Snakkeboble>
