@@ -136,6 +136,7 @@ export function DialogInputBox(props: Props) {
             .then(dialog => {
                 if (bruker?.erVeileder) {
                     if (!dialog.ferdigBehandlet) {
+                        slettKladd(valgtDialog.id, valgtDialog.aktivitetId);
                         return setFerdigBehandlet(valgtDialog, true);
                     }
                 }
