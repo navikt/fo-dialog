@@ -1,11 +1,13 @@
+@import (reference) '../variabler';
+
 .dialogContainer {
     background-color: white;
     overflow: auto;
     display: flex;
     flex-grow: 1;
-    max-height: 100vh;
+    max-height: 100vh; /* Fallback for browsers that do not support Custom Properties */
+    max-height: calc(var(--vh, 1vh) * 100);
 
-    @media (min-width: 800px) {
-        width: 65%;
-    }
+    .min-responsive({width: 65%;});
+    .max-responsive({height: 100vh;});
 }

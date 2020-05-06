@@ -56,6 +56,42 @@ const dialoger: DialogData[] & JSONArray = [
                 sendt: '2018-03-28T12:48:56.097+01:00',
                 lest: false,
                 tekst: 'De ringte meg i går. Skal på intervju neste uke :)'
+            },
+            {
+                id: '4a',
+                dialogId: '1',
+                avsender: 'BRUKER',
+                avsenderId: '0102030405',
+                sendt: '2018-03-28T12:48:57.097+01:00',
+                lest: false,
+                tekst: 'De ringte meg i går!. Skal på intervju neste uke :)'
+            },
+            {
+                id: '4b',
+                dialogId: '1',
+                avsender: 'BRUKER',
+                avsenderId: '0102030405',
+                sendt: '2018-03-28T12:48:58.097+01:00',
+                lest: false,
+                tekst: 'De ringte meg i går!!. Skal på intervju neste uke :)'
+            },
+            {
+                id: '4c',
+                dialogId: '1',
+                avsender: 'BRUKER',
+                avsenderId: '0102030405',
+                sendt: '2018-03-28T12:48:59.097+01:00',
+                lest: false,
+                tekst: 'De ringte meg i går!!!. Skal på intervju neste uke :)'
+            },
+            {
+                id: '4d',
+                dialogId: '1',
+                avsender: 'BRUKER',
+                avsenderId: '0102030405',
+                sendt: '2018-03-28T12:49:01.097+01:00',
+                lest: false,
+                tekst: 'De ringte meg i går!!!!. Skal på intervju neste uke :)'
             }
         ],
         egenskaper: []
@@ -139,6 +175,86 @@ const dialoger: DialogData[] & JSONArray = [
                 avsender: 'VEILEDER',
                 avsenderId: 'Z999999',
                 sendt: '2018-02-28T12:48:56.097+01:00',
+                lest: false,
+                tekst:
+                    'Hei!\n' +
+                    'Du har svart at du trenger mer veiledning nå som retten til sykepenger nærmer seg slutten. Vi vil veilede deg videre og trenger derfor å vite litt mer.\n' +
+                    'Du kan velge om du vil fortelle om situasjonen din \n' +
+                    '- i et møte med veilederen din på NAV-kontoret\n' +
+                    '- i en telefonsamtale\n' +
+                    '- her i dialogen\n' +
+                    'Skriv svaret ditt i feltet under. Hvis du velger "her i dialogen", kan du fortelle mer allerede nå.\n'
+            },
+            {
+                id: '7',
+                dialogId: '4',
+                avsender: 'VEILEDER',
+                avsenderId: 'Z999999',
+                sendt: '2018-02-28T12:49:56.097+01:00',
+                lest: false,
+                tekst:
+                    'Hei!\n' +
+                    'Du har svart at du trenger mer veiledning nå som retten til sykepenger nærmer seg slutten. Vi vil veilede deg videre og trenger derfor å vite litt mer.\n' +
+                    'Du kan velge om du vil fortelle om situasjonen din \n' +
+                    '- i et møte med veilederen din på NAV-kontoret\n' +
+                    '- i en telefonsamtale\n' +
+                    '- her i dialogen\n' +
+                    'Skriv svaret ditt i feltet under. Hvis du velger "her i dialogen", kan du fortelle mer allerede nå.\n'
+            },
+            {
+                id: '8',
+                dialogId: '4',
+                avsender: 'VEILEDER',
+                avsenderId: 'Z999999',
+                sendt: '2018-02-28T12:50:56.097+01:00',
+                lest: false,
+                tekst:
+                    'Hei!\n' +
+                    'Du har svart at du trenger mer veiledning nå som retten til sykepenger nærmer seg slutten. Vi vil veilede deg videre og trenger derfor å vite litt mer.\n' +
+                    'Du kan velge om du vil fortelle om situasjonen din \n' +
+                    '- i et møte med veilederen din på NAV-kontoret\n' +
+                    '- i en telefonsamtale\n' +
+                    '- her i dialogen\n' +
+                    'Skriv svaret ditt i feltet under. Hvis du velger "her i dialogen", kan du fortelle mer allerede nå.\n'
+            },
+            {
+                id: '9',
+                dialogId: '4',
+                avsender: 'VEILEDER',
+                avsenderId: 'Z999999',
+                sendt: '2018-02-28T12:51:56.097+01:00',
+                lest: false,
+                tekst:
+                    'Hei!\n' +
+                    'Du har svart at du trenger mer veiledning nå som retten til sykepenger nærmer seg slutten. Vi vil veilede deg videre og trenger derfor å vite litt mer.\n' +
+                    'Du kan velge om du vil fortelle om situasjonen din \n' +
+                    '- i et møte med veilederen din på NAV-kontoret\n' +
+                    '- i en telefonsamtale\n' +
+                    '- her i dialogen\n' +
+                    'Skriv svaret ditt i feltet under. Hvis du velger "her i dialogen", kan du fortelle mer allerede nå.\n'
+            },
+            {
+                id: '10',
+                dialogId: '4',
+                avsender: 'VEILEDER',
+                avsenderId: 'Z999999',
+                sendt: '2018-02-28T12:51:56.097+01:00',
+                lest: false,
+                tekst:
+                    'Hei!\n' +
+                    'Du har svart at du trenger mer veiledning nå som retten til sykepenger nærmer seg slutten. Vi vil veilede deg videre og trenger derfor å vite litt mer.\n' +
+                    'Du kan velge om du vil fortelle om situasjonen din \n' +
+                    '- i et møte med veilederen din på NAV-kontoret\n' +
+                    '- i en telefonsamtale\n' +
+                    '- her i dialogen\n' +
+                    'Skriv svaret ditt i feltet under. Hvis du velger "her i dialogen", kan du fortelle mer allerede nå.\n'
+            },
+            {
+                id: '11',
+                dialogId: '4',
+                avsender: 'VEILEDER',
+                avsenderId: 'Z999999',
+                sendt: '2018-02-28T12:52:56.097+01:00',
                 lest: false,
                 tekst:
                     'Hei!\n' +

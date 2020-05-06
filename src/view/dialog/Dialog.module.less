@@ -1,11 +1,18 @@
 @import (reference) '~nav-frontend-core/less/core';
+@import (reference) '../variabler';
 
 .overflowAuto {
     overflow: auto !important;
+    display: block !important;
 }
 
 .dialog {
     overflow: hidden;
+
+    @media (max-height: @show-scroll-when-height-smaller-then) {
+        overflow-y: initial;
+    }
+
     display: flex;
     flex-direction: column;
     flex-grow: 1;

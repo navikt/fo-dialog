@@ -99,7 +99,7 @@ export function DialogInputBox(props: Props) {
     const state = validator(initalValues, { startTekst });
 
     useLayoutEffect(() => {
-        const match = window.matchMedia ? window.matchMedia(`(min-width: 768px)`).matches : false;
+        const match = window.matchMedia ? window.matchMedia(`(min-width: 900px)`).matches : false;
         const autoFocus = match && viewState.sistHandlingsType !== HandlingsType.nyDialog;
 
         if (autoFocus) {
@@ -136,6 +136,7 @@ export function DialogInputBox(props: Props) {
             .then(dialog => {
                 if (bruker?.erVeileder) {
                     if (!dialog.ferdigBehandlet) {
+                        slettKladd(valgtDialog.id, valgtDialog.aktivitetId);
                         return setFerdigBehandlet(valgtDialog, true);
                     }
                 }
@@ -148,6 +149,11 @@ export function DialogInputBox(props: Props) {
                 state.reinitialize({ melding: startTekst });
                 setViewState(sendtNyHenvendelse(viewState));
                 dispatchUpdate(UpdateTypes.Dialog);
+
+                const elem = document.querySelector('.henvendelse-list');
+                if (elem !== null) {
+                    elem.scrollTo({ top: elem.scrollHeight, behavior: 'smooth' });
+                }
             })
             .catch(() => setNoeFeilet(true));
     };

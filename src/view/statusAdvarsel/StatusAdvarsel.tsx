@@ -37,11 +37,11 @@ export default function StatusAdvarsel() {
     if (erReservertKrr) {
         return <ReservertKrr erVeileder={erVeileder} />;
     }
-    if (!kanVarsles && erProd()) {
-        return <KanIkkeVarsles erVeileder={erVeileder} />;
-    }
     if (manuellBruker) {
         return <MannuelBruker erVeileder={erVeileder} />;
+    }
+    if (!kanVarsles && erProd()) {
+        return <KanIkkeVarsles erVeileder={erVeileder} />;
     }
 
     return null;
