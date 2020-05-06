@@ -48,6 +48,7 @@
     "dependencies": {
         "@navikt/navspa": "^1.0.3",
         "@nutgaard/use-formstate": "^2.2.1",
+        "@types/react-textarea-autosize": "^4.3.5",
         "babel-polyfill": "^6.26.0",
         "babel-runtime": "^6.26.0",
         "date-fns": "^1.30.1",
@@ -105,6 +106,7 @@
         "react-router": "^5.1.2",
         "react-router-dom": "^5.1.2",
         "react-scripts": "^3.4.1",
+        "react-textarea-autosize": "^7.1.2",
         "sha.js": "^2.4.11",
         "smoothscroll-polyfill": "^0.4.4",
         "typescript": "^3.8.3",
