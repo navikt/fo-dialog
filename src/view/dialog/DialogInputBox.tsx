@@ -4,7 +4,6 @@ import { visibleIfHoc } from '../../felleskomponenter/VisibleIfHoc';
 import { dataOrUndefined, useOppfolgingContext, useUserInfoContext, useViewContext } from '../Provider';
 import { AlertStripeFeil } from 'nav-frontend-alertstriper';
 import useFormstate, { Formstate } from '@nutgaard/use-formstate';
-import Textarea from '../../felleskomponenter/input/textarea';
 import { Hovedknapp } from 'nav-frontend-knapper';
 import { HandlingsType, sendtNyHenvendelse } from '../ViewState';
 import { dispatchUpdate, UpdateTypes } from '../../utils/UpdateEvent';
@@ -12,6 +11,7 @@ import { isDialogPendingOrReloading, useDialogContext } from '../DialogProvider'
 import useHenvendelseStartTekst from './UseHenvendelseStartTekst';
 import loggEvent from '../../felleskomponenter/logging';
 import { useKladdContext } from '../KladdProvider';
+import EkspanderbartTekstArea from '../../felleskomponenter/textArea/TextArea';
 
 const AlertStripeFeilVisible = visibleIfHoc(AlertStripeFeil);
 
@@ -55,10 +55,9 @@ function HenvendelseInput(props: HenvendelseInputProps) {
 
     return (
         <div className="skriv-melding label-sr-only">
-            <Textarea
+            <EkspanderbartTekstArea
                 label="Skriv en melding om arbeid og oppfølging"
                 placeholder="Skriv en melding om arbeid og oppfølging"
-                textareaClass="autosizing-textarea"
                 maxLength={maxMeldingsLengde}
                 visTellerFra={1000}
                 autoFocus={autoFocus}
@@ -66,7 +65,7 @@ function HenvendelseInput(props: HenvendelseInputProps) {
                 onChange={onChange}
                 {...state.fields.melding}
             />
-            <Hovedknapp title="Send" autoDisableVedSpinner spinner={laster}>
+            <Hovedknapp title="Send" autoDisableVedSpinner spinner={laster} htmlType="submit">
                 Send
             </Hovedknapp>
         </div>
