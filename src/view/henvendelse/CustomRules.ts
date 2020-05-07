@@ -14,6 +14,11 @@ export const markdownLink: Rule = {
         if (typeof node === 'string') {
             return { type: 'p' };
         }
-        return { type: Lenke, props: { href: `${getText(node.content[1])}` }, children: [node.content[0]] };
+        const startsWithHttp = /^(https?):\/\/.*$/;
+
+        const text = getText(node.content[1]);
+        const href = startsWithHttp.test(text) ? text : `https://${text}`;
+
+        return { type: Lenke, props: { href: `${href}` }, children: [node.content[0]] };
     }
 };
