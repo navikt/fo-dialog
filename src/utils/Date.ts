@@ -1,17 +1,17 @@
 import { differenceInHours, differenceInMinutes, format } from 'date-fns';
-import * as norweigianLocale from 'date-fns/locale/nb';
+import { nb } from 'date-fns/locale';
 import { ValueOrNull } from './Typer';
 
-const locale = { locale: norweigianLocale };
+const locale = { locale: nb };
 
 export function formaterDateAndTime(sendtDate: ValueOrNull<string>): string {
     if (!sendtDate) return '';
-    return format(new Date(sendtDate), 'DD.MM.YYYY HH:mm', locale);
+    return format(new Date(sendtDate), 'dd.MM.yyyy HH:mm', locale);
 }
 
 export function formaterDate(dato: ValueOrNull<string>): string {
     if (!dato) return '';
-    return format(new Date(dato), 'DD.MM.YYYY', locale);
+    return format(new Date(dato), 'dd.MM.yyyy', locale);
 }
 
 export function getKlokkeslett(dato: ValueOrNull<string>): string {
