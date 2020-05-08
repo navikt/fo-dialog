@@ -15,6 +15,7 @@ import useHenvendelseStartTekst from './UseHenvendelseStartTekst';
 import loggEvent from '../../felleskomponenter/logging';
 import { findKladd, useKladdContext } from '../KladdProvider';
 import EkspanderbartTekstArea from '../../felleskomponenter/textArea/TextArea';
+import { SkjemaGruppe } from 'nav-frontend-skjema';
 
 const AlertStripeFeilVisible = visibleIfHoc(AlertStripeFeil);
 
@@ -103,7 +104,7 @@ function NyDialogForm(props: Props) {
 
         loggEvent('arbeidsrettet-dialog.ny.dialog', { paaAktivitet: !!aktivitetId });
         return nyDialog(melding, tema, aktivitetId)
-            .then(dialog => {
+            .then((dialog) => {
                 slettKladd(null, props.aktivitetId);
                 onSubmit && onSubmit();
                 history.push('/' + dialog.id);
@@ -129,30 +130,32 @@ function NyDialogForm(props: Props) {
     return (
         <div className={style.nyDialog}>
             <form onSubmit={state.onSubmit(handleSubmit)} className={style.form} autoComplete="off">
-                <Normaltekst className={style.infotekst}>{infoTekst}</Normaltekst>
-                <Input
-                    autoFocus
-                    className={style.temafelt}
-                    label="Tema"
-                    autoComplete="off"
-                    placeholder="Skriv hva meldingen handler om"
-                    disabled={!!aktivitetId}
-                    maxLength={!aktivitetId ? 101 : undefined}
-                    submittoken={state.submittoken}
-                    onChange={e => onChange(e.target.value, undefined)}
-                    {...state.fields.tema}
-                />
-                <div className={style.skrivMelding}>
-                    <EkspanderbartTekstArea
-                        label="Melding"
-                        placeholder="Skriv en melding om arbeid og oppfølging"
-                        maxLength={maxMeldingsLengde}
-                        visTellerFra={1000}
+                <SkjemaGruppe>
+                    <Normaltekst className={style.infotekst}>{infoTekst}</Normaltekst>
+                    <Input
+                        autoFocus
+                        className={style.temafelt}
+                        label="Tema"
+                        autoComplete="off"
+                        placeholder="Skriv hva meldingen handler om"
+                        disabled={!!aktivitetId}
+                        maxLength={!aktivitetId ? 101 : undefined}
                         submittoken={state.submittoken}
-                        onChange={e => onChange(undefined, e.target.value)}
-                        {...state.fields.melding}
+                        onChange={(e) => onChange(e.target.value, undefined)}
+                        {...state.fields.tema}
                     />
-                </div>
+                    <div className={style.skrivMelding}>
+                        <EkspanderbartTekstArea
+                            label="Melding"
+                            placeholder="Skriv en melding om arbeid og oppfølging"
+                            maxLength={maxMeldingsLengde}
+                            visTellerFra={1000}
+                            submittoken={state.submittoken}
+                            onChange={(e) => onChange(undefined, e.target.value)}
+                            {...state.fields.melding}
+                        />
+                    </div>
+                </SkjemaGruppe>
 
                 <Hovedknapp title="Send" autoDisableVedSpinner spinner={state.submitting}>
                     Send
