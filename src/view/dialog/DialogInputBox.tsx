@@ -56,8 +56,8 @@ function HenvendelseInput(props: HenvendelseInputProps) {
     return (
         <div className="skriv-melding label-sr-only">
             <EkspanderbartTekstArea
-                label="Skriv en melding om arbeid og oppfølging"
-                placeholder="Skriv en melding om arbeid og oppfølging"
+                label="Skriv om arbeid og oppfølging"
+                placeholder="Skriv om arbeid og oppfølging"
                 maxLength={maxMeldingsLengde}
                 visTellerFra={1000}
                 autoFocus={autoFocus}
@@ -82,7 +82,7 @@ export function DialogInputBox(props: Props) {
     const startTekst = useHenvendelseStartTekst();
 
     const { kladder, oppdaterKladd, slettKladd } = useKladdContext();
-    const kladd = kladder.find(k => k.aktivitetId === props.dialog.aktivitetId && k.dialogId === props.dialog.id);
+    const kladd = kladder.find((k) => k.aktivitetId === props.dialog.aktivitetId && k.dialogId === props.dialog.id);
 
     const { viewState, setViewState } = useViewContext();
 
@@ -132,7 +132,7 @@ export function DialogInputBox(props: Props) {
 
         loggEvent('arbeidsrettet-dialog.ny.henvendelse', { paaAktivitet: !!valgtDialog.aktivitetId });
         return nyHenvendelse(melding, valgtDialog)
-            .then(dialog => {
+            .then((dialog) => {
                 if (bruker?.erVeileder) {
                     if (!dialog.ferdigBehandlet) {
                         slettKladd(valgtDialog.id, valgtDialog.aktivitetId);

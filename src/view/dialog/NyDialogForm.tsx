@@ -147,7 +147,7 @@ function NyDialogForm(props: Props) {
                     <div className={style.skrivMelding}>
                         <EkspanderbartTekstArea
                             label="Melding"
-                            placeholder="Skriv en melding om arbeid og oppfølging"
+                            placeholder="Skriv om arbeid og oppfølging"
                             maxLength={maxMeldingsLengde}
                             visTellerFra={1000}
                             submittoken={state.submittoken}
