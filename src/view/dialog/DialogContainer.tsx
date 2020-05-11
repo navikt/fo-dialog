@@ -5,10 +5,15 @@ import React from 'react';
 import DialogInfoMelding from './DialogInfoMelding';
 import styles from './DialogContainer.module.less';
 import { InfoOmDialogSide } from '../info/InfoOmDialogSide';
+import { useUserInfoContext } from '../Provider';
+import classNames from 'classnames';
 
 function DialogContainer() {
+    const bruker = useUserInfoContext();
+    const cls = classNames(styles.dialogContainer, { [styles.brukerDialogContainer]: bruker?.erBruker });
+
     return (
-        <div className={styles.dialogContainer}>
+        <div className={cls}>
             <Switch>
                 <Route path="/informasjon" component={InfoOmDialogSide} />
                 <Route path="/ny" component={DialogNew} />
