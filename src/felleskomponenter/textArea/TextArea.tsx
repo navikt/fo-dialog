@@ -53,7 +53,7 @@ export default function EkspanderbartTekstArea(props: Props) {
 
     const names = classNames(styles.textarea, { [styles.textareaFeil]: feil });
 
-    const cahnge = (e: ChangeEvent<HTMLTextAreaElement>) => {
+    const _onChange = (e: ChangeEvent<HTMLTextAreaElement>) => {
         onChange && onChange(e);
         input.onChange(e);
     };
@@ -69,7 +69,7 @@ export default function EkspanderbartTekstArea(props: Props) {
                 aria-errormessage={feil ? feilmeldingId : undefined}
                 aria-describedby={tellerId}
                 {...inputProps}
-                onChange={cahnge}
+                onChange={_onChange}
                 id={id}
             />
             <div className={styles.subContent}>
