@@ -53,7 +53,7 @@ export default function EkspanderbartTekstArea(props: Props) {
 
     const names = classNames(styles.textarea, { [styles.textareaFeil]: feil });
 
-    const _onChange = (e: ChangeEvent<HTMLTextAreaElement>) => {
+    const cahnge = (e: ChangeEvent<HTMLTextAreaElement>) => {
         onChange && onChange(e);
         input.onChange(e);
     };
@@ -65,11 +65,11 @@ export default function EkspanderbartTekstArea(props: Props) {
                 maxRows={10}
                 label="Skriv en melding om arbeid og oppfølging"
                 placeholder="Skriv en melding om arbeid og oppfølging"
-                onChange={_onChange}
                 aria-invalid={!!feil}
                 aria-errormessage={feil ? feilmeldingId : undefined}
                 aria-describedby={tellerId}
                 {...inputProps}
+                onChange={cahnge}
                 id={id}
             />
             <div className={styles.subContent}>
