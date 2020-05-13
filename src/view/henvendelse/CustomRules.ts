@@ -6,7 +6,7 @@ import Lenke from 'nav-frontend-lenker';
 export const markdownLink: Rule = {
     name: 'markdownLink',
     scope: RuleScope.INLINE,
-    regex: /\[([^\][]+)\]\(((?:[\w-]+:\/\/?|www(?:-\w+)?\.)[^\s()<>]+\w)\)/, // matches only [string](full-url)
+    regex: /\[([^\][]+)\]\(([^\s()<>]+\w)\)/, // matches only [string](single-string)
     parse(match): ASTNode {
         return { name: 'markdownLink', content: [match.capture[0], match.capture[1]] };
     },
@@ -14,10 +14,10 @@ export const markdownLink: Rule = {
         if (typeof node === 'string') {
             return { type: 'p' };
         }
-        const startsWithHttp = /^(https?):\/\/.*$/;
 
         const text = getText(node.content[1]);
-        const href = startsWithHttp.test(text) ? text : `https://${text}`;
+
+        const href = text.startsWith('www') ? `https://${text}` : text;
 
         return { type: Lenke, props: { href: `${href}` }, children: [node.content[0]] };
     }
