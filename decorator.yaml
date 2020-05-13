@@ -22,6 +22,8 @@ proxy:
 redirect:
   - from: /arbeid/dialog/aktivitetsplan
     to: {{AKTIVITETSPLAN_URL}}
+  - from: /aktivitetsplan
+    to: {{AKTIVITETSPLAN_URL}}
   - from: /arbeid/dialog/arbeidssokerregistrering
     to: {{ARBEIDSSOKERREGISTRERING_URL}}
   - from: /arbeid/dialog/dittnav
