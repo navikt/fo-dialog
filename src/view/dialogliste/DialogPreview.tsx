@@ -11,6 +11,7 @@ import Ikon from './ikon/Ikon';
 import { getDialogTittel } from '../aktivitet/TextUtils';
 import { Aktivitet, ArenaAktivitet } from '../../utils/AktivitetTypes';
 import { findAktivitet, useAktivitetContext } from '../AktivitetProvider';
+import { Flipper, Flipped } from 'react-flip-toolkit';
 
 interface TittelProps {
     aktivitet?: Aktivitet | ArenaAktivitet;
@@ -59,20 +60,18 @@ function DialogPreview(props: Props) {
     const markoer = lest ? styles.markoerLest : styles.markoerUlest;
 
     return (
-        <div role="listitem">
-            <LenkepanelBase className={lenkepanelCls} href={`/${id}`} linkCreator={WrapInReactLink}>
-                <div className={markoer} />
-                <Ikon dialog={dialog} />
-                <div className={styles.content}>
-                    <Normaltekst className="visually-hidden">{typeText(dialog)}</Normaltekst>
-                    <Tittel tittel={overskrift} aktivitet={aktivitet} />
-                    <EtikettLiten className={styles.dato}>{datoString}</EtikettLiten>
-                    <EtikettListe dialog={dialog} />
-                    <Normaltekst className="visually-hidden">{meldingerText(dialog.henvendelser.length)}</Normaltekst>
-                </div>
-                <Normaltekst aria-hidden="true">{dialog.henvendelser.length}</Normaltekst>
-            </LenkepanelBase>
-        </div>
+        <LenkepanelBase className={lenkepanelCls} href={`/${id}`} linkCreator={WrapInReactLink}>
+            <div className={markoer} />
+            <Ikon dialog={dialog} />
+            <div className={styles.content}>
+                <Normaltekst className="visually-hidden">{typeText(dialog)}</Normaltekst>
+                <Tittel tittel={overskrift} aktivitet={aktivitet} />
+                <EtikettLiten className={styles.dato}>{datoString}</EtikettLiten>
+                <EtikettListe dialog={dialog} />
+                <Normaltekst className="visually-hidden">{meldingerText(dialog.henvendelser.length)}</Normaltekst>
+            </div>
+            <Normaltekst aria-hidden="true">{dialog.henvendelser.length}</Normaltekst>
+        </LenkepanelBase>
     );
 }
 
@@ -83,12 +82,19 @@ interface ListeProps {
 
 export function DialogPreviewListe(props: ListeProps) {
     const { dialoger, valgDialog } = props;
+
     return (
-        <div role="list" aria-label="Dialogliste">
-            {dialoger.map(dialog => (
-                <DialogPreview dialog={dialog} key={dialog.id} valgtDialogId={valgDialog} />
-            ))}
-        </div>
+        <Flipper flipKey={dialoger.map((d) => d.id).join('')}>
+            <div role="list" aria-label="Dialogliste">
+                {dialoger.map((dialog) => (
+                    <Flipped flipId={dialog.id} key={dialog.id}>
+                        <div role="listitem">
+                            <DialogPreview dialog={dialog} key={dialog.id} valgtDialogId={valgDialog} />
+                        </div>
+                    </Flipped>
+                ))}
+            </div>
+        </Flipper>
     );
 }
 
