@@ -2,17 +2,10 @@
     "addons": [],
     "buildpacks": [
         {
-            "url": "heroku/nodejs"
+            "url": "mars/create-react-app"
         }
     ],
-    "env": {
-        "NPM_CONFIG_PRODUCTION": {
-            "required": true
-        },
-        "YARN_PRODUCTION": {
-            "required": true
-        }
-    },
+    "env": {},
     "formation": {
         "web": {
             "quantity": 1

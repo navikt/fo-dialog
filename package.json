@@ -10,7 +10,6 @@
         "test": "craco test",
         "test:coverage": "npm test -- --coverage --watchAll=false",
         "eject": "craco eject",
-        "heroku-serve": "serve -s build -l $PORT",
         "heroku-postbuild": "cross-env REACT_APP_MOCK=true PUBLIC_URL=/ craco build",
         "lint": "echo \"Not implemented\""
     },
@@ -137,8 +136,6 @@
         "enzyme-to-json": "^3.4.4",
         "husky": "^4.2.5",
         "prettier": "^2.0.5",
-        "serve": "^11.3.0",
-        "tslint": "^6.1.2",
         "yet-another-fetch-mock": "^3.4.0"
     }
 }
