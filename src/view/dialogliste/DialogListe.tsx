@@ -24,7 +24,6 @@ export function DialogListe() {
     const sorterteDialoger = dialoger.sort((a, b) => sortDialoger(a, b));
     const { naaverende, historiske } = sorterteDialoger.reduce(splitHistoriske, { naaverende: [], historiske: [] });
 
-    console.log('render?');
     return (
         <div className={styles.dialogListe} role="navigation" aria-label="Dialoger">
             <Systemtittel className="visually-hidden">Dialogliste</Systemtittel>
