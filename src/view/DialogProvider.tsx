@@ -14,9 +14,10 @@ export interface DialogDataProviderType {
     status: Status;
     dialoger: DialogData[];
     hentDialoger: () => Promise<DialogData[]>;
+    pollForChanges: () => void;
     nyDialog: (melding: string, tema: string, aktivitetId?: string) => Promise<DialogData>;
     nyHenvendelse: (melding: string, dialog: DialogData) => Promise<DialogData>;
-    lesDialog: (dialog: DialogData) => Promise<DialogData>;
+    lesDialog: (dialogId: string) => Promise<DialogData>;
     setFerdigBehandlet: (dialog: DialogData, ferdigBehandlet: boolean) => Promise<DialogData>;
     setVenterPaSvar: (dialog: DialogData, venterPaSvar: boolean) => Promise<DialogData>;
 }
@@ -25,9 +26,10 @@ export const DialogContext = React.createContext<DialogDataProviderType>({
     status: Status.INITIAL,
     dialoger: [],
     hentDialoger: () => Promise.resolve([]),
+    pollForChanges: () => {},
     nyDialog: (melding: string, tema: string, aktivitetId?: string) => Promise.resolve({} as any),
     nyHenvendelse: (melding: string, dialog: DialogData) => Promise.resolve(dialog),
-    lesDialog: (dialog: DialogData) => Promise.resolve(dialog),
+    lesDialog: (dialogId: String) => Promise.resolve({} as any),
     setFerdigBehandlet: (dialog: DialogData, ferdigBehandlet: boolean) => Promise.resolve(dialog),
     setVenterPaSvar: (dialog: DialogData, venterPaSvar: boolean) => Promise.resolve(dialog)
 });
@@ -67,26 +69,37 @@ export function useDialogDataProvider(fnr?: string): DialogDataProviderType {
     );
 
     const hentDialoger = useCallback(() => {
-        setState(prevState => ({
+        setState((prevState) => ({
             ...prevState,
             status: isDialogReloading(prevState.status) ? Status.RELOADING : Status.PENDING
         }));
         return fetchData<DialogData[]>(baseUrl)
-            .then(dialoger => {
+            .then((dialoger) => {
                 setState({ status: Status.OK, dialoger: dialoger });
                 return dialoger;
             })
             .catch(() => {
-                setState(prevState => ({ ...prevState, status: Status.ERROR }));
+                setState((prevState) => ({ ...prevState, status: Status.ERROR }));
                 return [];
             });
     }, [baseUrl, setState]);
 
+    const pollForChanges = useCallback(() => {
+        fetchData<DialogData[]>(baseUrl).then((dialoger) => {
+            setState((prevState) => {
+                if (prevState.status === Status.OK) {
+                    return { status: Status.OK, dialoger: dialoger };
+                }
+                return prevState;
+            });
+        });
+    }, [baseUrl, setState]);
+
     const updateDialogInDialoger = useCallback(
         (dialog: DialogData) => {
-            setState(prevState => {
+            setState((prevState) => {
                 const dialoger = prevState.dialoger;
-                const index = dialoger.findIndex(d => d.id === dialog.id);
+                const index = dialoger.findIndex((d) => d.id === dialog.id);
                 const nyeDialoger = [
                     ...dialoger.slice(0, index),
                     dialog,
@@ -101,7 +114,7 @@ export function useDialogDataProvider(fnr?: string): DialogDataProviderType {
 
     const sendMelding = useCallback(
         (melding: string, tema?: string, dialogId?: string, aktivitetId?: string) => {
-            setState(prevState => ({ ...prevState, status: Status.RELOADING }));
+            setState((prevState) => ({ ...prevState, status: Status.RELOADING }));
 
             const nyDialogData = {
                 dialogId: dialogId,
@@ -113,12 +126,12 @@ export function useDialogDataProvider(fnr?: string): DialogDataProviderType {
             return fetchData<DialogData>(baseUrl, {
                 method: 'post',
                 body: JSON.stringify(nyDialogData)
-            }).then(dialog => {
+            }).then((dialog) => {
                 if (!!dialogId) {
                     updateDialogInDialoger(dialog);
                     return dialog;
                 }
-                setState(prevState => ({ status: Status.OK, dialoger: [...prevState.dialoger, dialog] }));
+                setState((prevState) => ({ status: Status.OK, dialoger: [...prevState.dialoger, dialog] }));
                 return dialog;
             });
         },
@@ -140,16 +153,16 @@ export function useDialogDataProvider(fnr?: string): DialogDataProviderType {
     );
 
     const lesDialog = useCallback(
-        (dialog: DialogData) => {
-            setState(prevState => ({ ...prevState, status: Status.RELOADING }));
-            return fetchData<DialogData>(lesUrl(dialog.id), { method: 'put' }).then(updateDialogInDialoger);
+        (dialogId: string) => {
+            setState((prevState) => ({ ...prevState, status: Status.RELOADING }));
+            return fetchData<DialogData>(lesUrl(dialogId), { method: 'put' }).then(updateDialogInDialoger);
         },
         [setState, lesUrl, updateDialogInDialoger]
     );
 
     const setFerdigBehandlet = useCallback(
         (dialog: DialogData, ferdigBehandlet: boolean) => {
-            setState(prevState => ({ ...prevState, status: Status.RELOADING }));
+            setState((prevState) => ({ ...prevState, status: Status.RELOADING }));
             return fetchData<DialogData>(ferdigBehandletUrl(dialog.id, ferdigBehandlet), { method: 'put' }).then(
                 updateDialogInDialoger
             );
@@ -159,7 +172,7 @@ export function useDialogDataProvider(fnr?: string): DialogDataProviderType {
 
     const setVenterPaSvar = useCallback(
         (dialog: DialogData, venterPaSvar: boolean) => {
-            setState(prevState => ({ ...prevState, status: Status.RELOADING }));
+            setState((prevState) => ({ ...prevState, status: Status.RELOADING }));
             return fetchData<DialogData>(venterPaSvarUrl(dialog.id, venterPaSvar), { method: 'put' }).then(
                 updateDialogInDialoger
             );
@@ -172,17 +185,22 @@ export function useDialogDataProvider(fnr?: string): DialogDataProviderType {
             status: state.status,
             dialoger: state.dialoger,
             hentDialoger,
+            pollForChanges,
             nyDialog,
             nyHenvendelse,
             lesDialog,
             setFerdigBehandlet,
             setVenterPaSvar
         };
-    }, [state, hentDialoger, nyDialog, nyHenvendelse, lesDialog, setFerdigBehandlet, setVenterPaSvar]);
+    }, [state, hentDialoger, pollForChanges, nyDialog, nyHenvendelse, lesDialog, setFerdigBehandlet, setVenterPaSvar]);
 }
 
 function isDialogReloading(status: Status) {
     return status === Status.OK || status === Status.RELOADING;
+}
+
+export function isDialogOk(status: Status) {
+    return status === Status.OK;
 }
 
 export function isDialogPending(status: Status) {
