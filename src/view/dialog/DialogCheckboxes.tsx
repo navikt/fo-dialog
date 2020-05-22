@@ -2,6 +2,7 @@ import React from 'react';
 import { Checkbox } from 'nav-frontend-skjema';
 import { DialogData } from '../../utils/Typer';
 import { useDialogContext } from '../DialogProvider';
+import { dataOrUndefined, useOppfolgingContext } from '../Provider';
 
 interface Props {
     toggleFerdigBehandlet(ferdigBehandler: boolean): void;
@@ -37,8 +38,10 @@ interface ManagedProps {
     visible: boolean;
 }
 
-export default function MannagegDialogCheckboxes(props: ManagedProps) {
+export default function ManagedDialogCheckboxes(props: ManagedProps) {
     const dialogContext = useDialogContext();
+    const oppfolgingContext = useOppfolgingContext();
+    const oppfolgingData = dataOrUndefined(oppfolgingContext);
 
     const { visible, dialog } = props;
 
@@ -52,7 +55,7 @@ export default function MannagegDialogCheckboxes(props: ManagedProps) {
     const toggleVenterPaSvar = (venterPaSvar: boolean) => {
         dialogContext.setVenterPaSvar(dialog, venterPaSvar).then(dialogContext.hentDialoger);
     };
-    const disabled = dialog.historisk;
+    const disabled = dialog.historisk || !oppfolgingData?.underOppfolging;
 
     return (
         <DialogCheckboxes
