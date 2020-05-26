@@ -32,6 +32,11 @@
     bottom: 0;
     padding: 1rem;
     align-items: flex-end;
+
+    @media (max-width: @md-max-x) {
+        padding-bottom: 0.5rem;
+    }
+
     .autosizing-textarea {
         max-height: 7rem;
         overflow: initial !important; //overwrite nav styling
