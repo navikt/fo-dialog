@@ -405,7 +405,7 @@ const dialoger: DialogData[] & JSONArray = [
 ];
 
 export function lesDialog(dialogId: string) {
-    const dialog: any = dialoger.find(dialog => dialog.id === dialogId);
+    const dialog: any = dialoger.find((dialog) => dialog.id === dialogId);
     if (dialog) {
         dialog.lest = true;
         return ResponseUtils.jsonPromise(dialog);
@@ -425,7 +425,7 @@ export function opprettEllerOppdaterDialog(update: NyDialogMeldingData): DialogD
         tekst: update.tekst
     };
 
-    const eksisterendeDialog = dialoger.find(dialog => update.dialogId !== undefined && dialog.id === dialogId);
+    const eksisterendeDialog = dialoger.find((dialog) => update.dialogId !== undefined && dialog.id === dialogId);
 
     if (eksisterendeDialog) {
         const oldDialog = eksisterendeDialog;
@@ -463,7 +463,7 @@ export function opprettEllerOppdaterDialog(update: NyDialogMeldingData): DialogD
 }
 
 export function setVenterPaSvar(dialogId: string, venterPaSvar: boolean) {
-    const dialog = dialoger.find(dialog => dialog.id === dialogId);
+    const dialog = dialoger.find((dialog) => dialog.id === dialogId);
     if (dialog) {
         dialog.venterPaSvar = venterPaSvar;
     }
@@ -471,14 +471,61 @@ export function setVenterPaSvar(dialogId: string, venterPaSvar: boolean) {
 }
 
 export function setFerdigBehandlet(dialogId: string, ferdigBehandlet: boolean) {
-    const dialog = dialoger.find(dialog => dialog.id === dialogId);
+    const dialog = dialoger.find((dialog) => dialog.id === dialogId);
     if (dialog) {
         dialog.ferdigBehandlet = ferdigBehandlet;
     }
     return dialog as DialogData & JSONObject;
 }
 
-export default harIngenDialoger() ? [] : dialoger;
+let counter = 0;
+
+export default () => {
+    // mock more dialoger inncomming while users are using the system
+    if (counter === 1) {
+        const nyDialog = {
+            id: '6666',
+            overskrift: 'Sender denne mens du ser på :)',
+            sisteTekst: 'Halla, hvordan ser dette ut?',
+            sisteDato: new Date().toISOString(),
+            opprettetDato: new Date().toISOString(),
+            historisk: false,
+            lest: false,
+            venterPaSvar: false,
+            ferdigBehandlet: true,
+            lestAvBrukerTidspunkt: null,
+            erLestAvBruker: false,
+            aktivitetId: null,
+            henvendelser: [
+                {
+                    id: '3666',
+                    dialogId: '6666',
+                    avsender: 'VEILEDER',
+                    avsenderId: 'Z123456',
+                    sendt: new Date().toISOString(),
+                    lest: false,
+                    tekst: 'Halla, hvordan ser dette ut?'
+                }
+            ],
+            egenskaper: []
+        };
+        dialoger.push(nyDialog);
+        const nyHenvendelse: HenvendelseData = {
+            id: rndId(),
+            dialogId: '2',
+            avsender: 'NAV',
+            avsenderId: 'Z123456',
+            sendt: new Date().toISOString(),
+            lest: false,
+            tekst: 'Hei, hvordan går det?'
+        };
+        const d = dialoger.find((d) => d.id === '2');
+        d!.henvendelser.push(nyHenvendelse);
+        d!.lest = false;
+    }
+    counter += 1;
+    return harIngenDialoger() ? [] : [...dialoger];
+};
 
 export const kladder: KladdData[] & JSONArray = [
     {
