@@ -523,7 +523,7 @@ export default () => {
         d!.henvendelser.push(nyHenvendelse);
         d!.lest = false;
     }
-    //counter += 1;
+    counter += 1;
     return harIngenDialoger() ? [] : [...dialoger];
 };
 

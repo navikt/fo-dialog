@@ -1,6 +1,7 @@
 import React, { useCallback, useContext, useMemo, useState } from 'react';
 import { DialogData } from '../utils/Typer';
 import { fetchData, fnrQuery, getApiBasePath } from '../utils/Fetch';
+import { loggChangeInDialog } from '../felleskomponenter/logging';
 
 enum Status {
     INITIAL,
@@ -88,6 +89,7 @@ export function useDialogDataProvider(fnr?: string): DialogDataProviderType {
         fetchData<DialogData[]>(baseUrl).then((dialoger) => {
             setState((prevState) => {
                 if (prevState.status === Status.OK) {
+                    loggChangeInDialog(prevState.dialoger, dialoger);
                     return { status: Status.OK, dialoger: dialoger };
                 }
                 return prevState;
