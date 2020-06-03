@@ -119,7 +119,7 @@ const samtalereferatAktivitet = {
     oppfolging: null,
     opprettetDato: '2019-10-15T09:51:27.372+02:00',
     referat:
-        'Vi ble enige om at det skal søkes  https://www.nav.no/kake  minst 5 stillinger i uken den første perioden',
+        'Vi ble enige om at det skal søkes https://www.nav.no/en/veldig/lang/url/som/skal/ende/opp/med/ellipse minst 5 stillinger i uken den første perioden',
     status: 'BRUKER_ER_INTERESSERT',
     stillingsTittel: null,
     tilDato: null,

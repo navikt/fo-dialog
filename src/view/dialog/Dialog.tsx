@@ -27,16 +27,21 @@ export function Dialog() {
 
     const { viewState, setViewState } = useViewContext();
 
+    const lest = !valgtDialog ? false : valgtDialog.lest;
+
     useEffect(() => {
         setViewState(endreDialogSomVises(viewState, dialogId));
-        if (valgtDialog && !valgtDialog.lest) {
-            lesDialog(valgtDialog).then(() => {
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [dialogId]);
+
+    useEffect(() => {
+        if (lest) {
+            lesDialog(dialogId).then(() => {
                 dispatchUpdate(UpdateTypes.Dialog);
                 window.dispatchEvent(new Event('aktivitetsplan.dialog.lest')); //lest teller i personflata
             });
         }
-        // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [dialogId]);
+    }, [dialogId, lest, lesDialog]);
 
     if (!valgtDialog) {
         return <IngenDialog />;

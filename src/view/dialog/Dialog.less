@@ -2,7 +2,7 @@
 @import (reference) '../variabler';
 
 .henvendelse-list {
-    padding: 1rem;
+    padding: 1rem 1rem 0;
     flex: 1;
     overflow-y: scroll;
     border-bottom: 2px solid @navLysGra;
@@ -31,6 +31,11 @@
     bottom: 0;
     padding: 1rem;
     align-items: flex-end;
+
+    @media (max-width: @md-max-x) {
+        padding-bottom: 0.5rem;
+    }
+
     .autosizing-textarea {
         max-height: 7rem;
         overflow: initial !important; //overwrite nav styling
@@ -58,6 +63,7 @@
     background-color: @lysgraBakrund;
     box-shadow: 0 5px 5px rgba(0, 0, 0, 0.1);
     padding: 1rem 0 1rem 1rem;
+    position: relative;
     &__item {
         padding-right: 2rem;
     }

@@ -5,7 +5,7 @@ import useFetch, { FetchResult, hasData, hasError, isPending, Status } from '@nu
 import { fnrQuery, getApiBasePath, REQUEST_CONFIG } from '../utils/Fetch';
 import { initalState, ViewState } from './ViewState';
 import { AktivitetProvider } from './AktivitetProvider';
-import { DialogContext, hasDialogError, isDialogPending, useDialogDataProvider } from './DialogProvider';
+import { DialogContext, hasDialogError, isDialogOk, isDialogPending, useDialogDataProvider } from './DialogProvider';
 import useFetchVeilederNavn from '../api/useHentVeilederData';
 import { KladdContext, useKladdDataProvider } from './KladdProvider';
 
@@ -69,16 +69,24 @@ export function Provider(props: Props) {
     const dialogDataProvider = useDialogDataProvider(fnr);
     const kladdDataProvider = useKladdDataProvider(fnr);
 
-    const hentDialoger = dialogDataProvider.hentDialoger;
+    const { hentDialoger, pollForChanges, status } = dialogDataProvider;
     const hentKladder = kladdDataProvider.hentKladder;
+
     useEffect(() => {
         hentDialoger();
         hentKladder();
     }, [hentDialoger, hentKladder]);
 
-    if (isDialogPending(dialogDataProvider.status) || isPending(bruker, false) || isPending(oppfolgingData, false)) {
+    useEffect(() => {
+        if (isDialogOk(status)) {
+            const interval = setInterval(pollForChanges, 10000);
+            return () => clearInterval(interval);
+        }
+    }, [status, pollForChanges]);
+
+    if (isDialogPending(status) || isPending(bruker, false) || isPending(oppfolgingData, false)) {
         return <NavFrontendSpinner />;
-    } else if (hasError(bruker) || hasError(oppfolgingData) || hasDialogError(dialogDataProvider.status)) {
+    } else if (hasError(bruker) || hasError(oppfolgingData) || hasDialogError(status)) {
         return <p>Kunne ikke laste data fra baksystemer. Prøv igjen senere</p>;
     }
 
