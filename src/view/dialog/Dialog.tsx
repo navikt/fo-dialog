@@ -27,7 +27,7 @@ export function Dialog() {
 
     const { viewState, setViewState } = useViewContext();
 
-    const lest = !valgtDialog ? false : valgtDialog.lest;
+    const lest = !valgtDialog ? true : valgtDialog.lest;
 
     useEffect(() => {
         setViewState(endreDialogSomVises(viewState, dialogId));
@@ -35,7 +35,7 @@ export function Dialog() {
     }, [dialogId]);
 
     useEffect(() => {
-        if (lest) {
+        if (!lest) {
             lesDialog(dialogId).then(() => {
                 dispatchUpdate(UpdateTypes.Dialog);
                 window.dispatchEvent(new Event('aktivitetsplan.dialog.lest')); //lest teller i personflata

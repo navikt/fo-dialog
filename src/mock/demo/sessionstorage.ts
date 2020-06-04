@@ -6,7 +6,8 @@ export const SessionStorageElement = {
     INGEN_OPPF_PERIODER: 'ingen_oppf_perioder',
     KAN_IKKE_VARSLES: 'bruker_kan_ikke_varsles',
     INGEN_DIALOGER: 'ingen_dialoger',
-    HODEFOT: 'hodefot'
+    HODEFOT: 'hodefot',
+    FAILURE_RATE: 'failure_rate'
 };
 
 export const BRUKER_TYPE = {
@@ -41,3 +42,8 @@ export const erEksternBruker = () => hentFraSessionStorage(SessionStorageElement
 export const harIngenDialoger = () => erSatt(SessionStorageElement.INGEN_DIALOGER);
 
 export const harHodeFotSkruddPa = () => erSatt(SessionStorageElement.HODEFOT);
+
+export function getFailureRate(): number {
+    const value = hentFraSessionStorage(SessionStorageElement.FAILURE_RATE);
+    return value ? Number.parseInt(value) : 0;
+}
