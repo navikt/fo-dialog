@@ -1,6 +1,6 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Innholdstittel } from 'nav-frontend-typografi';
-import { CheckboksPanelGruppe, RadioPanelGruppe } from 'nav-frontend-skjema';
+import { CheckboksPanelGruppe, RadioPanelGruppe, SkjemaGruppe } from 'nav-frontend-skjema';
 import {
     BRUKER_TYPE,
     brukerKanIkkeVarsles,
@@ -8,14 +8,15 @@ import {
     erKRRBruker,
     erManuellBruker,
     erPrivatBruker,
+    getFailureRate,
     harHodeFotSkruddPa,
     harIngenDialoger,
     ingenOppfPerioder,
     SessionStorageElement,
     settSessionStorage
 } from './sessionstorage';
-import './DemoDashboard.less';
 import { Hovedknapp } from 'nav-frontend-knapper';
+import styles from './DemoDashboard.module.less';
 
 function reload() {
     window.location.reload();
@@ -36,13 +37,19 @@ function endreTilstand(event: React.SyntheticEvent<EventTarget>) {
     reload();
 }
 
+function endreFeilureRate(value: number) {
+    settSessionStorage(SessionStorageElement.FAILURE_RATE, value);
+    reload();
+}
+
 interface DemoDashboardProps {
     skul: () => void;
 }
 
 function DemoDashboard(props: DemoDashboardProps) {
+    const [failureRange, setFailureRange] = useState(getFailureRate());
     return (
-        <section className="demodashboard">
+        <section className={styles.demodashboard}>
             <Innholdstittel className="blokk-s">DEMO</Innholdstittel>
             <RadioPanelGruppe
                 legend="Brukertype"
@@ -108,9 +115,24 @@ function DemoDashboard(props: DemoDashboardProps) {
                 ]}
                 onChange={endreTilstand}
             />
-            <div>
+            <SkjemaGruppe className={styles.tekniskKolonne}>
                 <Hovedknapp onClick={props.skul}>Skul demo banner</Hovedknapp>
-            </div>
+
+                <div className={styles.range}>
+                    <label className="" htmlFor="myRange">
+                        Failure rate {failureRange}:{' '}
+                    </label>
+                    <input
+                        type="range"
+                        min="0"
+                        max="100"
+                        value={failureRange}
+                        id="myRange"
+                        onChange={(ev) => setFailureRange(Number.parseInt(ev.target.value))}
+                        onBlur={() => endreFeilureRate(failureRange)}
+                    />
+                </div>
+            </SkjemaGruppe>
         </section>
     );
 }
