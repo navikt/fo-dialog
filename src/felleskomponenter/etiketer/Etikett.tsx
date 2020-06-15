@@ -4,6 +4,7 @@ import classNames from 'classnames';
 
 interface Props {
     visible: boolean;
+    className?: string;
 }
 
 interface VenterSvarFraBrukerProps {
@@ -44,8 +45,9 @@ export function VenterSvarFraNAV(props: Props) {
 }
 
 export function ViktigMelding(props: Props) {
+    const cls = classNames(styles.viktigMelding, props.className);
     return (
-        <Etiket visible={props.visible} clasName={styles.viktigMelding}>
+        <Etiket visible={props.visible} clasName={cls}>
             Viktig melding
         </Etiket>
     );
