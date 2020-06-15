@@ -1,4 +1,4 @@
-import FetchMock, { Middleware, MiddlewareUtils, ResponseUtils } from 'yet-another-fetch-mock';
+import FetchMock, { Middleware, MiddlewareUtils, ResponseData, ResponseUtils } from 'yet-another-fetch-mock';
 import dialoger, {
     kladder,
     lesDialog,
@@ -12,6 +12,7 @@ import oppfolging from './Oppfolging';
 import aktiviteter, { getAktivitet } from './Aktivitet';
 import { arenaAktiviteter } from './Arena';
 import { veilederMe } from './Veileder';
+import { getFailureRate } from './demo/sessionstorage';
 
 const loggingMiddleware: Middleware = (request, response) => {
     // tslint:disable
@@ -33,9 +34,26 @@ const loggingMiddleware: Middleware = (request, response) => {
     return response;
 };
 
+const internalServerError: ResponseData = {
+    status: 500,
+    body: {
+        id: '9170c6534ed5eca272d527cd30c6a458',
+        type: 'UKJENT',
+        detaljer: {
+            detaljertType: 'javax.ws.rs.InternalServerErrorException',
+            feilMelding: 'HTTP 500 Internal Server Error',
+            stackTrace: 'javax.ws.rs.InternalServerErrorException: HTTP 500 Internal Server Error\r\n\t'
+        }
+    }
+};
+
 const mock = FetchMock.configure({
     enableFallback: false, // default: true
-    middleware: MiddlewareUtils.combine(loggingMiddleware, MiddlewareUtils.delayMiddleware(1000))
+    middleware: MiddlewareUtils.combine(
+        loggingMiddleware,
+        MiddlewareUtils.delayMiddleware(1000),
+        MiddlewareUtils.failurerateMiddleware(getFailureRate() / 100.0, internalServerError)
+    )
 });
 
 // eslint-disable-next-line

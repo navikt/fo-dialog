@@ -12,6 +12,7 @@ import useHenvendelseStartTekst from './UseHenvendelseStartTekst';
 import loggEvent from '../../felleskomponenter/logging';
 import { useKladdContext } from '../KladdProvider';
 import EkspanderbartTekstArea from '../../felleskomponenter/textArea/TextArea';
+import { smoothScrollToLastHenvendelse } from '../henvendelse/useScrollToLastHenvendelse';
 
 const AlertStripeFeilVisible = visibleIfHoc(AlertStripeFeil);
 
@@ -148,11 +149,7 @@ export function DialogInputBox(props: Props) {
                 state.reinitialize({ melding: startTekst });
                 setViewState(sendtNyHenvendelse(viewState));
                 dispatchUpdate(UpdateTypes.Dialog);
-
-                const elem = document.querySelector('.henvendelse-list');
-                if (elem !== null) {
-                    elem.scrollTo({ top: elem.scrollHeight, behavior: 'smooth' });
-                }
+                smoothScrollToLastHenvendelse();
             })
             .catch(() => setNoeFeilet(true));
     };
