@@ -1,20 +1,27 @@
 @import (reference) '~nav-frontend-core/less/core';
 @import (reference) '../variabler';
 
-.snakkeboble {
+.hendvendelse {
     margin-left: 0;
     margin-right: 0;
-    .snakkeboble-panel {
-        flex-grow: 1;
-        max-width: 44rem;
-        padding-bottom: 0;
-        overflow: hidden;
-        overflow-wrap: break-word;
+    :global {
+        .snakkeboble-panel {
+            flex-grow: 1;
+            max-width: 44rem;
+            padding-bottom: 0;
+            overflow: hidden;
+            overflow-wrap: break-word;
 
-        .max-responsive({flex-basis: 100%;});
+            .max-responsive({
+                flex-basis: 100%;
+            });
+        }
     }
+}
 
-    &--hoyre {
+.hendvendelse,
+:global(.snakkeboble--hoyre) {
+    :global {
         .snakkeboble-panel {
             text-align: left;
         }
@@ -28,17 +35,19 @@
     flex-shrink: 0;
 }
 
-.bruker-ikon {
+.brukerIkon {
+    .ikon();
     background: no-repeat data-uri('bruker.svg');
     background-size: cover;
 }
 
-.veileder-ikon {
+.veilederIkon {
+    .ikon();
     background: no-repeat data-uri('nav.svg');
     background-size: cover;
 }
 
-.henvendelse-viktig-melding {
+.viktig {
     position: relative;
     @media (min-width: 350px) {
         top: -2rem;

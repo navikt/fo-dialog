@@ -8,7 +8,7 @@ import { Undertittel } from 'nav-frontend-typografi';
 import { useUserInfoContext } from '../Provider';
 import { markdownLink } from './CustomRules';
 import { ViktigMelding } from '../../felleskomponenter/etiketer/Etikett';
-import './Henvendelse.less';
+import styles from './Henvendelse.module.less';
 
 function accessibleText(erBruker: boolean, erMeldingFraBruker: boolean) {
     if (erMeldingFraBruker) {
@@ -32,15 +32,20 @@ export function Henvendelse(props: Props) {
     const erMeldingFraBruker: boolean = avsender === 'BRUKER';
     const date: string = formaterDateAndTime(sendt);
     const toppTekst = erMeldingFraBruker || !avsenderId ? date : `${date} - ${avsenderId}`;
-    const className = erMeldingFraBruker ? 'ikon bruker-ikon' : 'ikon veileder-ikon';
+    const className = erMeldingFraBruker ? styles.brukerIkon : styles.veilederIkon;
 
     return (
         <>
             <Undertittel tag="h5" className="visually-hidden">
                 {accessibleText(erBruker, erMeldingFraBruker)}
             </Undertittel>
-            <Snakkeboble topp={toppTekst} pilHoyre={erMeldingFraBruker} ikonClass={className}>
-                <ViktigMelding visible={viktigMarkering} className="henvendelse-viktig-melding" />
+            <Snakkeboble
+                className={styles.hendvendelse}
+                topp={toppTekst}
+                pilHoyre={erMeldingFraBruker}
+                ikonClass={className}
+            >
+                <ViktigMelding visible={viktigMarkering} className={styles.viktig} />
                 <Tekstomrade rules={[LinkRule, LinebreakRule, ParagraphRule, markdownLink]} className="blokk-xs">
                     {tekst}
                 </Tekstomrade>
