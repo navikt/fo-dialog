@@ -1,18 +1,32 @@
 import React, { useContext } from 'react';
 
-import { DialogData } from '../../utils/Typer';
-import { UserInfoContext } from '../Provider';
-import { VenterSvarFraBruker, VenterSvarFraNAV, ViktigMelding } from './etiketer/Etikett';
+import { DialogData, OppfolgingData } from '../../utils/Typer';
+import { dataOrUndefined, useOppfolgingContext, UserInfoContext } from '../Provider';
+import { VenterSvarFraBruker, VenterSvarFraNAV, ViktigMelding } from '../../felleskomponenter/etiketer/Etikett';
 
 interface Props {
     dialog: DialogData;
 }
 
+function erViktig(dialog: DialogData, oppfolging?: OppfolgingData): boolean {
+    if (dialog.egenskaper.length > 0) {
+        if (dialog.egenskaper[0] === 'ESKALERINGSVARSEL') {
+            return oppfolging?.gjeldendeEskaleringsvarsel?.tilhorendeDialogId === dialog.id;
+        }
+
+        return true;
+    }
+
+    return false;
+}
+
 export function EtikettListe(props: Props) {
     const userInfo = useContext(UserInfoContext);
+    const oppfolging = useOppfolgingContext();
     const erVeileder = !!userInfo && userInfo.erVeileder;
 
-    const dialogErViktig = props.dialog.egenskaper.length > 0;
+    const dialogErViktig = erViktig(props.dialog, dataOrUndefined(oppfolging));
+
     const venterPaSvar = props.dialog.venterPaSvar;
     const visVenterPaaNav = !!userInfo && !props.dialog.ferdigBehandlet && erVeileder;
 
