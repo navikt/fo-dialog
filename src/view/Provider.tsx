@@ -79,7 +79,9 @@ export function Provider(props: Props) {
 
     useEffect(() => {
         if (isDialogOk(status)) {
-            const interval = setInterval(pollForChanges, 10000);
+            //stop interval when encountering error
+            let interval: NodeJS.Timeout;
+            interval = setInterval(() => pollForChanges().catch(() => clearInterval(interval)), 10000);
             return () => clearInterval(interval);
         }
     }, [status, pollForChanges]);

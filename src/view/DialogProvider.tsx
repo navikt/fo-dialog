@@ -15,7 +15,7 @@ export interface DialogDataProviderType {
     status: Status;
     dialoger: DialogData[];
     hentDialoger: () => Promise<DialogData[]>;
-    pollForChanges: () => void;
+    pollForChanges: () => Promise<void>;
     nyDialog: (melding: string, tema: string, aktivitetId?: string) => Promise<DialogData>;
     nyHenvendelse: (melding: string, dialog: DialogData) => Promise<DialogData>;
     lesDialog: (dialogId: string) => Promise<DialogData>;
@@ -27,7 +27,7 @@ export const DialogContext = React.createContext<DialogDataProviderType>({
     status: Status.INITIAL,
     dialoger: [],
     hentDialoger: () => Promise.resolve([]),
-    pollForChanges: () => {},
+    pollForChanges: () => Promise.resolve(),
     nyDialog: (melding: string, tema: string, aktivitetId?: string) => Promise.resolve({} as any),
     nyHenvendelse: (melding: string, dialog: DialogData) => Promise.resolve(dialog),
     lesDialog: (dialogId: String) => Promise.resolve({} as any),
@@ -86,7 +86,7 @@ export function useDialogDataProvider(fnr?: string): DialogDataProviderType {
     }, [baseUrl, setState]);
 
     const pollForChanges = useCallback(() => {
-        fetchData<DialogData[]>(baseUrl).then((dialoger) => {
+        return fetchData<DialogData[]>(baseUrl).then((dialoger) => {
             setState((prevState) => {
                 if (prevState.status === Status.OK) {
                     loggChangeInDialog(prevState.dialoger, dialoger);

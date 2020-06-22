@@ -24,6 +24,10 @@ function sisteLesteHenvendelse(lest: StringOrNull, henvendelser: HenvendelseData
     return sistLeste ? sistLeste.id : null;
 }
 
+function erViktig(dialog: DialogData) {
+    return dialog.egenskaper[0] === 'ESKALERINGSVARSEL';
+}
+
 export function HenvendelseList(props: Props) {
     const dialogData = props.dialogData;
     const { lestAvBrukerTidspunkt, henvendelser, id } = dialogData;
@@ -45,10 +49,13 @@ export function HenvendelseList(props: Props) {
         <section aria-label="Meldinger" className="henvendelse-list">
             <Systemtittel className="visually-hidden">Meldinger</Systemtittel>
             <div className="henvendelse-list__viewport">
-                {sorterteHenvendelser.map((henvendelse) => (
+                {sorterteHenvendelser.map((henvendelse, index) => (
                     <React.Fragment key={henvendelse.id}>
                         <div className="henvendelse-list__henvendelse henvendelse-item">
-                            <Henvendelse henvendelseData={henvendelse} />
+                            <Henvendelse
+                                henvendelseData={henvendelse}
+                                viktigMarkering={erViktig(dialogData) && index === 0}
+                            />
                         </div>
                         <LestAvTidspunkt
                             tidspunkt={lestAvBrukerTidspunkt!}
