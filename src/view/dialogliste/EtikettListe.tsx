@@ -11,7 +11,7 @@ interface Props {
 function erViktig(dialog: DialogData, oppfolging?: OppfolgingData): boolean {
     if (dialog.egenskaper.length > 0) {
         if (dialog.egenskaper[0] === 'ESKALERINGSVARSEL') {
-            return oppfolging?.gjeldendeEskaleringsvarsel?.tilhorendeDialogId === dialog.id;
+            return oppfolging?.gjeldendeEskaleringsvarsel?.tilhorendeDialogId.toString() === dialog.id;
         }
 
         return true;

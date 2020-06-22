@@ -70,7 +70,7 @@ export interface Eskaleringsvarsel {
     opprettetAv: string;
     opprettetDato: string;
     avsluttetDato: StringOrNull;
-    tilhorendeDialogId: string;
+    tilhorendeDialogId: number;
 }
 
 export interface PeriodeData {
