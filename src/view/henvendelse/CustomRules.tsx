@@ -1,5 +1,5 @@
 import React, { MouseEvent, ReactNode } from 'react';
-import { Rule, RuleScope, ASTNode, ReactElementDescription } from '@navikt/textparser';
+import { ASTNode, ReactElementDescription, Rule, RuleScope } from '@navikt/textparser';
 import { getText } from '@navikt/textparser/dist/utils';
 import Lenke from 'nav-frontend-lenker';
 import { useFnrContext } from '../Provider';
@@ -12,9 +12,10 @@ function CustomLenkeWrapper(props: { href: string; children: ReactNode }) {
         if (!fnr) {
             return;
         }
-        event.preventDefault();
 
         if (href.includes('aktivitetsplan/aktivitet/vis')) {
+            event.preventDefault();
+
             const urlSplit = href.split('/');
             const aktivitetID = urlSplit[urlSplit.length - 1];
             window.history.replaceState(
@@ -22,6 +23,7 @@ function CustomLenkeWrapper(props: { href: string; children: ReactNode }) {
                 'aktivitetsplan',
                 `/veilarbpersonflatefs/${fnr}/aktivitet/vis/${aktivitetID}`
             );
+
             window.dispatchEvent(new CustomEvent('visAktivitetsplan', { detail: aktivitetID }));
         }
     };
