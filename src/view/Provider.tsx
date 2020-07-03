@@ -78,13 +78,15 @@ export function Provider(props: Props) {
     }, [hentDialoger, hentKladder]);
 
     useEffect(() => {
-        if (isDialogOk(status)) {
+        if (isDialogOk(status) && hasData(bruker)) {
             //stop interval when encountering error
-            let interval: NodeJS.Timeout;
-            interval = setInterval(() => pollForChanges().catch(() => clearInterval(interval)), 10000);
-            return () => clearInterval(interval);
+            if (bruker.data.erBruker) {
+                let interval: NodeJS.Timeout;
+                interval = setInterval(() => pollForChanges().catch(() => clearInterval(interval)), 10000);
+                return () => clearInterval(interval);
+            }
         }
-    }, [status, pollForChanges]);
+    }, [status, bruker, pollForChanges]);
 
     if (isDialogPending(status) || isPending(bruker, false) || isPending(oppfolgingData, false)) {
         return <NavFrontendSpinner />;
