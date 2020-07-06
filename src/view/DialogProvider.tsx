@@ -1,7 +1,8 @@
 import React, { useCallback, useContext, useMemo, useState } from 'react';
-import { DialogData } from '../utils/Typer';
+import { DialogData, SistOppdatert } from '../utils/Typer';
 import { fetchData, fnrQuery, getApiBasePath } from '../utils/Fetch';
 import { loggChangeInDialog } from '../felleskomponenter/logging';
+import { formatISO, isAfter, parseISO } from 'date-fns';
 
 enum Status {
     INITIAL,
@@ -39,11 +40,13 @@ export const useDialogContext = () => useContext(DialogContext);
 
 export interface DialogState {
     status: Status;
+    sistOppdatert: string;
     dialoger: DialogData[];
 }
 
 const initDialogState: DialogState = {
     status: Status.INITIAL,
+    sistOppdatert: formatISO(new Date()),
     dialoger: []
 };
 
@@ -54,6 +57,10 @@ export function useDialogDataProvider(fnr?: string): DialogDataProviderType {
     const query = fnrQuery(fnr);
 
     const baseUrl = useMemo(() => `${apiBasePath}/veilarbdialog/api/dialog${query}`, [apiBasePath, query]);
+    const sistOppdatertUrl = useMemo(() => `${apiBasePath}/veilarbdialog/api/dialog/sistOppdatert${query}`, [
+        apiBasePath,
+        query
+    ]);
     const lesUrl = useCallback((id: string) => `${apiBasePath}/veilarbdialog/api/dialog/${id}/les${query}`, [
         apiBasePath,
         query
@@ -76,7 +83,7 @@ export function useDialogDataProvider(fnr?: string): DialogDataProviderType {
         }));
         return fetchData<DialogData[]>(baseUrl)
             .then((dialoger) => {
-                setState({ status: Status.OK, dialoger: dialoger });
+                setState({ status: Status.OK, dialoger: dialoger, sistOppdatert: formatISO(new Date()) });
                 return dialoger;
             })
             .catch(() => {
@@ -86,16 +93,24 @@ export function useDialogDataProvider(fnr?: string): DialogDataProviderType {
     }, [baseUrl, setState]);
 
     const pollForChanges = useCallback(() => {
-        return fetchData<DialogData[]>(baseUrl).then((dialoger) => {
+        return fetchData<SistOppdatert>(sistOppdatertUrl).then((data) => {
             setState((prevState) => {
-                if (prevState.status === Status.OK) {
-                    loggChangeInDialog(prevState.dialoger, dialoger);
-                    return { status: Status.OK, dialoger: dialoger };
+                // only update if new sistOppdatert
+                if (!!data.sistOppdatert) {
+                    if (isAfter(parseISO(data.sistOppdatert), parseISO(prevState.sistOppdatert))) {
+                        fetchData<DialogData[]>(baseUrl).then((dialoger) => {
+                            //do not update while we fetch new state
+                            if (prevState.status === Status.OK) {
+                                loggChangeInDialog(prevState.dialoger, dialoger);
+                                return { status: Status.OK, dialoger: dialoger, sistOppdatert: formatISO(new Date()) };
+                            }
+                        });
+                    }
                 }
                 return prevState;
             });
         });
-    }, [baseUrl, setState]);
+    }, [baseUrl, sistOppdatertUrl, setState]);
 
     const updateDialogInDialoger = useCallback(
         (dialog: DialogData) => {
@@ -107,7 +122,7 @@ export function useDialogDataProvider(fnr?: string): DialogDataProviderType {
                     dialog,
                     ...dialoger.slice(index + 1, dialoger.length)
                 ];
-                return { status: Status.OK, dialoger: nyeDialoger };
+                return { ...prevState, status: Status.OK, dialoger: nyeDialoger };
             });
             return dialog;
         },
@@ -133,7 +148,11 @@ export function useDialogDataProvider(fnr?: string): DialogDataProviderType {
                     updateDialogInDialoger(dialog);
                     return dialog;
                 }
-                setState((prevState) => ({ status: Status.OK, dialoger: [...prevState.dialoger, dialog] }));
+                setState((prevState) => ({
+                    ...prevState,
+                    status: Status.OK,
+                    dialoger: [...prevState.dialoger, dialog]
+                }));
                 return dialog;
             });
         },

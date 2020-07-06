@@ -93,3 +93,7 @@ export interface KladdData {
     overskrift: StringOrNull;
     tekst: StringOrNull;
 }
+
+export interface SistOppdatert {
+    sistOppdatert: StringOrNull;
+}
