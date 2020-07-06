@@ -34,6 +34,7 @@ export interface HenvendelseData {
     sendt: string;
     lest: boolean;
     tekst: string;
+    viktig: boolean;
 }
 
 export interface Bruker {

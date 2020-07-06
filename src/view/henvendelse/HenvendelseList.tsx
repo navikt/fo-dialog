@@ -54,7 +54,7 @@ export function HenvendelseList(props: Props) {
                         <div className="henvendelse-list__henvendelse henvendelse-item">
                             <Henvendelse
                                 henvendelseData={henvendelse}
-                                viktigMarkering={erViktig(dialogData) && index === 0}
+                                viktigMarkering={(erViktig(dialogData) && index === 0) || henvendelse.viktig}
                             />
                         </div>
                         <LestAvTidspunkt
