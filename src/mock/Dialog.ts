@@ -26,6 +26,7 @@ const dialoger: DialogData[] & JSONArray = [
                 avsenderId: 'Z123456',
                 sendt: '2018-02-27T12:47:56.097+01:00',
                 lest: true,
+                viktig: false,
                 tekst: 'Hei, det virker som denne stillingen kunne passet for meg. Hva tenker du?'
             },
             {
@@ -35,6 +36,7 @@ const dialoger: DialogData[] & JSONArray = [
                 avsenderId: 'Z123456',
                 sendt: '2018-02-27T12:48:56.097+01:00',
                 lest: true,
+                viktig: false,
                 tekst: 'Hei, det virker som denne stillingen kunne passet for meg. Hva tenker du?'
             },
             {
@@ -44,6 +46,7 @@ const dialoger: DialogData[] & JSONArray = [
                 avsenderId: '0102030405',
                 sendt: '2018-02-28T12:48:55.097+01:00',
                 lest: true,
+                viktig: false,
                 tekst:
                     'Ja, jeg vil så absolutt tro at du er kvalifisert til denne! Send dem en søknad og fortell meg' +
                     'om du får noe respons!'
@@ -55,6 +58,7 @@ const dialoger: DialogData[] & JSONArray = [
                 avsenderId: '0102030405',
                 sendt: '2018-03-28T12:48:56.097+01:00',
                 lest: false,
+                viktig: false,
                 tekst: 'De ringte meg i går. Skal på intervju neste uke :)'
             },
             {
@@ -64,6 +68,7 @@ const dialoger: DialogData[] & JSONArray = [
                 avsenderId: '0102030405',
                 sendt: '2018-03-28T12:48:57.097+01:00',
                 lest: false,
+                viktig: false,
                 tekst: 'De ringte meg i går!. Skal på intervju neste uke :)'
             },
             {
@@ -73,6 +78,7 @@ const dialoger: DialogData[] & JSONArray = [
                 avsenderId: '0102030405',
                 sendt: '2018-03-28T12:48:58.097+01:00',
                 lest: false,
+                viktig: false,
                 tekst: 'De ringte meg i går!!. Skal på intervju neste uke :)'
             },
             {
@@ -82,6 +88,7 @@ const dialoger: DialogData[] & JSONArray = [
                 avsenderId: '0102030405',
                 sendt: '2018-03-28T12:48:59.097+01:00',
                 lest: false,
+                viktig: false,
                 tekst: 'De ringte meg i går!!!. Skal på intervju neste uke :)'
             },
             {
@@ -91,6 +98,7 @@ const dialoger: DialogData[] & JSONArray = [
                 avsenderId: '0102030405',
                 sendt: '2018-03-28T12:49:01.097+01:00',
                 lest: false,
+                viktig: false,
                 tekst: 'De ringte meg i går!!!!. Skal på intervju neste uke :)'
             }
         ],
@@ -118,6 +126,7 @@ const dialoger: DialogData[] & JSONArray = [
                 avsenderId: 'Z123456',
                 sendt: '2018-02-01T11:52:20.615+01:00',
                 lest: true,
+                viktig: true,
                 tekst:
                     'Det er viktig at du gjennomfører denne aktiviteten med NAV. Gjør du ikke det, kan det medføre at stønaden du mottar fra NAV bortfaller for en periode eller stanses. Hvis du ikke kan gjennomføre aktiviteten, ber vi deg ta kontakt med veilederen din så snart som mulig.'
             }
@@ -148,6 +157,7 @@ const dialoger: DialogData[] & JSONArray = [
                 avsenderId: 'Z999999',
                 sendt: '2018-02-27T12:48:56.097+01:00',
                 lest: false,
+                viktig: false,
                 tekst:
                     'Hei!\n' +
                     'Du er registrert som arbeidssøker og NAV trenger å bli kjent med ditt behov for hjelp fra oss, slik at vi kan gi deg riktig veiledning.\n' +
@@ -160,6 +170,7 @@ const dialoger: DialogData[] & JSONArray = [
                 avsenderId: 'Z999999',
                 sendt: '2018-02-28T12:48:56.097+01:00',
                 lest: false,
+                viktig: false,
                 tekst:
                     'Hei!\n' +
                     'Du har svart at du har utfordringer som hindrer deg i å søke eller være i jobb. Vi vil veilede deg videre og trenger derfor å vite litt mer.\n' +
@@ -176,6 +187,7 @@ const dialoger: DialogData[] & JSONArray = [
                 avsenderId: 'Z999999',
                 sendt: '2018-02-28T12:48:56.097+01:00',
                 lest: false,
+                viktig: false,
                 tekst:
                     'Hei!\n' +
                     'Du har svart at du trenger mer veiledning nå som retten til sykepenger nærmer seg slutten. Vi vil veilede deg videre og trenger derfor å vite litt mer.\n' +
@@ -192,6 +204,7 @@ const dialoger: DialogData[] & JSONArray = [
                 avsenderId: 'Z999999',
                 sendt: '2018-02-28T12:49:56.097+01:00',
                 lest: false,
+                viktig: false,
                 tekst:
                     'Hei!\n' +
                     'Du har svart at du trenger mer veiledning nå som retten til sykepenger nærmer seg slutten. Vi vil veilede deg videre og trenger derfor å vite litt mer.\n' +
@@ -208,6 +221,7 @@ const dialoger: DialogData[] & JSONArray = [
                 avsenderId: 'Z999999',
                 sendt: '2018-02-28T12:50:56.097+01:00',
                 lest: false,
+                viktig: false,
                 tekst:
                     'Hei!\n' +
                     'Du har svart at du trenger mer veiledning nå som retten til sykepenger nærmer seg slutten. Vi vil veilede deg videre og trenger derfor å vite litt mer.\n' +
@@ -224,6 +238,7 @@ const dialoger: DialogData[] & JSONArray = [
                 avsenderId: 'Z999999',
                 sendt: '2018-02-28T12:51:56.097+01:00',
                 lest: false,
+                viktig: false,
                 tekst:
                     'Hei!\n' +
                     'Du har svart at du trenger mer veiledning nå som retten til sykepenger nærmer seg slutten. Vi vil veilede deg videre og trenger derfor å vite litt mer.\n' +
@@ -240,6 +255,7 @@ const dialoger: DialogData[] & JSONArray = [
                 avsenderId: 'Z999999',
                 sendt: '2018-02-28T12:51:56.097+01:00',
                 lest: false,
+                viktig: false,
                 tekst:
                     'Hei!\n' +
                     'Du har svart at du trenger mer veiledning nå som retten til sykepenger nærmer seg slutten. Vi vil veilede deg videre og trenger derfor å vite litt mer.\n' +
@@ -256,6 +272,7 @@ const dialoger: DialogData[] & JSONArray = [
                 avsenderId: 'Z999999',
                 sendt: '2018-02-28T12:52:56.097+01:00',
                 lest: false,
+                viktig: false,
                 tekst:
                     'Hei!\n' +
                     'Du har svart at du trenger mer veiledning nå som retten til sykepenger nærmer seg slutten. Vi vil veilede deg videre og trenger derfor å vite litt mer.\n' +
@@ -289,6 +306,7 @@ const dialoger: DialogData[] & JSONArray = [
                 avsenderId: 'Z123456',
                 sendt: '2018-02-01T11:52:20.615+01:00',
                 lest: false,
+                viktig: false,
                 tekst: 'Ja, jeg tror det er rimelig. Skal prøve å få kontakt med han som driver greia'
             }
         ],
@@ -315,6 +333,7 @@ const dialoger: DialogData[] & JSONArray = [
                 avsenderId: 'Z123456',
                 sendt: '2018-02-01T11:52:20.615+01:00',
                 lest: false,
+                viktig: false,
                 tekst: 'Hei. Se referat etter samtalen vår'
             }
         ],
@@ -341,6 +360,7 @@ const dialoger: DialogData[] & JSONArray = [
                 avsenderId: 'Z123456',
                 sendt: '2018-02-01T11:52:20.615+01:00',
                 lest: false,
+                viktig: false,
                 tekst: 'Hei. Jeg var hos kiropraktor i går. Han sa at jeg må komme tilbake om en uke'
             }
         ],
@@ -368,6 +388,7 @@ const dialoger: DialogData[] & JSONArray = [
                 avsenderId: 'Z123456',
                 sendt: '2018-02-01T11:52:20.615+01:00',
                 lest: false,
+                viktig: false,
                 tekst:
                     'Hei. Jeg vil at du skal prøve å søke minst 5 stillinger i uken. Vi møtes igjen om en uke for å prate om hvordan det har gått. '
             }
@@ -396,6 +417,7 @@ const dialoger: DialogData[] & JSONArray = [
                 avsenderId: 'Z123456',
                 sendt: '2018-02-01T11:52:20.615+01:00',
                 lest: false,
+                viktig: false,
                 tekst:
                     'Hei. Jeg vil at du skal prøve å søke minst 5 stillinger i uken. Vi møtes igjen om en uke for å prate om hvordan det har gått. '
             }
@@ -422,6 +444,7 @@ export function opprettEllerOppdaterDialog(update: NyDialogMeldingData): DialogD
         avsenderId: 'Z123456',
         sendt: new Date().toISOString(),
         lest: true,
+        viktig: false,
         tekst: update.tekst
     };
 
@@ -517,6 +540,7 @@ export default () => {
             avsenderId: 'Z123456',
             sendt: new Date().toISOString(),
             lest: false,
+            viktig: false,
             tekst: 'Hei, hvordan går det?'
         };
         const d = dialoger.find((d) => d.id === '2');

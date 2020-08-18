@@ -34,6 +34,7 @@ export interface HenvendelseData {
     sendt: string;
     lest: boolean;
     tekst: string;
+    viktig: boolean;
 }
 
 export interface Bruker {
@@ -92,4 +93,8 @@ export interface KladdData {
     aktivitetId: StringOrNull;
     overskrift: StringOrNull;
     tekst: StringOrNull;
+}
+
+export interface SistOppdatert {
+    sistOppdatert: StringOrNull;
 }
