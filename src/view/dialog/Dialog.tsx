@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { HenvendelseList } from '../henvendelse/HenvendelseList';
 import { DialogHeader, dialogHeaderID1, dialogHeaderID2 } from './DialogHeader';
 import { useFnrContext, useUserInfoContext, useViewContext } from '../Provider';
@@ -16,6 +16,7 @@ import styles from './Dialog.module.less';
 import { useDialogContext } from '../DialogProvider';
 import { Systemtittel } from 'nav-frontend-typografi';
 import ManagedDialogCheckboxes from './DialogCheckboxes';
+import { useEventListener } from '../utils/useEventListner';
 
 export function Dialog() {
     const kanSendeMelding = useKansendeMelding();
@@ -26,6 +27,8 @@ export function Dialog() {
     const bruker = useUserInfoContext();
 
     const { viewState, setViewState } = useViewContext();
+    const [activeTab, setActiveTab] = useState(!document.hidden);
+    const [activePersonflateTab, setActivePersonflateTab] = useState(true);
 
     const lest = !valgtDialog ? true : valgtDialog.lest;
 
@@ -35,13 +38,27 @@ export function Dialog() {
     }, [dialogId]);
 
     useEffect(() => {
-        if (!lest) {
+        const listener = () => setActiveTab(!document.hidden);
+        document.addEventListener('visibilitychange', listener, false);
+        return () => document.removeEventListener('visibilitychange', listener);
+    }, [setActiveTab]);
+
+    useEventListener<{ tabId: string }>('veilarbpersonflatefs.tab-clicked', (event) => {
+        if (event.detail.tabId === 'DIALOG') {
+            setActivePersonflateTab(true);
+        } else {
+            setActivePersonflateTab(false);
+        }
+    });
+
+    useEffect(() => {
+        if (!lest && activeTab && activePersonflateTab) {
             lesDialog(dialogId).then(() => {
                 dispatchUpdate(UpdateTypes.Dialog);
                 window.dispatchEvent(new Event('aktivitetsplan.dialog.lest')); //lest teller i personflata
             });
         }
-    }, [dialogId, lest, lesDialog]);
+    }, [dialogId, lest, activeTab, activePersonflateTab, lesDialog]);
 
     if (!valgtDialog) {
         return <IngenDialog />;
