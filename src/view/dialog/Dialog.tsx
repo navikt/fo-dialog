@@ -43,8 +43,9 @@ export function Dialog() {
         return () => document.removeEventListener('visibilitychange', listener);
     }, [setActiveTab]);
 
-    useEventListener<{ tabId: string }>('veilarbpersonflatefs.tab-clicked', (event) => {
-        if (event.detail.tabId === 'DIALOG') {
+    useEventListener<{ tabId: string; dialogId?: string }>('veilarbpersonflatefs.tab-clicked', (event) => {
+        const correctDialogInView = !event.detail.dialogId ? true : dialogId === event.detail.dialogId;
+        if (event.detail.tabId === 'DIALOG' && correctDialogInView) {
             setActivePersonflateTab(true);
         } else {
             setActivePersonflateTab(false);
