@@ -52,6 +52,7 @@ const initDialogState: DialogState = {
 
 export function useDialogDataProvider(fnr?: string): DialogDataProviderType {
     const [state, setState] = useState(initDialogState);
+    const sistOppdatert = state.sistOppdatert;
 
     const apiBasePath = getApiBasePath(fnr);
     const query = fnrQuery(fnr);
@@ -94,23 +95,18 @@ export function useDialogDataProvider(fnr?: string): DialogDataProviderType {
 
     const pollForChanges = useCallback(() => {
         return fetchData<SistOppdatert>(sistOppdatertUrl).then((data) => {
-            setState((prevState) => {
-                // only update if new sistOppdatert
-                if (!!data.sistOppdatert) {
-                    if (isAfter(parseISO(data.sistOppdatert), parseISO(prevState.sistOppdatert))) {
-                        fetchData<DialogData[]>(baseUrl).then((dialoger) => {
-                            //do not update while we fetch new state
-                            if (prevState.status === Status.OK) {
-                                loggChangeInDialog(prevState.dialoger, dialoger);
-                                return { status: Status.OK, dialoger: dialoger, sistOppdatert: formatISO(new Date()) };
-                            }
+            if (!!data.sistOppdatert) {
+                if (isAfter(parseISO(data.sistOppdatert), parseISO(sistOppdatert))) {
+                    fetchData<DialogData[]>(baseUrl).then((dialoger) => {
+                        setState((prevState) => {
+                            loggChangeInDialog(prevState.dialoger, dialoger);
+                            return { status: Status.OK, dialoger: dialoger, sistOppdatert: formatISO(new Date()) };
                         });
-                    }
+                    });
                 }
-                return prevState;
-            });
+            }
         });
-    }, [baseUrl, sistOppdatertUrl, setState]);
+    }, [baseUrl, sistOppdatertUrl, setState, sistOppdatert]);
 
     const updateDialogInDialoger = useCallback(
         (dialog: DialogData) => {
