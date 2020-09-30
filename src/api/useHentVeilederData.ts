@@ -14,7 +14,7 @@ const useFetchVeilederNavn = (erVeileder: boolean) => {
     useEffect(() => {
         if (erVeileder) {
             fetchData<VeilederInfo>('/veilarbveileder/api/veileder/me')
-                .then(veilerder => setVeilederNavn(`${veilerder.fornavn} ${veilerder.etternavn}`))
+                .then((veilerder) => setVeilederNavn(`${veilerder.fornavn} ${veilerder.etternavn}`))
                 .catch();
         }
     }, [erVeileder]);

@@ -23,6 +23,7 @@ export function AktivitetskortPreview(props: Props) {
     const apiBasePath = useApiBasePath();
 
     const aktivitet = findAktivitet(aktvitetData, aktivitetId);
+
     if (!aktivitet) {
         return null;
     }

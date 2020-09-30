@@ -1,13 +1,15 @@
 import React, { Dispatch, SetStateAction, useContext, useEffect, useState } from 'react';
-import { Bruker, OppfolgingData } from '../utils/Typer';
-import NavFrontendSpinner from 'nav-frontend-spinner';
 import useFetch, { FetchResult, hasData, hasError, isPending, Status } from '@nutgaard/use-fetch';
+import { AlertStripeFeil } from 'nav-frontend-alertstriper';
+import NavFrontendSpinner from 'nav-frontend-spinner';
+import { Bruker, OppfolgingData } from '../utils/Typer';
 import { fnrQuery, getApiBasePath, REQUEST_CONFIG } from '../utils/Fetch';
 import { initalState, ViewState } from './ViewState';
 import { AktivitetProvider } from './AktivitetProvider';
 import { DialogContext, hasDialogError, isDialogOk, isDialogPending, useDialogDataProvider } from './DialogProvider';
 import useFetchVeilederNavn from '../api/useHentVeilederData';
 import { KladdContext, useKladdDataProvider } from './KladdProvider';
+import styles from './App.module.less';
 
 interface VeilederData {
     veilederNavn?: string;
@@ -91,7 +93,11 @@ export function Provider(props: Props) {
     if (isDialogPending(status) || isPending(bruker, false) || isPending(oppfolgingData, false)) {
         return <NavFrontendSpinner />;
     } else if (hasError(bruker) || hasError(oppfolgingData) || hasDialogError(status)) {
-        return <p>Kunne ikke laste data fra baksystemer. Prøv igjen senere</p>;
+        return (
+            <AlertStripeFeil className={styles.feil}>
+                Noe gikk dessverre galt med systemet. Prøv igjen senere.
+            </AlertStripeFeil>
+        );
     }
 
     return (
