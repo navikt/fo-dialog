@@ -1,12 +1,15 @@
 import React from 'react';
-import { VenstreChevron } from 'nav-frontend-chevron';
-import { DialogData, StringOrNull } from '../../utils/Typer';
-import { AktivitetskortPreview } from '../aktivitet/AktivitetskortPreview';
-import { Systemtittel, Undertittel } from 'nav-frontend-typografi';
 import { Link } from 'react-router-dom';
 import classNames from 'classnames';
-import styles from './DialogHeader.module.less';
+import { VenstreChevron } from 'nav-frontend-chevron';
+import { Systemtittel, Undertittel } from 'nav-frontend-typografi';
+import { hasError } from '@nutgaard/use-fetch';
+import { DialogData, StringOrNull } from '../../utils/Typer';
+import { AktivitetskortPreview } from '../aktivitet/AktivitetskortPreview';
 import { ReactComponent as Lukk } from '../../fellesikoner/lukk.svg';
+import { AktivitetContextType, useAktivitetContext } from '../AktivitetProvider';
+import DialogHeaderFeil from './DialogHeaderFeil';
+import styles from './DialogHeader.module.less';
 
 export const dialogHeaderID1 = 'dialog_header_1';
 export const dialogHeaderID2 = 'dialog_header_2';
@@ -33,21 +36,38 @@ function DialogOverskrift(props: DialogOverskriftProps) {
     );
 }
 
+function harAktivitetDataFeil(aktivitetData: AktivitetContextType, aktivitetId?: string | null) {
+    if (!aktivitetId) return false;
+
+    if (aktivitetId.startsWith('ARENA')) {
+        return hasError(aktivitetData.arenaAktiviter);
+    } else {
+        return hasError(aktivitetData.aktiviteter);
+    }
+}
+
 export function DialogHeader(props: DialogHeaderProps) {
     const { dialog, aktivitetId, visSkygge } = props;
     const aktivitet = aktivitetId || dialog?.aktivitetId;
 
+    const aktvitetData = useAktivitetContext();
+
+    const erFeil = harAktivitetDataFeil(aktvitetData, aktivitet);
+
     return (
-        <Header visSkygge={visSkygge}>
-            <div id={dialogHeaderID1} className="hide">
-                Dialog om:
-            </div>
-            {aktivitet ? (
-                <AktivitetskortPreview aktivitetId={aktivitet} />
-            ) : (
-                <DialogOverskrift tekst={dialog?.overskrift} />
-            )}
-        </Header>
+        <>
+            <DialogHeaderFeil visible={erFeil} />
+            <Header visSkygge={visSkygge}>
+                <div id={dialogHeaderID1} className="hide">
+                    Dialog om:
+                </div>
+                {aktivitet && !erFeil ? (
+                    <AktivitetskortPreview aktivitetId={aktivitet} />
+                ) : (
+                    <DialogOverskrift tekst={dialog?.overskrift} />
+                )}
+            </Header>
+        </>
     );
 }
 

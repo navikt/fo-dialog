@@ -1,20 +1,18 @@
 import React, { useEffect, useLayoutEffect, useRef, useState } from 'react';
 import { DialogData } from '../../utils/Typer';
-import { visibleIfHoc } from '../../felleskomponenter/VisibleIfHoc';
 import { dataOrUndefined, useOppfolgingContext, useUserInfoContext, useViewContext } from '../Provider';
-import { AlertStripeFeil } from 'nav-frontend-alertstriper';
 import useFormstate, { Formstate } from '@nutgaard/use-formstate';
 import { Hovedknapp } from 'nav-frontend-knapper';
 import { HandlingsType, sendtNyHenvendelse } from '../ViewState';
 import { dispatchUpdate, UpdateTypes } from '../../utils/UpdateEvent';
-import { isDialogPendingOrReloading, useDialogContext } from '../DialogProvider';
+import { useDialogContext } from '../DialogProvider';
 import useHenvendelseStartTekst from './UseHenvendelseStartTekst';
 import loggEvent from '../../felleskomponenter/logging';
 import { useKladdContext } from '../KladdProvider';
 import EkspanderbartTekstArea from '../../felleskomponenter/textArea/TextArea';
 import { smoothScrollToLastHenvendelse } from '../henvendelse/useScrollToLastHenvendelse';
-
-const AlertStripeFeilVisible = visibleIfHoc(AlertStripeFeil);
+import AlertStripeFeilVisible from '../../felleskomponenter/AlertStripeFeilVisible';
+import styles from './DialogInputBox.module.less';
 
 const maxMeldingsLengde = 5000;
 
@@ -77,8 +75,7 @@ export function DialogInputBox(props: Props) {
     const bruker = useUserInfoContext();
     const oppfolgingContext = useOppfolgingContext();
     const oppfolging = dataOrUndefined(oppfolgingContext);
-    const { hentDialoger, nyHenvendelse, setFerdigBehandlet, status } = useDialogContext();
-    const dialogLaster = isDialogPendingOrReloading(status);
+    const { hentDialoger, nyHenvendelse, setFerdigBehandlet } = useDialogContext();
     const [noeFeilet, setNoeFeilet] = useState(false);
     const startTekst = useHenvendelseStartTekst();
 
@@ -126,6 +123,7 @@ export function DialogInputBox(props: Props) {
     }
 
     const onSubmit = (data: { melding: string }) => {
+        setNoeFeilet(false);
         const { melding } = data;
 
         timer.current && clearInterval(timer.current);
@@ -154,8 +152,6 @@ export function DialogInputBox(props: Props) {
             .catch(() => setNoeFeilet(true));
     };
 
-    const laster = state.submitting || dialogLaster;
-
     const onChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         const value = e.target.value;
         timer.current && clearInterval(timer.current);
@@ -170,13 +166,13 @@ export function DialogInputBox(props: Props) {
         <section aria-label="Ny melding">
             <form onSubmit={state.onSubmit(onSubmit)} noValidate autoComplete="off">
                 <HenvendelseInput
-                    laster={laster}
+                    laster={state.submitting}
                     state={state}
                     onChange={onChange}
                     kanSendeHenvendelse={kanSendeHenveldelse}
                 />
-                <AlertStripeFeilVisible visible={noeFeilet}>
-                    Det skjedde en alvorlig feil. Prøv igjen senere
+                <AlertStripeFeilVisible visible={noeFeilet} className={styles.feil}>
+                    Noe gikk dessverre galt med systemet. Prøv igjen senere.
                 </AlertStripeFeilVisible>
             </form>
         </section>

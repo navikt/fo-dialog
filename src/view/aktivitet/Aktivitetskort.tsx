@@ -16,7 +16,7 @@ export function Aktivitetskort() {
     const { dialogId } = useParams();
     const aktivitetData = useAktivitetContext();
 
-    const dialog = dialoger.find(dialog => dialog.id === dialogId);
+    const dialog = dialoger.find((dialog) => dialog.id === dialogId);
     const aktivitetId = useAktivitetId() ?? dialog?.aktivitetId;
     const aktivitet = findAktivitet(aktivitetData, aktivitetId);
 

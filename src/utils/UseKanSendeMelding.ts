@@ -6,6 +6,7 @@ export default function useKansendeMelding(): boolean {
 
     return (
         !!oppfolgingData &&
+        oppfolgingData.harSkriveTilgang &&
         oppfolgingData.underOppfolging &&
         !oppfolgingData.reservasjonKRR &&
         //TODO fiks denne oppfolgingData.kanVarsles &&

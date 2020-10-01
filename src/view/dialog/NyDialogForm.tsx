@@ -1,13 +1,11 @@
 import React, { useEffect, useRef, useState } from 'react';
 import { Normaltekst } from 'nav-frontend-typografi';
 import useFormstate from '@nutgaard/use-formstate';
-import { useUserInfoContext } from '../Provider';
 import { useHistory } from 'react-router';
-import { AlertStripeFeil } from 'nav-frontend-alertstriper';
-import { visibleIfHoc } from '../../felleskomponenter/VisibleIfHoc';
 import { Hovedknapp } from 'nav-frontend-knapper';
+import { SkjemaGruppe } from 'nav-frontend-skjema';
+import { useUserInfoContext } from '../Provider';
 import Input from '../../felleskomponenter/input/input';
-import style from './NyDialogForm.module.less';
 import { StringOrNull } from '../../utils/Typer';
 import { dispatchUpdate, UpdateTypes } from '../../utils/UpdateEvent';
 import { useDialogContext } from '../DialogProvider';
@@ -15,9 +13,8 @@ import useHenvendelseStartTekst from './UseHenvendelseStartTekst';
 import loggEvent from '../../felleskomponenter/logging';
 import { findKladd, useKladdContext } from '../KladdProvider';
 import EkspanderbartTekstArea from '../../felleskomponenter/textArea/TextArea';
-import { SkjemaGruppe } from 'nav-frontend-skjema';
-
-const AlertStripeFeilVisible = visibleIfHoc(AlertStripeFeil);
+import AlertStripeFeilVisible from '../../felleskomponenter/AlertStripeFeilVisible';
+import style from './NyDialogForm.module.less';
 
 const maxMeldingsLengde = 5000;
 const veilederInfoMelding = 'Skriv en melding til brukeren';
@@ -161,8 +158,8 @@ function NyDialogForm(props: Props) {
                     Send
                 </Hovedknapp>
 
-                <AlertStripeFeilVisible visible={noeFeilet}>
-                    Det skjedde en alvorlig feil. Prøv igjen senere
+                <AlertStripeFeilVisible visible={noeFeilet} className={style.feil}>
+                    Noe gikk dessverre galt med systemet. Prøv igjen senere.
                 </AlertStripeFeilVisible>
             </form>
         </div>
