@@ -59,7 +59,12 @@ const dialoger: DialogData[] & JSONArray = [
                 sendt: '2018-03-28T12:48:56.097+01:00',
                 lest: false,
                 viktig: false,
-                tekst: 'De ringte meg i går. Skal på intervju neste uke :)'
+                tekst:
+                    'Hei! Jeg har utforsket denne stillingen som kunderådgiver og fant ut at den passer meg godt. ' +
+                    'Jeg tror det passer fordi jeg er god med mennesker og sånn og bla di bla bla bla. Har sendt søknad ' +
+                    'men har ikke hørt noe fra dem på to uker. Lorem ipsum dolor sit amet, consectetuer adipiscing elit. ' +
+                    'Aenean commodo ligula eget dolor. Aenean massa. Cum sociis natoque penatibus et magnis dis. Usikker på ' +
+                    'om jeg burde ringe eller ikke - hva tenker du?'
             },
             {
                 id: '4a',

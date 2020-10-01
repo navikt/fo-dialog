@@ -9,7 +9,6 @@ import { useUserInfoContext } from '../Provider';
 import { markdownLink } from './CustomRules';
 import { ViktigMelding } from '../../felleskomponenter/etiketer/Etikett';
 import styles from './Henvendelse.module.less';
-
 function accessibleText(erBruker: boolean, erMeldingFraBruker: boolean) {
     if (erMeldingFraBruker) {
         return erBruker ? 'Deg' : 'Bruker';
@@ -33,6 +32,7 @@ export function Henvendelse(props: Props) {
     const date: string = formaterDateAndTime(sendt);
     const toppTekst = erMeldingFraBruker || !avsenderId ? date : `${date} - ${avsenderId}`;
     const className = erMeldingFraBruker ? styles.brukerIkon : styles.veilederIkon;
+    const classNameStyle = erMeldingFraBruker ? styles.hendvendelsebruker : styles.hendvendelse;
 
     return (
         <>
@@ -40,7 +40,7 @@ export function Henvendelse(props: Props) {
                 {accessibleText(erBruker, erMeldingFraBruker)}
             </Undertittel>
             <Snakkeboble
-                className={styles.hendvendelse}
+                className={classNameStyle}
                 topp={toppTekst}
                 pilHoyre={erMeldingFraBruker}
                 ikonClass={className}

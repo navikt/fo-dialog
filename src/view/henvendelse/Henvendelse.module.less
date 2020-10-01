@@ -6,6 +6,28 @@
     margin-right: 0;
     :global {
         .snakkeboble-panel {
+            background: #f4f4f4;
+            flex-grow: 1;
+            max-width: 44rem;
+            padding-bottom: 0;
+            overflow: hidden;
+            overflow-wrap: break-word;
+
+            .max-responsive({
+                flex-basis: 100%;
+            });
+        }
+        .snakkeboble__snakkebole-pil {
+            background: #f4f4f4;
+        }
+    }
+}
+
+.hendvendelsebruker {
+    margin-left: 0;
+    margin-right: 0;
+    :global {
+        .snakkeboble-panel {
             flex-grow: 1;
             max-width: 44rem;
             padding-bottom: 0;
