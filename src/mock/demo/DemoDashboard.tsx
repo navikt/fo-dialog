@@ -9,8 +9,12 @@ import {
     erManuellBruker,
     erPrivatBruker,
     getFailureRate,
+    harAktivitetFeilerSkruddPa,
+    harArenaaktivitetFeilerSkruddPa,
+    harDialogFeilerSkruddPa,
     harHodeFotSkruddPa,
     harIngenDialoger,
+    harNyDialogEllerSendMeldingFeilerSkruddPa,
     ingenOppfPerioder,
     SessionStorageElement,
     settSessionStorage
@@ -111,6 +115,26 @@ function DemoDashboard(props: DemoDashboardProps) {
                         label: 'HodeFot mock',
                         id: SessionStorageElement.HODEFOT,
                         checked: harHodeFotSkruddPa()
+                    },
+                    {
+                        label: 'Dialog feiler',
+                        id: SessionStorageElement.DIALOG_FEILER,
+                        checked: harDialogFeilerSkruddPa()
+                    },
+                    {
+                        label: 'Aktivitet feiler',
+                        id: SessionStorageElement.AKTIVITET_FEILER,
+                        checked: harAktivitetFeilerSkruddPa()
+                    },
+                    {
+                        label: 'Arenaaktivitet feiler',
+                        id: SessionStorageElement.ARENAAKTIVITET_FEILER,
+                        checked: harArenaaktivitetFeilerSkruddPa()
+                    },
+                    {
+                        label: 'Ny dialog/send feiler',
+                        id: SessionStorageElement.NY_DIALOG_SEND_MELDING_FEILER,
+                        checked: harNyDialogEllerSendMeldingFeilerSkruddPa()
                     }
                 ]}
                 onChange={endreTilstand}
