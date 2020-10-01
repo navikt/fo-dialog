@@ -9,7 +9,7 @@ import { AktivitetProvider } from './AktivitetProvider';
 import { DialogContext, hasDialogError, isDialogOk, isDialogPending, useDialogDataProvider } from './DialogProvider';
 import useFetchVeilederNavn from '../api/useHentVeilederData';
 import { KladdContext, useKladdDataProvider } from './KladdProvider';
-import styles from './App.module.less';
+import styles from './Provider.module.less';
 
 interface VeilederData {
     veilederNavn?: string;
