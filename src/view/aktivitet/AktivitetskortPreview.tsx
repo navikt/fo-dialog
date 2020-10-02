@@ -11,6 +11,9 @@ import { StringOrNull } from '../../utils/Typer';
 import { findAktivitet, useAktivitetContext } from '../AktivitetProvider';
 import useApiBasePath from '../../utils/UseApiBasePath';
 import { dialogHeaderID2 } from '../dialog/DialogHeader';
+import { visibleIfHoc } from '../../felleskomponenter/VisibleIfHoc';
+
+const UndertekstVisible = visibleIfHoc(Undertekst);
 
 interface Props {
     aktivitetId?: StringOrNull;
@@ -48,7 +51,9 @@ export function AktivitetskortPreview(props: Props) {
                         <Undertittel id={dialogHeaderID2} className={styles.tittel}>
                             {aktivitet.tittel}
                         </Undertittel>
-                        <Undertekst className={styles.tittel}>{infotekst}</Undertekst>
+                        <UndertekstVisible visible={!!infotekst} className={styles.tittel}>
+                            {infotekst}
+                        </UndertekstVisible>
                     </div>
                     <p className={styles.lesmer}>Gå til aktiviteten</p>
                 </div>

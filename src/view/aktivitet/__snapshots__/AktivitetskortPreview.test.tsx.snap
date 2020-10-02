@@ -73,17 +73,21 @@ exports[`<AktivitetskortPreview /> skal rendre stillingsaktivitet som i snapshot
                 </h2>
               </TypografiBase>
             </Undertittel>
-            <Undertekst>
-              <TypografiBase
-                type="undertekst"
-              >
-                <p
-                  className="typo-undertekst"
+            <WithVisibleIf
+              visible={true}
+            >
+              <Undertekst>
+                <TypografiBase
+                  type="undertekst"
                 >
-                  Testesen
-                </p>
-              </TypografiBase>
-            </Undertekst>
+                  <p
+                    className="typo-undertekst"
+                  >
+                    Testesen
+                  </p>
+                </TypografiBase>
+              </Undertekst>
+            </WithVisibleIf>
           </div>
           <p>
             Gå til aktiviteten
