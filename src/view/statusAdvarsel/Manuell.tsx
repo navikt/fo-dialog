@@ -4,7 +4,7 @@ import { fetchData } from '../../utils/Fetch';
 import { useOppfolgingContext } from '../Provider';
 import { dispatchUpdate, UpdateTypes } from '../../utils/UpdateEvent';
 import useApiBasePath from '../../utils/UseApiBasePath';
-import StatusAdvarselWrapper, { KanIkkeKonteteElektroniskVeileder } from './StatusAdvarselWrapper';
+import StatusAdvarselWrapper, { KanIkkeKontakteElektroniskVeileder } from './StatusAdvarselWrapper';
 import styles from './AlertLess.module.less';
 
 interface Props {
@@ -12,7 +12,7 @@ interface Props {
 }
 
 function MannuelBruker(props: Props) {
-    return props.erVeileder ? <KanIkkeKonteteElektroniskVeileder /> : <Bruker />;
+    return props.erVeileder ? <KanIkkeKontakteElektroniskVeileder /> : <Bruker />;
 }
 
 function Bruker() {

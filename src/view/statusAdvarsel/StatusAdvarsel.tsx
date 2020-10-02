@@ -5,11 +5,7 @@ import ReservertKrr from './ReservertKrr';
 import KanIkkeVarsles from './KanIkkeVarsles';
 import AldriUnderOppfolging from './AldriUnderOppfolging';
 import MannuelBruker from './Manuell';
-
-function erProd() {
-    //trengs da ingen av brukerne er registrert i krr i testmiljø
-    return window.location.hostname === 'www.nav.no' || window.location.hostname === 'app.adeo.no';
-}
+import { erProd } from '../../utils/FellesFunksjoner';
 
 export default function StatusAdvarsel() {
     const oppfolgingDataContext = useOppfolgingContext();
@@ -41,6 +37,7 @@ export default function StatusAdvarsel() {
         return <MannuelBruker erVeileder={erVeileder} />;
     }
     if (!kanVarsles && erProd()) {
+        //erProd trengs da ingen av brukerne er registrert i krr i testmiljø
         return <KanIkkeVarsles erVeileder={erVeileder} />;
     }
 
