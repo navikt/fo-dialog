@@ -1,13 +1,13 @@
 import React from 'react';
 import Lenke from 'nav-frontend-lenker';
-import StatusAdvarselWrapper, { KanIkkeKonteteElektroniskVeileder } from './StatusAdvarselWrapper';
+import StatusAdvarselWrapper, { KanIkkeKontakteElektroniskVeileder } from './StatusAdvarselWrapper';
 
 interface Props {
     erVeileder: boolean;
 }
 
 export default function ReservertKrr(props: Props) {
-    return props.erVeileder ? <KanIkkeKonteteElektroniskVeileder /> : <BrukerKrr />;
+    return props.erVeileder ? <KanIkkeKontakteElektroniskVeileder /> : <BrukerKrr />;
 }
 
 function BrukerKrr() {

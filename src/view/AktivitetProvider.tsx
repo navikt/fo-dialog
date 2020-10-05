@@ -46,9 +46,9 @@ export function findAktivitet(aktivitetData: AktivitetContextType, aktivitetId?:
     const arena = hasData(aktivitetData.arenaAktiviter) ? aktivitetData.arenaAktiviter.data : undefined;
 
     if (aktivitetId.startsWith('ARENA')) {
-        return arena && arena.find(a => a.id === aktivitetId);
+        return arena && arena.find((a) => a.id === aktivitetId);
     }
-    return aktiviteter && aktiviteter.find(a => a.id === aktivitetId);
+    return aktiviteter && aktiviteter.find((a) => a.id === aktivitetId);
 }
 
 interface Props {
