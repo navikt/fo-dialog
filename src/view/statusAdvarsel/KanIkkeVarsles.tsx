@@ -1,12 +1,12 @@
 import React from 'react';
-import StatusAdvarselWrapper, { KanIkkeKonteteElektroniskVeileder } from './StatusAdvarselWrapper';
+import StatusAdvarselWrapper, { KanIkkeKontakteElektroniskVeileder } from './StatusAdvarselWrapper';
 
 interface Props {
     erVeileder: boolean;
 }
 
 export default function KanIkkeVarsles(props: Props) {
-    return props.erVeileder ? <KanIkkeKonteteElektroniskVeileder /> : <Bruker />;
+    return props.erVeileder ? <KanIkkeKontakteElektroniskVeileder /> : <Bruker />;
 }
 
 function Bruker() {

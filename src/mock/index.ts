@@ -9,10 +9,16 @@ import dialoger, {
 } from './Dialog';
 import bruker from './Bruker';
 import oppfolging from './Oppfolging';
-import aktiviteter, { getAktivitet } from './Aktivitet';
+import aktiviteter from './Aktivitet';
 import { arenaAktiviteter } from './Arena';
 import { veilederMe } from './Veileder';
-import { getFailureRate } from './demo/sessionstorage';
+import {
+    getFailureRate,
+    harAktivitetFeilerSkruddPa,
+    harArenaaktivitetFeilerSkruddPa,
+    harDialogFeilerSkruddPa,
+    harNyDialogEllerSendMeldingFeilerSkruddPa
+} from './demo/sessionstorage';
 
 const loggingMiddleware: Middleware = (request, response) => {
     // tslint:disable
@@ -73,9 +79,12 @@ mock.post(
     ResponseUtils.combine(ResponseUtils.statusCode(204), ({ body }) => oppdaterKladd(body))
 );
 
-mock.get('/veilarbdialog/api/dialog', dialoger);
+mock.get('/veilarbdialog/api/dialog', harDialogFeilerSkruddPa() ? fail() : dialoger);
 
-mock.post('/veilarbdialog/api/dialog', ({ body }) => opprettEllerOppdaterDialog(body));
+mock.post(
+    '/veilarbdialog/api/dialog',
+    harNyDialogEllerSendMeldingFeilerSkruddPa() ? fail() : ({ body }) => opprettEllerOppdaterDialog(body)
+);
 
 mock.put('/veilarbdialog/api/dialog/:dialogId/les', ({ pathParams }) => lesDialog(pathParams.dialogId));
 
@@ -92,11 +101,9 @@ mock.get('/veilarboppfolging/api/oppfolging/me', bruker());
 
 mock.get('/veilarboppfolging/api/oppfolging', oppfolging);
 
-mock.get('/veilarbaktivitet/api/aktivitet', aktiviteter);
+mock.get('/veilarbaktivitet/api/aktivitet', harAktivitetFeilerSkruddPa() ? fail() : aktiviteter);
 
-mock.get('/veilarbaktivitet/api/aktivitet/:aktivitetId', ({ pathParams }) => getAktivitet(pathParams.aktivitetId));
-
-mock.get('/veilarbaktivitet/api/aktivitet/arena', arenaAktiviteter);
+mock.get('/veilarbaktivitet/api/aktivitet/arena', harArenaaktivitetFeilerSkruddPa() ? fail() : arenaAktiviteter);
 
 mock.get('/api/auth', { remainingSeconds: 60 * 60 });
 
