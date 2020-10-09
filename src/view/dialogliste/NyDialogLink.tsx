@@ -7,12 +7,10 @@ import styles from './NyDialogLink.module.less';
 export function NyDialogLink() {
     return (
         <div className={styles.header}>
-            <div className={styles.panel}>
-                <Link className={styles.dialogKnapp} to={'/ny'}>
-                    <PlussIkon className={styles.plusslogo} />
-                    Ny dialog
-                </Link>
-            </div>
+            <Link className={styles.dialogKnapp} to={'/ny'}>
+                <PlussIkon className={styles.plusslogo} />
+                Ny dialog
+            </Link>
         </div>
     );
 }

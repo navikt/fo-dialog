@@ -6,11 +6,6 @@
     display: flex;
 }
 
-.panel {
-    display: flex;
-    align-items: center;
-}
-
 .dialogKnapp {
     //Hovedknapp total mixin start = .knapp .knapp--hoved
     .knappbase-mixin(@font-family);
@@ -32,6 +27,13 @@
     &:focus {
         .plusslogo {
             fill: @navBla;
+        }
+    }
+
+    &:active,
+    &:hover {
+        .plusslogo {
+            fill: @white;
         }
     }
 }

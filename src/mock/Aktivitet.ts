@@ -62,7 +62,7 @@ const stilingAktivitet = {
     endretAv: '1571400374040',
     endretDato: '2019-10-18T12:06:14.040Z',
     erReferatPublisert: false,
-    etikett: null,
+    etikett: 'AVSLAG',
     forberedelser: null,
     fraDato: '2019-10-17T22:00:00.000Z',
     hensikt: null,
@@ -312,7 +312,7 @@ const aktiviteter = {
 };
 
 export function getAktivitet(id: string): JSONObject {
-    const aktivitet = aktiviteter.aktiviteter.find(aktivitet => aktivitet.id === id);
+    const aktivitet = aktiviteter.aktiviteter.find((aktivitet) => aktivitet.id === id);
     return aktivitet ? aktivitet : {};
 }
 
