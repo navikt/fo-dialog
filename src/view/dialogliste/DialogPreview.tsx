@@ -48,16 +48,19 @@ interface Props {
 
 function DialogPreview(props: Props) {
     const { dialog, valgtDialogId } = props;
-    const { id, sisteDato, aktivitetId, lest, overskrift } = dialog;
+    const { id, sisteDato, aktivitetId, lest, overskrift, historisk } = dialog;
     const aktivitetData = useAktivitetContext();
 
     const datoString = !!sisteDato ? formaterDate(sisteDato) : '';
     const aktivitet = findAktivitet(aktivitetData, aktivitetId);
+
+    const erLest = lest || historisk;
+
     const lenkepanelCls = classNames(styles.preview, {
-        [styles.innholdUlest]: !lest,
+        [styles.innholdUlest]: !erLest,
         [styles.innholdValgt]: id === valgtDialogId
     });
-    const markoer = lest ? styles.markoerLest : styles.markoerUlest;
+    const markoer = erLest ? styles.markoerLest : styles.markoerUlest;
 
     return (
         <LenkepanelBase className={lenkepanelCls} href={`/${id}`} linkCreator={WrapInReactLink}>
