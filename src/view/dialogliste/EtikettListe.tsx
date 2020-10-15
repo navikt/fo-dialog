@@ -23,6 +23,11 @@ function erViktig(dialog: DialogData, oppfolging?: OppfolgingData): boolean {
 export function EtikettListe(props: Props) {
     const userInfo = useContext(UserInfoContext);
     const oppfolging = useOppfolgingContext();
+
+    if (props.dialog.historisk) {
+        return null;
+    }
+
     const erVeileder = !!userInfo && userInfo.erVeileder;
 
     const dialogErViktig = erViktig(props.dialog, dataOrUndefined(oppfolging));

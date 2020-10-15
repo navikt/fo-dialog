@@ -11,7 +11,7 @@ interface IkonProps {
 
 function DialogPreviewIkon(props: IkonProps) {
     const erAktivitet: boolean = props.dialog.aktivitetId !== null;
-    const ikonCls = classNames(styles.ikon, { [styles.lestIkon]: !props.dialog.lest });
+    const ikonCls = classNames(styles.ikon, { [styles.ulestIkon]: !props.dialog.lest && !props.dialog.historisk });
     if (erAktivitet) {
         return (
             <div aria-hidden="true" className={ikonCls}>
