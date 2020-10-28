@@ -6,8 +6,6 @@ export default function useKansendeMelding(): boolean {
     const harNivaa4 = useHarNivaa4Context();
     const oppfolgingData = dataOrUndefined(oppfolgingContext);
 
-    console.log('nivaa 4', harNivaa4);
-
     if (!oppfolgingData) {
         return false;
     }
