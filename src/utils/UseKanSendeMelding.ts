@@ -1,9 +1,12 @@
-import { dataOrUndefined, useOppfolgingContext } from '../view/Provider';
+import { dataOrUndefined, useHarNivaa4Context, useOppfolgingContext } from '../view/Provider';
 import { erProd } from './FellesFunksjoner';
 
 export default function useKansendeMelding(): boolean {
     const oppfolgingContext = useOppfolgingContext();
+    const harNivaa4 = useHarNivaa4Context();
     const oppfolgingData = dataOrUndefined(oppfolgingContext);
+
+    console.log('nivaa 4', harNivaa4);
 
     if (!oppfolgingData) {
         return false;
@@ -17,6 +20,7 @@ export default function useKansendeMelding(): boolean {
         oppfolgingData.underOppfolging &&
         !oppfolgingData.reservasjonKRR &&
         kanVarsles &&
-        !oppfolgingData.manuell
+        !oppfolgingData.manuell &&
+        harNivaa4.harNivaa4
     );
 }

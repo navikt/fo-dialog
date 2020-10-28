@@ -13,6 +13,7 @@ import {
     harArenaaktivitetFeilerSkruddPa,
     harDialogFeilerSkruddPa,
     harHodeFotSkruddPa,
+    harIkkeNivaa4,
     harIngenDialoger,
     harNyDialogEllerSendMeldingFeilerSkruddPa,
     ingenOppfPerioder,
@@ -103,6 +104,11 @@ function DemoDashboard(props: DemoDashboardProps) {
                         label: 'Ingen dialoger',
                         id: SessionStorageElement.INGEN_DIALOGER,
                         checked: harIngenDialoger()
+                    },
+                    {
+                        label: 'Ikke nivå 4',
+                        id: SessionStorageElement.IKKE_NIVAA_4,
+                        checked: harIkkeNivaa4()
                     }
                 ]}
                 onChange={endreTilstand}

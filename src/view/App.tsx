@@ -24,7 +24,7 @@ function App(props: Props) {
             <div className={wraperClass}>
                 <div className={appstyle}>
                     <EventHandler />
-                    <Provider fnr={fnr}>
+                    <Provider fnr={fnr} erVeileder={!!fnr}>
                         <StatusAdvarsel />
                         <AppBody />
                         <UppdateEventHandler />
