@@ -142,6 +142,11 @@ describe('<DialogContainer/>', () => {
             }
         ];
         jest.spyOn(AppContext, 'useOppfolgingContext').mockImplementation(() => useFetchOppfolging);
+        jest.spyOn(AppContext, 'useHarNivaa4Context').mockImplementation(() => ({
+            harNivaa4: true,
+            hasError: false,
+            isPending: false
+        }));
         jest.spyOn(DialogProvider, 'useDialogContext').mockImplementation(() => useDialogContext);
         const wrapper = mount(
             <MemoryRouter>
