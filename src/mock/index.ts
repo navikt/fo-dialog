@@ -19,6 +19,7 @@ import {
     harDialogFeilerSkruddPa,
     harNyDialogEllerSendMeldingFeilerSkruddPa
 } from './demo/sessionstorage';
+import { harNivaa4Data } from './HarNivaa4';
 
 const loggingMiddleware: Middleware = (request, response) => {
     // tslint:disable
@@ -108,3 +109,5 @@ mock.get('/veilarbaktivitet/api/aktivitet/arena', harArenaaktivitetFeilerSkruddP
 mock.get('/api/auth', { remainingSeconds: 60 * 60 });
 
 mock.get('/veilarbveileder/api/veileder/me', veilederMe);
+
+mock.get('/veilarbperson/api/person/:fnr/harNivaa4', ({ pathParams }) => harNivaa4Data(pathParams.fnr));

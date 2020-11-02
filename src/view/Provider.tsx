@@ -9,6 +9,7 @@ import { AktivitetProvider } from './AktivitetProvider';
 import { DialogContext, hasDialogError, isDialogOk, isDialogPending, useDialogDataProvider } from './DialogProvider';
 import useFetchVeilederNavn from '../api/useHentVeilederData';
 import { KladdContext, useKladdDataProvider } from './KladdProvider';
+import useFetchHarNivaa4, { HarNivaa4Response } from '../api/useFetchHarNivaa4';
 import styles from './Provider.module.less';
 
 interface VeilederData {
@@ -18,6 +19,11 @@ interface VeilederData {
 export const UserInfoContext = React.createContext<Bruker | null>(null);
 export const FNRContext = React.createContext<string | undefined>(undefined);
 export const VeilederDataContext = React.createContext<VeilederData>({});
+export const HarNivaa4Context = React.createContext<HarNivaa4Response>({
+    harNivaa4: false,
+    isPending: false,
+    hasError: false
+});
 
 function init<T>(): FetchResult<T> {
     return {
@@ -44,6 +50,7 @@ export const useOppfolgingContext = () => useContext(OppfolgingContext);
 export const useFnrContext = () => useContext(FNRContext);
 export const useViewContext = () => useContext(ViewContext);
 export const useVeilederDataContext = () => useContext(VeilederDataContext);
+export const useHarNivaa4Context = () => useContext(HarNivaa4Context);
 
 export function dataOrUndefined<T>(context: FetchResult<T>): T | undefined {
     return hasData(context) ? context.data : undefined;
@@ -52,20 +59,24 @@ export function dataOrUndefined<T>(context: FetchResult<T>): T | undefined {
 interface Props {
     fnr?: string;
     enhet?: string;
+    erVeileder: boolean;
     children: React.ReactNode;
 }
 
 export function Provider(props: Props) {
-    const { fnr, children } = props;
+    const { fnr, erVeileder, children } = props;
     const apiBasePath = getApiBasePath(fnr);
     const query = fnrQuery(fnr);
 
-    const veilederNavn = useFetchVeilederNavn(!!fnr);
+    const veilederNavn = useFetchVeilederNavn(erVeileder);
     const bruker = useFetch<Bruker>(`${apiBasePath}/veilarboppfolging/api/oppfolging/me`, REQUEST_CONFIG);
     const oppfolgingData = useFetch<OppfolgingData>(
         `${apiBasePath}/veilarboppfolging/api/oppfolging${query}`,
         REQUEST_CONFIG
     );
+
+    const harLoggetInnNiva4 = useFetchHarNivaa4(erVeileder, fnr);
+
     const [viewState, setState] = useState(initalState);
 
     const dialogDataProvider = useDialogDataProvider(fnr);
@@ -90,9 +101,14 @@ export function Provider(props: Props) {
         }
     }, [status, bruker, pollForChanges]);
 
-    if (isDialogPending(status) || isPending(bruker, false) || isPending(oppfolgingData, false)) {
+    if (
+        isDialogPending(status) ||
+        isPending(bruker, false) ||
+        isPending(oppfolgingData, false) ||
+        harLoggetInnNiva4.isPending
+    ) {
         return <NavFrontendSpinner />;
-    } else if (hasError(bruker) || hasError(oppfolgingData) || hasDialogError(status)) {
+    } else if (hasError(bruker) || hasError(oppfolgingData) || hasDialogError(status) || harLoggetInnNiva4.hasError) {
         return (
             <AlertStripeFeil className={styles.feil}>
                 Noe gikk dessverre galt med systemet. Prøv igjen senere.
@@ -103,19 +119,21 @@ export function Provider(props: Props) {
     return (
         <DialogContext.Provider value={dialogDataProvider}>
             <OppfolgingContext.Provider value={oppfolgingData}>
-                <UserInfoContext.Provider value={bruker.data}>
-                    <AktivitetProvider fnr={fnr} apiBasePath={apiBasePath}>
-                        <VeilederDataContext.Provider value={{ veilederNavn }}>
-                            <KladdContext.Provider value={kladdDataProvider}>
-                                <FNRContext.Provider value={fnr}>
-                                    <ViewContext.Provider value={{ viewState: viewState, setViewState: setState }}>
-                                        {children}
-                                    </ViewContext.Provider>
-                                </FNRContext.Provider>
-                            </KladdContext.Provider>
-                        </VeilederDataContext.Provider>
-                    </AktivitetProvider>
-                </UserInfoContext.Provider>
+                <HarNivaa4Context.Provider value={harLoggetInnNiva4}>
+                    <UserInfoContext.Provider value={bruker.data}>
+                        <AktivitetProvider fnr={fnr} apiBasePath={apiBasePath}>
+                            <VeilederDataContext.Provider value={{ veilederNavn }}>
+                                <KladdContext.Provider value={kladdDataProvider}>
+                                    <FNRContext.Provider value={fnr}>
+                                        <ViewContext.Provider value={{ viewState: viewState, setViewState: setState }}>
+                                            {children}
+                                        </ViewContext.Provider>
+                                    </FNRContext.Provider>
+                                </KladdContext.Provider>
+                            </VeilederDataContext.Provider>
+                        </AktivitetProvider>
+                    </UserInfoContext.Provider>
+                </HarNivaa4Context.Provider>
             </OppfolgingContext.Provider>
         </DialogContext.Provider>
     );
