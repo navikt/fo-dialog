@@ -15,6 +15,7 @@ import {
     harHodeFotSkruddPa,
     harIkkeNivaa4,
     harIngenDialoger,
+    harNivaa4Fieler,
     harNyDialogEllerSendMeldingFeilerSkruddPa,
     ingenOppfPerioder,
     SessionStorageElement,
@@ -141,6 +142,11 @@ function DemoDashboard(props: DemoDashboardProps) {
                         label: 'Ny dialog/send feiler',
                         id: SessionStorageElement.NY_DIALOG_SEND_MELDING_FEILER,
                         checked: harNyDialogEllerSendMeldingFeilerSkruddPa()
+                    },
+                    {
+                        label: 'Har nivå4 feiler',
+                        id: SessionStorageElement.NIVA_4_FEILER,
+                        checked: harNivaa4Fieler()
                     }
                 ]}
                 onChange={endreTilstand}

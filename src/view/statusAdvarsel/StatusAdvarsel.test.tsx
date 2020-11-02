@@ -9,6 +9,8 @@ import IkkeUnderOppfolging from './IkkeUnderOppfolging';
 import ReservertKrr from './ReservertKrr';
 import KanIkkeVarsles from './KanIkkeVarsles';
 import { FetchResult, Status } from '@nutgaard/use-fetch';
+import { HarNivaa4Response } from '../../api/useFetchHarNivaa4';
+import { ManglerNivaa4, Nivaa4Feiler } from './Nivaa4';
 
 const veileder: Bruker = { id: '010101', erVeileder: true, erBruker: false };
 const bruker: Bruker = { id: '010101', erVeileder: false, erBruker: true };
@@ -18,7 +20,8 @@ const oppfPerioder: PeriodeData[] = [
         veileder: false,
         startDato: '2017-01-30T10:46:10.971+01:00',
         sluttDato: '2017-12-31T10:46:10.971+01:00',
-        begrunnelse: null
+        begrunnelse: null,
+        kvpPerioder: []
     }
 ];
 const ingenPerioder: PeriodeData[] = [];
@@ -50,10 +53,17 @@ const useFetchOppfolging: FetchResult<OppfolgingData> = {
     rerun(): void {}
 };
 
+const useNivaa4: HarNivaa4Response = {
+    harNivaa4: true,
+    hasError: false,
+    isPending: false
+};
+
 describe('<AlertStripeContainer/>', () => {
     test('Bruker uten oppf.perioder og ikke under oppf. viser en advarsel - veileder.', () => {
         jest.spyOn(AppContext, 'useUserInfoContext').mockImplementation(() => veileder);
         jest.spyOn(AppContext, 'useOppfolgingContext').mockImplementation(() => useFetchOppfolging);
+        jest.spyOn(AppContext, 'useHarNivaa4Context').mockImplementation(() => useNivaa4);
 
         const wrapper = shallow(<StatusAdvarsel />);
         expect(wrapper.matchesElement(<AldriUnderOppfolging erVeileder={true} />)).toBeTruthy();
@@ -61,6 +71,7 @@ describe('<AlertStripeContainer/>', () => {
     test('Bruker uten oppf.perioder og ikke under oppf. viser en advarsel - bruker. ', () => {
         jest.spyOn(AppContext, 'useUserInfoContext').mockImplementation(() => bruker);
         jest.spyOn(AppContext, 'useOppfolgingContext').mockImplementation(() => useFetchOppfolging);
+        jest.spyOn(AppContext, 'useHarNivaa4Context').mockImplementation(() => useNivaa4);
 
         const wrapper = shallow(<StatusAdvarsel />);
         expect(wrapper.matchesElement(<AldriUnderOppfolging erVeileder={false} />)).toBeTruthy();
@@ -70,6 +81,7 @@ describe('<AlertStripeContainer/>', () => {
 
         jest.spyOn(AppContext, 'useUserInfoContext').mockImplementation(() => bruker);
         jest.spyOn(AppContext, 'useOppfolgingContext').mockImplementation(() => useFetchOppfolging);
+        jest.spyOn(AppContext, 'useHarNivaa4Context').mockImplementation(() => useNivaa4);
 
         const wrapper = shallow(<StatusAdvarsel />);
         expect(wrapper.matchesElement(<IkkeUnderOppfolging erVeileder={false} />)).toBeTruthy();
@@ -79,6 +91,7 @@ describe('<AlertStripeContainer/>', () => {
 
         jest.spyOn(AppContext, 'useUserInfoContext').mockImplementation(() => veileder);
         jest.spyOn(AppContext, 'useOppfolgingContext').mockImplementation(() => useFetchOppfolging);
+        jest.spyOn(AppContext, 'useHarNivaa4Context').mockImplementation(() => useNivaa4);
 
         const wrapper = shallow(<StatusAdvarsel />);
         expect(wrapper.matchesElement(<IkkeUnderOppfolging erVeileder={true} />)).toBeTruthy();
@@ -89,6 +102,7 @@ describe('<AlertStripeContainer/>', () => {
 
         jest.spyOn(AppContext, 'useUserInfoContext').mockImplementation(() => veileder);
         jest.spyOn(AppContext, 'useOppfolgingContext').mockImplementation(() => useFetchOppfolging);
+        jest.spyOn(AppContext, 'useHarNivaa4Context').mockImplementation(() => useNivaa4);
 
         const wrapper = shallow(<StatusAdvarsel />);
         expect(wrapper.matchesElement(<ReservertKrr erVeileder={true} />)).toBeTruthy();
@@ -98,6 +112,7 @@ describe('<AlertStripeContainer/>', () => {
 
         jest.spyOn(AppContext, 'useUserInfoContext').mockImplementation(() => bruker);
         jest.spyOn(AppContext, 'useOppfolgingContext').mockImplementation(() => useFetchOppfolging);
+        jest.spyOn(AppContext, 'useHarNivaa4Context').mockImplementation(() => useNivaa4);
 
         const wrapper = shallow(<StatusAdvarsel />);
         expect(wrapper.matchesElement(<ReservertKrr erVeileder={false} />)).toBeTruthy();
@@ -123,24 +138,64 @@ describe('<AlertStripeContainer/>', () => {
     //     expect(wrapper.matchesElement(<KanIkkeVarsles erVeileder={true} />)).toBeTruthy();
     // });
 
+    test('ManglerNivaa4 - veileder', () => {
+        useFetchOppfolging.data.underOppfolging = true;
+        useFetchOppfolging.data.reservasjonKRR = false;
+        useFetchOppfolging.data.kanVarsles = true;
+
+        useNivaa4.harNivaa4 = false;
+
+        jest.spyOn(AppContext, 'useUserInfoContext').mockImplementation(() => veileder);
+        jest.spyOn(AppContext, 'useOppfolgingContext').mockImplementation(() => useFetchOppfolging);
+        jest.spyOn(AppContext, 'useHarNivaa4Context').mockImplementation(() => useNivaa4);
+
+        const wrapper = shallow(<StatusAdvarsel />);
+        expect(wrapper.matchesElement(<ManglerNivaa4 erVeileder={true} />)).toBeTruthy();
+    });
+
+    test('Nivaa4Feiler - veileder', () => {
+        useFetchOppfolging.data.underOppfolging = true;
+        useFetchOppfolging.data.reservasjonKRR = false;
+        useFetchOppfolging.data.kanVarsles = true;
+
+        useNivaa4.harNivaa4 = false;
+        useNivaa4.hasError = true;
+
+        jest.spyOn(AppContext, 'useUserInfoContext').mockImplementation(() => veileder);
+        jest.spyOn(AppContext, 'useOppfolgingContext').mockImplementation(() => useFetchOppfolging);
+        jest.spyOn(AppContext, 'useHarNivaa4Context').mockImplementation(() => useNivaa4);
+
+        const wrapper = shallow(<StatusAdvarsel />);
+        expect(wrapper.matchesElement(<Nivaa4Feiler erVeileder={true} />)).toBeTruthy();
+    });
+
     test('ingen varsler for gyldig status - veileder', () => {
         useFetchOppfolging.data.underOppfolging = true;
         useFetchOppfolging.data.reservasjonKRR = false;
         useFetchOppfolging.data.kanVarsles = true;
 
+        useNivaa4.harNivaa4 = true;
+        useNivaa4.hasError = false;
+
         jest.spyOn(AppContext, 'useUserInfoContext').mockImplementation(() => veileder);
         jest.spyOn(AppContext, 'useOppfolgingContext').mockImplementation(() => useFetchOppfolging);
+        jest.spyOn(AppContext, 'useHarNivaa4Context').mockImplementation(() => useNivaa4);
 
         const wrapper = shallow(<StatusAdvarsel />);
         expect(wrapper.isEmptyRender()).toBeTruthy();
     });
+
     test('ingen varsler for gyldig status - bruker. ', () => {
         useFetchOppfolging.data.underOppfolging = true;
         useFetchOppfolging.data.reservasjonKRR = false;
         useFetchOppfolging.data.kanVarsles = true;
 
+        useNivaa4.harNivaa4 = true;
+        useNivaa4.hasError = false;
+
         jest.spyOn(AppContext, 'useUserInfoContext').mockImplementation(() => bruker);
         jest.spyOn(AppContext, 'useOppfolgingContext').mockImplementation(() => useFetchOppfolging);
+        jest.spyOn(AppContext, 'useHarNivaa4Context').mockImplementation(() => useNivaa4);
 
         const wrapper = shallow(<StatusAdvarsel />);
         expect(wrapper.isEmptyRender()).toBeTruthy();
