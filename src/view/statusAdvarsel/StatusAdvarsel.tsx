@@ -1,16 +1,18 @@
 import React from 'react';
-import { dataOrUndefined, useOppfolgingContext, useUserInfoContext } from '../Provider';
+import { dataOrUndefined, useHarNivaa4Context, useOppfolgingContext, useUserInfoContext } from '../Provider';
 import IkkeUnderOppfolging from './IkkeUnderOppfolging';
 import ReservertKrr from './ReservertKrr';
 import KanIkkeVarsles from './KanIkkeVarsles';
 import AldriUnderOppfolging from './AldriUnderOppfolging';
 import MannuelBruker from './Manuell';
 import { erProd } from '../../utils/FellesFunksjoner';
+import { ManglerNivaa4, Nivaa4Feiler } from './Nivaa4';
 
 export default function StatusAdvarsel() {
     const oppfolgingDataContext = useOppfolgingContext();
     const oppfolgingData = dataOrUndefined(oppfolgingDataContext);
     const UserInfo = useUserInfoContext();
+    const HarNiva4 = useHarNivaa4Context();
 
     if (!oppfolgingData || !UserInfo) {
         return null;
@@ -39,6 +41,13 @@ export default function StatusAdvarsel() {
     if (!kanVarsles && erProd()) {
         //erProd trengs da ingen av brukerne er registrert i krr i testmiljø
         return <KanIkkeVarsles erVeileder={erVeileder} />;
+    }
+
+    if (HarNiva4.hasError) {
+        return <Nivaa4Feiler erVeileder={erVeileder} />;
+    }
+    if (!HarNiva4.harNivaa4) {
+        return <ManglerNivaa4 erVeileder={erVeileder} />;
     }
 
     return null;
