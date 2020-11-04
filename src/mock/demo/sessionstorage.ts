@@ -12,7 +12,8 @@ export const SessionStorageElement = {
     DIALOG_FEILER: 'dialog_feiler',
     AKTIVITET_FEILER: 'aktivitet_feiler',
     ARENAAKTIVITET_FEILER: 'arenaaktivitet_feiler',
-    NY_DIALOG_SEND_MELDING_FEILER: 'ny_dialog_eller_send_melding_feiler'
+    NY_DIALOG_SEND_MELDING_FEILER: 'ny_dialog_eller_send_melding_feiler',
+    NIVA_4_FEILER: 'nivaa4Feiler'
 };
 
 export const BRUKER_TYPE = {
@@ -55,6 +56,8 @@ export const harDialogFeilerSkruddPa = () => erSatt(SessionStorageElement.DIALOG
 export const harAktivitetFeilerSkruddPa = () => erSatt(SessionStorageElement.AKTIVITET_FEILER);
 
 export const harArenaaktivitetFeilerSkruddPa = () => erSatt(SessionStorageElement.ARENAAKTIVITET_FEILER);
+
+export const harNivaa4Fieler = () => erSatt(SessionStorageElement.NIVA_4_FEILER);
 
 export const harNyDialogEllerSendMeldingFeilerSkruddPa = () =>
     erSatt(SessionStorageElement.NY_DIALOG_SEND_MELDING_FEILER);

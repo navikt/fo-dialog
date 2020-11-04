@@ -108,7 +108,7 @@ export function Provider(props: Props) {
         harLoggetInnNiva4.isPending
     ) {
         return <NavFrontendSpinner />;
-    } else if (hasError(bruker) || hasError(oppfolgingData) || hasDialogError(status) || harLoggetInnNiva4.hasError) {
+    } else if (hasError(bruker) || hasError(oppfolgingData) || hasDialogError(status)) {
         return (
             <AlertStripeFeil className={styles.feil}>
                 Noe gikk dessverre galt med systemet. Prøv igjen senere.
