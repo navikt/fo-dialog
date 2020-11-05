@@ -17,12 +17,13 @@ jobs:
 
     steps:
       - uses: actions/checkout@v1
-
       - uses: actions/setup-node@v1
         with:
           node-version: 12
+
       - name: Create image tag
-        run: echo ::set-env name=IMAGE::${IMAGE_NAME}:$(echo ${{ github.ref }} | cut -d '/' -f3).$(date '+%F-%H%M').$(echo $GITHUB_SHA | cut -c1-7) #eks pa tag  gh-actions.2020-01-08-1255.8fa4236
+        id: image
+        run: echo "::set-output name=tag::${IMAGE_NAME}:$(echo ${{ github.ref }} | cut -d '/' -f3).$(date '+%F-%H%M').$(echo $GITHUB_SHA | cut -c1-7)" #eks pa tag  gh-actions.2020-01-08-1255.8fa4236
       - run: npm ci
       - run: npm run test
       - run: npm run build
@@ -33,14 +34,15 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
           docker login docker.pkg.github.com -u ${GITHUB_REPOSITORY} -p ${GITHUB_TOKEN}
-          docker build -t ${IMAGE} .
-          docker push ${IMAGE}
+          docker build -t ${{ steps.image.outputs.tag }} .
+          docker push ${{ steps.image.outputs.tag }}
 
       - name: deply q0 fss
         if: github.ref == 'refs/heads/dev'
         uses: nais/deploy/actions/deploy@v1
         env:
           CLUSTER: dev-fss
+          IMAGE: ${{ steps.image.outputs.tag }}
           RESOURCE: nais-q-fss.yaml
           VAR: namespace=q0
 
@@ -49,6 +51,7 @@ jobs:
         uses: nais/deploy/actions/deploy@v1
         env:
           CLUSTER: dev-sbs
+          IMAGE: ${{ steps.image.outputs.tag }}
           RESOURCE: nais-q-sbs.yaml
           VAR: namespace=q0
 
@@ -57,6 +60,7 @@ jobs:
         uses: nais/deploy/actions/deploy@v1
         env:
           CLUSTER: dev-fss
+          IMAGE: ${{ steps.image.outputs.tag }}
           RESOURCE: nais-q-fss.yaml
           VAR: namespace=q1
 
@@ -65,6 +69,7 @@ jobs:
         uses: nais/deploy/actions/deploy@v1
         env:
           CLUSTER: dev-sbs
+          IMAGE: ${{ steps.image.outputs.tag }}
           RESOURCE: nais-q-sbs.yaml
           VAR: namespace=q1
 
@@ -73,6 +78,7 @@ jobs:
         uses: nais/deploy/actions/deploy@v1
         env:
           CLUSTER: prod-fss
+          IMAGE: ${{ steps.image.outputs.tag }}
           RESOURCE: nais-fss.yaml
 
       - name: deply prod sbs
@@ -80,4 +86,5 @@ jobs:
         uses: nais/deploy/actions/deploy@v1
         env:
           CLUSTER: prod-sbs
+          IMAGE: ${{ steps.image.outputs.tag }}
           RESOURCE: nais-sbs.yaml
