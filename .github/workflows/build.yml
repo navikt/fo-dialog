@@ -42,6 +42,7 @@ jobs:
         uses: nais/deploy/actions/deploy@v1
         env:
           CLUSTER: dev-fss
+          IMAGE: ${{ steps.image.outputs.tag }}
           RESOURCE: nais-q-fss.yaml
           VAR: namespace=q0
 
@@ -50,6 +51,7 @@ jobs:
         uses: nais/deploy/actions/deploy@v1
         env:
           CLUSTER: dev-sbs
+          IMAGE: ${{ steps.image.outputs.tag }}
           RESOURCE: nais-q-sbs.yaml
           VAR: namespace=q0
 
@@ -58,6 +60,7 @@ jobs:
         uses: nais/deploy/actions/deploy@v1
         env:
           CLUSTER: dev-fss
+          IMAGE: ${{ steps.image.outputs.tag }}
           RESOURCE: nais-q-fss.yaml
           VAR: namespace=q1
 
@@ -66,6 +69,7 @@ jobs:
         uses: nais/deploy/actions/deploy@v1
         env:
           CLUSTER: dev-sbs
+          IMAGE: ${{ steps.image.outputs.tag }}
           RESOURCE: nais-q-sbs.yaml
           VAR: namespace=q1
 
@@ -74,6 +78,7 @@ jobs:
         uses: nais/deploy/actions/deploy@v1
         env:
           CLUSTER: prod-fss
+          IMAGE: ${{ steps.image.outputs.tag }}
           RESOURCE: nais-fss.yaml
 
       - name: deply prod sbs
@@ -81,4 +86,5 @@ jobs:
         uses: nais/deploy/actions/deploy@v1
         env:
           CLUSTER: prod-sbs
+          IMAGE: ${{ steps.image.outputs.tag }}
           RESOURCE: nais-sbs.yaml
