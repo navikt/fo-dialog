@@ -1,7 +1,7 @@
+import { FieldState } from '@nutgaard/use-formstate';
+import { InputProps, Input as NavInput } from 'nav-frontend-skjema';
 /* eslint-disable no-unused-vars */
 import React, { ChangeEvent } from 'react';
-import { Input as NavInput, InputProps } from 'nav-frontend-skjema';
-import { FieldState } from '@nutgaard/use-formstate';
 
 interface Props {
     touched: boolean;

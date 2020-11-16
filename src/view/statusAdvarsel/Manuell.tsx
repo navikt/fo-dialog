@@ -1,11 +1,12 @@
-import React from 'react';
 import { Hovedknapp } from 'nav-frontend-knapper';
+import React from 'react';
+
 import { fetchData } from '../../utils/Fetch';
-import { useOppfolgingContext } from '../Provider';
-import { dispatchUpdate, UpdateTypes } from '../../utils/UpdateEvent';
+import { UpdateTypes, dispatchUpdate } from '../../utils/UpdateEvent';
 import useApiBasePath from '../../utils/UseApiBasePath';
-import StatusAdvarselWrapper, { KanIkkeKontakteElektroniskVeileder } from './StatusAdvarselWrapper';
+import { useOppfolgingContext } from '../Provider';
 import styles from './AlertLess.module.less';
+import StatusAdvarselWrapper, { KanIkkeKontakteElektroniskVeileder } from './StatusAdvarselWrapper';
 
 interface Props {
     erVeileder: boolean;

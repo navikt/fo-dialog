@@ -1,7 +1,8 @@
-import React from 'react';
 import { Normaltekst } from 'nav-frontend-typografi';
-import styles from './HistoriskInfo.module.less';
+import React from 'react';
+
 import NyDialogLink from '../dialogliste/NyDialogLink';
+import styles from './HistoriskInfo.module.less';
 
 interface Props {
     kanSendeMelding: boolean;

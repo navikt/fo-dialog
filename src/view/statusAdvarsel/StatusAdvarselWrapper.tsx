@@ -1,5 +1,6 @@
-import React from 'react';
 import { AlertStripeAdvarsel } from 'nav-frontend-alertstriper';
+import React from 'react';
+
 import styles from './AlertLess.module.less';
 
 export default function StatusAdvarselWrapper(props: { children: React.ReactNode }) {

@@ -1,8 +1,9 @@
 import React from 'react';
-import { formaterDate } from '../../utils/Date';
+
 import { Aktivitet } from '../../utils/AktivitetTypes';
-import InformasjonElement, { LenkeInformasjonElement } from './InformasjonElement';
+import { formaterDate } from '../../utils/Date';
 import SokeStatusEtikett from './etiketter/sokeStatusEtikett';
+import InformasjonElement, { LenkeInformasjonElement } from './InformasjonElement';
 
 interface PropTypes {
     aktivitet: Aktivitet;

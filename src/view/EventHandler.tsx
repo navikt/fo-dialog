@@ -1,7 +1,8 @@
 import React, { useLayoutEffect } from 'react';
-import { useEventListener } from './utils/useEventListner';
 import { useHistory } from 'react-router';
+
 import loggEvent from '../felleskomponenter/logging';
+import { useEventListener } from './utils/useEventListner';
 
 interface EventDetails {
     dialogId?: string;
@@ -25,7 +26,7 @@ function loggingAntallBrukere() {
 
 export function EventHandler() {
     const history = useHistory();
-    useEventListener<EventDetails>('visDialog', event => {
+    useEventListener<EventDetails>('visDialog', (event) => {
         const { dialogId, aktivitetId } = event.detail;
         if (!!dialogId) {
             history.push(`/${dialogId}`);

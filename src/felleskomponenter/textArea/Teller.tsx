@@ -1,6 +1,7 @@
 import { Normaltekst } from 'nav-frontend-typografi';
-import styles from './TextArea.module.less';
 import React from 'react';
+
+import styles from './TextArea.module.less';
 
 interface TellerProps {
     maksTegn?: number;

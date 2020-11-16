@@ -1,7 +1,8 @@
-import React, { MouseEvent, ReactNode } from 'react';
 import { ASTNode, ReactElementDescription, Rule, RuleScope } from '@navikt/textparser';
 import { getText } from '@navikt/textparser/dist/utils';
 import Lenke from 'nav-frontend-lenker';
+import React, { MouseEvent, ReactNode } from 'react';
+
 import { useFnrContext } from '../Provider';
 
 function CustomLenkeWrapper(props: { href: string; children: ReactNode }) {

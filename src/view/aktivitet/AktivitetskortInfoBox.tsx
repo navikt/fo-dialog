@@ -1,15 +1,16 @@
 import React from 'react';
+
 import { Aktivitet, AktivitetTypes, ArenaAktivitet, ArenaAktivitetTypes } from '../../utils/AktivitetTypes';
-import StillingAktivitet from './StillingAktivitet';
-import MoteAktivitet from './MoteAktivitet';
-import SokeAktivitet from './SokeAktivitet';
 import BehandlingAktivitet from './BehandlingAktivitet';
-import SamtalereferatAktivitet from './SamtalereferatAktivitet';
 import EgenAktivitet from './EgenAktivitet';
+import GruppeAktivitet from './GruppeAktivitet';
 import IJobbAktivitet from './IJobbAktivitet';
+import MoteAktivitet from './MoteAktivitet';
+import SamtalereferatAktivitet from './SamtalereferatAktivitet';
+import SokeAktivitet from './SokeAktivitet';
+import StillingAktivitet from './StillingAktivitet';
 import TiltakAktivitet from './TiltakAktivitet';
 import UtdanningAktivitet from './UtdanningAktivitet';
-import GruppeAktivitet from './GruppeAktivitet';
 
 interface Props {
     aktivitet: Aktivitet | ArenaAktivitet;

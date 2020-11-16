@@ -1,10 +1,11 @@
-import React from 'react';
-import Veilederpanel from 'nav-frontend-veilederpanel';
-import styles from './InfoVedIngenDialoger.module.less';
-import { visibleIfHoc } from '../../felleskomponenter/VisibleIfHoc';
 import classNames from 'classnames';
-import { ReactComponent as VeilederIkon } from './veileder.svg';
 import { Normaltekst } from 'nav-frontend-typografi';
+import Veilederpanel from 'nav-frontend-veilederpanel';
+import React from 'react';
+
+import { visibleIfHoc } from '../../felleskomponenter/VisibleIfHoc';
+import styles from './InfoVedIngenDialoger.module.less';
+import { ReactComponent as VeilederIkon } from './veileder.svg';
 
 interface PropTypes {
     className: string;

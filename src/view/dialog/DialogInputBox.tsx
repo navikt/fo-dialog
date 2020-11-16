@@ -1,18 +1,19 @@
-import React, { useEffect, useLayoutEffect, useRef, useState } from 'react';
-import { DialogData } from '../../utils/Typer';
-import { dataOrUndefined, useOppfolgingContext, useUserInfoContext, useViewContext } from '../Provider';
 import useFormstate, { Formstate } from '@nutgaard/use-formstate';
 import { Hovedknapp } from 'nav-frontend-knapper';
-import { HandlingsType, sendtNyHenvendelse } from '../ViewState';
-import { dispatchUpdate, UpdateTypes } from '../../utils/UpdateEvent';
-import { useDialogContext } from '../DialogProvider';
-import useHenvendelseStartTekst from './UseHenvendelseStartTekst';
-import loggEvent from '../../felleskomponenter/logging';
-import { useKladdContext } from '../KladdProvider';
-import EkspanderbartTekstArea from '../../felleskomponenter/textArea/TextArea';
-import { smoothScrollToLastHenvendelse } from '../henvendelse/useScrollToLastHenvendelse';
+import React, { useEffect, useLayoutEffect, useRef, useState } from 'react';
+
 import AlertStripeFeilVisible from '../../felleskomponenter/AlertStripeFeilVisible';
+import loggEvent from '../../felleskomponenter/logging';
+import EkspanderbartTekstArea from '../../felleskomponenter/textArea/TextArea';
+import { DialogData } from '../../utils/Typer';
+import { UpdateTypes, dispatchUpdate } from '../../utils/UpdateEvent';
+import { useDialogContext } from '../DialogProvider';
+import { smoothScrollToLastHenvendelse } from '../henvendelse/useScrollToLastHenvendelse';
+import { useKladdContext } from '../KladdProvider';
+import { dataOrUndefined, useOppfolgingContext, useUserInfoContext, useViewContext } from '../Provider';
+import { HandlingsType, sendtNyHenvendelse } from '../ViewState';
 import styles from './DialogInputBox.module.less';
+import useHenvendelseStartTekst from './UseHenvendelseStartTekst';
 
 const maxMeldingsLengde = 5000;
 

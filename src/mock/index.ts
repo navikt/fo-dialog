@@ -1,17 +1,8 @@
 import FetchMock, { Middleware, MiddlewareUtils, ResponseData, ResponseUtils } from 'yet-another-fetch-mock';
-import dialoger, {
-    kladder,
-    lesDialog,
-    oppdaterKladd,
-    opprettEllerOppdaterDialog,
-    setFerdigBehandlet,
-    setVenterPaSvar
-} from './Dialog';
-import bruker from './Bruker';
-import oppfolging from './Oppfolging';
+
 import aktiviteter from './Aktivitet';
 import { arenaAktiviteter } from './Arena';
-import { veilederMe } from './Veileder';
+import bruker from './Bruker';
 import {
     getFailureRate,
     harAktivitetFeilerSkruddPa,
@@ -20,7 +11,17 @@ import {
     harNivaa4Fieler,
     harNyDialogEllerSendMeldingFeilerSkruddPa
 } from './demo/sessionstorage';
+import dialoger, {
+    kladder,
+    lesDialog,
+    oppdaterKladd,
+    opprettEllerOppdaterDialog,
+    setFerdigBehandlet,
+    setVenterPaSvar
+} from './Dialog';
 import { harNivaa4Data } from './HarNivaa4';
+import oppfolging from './Oppfolging';
+import { veilederMe } from './Veileder';
 
 const loggingMiddleware: Middleware = (request, response) => {
     // tslint:disable

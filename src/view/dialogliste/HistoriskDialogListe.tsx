@@ -1,10 +1,11 @@
+import { Undertittel } from 'nav-frontend-typografi';
+import React from 'react';
+
+import InvertedLestMer from '../../felleskomponenter/InvertedLesMer';
 import { DialogData } from '../../utils/Typer';
 import { dataOrUndefined, useOppfolgingContext } from '../Provider';
-import InvertedLestMer from '../../felleskomponenter/InvertedLesMer';
-import { Undertittel } from 'nav-frontend-typografi';
 import styles from './DialogOversikt.module.less';
 import { DialogPreviewListe } from './DialogPreview';
-import React from 'react';
 
 interface HistoriskeDialogerProps {
     historiske: DialogData[];
@@ -41,7 +42,7 @@ function useTekst(): HistoriskeDialogerTekst {
 
     const underOppfolging = oppfolgingData.underOppfolging;
     const perioder = oppfolgingData.oppfolgingsPerioder;
-    const naverende = perioder?.find(a => !a.sluttDato);
+    const naverende = perioder?.find((a) => !a.sluttDato);
     const kvpPerioder = naverende?.kvpPerioder ? naverende.kvpPerioder : [];
     const underKVP = oppfolgingData.underKvp;
 

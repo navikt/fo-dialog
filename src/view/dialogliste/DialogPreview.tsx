@@ -1,17 +1,18 @@
-import React from 'react';
-import { DialogData, StringOrNull } from '../../utils/Typer';
-import { EtikettLiten, Normaltekst, Systemtittel } from 'nav-frontend-typografi';
-import { LenkepanelBase } from 'nav-frontend-lenkepanel';
-import { EtikettListe } from './EtikettListe';
-import { formaterDate } from '../../utils/Date';
-import WrapInReactLink from '../../felleskomponenter/WrapInReactLink';
 import classNames from 'classnames';
-import styles from './DialogPreview.module.less';
-import Ikon from './ikon/Ikon';
-import { getDialogTittel } from '../aktivitet/TextUtils';
+import { LenkepanelBase } from 'nav-frontend-lenkepanel';
+import { EtikettLiten, Normaltekst, Systemtittel } from 'nav-frontend-typografi';
+import React from 'react';
+import { Flipped, Flipper } from 'react-flip-toolkit';
+
+import WrapInReactLink from '../../felleskomponenter/WrapInReactLink';
 import { Aktivitet, ArenaAktivitet } from '../../utils/AktivitetTypes';
+import { formaterDate } from '../../utils/Date';
+import { DialogData, StringOrNull } from '../../utils/Typer';
+import { getDialogTittel } from '../aktivitet/TextUtils';
 import { findAktivitet, useAktivitetContext } from '../AktivitetProvider';
-import { Flipper, Flipped } from 'react-flip-toolkit';
+import styles from './DialogPreview.module.less';
+import { EtikettListe } from './EtikettListe';
+import Ikon from './ikon/Ikon';
 
 interface TittelProps {
     aktivitet?: Aktivitet | ArenaAktivitet;

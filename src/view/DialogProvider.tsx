@@ -1,8 +1,9 @@
-import React, { useCallback, useContext, useMemo, useState } from 'react';
-import { DialogData, SistOppdatert } from '../utils/Typer';
-import { fetchData, fnrQuery, getApiBasePath } from '../utils/Fetch';
-import { loggChangeInDialog } from '../felleskomponenter/logging';
 import { formatISO, isAfter, parseISO } from 'date-fns';
+import React, { useCallback, useContext, useMemo, useState } from 'react';
+
+import { loggChangeInDialog } from '../felleskomponenter/logging';
+import { fetchData, fnrQuery, getApiBasePath } from '../utils/Fetch';
+import { DialogData, SistOppdatert } from '../utils/Typer';
 
 enum Status {
     INITIAL,

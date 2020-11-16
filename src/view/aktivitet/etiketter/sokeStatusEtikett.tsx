@@ -1,8 +1,9 @@
-import React from 'react';
 import classNames from 'classnames';
-import styles from './sokestatusEtikett.module.less';
-import EtikettBase from './etikett-base';
+import React from 'react';
+
 import { StillingsStatus } from '../../../utils/AktivitetTypes';
+import EtikettBase from './etikett-base';
+import styles from './sokestatusEtikett.module.less';
 
 const INGEN_VALGT = 'INGEN_VALGT';
 const SOKNAD_SENDT = 'SOKNAD_SENDT';

@@ -14,7 +14,7 @@ export function hiddenIfHoc<P>(Component: React.ComponentType<P>) {
 }
 
 function hoc<P>(type: string) {
-    return hiddenIfHoc<P>(props => React.createElement(type, props, props.children));
+    return hiddenIfHoc<P>((props) => React.createElement(type, props, props.children));
 }
 
 export const div = hoc<HTMLAttributes<HTMLDivElement>>('div');

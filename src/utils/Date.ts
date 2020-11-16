@@ -1,5 +1,6 @@
 import { differenceInHours, differenceInMinutes, format } from 'date-fns';
 import { nb } from 'date-fns/locale';
+
 import { ValueOrNull } from './Typer';
 
 const locale = { locale: nb };

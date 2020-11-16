@@ -1,12 +1,13 @@
-import { Route, Switch } from 'react-router';
-import Dialog from './Dialog';
-import DialogNew from './NyDialog';
+import classNames from 'classnames';
 import React from 'react';
-import DialogInfoMelding from './DialogInfoMelding';
-import styles from './DialogContainer.module.less';
+import { Route, Switch } from 'react-router';
+
 import { InfoOmDialogSide } from '../info/InfoOmDialogSide';
 import { useUserInfoContext } from '../Provider';
-import classNames from 'classnames';
+import Dialog from './Dialog';
+import styles from './DialogContainer.module.less';
+import DialogInfoMelding from './DialogInfoMelding';
+import DialogNew from './NyDialog';
 
 function DialogContainer() {
     const bruker = useUserInfoContext();

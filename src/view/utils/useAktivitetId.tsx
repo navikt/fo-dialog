@@ -1,5 +1,5 @@
-import { useLocation } from 'react-router';
 import queryString from 'query-string';
+import { useLocation } from 'react-router';
 
 function getFirst(maybeArray: string | string[]): string {
     if (Array.isArray(maybeArray)) {
