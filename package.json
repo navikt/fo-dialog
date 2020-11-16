@@ -11,6 +11,7 @@
         "test:coverage": "npm test -- --coverage --watchAll=false",
         "eject": "craco eject",
         "heroku-postbuild": "cross-env REACT_APP_MOCK=true PUBLIC_URL=/ craco build",
+        "format-all": "prettier --write 'src/'",
         "lint": "echo \"Not implemented\""
     },
     "husky": {
