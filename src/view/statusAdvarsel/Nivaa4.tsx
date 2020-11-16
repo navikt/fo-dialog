@@ -8,8 +8,16 @@ interface Props {
 
 const ManglerNivaa4Veileder = () => (
     <StatusAdvarselWrapper>
-        Du kan ikke sende dialogmelding fordi brukeren ikke har vært innlogget de siste 18 månedene med nivå 4 (for
-        eksempel BankID).
+        Systemet får ikke sjekket om denne brukeren er en digital eller manuell bruker. <br />
+        Dette er et midlertidig problem på grunn av ny teknisk løsning etter koronasituasjonen.
+        <ul>
+            <li>
+                Hvis brukeren svarer på digital dialog, så kan du kommunisere digitalt. Forhåndsorientering og varsel
+                vil ikke fungere på denne brukeren.
+                <br />
+            </li>
+            <li>Hvis brukeren ikke svarer på digital dialog, så setter du brukeren til manuell bruker.</li>
+        </ul>
     </StatusAdvarselWrapper>
 );
 const Nivaa4FeilerVeilede = () => (
