@@ -1,4 +1,5 @@
 import React from 'react';
+
 import { ReactComponent as OkIcon } from './ok.svg';
 import styles from './OkMessage.module.less';
 

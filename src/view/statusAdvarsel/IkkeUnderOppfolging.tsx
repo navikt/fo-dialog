@@ -1,7 +1,8 @@
-import React from 'react';
-import StatusAdvarselWrapper from './StatusAdvarselWrapper';
-import useApiBasePath from '../../utils/UseApiBasePath';
 import Lenke from 'nav-frontend-lenker';
+import React from 'react';
+
+import useApiBasePath from '../../utils/UseApiBasePath';
+import StatusAdvarselWrapper from './StatusAdvarselWrapper';
 
 interface Props {
     erVeileder: boolean;

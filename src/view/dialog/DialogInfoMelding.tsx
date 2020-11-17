@@ -1,9 +1,10 @@
 import React from 'react';
-import { useUserInfoContext } from '../Provider';
-import DialogIkkeValgt from '../info/DialogIkkeValgt';
-import styles from './DialogInfoMelding.module.less';
-import InfoVedIngenDialoger from '../info/InfoVedIngenDialoger';
+
 import { useDialogContext } from '../DialogProvider';
+import DialogIkkeValgt from '../info/DialogIkkeValgt';
+import InfoVedIngenDialoger from '../info/InfoVedIngenDialoger';
+import { useUserInfoContext } from '../Provider';
+import styles from './DialogInfoMelding.module.less';
 
 export default function DialogInfoMelding() {
     const { dialoger } = useDialogContext();

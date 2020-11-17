@@ -1,14 +1,15 @@
-import React from 'react';
 import Snakkeboble from 'nav-frontend-snakkeboble';
-import { HenvendelseData } from '../../utils/Typer';
-import { formaterDateAndTime } from '../../utils/Date';
-
-import Tekstomrade, { LinkRule, ParagraphRule, LinebreakRule } from 'nav-frontend-tekstomrade';
+import Tekstomrade, { LinebreakRule, LinkRule, ParagraphRule } from 'nav-frontend-tekstomrade';
 import { Undertittel } from 'nav-frontend-typografi';
+import React from 'react';
+
+import { ViktigMelding } from '../../felleskomponenter/etiketer/Etikett';
+import { formaterDateAndTime } from '../../utils/Date';
+import { HenvendelseData } from '../../utils/Typer';
 import { useUserInfoContext } from '../Provider';
 import { markdownLink } from './CustomRules';
-import { ViktigMelding } from '../../felleskomponenter/etiketer/Etikett';
 import styles from './Henvendelse.module.less';
+
 function accessibleText(erBruker: boolean, erMeldingFraBruker: boolean) {
     if (erMeldingFraBruker) {
         return erBruker ? 'Deg' : 'Bruker';

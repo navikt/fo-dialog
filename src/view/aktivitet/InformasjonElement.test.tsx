@@ -1,10 +1,12 @@
-import React from 'react';
-import { mount, shallow } from 'enzyme';
-import InformasjonElement, { InformasjonElementRaw } from './InformasjonElement';
-import { EtikettLiten } from 'nav-frontend-typografi';
-import EksternLenke from '../../felleskomponenter/EksternLenke';
 import '../../utils/SetupEnzyme';
+
+import { mount, shallow } from 'enzyme';
 import Tekstomrade from 'nav-frontend-tekstomrade';
+import { EtikettLiten } from 'nav-frontend-typografi';
+import React from 'react';
+
+import EksternLenke from '../../felleskomponenter/EksternLenke';
+import InformasjonElement, { InformasjonElementRaw } from './InformasjonElement';
 
 describe('<InformasjonElement />', () => {
     it('skal vise fritekst hvis det er oppgitt', () => {

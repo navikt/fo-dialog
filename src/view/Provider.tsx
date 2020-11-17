@@ -1,16 +1,17 @@
-import React, { Dispatch, SetStateAction, useContext, useEffect, useState } from 'react';
-import useFetch, { FetchResult, hasData, hasError, isPending, Status } from '@nutgaard/use-fetch';
+import useFetch, { FetchResult, Status, hasData, hasError, isPending } from '@nutgaard/use-fetch';
 import { AlertStripeFeil } from 'nav-frontend-alertstriper';
 import NavFrontendSpinner from 'nav-frontend-spinner';
+import React, { Dispatch, SetStateAction, useContext, useEffect, useState } from 'react';
+
+import useFetchHarNivaa4, { HarNivaa4Response } from '../api/useFetchHarNivaa4';
+import useFetchVeilederNavn from '../api/useHentVeilederData';
+import { REQUEST_CONFIG, fnrQuery, getApiBasePath } from '../utils/Fetch';
 import { Bruker, OppfolgingData } from '../utils/Typer';
-import { fnrQuery, getApiBasePath, REQUEST_CONFIG } from '../utils/Fetch';
-import { initalState, ViewState } from './ViewState';
 import { AktivitetProvider } from './AktivitetProvider';
 import { DialogContext, hasDialogError, isDialogOk, isDialogPending, useDialogDataProvider } from './DialogProvider';
-import useFetchVeilederNavn from '../api/useHentVeilederData';
 import { KladdContext, useKladdDataProvider } from './KladdProvider';
-import useFetchHarNivaa4, { HarNivaa4Response } from '../api/useFetchHarNivaa4';
 import styles from './Provider.module.less';
+import { ViewState, initalState } from './ViewState';
 
 interface VeilederData {
     veilederNavn?: string;

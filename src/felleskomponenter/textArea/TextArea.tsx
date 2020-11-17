@@ -1,12 +1,12 @@
+import { FieldState } from '@nutgaard/use-formstate';
+import classNames from 'classnames';
+import { guid } from 'nav-frontend-js-utils';
+import React, { ChangeEvent, useState } from 'react';
 import TextareaAutosize from 'react-textarea-autosize';
 
-import React, { ChangeEvent, useState } from 'react';
-import styles from './TextArea.module.less';
-import { FieldState } from '@nutgaard/use-formstate';
-import { guid } from 'nav-frontend-js-utils';
-import { Teller } from './Teller';
 import { Feilemelding } from './Feilmelding';
-import classNames from 'classnames';
+import { Teller } from './Teller';
+import styles from './TextArea.module.less';
 
 interface Props {
     initialValue?: string;

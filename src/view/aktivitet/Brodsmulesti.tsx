@@ -1,8 +1,9 @@
-import styles from './Aktivitetskort.module.less';
-import { getStatusText, getTypeText } from './TextUtils';
 import { EtikettLiten } from 'nav-frontend-typografi';
 import React from 'react';
+
 import { AktivitetStatus, AktivitetTypes, ArenaAktivitetTypes } from '../../utils/AktivitetTypes';
+import styles from './Aktivitetskort.module.less';
+import { getStatusText, getTypeText } from './TextUtils';
 
 interface Props {
     status: AktivitetStatus;

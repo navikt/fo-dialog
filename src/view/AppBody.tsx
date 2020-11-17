@@ -1,18 +1,17 @@
 import React, { useEffect } from 'react';
-import { dataOrUndefined, useOppfolgingContext, useUserInfoContext } from './Provider';
-import DialogContainer from './dialog/DialogContainer';
-import AktivitetContainer from './aktivitet/AktivitetContainer';
-import DialogOversiktContainer from './dialogliste/DialogOversiktContainer';
-import styles from './App.module.less';
-import { Bruker, OppfolgingData } from '../utils/Typer';
-import loggEvent from '../felleskomponenter/logging';
 import shajs from 'sha.js';
 import { v4 as uuidv4 } from 'uuid';
 
+import loggEvent from '../felleskomponenter/logging';
+import { Bruker, OppfolgingData } from '../utils/Typer';
+import AktivitetContainer from './aktivitet/AktivitetContainer';
+import styles from './App.module.less';
+import DialogContainer from './dialog/DialogContainer';
+import DialogOversiktContainer from './dialogliste/DialogOversiktContainer';
+import { dataOrUndefined, useOppfolgingContext, useUserInfoContext } from './Provider';
+
 function hash(string: string): string {
-    return shajs('sha256')
-        .update(string)
-        .digest('hex');
+    return shajs('sha256').update(string).digest('hex');
 }
 
 const useLogBruker = (brukerdata: Bruker | null, oppfolgingData?: OppfolgingData) => {

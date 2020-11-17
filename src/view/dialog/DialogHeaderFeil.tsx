@@ -1,5 +1,6 @@
-import React from 'react';
 import { AlertStripeFeil } from 'nav-frontend-alertstriper';
+import React from 'react';
+
 import styles from './DialogHeader.module.less';
 
 interface Props {

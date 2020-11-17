@@ -1,7 +1,9 @@
-import React from 'react';
-import { shallow } from 'enzyme';
-import EksternLenke from './EksternLenke';
 import '../utils/SetupEnzyme';
+
+import { shallow } from 'enzyme';
+import React from 'react';
+
+import EksternLenke from './EksternLenke';
 
 describe('<EksternLenke/>', () => {
     it('skal padde href med protokoll når det mangler', () => {

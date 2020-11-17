@@ -1,5 +1,6 @@
-import React from 'react';
 import { Checkbox } from 'nav-frontend-skjema';
+import React from 'react';
+
 import { DialogData } from '../../utils/Typer';
 import { useDialogContext } from '../DialogProvider';
 import { dataOrUndefined, useOppfolgingContext } from '../Provider';

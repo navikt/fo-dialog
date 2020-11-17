@@ -1,22 +1,23 @@
-import React, { useEffect, useState } from 'react';
-import { HenvendelseList } from '../henvendelse/HenvendelseList';
-import { DialogHeader, dialogHeaderID1, dialogHeaderID2 } from './DialogHeader';
-import { useFnrContext, useUserInfoContext, useViewContext } from '../Provider';
-import { useParams } from 'react-router';
-import DialogInputBoxVisible from './DialogInputBox';
-import useKansendeMelding from '../../utils/UseKanSendeMelding';
-
 import './Dialog.less';
+
+import { Systemtittel } from 'nav-frontend-typografi';
+import React, { useEffect, useState } from 'react';
+import { useParams } from 'react-router';
+
+import { UpdateTypes, dispatchUpdate } from '../../utils/UpdateEvent';
+import useKansendeMelding from '../../utils/UseKanSendeMelding';
+import { useDialogContext } from '../DialogProvider';
+import { HenvendelseList } from '../henvendelse/HenvendelseList';
+import { useFnrContext, useUserInfoContext, useViewContext } from '../Provider';
+import { useEventListener } from '../utils/useEventListner';
 import { endreDialogSomVises } from '../ViewState';
+import styles from './Dialog.module.less';
+import ManagedDialogCheckboxes from './DialogCheckboxes';
+import { DialogHeader, dialogHeaderID1, dialogHeaderID2 } from './DialogHeader';
+import DialogInputBoxVisible from './DialogInputBox';
 import DialogSendtBekreftelse from './DialogSendtBekreftelse';
 import HistoriskInfo from './HistoriskInfo';
 import { IngenDialog } from './IngenDialog';
-import { dispatchUpdate, UpdateTypes } from '../../utils/UpdateEvent';
-import styles from './Dialog.module.less';
-import { useDialogContext } from '../DialogProvider';
-import { Systemtittel } from 'nav-frontend-typografi';
-import ManagedDialogCheckboxes from './DialogCheckboxes';
-import { useEventListener } from '../utils/useEventListner';
 
 export function Dialog() {
     const kanSendeMelding = useKansendeMelding();

@@ -1,8 +1,12 @@
-import React, { useState } from 'react';
-import { Innholdstittel } from 'nav-frontend-typografi';
+import { Hovedknapp } from 'nav-frontend-knapper';
 import { CheckboksPanelGruppe, RadioPanelGruppe, SkjemaGruppe } from 'nav-frontend-skjema';
+import { Innholdstittel } from 'nav-frontend-typografi';
+import React, { useState } from 'react';
+
+import styles from './DemoDashboard.module.less';
 import {
     BRUKER_TYPE,
+    SessionStorageElement,
     brukerKanIkkeVarsles,
     erEksternBruker,
     erKRRBruker,
@@ -18,11 +22,8 @@ import {
     harNivaa4Fieler,
     harNyDialogEllerSendMeldingFeilerSkruddPa,
     ingenOppfPerioder,
-    SessionStorageElement,
     settSessionStorage
 } from './sessionstorage';
-import { Hovedknapp } from 'nav-frontend-knapper';
-import styles from './DemoDashboard.module.less';
 
 function reload() {
     window.location.reload();

@@ -1,20 +1,21 @@
-import React, { useEffect, useRef, useState } from 'react';
-import { Normaltekst } from 'nav-frontend-typografi';
 import useFormstate from '@nutgaard/use-formstate';
-import { useHistory } from 'react-router';
 import { Hovedknapp } from 'nav-frontend-knapper';
 import { SkjemaGruppe } from 'nav-frontend-skjema';
-import { useUserInfoContext } from '../Provider';
-import Input from '../../felleskomponenter/input/input';
-import { StringOrNull } from '../../utils/Typer';
-import { dispatchUpdate, UpdateTypes } from '../../utils/UpdateEvent';
-import { useDialogContext } from '../DialogProvider';
-import useHenvendelseStartTekst from './UseHenvendelseStartTekst';
-import loggEvent from '../../felleskomponenter/logging';
-import { findKladd, useKladdContext } from '../KladdProvider';
-import EkspanderbartTekstArea from '../../felleskomponenter/textArea/TextArea';
+import { Normaltekst } from 'nav-frontend-typografi';
+import React, { useEffect, useRef, useState } from 'react';
+import { useHistory } from 'react-router';
+
 import AlertStripeFeilVisible from '../../felleskomponenter/AlertStripeFeilVisible';
+import Input from '../../felleskomponenter/input/input';
+import loggEvent from '../../felleskomponenter/logging';
+import EkspanderbartTekstArea from '../../felleskomponenter/textArea/TextArea';
+import { StringOrNull } from '../../utils/Typer';
+import { UpdateTypes, dispatchUpdate } from '../../utils/UpdateEvent';
+import { useDialogContext } from '../DialogProvider';
+import { findKladd, useKladdContext } from '../KladdProvider';
+import { useUserInfoContext } from '../Provider';
 import style from './NyDialogForm.module.less';
+import useHenvendelseStartTekst from './UseHenvendelseStartTekst';
 
 const maxMeldingsLengde = 5000;
 const veilederInfoMelding = 'Skriv en melding til brukeren';

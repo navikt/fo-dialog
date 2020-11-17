@@ -1,8 +1,9 @@
 import React from 'react';
-import { visibleIfHoc } from '../../felleskomponenter/VisibleIfHoc';
 import { Link } from 'react-router-dom';
-import { ReactComponent as PlussIkon } from './pluss.svg';
+
+import { visibleIfHoc } from '../../felleskomponenter/VisibleIfHoc';
 import styles from './NyDialogLink.module.less';
+import { ReactComponent as PlussIkon } from './pluss.svg';
 
 export function NyDialogLink() {
     return (

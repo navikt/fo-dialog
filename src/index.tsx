@@ -1,11 +1,13 @@
 import './polyfill';
+
+import NAVSPA from '@navikt/navspa';
+import NavFrontendModal from 'nav-frontend-modal';
 import React from 'react';
 import ReactDOM from 'react-dom';
-import App from './view/App';
+
 import DemoBanner from './mock/demo/DemoBanner';
-import NAVSPA from '@navikt/navspa';
 import { erEksternBruker } from './mock/demo/sessionstorage';
-import NavFrontendModal from 'nav-frontend-modal';
+import App from './view/App';
 
 const modalAlly = document.getElementById('modal-a11y-wrapper');
 const root = document.getElementById('root');

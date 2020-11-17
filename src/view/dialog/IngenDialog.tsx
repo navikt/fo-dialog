@@ -1,7 +1,8 @@
-import React from 'react';
-import { TittelHeader } from './DialogHeader';
 import AlertStripe from 'nav-frontend-alertstriper';
+import React from 'react';
+
 import styles from './Dialog.module.less';
+import { TittelHeader } from './DialogHeader';
 
 export function IngenDialog() {
     return (

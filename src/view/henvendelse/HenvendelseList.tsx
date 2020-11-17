@@ -1,9 +1,10 @@
+import { Systemtittel } from 'nav-frontend-typografi';
 import React from 'react';
+
 import { DialogData, HenvendelseData, StringOrNull } from '../../utils/Typer';
-import { Henvendelse } from './Henvendelse';
 import LestAvTidspunkt from '../lest/LestTidspunkt';
 import { useSkjulHodefotForMobilVisning } from '../utils/useSkjulHodefotForMobilVisning';
-import { Systemtittel } from 'nav-frontend-typografi';
+import { Henvendelse } from './Henvendelse';
 import { useScrollToLastHenvendelse } from './useScrollToLastHenvendelse';
 
 interface Props {

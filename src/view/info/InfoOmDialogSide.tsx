@@ -1,13 +1,14 @@
-import React, { useLayoutEffect } from 'react';
-import { Element, Normaltekst } from 'nav-frontend-typografi';
+import classNames from 'classnames';
 import Ekspanderbartpanel from 'nav-frontend-ekspanderbartpanel';
-import styles from './InfoOmDialogSide.module.less';
+import Lenke from 'nav-frontend-lenker';
+import { Element, Normaltekst } from 'nav-frontend-typografi';
+import React, { useLayoutEffect } from 'react';
+
+import useApiBasePath from '../../utils/UseApiBasePath';
 import dialogStyle from '../dialog/Dialog.module.less';
 import { TittelHeader } from '../dialog/DialogHeader';
-import classNames from 'classnames';
 import { useSkjulHodefotForMobilVisning } from '../utils/useSkjulHodefotForMobilVisning';
-import Lenke from 'nav-frontend-lenker';
-import useApiBasePath from '../../utils/UseApiBasePath';
+import styles from './InfoOmDialogSide.module.less';
 
 const cls = classNames(dialogStyle.overflowAuto, dialogStyle.dialog);
 

@@ -1,7 +1,8 @@
-import React, { useEffect, useState } from 'react';
-import { DemoIkon } from './DemoIkon';
 import Modal from 'nav-frontend-modal';
+import React, { useEffect, useState } from 'react';
+
 import DemoDashboard from './DemoDashboard';
+import { DemoIkon } from './DemoIkon';
 import { harHodeFotSkruddPa } from './sessionstorage';
 
 function DemoBanner() {

@@ -1,22 +1,24 @@
-import React from 'react';
+import '../utils/SetupEnzyme';
+
+import { Status as FetchMockStatus, FetchResult } from '@nutgaard/use-fetch';
 import { mount } from 'enzyme';
+import { Checkbox } from 'nav-frontend-skjema';
+import React from 'react';
 import { MemoryRouter } from 'react-router';
-import * as AppContext from '../view/Provider';
+
+import { Bruker, DialogData, OppfolgingData, PeriodeData } from '../utils/Typer';
+import { Dialog } from '../view/dialog/Dialog';
+import DialogContainer from '../view/dialog/DialogContainer';
+import { DialogHeader } from '../view/dialog/DialogHeader';
+import { DialogInputBox } from '../view/dialog/DialogInputBox';
+import DialogListe from '../view/dialogliste/DialogListe';
+import DialogOversikt from '../view/dialogliste/DialogOversikt';
+import DialogPreview from '../view/dialogliste/DialogPreview';
+import { NyDialogLink } from '../view/dialogliste/NyDialogLink';
 import * as DialogProvider from '../view/DialogProvider';
 import { DialogDataProviderType } from '../view/DialogProvider';
-import { Dialog } from '../view/dialog/Dialog';
-import { Bruker, DialogData, OppfolgingData, PeriodeData } from '../utils/Typer';
 import { HenvendelseList } from '../view/henvendelse/HenvendelseList';
-import { DialogInputBox } from '../view/dialog/DialogInputBox';
-import { DialogHeader } from '../view/dialog/DialogHeader';
-import DialogListe from '../view/dialogliste/DialogListe';
-import { NyDialogLink } from '../view/dialogliste/NyDialogLink';
-import DialogPreview from '../view/dialogliste/DialogPreview';
-import { Checkbox } from 'nav-frontend-skjema';
-import { FetchResult, Status as FetchMockStatus } from '@nutgaard/use-fetch';
-import '../utils/SetupEnzyme';
-import DialogContainer from '../view/dialog/DialogContainer';
-import DialogOversikt from '../view/dialogliste/DialogOversikt';
+import * as AppContext from '../view/Provider';
 
 const userInfo: Bruker = { id: '010101', erVeileder: true, erBruker: false };
 const oppfPerioder: PeriodeData[] = [];

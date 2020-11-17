@@ -1,5 +1,6 @@
-import React from 'react';
 import Lenke from 'nav-frontend-lenker';
+import React from 'react';
+
 import { ReactComponent as EksternLenkeIkon } from './ekstern-lenke.svg';
 
 const httpRegex = /^(https?):\/\/.*$/;

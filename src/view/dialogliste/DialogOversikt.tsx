@@ -1,17 +1,18 @@
-import React from 'react';
-import DialogOverviewHeader from './NyDialogLink';
-import { useParams } from 'react-router';
 import classNames from 'classnames';
-import styles from './DialogOversikt.module.less';
-import useKansendeMelding from '../../utils/UseKanSendeMelding';
-import DialogListe from './DialogListe';
-import OmDialogLenke from '../info/OmDialogLenke';
-import InfoVedIngenDialoger from '../info/InfoVedIngenDialoger';
-import { useDialogContext } from '../DialogProvider';
-import Lenke from 'nav-frontend-lenker';
 import { VenstreChevron } from 'nav-frontend-chevron';
+import Lenke from 'nav-frontend-lenker';
 import { Systemtittel } from 'nav-frontend-typografi';
+import React from 'react';
+import { useParams } from 'react-router';
+
+import useKansendeMelding from '../../utils/UseKanSendeMelding';
+import { useDialogContext } from '../DialogProvider';
+import InfoVedIngenDialoger from '../info/InfoVedIngenDialoger';
+import OmDialogLenke from '../info/OmDialogLenke';
 import { useUserInfoContext } from '../Provider';
+import DialogListe from './DialogListe';
+import styles from './DialogOversikt.module.less';
+import DialogOverviewHeader from './NyDialogLink';
 
 function DialogOversiktHeader(props: { erVeileder: boolean }) {
     if (props.erVeileder) {
