@@ -52,7 +52,7 @@
     },
     "dependencies": {
         "@navikt/fnrvalidator": "^1.1.2",
-        "@navikt/navspa": "^1.0.3",
+        "@navikt/navspa": "1.1.1",
         "@nutgaard/use-formstate": "^2.2.1",
         "@types/react-textarea-autosize": "^4.3.5",
         "babel-polyfill": "^6.26.0",
