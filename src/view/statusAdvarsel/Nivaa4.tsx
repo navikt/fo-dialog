@@ -2,14 +2,15 @@ import React from 'react';
 
 import StatusAdvarselWrapper from './StatusAdvarselWrapper';
 import TekniskFeilBrukerstotte from './TekniskFeilBrukerstotte';
+import Hjelpetekst from 'nav-frontend-hjelpetekst';
+import { PopoverOrientering } from 'nav-frontend-popover';
 
 interface Props {
     erVeileder: boolean;
 }
 
-const ManglerNivaa4Veileder = () => (
-    <StatusAdvarselWrapper>
-        Systemet får ikke sjekket om denne brukeren er en digital eller manuell bruker. <br />
+const Mere = () => (
+    <Hjelpetekst type={PopoverOrientering.Under}>
         Dette er et midlertidig problem på grunn av ny teknisk løsning etter koronasituasjonen.
         <ul>
             <li>
@@ -19,6 +20,12 @@ const ManglerNivaa4Veileder = () => (
             </li>
             <li>Hvis brukeren ikke svarer på digital dialog, så setter du brukeren til manuell bruker.</li>
         </ul>
+    </Hjelpetekst>
+);
+
+const ManglerNivaa4Veileder = () => (
+    <StatusAdvarselWrapper>
+        Systemet får ikke sjekket om denne brukeren er en digital eller manuell bruker. <Mere />
     </StatusAdvarselWrapper>
 );
 const Nivaa4FeilerVeilede = () => (
@@ -27,7 +34,7 @@ const Nivaa4FeilerVeilede = () => (
     </StatusAdvarselWrapper>
 );
 
-const ManglerNivaa4 = (props: Props) => (props.erVeileder ? <ManglerNivaa4Veileder /> : <TekniskFeilBrukerstotte />);
-const Nivaa4Feiler = (props: Props) => (props.erVeileder ? <Nivaa4FeilerVeilede /> : <TekniskFeilBrukerstotte />);
-
-export { ManglerNivaa4, Nivaa4Feiler };
+export const ManglerNivaa4 = (props: Props) =>
+    props.erVeileder ? <ManglerNivaa4Veileder /> : <TekniskFeilBrukerstotte />;
+export const Nivaa4Feiler = (props: Props) =>
+    props.erVeileder ? <Nivaa4FeilerVeilede /> : <TekniskFeilBrukerstotte />;
