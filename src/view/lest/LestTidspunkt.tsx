@@ -1,9 +1,10 @@
-import React from 'react';
-import { formaterDateAndTime } from '../../utils/Date';
-import { visibleIfHoc } from '../../felleskomponenter/VisibleIfHoc';
 import { Undertekst } from 'nav-frontend-typografi';
-import { ReactComponent as Pil } from './pil.svg';
+import React from 'react';
+
+import { visibleIfHoc } from '../../felleskomponenter/VisibleIfHoc';
+import { formaterDateAndTime } from '../../utils/Date';
 import styles from './LestTidspunkt.module.less';
+import { ReactComponent as Pil } from './pil.svg';
 
 interface Props {
     tidspunkt: string;

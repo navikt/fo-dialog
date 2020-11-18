@@ -44,9 +44,15 @@
             "last 1 safari version"
         ]
     },
+    "importSort": {
+        ".js, .jsx, .ts, .tsx": {
+            "style": "module",
+            "parser": "typescript"
+        }
+    },
     "dependencies": {
         "@navikt/fnrvalidator": "^1.1.2",
-        "@navikt/navspa": "^1.0.3",
+        "@navikt/navspa": "1.1.1",
         "@nutgaard/use-formstate": "^2.2.1",
         "@types/react-textarea-autosize": "^4.3.5",
         "babel-polyfill": "^6.26.0",
@@ -135,7 +141,9 @@
         "enzyme-adapter-react-16": "^1.15.2",
         "enzyme-to-json": "^3.4.4",
         "husky": "^4.2.5",
-        "prettier": "^2.0.5",
+        "import-sort-style-module": "^6.0.0",
+        "prettier": "^2.1.2",
+        "prettier-plugin-import-sort": "0.0.6",
         "yet-another-fetch-mock": "^3.4.0"
     }
 }

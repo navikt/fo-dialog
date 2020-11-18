@@ -1,15 +1,16 @@
-import React from 'react';
-import { Link } from 'react-router-dom';
+import { hasError } from '@nutgaard/use-fetch';
 import classNames from 'classnames';
 import { VenstreChevron } from 'nav-frontend-chevron';
 import { Systemtittel, Undertittel } from 'nav-frontend-typografi';
-import { hasError } from '@nutgaard/use-fetch';
+import React from 'react';
+import { Link } from 'react-router-dom';
+
+import { ReactComponent as Lukk } from '../../fellesikoner/lukk.svg';
 import { DialogData, StringOrNull } from '../../utils/Typer';
 import { AktivitetskortPreview } from '../aktivitet/AktivitetskortPreview';
-import { ReactComponent as Lukk } from '../../fellesikoner/lukk.svg';
 import { AktivitetContextType, useAktivitetContext } from '../AktivitetProvider';
-import DialogHeaderFeil from './DialogHeaderFeil';
 import styles from './DialogHeader.module.less';
+import DialogHeaderFeil from './DialogHeaderFeil';
 
 export const dialogHeaderID1 = 'dialog_header_1';
 export const dialogHeaderID2 = 'dialog_header_2';

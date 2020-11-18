@@ -1,9 +1,10 @@
-import React, { useEffect, useState } from 'react';
-import OkMessage from '../../felleskomponenter/mesage/OkMessage';
-import { HandlingsType, ViewState } from '../ViewState';
-import { DialogData, StringOrNull } from '../../utils/Typer';
 import { Normaltekst } from 'nav-frontend-typografi';
+import React, { useEffect, useState } from 'react';
+
 import Hjelpetekst from '../../felleskomponenter/Hjelpetekst';
+import OkMessage from '../../felleskomponenter/mesage/OkMessage';
+import { DialogData, StringOrNull } from '../../utils/Typer';
+import { HandlingsType, ViewState } from '../ViewState';
 import styles from './DialogSendtBekreftelse.module.less';
 
 function getTekst(handling: HandlingsType, erVeileder: boolean, overskrift: StringOrNull) {

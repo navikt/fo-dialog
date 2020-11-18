@@ -1,7 +1,8 @@
 import React, { useCallback, useContext, useMemo, useState } from 'react';
-import { KladdData, StringOrNull } from '../utils/Typer';
+
 import { fetchData, fnrQuery, getApiBasePath } from '../utils/Fetch';
 import { valueOrNull } from '../utils/TypeHelper';
+import { KladdData, StringOrNull } from '../utils/Typer';
 
 enum Status {
     INITIAL,
@@ -58,17 +59,17 @@ export function useKladdDataProvider(fnr?: string): KladdDataProviderType {
     const baseUrl = useMemo(() => `${apiBasePath}/veilarbdialog/api/kladd${query}`, [apiBasePath, query]);
 
     const hentKladder = useCallback(() => {
-        setState(prevState => ({
+        setState((prevState) => ({
             ...prevState,
             status: isKladdReloading(prevState.status) ? Status.RELOADING : Status.PENDING
         }));
         return fetchData<KladdData[]>(baseUrl)
-            .then(kladder => {
+            .then((kladder) => {
                 setState({ status: Status.OK, kladder: kladder });
                 return kladder;
             })
             .catch(() => {
-                setState(prevState => ({ ...prevState, status: Status.ERROR }));
+                setState((prevState) => ({ ...prevState, status: Status.ERROR }));
                 return [];
             });
     }, [baseUrl, setState]);
@@ -82,9 +83,9 @@ export function useKladdDataProvider(fnr?: string): KladdDataProviderType {
                 tekst: valueOrNull(melding)
             };
 
-            setState(prevState => {
+            setState((prevState) => {
                 const kladder = prevState.kladder;
-                const ny = [...kladder.filter(k => !eqKladd(k, dialogId, aktivitetId)), kladdData];
+                const ny = [...kladder.filter((k) => !eqKladd(k, dialogId, aktivitetId)), kladdData];
                 return { ...prevState, kladder: ny };
             });
 
@@ -98,9 +99,9 @@ export function useKladdDataProvider(fnr?: string): KladdDataProviderType {
 
     const slettKladd = useCallback(
         (dialogId?: StringOrNull, aktivitetId?: StringOrNull) => {
-            setState(prevState => {
+            setState((prevState) => {
                 const kladder = prevState.kladder;
-                const ny = kladder.filter(k => !eqKladd(k, dialogId, aktivitetId));
+                const ny = kladder.filter((k) => !eqKladd(k, dialogId, aktivitetId));
                 return { ...prevState, kladder: ny };
             });
         },
@@ -138,5 +139,5 @@ export function findKladd(
     dialogId?: StringOrNull,
     aktivitetId?: StringOrNull
 ): KladdData | undefined {
-    return kladder.find(k => eqKladd(k, dialogId, aktivitetId));
+    return kladder.find((k) => eqKladd(k, dialogId, aktivitetId));
 }

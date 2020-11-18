@@ -1,6 +1,7 @@
-import React from 'react';
-import styles from './Etiketter.module.less';
 import classNames from 'classnames';
+import React from 'react';
+
+import styles from './Etiketter.module.less';
 
 interface Props {
     visible: boolean;

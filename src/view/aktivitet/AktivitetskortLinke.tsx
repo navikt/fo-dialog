@@ -1,9 +1,10 @@
-import styles from './Aktivitetskort.module.less';
 import { HoyreChevron } from 'nav-frontend-chevron';
 import { Element } from 'nav-frontend-typografi';
 import React, { MouseEvent } from 'react';
-import { useFnrContext } from '../Provider';
+
 import useApiBasePath from '../../utils/UseApiBasePath';
+import { useFnrContext } from '../Provider';
+import styles from './Aktivitetskort.module.less';
 
 export const aktivitetLenke = (apiBasePath: string, aktivitetId: string) =>
     `${apiBasePath}/aktivitetsplan/aktivitet/vis/${aktivitetId}`;

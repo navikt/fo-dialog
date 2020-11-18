@@ -1,9 +1,10 @@
-import styles from './AktivitetskortInfoBox.module.less';
+import Tekstomrade from 'nav-frontend-tekstomrade';
 import { EtikettLiten } from 'nav-frontend-typografi';
 import React, { ReactNode } from 'react';
-import { StringOrNull } from '../../utils/Typer';
-import Tekstomrade from 'nav-frontend-tekstomrade';
+
 import EksternLenke from '../../felleskomponenter/EksternLenke';
+import { StringOrNull } from '../../utils/Typer';
+import styles from './AktivitetskortInfoBox.module.less';
 
 interface TekstomradeProps {
     merkelapptekst: string;

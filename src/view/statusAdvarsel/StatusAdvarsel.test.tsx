@@ -1,16 +1,18 @@
+import '../../utils/SetupEnzyme';
+
+import { FetchResult, Status } from '@nutgaard/use-fetch';
+import { shallow } from 'enzyme';
+import React from 'react';
+
+import { HarNivaa4Response } from '../../api/useFetchHarNivaa4';
 import { Bruker, OppfolgingData, PeriodeData } from '../../utils/Typer';
 import * as AppContext from '../Provider';
-import { shallow } from 'enzyme';
-import StatusAdvarsel from './StatusAdvarsel';
-import React from 'react';
-import '../../utils/SetupEnzyme';
 import AldriUnderOppfolging from './AldriUnderOppfolging';
 import IkkeUnderOppfolging from './IkkeUnderOppfolging';
-import ReservertKrr from './ReservertKrr';
 import KanIkkeVarsles from './KanIkkeVarsles';
-import { FetchResult, Status } from '@nutgaard/use-fetch';
-import { HarNivaa4Response } from '../../api/useFetchHarNivaa4';
 import { ManglerNivaa4, Nivaa4Feiler } from './Nivaa4';
+import ReservertKrr from './ReservertKrr';
+import StatusAdvarsel from './StatusAdvarsel';
 
 const veileder: Bruker = { id: '010101', erVeileder: true, erBruker: false };
 const bruker: Bruker = { id: '010101', erVeileder: false, erBruker: true };

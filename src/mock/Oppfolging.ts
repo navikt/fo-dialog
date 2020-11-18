@@ -1,5 +1,6 @@
-import { PeriodeData } from '../utils/Typer';
 import { JSONArray } from 'yet-another-fetch-mock';
+
+import { PeriodeData } from '../utils/Typer';
 import {
     brukerKanIkkeVarsles,
     erKRRBruker,

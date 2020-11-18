@@ -1,9 +1,10 @@
-import styles from './DialogIkkeValgt.module.less';
-import { ReactComponent as IngenValgteDialoger } from '../dialog/ingen-valgt.svg';
+import classNames from 'classnames';
 import { Normaltekst } from 'nav-frontend-typografi';
 import React from 'react';
+
 import { visibleIfHoc } from '../../felleskomponenter/VisibleIfHoc';
-import classNames from 'classnames';
+import { ReactComponent as IngenValgteDialoger } from '../dialog/ingen-valgt.svg';
+import styles from './DialogIkkeValgt.module.less';
 
 interface Props {
     className: string;

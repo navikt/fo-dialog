@@ -1,12 +1,14 @@
-import React from 'react';
-import { mount } from 'enzyme';
-import { AktivitetskortPreview, getInfoText } from './AktivitetskortPreview';
-import { Aktivitet, AktivitetStatus, AktivitetTypes, KanalTypes } from '../../utils/AktivitetTypes';
 import '../../utils/SetupEnzyme';
+
+import { Status } from '@nutgaard/use-fetch';
+import { mount } from 'enzyme';
+import React from 'react';
 import { MemoryRouter } from 'react-router';
+
+import { Aktivitet, AktivitetStatus, AktivitetTypes, KanalTypes } from '../../utils/AktivitetTypes';
 import * as AppContext from '../AktivitetProvider';
 import { AktivitetContextType } from '../AktivitetProvider';
-import { Status } from '@nutgaard/use-fetch';
+import { AktivitetskortPreview, getInfoText } from './AktivitetskortPreview';
 
 describe('getInfoText', () => {
     it('skal returnere korrekt tekst for stillingsaktivitet', () => {
@@ -129,12 +131,7 @@ describe('<AktivitetskortPreview />', () => {
                 <AktivitetskortPreview aktivitetId={'123'} />
             </MemoryRouter>
         );
-        expect(
-            wrapper
-                .children()
-                .children()
-                .first()
-        ).toMatchSnapshot();
+        expect(wrapper.children().children().first()).toMatchSnapshot();
         expect(wrapper.children().length).toBe(1);
         expect(wrapper.children().children().length).toBe(1);
     });

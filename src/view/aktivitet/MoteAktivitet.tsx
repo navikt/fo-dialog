@@ -1,6 +1,7 @@
 import React from 'react';
-import { formaterDate, getKlokkeslett, getVarighet } from '../../utils/Date';
+
 import { Aktivitet, KanalTypes } from '../../utils/AktivitetTypes';
+import { formaterDate, getKlokkeslett, getVarighet } from '../../utils/Date';
 import InformasjonElement from './InformasjonElement';
 
 interface PropTypes {

@@ -1,7 +1,8 @@
 import React from 'react';
 import { Route, Switch } from 'react-router';
-import { Aktivitetskort } from './Aktivitetskort';
+
 import styles from './AktivitetContainer.module.less';
+import { Aktivitetskort } from './Aktivitetskort';
 
 function AktivitetContainer() {
     return (

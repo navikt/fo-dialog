@@ -1,8 +1,9 @@
-import { DialogData, HenvendelseData, KladdData, NyDialogMeldingData } from '../utils/Typer';
-import { rndId } from './Utils';
 import { JSONArray, JSONObject, ResponseUtils } from 'yet-another-fetch-mock';
+
+import { DialogData, HenvendelseData, KladdData, NyDialogMeldingData } from '../utils/Typer';
 import bruker from './Bruker';
 import { erEksternBruker, harIngenDialoger } from './demo/sessionstorage';
+import { rndId } from './Utils';
 
 const dialoger: DialogData[] & JSONArray = [
     {

@@ -1,12 +1,14 @@
-import React, { useEffect, useState } from 'react';
-import NavFrontendModal from 'nav-frontend-modal';
-import Veilederpanel from 'nav-frontend-veilederpanel';
+import './Timeoutmodal.less';
+
 import { Hovedknapp, Knapp } from 'nav-frontend-knapper';
+import NavFrontendModal from 'nav-frontend-modal';
 import { Normaltekst, Systemtittel } from 'nav-frontend-typografi';
+import Veilederpanel from 'nav-frontend-veilederpanel';
+import React, { useEffect, useState } from 'react';
+
+import { getApiBasePath } from '../../utils/Fetch';
 import { hiddenIfHoc } from '../HiddenIfHoc';
 import { ReactComponent as ObsSVG } from './obs.svg';
-import './Timeoutmodal.less';
-import { getApiBasePath } from '../../utils/Fetch';
 
 export const getCookie = (name: string) => {
     const re = new RegExp(`${name}=([^;]+)`);
@@ -39,10 +41,10 @@ function TimeoutModal(props: Props) {
             credentials: 'same-origin',
             headers: getHeaders()
         })
-            .then(response => {
+            .then((response) => {
                 return response.json();
             })
-            .then(authExp => {
+            .then((authExp) => {
                 const { remainingSeconds } = authExp;
 
                 if (remainingSeconds) {
@@ -59,7 +61,7 @@ function TimeoutModal(props: Props) {
                     });
                 }
             })
-            .catch(e => {
+            .catch((e) => {
                 console.log('catch', e);
             });
     }, [fnr]);

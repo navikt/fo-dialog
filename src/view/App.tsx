@@ -1,12 +1,13 @@
 import React from 'react';
-import StatusAdvarsel from './statusAdvarsel/StatusAdvarsel';
-import styles from './App.module.less';
 import { BrowserRouter as Router } from 'react-router-dom';
-import { Provider } from './Provider';
-import { EventHandler } from './EventHandler';
-import AppBody from './AppBody';
+
 import TimeoutModal from '../felleskomponenter/timeoutmodal/TimeoutModal';
 import { UppdateEventHandler } from '../utils/UpdateEvent';
+import styles from './App.module.less';
+import AppBody from './AppBody';
+import { EventHandler } from './EventHandler';
+import { Provider } from './Provider';
+import StatusAdvarsel from './statusAdvarsel/StatusAdvarsel';
 
 interface Props {
     fnr?: string;

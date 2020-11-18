@@ -1,12 +1,13 @@
 import React from 'react';
-import { dataOrUndefined, useHarNivaa4Context, useOppfolgingContext, useUserInfoContext } from '../Provider';
-import IkkeUnderOppfolging from './IkkeUnderOppfolging';
-import ReservertKrr from './ReservertKrr';
-import KanIkkeVarsles from './KanIkkeVarsles';
-import AldriUnderOppfolging from './AldriUnderOppfolging';
-import MannuelBruker from './Manuell';
+
 import { erProd } from '../../utils/FellesFunksjoner';
+import { dataOrUndefined, useHarNivaa4Context, useOppfolgingContext, useUserInfoContext } from '../Provider';
+import AldriUnderOppfolging from './AldriUnderOppfolging';
+import IkkeUnderOppfolging from './IkkeUnderOppfolging';
+import KanIkkeVarsles from './KanIkkeVarsles';
+import MannuelBruker from './Manuell';
 import { ManglerNivaa4, Nivaa4Feiler } from './Nivaa4';
+import ReservertKrr from './ReservertKrr';
 
 export default function StatusAdvarsel() {
     const oppfolgingDataContext = useOppfolgingContext();

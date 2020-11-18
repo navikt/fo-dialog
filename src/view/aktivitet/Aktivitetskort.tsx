@@ -1,15 +1,16 @@
-import React from 'react';
 import { Systemtittel } from 'nav-frontend-typografi';
-import { AktivitetskortInfoBox } from './AktivitetskortInfoBox';
-import styles from './Aktivitetskort.module.less';
+import React from 'react';
 import { useParams } from 'react-router';
-import Brodsmulesti from './Brodsmulesti';
-import AktivitetskortLenke from './AktivitetskortLinke';
-import AktivitetIngress from './AktivitetIngress';
-import AvtaltMarkering from './etiketter/avtalt-markering';
-import { useAktivitetId } from '../utils/useAktivitetId';
+
 import { findAktivitet, useAktivitetContext } from '../AktivitetProvider';
 import { useDialogContext } from '../DialogProvider';
+import { useAktivitetId } from '../utils/useAktivitetId';
+import AktivitetIngress from './AktivitetIngress';
+import styles from './Aktivitetskort.module.less';
+import { AktivitetskortInfoBox } from './AktivitetskortInfoBox';
+import AktivitetskortLenke from './AktivitetskortLinke';
+import Brodsmulesti from './Brodsmulesti';
+import AvtaltMarkering from './etiketter/avtalt-markering';
 
 export function Aktivitetskort() {
     const { dialoger } = useDialogContext();

@@ -1,4 +1,5 @@
 import 'whatwg-fetch';
+
 // @ts-ignore
 import smoothscroll from 'smoothscroll-polyfill';
 

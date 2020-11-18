@@ -1,10 +1,11 @@
-import React from 'react';
-import { DialogPreviewListe } from './DialogPreview';
-import { DialogData } from '../../utils/Typer';
-import { useParams } from 'react-router';
-import styles from './DialogOversikt.module.less';
 import { Systemtittel } from 'nav-frontend-typografi';
+import React from 'react';
+import { useParams } from 'react-router';
+
+import { DialogData } from '../../utils/Typer';
 import { useDialogContext } from '../DialogProvider';
+import styles from './DialogOversikt.module.less';
+import { DialogPreviewListe } from './DialogPreview';
 import HistoriskeDialogerOversikt from './HistoriskDialogListe';
 
 interface Res {

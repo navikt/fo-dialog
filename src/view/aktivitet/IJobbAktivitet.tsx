@@ -1,6 +1,7 @@
 import React from 'react';
-import { formaterDate } from '../../utils/Date';
+
 import { Aktivitet } from '../../utils/AktivitetTypes';
+import { formaterDate } from '../../utils/Date';
 import InformasjonElement from './InformasjonElement';
 
 interface PropTypes {

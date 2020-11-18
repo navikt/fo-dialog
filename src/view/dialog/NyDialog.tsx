@@ -1,15 +1,16 @@
+import classNames from 'classnames';
 import React, { useEffect } from 'react';
-import { useViewContext } from '../Provider';
+
 import useKansendeMelding from '../../utils/UseKanSendeMelding';
-import { endreDialogSomVises, sendtNyDialog } from '../ViewState';
+import { getDialogTittel } from '../aktivitet/TextUtils';
+import { findAktivitet, isLoadingData, useAktivitetContext } from '../AktivitetProvider';
+import { useViewContext } from '../Provider';
+import { useAktivitetId } from '../utils/useAktivitetId';
 import { useSkjulHodefotForMobilVisning } from '../utils/useSkjulHodefotForMobilVisning';
+import { endreDialogSomVises, sendtNyDialog } from '../ViewState';
+import styles from './Dialog.module.less';
 import { TittelHeader } from './DialogHeader';
 import NyDialogForm from './NyDialogForm';
-import { useAktivitetId } from '../utils/useAktivitetId';
-import { findAktivitet, isLoadingData, useAktivitetContext } from '../AktivitetProvider';
-import classNames from 'classnames';
-import styles from './Dialog.module.less';
-import { getDialogTittel } from '../aktivitet/TextUtils';
 
 const cls = classNames(styles.dialog, styles.overflowAuto);
 

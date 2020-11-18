@@ -1,5 +1,6 @@
-import React from 'react';
 import Lenke from 'nav-frontend-lenker';
+import React from 'react';
+
 import StatusAdvarselWrapper, { KanIkkeKontakteElektroniskVeileder } from './StatusAdvarselWrapper';
 
 interface Props {

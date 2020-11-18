@@ -1,9 +1,10 @@
 import classNames from 'classnames';
-import styles from './Ikon.module.less';
-import { ReactComponent as AktivitetsIkon } from './aktivitet-dialog-lest.svg';
-import { ReactComponent as DialogIkon } from './snakkeboble.svg';
 import React from 'react';
+
 import { DialogData } from '../../../utils/Typer';
+import { ReactComponent as AktivitetsIkon } from './aktivitet-dialog-lest.svg';
+import styles from './Ikon.module.less';
+import { ReactComponent as DialogIkon } from './snakkeboble.svg';
 
 interface IkonProps {
     dialog: DialogData;

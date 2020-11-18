@@ -1,8 +1,9 @@
-import { useEventListener } from '../view/utils/useEventListner';
-import { useAktivitetContext } from '../view/AktivitetProvider';
-import { useOppfolgingContext } from '../view/Provider';
 import React from 'react';
+
+import { useAktivitetContext } from '../view/AktivitetProvider';
 import { useDialogContext } from '../view/DialogProvider';
+import { useOppfolgingContext } from '../view/Provider';
+import { useEventListener } from '../view/utils/useEventListner';
 
 export enum UpdateTypes {
     Dialog = 'DIALOG',
@@ -31,7 +32,7 @@ export function UppdateEventHandler() {
     const { aktiviteter } = useAktivitetContext();
     const dialogContext = useDialogContext();
     const oppfolgingContext = useOppfolgingContext();
-    useEventListener(eventName, event => {
+    useEventListener(eventName, (event) => {
         if (!isUpdateEvent(event)) {
             return;
         }

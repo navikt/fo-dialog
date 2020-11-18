@@ -1,6 +1,6 @@
-import React, { useState } from 'react';
-import { Checkbox as NavCheckbox, CheckboxProps } from 'nav-frontend-skjema';
 import { FieldState } from '@nutgaard/use-formstate';
+import { CheckboxProps, Checkbox as NavCheckbox } from 'nav-frontend-skjema';
+import React, { useState } from 'react';
 
 interface Props {
     initialValue?: string;

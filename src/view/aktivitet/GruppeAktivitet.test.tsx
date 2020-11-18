@@ -1,9 +1,10 @@
+import '../../utils/SetupEnzyme';
+
+import { shallow } from 'enzyme';
 import React from 'react';
 
-import GruppeAktivitet from './GruppeAktivitet';
-import { shallow } from 'enzyme';
 import { ArenaAktivitetTypes } from '../../utils/AktivitetTypes';
-import '../../utils/SetupEnzyme';
+import GruppeAktivitet from './GruppeAktivitet';
 
 describe('<GruppeAktivitet/>', () => {
     it('skal vise bare en dato hvis fraDato==tilDato', () => {

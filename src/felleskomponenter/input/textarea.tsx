@@ -1,6 +1,6 @@
-import React, { ChangeEvent } from 'react';
-import { Textarea as NavTextArea } from 'nav-frontend-skjema';
 import { FieldState } from '@nutgaard/use-formstate';
+import { Textarea as NavTextArea } from 'nav-frontend-skjema';
+import React, { ChangeEvent } from 'react';
 
 function getTellerTekst(antallTegn: number, maxLength: number, visTellerFra?: number) {
     const tegnIgjen = maxLength - antallTegn;

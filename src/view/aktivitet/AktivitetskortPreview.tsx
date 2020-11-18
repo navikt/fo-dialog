@@ -1,17 +1,18 @@
-import React from 'react';
-import { Aktivitet, AktivitetTypes, ArenaAktivitet, ArenaAktivitetTypes } from '../../utils/AktivitetTypes';
-import { EtikettLiten, Systemtittel, Undertekst, Undertittel } from 'nav-frontend-typografi';
 import { LenkepanelBase } from 'nav-frontend-lenkepanel';
+import { EtikettLiten, Systemtittel, Undertekst, Undertittel } from 'nav-frontend-typografi';
+import React from 'react';
+
+import { visibleIfHoc } from '../../felleskomponenter/VisibleIfHoc';
+import { Aktivitet, AktivitetTypes, ArenaAktivitet, ArenaAktivitetTypes } from '../../utils/AktivitetTypes';
 import { formaterDate, getKlokkeslett } from '../../utils/Date';
+import { StringOrNull } from '../../utils/Typer';
+import useApiBasePath from '../../utils/UseApiBasePath';
+import { findAktivitet, useAktivitetContext } from '../AktivitetProvider';
+import { dialogHeaderID2 } from '../dialog/DialogHeader';
+import { useFnrContext } from '../Provider';
+import { aktivitetLenke, visAktivitetsplan } from './AktivitetskortLinke';
 import styles from './AktivitetskortPreview.module.less';
 import { getTypeText } from './TextUtils';
-import { aktivitetLenke, visAktivitetsplan } from './AktivitetskortLinke';
-import { useFnrContext } from '../Provider';
-import { StringOrNull } from '../../utils/Typer';
-import { findAktivitet, useAktivitetContext } from '../AktivitetProvider';
-import useApiBasePath from '../../utils/UseApiBasePath';
-import { dialogHeaderID2 } from '../dialog/DialogHeader';
-import { visibleIfHoc } from '../../felleskomponenter/VisibleIfHoc';
 
 const UndertekstVisible = visibleIfHoc(Undertekst);
 
