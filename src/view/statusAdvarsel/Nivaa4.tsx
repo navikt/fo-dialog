@@ -10,7 +10,7 @@ interface Props {
 }
 
 const Mere = () => (
-    <Hjelpetekst type={PopoverOrientering.Under}>
+    <Hjelpetekst type={PopoverOrientering.Over}>
         Dette er et midlertidig problem på grunn av ny teknisk løsning etter koronasituasjonen.
         <ul>
             <li>
