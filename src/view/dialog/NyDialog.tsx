@@ -9,8 +9,8 @@ import { useAktivitetId } from '../utils/useAktivitetId';
 import { useSkjulHodefotForMobilVisning } from '../utils/useSkjulHodefotForMobilVisning';
 import { endreDialogSomVises, sendtNyDialog } from '../ViewState';
 import styles from './Dialog.module.less';
-import { TittelHeader } from './DialogHeader';
 import NyDialogForm from './NyDialogForm';
+import { TittelHeader } from './TittelHeader';
 
 const cls = classNames(styles.dialog, styles.overflowAuto);
 
