@@ -5,11 +5,10 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 
 import { DialogData, StringOrNull } from '../../utils/Typer';
-import { AktivitetskortPreview } from '../aktivitet/AktivitetskortPreview';
 import { AktivitetContextType, useAktivitetContext } from '../AktivitetProvider';
 import styles from './DialogHeader.module.less';
 import DialogHeaderFeil from './DialogHeaderFeil';
-import { DialogOverskrift } from './DialogOverskrift';
+import { HeaderInnhold } from './HeaderInnhold';
 
 export const dialogHeaderID1 = 'dialog_header_1';
 export const dialogHeaderID2 = 'dialog_header_2';
@@ -32,11 +31,11 @@ function harAktivitetDataFeil(aktivitetData: AktivitetContextType, aktivitetId?:
 
 export function DialogHeader(props: DialogHeaderProps) {
     const { dialog, aktivitetId, visSkygge } = props;
-    const aktivitet = aktivitetId || dialog?.aktivitetId;
+    const aktivitetID = aktivitetId || dialog?.aktivitetId;
 
     const aktivitetData = useAktivitetContext();
-    const erFeil = harAktivitetDataFeil(aktivitetData, aktivitet);
-    const viseAktivitet = aktivitet && !erFeil;
+    const erFeil = harAktivitetDataFeil(aktivitetData, aktivitetID);
+    const viseAktivitet = !!aktivitetID && !erFeil;
 
     const TilbakeKnapp = () => (
         <Link to="/" title="Til dialoger" className={styles.tilbakeTilOversikt}>
@@ -44,22 +43,16 @@ export function DialogHeader(props: DialogHeaderProps) {
         </Link>
     );
 
-    const HeaderInnhold = () =>
-        viseAktivitet ? (
-            <AktivitetskortPreview aktivitetId={aktivitet} />
-        ) : (
-            <DialogOverskrift tekst={dialog?.overskrift} />
-        );
-
     return (
         <>
             <DialogHeaderFeil visible={erFeil} />
             <div className={classNames(styles.dialogHeader, { [styles.dialogHeaderShadow]: visSkygge })}>
                 <TilbakeKnapp />
-                <div id={dialogHeaderID1} className="hide">
-                    Dialog om:
-                </div>
-                <HeaderInnhold />
+                <HeaderInnhold
+                    viseAktivitet={viseAktivitet}
+                    aktivitetId={aktivitetID}
+                    dialogOverskrift={dialog?.overskrift}
+                />
             </div>
         </>
     );
