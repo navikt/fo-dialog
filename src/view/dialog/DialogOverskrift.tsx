@@ -9,14 +9,9 @@ interface DialogOverskriftProps {
     tekst?: StringOrNull;
 }
 
-export function DialogOverskrift(props: DialogOverskriftProps) {
-    if (!props.tekst) {
-        return null;
-    }
-
-    return (
+export const DialogOverskrift = (props: DialogOverskriftProps) =>
+    props.tekst ? (
         <Undertittel id={dialogHeaderID2} className={styles.tittel}>
             {props.tekst}
         </Undertittel>
-    );
-}
+    ) : null;

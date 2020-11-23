@@ -11,7 +11,7 @@ interface PropsTypes {
     aktivitetId?: StringOrNull;
 }
 
-export function HeaderInnhold(props: PropsTypes) {
+export const HeaderInnhold = (props: PropsTypes) => {
     const { viseAktivitet, dialogOverskrift, aktivitetId } = props;
 
     const UUMarkering = () => (
@@ -30,4 +30,4 @@ export function HeaderInnhold(props: PropsTypes) {
             )}
         </>
     );
-}
+};
