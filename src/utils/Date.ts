@@ -5,6 +5,10 @@ import { ValueOrNull } from './Typer';
 
 const locale = { locale: nb };
 
+export function compareDates(adato: string, bdato: string): number {
+    return adato > bdato ? -1 : adato === bdato ? 0 : 1;
+}
+
 export function formaterDateAndTime(sendtDate: ValueOrNull<string>): string {
     if (!sendtDate) return '';
     return format(new Date(sendtDate), 'dd.MM.yyyy HH:mm', locale);
