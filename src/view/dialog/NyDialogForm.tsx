@@ -6,7 +6,7 @@ import React, { useEffect, useRef, useState } from 'react';
 import { useHistory } from 'react-router';
 
 import AlertStripeFeilVisible from '../../felleskomponenter/AlertStripeFeilVisible';
-import Input from '../../felleskomponenter/input/input';
+import Input from '../../felleskomponenter/input/Input';
 import loggEvent from '../../felleskomponenter/logging';
 import EkspanderbartTekstArea from '../../felleskomponenter/textArea/TextArea';
 import { StringOrNull } from '../../utils/Typer';
