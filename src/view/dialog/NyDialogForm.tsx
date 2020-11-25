@@ -28,19 +28,19 @@ function validerTema(tema: string, rest: any, props: { disabled?: boolean }) {
     }
 
     if (tema.trim().length === 0) {
-        return 'Tema må ha innhold.';
+        return 'Du må skrive hva meldingen handler om';
     }
     if (tema.trim().length > 100) {
-        return 'Tema kan ikke være mer enn 100 tegn.';
+        return 'Tema kan ikke være mer enn 100 tegn';
     }
 }
 
 function validerMelding(melding: string, resten: any, props: { startTekst?: string }) {
     if (melding.length > maxMeldingsLengde) {
-        return `Meldingen kan ikke være mer enn ${maxMeldingsLengde} tegn.`;
+        return `Meldingen kan ikke være mer enn ${maxMeldingsLengde} tegn`;
     }
     if (melding.trim().length === 0) {
-        return 'Du må fylle ut en melding.';
+        return 'Du må fylle ut en melding';
     }
     if (melding.trim() === props.startTekst?.trim()) {
         return 'Du må endre på meldingen';
