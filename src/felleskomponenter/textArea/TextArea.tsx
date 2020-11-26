@@ -19,7 +19,7 @@ interface Props {
     visTellerFra?: number;
     placeholder?: string;
     maxLength: number;
-    label: any;
+    label?: string;
     minRows?: number;
     submittoken?: string;
     onChange?: (e: ChangeEvent<HTMLTextAreaElement>) => void;
@@ -44,6 +44,7 @@ const EkspanderbartTekstArea = (props: Props) => {
         submittoken,
         maxLength,
         minRows = 1,
+        placeholder,
         ...rest
     } = props;
 
@@ -55,7 +56,7 @@ const EkspanderbartTekstArea = (props: Props) => {
     const inputProps = { ...input, ...rest };
     const length = input.value.length;
 
-    const names = classNames(styles.textarea, { [styles.textareaFeil]: feil });
+    const names = classNames(styles.textarea, { [styles.textareaFeil]: feil }, 'label-sr-only');
 
     const _onChange = (e: ChangeEvent<HTMLTextAreaElement>) => {
         onChange && onChange(e);
@@ -64,13 +65,13 @@ const EkspanderbartTekstArea = (props: Props) => {
 
     return (
         <div className={styles.wrapper}>
-            <Label htmlFor={id}>{label}</Label>
+            {label && <Label htmlFor={id}>{label}</Label>}
             <TextareaAutosize
                 className={names}
                 minRows={minRows}
                 maxRows={10}
                 label="Skriv en melding om arbeid og oppfølging"
-                placeholder="Skriv en melding om arbeid og oppfølging"
+                placeholder={placeholder}
                 aria-invalid={!!feil}
                 aria-errormessage={feil ? feilmeldingId : undefined}
                 aria-describedby={tellerId}
