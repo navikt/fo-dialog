@@ -1,6 +1,7 @@
 import { FieldState } from '@nutgaard/use-formstate';
 import classNames from 'classnames';
 import { guid } from 'nav-frontend-js-utils';
+import { Normaltekst } from 'nav-frontend-typografi';
 import React, { ChangeEvent, useState } from 'react';
 import TextareaAutosize from 'react-textarea-autosize';
 
@@ -31,6 +32,7 @@ function useGuid(): string {
 
 export default function EkspanderbartTekstArea(props: Props) {
     const {
+        label,
         touched,
         error,
         input,
@@ -60,8 +62,10 @@ export default function EkspanderbartTekstArea(props: Props) {
 
     return (
         <div className={styles.wrapper}>
+            <Normaltekst className={styles.label}>{label}</Normaltekst>
             <TextareaAutosize
                 className={names}
+                minRows={2}
                 maxRows={10}
                 label="Skriv en melding om arbeid og oppfølging"
                 placeholder="Skriv en melding om arbeid og oppfølging"

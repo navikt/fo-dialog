@@ -155,7 +155,7 @@ function NyDialogForm(props: Props) {
                     </div>
                 </SkjemaGruppe>
 
-                <Hovedknapp title="Send" autoDisableVedSpinner spinner={state.submitting}>
+                <Hovedknapp title="Send" autoDisableVedSpinner spinner={state.submitting} className={style.hovedknapp}>
                     Send
                 </Hovedknapp>
 
