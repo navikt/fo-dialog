@@ -22,7 +22,7 @@ const veilederInfoMelding = 'Skriv en melding til brukeren';
 const brukerinfomelding =
     'Her kan du skrive til din veileder om arbeid og oppfølging. Du vil få svar i løpet av noen dager.';
 
-function validerTema(tema: string, rest: any, props: { disabled?: boolean }) {
+const validerTema = (tema: string, rest: any, props: { disabled?: boolean }) => {
     if (props.disabled) {
         return undefined;
     }
@@ -33,9 +33,9 @@ function validerTema(tema: string, rest: any, props: { disabled?: boolean }) {
     if (tema.trim().length > 100) {
         return 'Tema kan ikke være mer enn 100 tegn';
     }
-}
+};
 
-function validerMelding(melding: string, resten: any, props: { startTekst?: string }) {
+const validerMelding = (melding: string, resten: any, props: { startTekst?: string }) => {
     if (melding.length > maxMeldingsLengde) {
         return `Meldingen kan ikke være mer enn ${maxMeldingsLengde} tegn`;
     }
@@ -45,7 +45,7 @@ function validerMelding(melding: string, resten: any, props: { startTekst?: stri
     if (melding.trim() === props.startTekst?.trim()) {
         return 'Du må endre på meldingen';
     }
-}
+};
 
 const validator = useFormstate({
     tema: validerTema,
@@ -58,7 +58,7 @@ interface Props {
     aktivitetId?: string;
 }
 
-function NyDialogForm(props: Props) {
+const NyDialogForm = (props: Props) => {
     const { defaultTema, onSubmit, aktivitetId } = props;
     const { hentDialoger, nyDialog } = useDialogContext();
     const bruker = useUserInfoContext();
@@ -155,7 +155,7 @@ function NyDialogForm(props: Props) {
                     </div>
                 </SkjemaGruppe>
 
-                <Hovedknapp title="Send" autoDisableVedSpinner spinner={state.submitting}>
+                <Hovedknapp title="Send" autoDisableVedSpinner spinner={state.submitting} className={style.hovedknapp}>
                     Send
                 </Hovedknapp>
 
@@ -165,6 +165,6 @@ function NyDialogForm(props: Props) {
             </form>
         </div>
     );
-}
+};
 
 export default NyDialogForm;
