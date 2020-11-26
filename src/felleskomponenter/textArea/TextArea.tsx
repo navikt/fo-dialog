@@ -1,11 +1,11 @@
 import { FieldState } from '@nutgaard/use-formstate';
 import classNames from 'classnames';
 import { guid } from 'nav-frontend-js-utils';
-import { Normaltekst } from 'nav-frontend-typografi';
+import { Label } from 'nav-frontend-skjema';
 import React, { ChangeEvent, useState } from 'react';
 import TextareaAutosize from 'react-textarea-autosize';
 
-import { Feilemelding } from './Feilmelding';
+import Feilemelding from './Feilmelding';
 import { Teller } from './Teller';
 import styles from './TextArea.module.less';
 
@@ -20,6 +20,7 @@ interface Props {
     placeholder?: string;
     maxLength: number;
     label: any;
+    minRows?: number;
     submittoken?: string;
     onChange?: (e: ChangeEvent<HTMLTextAreaElement>) => void;
 }
@@ -42,6 +43,7 @@ const EkspanderbartTekstArea = (props: Props) => {
         onChange,
         submittoken,
         maxLength,
+        minRows = 1,
         ...rest
     } = props;
 
@@ -62,10 +64,10 @@ const EkspanderbartTekstArea = (props: Props) => {
 
     return (
         <div className={styles.wrapper}>
-            <Normaltekst className={styles.label}>{label}</Normaltekst>
+            <Label htmlFor={id}>{label}</Label>
             <TextareaAutosize
                 className={names}
-                minRows={2}
+                minRows={minRows}
                 maxRows={10}
                 label="Skriv en melding om arbeid og oppfølging"
                 placeholder="Skriv en melding om arbeid og oppfølging"
