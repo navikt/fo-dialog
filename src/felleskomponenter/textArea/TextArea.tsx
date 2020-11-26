@@ -24,13 +24,13 @@ interface Props {
     onChange?: (e: ChangeEvent<HTMLTextAreaElement>) => void;
 }
 
-function useGuid(): string {
+const useGuid = (): string => {
     const useState1 = useState(guid());
 
     return useState1[0];
-}
+};
 
-export default function EkspanderbartTekstArea(props: Props) {
+const EkspanderbartTekstArea = (props: Props) => {
     const {
         label,
         touched,
@@ -82,4 +82,6 @@ export default function EkspanderbartTekstArea(props: Props) {
             </div>
         </div>
     );
-}
+};
+
+export default EkspanderbartTekstArea;
