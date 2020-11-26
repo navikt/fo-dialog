@@ -1,6 +1,5 @@
 import { FieldState } from '@nutgaard/use-formstate';
 import { InputProps, Input as NavInput } from 'nav-frontend-skjema';
-/* eslint-disable no-unused-vars */
 import React, { ChangeEvent } from 'react';
 
 interface Props {
@@ -16,7 +15,8 @@ interface Props {
 // pristine and initialValue isn't used, but we don't want to pass it to input
 function Input(props: Props & InputProps) {
     const { touched, error, input, onChange, pristine, initialValue, submittoken, ...rest } = props;
-    const feil = error && !!submittoken ? { feilmelding: error } : undefined;
+    const feil = error && !!submittoken ? error : undefined;
+
     const inputProps = { ...input, ...rest };
 
     const _onChange = (e: ChangeEvent<HTMLInputElement>) => {
