@@ -148,6 +148,7 @@ const NyDialogForm = (props: Props) => {
                             placeholder="Skriv om arbeid og oppfølging"
                             maxLength={maxMeldingsLengde}
                             visTellerFra={1000}
+                            minRows={2}
                             submittoken={state.submittoken}
                             onChange={(e) => onChange(undefined, e.target.value)}
                             {...state.fields.melding}

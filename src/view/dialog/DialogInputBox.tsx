@@ -53,9 +53,8 @@ function HenvendelseInput(props: HenvendelseInputProps) {
     }
 
     return (
-        <div className="skriv-melding label-sr-only">
+        <div className="skriv-melding">
             <EkspanderbartTekstArea
-                label="Skriv om arbeid og oppfølging"
                 placeholder="Skriv om arbeid og oppfølging"
                 maxLength={maxMeldingsLengde}
                 visTellerFra={1000}
