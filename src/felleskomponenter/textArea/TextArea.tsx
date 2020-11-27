@@ -1,10 +1,11 @@
 import { FieldState } from '@nutgaard/use-formstate';
 import classNames from 'classnames';
 import { guid } from 'nav-frontend-js-utils';
+import { Label } from 'nav-frontend-skjema';
 import React, { ChangeEvent, useState } from 'react';
 import TextareaAutosize from 'react-textarea-autosize';
 
-import { Feilemelding } from './Feilmelding';
+import Feilemelding from './Feilmelding';
 import { Teller } from './Teller';
 import styles from './TextArea.module.less';
 
@@ -18,19 +19,21 @@ interface Props {
     visTellerFra?: number;
     placeholder?: string;
     maxLength: number;
-    label: any;
+    label?: string;
+    minRows?: number;
     submittoken?: string;
     onChange?: (e: ChangeEvent<HTMLTextAreaElement>) => void;
 }
 
-function useGuid(): string {
+const useGuid = (): string => {
     const useState1 = useState(guid());
 
     return useState1[0];
-}
+};
 
-export default function EkspanderbartTekstArea(props: Props) {
+const EkspanderbartTekstArea = (props: Props) => {
     const {
+        label,
         touched,
         error,
         input,
@@ -40,6 +43,8 @@ export default function EkspanderbartTekstArea(props: Props) {
         onChange,
         submittoken,
         maxLength,
+        minRows = 1,
+        placeholder,
         ...rest
     } = props;
 
@@ -51,7 +56,7 @@ export default function EkspanderbartTekstArea(props: Props) {
     const inputProps = { ...input, ...rest };
     const length = input.value.length;
 
-    const names = classNames(styles.textarea, { [styles.textareaFeil]: feil });
+    const names = classNames(styles.textarea, { [styles.textareaFeil]: feil }, 'label-sr-only');
 
     const _onChange = (e: ChangeEvent<HTMLTextAreaElement>) => {
         onChange && onChange(e);
@@ -60,11 +65,13 @@ export default function EkspanderbartTekstArea(props: Props) {
 
     return (
         <div className={styles.wrapper}>
+            {label && <Label htmlFor={id}>{label}</Label>}
             <TextareaAutosize
                 className={names}
+                minRows={minRows}
                 maxRows={10}
                 label="Skriv en melding om arbeid og oppfølging"
-                placeholder="Skriv en melding om arbeid og oppfølging"
+                placeholder={placeholder}
                 aria-invalid={!!feil}
                 aria-errormessage={feil ? feilmeldingId : undefined}
                 aria-describedby={tellerId}
@@ -78,4 +85,6 @@ export default function EkspanderbartTekstArea(props: Props) {
             </div>
         </div>
     );
-}
+};
+
+export default EkspanderbartTekstArea;

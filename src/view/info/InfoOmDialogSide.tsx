@@ -6,7 +6,7 @@ import React, { useLayoutEffect } from 'react';
 
 import useApiBasePath from '../../utils/UseApiBasePath';
 import dialogStyle from '../dialog/Dialog.module.less';
-import { TittelHeader } from '../dialog/DialogHeader';
+import { TittelHeader } from '../dialog/TittelHeader';
 import { useSkjulHodefotForMobilVisning } from '../utils/useSkjulHodefotForMobilVisning';
 import styles from './InfoOmDialogSide.module.less';
 

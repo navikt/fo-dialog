@@ -8,7 +8,6 @@ import EkspanderbartTekstArea from '../../felleskomponenter/textArea/TextArea';
 import { DialogData } from '../../utils/Typer';
 import { UpdateTypes, dispatchUpdate } from '../../utils/UpdateEvent';
 import { useDialogContext } from '../DialogProvider';
-import { smoothScrollToLastHenvendelse } from '../henvendelse/useScrollToLastHenvendelse';
 import { useKladdContext } from '../KladdProvider';
 import { dataOrUndefined, useOppfolgingContext, useUserInfoContext, useViewContext } from '../Provider';
 import { HandlingsType, sendtNyHenvendelse } from '../ViewState';
@@ -54,9 +53,8 @@ function HenvendelseInput(props: HenvendelseInputProps) {
     }
 
     return (
-        <div className="skriv-melding label-sr-only">
+        <div className="skriv-melding">
             <EkspanderbartTekstArea
-                label="Skriv om arbeid og oppfølging"
                 placeholder="Skriv om arbeid og oppfølging"
                 maxLength={maxMeldingsLengde}
                 visTellerFra={1000}
@@ -148,7 +146,6 @@ export function DialogInputBox(props: Props) {
                 state.reinitialize({ melding: startTekst });
                 setViewState(sendtNyHenvendelse(viewState));
                 dispatchUpdate(UpdateTypes.Dialog);
-                smoothScrollToLastHenvendelse();
             })
             .catch(() => setNoeFeilet(true));
     };

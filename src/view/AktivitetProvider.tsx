@@ -1,4 +1,4 @@
-import useFetch, { FetchResult, Status, hasData } from '@nutgaard/use-fetch';
+import useFetch, { FetchResult, Status, hasData, hasError } from '@nutgaard/use-fetch';
 import React, { useContext } from 'react';
 
 import { Aktivitet, ArenaAktivitet } from '../utils/AktivitetTypes';
@@ -36,6 +36,14 @@ export function isLoadingData(aktivitetData: AktivitetContextType): boolean {
     const arena = hasData(aktivitetData.arenaAktiviter);
 
     return !aktiviteter || !arena;
+}
+
+export function harAktivitetDataFeil(aktivitetData: AktivitetContextType, arenaAktivitet: boolean): boolean {
+    if (arenaAktivitet) {
+        return hasError(aktivitetData.arenaAktiviter);
+    } else {
+        return hasError(aktivitetData.aktiviteter);
+    }
 }
 
 export function findAktivitet(aktivitetData: AktivitetContextType, aktivitetId?: StringOrNull): MaybeAktivitet {

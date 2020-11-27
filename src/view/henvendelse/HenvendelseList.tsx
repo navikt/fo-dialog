@@ -1,18 +1,15 @@
 import { Systemtittel } from 'nav-frontend-typografi';
-import React from 'react';
+import React, { useEffect } from 'react';
 
+import { compareDates } from '../../utils/Date';
 import { DialogData, HenvendelseData, StringOrNull } from '../../utils/Typer';
 import LestAvTidspunkt from '../lest/LestTidspunkt';
 import { useSkjulHodefotForMobilVisning } from '../utils/useSkjulHodefotForMobilVisning';
 import { Henvendelse } from './Henvendelse';
-import { useScrollToLastHenvendelse } from './useScrollToLastHenvendelse';
+import styles from './HenvendelseList.module.less';
 
 interface Props {
     dialogData: DialogData;
-}
-
-function datoComparator(adato: string, bdato: string): number {
-    return adato > bdato ? -1 : adato === bdato ? 0 : 1;
 }
 
 function sisteLesteHenvendelse(lest: StringOrNull, henvendelser: HenvendelseData[]) {
@@ -20,42 +17,44 @@ function sisteLesteHenvendelse(lest: StringOrNull, henvendelser: HenvendelseData
         return null;
     }
 
-    const lesteMeldinger = henvendelser.filter((henvendelse) => datoComparator(henvendelse.sendt, lest) >= 0);
+    const lesteMeldinger = henvendelser.filter((henvendelse) => compareDates(henvendelse.sendt, lest) >= 0);
     const sistLeste = lesteMeldinger[lesteMeldinger.length - 1];
     return sistLeste ? sistLeste.id : null;
 }
 
-function erViktig(dialog: DialogData) {
-    return dialog.egenskaper[0] === 'ESKALERINGSVARSEL';
-}
-
 export function HenvendelseList(props: Props) {
-    const dialogData = props.dialogData;
-    const { lestAvBrukerTidspunkt, henvendelser, id } = dialogData;
+    const { lestAvBrukerTidspunkt, henvendelser } = props.dialogData;
 
-    const sorterteHenvendelser = !!henvendelser ? henvendelser.sort((a, b) => datoComparator(b.sendt, a.sendt)) : [];
-    const lastHenvendelse = sorterteHenvendelser[sorterteHenvendelser.length - 1];
-    const lastHenvendelseId = !!lastHenvendelse ? lastHenvendelse.id : undefined;
+    const sorterteHenvendelser = !!henvendelser ? henvendelser.sort((a, b) => compareDates(b.sendt, a.sendt)) : [];
 
     useSkjulHodefotForMobilVisning();
-    useScrollToLastHenvendelse(id, lastHenvendelseId);
+
+    useEffect(() => {
+        requestAnimationFrame(() => {
+            const elem = document.querySelector('#henvendelse-scroll-list');
+            if (elem !== null) {
+                elem.scrollTo({ top: elem.scrollHeight, behavior: 'auto' });
+            }
+        });
+    }, [henvendelser]);
 
     if (!henvendelser) {
         return null;
     }
 
+    const erViktig = props.dialogData.egenskaper[0] === 'ESKALERINGSVARSEL';
     const sisteHenvendelseLestAvBruker = sisteLesteHenvendelse(lestAvBrukerTidspunkt, sorterteHenvendelser);
 
     return (
-        <section aria-label="Meldinger" className="henvendelse-list">
+        <section id="henvendelse-scroll-list" aria-label="Meldinger" className={styles.henvendelseList}>
             <Systemtittel className="visually-hidden">Meldinger</Systemtittel>
-            <div className="henvendelse-list__viewport">
+            <div className={styles.henvendelseContainer}>
                 {sorterteHenvendelser.map((henvendelse, index) => (
                     <React.Fragment key={henvendelse.id}>
-                        <div className="henvendelse-list__henvendelse henvendelse-item">
+                        <div className={styles.henvendelseItem}>
                             <Henvendelse
                                 henvendelseData={henvendelse}
-                                viktigMarkering={(erViktig(dialogData) && index === 0) || henvendelse.viktig}
+                                viktigMarkering={(erViktig && index === 0) || henvendelse.viktig}
                             />
                         </div>
                         <LestAvTidspunkt
