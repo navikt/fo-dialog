@@ -29,7 +29,6 @@ export function Aktivitetskort() {
 
     return (
         <section aria-label="Aktivitet knyttet til dialog" className={styles.aktivitetskort}>
-            <Systemtittel className="visually-hidden">Aktivitet knyttet til dialog</Systemtittel>
             <AktivitetskortLenke aktivitetId={id} />
             <Brodsmulesti status={status} type={type} />
             <Systemtittel>{tittel}</Systemtittel>

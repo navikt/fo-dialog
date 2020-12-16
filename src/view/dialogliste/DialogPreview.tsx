@@ -87,6 +87,7 @@ interface ListeProps {
 export function DialogPreviewListe(props: ListeProps) {
     const { dialoger, valgDialog } = props;
 
+    if (dialoger.length === 0) return null;
     return (
         <Flipper flipKey={dialoger.map((d) => d.id).join('')}>
             <div role="list" aria-label="Dialogliste">

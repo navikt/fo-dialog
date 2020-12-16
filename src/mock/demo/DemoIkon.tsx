@@ -14,6 +14,7 @@ export function DemoIkon(props: Props) {
             width={110}
             className={styles.demoIkon}
             onClick={props.onClick}
+            focusable={false}
         >
             <polygon points="0,0 110,0 110,110" />
             <text x={40} y={10} transform="rotate(45 20,40)">
