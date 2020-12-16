@@ -6,15 +6,16 @@ import React, { useEffect, useRef, useState } from 'react';
 import { useHistory } from 'react-router';
 
 import AlertStripeFeilVisible from '../../felleskomponenter/AlertStripeFeilVisible';
-import Input from '../../felleskomponenter/input/Input';
 import loggEvent from '../../felleskomponenter/logging';
-import EkspanderbartTekstArea from '../../felleskomponenter/textArea/TextArea';
 import { StringOrNull } from '../../utils/Typer';
 import { UpdateTypes, dispatchUpdate } from '../../utils/UpdateEvent';
 import { useDialogContext } from '../DialogProvider';
 import { findKladd, useKladdContext } from '../KladdProvider';
 import { useUserInfoContext } from '../Provider';
 import style from './NyDialogForm.module.less';
+import { SkrivMeldingInput } from './SkrivMeldingInput';
+import { TemaInput } from './TemaInput';
+import { TittelHeader } from './TittelHeader';
 import useHenvendelseStartTekst from './UseHenvendelseStartTekst';
 
 const maxMeldingsLengde = 5000;
@@ -54,7 +55,7 @@ const validator = useFormstate({
 
 interface Props {
     defaultTema?: StringOrNull;
-    onSubmit?: () => void;
+    onSubmit: () => void;
     aktivitetId?: string;
 }
 
@@ -69,7 +70,7 @@ const NyDialogForm = (props: Props) => {
     const { kladder, oppdaterKladd, slettKladd } = useKladdContext();
     const kladd = findKladd(kladder, null, aktivitetId);
 
-    const [tmpInput, setTmpInput] = useState<{ tema?: StringOrNull; melding?: StringOrNull }>({
+    const [gjeldendeInput, setGjeldendeInput] = useState<{ tema?: StringOrNull; melding?: StringOrNull }>({
         tema: kladd?.overskrift,
         melding: kladd?.tekst
     });
@@ -104,7 +105,7 @@ const NyDialogForm = (props: Props) => {
         return nyDialog(melding, tema, aktivitetId)
             .then((dialog) => {
                 slettKladd(null, props.aktivitetId);
-                onSubmit && onSubmit();
+                onSubmit();
                 history.push('/' + dialog.id);
                 dispatchUpdate(UpdateTypes.Dialog);
                 return dialog;
@@ -114,9 +115,9 @@ const NyDialogForm = (props: Props) => {
     };
 
     const onChange = (tema?: string, melding?: string) => {
-        const newTema = tema !== undefined ? tema : tmpInput.tema;
-        const newMelding = melding !== undefined ? melding : tmpInput.melding;
-        setTmpInput({ tema: newTema, melding: newMelding });
+        const newTema = tema !== undefined ? tema : gjeldendeInput.tema;
+        const newMelding = melding !== undefined ? melding : gjeldendeInput.melding;
+        setGjeldendeInput({ tema: newTema, melding: newMelding });
         timer.current && clearInterval(timer.current);
         callback.current = () => {
             timer.current = undefined;
@@ -127,36 +128,16 @@ const NyDialogForm = (props: Props) => {
 
     return (
         <div className={style.nyDialog}>
-            <form onSubmit={state.onSubmit(handleSubmit)} className={style.form} autoComplete="off">
-                <SkjemaGruppe>
-                    <Normaltekst className={style.infotekst}>{infoTekst}</Normaltekst>
-                    <Input
-                        autoFocus
-                        className={style.temafelt}
-                        label="Tema"
-                        autoComplete="off"
-                        placeholder="Skriv hva meldingen handler om"
-                        disabled={!!aktivitetId}
-                        maxLength={!aktivitetId ? 101 : undefined}
-                        submittoken={state.submittoken}
-                        onChange={(e) => onChange(e.target.value, undefined)}
-                        {...state.fields.tema}
-                    />
-                    <div className={style.skrivMelding}>
-                        <EkspanderbartTekstArea
-                            label="Melding"
-                            placeholder="Skriv om arbeid og oppfølging"
-                            maxLength={maxMeldingsLengde}
-                            visTellerFra={1000}
-                            minRows={2}
-                            submittoken={state.submittoken}
-                            onChange={(e) => onChange(undefined, e.target.value)}
-                            {...state.fields.melding}
-                        />
+            <form className={style.nyDialogForm} onSubmit={state.onSubmit(handleSubmit)} autoComplete="off">
+                <SkjemaGruppe legend={<TittelHeader>Ny Dialog</TittelHeader>}>
+                    <div className={style.skjemaInnhold}>
+                        <Normaltekst className={style.infotekst}>{infoTekst}</Normaltekst>
+                        <TemaInput onChange={onChange} state={state} aktivitetId={aktivitetId} />
+                        <SkrivMeldingInput maxMeldingsLengde={maxMeldingsLengde} state={state} onChange={onChange} />
                     </div>
                 </SkjemaGruppe>
 
-                <Hovedknapp title="Send" autoDisableVedSpinner spinner={state.submitting} className={style.hovedknapp}>
+                <Hovedknapp title="Send" autoDisableVedSpinner spinner={state.submitting} className={style.sendKnapp}>
                     Send
                 </Hovedknapp>
 
