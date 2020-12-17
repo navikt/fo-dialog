@@ -51,8 +51,8 @@ const EkspanderbartTekstArea = (props: Props) => {
     const id = input.id ? input.id : guid();
     const feilmeldingId = useGuid();
     const tellerId = useGuid();
-
     const feil = error && !!submittoken ? error : undefined;
+
     const inputProps = { ...input, ...rest };
     const length = input.value.length;
 

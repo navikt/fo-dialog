@@ -1,4 +1,3 @@
-import classNames from 'classnames';
 import React, { useEffect } from 'react';
 
 import useKansendeMelding from '../../utils/UseKanSendeMelding';
@@ -10,11 +9,8 @@ import { useSkjulHodefotForMobilVisning } from '../utils/useSkjulHodefotForMobil
 import { endreDialogSomVises, sendtNyDialog } from '../ViewState';
 import styles from './Dialog.module.less';
 import NyDialogForm from './NyDialogForm';
-import { TittelHeader } from './TittelHeader';
 
-const cls = classNames(styles.dialog, styles.overflowAuto);
-
-function NyDialog() {
+export default function NyDialog() {
     const kansendeMelding = useKansendeMelding();
     useSkjulHodefotForMobilVisning();
 
@@ -36,16 +32,11 @@ function NyDialog() {
     }
 
     return (
-        <section aria-label="Ny dialog" className={cls}>
-            <TittelHeader>Ny dialog</TittelHeader>
-            <NyDialogForm
-                onSubmit={() => setViewState(sendtNyDialog(viewState))}
-                defaultTema={defaultTema}
-                aktivitetId={aktivitet?.id}
-                key={aktivitet?.id}
-            />
-        </section>
+        <NyDialogForm
+            onSubmit={() => setViewState(sendtNyDialog(viewState))}
+            defaultTema={defaultTema}
+            aktivitetId={aktivitet?.id}
+            key={aktivitet?.id}
+        />
     );
 }
-
-export default NyDialog;

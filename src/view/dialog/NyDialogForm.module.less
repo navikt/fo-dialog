@@ -1,15 +1,21 @@
 @import (reference) '~nav-frontend-core/less/core';
 @import (reference) '../variabler';
 
+.nyDialogForm {
+    .min-responsive({padding: 0 6% 0 6%;});
+
+    legend {
+        min-width: 100%;
+    }
+}
+
+.skjemaInnhold {
+    margin: 1rem;
+}
 .nyDialog {
     display: flex;
     flex-direction: column;
     background-color: white;
-
-    .form {
-        .min-responsive({padding: 0 6% 0 6%;});
-        margin: 1rem;
-    }
 
     .tittel {
         margin-top: 0.5rem;
@@ -32,31 +38,6 @@
         }
     }
 
-    .skrivMelding {
-        display: flex;
-        flex-basis: 7rem;
-        bottom: 0;
-        padding: 1rem 2rem 1rem 0;
-        align-items: flex-end;
-
-        :global {
-            .knapp--hoved {
-                padding: 0.5rem;
-                height: 2.6rem;
-                margin-left: 1rem;
-            }
-
-            .skjemaelement {
-                flex: 1;
-                margin-bottom: 0;
-            }
-        }
-
-        @media (max-width: 480px) {
-            padding-right: 0;
-        }
-    }
-
     .min-responsive({.infotekst {max-width: 30rem;}});
 }
 
@@ -64,8 +45,30 @@
     margin-top: 1rem;
 }
 
-.hovedknapp {
+.skrivMelding {
+    display: flex;
+    flex-basis: 7rem;
+    bottom: 0;
+    padding: 1rem 2rem 1rem 0;
+    align-items: flex-end;
+
+    :global {
+        .knapp--hoved {
+            padding: 0.5rem;
+            height: 2.6rem;
+            margin-left: 1rem;
+        }
+    }
+
     @media (max-width: 480px) {
-        width: 100%;
+        padding-right: 0;
+    }
+}
+
+.sendKnapp {
+    margin-left: 1rem;
+
+    @media (max-width: 480px) {
+        width: calc(100% - 2rem);
     }
 }
