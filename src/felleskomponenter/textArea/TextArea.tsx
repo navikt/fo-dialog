@@ -52,7 +52,7 @@ const EkspanderbartTekstArea = (props: Props) => {
     const feilmeldingId = useGuid();
     const tellerId = useGuid();
     const feil = error && !!submittoken ? error : undefined;
-
+    const labelTekst = 'Skriv en melding om arbeid og oppfølging';
     const inputProps = { ...input, ...rest };
     const length = input.value.length;
 
@@ -70,11 +70,11 @@ const EkspanderbartTekstArea = (props: Props) => {
                 className={names}
                 minRows={minRows}
                 maxRows={10}
-                label="Skriv en melding om arbeid og oppfølging"
                 placeholder={placeholder}
                 aria-invalid={!!feil}
                 aria-errormessage={feil ? feilmeldingId : undefined}
                 aria-describedby={tellerId}
+                aria-label={labelTekst}
                 {...inputProps}
                 onChange={_onChange}
                 id={id}
