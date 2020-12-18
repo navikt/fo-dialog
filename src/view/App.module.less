@@ -2,6 +2,8 @@
 @import (reference) '~nav-frontend-typografi-style/src/index';
 @import (reference) 'variabler';
 
+@vis-uu-markorer: true;
+
 :global {
     html,
     body,
@@ -53,15 +55,26 @@
         .blokk-xs();
     }
 
-    .visually-hidden {
-        position: absolute !important;
-        margin: -1px;
-        height: 1px;
-        width: 1px;
-        overflow: hidden;
-        clip: rect(1px, 1px, 1px, 1px);
-        white-space: nowrap;
+    .uu-mixin() {
+        .visually-hidden when (@vis-uu-markorer = false) {
+            visibility: hidden;
+            position: absolute !important;
+            margin: -1px;
+            height: 1px;
+            width: 1px;
+            overflow: hidden;
+            clip: rect(1px, 1px, 1px, 1px);
+            white-space: nowrap;
+        }
+        .visually-hidden when (@vis-uu-markorer = true) {
+            position: absolute !important;
+            z-index: 1001;
+            color: red;
+            background: black;
+            font-weight: bold;
+        }
     }
+    .uu-mixin();
 }
 
 .app {
