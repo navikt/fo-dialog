@@ -1,7 +1,7 @@
 import { EtikettLiten } from 'nav-frontend-typografi';
 import React from 'react';
 
-import { AktivitetStatus, AktivitetTypes, ArenaAktivitetTypes } from '../../utils/AktivitetTypes';
+import { AktivitetStatus, AktivitetTypes, ArenaAktivitetTypes } from '../../utils/aktivitetTypes';
 import styles from './Aktivitetskort.module.less';
 import { getStatusText, getTypeText } from './TextUtils';
 

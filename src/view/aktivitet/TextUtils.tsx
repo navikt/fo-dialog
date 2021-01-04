@@ -4,7 +4,7 @@ import {
     AktivitetTypes,
     ArenaAktivitet,
     ArenaAktivitetTypes
-} from '../../utils/AktivitetTypes';
+} from '../../utils/aktivitetTypes';
 
 export function getStatusText(status: AktivitetStatus): string {
     switch (status) {

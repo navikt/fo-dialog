@@ -1,7 +1,7 @@
 import classNames from 'classnames';
 import React from 'react';
 
-import { StillingsStatus } from '../../../utils/AktivitetTypes';
+import { StillingsStatus } from '../../../utils/aktivitetTypes';
 import EtikettBase from './etikett-base';
 import styles from './sokestatusEtikett.module.less';
 

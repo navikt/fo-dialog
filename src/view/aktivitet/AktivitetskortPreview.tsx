@@ -3,7 +3,7 @@ import { EtikettLiten, Systemtittel, Undertekst, Undertittel } from 'nav-fronten
 import React from 'react';
 
 import { visibleIfHoc } from '../../felleskomponenter/VisibleIfHoc';
-import { Aktivitet, AktivitetTypes, ArenaAktivitet, ArenaAktivitetTypes } from '../../utils/AktivitetTypes';
+import { Aktivitet, AktivitetTypes, ArenaAktivitet, ArenaAktivitetTypes } from '../../utils/aktivitetTypes';
 import { formaterDate, getKlokkeslett } from '../../utils/Date';
 import { StringOrNull } from '../../utils/Typer';
 import useApiBasePath from '../../utils/UseApiBasePath';

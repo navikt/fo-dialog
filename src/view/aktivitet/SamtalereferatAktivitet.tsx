@@ -1,8 +1,9 @@
 import React from 'react';
 
-import { Aktivitet } from '../../utils/AktivitetTypes';
+import { Aktivitet } from '../../utils/aktivitetTypes';
 import { formaterDate } from '../../utils/Date';
 import InformasjonElement from './InformasjonElement';
+import { getKanalTekst } from './MoteAktivitet';
 
 interface PropTypes {
     aktivitet: Aktivitet;
@@ -15,7 +16,7 @@ export default function SamtalereferatAktivitet(props: PropTypes) {
     return (
         <>
             <InformasjonElement merkelapptekst="Dato" verdi={formaterDate(fraDato)} />
-            <InformasjonElement merkelapptekst="Kanal" verdi={kanal} />
+            <InformasjonElement merkelapptekst="Kanal" verdi={getKanalTekst(kanal)} />
             <InformasjonElement merkelapptekst="Referat" verdi={referat} />
         </>
     );
