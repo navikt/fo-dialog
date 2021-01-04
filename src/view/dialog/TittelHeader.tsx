@@ -7,10 +7,10 @@ import { ReactComponent as Lukk } from '../../fellesikoner/lukk.svg';
 import styles from './DialogHeader.module.less';
 import { TilbakeKnapp } from './TilbakeKnapp';
 
-export function TittelHeader(props: { children?: string }) {
+export function TittelHeader(props: { children: string }) {
     const Tittel = () => (
         <div className={styles.headerContent}>
-            <Systemtittel className={styles.tittel}>{props.children ?? ''}</Systemtittel>
+            <Systemtittel className={styles.tittel}>{props.children}</Systemtittel>
         </div>
     );
 

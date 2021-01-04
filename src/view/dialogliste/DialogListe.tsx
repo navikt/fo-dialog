@@ -1,4 +1,3 @@
-import { Systemtittel } from 'nav-frontend-typografi';
 import React from 'react';
 import { useParams } from 'react-router';
 
@@ -27,7 +26,6 @@ export function DialogListe() {
 
     return (
         <div className={styles.dialogListe} role="navigation" aria-label="Dialoger">
-            <Systemtittel className="visually-hidden">Dialogliste</Systemtittel>
             <DialogPreviewListe dialoger={naaverende} valgDialog={dialogId} />
             <HistoriskeDialogerOversikt historiske={historiske} valgDialog={dialogId} />
         </div>

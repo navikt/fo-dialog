@@ -1,6 +1,6 @@
 import Snakkeboble from 'nav-frontend-snakkeboble';
 import Tekstomrade, { LinebreakRule, LinkRule, ParagraphRule } from 'nav-frontend-tekstomrade';
-import { Undertittel } from 'nav-frontend-typografi';
+import { Normaltekst } from 'nav-frontend-typografi';
 import React from 'react';
 
 import { ViktigMelding } from '../../felleskomponenter/etiketer/Etikett';
@@ -37,9 +37,7 @@ export function Henvendelse(props: Props) {
 
     return (
         <>
-            <Undertittel tag="h5" className="visually-hidden">
-                {accessibleText(erBruker, erMeldingFraBruker)}
-            </Undertittel>
+            <Normaltekst className="visually-hidden">{accessibleText(erBruker, erMeldingFraBruker)}</Normaltekst>
             <Snakkeboble
                 className={classNameStyle}
                 topp={toppTekst}
