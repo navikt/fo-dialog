@@ -5,7 +5,7 @@ import { mount } from 'enzyme';
 import React from 'react';
 import { MemoryRouter } from 'react-router';
 
-import { Aktivitet, AktivitetStatus, AktivitetTypes, KanalTypes } from '../../utils/AktivitetTypes';
+import { Aktivitet, AktivitetStatus, AktivitetTypes, KanalTypes } from '../../utils/aktivitetTypes';
 import * as AppContext from '../AktivitetProvider';
 import { AktivitetContextType } from '../AktivitetProvider';
 import { AktivitetskortPreview, getInfoText } from './AktivitetskortPreview';

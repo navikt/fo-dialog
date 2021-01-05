@@ -3,7 +3,7 @@ import '../../utils/SetupEnzyme';
 import { shallow } from 'enzyme';
 import React from 'react';
 
-import { ArenaAktivitetTypes } from '../../utils/AktivitetTypes';
+import { ArenaAktivitetTypes } from '../../utils/aktivitetTypes';
 import GruppeAktivitet from './GruppeAktivitet';
 
 describe('<GruppeAktivitet/>', () => {

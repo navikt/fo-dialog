@@ -1,6 +1,6 @@
 import React from 'react';
 
-import { Aktivitet, AktivitetTypes, ArenaAktivitet, ArenaAktivitetTypes } from '../../utils/AktivitetTypes';
+import { Aktivitet, AktivitetTypes, ArenaAktivitet, ArenaAktivitetTypes } from '../../utils/aktivitetTypes';
 import BehandlingAktivitet from './BehandlingAktivitet';
 import EgenAktivitet from './EgenAktivitet';
 import GruppeAktivitet from './GruppeAktivitet';

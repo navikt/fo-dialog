@@ -1,7 +1,7 @@
 import { Undertekst } from 'nav-frontend-typografi';
 import React from 'react';
 
-import { AktivitetTypes, ArenaAktivitetTypes } from '../../utils/AktivitetTypes';
+import { AktivitetTypes, ArenaAktivitetTypes } from '../../utils/aktivitetTypes';
 import styles from './Aktivitetskort.module.less';
 
 interface Props {

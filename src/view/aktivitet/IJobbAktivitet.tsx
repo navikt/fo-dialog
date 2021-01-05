@@ -1,6 +1,6 @@
 import React from 'react';
 
-import { Aktivitet } from '../../utils/AktivitetTypes';
+import { Aktivitet } from '../../utils/aktivitetTypes';
 import { formaterDate } from '../../utils/Date';
 import InformasjonElement from './InformasjonElement';
 
