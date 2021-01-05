@@ -30,7 +30,7 @@ export const getKanalTekst = (kanal: KanalTypes) => {
         case KanalTypes.TELEFON:
             return 'Telefonmøte';
         case KanalTypes.INTERNETT:
-            return 'Nettmøte';
+            return 'Videomøte';
         default:
             return '';
     }
