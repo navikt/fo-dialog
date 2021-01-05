@@ -5,7 +5,7 @@ import React from 'react';
 import { Flipped, Flipper } from 'react-flip-toolkit';
 
 import WrapInReactLink from '../../felleskomponenter/WrapInReactLink';
-import { Aktivitet, ArenaAktivitet } from '../../utils/AktivitetTypes';
+import { Aktivitet, ArenaAktivitet } from '../../utils/aktivitetTypes';
 import { formaterDate } from '../../utils/Date';
 import { DialogData, StringOrNull } from '../../utils/Typer';
 import { getDialogTittel } from '../aktivitet/TextUtils';
