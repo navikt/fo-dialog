@@ -10,7 +10,7 @@ import { Bruker, DialogData, OppfolgingData, PeriodeData } from '../utils/Typer'
 import { Dialog } from '../view/dialog/Dialog';
 import DialogContainer from '../view/dialog/DialogContainer';
 import { DialogHeader } from '../view/dialog/DialogHeader';
-import { DialogInputBox } from '../view/dialog/dialogInput/DialogInputBox';
+import DialogInputBox from '../view/dialog/dialogInput/DialogInputBox';
 import DialogListe from '../view/dialogliste/DialogListe';
 import DialogOversikt from '../view/dialogliste/DialogOversikt';
 import DialogPreview from '../view/dialogliste/DialogPreview';
