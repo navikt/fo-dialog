@@ -14,10 +14,15 @@ import DialogListe from './DialogListe';
 import styles from './DialogOversikt.module.less';
 import DialogOverviewHeader from './NyDialogLink';
 
-function DialogOversiktHeader(props: { erVeileder: boolean }) {
+interface HeaderProps {
+    erVeileder: boolean;
+}
+
+const DialogOversiktHeader = (props: HeaderProps) => {
     if (props.erVeileder) {
         return null;
     }
+
     return (
         <>
             <Lenke href="/arbeid/dialog/dittnav" className={styles.dintnav}>
@@ -29,9 +34,9 @@ function DialogOversiktHeader(props: { erVeileder: boolean }) {
             </Systemtittel>
         </>
     );
-}
+};
 
-export function DialogOversikt() {
+const DialogOversikt = () => {
     const kanSendeMelding = useKansendeMelding();
     const { dialoger } = useDialogContext();
     const { dialogId } = useParams();
@@ -53,6 +58,6 @@ export function DialogOversikt() {
             <DialogListe />
         </div>
     );
-}
+};
 
 export default DialogOversikt;

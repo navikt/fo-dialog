@@ -4,6 +4,7 @@ import React from 'react';
 import { DialogData } from '../../utils/Typer';
 import { useDialogContext } from '../DialogProvider';
 import { dataOrUndefined, useOppfolgingContext } from '../Provider';
+import styles from './DialogCheckboxes.module.less';
 
 interface Props {
     toggleFerdigBehandlet(ferdigBehandler: boolean): void;
@@ -13,33 +14,31 @@ interface Props {
     disabled: boolean;
 }
 
-export function DialogCheckboxes(props: Props) {
-    return (
-        <div className="checkbox-block">
-            <Checkbox
-                label="Venter på svar fra NAV"
-                checked={!props.ferdigBehandlet}
-                className="checkbox-block__item"
-                disabled={props.disabled}
-                onChange={() => props.toggleFerdigBehandlet(!props.ferdigBehandlet)}
-            />
-            <Checkbox
-                label="Venter på svar fra bruker"
-                checked={props.venterPaSvar}
-                className="checkbox-block__item"
-                disabled={props.disabled}
-                onChange={() => props.toggleVenterPaSvar(!props.venterPaSvar)}
-            />
-        </div>
-    );
-}
+const DialogCheckboxes = (props: Props) => (
+    <div className={styles.checkboxBlock}>
+        <Checkbox
+            label="Venter på svar fra NAV"
+            checked={!props.ferdigBehandlet}
+            className={styles.checkboxItem}
+            disabled={props.disabled}
+            onChange={() => props.toggleFerdigBehandlet(!props.ferdigBehandlet)}
+        />
+        <Checkbox
+            label="Venter på svar fra bruker"
+            checked={props.venterPaSvar}
+            className={styles.checkboxItem}
+            disabled={props.disabled}
+            onChange={() => props.toggleVenterPaSvar(!props.venterPaSvar)}
+        />
+    </div>
+);
 
 interface ManagedProps {
     dialog: DialogData;
     visible: boolean;
 }
 
-export default function ManagedDialogCheckboxes(props: ManagedProps) {
+const ManagedDialogCheckboxes = (props: ManagedProps) => {
     const dialogContext = useDialogContext();
     const oppfolgingContext = useOppfolgingContext();
     const oppfolgingData = dataOrUndefined(oppfolgingContext);
@@ -67,4 +66,6 @@ export default function ManagedDialogCheckboxes(props: ManagedProps) {
             venterPaSvar={dialog.venterPaSvar}
         />
     );
-}
+};
+
+export default ManagedDialogCheckboxes;
