@@ -16,7 +16,7 @@ import DialogOverviewHeader from './NyDialogLink';
 
 function DialogOversiktHeader(props: { erVeileder: boolean }) {
     if (props.erVeileder) {
-        return <div className={styles.veiledrpadding} />;
+        return null;
     }
     return (
         <>

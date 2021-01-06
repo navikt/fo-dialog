@@ -63,7 +63,7 @@ function HenvendelseInput(props: HenvendelseInputProps) {
                 onChange={onChange}
                 {...state.fields.melding}
             />
-            <Hovedknapp title="Send" autoDisableVedSpinner spinner={laster} htmlType="submit">
+            <Hovedknapp className="send-knapp" title="Send" autoDisableVedSpinner spinner={laster} htmlType="submit">
                 Send
             </Hovedknapp>
         </div>

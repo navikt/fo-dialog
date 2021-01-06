@@ -8,7 +8,7 @@
     display: flex;
     flex-basis: 7rem;
     bottom: 0;
-    padding: 1rem;
+    padding: 0.5rem 1rem 0.2rem 1rem;
     align-items: flex-end;
 
     @media (max-width: @md-max-x) {
@@ -37,16 +37,20 @@
     }
 }
 
+.send-knapp {
+    margin-bottom: 0.3rem;
+}
+
 .checkbox-block {
     display: flex;
     background-color: @lysgraBakrund;
     box-shadow: 0 3px 5px rgba(0, 0, 0, 0.07);
-    padding: 1rem 0 1rem 1rem;
+    padding: 0 0 0.5rem 1rem;
     position: relative;
     &__item {
         padding-right: 2rem;
+        margin-bottom: 0 !important;
     }
-    position: relative;
     z-index: 100;
 }
 
