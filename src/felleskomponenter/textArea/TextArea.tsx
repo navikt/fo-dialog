@@ -55,7 +55,7 @@ const EkspanderbartTekstArea = (props: Props) => {
     const inputProps = { ...input, ...rest };
     const length = input.value.length;
 
-    const names = classNames(styles.textarea, { [styles.textareaFeil]: feil }, 'label-sr-only');
+    const names = classNames(styles.textarea, { [styles.textareaFeil]: feil });
 
     const _onChange = (e: ChangeEvent<HTMLTextAreaElement>) => {
         onChange && onChange(e);

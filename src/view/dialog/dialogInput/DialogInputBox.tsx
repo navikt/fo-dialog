@@ -1,27 +1,21 @@
-import useFormstate, { Formstate } from '@nutgaard/use-formstate';
-import { Hovedknapp } from 'nav-frontend-knapper';
+import useFormstate from '@nutgaard/use-formstate';
 import React, { useEffect, useLayoutEffect, useRef, useState } from 'react';
 
-import AlertStripeFeilVisible from '../../felleskomponenter/AlertStripeFeilVisible';
-import loggEvent from '../../felleskomponenter/logging';
-import EkspanderbartTekstArea from '../../felleskomponenter/textArea/TextArea';
-import { DialogData } from '../../utils/Typer';
-import { UpdateTypes, dispatchUpdate } from '../../utils/UpdateEvent';
-import { useDialogContext } from '../DialogProvider';
-import { useKladdContext } from '../KladdProvider';
-import { dataOrUndefined, useOppfolgingContext, useUserInfoContext, useViewContext } from '../Provider';
-import { HandlingsType, sendtNyHenvendelse } from '../ViewState';
+import AlertStripeFeilVisible from '../../../felleskomponenter/AlertStripeFeilVisible';
+import loggEvent from '../../../felleskomponenter/logging';
+import { DialogData } from '../../../utils/Typer';
+import { UpdateTypes, dispatchUpdate } from '../../../utils/UpdateEvent';
+import { useDialogContext } from '../../DialogProvider';
+import { useKladdContext } from '../../KladdProvider';
+import { dataOrUndefined, useOppfolgingContext, useUserInfoContext, useViewContext } from '../../Provider';
+import { HandlingsType, sendtNyHenvendelse } from '../../ViewState';
+import useHenvendelseStartTekst from '../UseHenvendelseStartTekst';
 import styles from './DialogInputBox.module.less';
-import useHenvendelseStartTekst from './UseHenvendelseStartTekst';
+import HenvendelseInput from './HendvendelseInput';
 
 const maxMeldingsLengde = 5000;
 
-interface Props {
-    dialog: DialogData;
-    kanSendeHenveldelse: boolean;
-}
-
-function validerMelding(melding: string, resten: any, props: { startTekst?: string }) {
+const validerMelding = (melding: string, resten: any, props: { startTekst?: string }) => {
     if (melding.length > maxMeldingsLengde) {
         return `Meldingen kan ikke være mer enn ${maxMeldingsLengde} tegn.`;
     }
@@ -31,46 +25,14 @@ function validerMelding(melding: string, resten: any, props: { startTekst?: stri
     if (melding.trim() === props.startTekst?.trim()) {
         return 'Du må endre på meldingen';
     }
+};
+
+interface Props {
+    dialog: DialogData;
+    kanSendeHenveldelse: boolean;
 }
 
-const validator = useFormstate({
-    melding: validerMelding
-});
-
-interface HenvendelseInputProps {
-    autoFocus?: boolean;
-    state: Formstate<{ [p: string]: any }>;
-    laster: boolean;
-    kanSendeHenvendelse: boolean;
-    onChange?: React.ChangeEventHandler;
-}
-
-function HenvendelseInput(props: HenvendelseInputProps) {
-    const { autoFocus, state, laster, onChange, kanSendeHenvendelse } = props;
-
-    if (!kanSendeHenvendelse) {
-        return null;
-    }
-
-    return (
-        <div className="skriv-melding">
-            <EkspanderbartTekstArea
-                placeholder="Skriv om arbeid og oppfølging"
-                maxLength={maxMeldingsLengde}
-                visTellerFra={1000}
-                autoFocus={autoFocus}
-                submittoken={state.submittoken}
-                onChange={onChange}
-                {...state.fields.melding}
-            />
-            <Hovedknapp title="Send" autoDisableVedSpinner spinner={laster} htmlType="submit">
-                Send
-            </Hovedknapp>
-        </div>
-    );
-}
-
-export function DialogInputBox(props: Props) {
+const DialogInputBox = (props: Props) => {
     const bruker = useUserInfoContext();
     const oppfolgingContext = useOppfolgingContext();
     const oppfolging = dataOrUndefined(oppfolgingContext);
@@ -91,6 +53,10 @@ export function DialogInputBox(props: Props) {
     const initalValues = {
         melding: !!kladd?.tekst ? kladd.tekst : startTekst
     };
+
+    const validator = useFormstate({
+        melding: validerMelding
+    });
 
     const state = validator(initalValues, { startTekst });
 
@@ -168,6 +134,7 @@ export function DialogInputBox(props: Props) {
                     state={state}
                     onChange={onChange}
                     kanSendeHenvendelse={kanSendeHenveldelse}
+                    maxMeldingsLengde={maxMeldingsLengde}
                 />
                 <AlertStripeFeilVisible visible={noeFeilet} className={styles.feil}>
                     Noe gikk dessverre galt med systemet. Prøv igjen senere.
@@ -175,6 +142,6 @@ export function DialogInputBox(props: Props) {
             </form>
         </section>
     );
-}
+};
 
 export default DialogInputBox;
