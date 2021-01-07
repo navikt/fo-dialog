@@ -1,10 +1,10 @@
-import { dataOrUndefined, useOppfolgingContext } from '../view/Provider';
+import { dataOrUndefined, useHarNivaa4Context, useOppfolgingContext } from '../view/Provider';
 import { erProd } from './FellesFunksjoner';
 
 export default function useKansendeMelding(): boolean {
     const oppfolgingContext = useOppfolgingContext();
     //TODO min id pasport
-    //const harNivaa4 = useHarNivaa4Context();
+    const harNivaa4 = useHarNivaa4Context();
     const oppfolgingData = dataOrUndefined(oppfolgingContext);
 
     if (!oppfolgingData) {
@@ -21,9 +21,7 @@ export default function useKansendeMelding(): boolean {
         oppfolgingData.underOppfolging &&
         !oppfolgingData.reservasjonKRR &&
         kanVarsles &&
-        !oppfolgingData.manuell
-        //TODO min id pasport  er ferdig
-        //&&
-        //harNivaa4.harNivaa4
+        !oppfolgingData.manuell &&
+        harNivaa4.harNivaa4
     );
 }
