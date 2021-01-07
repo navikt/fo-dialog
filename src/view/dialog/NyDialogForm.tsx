@@ -129,7 +129,7 @@ const NyDialogForm = (props: Props) => {
     return (
         <div className={style.nyDialog}>
             <form className={style.nyDialogForm} onSubmit={state.onSubmit(handleSubmit)} autoComplete="off">
-                <SkjemaGruppe legend={<TittelHeader>Ny Dialog</TittelHeader>}>
+                <SkjemaGruppe legend={<TittelHeader>Ny dialog</TittelHeader>}>
                     <div className={style.skjemaInnhold}>
                         <Normaltekst className={style.infotekst}>{infoTekst}</Normaltekst>
                         <TemaInput onChange={onChange} state={state} aktivitetId={aktivitetId} />
