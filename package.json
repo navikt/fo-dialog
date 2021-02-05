@@ -12,6 +12,7 @@
         "eject": "craco eject",
         "heroku-postbuild": "cross-env REACT_APP_MOCK=true PUBLIC_URL=/ craco build",
         "format-all": "prettier --write 'src/'",
+        "prettier-check": "prettier --check 'src/'",
         "lint": "echo \"Not implemented\""
     },
     "husky": {
