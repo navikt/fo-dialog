@@ -6,7 +6,7 @@ import style from './NyDialogForm.module.less';
 
 interface Props {
     maxMeldingsLengde: number;
-    state: Formstate<{ tema: any; melding: any }>;
+    state: Formstate<{ [p: string]: any }>;
     onChange: (tema?: string, melding?: string) => void;
 }
 

@@ -5,7 +5,7 @@ import Input from '../../felleskomponenter/input/Input';
 import style from './NyDialogForm.module.less';
 
 interface Props {
-    state: Formstate<{ tema: any; melding: any }>;
+    state: Formstate<{ [p: string]: any }>;
     onChange: (tema?: string, melding?: string) => void;
     aktivitetId?: string;
 }
