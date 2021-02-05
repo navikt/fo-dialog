@@ -2,10 +2,11 @@ import { Formstate } from '@nutgaard/use-formstate';
 import React from 'react';
 
 import Input from '../../felleskomponenter/input/Input';
+import { NyDialogInputProps } from './NyDialogForm';
 import style from './NyDialogForm.module.less';
 
 interface Props {
-    state: Formstate<{ [p: string]: any }>;
+    state: Formstate<NyDialogInputProps>;
     onChange: (tema?: string, melding?: string) => void;
     aktivitetId?: string;
 }

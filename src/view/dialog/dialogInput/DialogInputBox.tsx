@@ -26,8 +26,8 @@ const validerMelding = (melding: string, resten: any, props: { startTekst?: stri
         return 'Du må endre på meldingen';
     }
 };
-
-export type Handler = SubmitHandler<{ [p: string]: any }>;
+export type DialogInputProps = { melding: string };
+export type Handler = SubmitHandler<DialogInputProps>;
 
 interface Props {
     dialog: DialogData;
@@ -56,7 +56,7 @@ const DialogInputBox = (props: Props) => {
         melding: !!kladd?.tekst ? kladd.tekst : startTekst
     };
 
-    const validator = useFormstate({
+    const validator = useFormstate<DialogInputProps>({
         melding: validerMelding
     });
 

@@ -48,7 +48,8 @@ const validerMelding = (melding: string, resten: any, props: { startTekst?: stri
     }
 };
 
-export type Handler = SubmitHandler<{ [p: string]: any }>;
+export type NyDialogInputProps = { tema: string; melding: string };
+export type Handler = SubmitHandler<NyDialogInputProps>;
 
 interface Props {
     defaultTema?: StringOrNull;
@@ -74,7 +75,7 @@ const NyDialogForm = (props: Props) => {
     const timer = useRef<number | undefined>();
     const callback = useRef<() => any>();
 
-    const validator = useFormstate({
+    const validator = useFormstate<NyDialogInputProps>({
         tema: validerTema,
         melding: validerMelding
     });

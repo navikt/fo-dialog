@@ -2,11 +2,12 @@ import { Formstate } from '@nutgaard/use-formstate';
 import React from 'react';
 
 import EkspanderbartTekstArea from '../../felleskomponenter/textArea/TextArea';
+import { NyDialogInputProps } from './NyDialogForm';
 import style from './NyDialogForm.module.less';
 
 interface Props {
     maxMeldingsLengde: number;
-    state: Formstate<{ [p: string]: any }>;
+    state: Formstate<NyDialogInputProps>;
     onChange: (tema?: string, melding?: string) => void;
 }
 
