@@ -201,6 +201,7 @@ describe('<Dialog/>', () => {
                 kvpPerioder: []
             }
         ];
+        jest.spyOn(DialogProvider, 'useDialogContext').mockImplementation(() => useDialogContext);
         jest.spyOn(AppContext, 'useOppfolgingContext').mockImplementation(() => useFetchOppfolging);
         jest.spyOn(AppContext, 'useUserInfoContext').mockImplementation(() => userInfo);
         jest.spyOn(AppContext, 'useHarNivaa4Context').mockImplementation(() => ({
