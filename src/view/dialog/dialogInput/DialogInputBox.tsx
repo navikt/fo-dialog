@@ -1,4 +1,4 @@
-import useFormstate from '@nutgaard/use-formstate';
+import useFormstate, { SubmitHandler } from '@nutgaard/use-formstate';
 import React, { useEffect, useLayoutEffect, useRef, useState } from 'react';
 
 import AlertStripeFeilVisible from '../../../felleskomponenter/AlertStripeFeilVisible';
@@ -26,6 +26,8 @@ const validerMelding = (melding: string, resten: any, props: { startTekst?: stri
         return 'Du må endre på meldingen';
     }
 };
+export type DialogInputProps = { melding: string };
+export type Handler = SubmitHandler<DialogInputProps>;
 
 interface Props {
     dialog: DialogData;
@@ -54,11 +56,11 @@ const DialogInputBox = (props: Props) => {
         melding: !!kladd?.tekst ? kladd.tekst : startTekst
     };
 
-    const validator = useFormstate({
+    const validator = useFormstate<DialogInputProps>({
         melding: validerMelding
     });
 
-    const state = validator(initalValues, { startTekst });
+    const state = validator(initalValues);
 
     useLayoutEffect(() => {
         const match = window.matchMedia ? window.matchMedia(`(min-width: 900px)`).matches : false;
@@ -87,7 +89,7 @@ const DialogInputBox = (props: Props) => {
         return null;
     }
 
-    const onSubmit = (data: { melding: string }) => {
+    const onSubmit: Handler = (data) => {
         setNoeFeilet(false);
         const { melding } = data;
 

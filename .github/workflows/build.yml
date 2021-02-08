@@ -25,6 +25,7 @@ jobs:
         id: image
         run: echo "::set-output name=tag::${IMAGE_NAME}:$(echo ${{ github.ref }} | cut -d '/' -f3).$(date '+%F-%H%M').$(echo $GITHUB_SHA | cut -c1-7)" #eks pa tag  gh-actions.2020-01-08-1255.8fa4236
       - run: npm ci
+      - run: npm run prettier-check
       - run: npm run test
       - run: npm run build
 

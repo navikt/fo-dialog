@@ -3,11 +3,12 @@ import { Hovedknapp } from 'nav-frontend-knapper';
 import React from 'react';
 
 import EkspanderbartTekstArea from '../../../felleskomponenter/textArea/TextArea';
+import { DialogInputProps } from './DialogInputBox';
 import styles from './HendvendelseInput.module.less';
 
 interface HenvendelseInputProps {
     autoFocus?: boolean;
-    state: Formstate<{ [p: string]: any }>;
+    state: Formstate<DialogInputProps>;
     laster: boolean;
     kanSendeHenvendelse: boolean;
     maxMeldingsLengde: number;
