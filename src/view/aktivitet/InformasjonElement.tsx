@@ -1,5 +1,5 @@
 import Tekstomrade from 'nav-frontend-tekstomrade';
-import { EtikettLiten } from 'nav-frontend-typografi';
+import { Undertekst } from 'nav-frontend-typografi';
 import React, { ReactNode } from 'react';
 
 import EksternLenke from '../../felleskomponenter/EksternLenke';
@@ -49,7 +49,7 @@ export function InformasjonElementRaw(props: PropTypes) {
 
     return (
         <div className={styles.informasjonselement}>
-            <EtikettLiten children={merkelapptekst} className={styles.merkelapp} />
+            <Undertekst children={merkelapptekst} className={styles.merkelapp} />
             {children}
         </div>
     );

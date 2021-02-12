@@ -1,4 +1,4 @@
-import { EtikettLiten } from 'nav-frontend-typografi';
+import { Undertekst } from 'nav-frontend-typografi';
 import React from 'react';
 
 import { AktivitetStatus, AktivitetTypes, ArenaAktivitetTypes } from '../../utils/aktivitetTypes';
@@ -13,9 +13,9 @@ interface Props {
 export default function Brodsmulesti(props: Props) {
     return (
         <div className={styles.brodsmulesti}>
-            <EtikettLiten>
+            <Undertekst>
                 aktivitet / {getStatusText(props.status)} / {getTypeText(props.type)}
-            </EtikettLiten>
+            </Undertekst>
         </div>
     );
 }
