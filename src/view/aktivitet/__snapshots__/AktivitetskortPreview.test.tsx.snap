@@ -47,17 +47,17 @@ exports[`<AktivitetskortPreview /> skal rendre stillingsaktivitet som i snapshot
       >
         <div>
           <div>
-            <EtikettLiten>
+            <Undertekst>
               <TypografiBase
-                type="etikettLiten"
+                type="undertekst"
               >
                 <p
-                  className="typo-etikett-liten"
+                  className="typo-undertekst"
                 >
                   Stilling
                 </p>
               </TypografiBase>
-            </EtikettLiten>
+            </Undertekst>
             <Undertittel
               id="dialog_header_2"
             >

@@ -1,6 +1,6 @@
 import classNames from 'classnames';
 import { LenkepanelBase } from 'nav-frontend-lenkepanel';
-import { EtikettLiten, Normaltekst, Systemtittel } from 'nav-frontend-typografi';
+import { Normaltekst, Systemtittel, Undertekst } from 'nav-frontend-typografi';
 import React from 'react';
 import { Flipped, Flipper } from 'react-flip-toolkit';
 
@@ -70,7 +70,7 @@ function DialogPreview(props: Props) {
             <div className={styles.content}>
                 <Normaltekst className="visually-hidden">{typeText(dialog)}</Normaltekst>
                 <Tittel tittel={overskrift} aktivitet={aktivitet} />
-                <EtikettLiten className={styles.dato}>{datoString}</EtikettLiten>
+                <Undertekst className={styles.dato}>{datoString}</Undertekst>
                 <EtikettListe dialog={dialog} />
                 <Normaltekst className="visually-hidden">{meldingerText(dialog.henvendelser.length)}</Normaltekst>
             </div>

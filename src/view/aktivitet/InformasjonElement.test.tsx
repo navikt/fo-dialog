@@ -2,7 +2,7 @@ import '../../utils/SetupEnzyme';
 
 import { mount, shallow } from 'enzyme';
 import Tekstomrade from 'nav-frontend-tekstomrade';
-import { EtikettLiten } from 'nav-frontend-typografi';
+import { Undertekst } from 'nav-frontend-typografi';
 import React from 'react';
 
 import EksternLenke from '../../felleskomponenter/EksternLenke';
@@ -14,8 +14,8 @@ describe('<InformasjonElement />', () => {
         const verdi = 'Verdi på merkelapp';
         const wrapper = mount(<InformasjonElement merkelapptekst={merkelapptekst} verdi={verdi} />);
 
-        expect(wrapper.find(EtikettLiten).exists).toBeTruthy();
-        expect(wrapper.find(EtikettLiten).text()).toEqual(merkelapptekst);
+        expect(wrapper.find(Undertekst).exists).toBeTruthy();
+        expect(wrapper.find(Undertekst).text()).toEqual(merkelapptekst);
 
         expect(wrapper.find(Tekstomrade).exists()).toBeTruthy();
         expect(wrapper.find(Tekstomrade).text()).toEqual(verdi);
@@ -30,15 +30,15 @@ describe('<InformasjonElement />', () => {
         );
         const wrapper = mount(jsx);
 
-        expect(wrapper.find(EtikettLiten).exists).toBeTruthy();
-        expect(wrapper.find(EtikettLiten).text()).toEqual(merkelapptekst);
+        expect(wrapper.find(Undertekst).exists).toBeTruthy();
+        expect(wrapper.find(Undertekst).text()).toEqual(merkelapptekst);
         expect(wrapper.find(EksternLenke).exists()).toBeTruthy();
     });
 
     it('skal skjules om hverken tekst eller children er oppgitt', () => {
         const merkelapptekst = 'merkelappteksten';
         const wrapper = shallow(<InformasjonElement merkelapptekst={merkelapptekst} verdi={null} />);
-        expect(wrapper.find(EtikettLiten).exists()).toBeFalsy();
+        expect(wrapper.find(Undertekst).exists()).toBeFalsy();
     });
 
     it('skal matche snapshot når EksternLenke er child', () => {

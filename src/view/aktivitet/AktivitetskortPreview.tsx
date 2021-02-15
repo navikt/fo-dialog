@@ -1,5 +1,5 @@
 import { LenkepanelBase } from 'nav-frontend-lenkepanel';
-import { EtikettLiten, Systemtittel, Undertekst, Undertittel } from 'nav-frontend-typografi';
+import { Systemtittel, Undertekst, Undertittel } from 'nav-frontend-typografi';
 import React from 'react';
 
 import { visibleIfHoc } from '../../felleskomponenter/VisibleIfHoc';
@@ -48,7 +48,7 @@ export function AktivitetskortPreview(props: Props) {
             >
                 <div className={styles.aktivteskortWrapper}>
                     <div className={styles.info}>
-                        <EtikettLiten className={styles.tittel}>{typeTekst}</EtikettLiten>
+                        <Undertekst className={styles.tittel}>{typeTekst}</Undertekst>
                         <Undertittel id={dialogHeaderID2} className={styles.tittel}>
                             {aktivitet.tittel}
                         </Undertittel>
