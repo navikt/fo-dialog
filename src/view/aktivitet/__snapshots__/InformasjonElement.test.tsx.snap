@@ -5,17 +5,17 @@ exports[`<InformasjonElement /> skal matche snapshot når EksternLenke er child 
   merkelapptekst="merkelappteksten"
 >
   <div>
-    <EtikettLiten>
+    <Undertekst>
       <TypografiBase
-        type="etikettLiten"
+        type="undertekst"
       >
         <p
-          className="typo-etikett-liten"
+          className="typo-undertekst"
         >
           merkelappteksten
         </p>
       </TypografiBase>
-    </EtikettLiten>
+    </Undertekst>
     <EksternLenke
       lenke="nav.no"
     >

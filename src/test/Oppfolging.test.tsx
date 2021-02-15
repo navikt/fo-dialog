@@ -71,7 +71,8 @@ const dialoger = [
                 avsenderId: 'Z123456',
                 sendt: '2018-02-27T12:48:56.097+01:00',
                 lest: true,
-                tekst: 'Hei. Hva er status her? Har du finnet Kaptain Sabeltann?'
+                tekst: 'Hei. Hva er status her? Har du finnet Kaptain Sabeltann?',
+                viktig: false
             },
             {
                 id: '2',
@@ -80,7 +81,8 @@ const dialoger = [
                 avsenderId: '0102030405',
                 sendt: '2018-02-28T12:48:56.097+01:00',
                 lest: true,
-                tekst: 'Hei. Leter enda på sjøen :)'
+                tekst: 'Hei. Leter enda på sjøen :)',
+                viktig: false
             }
         ],
         egenskaper: []
@@ -92,7 +94,7 @@ const useDialogContext: DialogDataProviderType = {
     hentDialoger: () => Promise.resolve([]),
     nyDialog: (melding: string, tema: string, aktivitetId?: string) => Promise.resolve({} as any),
     nyHenvendelse: (melding: string, dialog: DialogData) => Promise.resolve(dialog),
-    lesDialog: (dialog: DialogData) => Promise.resolve(dialog),
+    lesDialog: (dialogId: string) => Promise.resolve(dialoger.find((dialog) => dialog.id === dialogId)!!),
     setFerdigBehandlet: (dialog: DialogData, ferdigBehandlet: boolean) => Promise.resolve(dialog),
     setVenterPaSvar: (dialog: DialogData, venterPaSvar: boolean) => Promise.resolve(dialog)
 };
@@ -119,7 +121,8 @@ describe('<DialogContainer/>', () => {
                 veileder: false,
                 startDato: '2017-01-30T10:46:10.971+01:00',
                 sluttDato: '2017-12-31T10:46:10.971+01:00',
-                begrunnelse: null
+                begrunnelse: null,
+                kvpPerioder: []
             }
         ];
         jest.spyOn(AppContext, 'useOppfolgingContext').mockImplementation(() => useFetchOppfolging);
@@ -140,7 +143,8 @@ describe('<DialogContainer/>', () => {
                 veileder: false,
                 startDato: '2017-01-30T10:46:10.971+01:00',
                 sluttDato: '2017-12-31T10:46:10.971+01:00',
-                begrunnelse: null
+                begrunnelse: null,
+                kvpPerioder: []
             }
         ];
         jest.spyOn(AppContext, 'useOppfolgingContext').mockImplementation(() => useFetchOppfolging);
@@ -169,7 +173,8 @@ describe('<Dialog/>', () => {
                 veileder: false,
                 startDato: '2017-01-30T10:46:10.971+01:00',
                 sluttDato: '2017-12-31T10:46:10.971+01:00',
-                begrunnelse: null
+                begrunnelse: null,
+                kvpPerioder: []
             }
         ];
         jest.spyOn(DialogProvider, 'useDialogContext').mockImplementation(() => useDialogContext);
@@ -192,11 +197,18 @@ describe('<Dialog/>', () => {
                 veileder: false,
                 startDato: '2017-01-30T10:46:10.971+01:00',
                 sluttDato: '2017-12-31T10:46:10.971+01:00',
-                begrunnelse: null
+                begrunnelse: null,
+                kvpPerioder: []
             }
         ];
+        jest.spyOn(DialogProvider, 'useDialogContext').mockImplementation(() => useDialogContext);
         jest.spyOn(AppContext, 'useOppfolgingContext').mockImplementation(() => useFetchOppfolging);
         jest.spyOn(AppContext, 'useUserInfoContext').mockImplementation(() => userInfo);
+        jest.spyOn(AppContext, 'useHarNivaa4Context').mockImplementation(() => ({
+            harNivaa4: true,
+            hasError: false,
+            isPending: false
+        }));
         Element.prototype.scrollIntoView = () => {};
         const wrapper = mount(
             <MemoryRouter initialEntries={['/1']}>

@@ -1,4 +1,4 @@
-import useFormstate from '@nutgaard/use-formstate';
+import useFormstate, { SubmitHandler } from '@nutgaard/use-formstate';
 import { Hovedknapp } from 'nav-frontend-knapper';
 import { SkjemaGruppe } from 'nav-frontend-skjema';
 import { Normaltekst } from 'nav-frontend-typografi';
@@ -48,10 +48,8 @@ const validerMelding = (melding: string, resten: any, props: { startTekst?: stri
     }
 };
 
-const validator = useFormstate({
-    tema: validerTema,
-    melding: validerMelding
-});
+export type NyDialogInputProps = { tema: string; melding: string };
+export type Handler = SubmitHandler<NyDialogInputProps>;
 
 interface Props {
     defaultTema?: StringOrNull;
@@ -77,13 +75,15 @@ const NyDialogForm = (props: Props) => {
     const timer = useRef<number | undefined>();
     const callback = useRef<() => any>();
 
-    const state = validator(
-        {
-            tema: kladd?.overskrift ?? defaultTema ?? '',
-            melding: !!kladd?.tekst ? kladd.tekst : startTekst
-        },
-        { disabled: !!aktivitetId, startTekst }
-    );
+    const validator = useFormstate<NyDialogInputProps>({
+        tema: validerTema,
+        melding: validerMelding
+    });
+
+    const state = validator({
+        tema: kladd?.overskrift ?? defaultTema ?? '',
+        melding: !!kladd?.tekst ? kladd.tekst : startTekst
+    });
 
     useEffect(() => {
         return () => {
@@ -95,7 +95,7 @@ const NyDialogForm = (props: Props) => {
     const erVeileder = !!bruker && bruker.erVeileder;
     const infoTekst = erVeileder ? veilederInfoMelding : brukerinfomelding;
 
-    const handleSubmit = (data: { tema: string; melding: string }) => {
+    const handleSubmit: Handler = (data) => {
         const { tema, melding } = data;
 
         timer.current && clearInterval(timer.current);
