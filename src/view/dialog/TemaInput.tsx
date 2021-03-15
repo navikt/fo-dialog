@@ -22,7 +22,7 @@ export const TemaInput = (props: Props) => {
             autoComplete="off"
             placeholder="Skriv hva meldingen handler om"
             disabled={!!aktivitetId}
-            maxLength={!aktivitetId ? 101 : undefined}
+            maxLength={!!aktivitetId ? undefined : 100}
             submittoken={state.submittoken}
             onChange={(e) => onChange(e.target.value, undefined)}
             {...state.fields.tema}

@@ -12,6 +12,7 @@ import { UpdateTypes, dispatchUpdate } from '../../utils/UpdateEvent';
 import { useDialogContext } from '../DialogProvider';
 import { findKladd, useKladdContext } from '../KladdProvider';
 import { useUserInfoContext } from '../Provider';
+import { cutStringAtLength } from '../utils/stringUtils';
 import style from './NyDialogForm.module.less';
 import { SkrivMeldingInput } from './SkrivMeldingInput';
 import { TemaInput } from './TemaInput';
@@ -52,7 +53,7 @@ export type NyDialogInputProps = { tema: string; melding: string };
 export type Handler = SubmitHandler<NyDialogInputProps>;
 
 interface Props {
-    defaultTema?: StringOrNull;
+    defaultTema: string;
     onSubmit: () => void;
     aktivitetId?: string;
 }
@@ -81,7 +82,7 @@ const NyDialogForm = (props: Props) => {
     });
 
     const state = validator({
-        tema: kladd?.overskrift ?? defaultTema ?? '',
+        tema: kladd?.overskrift ?? cutStringAtLength(defaultTema, 100, '...'),
         melding: !!kladd?.tekst ? kladd.tekst : startTekst
     });
 
