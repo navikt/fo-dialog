@@ -18,7 +18,7 @@ export default function NyDialog() {
     const aktivitetData = useAktivitetContext();
 
     const aktivitet = findAktivitet(aktivitetData, aktivitetId);
-    const defaultTema = getDialogTittel(aktivitet).substr(0, 254); // max 255 char long
+    const defaultTema = getDialogTittel(aktivitet);
     const loadingData = isLoadingData(aktivitetData);
 
     const { viewState, setViewState } = useViewContext();
