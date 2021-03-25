@@ -75,7 +75,7 @@ export function AktivitetProvider(props: Props) {
         REQUEST_CONFIG
     );
     const arenaAktiviteterFetch = useFetch<ArenaAktivitet[]>(
-        `${apiBasePath}/veilarbaktivitet/api/aktivitet/arena${query}`,
+        `${apiBasePath}/veilarbaktivitet/api/arena/tiltak${query}`,
         REQUEST_CONFIG
     );
 

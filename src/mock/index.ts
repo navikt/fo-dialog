@@ -106,7 +106,7 @@ mock.get('/veilarboppfolging/api/oppfolging', oppfolging);
 
 mock.get('/veilarbaktivitet/api/aktivitet', harAktivitetFeilerSkruddPa() ? fail() : aktiviteter);
 
-mock.get('/veilarbaktivitet/api/aktivitet/arena', harArenaaktivitetFeilerSkruddPa() ? fail() : arenaAktiviteter);
+mock.get('/veilarbaktivitet/api/arena/tiltak', harArenaaktivitetFeilerSkruddPa() ? fail() : arenaAktiviteter);
 
 mock.get('/api/auth', { remainingSeconds: 60 * 60 });
 
