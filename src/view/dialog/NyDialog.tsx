@@ -1,8 +1,9 @@
 import React, { useEffect } from 'react';
 
+import { StringOrUndefined } from '../../utils/Typer';
 import useKansendeMelding from '../../utils/UseKanSendeMelding';
 import { getDialogTittel } from '../aktivitet/TextUtils';
-import { findAktivitet, isLoadingData, useAktivitetContext } from '../AktivitetProvider';
+import { AktivitetContextType, MaybeAktivitet, findAktivitet, useAktivitetContext } from '../AktivitetProvider';
 import { useViewContext } from '../Provider';
 import { useAktivitetId } from '../utils/useAktivitetId';
 import { useSkjulHodefotForMobilVisning } from '../utils/useSkjulHodefotForMobilVisning';
@@ -14,12 +15,11 @@ export default function NyDialog() {
     const kansendeMelding = useKansendeMelding();
     useSkjulHodefotForMobilVisning();
 
-    const aktivitetId = useAktivitetId();
-    const aktivitetData = useAktivitetContext();
+    const aktivitetId: StringOrUndefined = useAktivitetId();
+    const aktivitetData: AktivitetContextType = useAktivitetContext();
+    const aktivitet: MaybeAktivitet = findAktivitet(aktivitetData, aktivitetId);
 
-    const aktivitet = findAktivitet(aktivitetData, aktivitetId);
     const defaultTema = getDialogTittel(aktivitet);
-    const loadingData = isLoadingData(aktivitetData);
 
     const { viewState, setViewState } = useViewContext();
 
@@ -27,7 +27,7 @@ export default function NyDialog() {
         setViewState(endreDialogSomVises());
     }, [setViewState]);
 
-    if (!kansendeMelding || (aktivitetId && loadingData)) {
+    if (!kansendeMelding || (aktivitetId && !aktivitet)) {
         return <div className={styles.dialog} />;
     }
 
