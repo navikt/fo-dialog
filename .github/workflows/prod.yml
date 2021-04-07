@@ -30,14 +30,12 @@ jobs:
       - run: npm run build
 
       - name: Build and publish Docker image
-        if: github.ref == 'refs/heads/master' || github.ref == 'refs/heads/dev'
         run: |
           docker login docker.pkg.github.com -u ${GITHUB_REPOSITORY} -p ${GITHUB_TOKEN}
           docker build -t ${IMAGE} .
           docker push ${IMAGE}
   deploy-p:
     runs-on: ubuntu-latest
-    if: github.ref == 'refs/heads/master'
     needs: build
     steps:
       - uses: actions/checkout@v1
