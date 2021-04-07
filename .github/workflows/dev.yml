@@ -1,6 +1,10 @@
-name: Deploy to test
+name: dev
 
-on: [workflow_dispatch]
+on:
+  workflow_dispatch:
+  push:
+    branches:
+      - dev
 
 env:
   IMAGE_NAME: docker.pkg.github.com/navikt/arbeidsrettet-dialog/arbeidsrettet-dialog
@@ -28,7 +32,8 @@ jobs:
           docker login docker.pkg.github.com -u ${GITHUB_REPOSITORY} -p ${GITHUB_TOKEN}
           docker build -t ${IMAGE} .
           docker push ${IMAGE}
-  deploy-test:
+
+  deploy-fss:
     runs-on: ubuntu-latest
     needs: build
     steps:
@@ -40,6 +45,11 @@ jobs:
           RESOURCE: nais-q-fss.yaml
           VAR: namespace=q1
 
+  deply-sbs:
+    runs-on: ubuntu-latest
+    needs: build
+    steps:
+      - uses: actions/checkout@v1
       - name: deploy sbs
         uses: nais/deploy/actions/deploy@v1
         env:

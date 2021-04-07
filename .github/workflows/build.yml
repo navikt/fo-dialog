@@ -1,13 +1,8 @@
-name: Node CI
+name: run test
 
-on: [push, workflow_dispatch]
+on: [push]
 
 env:
-  IMAGE_NAME: docker.pkg.github.com/navikt/arbeidsrettet-dialog/arbeidsrettet-dialog
-  IMAGE_TAG: ${{ github.sha }}
-  IMAGE: docker.pkg.github.com/navikt/arbeidsrettet-dialog/arbeidsrettet-dialog:${{ github.sha }}
-  APIKEY: ${{ secrets.NAIS_DEPLOY_APIKEY }}
-  GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
   PRINT_PAYLOAD: true
   TZ: Europe/Amsterdam
   CI: true
@@ -25,46 +20,3 @@ jobs:
       - run: npm run prettier-check
       - run: npm run test
       - run: npm run build
-
-      - name: Build and publish Docker image
-        if: github.ref == 'refs/heads/master' || github.ref == 'refs/heads/dev'
-        run: |
-          docker login docker.pkg.github.com -u ${GITHUB_REPOSITORY} -p ${GITHUB_TOKEN}
-          docker build -t ${IMAGE} .
-          docker push ${IMAGE}
-  deploy-test:
-    runs-on: ubuntu-latest
-    if: github.ref == 'refs/heads/dev'
-    needs: build
-    steps:
-      - uses: actions/checkout@v1
-      - name: deploy fss
-        uses: nais/deploy/actions/deploy@v1
-        env:
-          CLUSTER: dev-fss
-          RESOURCE: nais-q-fss.yaml
-          VAR: namespace=q1
-
-      - name: deploy sbs
-        uses: nais/deploy/actions/deploy@v1
-        env:
-          CLUSTER: dev-sbs
-          RESOURCE: nais-q-sbs.yaml
-          VAR: namespace=q1
-  deploy-p:
-    runs-on: ubuntu-latest
-    if: github.ref == 'refs/heads/master'
-    needs: build
-    steps:
-      - uses: actions/checkout@v1
-      - name: deploy fss
-        uses: nais/deploy/actions/deploy@v1
-        env:
-          CLUSTER: prod-fss
-          RESOURCE: nais-fss.yaml
-
-      - name: deploy sbs
-        uses: nais/deploy/actions/deploy@v1
-        env:
-          CLUSTER: prod-sbs
-          RESOURCE: nais-sbs.yaml
