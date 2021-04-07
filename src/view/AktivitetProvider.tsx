@@ -31,13 +31,6 @@ const inital: AktivitetContextType = {
 export const AktivitetContext = React.createContext(inital);
 export const useAktivitetContext = () => useContext(AktivitetContext);
 
-export function isLoadingData(aktivitetData: AktivitetContextType): boolean {
-    const aktiviteter = hasData(aktivitetData.aktiviteter);
-    const arena = hasData(aktivitetData.arenaAktiviter);
-
-    return !aktiviteter || !arena;
-}
-
 export function harAktivitetDataFeil(aktivitetData: AktivitetContextType, arenaAktivitet: boolean): boolean {
     if (arenaAktivitet) {
         return hasError(aktivitetData.arenaAktiviter);
@@ -75,7 +68,7 @@ export function AktivitetProvider(props: Props) {
         REQUEST_CONFIG
     );
     const arenaAktiviteterFetch = useFetch<ArenaAktivitet[]>(
-        `${apiBasePath}/veilarbaktivitet/api/aktivitet/arena${query}`,
+        `${apiBasePath}/veilarbaktivitet/api/arena/tiltak${query}`,
         REQUEST_CONFIG
     );
 

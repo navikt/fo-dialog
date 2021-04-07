@@ -1,6 +1,8 @@
 export type ValueOrNull<T> = T | null;
 export type StringOrNull = ValueOrNull<string>;
 export type NumberOrNull = ValueOrNull<number>;
+export type ValueOrUndefined<T> = T | undefined;
+export type StringOrUndefined = ValueOrUndefined<string>;
 
 export interface NyDialogMeldingData {
     tekst: string;
