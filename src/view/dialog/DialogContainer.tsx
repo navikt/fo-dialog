@@ -7,7 +7,7 @@ import { useUserInfoContext } from '../Provider';
 import Dialog from './Dialog';
 import styles from './DialogContainer.module.less';
 import DialogInfoMelding from './DialogInfoMelding';
-import DialogNew from './NyDialog';
+import NyDialog from './NyDialog';
 
 function DialogContainer() {
     const bruker = useUserInfoContext();
@@ -17,7 +17,7 @@ function DialogContainer() {
         <div className={cls}>
             <Switch>
                 <Route path="/informasjon" component={InfoOmDialogSide} />
-                <Route path="/ny" component={DialogNew} />
+                <Route path="/ny" component={NyDialog} />
                 <Route path="/:dialogId" component={Dialog} />
                 <Route path="/" component={DialogInfoMelding} />
             </Switch>

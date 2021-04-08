@@ -14,6 +14,7 @@ interface Props {
     pristine?: boolean;
     autoFocus?: boolean;
     touched: boolean;
+    setValue: (value: string) => void;
     error?: string;
     input: FieldState['input'];
     visTellerFra?: number;
@@ -35,6 +36,7 @@ const EkspanderbartTekstArea = (props: Props) => {
     const {
         label,
         touched,
+        setValue,
         error,
         input,
         pristine,
