@@ -1,4 +1,4 @@
-import { formatISO, isAfter, parseISO } from 'date-fns';
+import { isAfter } from 'date-fns';
 import React, { useCallback, useContext, useMemo, useState } from 'react';
 
 import { loggChangeInDialog } from '../felleskomponenter/logging';
@@ -41,13 +41,13 @@ export const useDialogContext = () => useContext(DialogContext);
 
 export interface DialogState {
     status: Status;
-    sistOppdatert: string;
+    sistOppdatert: Date;
     dialoger: DialogData[];
 }
 
 const initDialogState: DialogState = {
     status: Status.INITIAL,
-    sistOppdatert: formatISO(new Date()),
+    sistOppdatert: new Date(),
     dialoger: []
 };
 
@@ -85,7 +85,7 @@ export function useDialogDataProvider(fnr?: string): DialogDataProviderType {
         }));
         return fetchData<DialogData[]>(baseUrl)
             .then((dialoger) => {
-                setState({ status: Status.OK, dialoger: dialoger, sistOppdatert: formatISO(new Date()) });
+                setState({ status: Status.OK, dialoger: dialoger, sistOppdatert: new Date() });
                 return dialoger;
             })
             .catch(() => {
@@ -97,11 +97,11 @@ export function useDialogDataProvider(fnr?: string): DialogDataProviderType {
     const pollForChanges = useCallback(() => {
         return fetchData<SistOppdatert>(sistOppdatertUrl).then((data) => {
             if (!!data.sistOppdatert) {
-                if (isAfter(parseISO(data.sistOppdatert), parseISO(sistOppdatert))) {
+                if (isAfter(data.sistOppdatert, sistOppdatert)) {
                     fetchData<DialogData[]>(baseUrl).then((dialoger) => {
                         setState((prevState) => {
                             loggChangeInDialog(prevState.dialoger, dialoger);
-                            return { status: Status.OK, dialoger: dialoger, sistOppdatert: formatISO(new Date()) };
+                            return { status: Status.OK, dialoger: dialoger, sistOppdatert: new Date() };
                         });
                     });
                 }

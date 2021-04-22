@@ -507,11 +507,8 @@ export function setFerdigBehandlet(dialogId: string, ferdigBehandlet: boolean) {
     return dialog as DialogData & JSONObject;
 }
 
-let counter = 0;
-
-export default () => {
-    // mock more dialoger inncomming while users are using the system
-    if (counter === 1) {
+export const opprettDialogEtterRender = () => {
+    setTimeout(() => {
         const nyDialog = {
             id: '6666',
             overskrift: 'Sender denne mens du ser på :)',
@@ -542,7 +539,7 @@ export default () => {
         const nyHenvendelse: HenvendelseData = {
             id: rndId(),
             dialogId: '2',
-            avsender: 'NAV',
+            avsender: erEksternBruker() ? 'NAV' : 'BRUKER',
             avsenderId: 'Z123456',
             sendt: new Date().toISOString(),
             lest: false,
@@ -552,9 +549,7 @@ export default () => {
         const d = dialoger.find((d) => d.id === '2');
         d!.henvendelser.push(nyHenvendelse);
         d!.lest = false;
-    }
-    counter += 1;
-    return harIngenDialoger() ? [] : [...dialoger];
+    }, 2000);
 };
 
 export const kladder: KladdData[] & JSONArray = [
@@ -575,3 +570,8 @@ export const kladder: KladdData[] & JSONArray = [
 export function oppdaterKladd(data: KladdData) {
     return null;
 }
+
+export default () => {
+    opprettDialogEtterRender();
+    return harIngenDialoger() ? [] : [...dialoger];
+};
