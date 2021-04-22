@@ -98,5 +98,5 @@ export interface KladdData {
 }
 
 export interface SistOppdatert {
-    sistOppdatert: StringOrNull;
+    sistOppdatert: Date;
 }
