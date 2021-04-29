@@ -21,6 +21,7 @@ import dialoger, {
 } from './Dialog';
 import { harNivaa4Data } from './HarNivaa4';
 import oppfolging from './Oppfolging';
+import { getSistOppdatert } from './SistOppdatert';
 import { veilederMe } from './Veileder';
 
 const loggingMiddleware: Middleware = (request, response) => {
@@ -98,7 +99,7 @@ mock.put('/veilarbdialog/api/dialog/:dialogId/ferdigbehandlet/:bool', ({ pathPar
     setFerdigBehandlet(pathParams.dialogId, pathParams.bool === 'true')
 );
 
-mock.get('/veilarbdialog/api/dialog/sistOppdatert', () => ({ sistOppdatert: '2020-06-25T12:58:12.757+02:00' }));
+mock.get('/veilarbdialog/api/dialog/sistOppdatert', getSistOppdatert());
 
 mock.get('/veilarboppfolging/api/oppfolging/me', bruker());
 

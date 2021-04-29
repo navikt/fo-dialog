@@ -5,6 +5,7 @@ import React, { ChangeEvent } from 'react';
 interface Props {
     touched: boolean;
     error?: string;
+    setValue: (value: string) => void;
     input: FieldState['input'];
     pristine?: boolean;
     initialValue?: string;
@@ -12,9 +13,9 @@ interface Props {
     onChange?: (e: ChangeEvent<HTMLInputElement>) => void;
 }
 
-// pristine and initialValue isn't used, but we don't want to pass it to input
+// pristine, initialValue and setValue isn't used, but we don't want to pass it to input
 function Input(props: Props & InputProps) {
-    const { touched, error, input, onChange, pristine, initialValue, submittoken, ...rest } = props;
+    const { touched, error, input, onChange, pristine, initialValue, setValue, submittoken, ...rest } = props;
     const feil = error && !!submittoken ? error : undefined;
 
     const inputProps = { ...input, ...rest };
