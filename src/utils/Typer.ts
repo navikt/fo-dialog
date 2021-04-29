@@ -6,7 +6,7 @@ export type StringOrUndefined = ValueOrUndefined<string>;
 
 export interface NyDialogMeldingData {
     tekst: string;
-    dialogId: StringOrNull;
+    dialogId?: string;
     overskrift?: string;
     aktivitetId?: string;
 }
