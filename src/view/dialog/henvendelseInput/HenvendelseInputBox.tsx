@@ -7,11 +7,11 @@ import { DialogData } from '../../../utils/Typer';
 import { UpdateTypes, dispatchUpdate } from '../../../utils/UpdateEvent';
 import { useDialogContext } from '../../DialogProvider';
 import { useKladdContext } from '../../KladdProvider';
-import { dataOrUndefined, useOppfolgingContext, useUserInfoContext, useViewContext } from '../../Provider';
+import { dataOrUndefined, useOppfolgingContext, useViewContext } from '../../Provider';
 import { HandlingsType, sendtNyHenvendelse } from '../../ViewState';
 import useHenvendelseStartTekst from '../UseHenvendelseStartTekst';
-import styles from './DialogInputBox.module.less';
-import HenvendelseInput from './HendvendelseInput';
+import HenvendelseInput from './HenvendelseInput';
+import styles from './HenvendelseInputBox.module.less';
 
 const maxMeldingsLengde = 5000;
 
@@ -26,19 +26,18 @@ const validerMelding = (melding: string, resten: any, props: { startTekst?: stri
         return 'Du må endre på meldingen';
     }
 };
-export type DialogInputProps = { melding: string };
-export type Handler = SubmitHandler<DialogInputProps>;
+export type HenvendelseInputBoxProps = { melding: string };
+export type Handler = SubmitHandler<HenvendelseInputBoxProps>;
 
 interface Props {
     dialog: DialogData;
     kanSendeHenveldelse: boolean;
 }
 
-const DialogInputBox = (props: Props) => {
-    const bruker = useUserInfoContext();
+const HenvendelseInputBox = (props: Props) => {
     const oppfolgingContext = useOppfolgingContext();
     const oppfolging = dataOrUndefined(oppfolgingContext);
-    const { hentDialoger, nyHenvendelse, setFerdigBehandlet } = useDialogContext();
+    const { hentDialoger, nyHenvendelse } = useDialogContext();
     const [noeFeilet, setNoeFeilet] = useState(false);
     const startTekst = useHenvendelseStartTekst();
 
@@ -56,7 +55,7 @@ const DialogInputBox = (props: Props) => {
         melding: !!kladd?.tekst ? kladd.tekst : startTekst
     };
 
-    const validator = useFormstate<DialogInputProps>({
+    const validator = useFormstate<HenvendelseInputBoxProps>({
         melding: validerMelding
     });
 
@@ -99,12 +98,6 @@ const DialogInputBox = (props: Props) => {
         loggEvent('arbeidsrettet-dialog.ny.henvendelse', { paaAktivitet: !!valgtDialog.aktivitetId });
         return nyHenvendelse(melding, valgtDialog)
             .then((dialog) => {
-                if (bruker?.erVeileder) {
-                    if (!dialog.ferdigBehandlet) {
-                        slettKladd(valgtDialog.id, valgtDialog.aktivitetId);
-                        return setFerdigBehandlet(valgtDialog, true);
-                    }
-                }
                 slettKladd(valgtDialog.id, valgtDialog.aktivitetId);
                 return dialog;
             })
@@ -146,4 +139,4 @@ const DialogInputBox = (props: Props) => {
     );
 };
 
-export default DialogInputBox;
+export default HenvendelseInputBox;

@@ -3,7 +3,7 @@ import React, { useCallback, useContext, useMemo, useState } from 'react';
 
 import { loggChangeInDialog } from '../felleskomponenter/logging';
 import { fetchData, fnrQuery, getApiBasePath } from '../utils/Fetch';
-import { DialogData, SistOppdatert } from '../utils/Typer';
+import { DialogData, NyDialogMeldingData, SistOppdatert } from '../utils/Typer';
 
 enum Status {
     INITIAL,
@@ -130,7 +130,7 @@ export function useDialogDataProvider(fnr?: string): DialogDataProviderType {
         (melding: string, tema?: string, dialogId?: string, aktivitetId?: string) => {
             setState((prevState) => ({ ...prevState, status: Status.RELOADING }));
 
-            const nyDialogData = {
+            const nyDialogData: NyDialogMeldingData = {
                 dialogId: dialogId,
                 overskrift: tema,
                 tekst: melding,
