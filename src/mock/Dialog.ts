@@ -509,8 +509,9 @@ export function setFerdigBehandlet(dialogId: string, ferdigBehandlet: boolean) {
 
 export const opprettDialogEtterRender = () => {
     setTimeout(() => {
+        const dialogId = Math.floor(Math.random() * 100);
         const nyDialog = {
-            id: '6666',
+            id: dialogId,
             overskrift: 'Sender denne mens du ser på :)',
             sisteTekst: 'Halla, hvordan ser dette ut?',
             sisteDato: new Date().toISOString(),
@@ -525,7 +526,7 @@ export const opprettDialogEtterRender = () => {
             henvendelser: [
                 {
                     id: '3666',
-                    dialogId: '6666',
+                    dialogId: dialogId,
                     avsender: 'VEILEDER',
                     avsenderId: 'Z123456',
                     sendt: new Date().toISOString(),

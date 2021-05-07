@@ -10,7 +10,7 @@ import { Bruker, DialogData, OppfolgingData, PeriodeData } from '../utils/Typer'
 import { Dialog } from '../view/dialog/Dialog';
 import DialogContainer from '../view/dialog/DialogContainer';
 import { DialogHeader } from '../view/dialog/DialogHeader';
-import DialogInputBox from '../view/dialog/dialogInput/DialogInputBox';
+import HenvendelseInputBox from '../view/dialog/henvendelseInput/HenvendelseInputBox';
 import DialogListe from '../view/dialogliste/DialogListe';
 import DialogOversikt from '../view/dialogliste/DialogOversikt';
 import DialogPreview from '../view/dialogliste/DialogPreview';
@@ -185,7 +185,7 @@ describe('<Dialog/>', () => {
                 <DialogContainer />
             </MemoryRouter>
         );
-        expect(wrapper.find(DialogInputBox).exists()).toBeTruthy();
+        expect(wrapper.find(HenvendelseInputBox).exists()).toBeTruthy();
         expect(wrapper.find(HenvendelseList).exists()).toBeTruthy();
         expect(wrapper.find(Checkbox).exists()).toBeFalsy();
     });
@@ -216,7 +216,7 @@ describe('<Dialog/>', () => {
             </MemoryRouter>
         );
         expect(wrapper.find(DialogHeader).exists()).toBeTruthy();
-        expect(wrapper.find(DialogInputBox).exists()).toBeTruthy();
+        expect(wrapper.find(HenvendelseInputBox).exists()).toBeTruthy();
         expect(wrapper.find(HenvendelseList).exists()).toBeTruthy();
     });
 });

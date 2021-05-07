@@ -12,8 +12,8 @@ import { endreDialogSomVises } from '../ViewState';
 import styles from './Dialog.module.less';
 import ManagedDialogCheckboxes from './DialogCheckboxes';
 import { DialogHeader, dialogHeaderID1, dialogHeaderID2 } from './DialogHeader';
-import DialogInputBoxVisible from './dialogInput/DialogInputBox';
 import DialogSendtBekreftelse from './DialogSendtBekreftelse';
+import DialogInputBoxVisible from './henvendelseInput/HenvendelseInputBox';
 import HistoriskInfo from './HistoriskInfo';
 import { IngenDialog } from './IngenDialog';
 
