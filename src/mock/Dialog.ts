@@ -373,6 +373,33 @@ const dialoger: DialogData[] & JSONArray = [
         egenskaper: []
     },
     {
+        id: '8',
+        overskrift: 'Ikke delt',
+        sisteTekst: 'Denne dialogen har et samtalereferat som ikke er delt.',
+        sisteDato: '2021-05-20T10:00:00.000+01:00',
+        opprettetDato: '2021-05-20T10:00:00.000+01:00',
+        historisk: false,
+        lest: true,
+        venterPaSvar: false,
+        ferdigBehandlet: true,
+        lestAvBrukerTidspunkt: null,
+        erLestAvBruker: false,
+        aktivitetId: 'SAMTALEREFERAT2',
+        henvendelser: [
+            {
+                id: '3',
+                dialogId: '2',
+                avsender: 'VEILEDER',
+                avsenderId: 'Z123456',
+                sendt: '2021-05-20T10:00:00.000+01:00',
+                lest: false,
+                viktig: false,
+                tekst: 'Denne dialogen har et samtalereferat som ikke er delt ennå.'
+            }
+        ],
+        egenskaper: []
+    },
+    {
         id: '11',
         overskrift: 'Fiskeoppdrett',
         sisteTekst:
