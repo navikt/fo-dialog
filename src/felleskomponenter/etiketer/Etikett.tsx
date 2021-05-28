@@ -54,7 +54,7 @@ export function ViktigMelding(props: Props) {
     );
 }
 
-export function SamtalereferatIkkeDelt(props : Props) {
+export function SamtalereferatIkkeDelt(props: Props) {
     const classes = classNames(styles.samtalereferatIkkeDelt, props.className);
     return (
         <Etiket visible={props.visible} clasName={classes}>
