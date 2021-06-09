@@ -9,15 +9,23 @@ interface PropTypes {
     lenke: string | null;
 }
 
-export default function EksternLenke(props: PropTypes) {
+const EksternLenke = (props: PropTypes) => {
     const { lenke } = props;
 
-    if (!lenke) return null;
-    const paddaLenke = lenke && lenke.match(httpRegex) ? lenke : `http://${lenke}`;
+    const trimmetLenke = lenke?.trim();
+
+    if (!trimmetLenke) {
+        return null;
+    }
+
+    const paddaLenke = trimmetLenke.match(httpRegex) ? trimmetLenke : `http://${trimmetLenke}`;
+
     return (
         <Lenke href={paddaLenke}>
             {lenke}
             <EksternLenkeIkon />
         </Lenke>
     );
-}
+};
+
+export default EksternLenke;
