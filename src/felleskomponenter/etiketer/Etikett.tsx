@@ -53,12 +53,3 @@ export function ViktigMelding(props: Props) {
         </Etiket>
     );
 }
-
-export function SamtalereferatIkkeDelt(props: Props) {
-    const classes = classNames(styles.samtalereferatIkkeDelt, props.className);
-    return (
-        <Etiket visible={props.visible} clasName={classes}>
-            Samtalereferatet er ikke delt
-        </Etiket>
-    );
-}
