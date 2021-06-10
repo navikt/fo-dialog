@@ -1,32 +1,23 @@
 import React from 'react';
 
-import { SamtalereferatIkkeDelt } from '../../felleskomponenter/etiketer/Etikett';
-import { erEksternBruker } from '../../mock/demo/sessionstorage';
 import { Aktivitet } from '../../utils/aktivitetTypes';
 import { formaterDate } from '../../utils/Date';
-import InformasjonElement, { InformasjonElementRaw } from './InformasjonElement';
+import InformasjonElement from './InformasjonElement';
 import { getKanalTekst } from './MoteAktivitet';
 
 interface PropTypes {
     aktivitet: Aktivitet;
 }
 
+//TODO: Ok med referat her? har en annen type visning i aktivitetsplanen
 export default function SamtalereferatAktivitet(props: PropTypes) {
-    const { fraDato, kanal, referat, erReferatPublisert } = props.aktivitet;
-
-    const referatPublisertElement = <InformasjonElement merkelapptekst="Referat" verdi={referat} />;
-    const referatIkkePublisertElement = erEksternBruker() ? null : (
-        <InformasjonElementRaw merkelapptekst="Referat">
-            {SamtalereferatIkkeDelt({ visible: !erEksternBruker() })}
-        </InformasjonElementRaw>
-    );
-    const referatElement = erReferatPublisert ? referatPublisertElement : referatIkkePublisertElement;
+    const { fraDato, kanal, referat } = props.aktivitet;
 
     return (
         <>
             <InformasjonElement merkelapptekst="Dato" verdi={formaterDate(fraDato)} />
             <InformasjonElement merkelapptekst="Kanal" verdi={getKanalTekst(kanal)} />
-            {referatElement}
+            <InformasjonElement merkelapptekst="Referat" verdi={referat} />
         </>
     );
 }
