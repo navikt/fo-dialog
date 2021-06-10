@@ -5,7 +5,7 @@
 
 .lukkeknapp {
     align-self: start;
-    background-color: white;
+    background-color: @white;
     margin-top: 0.5rem;
     margin-right: 0.5rem;
 
@@ -28,14 +28,14 @@
 .dialogHeader {
     display: flex;
     align-items: center;
-    background-color: @lysgraBakrund;
+    background-color: @navGraBakgrunn;
     z-index: 0;
 }
 
 .tittelHeader {
     text-align: center;
 
-    .min-responsive({background-color: white;});
+    .min-responsive({background-color: @white;});
 }
 
 .dialogHeaderShadow {
@@ -54,6 +54,6 @@
 
 .feil {
     padding: 1rem;
-    background-color: @lysgraBakrund;
+    background-color: @navGraBakgrunn;
     z-index: 1000;
 }
