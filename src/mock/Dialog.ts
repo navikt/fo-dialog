@@ -133,7 +133,8 @@ const dialoger: DialogData[] & JSONArray = [
                 sendt: '2018-02-01T11:52:20.615+01:00',
                 lest: true,
                 viktig: true,
-                tekst: 'Det er viktig at du gjennomfører denne aktiviteten med NAV. Gjør du ikke det, kan det medføre at stønaden du mottar fra NAV bortfaller for en periode eller stanses. Hvis du ikke kan gjennomføre aktiviteten, ber vi deg ta kontakt med veilederen din så snart som mulig.'
+                tekst:
+                    'Det er viktig at du gjennomfører denne aktiviteten med NAV. Gjør du ikke det, kan det medføre at stønaden du mottar fra NAV bortfaller for en periode eller stanses. Hvis du ikke kan gjennomføre aktiviteten, ber vi deg ta kontakt med veilederen din så snart som mulig.'
             }
         ],
         egenskaper: ['ESKALERINGSVARSEL']
@@ -421,7 +422,8 @@ const dialoger: DialogData[] & JSONArray = [
                 sendt: '2018-02-01T11:52:20.615+01:00',
                 lest: false,
                 viktig: false,
-                tekst: 'Hei. Jeg vil at du skal prøve å søke minst 5 stillinger i uken. Vi møtes igjen om en uke for å prate om hvordan det har gått. '
+                tekst:
+                    'Hei. Jeg vil at du skal prøve å søke minst 5 stillinger i uken. Vi møtes igjen om en uke for å prate om hvordan det har gått. '
             }
         ],
         egenskaper: []
@@ -449,7 +451,8 @@ const dialoger: DialogData[] & JSONArray = [
                 sendt: '2018-02-01T11:52:20.615+01:00',
                 lest: false,
                 viktig: false,
-                tekst: 'Hei. Jeg vil at du skal prøve å søke minst 5 stillinger i uken. Vi møtes igjen om en uke for å prate om hvordan det har gått. '
+                tekst:
+                    'Hei. Jeg vil at du skal prøve å søke minst 5 stillinger i uken. Vi møtes igjen om en uke for å prate om hvordan det har gått. '
             }
         ],
         egenskaper: []
