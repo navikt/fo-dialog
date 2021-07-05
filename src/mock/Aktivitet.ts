@@ -37,8 +37,7 @@ const moteAktivitet = {
     status: 'PLANLAGT',
     stillingsTittel: null,
     tilDato: '2019-10-10T07:45:00+02:00',
-    tittel:
-        'Møte med nav med tittel som er så utrolig lang at den kan jo umulig få plass uansett hvor stor skjerm man har',
+    tittel: 'Møte med nav med tittel som er så utrolig lang at den kan jo umulig få plass uansett hvor stor skjerm man har',
     transaksjonsType: 'REFERAT_PUBLISERT',
     type: 'MOTE',
     versjon: '213019'

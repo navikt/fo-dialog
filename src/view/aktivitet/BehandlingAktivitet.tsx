@@ -9,15 +9,8 @@ interface PropTypes {
 }
 
 export default function BehandlingAktivitet(props: PropTypes) {
-    const {
-        fraDato,
-        tilDato,
-        behandlingType,
-        behandlingSted,
-        effekt,
-        behandlingOppfolging,
-        beskrivelse
-    } = props.aktivitet;
+    const { fraDato, tilDato, behandlingType, behandlingSted, effekt, behandlingOppfolging, beskrivelse } =
+        props.aktivitet;
 
     return (
         <>
