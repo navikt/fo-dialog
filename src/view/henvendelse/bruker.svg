@@ -4,7 +4,7 @@
         <circle id="path-1" cx="17.1" cy="17.1" r="17.1"></circle>
     </defs>
     <g id="ikon/bruker8" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
-        <circle id="Oval" fill="#99BDCD" cx="18" cy="18" r="18"></circle>
+        <circle id="Oval" fill="#99C4DD" cx="18" cy="18" r="18"></circle>
         <g id="Group-2" transform="translate(0.500000, 0.500000)">
             <mask id="mask-2" fill="white">
                 <use xlink:href="#path-1"></use>
@@ -12,6 +12,6 @@
             <g id="Mask"></g>
             <path d="M31,41 L4,41 C3.172,41 2.5,40.2669091 2.5,39.3636364 C2.5,29.3850909 7.318,24.5643636 11.989,22.5647273 C9.871,20.768 8.5,17.9665455 8.5,14.8181818 C8.5,9.40509091 12.538,5 17.5,5 C22.462,5 26.5,9.40509091 26.5,14.8181818 C26.5,17.9665455 25.129,20.768 23.011,22.5647273 C27.682,24.5610909 32.5,29.3850909 32.5,39.3636364 C32.5,40.2669091 31.828,41 31,41 Z" id="Path" fill="#FFFFFF" fill-rule="nonzero" mask="url(#mask-2)"></path>
         </g>
-        <circle id="Oval" stroke="#99BDCD" stroke-width="0.969" cx="18" cy="18" r="17.5"></circle>
+        <circle id="Oval" stroke="#99C4DD" stroke-width="0.969" cx="18" cy="18" r="17.5"></circle>
     </g>
 </svg>
