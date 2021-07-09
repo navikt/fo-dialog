@@ -14,7 +14,7 @@ import HenvendelseInputBox from '../view/dialog/henvendelseInput/HenvendelseInpu
 import DialogListe from '../view/dialogliste/DialogListe';
 import DialogOversikt from '../view/dialogliste/DialogOversikt';
 import DialogPreview from '../view/dialogliste/DialogPreview';
-import { NyDialogLink } from '../view/dialogliste/NyDialogLink';
+import NyDialogLink from '../view/dialogliste/NyDialogLink';
 import * as DialogProvider from '../view/DialogProvider';
 import { DialogDataProviderType } from '../view/DialogProvider';
 import { HenvendelseList } from '../view/henvendelse/HenvendelseList';
@@ -96,7 +96,8 @@ const useDialogContext: DialogDataProviderType = {
     nyHenvendelse: (melding: string, dialog: DialogData) => Promise.resolve(dialog),
     lesDialog: (dialogId: string) => Promise.resolve(dialoger.find((dialog) => dialog.id === dialogId)!!),
     setFerdigBehandlet: (dialog: DialogData, ferdigBehandlet: boolean) => Promise.resolve(dialog),
-    setVenterPaSvar: (dialog: DialogData, venterPaSvar: boolean) => Promise.resolve(dialog)
+    setVenterPaSvar: (dialog: DialogData, venterPaSvar: boolean) => Promise.resolve(dialog),
+    pollForChanges: () => Promise.resolve()
 };
 
 describe('<DialogContainer/>', () => {
