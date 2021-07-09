@@ -7,5 +7,33 @@
 }
 
 .dialogKnapp {
-    text-decoration: none;
+    //Hovedknapp total mixin start = .knapp .knapp--hoved
+    .knappbase-mixin(@font-family);
+    .knappramme-mixin(@navBla, @navDypBla, @white);
+    .knappdisabled-mixin();
+    .knappspinner-mixin();
+    .knappmedikon-mixin();
+    .knappfylt-mixin(@navBla, @white, @navDypBla, lighten(@navBla, 5%));
+    //Hovedknapp total mixin slutt
+
+    display: flex;
+    padding: 0.3rem 1rem 0.3rem 1rem;
+    .plusslogo {
+        fill: @white;
+        margin-right: 0.5rem;
+        align-self: center;
+    }
+
+    &:focus {
+        .plusslogo {
+            fill: @navBla;
+        }
+    }
+
+    &:active,
+    &:hover {
+        .plusslogo {
+            fill: @white;
+        }
+    }
 }
