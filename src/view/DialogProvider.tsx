@@ -59,14 +59,14 @@ export function useDialogDataProvider(fnr?: string): DialogDataProviderType {
     const query = fnrQuery(fnr);
 
     const baseUrl = useMemo(() => `${apiBasePath}/veilarbdialog/api/dialog${query}`, [apiBasePath, query]);
-    const sistOppdatertUrl = useMemo(() => `${apiBasePath}/veilarbdialog/api/dialog/sistOppdatert${query}`, [
-        apiBasePath,
-        query
-    ]);
-    const lesUrl = useCallback((id: string) => `${apiBasePath}/veilarbdialog/api/dialog/${id}/les${query}`, [
-        apiBasePath,
-        query
-    ]);
+    const sistOppdatertUrl = useMemo(
+        () => `${apiBasePath}/veilarbdialog/api/dialog/sistOppdatert${query}`,
+        [apiBasePath, query]
+    );
+    const lesUrl = useCallback(
+        (id: string) => `${apiBasePath}/veilarbdialog/api/dialog/${id}/les${query}`,
+        [apiBasePath, query]
+    );
     const ferdigBehandletUrl = useCallback(
         (id: string, ferdigBehandlet: boolean) =>
             `${apiBasePath}/veilarbdialog/api/dialog/${id}/ferdigbehandlet/${ferdigBehandlet}${query}`,

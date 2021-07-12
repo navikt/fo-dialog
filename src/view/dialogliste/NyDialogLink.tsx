@@ -5,7 +5,7 @@ import { visibleIfHoc } from '../../felleskomponenter/VisibleIfHoc';
 import styles from './NyDialogLink.module.less';
 import { ReactComponent as PlussIkon } from './pluss.svg';
 
-export function NyDialogLink() {
+const NyDialogLink = () => {
     return (
         <div className={styles.header}>
             <Link className={styles.dialogKnapp} to={'/ny'}>
@@ -14,6 +14,5 @@ export function NyDialogLink() {
             </Link>
         </div>
     );
-}
-
+};
 export default visibleIfHoc(NyDialogLink);

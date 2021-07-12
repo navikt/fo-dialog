@@ -31,7 +31,7 @@ const getCls = (etikettnavn?: StillingsStatus): string => {
 const getText = (etikettnavn?: StillingsStatus): string => {
     switch (etikettnavn) {
         case SOKNAD_SENDT:
-            return 'Sendt søknad';
+            return 'Sendt søknad og venter på svar';
         case INNKALT_TIL_INTERVJU:
             return 'Skal på intervju';
         case JOBBTILBUD:
