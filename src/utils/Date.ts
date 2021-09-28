@@ -32,7 +32,7 @@ export function getVarighet(fraDato: ValueOrNull<string>, tilDato: ValueOrNull<s
     const fraDatoDate = new Date(fraDato);
     const tilDatoDate = new Date(tilDato);
     const hourDiff = differenceInHours(tilDatoDate, fraDatoDate);
-    const minuteDiff = padStart(differenceInMinutes(tilDatoDate.setHours(0), fraDatoDate.setHours(0)));
+    const minuteDiff = padStart(differenceInMinutes(tilDatoDate, fraDatoDate) % 60);
 
     return `${hourDiff}:${minuteDiff}`;
 }
