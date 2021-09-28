@@ -42,4 +42,11 @@ describe('getVarighet', () => {
 
         expect(getVarighet(fradato, tildato)).toBe('1:00');
     });
+
+    it('skal returnere korrekt varighet 0:45', () => {
+        const fradato = '2021-09-29T09:30:00.000+00:00';
+        const tildato = '2021-09-29T10:15:00.000+00:00';
+
+        expect(getVarighet(fradato, tildato)).toBe('0:45');
+    });
 });
