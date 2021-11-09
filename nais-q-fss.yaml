@@ -2,7 +2,7 @@ apiVersion: 'nais.io/v1alpha1'
 kind: 'Application'
 metadata:
   name: arbeidsrettet-dialog-fss
-  namespace: {{namespace}}
+  namespace: pto
   labels:
     team: pto
 spec:
@@ -22,9 +22,9 @@ spec:
     enabled: true
     path: arbeidsrettet-dialog/internal/metrics
   ingresses:
-    - https://arbeidsrettet-dialog-{{namespace}}.nais.preprod.local
-    - https://app-{{namespace}}.adeo.no/arbeidsrettet-dialog
-    - https://app-{{namespace}}.dev.adeo.no/arbeidsrettet-dialog
+    - https://arbeidsrettet-dialog-q1.nais.preprod.local
+    - https://app-q1.adeo.no/arbeidsrettet-dialog
+    - https://app-q1.dev.adeo.no/arbeidsrettet-dialog
   vault:
     enabled: true
   webproxy: true

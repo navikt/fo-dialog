@@ -2,7 +2,7 @@ apiVersion: 'nais.io/v1alpha1'
 kind: 'Application'
 metadata:
   name: arbeidsrettet-dialog
-  namespace: {{namespace}}
+  namespace: pto
   labels:
     team: pto
 spec:
@@ -22,15 +22,15 @@ spec:
     enabled: true
     path: arbeid/dialog/internal/metrics
   ingresses:
-    - https://arbeidsrettet-dialog-{{namespace}}.nais.oera-q.local
-    - https://arbeidsrettet-dialog-{{namespace}}.dev-sbs.nais.io
-    - https://www-{{namespace}}.nav.no/arbeid/dialog
+    - https://arbeidsrettet-dialog-q1.nais.oera-q.local
+    - https://arbeidsrettet-dialog-q1.dev-sbs.nais.io
+    - https://www-q1.nav.no/arbeid/dialog
   vault:
     enabled: true
   webproxy: true
   env:
     - name: DITTNAV_LINK_URL
-      value: 'https://tjenester-{{namespace}}.nav.no/dittnav/'
+      value: 'https://www.dev.nav.no/person/dittnav/'
   envFrom:
     - configmap: pto-config
     - configmap: loginservice-idporten

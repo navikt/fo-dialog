@@ -2,7 +2,7 @@ apiVersion: 'nais.io/v1alpha1'
 kind: 'Application'
 metadata:
   name: arbeidsrettet-dialog
-  namespace: default
+  namespace: pto
   labels:
     team: pto
 spec:
@@ -35,7 +35,7 @@ spec:
   webproxy: true
   env:
     - name: DITTNAV_LINK_URL
-      value: 'https://tjenester-{{namespace}}.nav.no/dittnav/'
+      value: 'https://tjenester.nav.no/dittnav/'
   envFrom:
     - configmap: pto-config
     - configmap: loginservice-idporten
