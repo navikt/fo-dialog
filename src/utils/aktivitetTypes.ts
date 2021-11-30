@@ -34,6 +34,21 @@ export type StillingsStatus =
     | null
     | undefined;
 
+export interface StillingFraNavData {
+    //    cvKanDelesData: CvKanDelesData;
+    soknadsfrist: StringOrNull;
+    svarfrist: StringOrNull;
+    arbeidsgiver: string;
+    bestillingsId: string;
+    stillingsId: string;
+    arbeidssted: string;
+    varselId: string;
+    lenke: string; //mangler i backend
+    //    kontaktpersonData: KontaktInfo;
+    //    soknadsstatus: StillingFraNavSoknadsstatus;
+    //    livslopsstatus: Livslopsstatus;
+}
+
 export interface Aktivitet {
     id: string;
     versjon: StringOrNull;
@@ -90,6 +105,7 @@ export interface Aktivitet {
     erReferatPublisert: boolean;
 
     //stillingFraNav
+    stillingFraNavData?: StillingFraNavData;
 }
 
 export enum ArenaAktivitetTypes {
