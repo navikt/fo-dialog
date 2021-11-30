@@ -78,6 +78,8 @@ export function getInfoText(aktivitet: Aktivitet | ArenaAktivitet): string | nul
             return `${formaterDate(aktivitet.fraDato)}`;
         case AktivitetTypes.IJOBB:
             return aktivitet.ansettelsesforhold;
+        case AktivitetTypes.STILLING_FRA_NAV:
+            return aktivitet.beskrivelse;
         case ArenaAktivitetTypes.TILTAKSAKTIVITET:
         case ArenaAktivitetTypes.UTDANNINGSAKTIVITET:
         case ArenaAktivitetTypes.GRUPPEAKTIVITET:

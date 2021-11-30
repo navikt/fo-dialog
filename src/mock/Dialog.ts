@@ -426,11 +426,38 @@ const dialoger: DialogData[] & JSONArray = [
             }
         ],
         egenskaper: []
+    },
+    {
+        id: '200',
+        overskrift: 'Hei, vi har en stilling som kan passe for deg',
+        sisteTekst: 'Hva tror du om denne? Arbeidgiver vil gjerne ta en titt på CV-en din. ',
+        sisteDato: '2021-02-01T11:52:20.615+01:00',
+        opprettetDato: '2021-02-01T11:52:20.535+01:00',
+        historisk: false,
+        lest: false,
+        venterPaSvar: true,
+        ferdigBehandlet: true,
+        lestAvBrukerTidspunkt: null,
+        erLestAvBruker: false,
+        aktivitetId: 'STILLING_FRA_NAV_1',
+        henvendelser: [
+            {
+                id: '2000',
+                dialogId: '200',
+                avsender: 'VEILEDER',
+                avsenderId: 'Z123456',
+                sendt: '2021-02-01T11:52:20.615+01:00',
+                lest: false,
+                viktig: false,
+                tekst: 'Hva tror du om denne? Arbeidgiver vil gjerne ta en titt på CV-en din. '
+            }
+        ],
+        egenskaper: []
     }
 ];
 
 export function lesDialog(dialogId: string) {
-    const dialog: any = dialoger.find((dialog) => dialog.id === dialogId);
+    const dialog: any = dialoger.find((dlg) => dlg.id === dialogId);
     if (dialog) {
         dialog.lest = true;
         return ResponseUtils.jsonPromise(dialog);
@@ -489,7 +516,7 @@ export function opprettEllerOppdaterDialog(update: NyDialogMeldingData): DialogD
 }
 
 export function setVenterPaSvar(dialogId: string, venterPaSvar: boolean) {
-    const dialog = dialoger.find((dialog) => dialog.id === dialogId);
+    const dialog = dialoger.find((dlg) => dlg.id === dialogId);
     if (dialog) {
         dialog.venterPaSvar = venterPaSvar;
     }
@@ -497,7 +524,7 @@ export function setVenterPaSvar(dialogId: string, venterPaSvar: boolean) {
 }
 
 export function setFerdigBehandlet(dialogId: string, ferdigBehandlet: boolean) {
-    const dialog = dialoger.find((dialog) => dialog.id === dialogId);
+    const dialog = dialoger.find((dlg) => dlg.id === dialogId);
     if (dialog) {
         dialog.ferdigBehandlet = ferdigBehandlet;
     }

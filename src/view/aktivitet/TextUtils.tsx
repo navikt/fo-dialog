@@ -37,6 +37,8 @@ export function getTypeText(type: AktivitetTypes | ArenaAktivitetTypes): string 
             return 'Jobbrettet egenaktivitet';
         case AktivitetTypes.IJOBB:
             return 'Jobb jeg har nå';
+        case AktivitetTypes.STILLING_FRA_NAV:
+            return 'Stilling fra NAV';
         case ArenaAktivitetTypes.TILTAKSAKTIVITET:
             return 'Tiltak gjennom NAV';
         case ArenaAktivitetTypes.GRUPPEAKTIVITET:

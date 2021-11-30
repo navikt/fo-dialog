@@ -7,7 +7,8 @@ export enum AktivitetTypes {
     IJOBB = 'IJOBB',
     BEHANDLING = 'BEHANDLING',
     MOTE = 'MOTE',
-    SAMTALEREFERAT = 'SAMTALEREFERAT'
+    SAMTALEREFERAT = 'SAMTALEREFERAT',
+    STILLING_FRA_NAV = 'STILLING_FRA_NAV'
 }
 
 export enum KanalTypes {
@@ -87,6 +88,8 @@ export interface Aktivitet {
     kanal: KanalTypes;
     referat: StringOrNull;
     erReferatPublisert: boolean;
+
+    //stillingFraNav
 }
 
 export enum ArenaAktivitetTypes {

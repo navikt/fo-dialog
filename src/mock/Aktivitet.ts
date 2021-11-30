@@ -297,6 +297,33 @@ const ijobbAktivitet = {
     type: 'IJOBB',
     versjon: '210077'
 };
+const stillingFraNav = {
+    versjon: '5345437',
+    id: 'STILLING_FRA_NAV_1',
+    tittel: 'Servitør',
+    type: 'STILLING_FRA_NAV',
+    lenke: null,
+    status: 'PLANLAGT',
+    opprettetDato: '2020-05-31T10:46:51.622+01:00',
+    endretDato: '2018-09-30T10:46:51.622+01:00',
+    endretAv: 'z990207',
+    historisk: false,
+    kontaktperson: 'Vidar Vidarsen,\n NAV-ansatt, 99 99 99 99,vidar.vidarsen@nav.no',
+    lagtInnAv: 'NAV',
+    transaksjonsType: 'OPPRETTET',
+    stillingFraNavData: {
+        cvKanDelesData: null,
+        arbeidsgiver: 'Havsalt AS',
+        arbeidssted: 'Kristiansand',
+        lenke: 'www.nav.no',
+        svarfrist: '2021-07-29T10:46:51.622+01:00',
+        kontaktpersonData: {
+            navn: 'Sykfest Strutle',
+            tittel: 'NAV-ansatt',
+            mobil: null
+        }
+    }
+};
 
 const aktiviteter = {
     aktiviteter: [
@@ -306,12 +333,13 @@ const aktiviteter = {
         behandlingAktivitet,
         sokeavtaleAktivitet,
         sokeavtaleAktivitet2,
-        ijobbAktivitet
+        ijobbAktivitet,
+        stillingFraNav
     ]
 };
 
 export function getAktivitet(id: string): JSONObject {
-    const aktivitet = aktiviteter.aktiviteter.find((aktivitet) => aktivitet.id === id);
+    const aktivitet = aktiviteter.aktiviteter.find((akt) => akt.id === id);
     return aktivitet ? aktivitet : {};
 }
 
