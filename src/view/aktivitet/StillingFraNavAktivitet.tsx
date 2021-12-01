@@ -2,6 +2,7 @@ import React from 'react';
 
 import { Aktivitet } from '../../utils/aktivitetTypes';
 import { formaterDate } from '../../utils/Date';
+import StillingFraNavEtikett from './etiketter/StillingFraNavEtikett';
 import InformasjonElement from './InformasjonElement';
 
 interface PropTypes {
@@ -11,27 +12,16 @@ interface PropTypes {
 export default function StillingFraNavAktivitet(props: PropTypes) {
     const { stillingFraNavData } = props.aktivitet;
     if (!stillingFraNavData) return null;
-    /*
-        stillingFraNavData: {
-        cvKanDelesData: null,
-        arbeidsgiver: 'Havsalt AS',
-        arbeidssted: 'Kristiansand',
-        lenke: 'www.nav.no',
-        svarfrist: '2021-07-29T10:46:51.622+01:00',
-        kontaktpersonData: {
-            navn: 'Sykfest Strutle',
-            tittel: 'NAV-ansatt',
-            mobil: null
-        }
-     */
+
+    const { arbeidsgiver, arbeidssted, svarfrist, soknadsstatus } = stillingFraNavData;
 
     return (
         <>
-            <InformasjonElement merkelapptekst="Arbeidsgiver" verdi={stillingFraNavData.arbeidsgiver} />
-            <InformasjonElement merkelapptekst="Arbeidssted" verdi={stillingFraNavData.arbeidssted} />
-            <InformasjonElement merkelapptekst="Svarfrist" verdi={formaterDate(stillingFraNavData.svarfrist)} />
+            <InformasjonElement merkelapptekst="Arbeidsgiver" verdi={arbeidsgiver} />
+            <InformasjonElement merkelapptekst="Arbeidssted" verdi={arbeidssted} />
+            <InformasjonElement merkelapptekst="Svarfrist" verdi={formaterDate(svarfrist)} />
             {/*<LenkeInformasjonElement merkelapptekst="Les mer om stillingen" verdi={stillingFraNavData.lenke} />*/}
-            {/* <SokeStatusEtikett etikett={etikett} />*/}
+            <StillingFraNavEtikett etikett={soknadsstatus} />
         </>
     );
 }

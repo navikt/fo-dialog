@@ -34,18 +34,32 @@ export type StillingsStatus =
     | null
     | undefined;
 
+export interface CvKanDelesData {
+    kanDeles: boolean;
+    endretTidspunkt: StringOrNull;
+    avtaltDato: StringOrNull;
+    endretAv: StringOrNull;
+    endretAvType: BrukerType;
+}
+export type BrukerType = 'NAV' | 'BRUKER';
+
+export enum StillingFraNavSoknadsstatus {
+    VENTER = 'VENTER',
+    SKAL_PAA_INTERVJU = 'SKAL_PAA_INTERVJU',
+    JOBBTILBUD = 'JOBBTILBUD',
+    AVSLAG = 'AVSLAG'
+}
 export interface StillingFraNavData {
-    //    cvKanDelesData: CvKanDelesData;
+    cvKanDelesData: CvKanDelesData;
     soknadsfrist: StringOrNull;
     svarfrist: StringOrNull;
-    arbeidsgiver: string;
+    arbeidsgiver: StringOrNull;
     bestillingsId: string;
-    stillingsId: string;
-    arbeidssted: string;
-    varselId: string;
-    lenke: string; //mangler i backend
-    //    kontaktpersonData: KontaktInfo;
-    //    soknadsstatus: StillingFraNavSoknadsstatus;
+    stillingsId: StringOrNull;
+    arbeidssted: StringOrNull;
+    varselId: StringOrNull;
+    lenke: StringOrNull; //mangler i backend
+    soknadsstatus: StillingFraNavSoknadsstatus;
     //    livslopsstatus: Livslopsstatus;
 }
 

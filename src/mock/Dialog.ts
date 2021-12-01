@@ -453,6 +453,33 @@ const dialoger: DialogData[] & JSONArray = [
             }
         ],
         egenskaper: []
+    },
+    {
+        id: '201',
+        overskrift: 'Hei, vi har en stilling som kan passe for deg',
+        sisteTekst: 'Er det ok at vi sender cv-en din videre?. ',
+        sisteDato: '2021-09-01T11:52:20.615+01:00',
+        opprettetDato: '2021-09-01T11:52:20.535+01:00',
+        historisk: false,
+        lest: false,
+        venterPaSvar: true,
+        ferdigBehandlet: true,
+        lestAvBrukerTidspunkt: null,
+        erLestAvBruker: false,
+        aktivitetId: 'STILLING_FRA_NAV_2',
+        henvendelser: [
+            {
+                id: '2000',
+                dialogId: '200',
+                avsender: 'VEILEDER',
+                avsenderId: 'Z123456',
+                sendt: '2021-02-01T11:52:20.615+01:00',
+                lest: false,
+                viktig: false,
+                tekst: 'Er det ok at vi sender cv-en din videre?. '
+            }
+        ],
+        egenskaper: []
     }
 ];
 

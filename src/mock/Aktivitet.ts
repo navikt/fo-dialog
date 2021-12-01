@@ -324,6 +324,33 @@ const stillingFraNav = {
         }
     }
 };
+const stillingFraNav2 = {
+    versjon: '5345436',
+    id: 'STILLING_FRA_NAV_2',
+    tittel: 'Hovmester',
+    type: 'STILLING_FRA_NAV',
+    lenke: null,
+    status: 'GJENNOMFORES',
+    opprettetDato: '2020-05-31T10:46:51.622+01:00',
+    endretDato: '2020-09-30T10:46:51.622+01:00',
+    endretAv: 'z990207',
+    historisk: false,
+    kontaktperson: 'Vidar Vidarsen,\n NAV-ansatt, 99 99 99 99,vidar.vidarsen@nav.no',
+    lagtInnAv: 'NAV',
+    transaksjonsType: 'STATUS_ENDRET',
+    stillingFraNavData: {
+        cvKanDelesData: {
+            kanDeles: true,
+            endretTidspunkt: '2020-09-30T10:46:51.622+01:00',
+            endretAv: 'V123',
+            endretAvType: 'BRUKER'
+        },
+        arbeidsgiver: 'Havsalt AS',
+        arbeidssted: 'Kristiansand',
+        lenke: 'www.nav.no',
+        soknadsstatus: 'VENTER'
+    }
+};
 
 const aktiviteter = {
     aktiviteter: [
@@ -334,7 +361,8 @@ const aktiviteter = {
         sokeavtaleAktivitet,
         sokeavtaleAktivitet2,
         ijobbAktivitet,
-        stillingFraNav
+        stillingFraNav,
+        stillingFraNav2
     ]
 };
 
