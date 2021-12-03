@@ -7,7 +7,8 @@ export enum AktivitetTypes {
     IJOBB = 'IJOBB',
     BEHANDLING = 'BEHANDLING',
     MOTE = 'MOTE',
-    SAMTALEREFERAT = 'SAMTALEREFERAT'
+    SAMTALEREFERAT = 'SAMTALEREFERAT',
+    STILLING_FRA_NAV = 'STILLING_FRA_NAV'
 }
 
 export enum KanalTypes {
@@ -32,6 +33,35 @@ export type StillingsStatus =
     | 'JOBBTILBUD'
     | null
     | undefined;
+
+export interface CvKanDelesData {
+    kanDeles: boolean;
+    endretTidspunkt: StringOrNull;
+    avtaltDato: StringOrNull;
+    endretAv: StringOrNull;
+    endretAvType: BrukerType;
+}
+export type BrukerType = 'NAV' | 'BRUKER';
+
+export enum StillingFraNavSoknadsstatus {
+    VENTER = 'VENTER',
+    SKAL_PAA_INTERVJU = 'SKAL_PAA_INTERVJU',
+    JOBBTILBUD = 'JOBBTILBUD',
+    AVSLAG = 'AVSLAG'
+}
+export interface StillingFraNavData {
+    cvKanDelesData: CvKanDelesData;
+    soknadsfrist: StringOrNull;
+    svarfrist: StringOrNull;
+    arbeidsgiver: StringOrNull;
+    bestillingsId: string;
+    stillingsId: StringOrNull;
+    arbeidssted: StringOrNull;
+    varselId: StringOrNull;
+    lenke: StringOrNull; //mangler i backend
+    soknadsstatus: StillingFraNavSoknadsstatus;
+    //    livslopsstatus: Livslopsstatus;
+}
 
 export interface Aktivitet {
     id: string;
@@ -87,6 +117,9 @@ export interface Aktivitet {
     kanal: KanalTypes;
     referat: StringOrNull;
     erReferatPublisert: boolean;
+
+    //stillingFraNav
+    stillingFraNavData?: StillingFraNavData;
 }
 
 export enum ArenaAktivitetTypes {

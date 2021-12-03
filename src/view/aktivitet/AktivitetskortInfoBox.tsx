@@ -9,6 +9,7 @@ import MoteAktivitet from './MoteAktivitet';
 import SamtalereferatAktivitet from './SamtalereferatAktivitet';
 import SokeAktivitet from './SokeAktivitet';
 import StillingAktivitet from './StillingAktivitet';
+import StillingFraNavAktivitet from './StillingFraNavAktivitet';
 import TiltakAktivitet from './TiltakAktivitet';
 import UtdanningAktivitet from './UtdanningAktivitet';
 
@@ -33,6 +34,8 @@ export function AktivitetskortInfoBox(props: Props) {
             return <EgenAktivitet aktivitet={aktivitet} />;
         case AktivitetTypes.IJOBB:
             return <IJobbAktivitet aktivitet={aktivitet} />;
+        case AktivitetTypes.STILLING_FRA_NAV:
+            return <StillingFraNavAktivitet aktivitet={aktivitet} />;
         case ArenaAktivitetTypes.GRUPPEAKTIVITET:
             return <GruppeAktivitet aktivitet={aktivitet} />;
         case ArenaAktivitetTypes.TILTAKSAKTIVITET:
