@@ -2,7 +2,7 @@
 
 Arbeidsrettet-dialog er et verktøy for veiledere og brukere i NAV. Verktøyet gjør det mulig for brukere under arbeidsrettet oppfølging å kommunisere med veilederne deres.
 
-Dette prosjektet er satt opp med [Create React App](https://github.com/facebook/create-react-app).
+Dette prosjektet er satt opp med [Create React App](https://github.com/facebook/create-react-app)
 
 ### Komme i gang
 
