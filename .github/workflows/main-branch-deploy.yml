@@ -1,10 +1,9 @@
-name: dev
+name: build og deploy main
 
 on:
-  workflow_dispatch:
   push:
     branches:
-      - dev
+      - main
 
 env:
   IMAGE_NAME: docker.pkg.github.com/navikt/arbeidsrettet-dialog/arbeidsrettet-dialog
@@ -21,10 +20,13 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v1
+
       - uses: actions/setup-node@v1
         with:
           node-version: 12
       - run: npm ci
+      - run: npm run prettier-check
+      - run: npm run test
       - run: npm run build
 
       - name: Build and publish Docker image
@@ -33,7 +35,7 @@ jobs:
           docker build -t ${IMAGE} .
           docker push ${IMAGE}
 
-  deploy-fss:
+  deploy-dev-fss:
     runs-on: ubuntu-latest
     needs: build
     steps:
@@ -45,7 +47,7 @@ jobs:
           RESOURCE: nais-q-fss.yaml
           VAR: namespace=q1
 
-  deply-sbs:
+  deploy-dev-sbs:
     runs-on: ubuntu-latest
     needs: build
     steps:
@@ -56,3 +58,25 @@ jobs:
           CLUSTER: dev-sbs
           RESOURCE: nais-q-sbs.yaml
           VAR: namespace=q1
+
+  deploy-fss:
+    runs-on: ubuntu-latest
+    needs: deploy-dev-fss
+    steps:
+      - uses: actions/checkout@v1
+      - name: deploy fss
+        uses: nais/deploy/actions/deploy@v1
+        env:
+          CLUSTER: prod-fss
+          RESOURCE: nais-fss.yaml
+
+  deploy-sbs:
+    runs-on: ubuntu-latest
+    needs: deploy-dev-sbs
+    steps:
+      - uses: actions/checkout@v1
+      - name: deploy sbs
+        uses: nais/deploy/actions/deploy@v1
+        env:
+          CLUSTER: prod-sbs
+          RESOURCE: nais-sbs.yaml
