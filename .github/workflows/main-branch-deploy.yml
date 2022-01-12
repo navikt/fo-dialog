@@ -5,6 +5,10 @@ on:
     branches:
       - main
 
+concurrency:
+  group: deploy_prod
+  cancel-in-progress: true
+
 env:
   IMAGE_NAME: docker.pkg.github.com/navikt/arbeidsrettet-dialog/arbeidsrettet-dialog
   IMAGE_TAG: ${{ github.sha }}
