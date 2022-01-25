@@ -28,7 +28,7 @@ export function fnrQuery(fnr?: string): string {
 }
 
 export function sjekkStatuskode(response: Response) {
-    if (response.status >= 200 && response.status < 300 && response.ok && !response.redirected) {
+    if (response.status >= 200 && response.status < 300 && response.ok) {
         return response;
     }
     throw new Error(response.statusText || response.type);
