@@ -65,8 +65,8 @@ spec:
           ],
           "redirects": [
               {
-                "from": "/api/auth",
-                "to": "/auth/info"
+                "from": "/arbeid/dialog/api/auth",
+                "to": "/arbeid/dialog/auth/info"
               },
               {
                 "from": "/arbeid/dialog/aktivitetsplan",
