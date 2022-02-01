@@ -58,30 +58,30 @@ spec:
         {
           "fallbackStrategy": "serve",
           "proxies": [
-            { "from": "/arbeid/dialog/veilarbaktivitet", "to": "http://pto-proxy/proxy", "preserveContextPath": true },
-            { "from": "/arbeid/dialog/veilarbdialog", "to": "http://pto-proxy/proxy" },
-            { "from": "/arbeid/dialog/veilarboppfolging", "to": "http://pto-proxy/proxy" },
-            { "from": "/arbeid/dialog/veilarblest", "to": "http://pto-proxy/proxy" }
+            { "from": "/veilarbaktivitet", "to": "http://pto-proxy/proxy/veilarbaktivitet" },
+            { "from": "/veilarbdialog", "to": "http://pto-proxy/proxy/veilarbdialog" },
+            { "from": "/veilarboppfolging", "to": "http://pto-proxy/proxy/veilarboppfolging" },
+            { "from": "/veilarblest", "to": "http://pto-proxy/proxy/veilarblest" }
           ],
           "redirects": [
               {
-                "from": "/arbeid/dialog/api/auth",
-                "to": "/arbeid/dialog/auth/info"
+                "from": "/api/auth",
+                "to": "/auth/info"
               },
               {
-                "from": "/arbeid/dialog/aktivitetsplan",
+                "from": "/aktivitetsplan",
                 "to": "{{AKTIVITETSPLAN_URL}}"
               },
               {
-                "from": "/arbeid/dialog/arbeidssokerregistrering",
+                "from": "/arbeidssokerregistrering",
                 "to": "{{ARBEIDSSOKERREGISTRERING_URL}}"
               },
               {
-                "from": "/arbeid/dialog/dittnav",
+                "from": "/dittnav",
                 "to": "{{DITTNAV_URL}}"
               },
               {
-                "from": "/arbeid/dialog/veientilarbeid",
+                "from": "/veientilarbeid",
                 "to": "{{VEIENTILARBEID_URL}}"
               }
           ]
