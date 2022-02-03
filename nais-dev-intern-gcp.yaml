@@ -47,4 +47,3 @@ spec:
       value: "*"
     - name: CONTEXT_PATH
       value: /arbeid/dialog
-
