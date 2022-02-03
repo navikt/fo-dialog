@@ -45,3 +45,6 @@ spec:
       value: arbeidsrettet-dialog-intern-dev
     - name: CORS_DOMAIN
       value: "*"
+    - name: CONTEXT_PATH
+      value: /arbeid/dialog
+
