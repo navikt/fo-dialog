@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta name="theme-color" content="#000000" />
     <title>Arbeidsrettet Dialog</title>
-    <link href='https://dekoratoren.ekstern.dev.nav.no/css/client.css' rel='stylesheet' />
+    <link href='%REACT_APP_DEKORATOR_URL%/css/client.css' rel='stylesheet' />
   </head>
 
   <body>
@@ -16,10 +16,10 @@
       </main>
     </div>
     <div id='decorator-footer'></div>
-    <div id='decorator-env' data-src='https://dekoratoren.ekstern.dev.nav.no/env?feedback=false&chatbot=false&footer=true'></div>
+    <div id='decorator-env' data-src='%REACT_APP_DEKORATOR_URL%/env?feedback=false&chatbot=false&footer=true'></div>
   </body>
 
-  <script src='https://dekoratoren.ekstern.dev.nav.no/client.js'></script>
+  <script src='%REACT_APP_DEKORATOR_URL%/client.js'></script>
   <script>
     function render() {
       return NAVSPA['arbeidsrettet-dialog'](document.getElementById('root'));
