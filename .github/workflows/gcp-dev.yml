@@ -2,6 +2,9 @@ name: GCP dev
 
 on:
   push:
+    branches:
+      - main
+      - gcp_migrering # TO-DO slett etter migrering
     paths-ignore:
       - '.github/workflows/pto-frontend-container-prod.yml'
       - 'nais-dev-ekstern-gcp.yaml'

@@ -1,7 +1,10 @@
-name: PTO frontend container dev
+name: pto-frontend container dev
 
 on:
   push:
+    branches:
+      - main
+      - gcp_migrering # TO-DO slett etter migrering
     paths:
       - '.github/workflows/pto-frontend-container-dev.yml'
       - 'nais-dev-ekstern-gcp.yaml'
