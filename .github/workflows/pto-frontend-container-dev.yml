@@ -30,3 +30,4 @@ jobs:
         env:
           CLUSTER: dev-gcp
           RESOURCE: nais-dev-ekstern-gcp.yaml
+
