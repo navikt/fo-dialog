@@ -1,17 +1,16 @@
-name: GCP dev
+name: GCP prod
 
 on:
   push:
     paths-ignore:
-      - '.github/workflows/pto-frontend-container-prod.yml'
+      - '.github/workflows/pto-frontend-container-dev.yml'
       - 'nais-dev-ekstern-gcp.yaml'
       - 'nais-dev-intern-gcp.yaml'
       - 'nais-prod-ekstern-gcp.yaml'
       - 'nais-prod-intern-gcp.yaml'
-  workflow_dispatch:
 
 concurrency:
-  group: gcp_dev
+  group: gcp_prod
   cancel-in-progress: true
 
 env:
@@ -20,8 +19,8 @@ env:
   CI: true
 
 jobs:
-  deploy-dev:
-    name: Test, build and deploy dev
+  deploy-prod:
+    name: Test, build and deploy prod
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
@@ -38,17 +37,17 @@ jobs:
       - name: Setup gcloud
         uses: google-github-actions/setup-gcloud@master
         with:
-          service_account_key: ${{ secrets.GCS_SA_KEY_DEV }}
+          service_account_key: ${{ secrets.GCS_SA_KEY_PROD }}
           export_default_credentials: true
-      - name: Upload files to GCS (dev ekstern bucket)
-        run: gsutil -m rsync -r build gs://arbeidsrettet-dialog-dev
-      - name: Upload files to GCS (dev intern bucket)
-        run: gsutil -m rsync -r build gs://arbeidsrettet-dialog-intern-dev
+      - name: Upload files to GCS (prod ekstern bucket)
+        run: gsutil -m rsync -r build gs://arbeidsrettet-dialog-prod
+      - name: Upload files to GCS (prod intern bucket)
+        run: gsutil -m rsync -r build gs://arbeidsrettet-dialog-intern-prod
       - name: Create release
         uses: actions/create-release@v1
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
-          tag_name: release/dev@${{ github.sha }}
-          release_name: Dev release
+          tag_name: release/prod@${{ github.sha }}
+          release_name: Prod release
           prerelease: true
