@@ -4,8 +4,8 @@ on:
   push:
     branches:
       - main
-      - gcp_migrering # TO-DO slett etter migrering
     paths:
+      - '.github/workflows/pto-frontend-container.yml'
       - 'nais-dev-ekstern-gcp.yaml'
       - 'nais-dev-intern-gcp.yaml'
       - 'nais-prod-ekstern-gcp.yml'
