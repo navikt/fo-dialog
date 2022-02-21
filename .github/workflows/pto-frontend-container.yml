@@ -1,4 +1,4 @@
-name: pto-frontend container dev
+name: pto-frontend container
 
 on:
   push:
@@ -6,13 +6,13 @@ on:
       - main
       - gcp_migrering # TO-DO slett etter migrering
     paths:
-      - '.github/workflows/pto-frontend-container-dev.yml'
       - 'nais-dev-ekstern-gcp.yaml'
       - 'nais-dev-intern-gcp.yaml'
-  workflow_dispatch:
+      - 'nais-prod-ekstern-gcp.yml'
+      - 'nais-prod-intern-gcp.yml'
 
 concurrency:
-  group: pto_frontend_container_dev
+  group: pto_frontend_container
   cancel-in-progress: true
 
 env:
@@ -34,3 +34,17 @@ jobs:
           CLUSTER: dev-gcp
           RESOURCE: nais-dev-ekstern-gcp.yaml
 
+  deploy-prod:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v1
+      - name: deploy gcp prod ekstern
+        uses: nais/deploy/actions/deploy@v1
+        env:
+          CLUSTER: prod-gcp
+          RESOURCE: nais-prod-ekstern-gcp.yaml
+      - name: deploy gcp prod intern
+        uses: nais/deploy/actions/deploy@v1
+        env:
+          CLUSTER: prod-gcp
+          RESOURCE: nais-prod-intern-gcp.yaml

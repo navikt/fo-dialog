@@ -6,7 +6,7 @@ on:
       - main
       - gcp_migrering # TO-DO slett etter migrering
     paths-ignore:
-      - '.github/workflows/pto-frontend-container-prod.yml'
+      - '.github/workflows/pto-frontend-container.yml'
       - 'nais-dev-ekstern-gcp.yaml'
       - 'nais-dev-intern-gcp.yaml'
       - 'nais-prod-ekstern-gcp.yaml'
