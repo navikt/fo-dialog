@@ -1,0 +1,49 @@
+apiVersion: "nais.io/v1alpha1"
+kind: "Application"
+metadata:
+  name: arbeidsrettet-dialog-intern
+  namespace: pto
+  labels:
+    team: pto
+spec:
+  image: ghcr.io/navikt/pto-frontend/pto-frontend:2022.02.02_13.08-d35764d57907
+  port: 8080
+  liveness:
+    path: /arbeid/dialog/internal/isAlive
+    initialDelay: 20
+  readiness:
+    path: /arbeid/dialog/internal/isReady
+    initialDelay: 20
+  replicas:
+    min: 1
+    max: 2
+    cpuThresholdPercentage: 75
+  resources:
+    limits:
+      cpu: "1"
+      memory: 512Mi
+    requests:
+      cpu: 250m
+      memory: 256Mi
+  ingresses:
+    - https://arbeidsrettet-dialog.dev.intern.nav.no/arbeid/dialog
+  accessPolicy:
+    outbound:
+      rules:
+        - application: pto-proxy
+      external:
+        - host: navtestb2c.b2clogin.com
+  gcp:
+    buckets:
+      - name: arbeidsrettet-dialog-intern-dev
+  envFrom:
+    - configmap: pto-config
+  env:
+    - name: ENFORCE_LOGIN
+      value: "false"
+    - name: GCS_BUCKET_NAME
+      value: arbeidsrettet-dialog-intern-dev
+    - name: CONTEXT_PATH
+      value: /arbeid/dialog
+    - name: CORS_DOMAIN
+      value: "*"
