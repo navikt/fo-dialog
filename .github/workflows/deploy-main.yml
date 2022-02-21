@@ -1,4 +1,4 @@
-name: GCP dev
+name: Deploy
 
 on:
   push:
@@ -14,7 +14,7 @@ on:
   workflow_dispatch:
 
 concurrency:
-  group: gcp_dev
+  group: gcp_deploy
   cancel-in-progress: true
 
 env:
@@ -54,4 +54,38 @@ jobs:
         with:
           tag_name: release/dev@${{ github.sha }}
           release_name: Dev release
+          prerelease: true
+
+  deploy-prod:
+    name: Test, build and deploy prod
+    needs: deploy-dev
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - uses: actions/setup-node@v2
+        with:
+          node-version: '14'
+          cache: 'npm'
+      - name: Install dependencies
+        run: npm ci
+      - name: Run tests
+        run: npm run test
+      - name: Build application
+        run: npm run build-prod
+      - name: Setup gcloud
+        uses: google-github-actions/setup-gcloud@master
+        with:
+          service_account_key: ${{ secrets.GCS_SA_KEY_PROD }}
+          export_default_credentials: true
+      - name: Upload files to GCS (prod ekstern bucket)
+        run: gsutil -m rsync -r build gs://arbeidsrettet-dialog-prod
+      - name: Upload files to GCS (prod intern bucket)
+        run: gsutil -m rsync -r build gs://arbeidsrettet-dialog-intern-prod
+      - name: Create release
+        uses: actions/create-release@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          tag_name: release/prod@${{ github.sha }}
+          release_name: Prod release
           prerelease: true
