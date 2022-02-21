@@ -38,4 +38,4 @@ jobs:
         with:
           tag_name: release/dev@${{ github.sha }}
           release_name: Dev release
-          prerelease: tru
+          prerelease: true
