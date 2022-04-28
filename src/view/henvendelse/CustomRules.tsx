@@ -52,6 +52,12 @@ export const markdownLink: Rule = {
 
         const href = text.startsWith('www') ? `https://${text}` : text;
 
-        return { type: CustomLenkeWrapper, props: { href: href }, children: [node.content[0]] };
+        const lenkeNavn = node.content[0];
+
+        if (typeof lenkeNavn === 'string') {
+            return { type: CustomLenkeWrapper, props: { href: href }, children: [lenkeNavn] };
+        }
+
+        return { type: CustomLenkeWrapper, props: { href: href }, children: [getText(lenkeNavn)] };
     }
 };
