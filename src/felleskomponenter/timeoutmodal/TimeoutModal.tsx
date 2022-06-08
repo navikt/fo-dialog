@@ -1,6 +1,6 @@
 import './Timeoutmodal.less';
 
-import { Hovedknapp, Knapp } from 'nav-frontend-knapper';
+import { Hovedknapp } from 'nav-frontend-knapper';
 import NavFrontendModal from 'nav-frontend-modal';
 import { Normaltekst, Systemtittel } from 'nav-frontend-typografi';
 import Veilederpanel from 'nav-frontend-veilederpanel';
@@ -67,27 +67,28 @@ function TimeoutModal(props: Props) {
     }, [fnr]);
 
     const apen = skalVises || !!visDemo;
+
     return (
         <NavFrontendModal
             isOpen={apen}
             className="timeoutbox-modal"
-            contentLabel="Du logges snart ut"
+            contentLabel="Du må logge inn på nytt."
             shouldCloseOnOverlayClick={false}
             closeButton={false}
             onRequestClose={() => setSkalVises(false)}
         >
             <Veilederpanel svg={<ObsSVG />} type="plakat" kompakt={true}>
                 <div className="timeoutbox-nedtelling">
-                    <Systemtittel className="timeoutbox-modal__tittel">Du logges snart ut</Systemtittel>
+                    <Systemtittel className="timeoutbox-modal__tittel">Du er logget ut.</Systemtittel>
                     <Normaltekst className="timeoutbox-modal__beskrivelse">
-                        Du kan fortsette i 5 minutter til, før du blir logget ut.
+                        Du må logge inn på nytt.
+                        <br />
+                        Du kan fortsette der du slapp etter innlogging.
                     </Normaltekst>
-                    <div className="timeoutbox-modal__button-row">
-                        <Hovedknapp className="timeoutbox-modal__avbryt" onClick={() => setSkalVises(false)}>
-                            Avbryt
-                        </Hovedknapp>
-                        <Knapp onClick={() => window.location.reload()}>Start på nytt nå</Knapp>
-                    </div>
+
+                    <Hovedknapp className="timeoutbox-modal__startpaanytt" onClick={() => window.location.reload()}>
+                        Start på nytt nå
+                    </Hovedknapp>
                 </div>
             </Veilederpanel>
         </NavFrontendModal>
