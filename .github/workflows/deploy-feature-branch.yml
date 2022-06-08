@@ -2,6 +2,11 @@ name: Deploy feature branch
 on:
   workflow_dispatch:
 
+env:
+  PRINT_PAYLOAD: true
+  TZ: Europe/Amsterdam
+  CI: true
+
 concurrency:
   group: deploy-feature-branch
   cancel-in-progress: true
