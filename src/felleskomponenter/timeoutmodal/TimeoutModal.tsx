@@ -23,10 +23,6 @@ function getHeaders() {
     };
 }
 
-function utloptTidspunktMinusSeksMinutter(remainingSeconds: number): number {
-    return (remainingSeconds - 360) * 1000;
-}
-
 interface Props {
     fnr?: string;
     visDemo?: boolean;
@@ -48,7 +44,7 @@ function TimeoutModal(props: Props) {
                 const { remainingSeconds } = authExp;
 
                 if (remainingSeconds) {
-                    const expirationInMillis = utloptTidspunktMinusSeksMinutter(remainingSeconds);
+                    const expirationInMillis = remainingSeconds * 1000;
                     const expiresAt = new Date().getTime() + expirationInMillis;
 
                     setTimeout(() => {
