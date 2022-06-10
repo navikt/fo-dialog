@@ -4,9 +4,10 @@ import { Hovedknapp } from 'nav-frontend-knapper';
 import NavFrontendModal from 'nav-frontend-modal';
 import { Normaltekst, Systemtittel } from 'nav-frontend-typografi';
 import Veilederpanel from 'nav-frontend-veilederpanel';
-import React, { useEffect, useState } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 
 import { getApiBasePath } from '../../utils/Fetch';
+import { UserInfoContext } from '../../view/Provider';
 import { hiddenIfHoc } from '../HiddenIfHoc';
 import { ReactComponent as ObsSVG } from './obs.svg';
 
@@ -23,10 +24,6 @@ function getHeaders() {
     };
 }
 
-function utloptTidspunktMinusSeksMinutter(remainingSeconds: number): number {
-    return (remainingSeconds - 360) * 1000;
-}
-
 interface Props {
     fnr?: string;
     visDemo?: boolean;
@@ -35,6 +32,12 @@ interface Props {
 function TimeoutModal(props: Props) {
     const { visDemo, fnr } = props;
     const [skalVises, setSkalVises] = useState(false);
+
+    const userInfo = useContext(UserInfoContext);
+
+    const baseUrl = userInfo?.erVeileder
+        ? window.location.origin + '/veilarbpersonflatefs'
+        : window.location.origin + '/arbeid/dialog';
 
     useEffect(() => {
         fetch(getApiBasePath(fnr) + '/api/auth', {
@@ -48,7 +51,7 @@ function TimeoutModal(props: Props) {
                 const { remainingSeconds } = authExp;
 
                 if (remainingSeconds) {
-                    const expirationInMillis = utloptTidspunktMinusSeksMinutter(remainingSeconds);
+                    const expirationInMillis = remainingSeconds * 1000;
                     const expiresAt = new Date().getTime() + expirationInMillis;
 
                     setTimeout(() => {
@@ -86,7 +89,11 @@ function TimeoutModal(props: Props) {
                         Du kan fortsette der du slapp etter innlogging.
                     </Normaltekst>
 
-                    <Hovedknapp className="timeoutbox-modal__startpaanytt" onClick={() => window.location.reload()}>
+                    <Hovedknapp
+                        className="timeoutbox-modal__startpaanytt"
+                        onClick={() => window.location.assign(baseUrl)}
+                    >
+                        {/* Loginservice støtter kun returnurl til baseUrl */}
                         Start på nytt nå
                     </Hovedknapp>
                 </div>
