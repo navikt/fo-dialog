@@ -3,4 +3,4 @@ export const erArenaAktivitet = (aktivitetId: string | null | undefined): boolea
 
 const erGCP = (): boolean => window.location.hostname.endsWith('intern.nav.no');
 
-export const getContextPath = (): string => (erGCP() ? '/' : '/veilarbpersonflatefs');
+export const getContextPath = (): string => (erGCP() ? '' : '/veilarbpersonflatefs');
