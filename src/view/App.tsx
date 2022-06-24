@@ -8,6 +8,7 @@ import AppBody from './AppBody';
 import { EventHandler } from './EventHandler';
 import { Provider } from './Provider';
 import StatusAdvarsel from './statusAdvarsel/StatusAdvarsel';
+import { getContextPath } from './utils/utils';
 
 interface Props {
     fnr?: string;
@@ -16,7 +17,7 @@ interface Props {
 
 function App(props: Props) {
     const { fnr } = props;
-    const basename = fnr ? `/veilarbpersonflatefs/${fnr}` : process.env.PUBLIC_URL;
+    const basename = fnr ? `${getContextPath()}/${fnr}` : process.env.PUBLIC_URL;
     const wraperClass = fnr ? styles.konteinerInside : styles.konteinerUtside;
     const appstyle = fnr ? styles.appInside : styles.app;
 

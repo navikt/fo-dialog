@@ -8,6 +8,7 @@ import React, { useContext, useEffect, useState } from 'react';
 
 import { getApiBasePath } from '../../utils/Fetch';
 import { UserInfoContext } from '../../view/Provider';
+import { getContextPath } from '../../view/utils/utils';
 import { hiddenIfHoc } from '../HiddenIfHoc';
 import { ReactComponent as ObsSVG } from './obs.svg';
 
@@ -36,7 +37,7 @@ function TimeoutModal(props: Props) {
     const userInfo = useContext(UserInfoContext);
 
     const baseUrl = userInfo?.erVeileder
-        ? window.location.origin + '/veilarbpersonflatefs'
+        ? window.location.origin + getContextPath()
         : window.location.origin + '/arbeid/dialog';
 
     useEffect(() => {
