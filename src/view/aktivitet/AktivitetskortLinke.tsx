@@ -4,6 +4,7 @@ import React, { MouseEvent } from 'react';
 
 import useApiBasePath from '../../utils/UseApiBasePath';
 import { useFnrContext } from '../Provider';
+import { getContextPath } from '../utils/utils';
 import styles from './Aktivitetskort.module.less';
 
 export const aktivitetLenke = (apiBasePath: string, aktivitetId: string) =>
@@ -14,11 +15,7 @@ export const visAktivitetsplan = (aktivitetID: string, fnrContext?: string) => (
         return;
     }
     event.preventDefault();
-    window.history.replaceState(
-        {},
-        'aktivitetsplan',
-        `/veilarbpersonflatefs/${fnrContext}/aktivitet/vis/${aktivitetID}`
-    );
+    window.history.replaceState({}, 'aktivitetsplan', `${getContextPath()}/${fnrContext}/aktivitet/vis/${aktivitetID}`);
     window.dispatchEvent(new CustomEvent('visAktivitetsplan', { detail: aktivitetID }));
 };
 
