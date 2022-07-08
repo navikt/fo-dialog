@@ -99,6 +99,12 @@ mock.put('/veilarbdialog/api/dialog/:dialogId/ferdigbehandlet/:bool', ({ pathPar
     setFerdigBehandlet(pathParams.dialogId, pathParams.bool === 'true')
 );
 
+mock.post('/veilarbdialog/api/logger/event', ({ body }) => {
+    const event = body.event;
+    console.log('Event', event.name, 'Fields:', event.fields, 'Tags:', event.tags);
+    return {};
+});
+
 mock.get('/veilarbdialog/api/dialog/sistOppdatert', getSistOppdatert());
 
 mock.get('/veilarboppfolging/api/oppfolging/me', bruker());
