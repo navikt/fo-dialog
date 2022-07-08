@@ -58,31 +58,28 @@ export function InfoOmDialogSide() {
                     <ul>
                         <Normaltekst tag="li">
                             kontakte NAV i tjenesten{' '}
-                            <a className="lenke" href="https://www.nav.no/person/kontakt-oss/skriv-til-oss">
+                            <a className="lenke" href="https://www.nav.no/skriv-til-oss">
                                 «Skriv til oss»
                             </a>
                         </Normaltekst>
                         <Normaltekst tag="li">ringe NAV på 55 55 33 33</Normaltekst>
                         <Normaltekst tag="li">
                             lese om{' '}
-                            <a
-                                className="lenke"
-                                href="https://www.nav.no/no/person/arbeid/dagpenger-ved-arbeidsloshet-og-permittering"
-                            >
+                            <a className="lenke" href="https://www.nav.no/arbeid/arbeidsledig-permittert">
                                 dagpenger
                             </a>
                             ,{' '}
-                            <a className="lenke" href="https://www.nav.no/no/Person/Arbeid/Arbeidsavklaringspenger">
+                            <a className="lenke" href="https://www.nav.no/aap">
                                 arbeidsavklaringspenger
                             </a>
                             ,{' '}
-                            <a className="lenke" href="https://www.nav.no/sosialhjelp">
+                            <a className="lenke" href="https://www.nav.no/okonomisk-sosialhjelp">
                                 økonomisk sosialhjelp
                             </a>{' '}
                             på nav.no
                         </Normaltekst>
                         <Normaltekst tag="li">
-                            <a className="lenke" href="https://www.nav.no/person/kontakt-oss/chat">
+                            <a className="lenke" href="https://www.nav.no/kontaktoss">
                                 chatte med oss
                             </a>
                             . Chatten er ikke innlogget, du kan bare stille generelle spørsmål.
