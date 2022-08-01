@@ -1,5 +1,5 @@
 import { DialogData } from '../utils/Typer';
-import useApiBasePath, { baseApiPath } from '../utils/UseApiBasePath';
+import { baseApiPath } from '../utils/UseApiBasePath';
 
 interface FrontendEvent {
     name: string;
