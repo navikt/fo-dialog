@@ -10,6 +10,7 @@ import { getApiBasePath } from '../../utils/Fetch';
 import { UserInfoContext } from '../../view/Provider';
 import { getContextPath } from '../../view/utils/utils';
 import { hiddenIfHoc } from '../HiddenIfHoc';
+import loggEvent from '../logging';
 import { ReactComponent as ObsSVG } from './obs.svg';
 
 export const getCookie = (name: string) => {
@@ -35,6 +36,8 @@ function TimeoutModal(props: Props) {
     const [skalVises, setSkalVises] = useState(false);
 
     const userInfo = useContext(UserInfoContext);
+    const erVeileder = userInfo?.erVeileder ?? 'ukjent';
+    const brukerId = userInfo?.id ?? 'ukjent';
 
     const baseUrl = userInfo?.erVeileder
         ? window.location.origin + getContextPath()
@@ -53,22 +56,17 @@ function TimeoutModal(props: Props) {
 
                 if (remainingSeconds) {
                     const expirationInMillis = remainingSeconds * 1000;
-                    const expiresAt = new Date().getTime() + expirationInMillis;
 
                     setTimeout(() => {
                         setSkalVises(true);
+                        loggEvent('timeout-modal', { brukerId }, { erVeileder });
                     }, expirationInMillis);
-
-                    document.addEventListener('mousedown', () => {
-                        const hasExpired = new Date().getTime() >= expiresAt;
-                        setSkalVises(hasExpired);
-                    });
                 }
             })
             .catch((e) => {
                 console.log('catch', e);
             });
-    }, [fnr]);
+    }, [fnr, brukerId, erVeileder]);
 
     const apen = skalVises || !!visDemo;
 

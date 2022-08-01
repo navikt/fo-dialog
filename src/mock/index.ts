@@ -100,7 +100,7 @@ mock.put('/veilarbdialog/api/dialog/:dialogId/ferdigbehandlet/:bool', ({ pathPar
 );
 
 mock.post('/veilarbdialog/api/logger/event', ({ body }) => {
-    const event = body.event;
+    const event = body;
     console.log('Event', event.name, 'Fields:', event.fields, 'Tags:', event.tags);
     return {};
 });
