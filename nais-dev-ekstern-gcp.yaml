@@ -66,6 +66,10 @@ spec:
                 "to": "/arbeid/dialog/auth/info"
               },
               {
+                "from": "/veilarbdialog/api/logger/event",
+                "to": "/arbeid/dialog/veilarbdialog/api/logger/event"
+              },
+              {
                 "from": "/aktivitetsplan",
                 "to": "{{AKTIVITETSPLAN_URL}}"
               },
