@@ -1,5 +1,4 @@
 import { DialogData } from '../utils/Typer';
-import { baseApiPath } from '../utils/UseApiBasePath';
 
 interface FrontendEvent {
     name: string;
@@ -9,8 +8,8 @@ interface FrontendEvent {
 
 export default function loggEvent(eventNavn: string, feltObjekt?: object, tagObjekt?: object) {
     const event: FrontendEvent = { name: eventNavn, fields: feltObjekt, tags: tagObjekt };
-    const apiBasePath = baseApiPath();
-    const url = `${apiBasePath}/veilarbdialog/api/logger/event`;
+
+    const url = `${process.env.PUBLIC_URL}/veilarbdialog/api/logger/event`;
     const config = {
         headers: {
             'Nav-Consumer-Id': 'aktivitetsplan',
