@@ -9,10 +9,10 @@ spec:
   image: ghcr.io/navikt/pto-frontend/pto-frontend:2022.05.06_06.20-7942c207e953
   port: 8080
   liveness:
-    path: /arbeid/dialog/internal/isAlive
+    path: /internal/isAlive
     initialDelay: 20
   readiness:
-    path: /arbeid/dialog/internal/isReady
+    path: /internal/isReady
     initialDelay: 20
   replicas:
     min: 1
@@ -43,7 +43,5 @@ spec:
       value: "false"
     - name: GCS_BUCKET_NAME
       value: arbeidsrettet-dialog-intern-dev
-    - name: CONTEXT_PATH
-      value: /arbeid/dialog
     - name: CORS_DOMAIN
       value: "*"

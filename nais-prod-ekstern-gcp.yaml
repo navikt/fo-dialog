@@ -9,10 +9,10 @@ spec:
   image: ghcr.io/navikt/pto-frontend/pto-frontend:2022.05.06_06.20-7942c207e953
   port: 8080
   liveness:
-    path: /arbeid/dialog/internal/isAlive
+    path: /internal/isAlive
     initialDelay: 20
   readiness:
-    path: /arbeid/dialog/internal/isReady
+    path: /internal/isReady
     initialDelay: 20
   replicas:
     min: 2
@@ -48,8 +48,6 @@ spec:
       value: selvbetjening-idtoken
     - name: GCS_BUCKET_NAME
       value: arbeidsrettet-dialog-prod
-    - name: CONTEXT_PATH
-      value: /arbeid/dialog
     - name: JSON_CONFIG
       value: >
         {
@@ -63,7 +61,7 @@ spec:
           "redirects": [
             {
               "from": "/api/auth",
-              "to": "/arbeid/dialog/auth/info"
+              "to": "/auth/info"
             },
             {
               "from": "/aktivitetsplan",
