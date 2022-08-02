@@ -53,7 +53,7 @@ spec:
     - name: JSON_CONFIG
       value: >
         {
-          "fallbackStrategy": "serve",
+          "fallbackStrategy": "redirect",
           "proxies": [
             { "from": "/veilarbaktivitet", "to": "http://pto-proxy/proxy/veilarbaktivitet" },
             { "from": "/veilarbdialog", "to": "http://pto-proxy/proxy/veilarbdialog" },
