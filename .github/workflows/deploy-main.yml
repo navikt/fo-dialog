@@ -5,7 +5,8 @@ on:
     branches:
       - main
     paths-ignore:
-      - '.github/workflows/pto-frontend-container.yml'
+      - '.github/workflows/pto-frontend-container-prod.yml'
+      - '.github/workflows/pto-frontend-container-dev.yml'
       - 'nais-dev-ekstern-gcp.yaml'
       - 'nais-dev-intern-gcp.yaml'
       - 'nais-prod-ekstern-gcp.yaml'
