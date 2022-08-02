@@ -1,5 +1,6 @@
 {
     "name": "arbeidsrettet-dialog",
+    "homepage": ".",
     "version": "1.0.0",
     "license": "MIT",
     "repository": "https://github.com/navikt/arbeidsrettet-dialog.git",
