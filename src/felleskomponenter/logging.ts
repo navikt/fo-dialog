@@ -1,3 +1,4 @@
+import { logAmplitudeEvent } from '../metrics/amplitude-utils';
 import { DialogData } from '../utils/Typer';
 
 interface FrontendEvent {
@@ -18,6 +19,11 @@ export default function loggEvent(eventNavn: string, feltObjekt?: object, tagObj
         method: 'post',
         body: JSON.stringify(event)
     };
+    const data = {
+        ...feltObjekt,
+        ...tagObjekt
+    };
+    logAmplitudeEvent(eventNavn, data);
     return fetch(url, config);
 }
 
