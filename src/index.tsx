@@ -5,12 +5,15 @@ import NavFrontendModal from 'nav-frontend-modal';
 import React from 'react';
 import ReactDOM from 'react-dom';
 
+import { initAmplitude } from './metrics/amplitude-utils';
 import DemoBanner from './mock/demo/DemoBanner';
 import { erEksternBruker } from './mock/demo/sessionstorage';
 import App from './view/App';
 
 const modalAlly = document.getElementById('modal-a11y-wrapper');
 const root = document.getElementById('root');
+
+initAmplitude();
 
 NavFrontendModal.setAppElement(modalAlly ? document.getElementById('modal-a11y-wrapper') : root);
 

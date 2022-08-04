@@ -2,6 +2,7 @@ import React from 'react';
 import { BrowserRouter as Router } from 'react-router-dom';
 
 import TimeoutModal from '../felleskomponenter/timeoutmodal/TimeoutModal';
+import { PageViewMetricCollector } from '../metrics/PageViewMetricCollector';
 import { UppdateEventHandler } from '../utils/UpdateEvent';
 import styles from './App.module.less';
 import AppBody from './AppBody';
@@ -34,6 +35,7 @@ function App(props: Props) {
                     <TimeoutModal hidden={!!fnr} fnr={fnr} />
                 </div>
             </div>
+            <PageViewMetricCollector />
         </Router>
     );
 }
