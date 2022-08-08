@@ -5,8 +5,12 @@ import { APP_NAME, TEAM_NAME } from './constants';
 type EventDataValue = string | boolean | number | null | undefined;
 
 export const initAmplitude = (): void => {
-    amplitude.getInstance().init('default', '', {
-        apiEndpoint: 'amplitude.nav.no/collect-auto',
+    const apiKey: string = process.env.REACT_APP_AMPLITUDE_KEY ?? 'default';
+    console.log(apiKey);
+    console.log(process.env.REACT_APP_AMPLITUDE_API_URL);
+
+    amplitude.getInstance().init(apiKey, '', {
+        apiEndpoint: process.env.REACT_APP_AMPLITUDE_API_URL,
         saveEvents: false,
         includeUtm: true,
         includeReferrer: true,
