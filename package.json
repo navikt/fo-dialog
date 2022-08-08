@@ -5,8 +5,10 @@
     "license": "MIT",
     "repository": "https://github.com/navikt/arbeidsrettet-dialog.git",
     "scripts": {
-        "build-dev": "cp .env.dev .env.production && npm run build",
-        "build-prod": "cp .env.prod .env.production && npm run build",
+        "build-ekstern-prod": "cp nais/.env.prod.ekstern .env.production && npm run build",
+        "build-intern-prod": "cp nais/.env.prod.intern .env.production && npm run build",
+        "build-ekstern-dev": "cp nais/.env.dev.ekstern .env.development && npm run build",
+        "build-intern-dev": "cp nais/.env.dev.intern .env.development && npm run build",
         "start": "cross-env REACT_APP_MOCK=true PUBLIC_URL=/ craco start",
         "build": "cross-env REACT_APP_MOCK=false craco build",
         "test": "craco test",

@@ -6,8 +6,8 @@ on:
       - main
     paths:
       - '.github/workflows/pto-frontend-container-dev.yml'
-      - 'nais-dev-ekstern-gcp.yaml'
-      - 'nais-dev-intern-gcp.yaml'
+      - 'nais/nais-dev-ekstern-gcp.yaml'
+      - 'nais/nais-dev-intern-gcp.yaml'
   workflow_dispatch:
 
 concurrency:

@@ -1,91 +1,56 @@
-name: Deploy
-
+name: deploy dev og prod
 on:
   push:
     branches:
       - main
-    paths-ignore:
-      - '.github/workflows/pto-frontend-container-prod.yml'
-      - '.github/workflows/pto-frontend-container-dev.yml'
-      - 'nais-dev-ekstern-gcp.yaml'
-      - 'nais-dev-intern-gcp.yaml'
-      - 'nais-prod-ekstern-gcp.yaml'
-      - 'nais-prod-intern-gcp.yaml'
-  workflow_dispatch:
 
 concurrency:
-  group: gcp_deploy
+  group: deploy
   cancel-in-progress: true
 
-env:
-  PRINT_PAYLOAD: true
-  TZ: Europe/Amsterdam
-  CI: true
-
 jobs:
-  deploy-dev:
-    name: Test, build and deploy dev
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v2
-      - uses: actions/setup-node@v2
-        with:
-          node-version: '14'
-          cache: 'npm'
-      - name: Install dependencies
-        run: npm ci
-      - name: Run tests
-        run: npm run test
-      - name: Build application
-        run: npm run build-dev
-      - name: Setup gcloud
-        uses: google-github-actions/setup-gcloud@v0
-        with:
-          service_account_key: ${{ secrets.GCS_SA_KEY_DEV }}
-          export_default_credentials: true
-      - name: Upload files to GCS (dev ekstern bucket)
-        run: gsutil -m rsync -r build gs://arbeidsrettet-dialog-dev
-      - name: Upload files to GCS (dev intern bucket)
-        run: gsutil -m rsync -r build gs://arbeidsrettet-dialog-intern-dev
-      - name: Create release
-        uses: actions/create-release@v1
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        with:
-          tag_name: release/dev@${{ github.sha }}
-          release_name: Dev release
-          prerelease: true
+  dev-ekstern:
+    name: Deploy to dev extern
+    uses: navikt/arbeidsrettet-dialog/.github/workflows/gcp-root.yml@main
+    with:
+      kommando: npm run build-ekstern-dev
+      bucket: arbeidsrettet-dialog-dev
+      releaseName: dev-ekstern
+    secrets:
+      GCS_SA_KEY: ${{ secrets.GCS_SA_KEY_DEV }}
 
-  deploy-prod:
-    name: Test, build and deploy prod
-    needs: deploy-dev
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v2
-      - uses: actions/setup-node@v2
-        with:
-          node-version: '14'
-          cache: 'npm'
-      - name: Install dependencies
-        run: npm ci
-      - name: Run tests
-        run: npm run test
-      - name: Build application
-        run: npm run build-prod
-      - name: Setup gcloud
-        uses: google-github-actions/setup-gcloud@v0
-        with:
-          service_account_key: ${{ secrets.GCS_SA_KEY_PROD }}
-          export_default_credentials: true
-      - name: Upload files to GCS (prod ekstern bucket)
-        run: gsutil -m rsync -r build gs://arbeidsrettet-dialog-prod
-      - name: Upload files to GCS (prod intern bucket)
-        run: gsutil -m rsync -r build gs://arbeidsrettet-dialog-intern-prod
-      - name: Create release
-        uses: actions/create-release@v1
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        with:
-          tag_name: release/prod@${{ github.sha }}
-          release_name: Prod release
-          prerelease: true
+  dev-intern:
+    name: Deploy application to dev intern
+    uses: navikt/arbeidsrettet-dialog/.github/workflows/gcp-root.yml@main
+    with:
+      kommando: npm run build-intern-dev
+      bucket: arbeidsrettet-dialog-intern-dev
+      releaseName: dev-intern
+    secrets:
+      GCS_SA_KEY: ${{ secrets.GCS_SA_KEY_DEV }}
+
+  prod-ekstern:
+    name: Deploy application to prod ekstern
+    needs:
+      - dev-ekstern
+      - dev-intern
+    uses: navikt/arbeidsrettet-dialog/.github/workflows/gcp-root.yml@main
+    with:
+      kommando: npm run build-ekstern-prod
+      bucket: arbeidsrettet-dialog-prod
+      releaseName: prod-ekstern
+    secrets:
+      GCS_SA_KEY: ${{ secrets.GCS_SA_KEY_PROD }}
+
+  prod-intern:
+    name: Deploy application to prod intern
+    needs:
+      - dev-ekstern
+      - dev-intern
+    uses: navikt/arbeidsrettet-dialog/.github/workflows/gcp-root.yml@main
+    with:
+      kommando: npm run build-intern-prod
+      bucket: arbeidsrettet-dialog-intern-prod
+      releaseName: prod-intern
+    secrets:
+      GCS_SA_KEY: ${{ secrets.GCS_SA_KEY_PROD }}
