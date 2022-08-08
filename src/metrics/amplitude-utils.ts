@@ -6,8 +6,9 @@ type EventDataValue = string | boolean | number | null | undefined;
 
 export const initAmplitude = (): void => {
     const apiKey: string = process.env.REACT_APP_AMPLITUDE_KEY ?? 'default';
-    console.log(apiKey);
-    console.log(process.env.REACT_APP_AMPLITUDE_API_URL);
+
+    console.log('test -----------');
+    console.log(process.env.REACT_APP_TEST);
 
     amplitude.getInstance().init(apiKey, '', {
         apiEndpoint: process.env.REACT_APP_AMPLITUDE_API_URL,
