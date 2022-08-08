@@ -26,9 +26,9 @@ jobs:
         uses: nais/deploy/actions/deploy@v1
         env:
           CLUSTER: dev-gcp
-          RESOURCE: nais-dev-intern-gcp.yaml
+          RESOURCE: nais/nais-dev-intern-gcp.yaml
       - name: deploy gcp dev ekstern
         uses: nais/deploy/actions/deploy@v1
         env:
           CLUSTER: dev-gcp
-          RESOURCE: nais-dev-ekstern-gcp.yaml
+          RESOURCE: nais/nais-dev-ekstern-gcp.yaml
