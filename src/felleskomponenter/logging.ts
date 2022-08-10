@@ -1,3 +1,4 @@
+import { logAmplitudeEvent } from '../metrics/amplitude-utils';
 import { DialogData } from '../utils/Typer';
 
 interface FrontendEvent {
@@ -8,7 +9,7 @@ interface FrontendEvent {
 
 export default function loggEvent(eventNavn: string, feltObjekt?: object, tagObjekt?: object) {
     const event: FrontendEvent = { name: eventNavn, fields: feltObjekt, tags: tagObjekt };
-    const url = `/veilarbdialog/api/logger/event`;
+    const url = process.env.REACT_APP_LOGGER_API_URL ?? '/veilarbdialog/api/logger/event';
     const config = {
         headers: {
             'Nav-Consumer-Id': 'aktivitetsplan',
@@ -18,6 +19,7 @@ export default function loggEvent(eventNavn: string, feltObjekt?: object, tagObj
         method: 'post',
         body: JSON.stringify(event)
     };
+    logAmplitudeEvent(eventNavn, { ...feltObjekt, ...tagObjekt });
     return fetch(url, config);
 }
 
