@@ -9,7 +9,7 @@ interface FrontendEvent {
 
 export default function loggEvent(eventNavn: string, feltObjekt?: object, tagObjekt?: object) {
     const event: FrontendEvent = { name: eventNavn, fields: feltObjekt, tags: tagObjekt };
-    const url = process.env.REACT_APP_LOGGER_API_URL ?? '';
+    const url = process.env.REACT_APP_LOGGER_API_URL ?? '/veilarbdialog/api/logger/event';
     const config = {
         headers: {
             'Nav-Consumer-Id': 'aktivitetsplan',
@@ -19,11 +19,7 @@ export default function loggEvent(eventNavn: string, feltObjekt?: object, tagObj
         method: 'post',
         body: JSON.stringify(event)
     };
-    const data = {
-        ...feltObjekt,
-        ...tagObjekt
-    };
-    logAmplitudeEvent(eventNavn, data);
+    logAmplitudeEvent(eventNavn, { ...feltObjekt, ...tagObjekt });
     return fetch(url, config);
 }
 
