@@ -11,7 +11,7 @@ const createCacheKey = (url: string, option?: RequestInit): string => {
 const getHeaders = (option?: RequestInit): string => {
     const allowed = ['Content-Type', 'Nav-Consumer-Id', 'NAV_CSRF_PROTECTION'];
 
-    if (!option || !option.headers) return '';
+    if (!option || !option.headers || !option.headers.keys) return '';
 
     const newHeaders = Object.keys(option.headers.keys).filter((key) => allowed.includes(key));
 
