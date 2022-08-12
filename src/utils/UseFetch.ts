@@ -18,8 +18,12 @@ const getHeaders = (option?: RequestInit): string => {
     return JSON.stringify(newHeaders);
 };
 
-const useFetch = <TYPE>(url: string, option?: RequestInit, config?: Config): FetchResult<TYPE> => {
-    if (config) {
+const useFetch = <TYPE>(
+    url: string,
+    option?: RequestInit,
+    config: Config = { lazy: false, cacheKey: undefined }
+): FetchResult<TYPE> => {
+    if (!config.cacheKey) {
         config.cacheKey = createCacheKey(url, option);
     }
 
