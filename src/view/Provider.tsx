@@ -1,4 +1,4 @@
-import useFetch, { FetchResult, Status, hasData, hasError, isPending } from '@nutgaard/use-fetch';
+import { FetchResult, Status, hasData, hasError, isPending } from '@nutgaard/use-fetch';
 import { AlertStripeFeil } from 'nav-frontend-alertstriper';
 import NavFrontendSpinner from 'nav-frontend-spinner';
 import React, { Dispatch, SetStateAction, useContext, useEffect, useState } from 'react';
@@ -7,6 +7,7 @@ import useFetchHarNivaa4, { HarNivaa4Response } from '../api/useFetchHarNivaa4';
 import useFetchVeilederNavn from '../api/useHentVeilederData';
 import { REQUEST_CONFIG, fnrQuery, getApiBasePath } from '../utils/Fetch';
 import { Bruker, OppfolgingData } from '../utils/Typer';
+import useFetch from '../utils/UseFetch';
 import { AktivitetProvider } from './AktivitetProvider';
 import { DialogContext, hasDialogError, isDialogOk, isDialogPending, useDialogDataProvider } from './DialogProvider';
 import { KladdContext, useKladdDataProvider } from './KladdProvider';

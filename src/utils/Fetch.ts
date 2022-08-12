@@ -5,6 +5,7 @@ function getCookie(name: string) {
 }
 
 function getHeaders() {
+    // Hvis du legger til flere headers husk å whitelist headeren i ./utils/UseFetch.ts
     return {
         'Content-Type': 'application/json',
         'Nav-Consumer-Id': 'arbeidsrettet-dialog',
