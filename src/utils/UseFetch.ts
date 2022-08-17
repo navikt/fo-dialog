@@ -8,12 +8,12 @@ const createCacheKey = (url: string, option?: RequestInit): string => {
     return [url, method.toUpperCase(), body, headers].join('||');
 };
 
-const getHeaders = (option?: RequestInit): string => {
+export const getHeaders = (option?: RequestInit): string => {
     const allowed = ['Content-Type', 'Nav-Consumer-Id', 'NAV_CSRF_PROTECTION'];
 
-    if (!option || !option.headers || !option.headers.keys) return '';
+    if (!option || !option.headers) return '';
 
-    const newHeaders = Object.keys(option.headers.keys).filter((key) => allowed.includes(key));
+    const newHeaders = Object.fromEntries(Object.entries(option.headers).filter((key) => allowed.includes(key[0])));
 
     return JSON.stringify(newHeaders);
 };
