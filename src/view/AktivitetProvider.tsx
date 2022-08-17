@@ -1,9 +1,10 @@
-import useFetch, { FetchResult, Status, hasData, hasError } from '@nutgaard/use-fetch';
+import { FetchResult, Status, hasData, hasError } from '@nutgaard/use-fetch';
 import React, { useContext } from 'react';
 
 import { Aktivitet, ArenaAktivitet } from '../utils/aktivitetTypes';
 import { REQUEST_CONFIG, fnrQuery } from '../utils/Fetch';
 import { StringOrNull } from '../utils/Typer';
+import useFetch from '../utils/UseFetch';
 
 export type MaybeAktivitet = Aktivitet | ArenaAktivitet | undefined;
 
