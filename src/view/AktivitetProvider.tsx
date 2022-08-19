@@ -2,10 +2,12 @@ import * as Nutgaard from '@nutgaard/use-fetch';
 import React, { useCallback, useContext, useMemo, useState } from 'react';
 
 import { AktivitetFetchResult, AktivitetResponse, useFetchAktivitetData } from '../api/useFetchAktivitetData';
+import aktiviteter from '../mock/Aktivitet';
 import { Aktivitet, ArenaAktivitet } from '../utils/aktivitetTypes';
 import { REQUEST_CONFIG, fetchData, fnrQuery, getApiBasePath } from '../utils/Fetch';
 import { DialogData, StringOrNull } from '../utils/Typer';
 import useFetch from '../utils/UseFetch';
+import { DialogDataProviderType } from './DialogProvider';
 
 export type MaybeAktivitet = Aktivitet | ArenaAktivitet | undefined;
 
@@ -15,6 +17,11 @@ enum Status {
     RELOADING,
     OK,
     ERROR
+}
+
+export interface AktivitetDataProviderType {
+    aktiviteter: () => Promise<AktivitetContextType>;
+    arenaAktiviter: Nutgaard.FetchResult<ArenaAktivitet[]>;
 }
 
 export interface AktiviteterContextType {
@@ -76,7 +83,7 @@ export function AktivitetProvider(props: Props) {
     const apiBasePath = props.apiBasePath;
     const baseUrl = useMemo(() => `${apiBasePath}/veilarbaktivitet/api/arena/tiltak${query}`, [apiBasePath, query]);
 
-    const hentAktiviteter = useCallback(() => {
+    const hentAktiviteter: () => Promise<AktivitetContextType> = useCallback(() => {
         setState((prevState) => ({
             ...prevState,
             status: isReloading(prevState.aktiviteter.status) ? Status.RELOADING : Status.PENDING
@@ -84,11 +91,11 @@ export function AktivitetProvider(props: Props) {
         return fetchData<Aktivitet[]>(baseUrl)
             .then((a) => {
                 setState((prevState) => ({
+                    ...prevState,
                     aktiviteter: {
                         aktiviteter: a,
                         status: Status.OK
-                    },
-                    arenaAktiviter: prevState.arenaAktiviter
+                    }
                 }));
                 return { aktiviteter: a, status: Status.OK };
             })
@@ -97,7 +104,7 @@ export function AktivitetProvider(props: Props) {
                     ...prevState,
                     aktiviteter: { ...prevState.aktiviteter, status: Status.ERROR }
                 }));
-                return {};
+                return { aktiviteter: [], status: Status.ERROR };
             });
     }, [baseUrl, setState]);
 
