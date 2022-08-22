@@ -8,7 +8,7 @@ import useFetchVeilederNavn from '../api/useHentVeilederData';
 import { REQUEST_CONFIG, fnrQuery, getApiBasePath } from '../utils/Fetch';
 import { Bruker, OppfolgingData } from '../utils/Typer';
 import useFetch from '../utils/UseFetch';
-import { AktivitetProvider } from './AktivitetProvider';
+import { AktivitetContext, useAktivitetDataProvider } from './AktivitetProvider';
 import { DialogContext, hasDialogError, isDialogOk, isDialogPending, useDialogDataProvider } from './DialogProvider';
 import { KladdContext, useKladdDataProvider } from './KladdProvider';
 import styles from './Provider.module.less';
@@ -82,10 +82,17 @@ export function Provider(props: Props) {
     const [viewState, setState] = useState(initalState);
 
     const dialogDataProvider = useDialogDataProvider(fnr);
+    const aktivitetDataProvider = useAktivitetDataProvider(fnr);
     const kladdDataProvider = useKladdDataProvider(fnr);
 
     const { hentDialoger, pollForChanges, status } = dialogDataProvider;
+    const { hentAktiviteter, hentArenaAktiviteter } = aktivitetDataProvider;
     const hentKladder = kladdDataProvider.hentKladder;
+
+    useEffect(() => {
+        hentAktiviteter();
+        hentArenaAktiviteter();
+    }, [hentAktiviteter, hentArenaAktiviteter]);
 
     useEffect(() => {
         hentDialoger();
@@ -123,7 +130,7 @@ export function Provider(props: Props) {
             <OppfolgingContext.Provider value={oppfolgingData}>
                 <HarNivaa4Context.Provider value={harLoggetInnNiva4}>
                     <UserInfoContext.Provider value={bruker.data}>
-                        <AktivitetProvider fnr={fnr} apiBasePath={apiBasePath}>
+                        <AktivitetContext.Provider value={aktivitetDataProvider}>
                             <VeilederDataContext.Provider value={{ veilederNavn }}>
                                 <KladdContext.Provider value={kladdDataProvider}>
                                     <FNRContext.Provider value={fnr}>
@@ -133,7 +140,7 @@ export function Provider(props: Props) {
                                     </FNRContext.Provider>
                                 </KladdContext.Provider>
                             </VeilederDataContext.Provider>
-                        </AktivitetProvider>
+                        </AktivitetContext.Provider>
                     </UserInfoContext.Provider>
                 </HarNivaa4Context.Provider>
             </OppfolgingContext.Provider>

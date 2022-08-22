@@ -78,7 +78,7 @@ export function useDialogDataProvider(fnr?: string): DialogDataProviderType {
         [apiBasePath, query]
     );
 
-    const hentDialoger = useCallback(() => {
+    const hentDialoger: () => Promise<DialogData[]> = useCallback(() => {
         setState((prevState) => ({
             ...prevState,
             status: isDialogReloading(prevState.status) ? Status.RELOADING : Status.PENDING

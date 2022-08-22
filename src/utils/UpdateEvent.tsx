@@ -29,7 +29,7 @@ function isUpdateEvent(toBeDetermined: CustomEvent): toBeDetermined is CustomEve
 }
 
 export function UppdateEventHandler() {
-    const { aktiviteter } = useAktivitetContext();
+    const aktivitetContext = useAktivitetContext();
     const dialogContext = useDialogContext();
     const oppfolgingContext = useOppfolgingContext();
     useEventListener(eventName, (event) => {
@@ -46,7 +46,7 @@ export function UppdateEventHandler() {
 
         switch (updateType) {
             case UpdateTypes.Aktivitet:
-                return aktiviteter.rerun();
+                return aktivitetContext.contextHentAktiviteter();
             case UpdateTypes.Dialog:
                 return dialogContext.hentDialoger();
             case UpdateTypes.Oppfolging:
