@@ -12,7 +12,7 @@ export enum UpdateTypes {
 }
 
 interface UpdateEventType {
-    uppdate: string;
+    update: string;
     avsender?: string;
 }
 
@@ -20,7 +20,7 @@ const eventName = 'uppdate';
 
 export function dispatchUpdate(update: UpdateTypes) {
     window.dispatchEvent(
-        new CustomEvent<UpdateEventType>(eventName, { detail: { uppdate: update, avsender: 'dialog' } })
+        new CustomEvent<UpdateEventType>(eventName, { detail: { update: update, avsender: 'dialog' } })
     );
 }
 
@@ -37,7 +37,7 @@ export function UppdateEventHandler() {
             return;
         }
 
-        const updateType = event.detail.uppdate;
+        const updateType = event.detail.update;
         const avsennder = event.detail.avsender;
 
         if (avsennder === 'dialog') {
@@ -46,7 +46,7 @@ export function UppdateEventHandler() {
 
         switch (updateType) {
             case UpdateTypes.Aktivitet:
-                return aktivitetContext.contextHentAktiviteter();
+                return aktivitetContext.hentAktiviteter();
             case UpdateTypes.Dialog:
                 return dialogContext.hentDialoger();
             case UpdateTypes.Oppfolging:

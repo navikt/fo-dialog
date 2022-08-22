@@ -15,12 +15,12 @@ export enum Status {
 }
 
 export interface AktivitetDataProviderType {
-    contextAktiviteterStatus: Status;
-    contextArenaAktiviteterStatus: Status;
-    contextHentAktiviteter: () => Promise<Aktivitet[]>;
-    contextHentArenaAktiviteter: () => Promise<ArenaAktivitet[]>;
-    contextAktiviteter: Aktivitet[];
-    contextArenaAktiviteter: ArenaAktivitet[];
+    aktiviteterStatus: Status;
+    arenaAktiviteterStatus: Status;
+    hentAktiviteter: () => Promise<Aktivitet[]>;
+    hentArenaAktiviteter: () => Promise<ArenaAktivitet[]>;
+    aktiviteter: Aktivitet[];
+    arenaAktiviteter: ArenaAktivitet[];
 }
 
 export interface AktivitetState {
@@ -38,20 +38,20 @@ const initAktivitetState: AktivitetState = {
 };
 
 export const AktivitetContext = React.createContext<AktivitetDataProviderType>({
-    contextAktiviteterStatus: Status.INITIAL,
-    contextArenaAktiviteterStatus: Status.INITIAL,
-    contextAktiviteter: [],
-    contextArenaAktiviteter: [],
-    contextHentAktiviteter: () => Promise.resolve([]),
-    contextHentArenaAktiviteter: () => Promise.resolve([])
+    aktiviteterStatus: Status.INITIAL,
+    arenaAktiviteterStatus: Status.INITIAL,
+    aktiviteter: new Array<Aktivitet>(),
+    arenaAktiviteter: new Array<ArenaAktivitet>(),
+    hentAktiviteter: () => Promise.resolve([]),
+    hentArenaAktiviteter: () => Promise.resolve([])
 });
 export const useAktivitetContext = () => useContext(AktivitetContext);
 
 export function harAktivitetDataFeil(aktivitetData: AktivitetDataProviderType, arenaAktivitet: boolean): boolean {
     if (arenaAktivitet) {
-        return hasError(aktivitetData.contextArenaAktiviteterStatus);
+        return hasError(aktivitetData.arenaAktiviteterStatus);
     } else {
-        return hasError(aktivitetData.contextAktiviteterStatus);
+        return hasError(aktivitetData.aktiviteterStatus);
     }
 }
 
@@ -61,22 +61,22 @@ export const findAktivitet = (aktivitetData: AktivitetDataProviderType, aktivite
     }
 
     const aktiviteterHasData =
-        aktivitetData.contextAktiviteterStatus === Status.OK ||
-        aktivitetData.contextAktiviteterStatus === Status.RELOADING;
-    const aktiviteter: Aktivitet[] = aktiviteterHasData ? aktivitetData.contextAktiviteter : [];
+        aktivitetData.aktiviteterStatus === Status.OK || aktivitetData.aktiviteterStatus === Status.RELOADING;
+    const aktiviteter: Aktivitet[] = aktiviteterHasData ? aktivitetData.aktiviteter : [];
 
     const arenaHasData =
-        aktivitetData.contextArenaAktiviteterStatus === Status.OK ||
-        aktivitetData.contextArenaAktiviteterStatus === Status.RELOADING;
-    const arena: ArenaAktivitet[] = arenaHasData ? aktivitetData.contextArenaAktiviteter : [];
+        aktivitetData.arenaAktiviteterStatus === Status.OK || aktivitetData.arenaAktiviteterStatus === Status.RELOADING;
+    const arena: ArenaAktivitet[] = arenaHasData ? aktivitetData.arenaAktiviteter : [];
 
-    // const aa = aktiviteter && aktiviteter.find((aktivitet) => aktivitet.id === aktivitetId);
-    // const bb = arena && arena.find((aktivitet) => aktivitet.id === aktivitetId);
     return [...aktiviteter, ...arena].find((aktivitet) => aktivitet.id === aktivitetId);
 };
 
+interface AktivitetResponse {
+    aktiviteter: Aktivitet[];
+}
+
 export const useAktivitetDataProvider = (fnr?: string): AktivitetDataProviderType => {
-    const [state, setState] = useState(initAktivitetState);
+    const [state, setState] = useState<AktivitetState>(initAktivitetState);
 
     const apiBasePath = getApiBasePath(fnr);
     const query = fnrQuery(fnr);
@@ -92,14 +92,14 @@ export const useAktivitetDataProvider = (fnr?: string): AktivitetDataProviderTyp
             ...prevState,
             status: isReloading(prevState.aktiviteterStatus) ? Status.RELOADING : Status.PENDING
         }));
-        return fetchData<Aktivitet[]>(aktivitetUrl)
-            .then((aktiviteter) => {
+        return fetchData<AktivitetResponse>(aktivitetUrl)
+            .then((response) => {
                 setState((prevState) => ({
                     ...prevState,
                     aktiviteterStatus: Status.OK,
-                    aktiviteter: aktiviteter
+                    aktiviteter: response.aktiviteter
                 }));
-                return aktiviteter;
+                return response.aktiviteter;
             })
             .catch(() => {
                 setState((prevState) => ({
@@ -116,13 +116,14 @@ export const useAktivitetDataProvider = (fnr?: string): AktivitetDataProviderTyp
             status: isReloading(prevState.arenaAktiviteterStatus) ? Status.RELOADING : Status.PENDING
         }));
         return fetchData<ArenaAktivitet[]>(arenaAktivitetUrl)
-            .then((aktiviteter) => {
+            .then((arenaAktiviteter) => {
                 setState((prevState) => ({
-                    ...prevState,
+                    aktiviteter: prevState.aktiviteter,
+                    aktiviteterStatus: prevState.aktiviteterStatus,
                     arenaAktiviteterStatus: Status.OK,
-                    arenaAktiviteter: aktiviteter
+                    arenaAktiviteter: arenaAktiviteter
                 }));
-                return aktiviteter;
+                return arenaAktiviteter;
             })
             .catch(() => {
                 setState((prevState) => ({
@@ -135,12 +136,12 @@ export const useAktivitetDataProvider = (fnr?: string): AktivitetDataProviderTyp
 
     return useMemo(() => {
         return {
-            contextAktiviteterStatus: state.aktiviteterStatus,
-            contextArenaAktiviteterStatus: state.arenaAktiviteterStatus,
-            contextAktiviteter: state.aktiviteter,
-            contextArenaAktiviteter: state.arenaAktiviteter,
-            contextHentAktiviteter: hentAktiviteter,
-            contextHentArenaAktiviteter: hentArenaAktiviteter
+            aktiviteterStatus: state.aktiviteterStatus,
+            arenaAktiviteterStatus: state.arenaAktiviteterStatus,
+            aktiviteter: state.aktiviteter,
+            arenaAktiviteter: state.arenaAktiviteter,
+            hentAktiviteter: hentAktiviteter,
+            hentArenaAktiviteter: hentArenaAktiviteter
         };
     }, [state, hentAktiviteter, hentArenaAktiviteter]);
 };

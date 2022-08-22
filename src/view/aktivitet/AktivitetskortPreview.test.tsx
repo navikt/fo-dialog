@@ -4,9 +4,9 @@ import { mount } from 'enzyme';
 import React from 'react';
 import { MemoryRouter } from 'react-router';
 
-import { Aktivitet, AktivitetStatus, AktivitetTypes, ArenaAktivitet, KanalTypes } from '../../utils/aktivitetTypes';
+import { Aktivitet, AktivitetStatus, AktivitetTypes, KanalTypes } from '../../utils/aktivitetTypes';
 import * as AktivitetProvider from '../AktivitetProvider';
-import { AktivitetContext, AktivitetDataProviderType, AktivitetState, Status } from '../AktivitetProvider';
+import { AktivitetDataProviderType, Status } from '../AktivitetProvider';
 import { AktivitetskortPreview, getInfoText } from './AktivitetskortPreview';
 
 describe('getInfoText', () => {
@@ -111,7 +111,7 @@ const aktivitetRes: AktivitetDataProviderType = {
     arenaAktiviteterStatus: Status.OK,
     aktiviteter: [aktivitet],
     arenaAktiviteter: [],
-    hentAktiviteter: () => Promise.resolve([]),
+    hentAktiviteter: () => Promise.resolve([aktivitet]),
     hentArenaAktiviteter: () => Promise.resolve([])
 };
 
