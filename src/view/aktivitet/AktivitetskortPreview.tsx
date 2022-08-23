@@ -23,10 +23,10 @@ interface Props {
 export function AktivitetskortPreview(props: Props) {
     const { aktivitetId } = props;
     const fnr = useFnrContext();
-    const aktvitetData = useAktivitetContext();
+    const aktivitetData = useAktivitetContext();
     const apiBasePath = useApiBasePath();
 
-    const aktivitet = findAktivitet(aktvitetData, aktivitetId);
+    const aktivitet = findAktivitet(aktivitetData, aktivitetId);
 
     if (!aktivitet) {
         return null;

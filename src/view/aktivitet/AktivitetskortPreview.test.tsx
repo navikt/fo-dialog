@@ -117,7 +117,7 @@ const aktivitetRes: AktivitetDataProviderType = {
 
 describe('<AktivitetskortPreview />', () => {
     it('skal rendre stillingsaktivitet som i snapshot', () => {
-        jest.spyOn(AktivitetProvider, 'useAktivitetDataProvider').mockImplementation(() => aktivitetRes);
+        jest.spyOn(AktivitetProvider, 'useAktivitetContext').mockImplementation(() => aktivitetRes);
 
         const wrapper = mount(
             <MemoryRouter>
