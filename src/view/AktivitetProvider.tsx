@@ -1,18 +1,11 @@
 import React, { useCallback, useContext, useMemo, useState } from 'react';
 
+import { Status, hasError, isReloading } from '../api/typer';
 import { Aktivitet, ArenaAktivitet } from '../utils/aktivitetTypes';
 import { fetchData, fnrQuery, getApiBasePath } from '../utils/Fetch';
 import { StringOrNull } from '../utils/Typer';
 
 export type MaybeAktivitet = Aktivitet | ArenaAktivitet | undefined;
-
-export enum Status {
-    INITIAL,
-    PENDING,
-    RELOADING,
-    OK,
-    ERROR
-}
 
 export interface AktivitetDataProviderType {
     aktiviteterStatus: Status;
@@ -145,23 +138,3 @@ export const useAktivitetDataProvider = (fnr?: string): AktivitetDataProviderTyp
         };
     }, [state, hentAktiviteter, hentArenaAktiviteter]);
 };
-
-function isReloading(status: Status) {
-    return status === Status.OK || status === Status.RELOADING;
-}
-
-export function isOk(status: Status) {
-    return status === Status.OK;
-}
-
-export function isPending(status: Status) {
-    return status === Status.PENDING;
-}
-
-export function isPendingOrReloading(status: Status) {
-    return status === Status.PENDING || status === Status.RELOADING;
-}
-
-export function hasError(status: Status) {
-    return status === Status.ERROR;
-}

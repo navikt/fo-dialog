@@ -1,14 +1,16 @@
-import { FetchResult, Status, hasData, hasError, isPending } from '@nutgaard/use-fetch';
+import { FetchResult, Status, hasData as hasDataNut, hasError, isPending as isPendingNut } from '@nutgaard/use-fetch';
 import { AlertStripeFeil } from 'nav-frontend-alertstriper';
 import NavFrontendSpinner from 'nav-frontend-spinner';
 import React, { Dispatch, SetStateAction, useContext, useEffect, useState } from 'react';
 
+import { hasData, isPending } from '../api/typer';
 import useFetchHarNivaa4, { HarNivaa4Response } from '../api/useFetchHarNivaa4';
 import useFetchVeilederNavn from '../api/useHentVeilederData';
 import { REQUEST_CONFIG, fnrQuery, getApiBasePath } from '../utils/Fetch';
 import { Bruker, OppfolgingData } from '../utils/Typer';
 import useFetch from '../utils/UseFetch';
 import { AktivitetContext, useAktivitetDataProvider } from './AktivitetProvider';
+import { BrukerDataProviderType, useBrukerDataProvider } from './BrukerProvider';
 import { DialogContext, hasDialogError, isDialogOk, isDialogPending, useDialogDataProvider } from './DialogProvider';
 import { KladdContext, useKladdDataProvider } from './KladdProvider';
 import styles from './Provider.module.less';
@@ -55,7 +57,7 @@ export const useVeilederDataContext = () => useContext(VeilederDataContext);
 export const useHarNivaa4Context = () => useContext(HarNivaa4Context);
 
 export function dataOrUndefined<T>(context: FetchResult<T>): T | undefined {
-    return hasData(context) ? context.data : undefined;
+    return hasDataNut(context) ? context.data : undefined;
 }
 
 interface Props {
@@ -71,7 +73,8 @@ export function Provider(props: Props) {
     const query = fnrQuery(fnr);
 
     const veilederNavn = useFetchVeilederNavn(erVeileder);
-    const bruker = useFetch<Bruker>(`${apiBasePath}/veilarboppfolging/api/oppfolging/me`, REQUEST_CONFIG);
+
+    const { data: bruker, status: brukerstatus }: BrukerDataProviderType = useBrukerDataProvider(fnr);
     const oppfolgingData = useFetch<OppfolgingData>(
         `${apiBasePath}/veilarboppfolging/api/oppfolging${query}`,
         REQUEST_CONFIG
@@ -85,7 +88,7 @@ export function Provider(props: Props) {
     const aktivitetDataProvider = useAktivitetDataProvider(fnr);
     const kladdDataProvider = useKladdDataProvider(fnr);
 
-    const { hentDialoger, pollForChanges, status } = dialogDataProvider;
+    const { hentDialoger, pollForChanges, status: dialogstatus } = dialogDataProvider;
     const { hentAktiviteter, hentArenaAktiviteter } = aktivitetDataProvider;
     const hentKladder = kladdDataProvider.hentKladder;
 
@@ -100,24 +103,24 @@ export function Provider(props: Props) {
     }, [hentDialoger, hentKladder]);
 
     useEffect(() => {
-        if (isDialogOk(status) && hasData(bruker)) {
+        if (isDialogOk(dialogstatus) && hasData(brukerstatus)) {
             //stop interval when encountering error
-            if (bruker.data.erBruker) {
+            if (bruker.erBruker) {
                 let interval: NodeJS.Timeout;
                 interval = setInterval(() => pollForChanges().catch(() => clearInterval(interval)), 10000);
                 return () => clearInterval(interval);
             }
         }
-    }, [status, bruker, pollForChanges]);
+    }, [dialogstatus, bruker, pollForChanges]);
 
     if (
-        isDialogPending(status) ||
+        isDialogPending(dialogstatus) ||
         isPending(bruker, false) ||
-        isPending(oppfolgingData, false) ||
+        isPendingNut(oppfolgingData, false) ||
         harLoggetInnNiva4.isPending
     ) {
         return <NavFrontendSpinner />;
-    } else if (hasError(bruker) || hasError(oppfolgingData) || hasDialogError(status)) {
+    } else if (hasError(bruker) || hasError(oppfolgingData) || hasDialogError(dialogstatus)) {
         return (
             <AlertStripeFeil className={styles.feil}>
                 Noe gikk dessverre galt med systemet. Prøv igjen senere.

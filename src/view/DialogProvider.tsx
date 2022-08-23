@@ -1,17 +1,10 @@
 import { isAfter } from 'date-fns';
 import React, { useCallback, useContext, useMemo, useState } from 'react';
 
+import { Status } from '../api/typer';
 import { loggChangeInDialog } from '../felleskomponenter/logging';
 import { fetchData, fnrQuery, getApiBasePath } from '../utils/Fetch';
 import { DialogData, NyDialogMeldingData, SistOppdatert } from '../utils/Typer';
-
-enum Status {
-    INITIAL,
-    PENDING,
-    RELOADING,
-    OK,
-    ERROR
-}
 
 export interface DialogDataProviderType {
     status: Status;
