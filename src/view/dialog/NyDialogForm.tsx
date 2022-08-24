@@ -9,9 +9,9 @@ import AlertStripeFeilVisible from '../../felleskomponenter/AlertStripeFeilVisib
 import loggEvent from '../../felleskomponenter/logging';
 import { StringOrNull } from '../../utils/Typer';
 import { UpdateTypes, dispatchUpdate } from '../../utils/UpdateEvent';
+import { useUserInfoContext } from '../BrukerProvider';
 import { useDialogContext } from '../DialogProvider';
 import { findKladd, useKladdContext } from '../KladdProvider';
-import { useUserInfoContext } from '../Provider';
 import { cutStringAtLength } from '../utils/stringUtils';
 import style from './NyDialogForm.module.less';
 import { SkrivMeldingInput } from './SkrivMeldingInput';

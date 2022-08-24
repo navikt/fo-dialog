@@ -3,7 +3,8 @@ import React from 'react';
 
 import { DialogData } from '../../utils/Typer';
 import { useDialogContext } from '../DialogProvider';
-import { dataOrUndefined, useOppfolgingContext } from '../Provider';
+import { useOppfolgingContext } from '../OppfolgingProvider';
+import { dataOrUndefined } from '../Provider';
 import styles from './DialogCheckboxes.module.less';
 
 interface Props {

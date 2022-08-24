@@ -6,9 +6,11 @@ import loggEvent from '../felleskomponenter/logging';
 import { Bruker, OppfolgingData } from '../utils/Typer';
 import AktivitetContainer from './aktivitet/AktivitetContainer';
 import styles from './App.module.less';
+import { useUserInfoContext } from './BrukerProvider';
 import DialogContainer from './dialog/DialogContainer';
 import DialogOversiktContainer from './dialogliste/DialogOversiktContainer';
-import { dataOrUndefined, useOppfolgingContext, useUserInfoContext } from './Provider';
+import { useOppfolgingContext } from './OppfolgingProvider';
+import { dataOrUndefined } from './Provider';
 
 function hash(string: string): string {
     return shajs('sha256').update(string).digest('hex');

@@ -4,7 +4,7 @@ import React from 'react';
 import { fetchData } from '../../utils/Fetch';
 import { UpdateTypes, dispatchUpdate } from '../../utils/UpdateEvent';
 import useApiBasePath from '../../utils/UseApiBasePath';
-import { useOppfolgingContext } from '../Provider';
+import { useOppfolgingContext } from '../OppfolgingProvider';
 import styles from './AlertLess.module.less';
 import StatusAdvarselWrapper, { KanIkkeKontakteElektroniskVeileder } from './StatusAdvarselWrapper';
 
@@ -24,7 +24,7 @@ function Bruker() {
         fetchData(`${apiBasePath}/veilarboppfolging/api/oppfolging/settDigital`, {
             method: 'POST'
         })
-            .then(oppfolgingData.rerun)
+            .then(oppfolgingData.hentOppfolging)
             .then(() => dispatchUpdate(UpdateTypes.Oppfolging));
     };
 

@@ -3,7 +3,8 @@ import React from 'react';
 
 import InvertedLestMer from '../../felleskomponenter/InvertedLesMer';
 import { DialogData } from '../../utils/Typer';
-import { dataOrUndefined, useOppfolgingContext } from '../Provider';
+import { useOppfolgingContext } from '../OppfolgingProvider';
+import { dataOrUndefined } from '../Provider';
 import styles from './DialogOversikt.module.less';
 import { DialogPreviewListe } from './DialogPreview';
 

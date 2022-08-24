@@ -2,8 +2,8 @@ import classNames from 'classnames';
 import React from 'react';
 import { Route, Switch } from 'react-router';
 
+import { useUserInfoContext } from '../BrukerProvider';
 import { InfoOmDialogSide } from '../info/InfoOmDialogSide';
-import { useUserInfoContext } from '../Provider';
 import Dialog from './Dialog';
 import styles from './DialogContainer.module.less';
 import DialogInfoMelding from './DialogInfoMelding';

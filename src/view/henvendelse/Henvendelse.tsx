@@ -6,7 +6,7 @@ import React from 'react';
 import { ViktigMelding } from '../../felleskomponenter/etiketer/Etikett';
 import { formaterDateAndTime } from '../../utils/Date';
 import { HenvendelseData } from '../../utils/Typer';
-import { useUserInfoContext } from '../Provider';
+import { useUserInfoContext } from '../BrukerProvider';
 import { markdownLink } from './CustomRules';
 import styles from './Henvendelse.module.less';
 

@@ -2,7 +2,9 @@ import React, { useContext } from 'react';
 
 import { VenterSvarFraBruker, VenterSvarFraNAV, ViktigMelding } from '../../felleskomponenter/etiketer/Etikett';
 import { DialogData, OppfolgingData } from '../../utils/Typer';
-import { UserInfoContext, dataOrUndefined, useOppfolgingContext } from '../Provider';
+import { UserInfoContext } from '../BrukerProvider';
+import { useOppfolgingContext } from '../OppfolgingProvider';
+import { dataOrUndefined } from '../Provider';
 
 interface Props {
     dialog: DialogData;

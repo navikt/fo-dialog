@@ -4,9 +4,10 @@ import { useParams } from 'react-router';
 
 import { UpdateTypes, dispatchUpdate } from '../../utils/UpdateEvent';
 import useKansendeMelding from '../../utils/UseKanSendeMelding';
+import { useUserInfoContext } from '../BrukerProvider';
 import { useDialogContext } from '../DialogProvider';
 import { HenvendelseList } from '../henvendelse/HenvendelseList';
-import { useFnrContext, useUserInfoContext, useViewContext } from '../Provider';
+import { useFnrContext, useViewContext } from '../Provider';
 import { useEventListener } from '../utils/useEventListner';
 import { endreDialogSomVises } from '../ViewState';
 import styles from './Dialog.module.less';

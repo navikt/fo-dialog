@@ -4,9 +4,10 @@ import { mount } from 'enzyme';
 import React from 'react';
 import { MemoryRouter } from 'react-router';
 
+import { Status } from '../../api/typer';
 import { Aktivitet, AktivitetStatus, AktivitetTypes, KanalTypes } from '../../utils/aktivitetTypes';
 import * as AktivitetProvider from '../AktivitetProvider';
-import { AktivitetDataProviderType, Status } from '../AktivitetProvider';
+import { AktivitetDataProviderType } from '../AktivitetProvider';
 import { AktivitetskortPreview, getInfoText } from './AktivitetskortPreview';
 
 describe('getInfoText', () => {

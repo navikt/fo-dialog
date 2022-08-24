@@ -1,7 +1,9 @@
 import React from 'react';
 
 import { erProd } from '../../utils/FellesFunksjoner';
-import { dataOrUndefined, useHarNivaa4Context, useOppfolgingContext, useUserInfoContext } from '../Provider';
+import { useUserInfoContext } from '../BrukerProvider';
+import { useOppfolgingContext } from '../OppfolgingProvider';
+import { dataOrUndefined, useHarNivaa4Context } from '../Provider';
 import AldriUnderOppfolging from './AldriUnderOppfolging';
 import IkkeUnderOppfolging from './IkkeUnderOppfolging';
 import KanIkkeVarsles from './KanIkkeVarsles';

@@ -7,7 +7,7 @@ import Veilederpanel from 'nav-frontend-veilederpanel';
 import React, { useContext, useEffect, useState } from 'react';
 
 import { getApiBasePath } from '../../utils/Fetch';
-import { UserInfoContext } from '../../view/Provider';
+import { UserInfoContext } from '../../view/BrukerProvider';
 import { getContextPath } from '../../view/utils/utils';
 import { hiddenIfHoc } from '../HiddenIfHoc';
 import loggEvent from '../logging';

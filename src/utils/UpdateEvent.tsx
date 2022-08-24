@@ -2,7 +2,7 @@ import React from 'react';
 
 import { useAktivitetContext } from '../view/AktivitetProvider';
 import { useDialogContext } from '../view/DialogProvider';
-import { useOppfolgingContext } from '../view/Provider';
+import { useOppfolgingContext } from '../view/OppfolgingProvider';
 import { useEventListener } from '../view/utils/useEventListner';
 
 export enum UpdateTypes {
@@ -50,7 +50,7 @@ export function UppdateEventHandler() {
             case UpdateTypes.Dialog:
                 return dialogContext.hentDialoger();
             case UpdateTypes.Oppfolging:
-                return oppfolgingContext.rerun();
+                return oppfolgingContext.hentOppfolging();
         }
     });
 

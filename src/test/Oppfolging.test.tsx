@@ -1,12 +1,13 @@
 import '../utils/SetupEnzyme';
 
-import { Status as FetchMockStatus, FetchResult } from '@nutgaard/use-fetch';
 import { mount } from 'enzyme';
 import { Checkbox } from 'nav-frontend-skjema';
 import React from 'react';
 import { MemoryRouter } from 'react-router';
 
+import { Status } from '../api/typer';
 import { Bruker, DialogData, OppfolgingData, PeriodeData } from '../utils/Typer';
+import * as BrukerProvider from '../view/BrukerProvider';
 import { Dialog } from '../view/dialog/Dialog';
 import DialogContainer from '../view/dialog/DialogContainer';
 import { DialogHeader } from '../view/dialog/DialogHeader';
@@ -18,6 +19,8 @@ import NyDialogLink from '../view/dialogliste/NyDialogLink';
 import * as DialogProvider from '../view/DialogProvider';
 import { DialogDataProviderType } from '../view/DialogProvider';
 import { HenvendelseList } from '../view/henvendelse/HenvendelseList';
+import * as OppfolgingProvider from '../view/OppfolgingProvider';
+import { OppfolgingDataProviderType } from '../view/OppfolgingProvider';
 import * as AppContext from '../view/Provider';
 
 const userInfo: Bruker = { id: '010101', erVeileder: true, erBruker: false };
@@ -43,12 +46,13 @@ const oppfolgingData: OppfolgingData = {
     kanVarsles: true,
     servicegruppe: null
 };
-const useFetchOppfolging: FetchResult<OppfolgingData> = {
-    status: FetchMockStatus.OK,
-    statusCode: 0,
+
+const useFetchOppfolging: OppfolgingDataProviderType = {
     data: oppfolgingData,
-    rerun(): void {}
+    status: Status.OK,
+    hentOppfolging: () => Promise.resolve(undefined)
 };
+
 const dialoger = [
     {
         id: '1',
@@ -102,9 +106,9 @@ const useDialogContext: DialogDataProviderType = {
 
 describe('<DialogContainer/>', () => {
     test('Bruker uten oppf.perioder og ikke under oppf skjuler store deler av appen', () => {
-        useFetchOppfolging.data.underOppfolging = false;
-        useFetchOppfolging.data.oppfolgingsPerioder = [];
-        jest.spyOn(AppContext, 'useOppfolgingContext').mockImplementation(() => useFetchOppfolging);
+        useFetchOppfolging.data!.underOppfolging = false;
+        useFetchOppfolging.data!.oppfolgingsPerioder = [];
+        jest.spyOn(OppfolgingProvider, 'useOppfolgingContext').mockImplementation(() => useFetchOppfolging);
         const wrapper = mount(
             <MemoryRouter>
                 <DialogListe />
@@ -115,8 +119,8 @@ describe('<DialogContainer/>', () => {
         expect(wrapper.find(DialogPreview).exists()).toBeFalsy();
     });
     test('Bruker ikke under oppf. skjuler knapper/checkbox', () => {
-        useFetchOppfolging.data.underOppfolging = false;
-        useFetchOppfolging.data.oppfolgingsPerioder = [
+        useFetchOppfolging.data!.underOppfolging = false;
+        useFetchOppfolging.data!.oppfolgingsPerioder = [
             {
                 aktorId: '1234567988888',
                 veileder: false,
@@ -126,7 +130,7 @@ describe('<DialogContainer/>', () => {
                 kvpPerioder: []
             }
         ];
-        jest.spyOn(AppContext, 'useOppfolgingContext').mockImplementation(() => useFetchOppfolging);
+        jest.spyOn(OppfolgingProvider, 'useOppfolgingContext').mockImplementation(() => useFetchOppfolging);
         jest.spyOn(DialogProvider, 'useDialogContext').mockImplementation(() => useDialogContext);
         const wrapper = mount(
             <MemoryRouter>
@@ -137,8 +141,8 @@ describe('<DialogContainer/>', () => {
         expect(wrapper.find(DialogPreview).exists()).toBeTruthy();
     });
     test('Bruker under oppf, elementer synes', () => {
-        useFetchOppfolging.data.underOppfolging = true;
-        useFetchOppfolging.data.oppfolgingsPerioder = [
+        useFetchOppfolging.data!.underOppfolging = true;
+        useFetchOppfolging.data!.oppfolgingsPerioder = [
             {
                 aktorId: '1234567988888',
                 veileder: false,
@@ -148,7 +152,7 @@ describe('<DialogContainer/>', () => {
                 kvpPerioder: []
             }
         ];
-        jest.spyOn(AppContext, 'useOppfolgingContext').mockImplementation(() => useFetchOppfolging);
+        jest.spyOn(OppfolgingProvider, 'useOppfolgingContext').mockImplementation(() => useFetchOppfolging);
         jest.spyOn(AppContext, 'useHarNivaa4Context').mockImplementation(() => ({
             harNivaa4: true,
             hasError: false,
@@ -167,8 +171,8 @@ describe('<DialogContainer/>', () => {
 
 describe('<Dialog/>', () => {
     test('Bruker ikke under oppf. skjuler dialogcontroller og viser fortsatt henvendelser', () => {
-        useFetchOppfolging.data.underOppfolging = false;
-        useFetchOppfolging.data.oppfolgingsPerioder = [
+        useFetchOppfolging.data!.underOppfolging = false;
+        useFetchOppfolging.data!.oppfolgingsPerioder = [
             {
                 aktorId: '1234567988888',
                 veileder: false,
@@ -179,7 +183,7 @@ describe('<Dialog/>', () => {
             }
         ];
         jest.spyOn(DialogProvider, 'useDialogContext').mockImplementation(() => useDialogContext);
-        jest.spyOn(AppContext, 'useOppfolgingContext').mockImplementation(() => useFetchOppfolging);
+        jest.spyOn(OppfolgingProvider, 'useOppfolgingContext').mockImplementation(() => useFetchOppfolging);
         Element.prototype.scrollIntoView = () => {};
         const wrapper = mount(
             <MemoryRouter initialEntries={['/1']}>
@@ -191,8 +195,8 @@ describe('<Dialog/>', () => {
         expect(wrapper.find(Checkbox).exists()).toBeFalsy();
     });
     test('Bruker under oppf. viser komponenter i Dialog', () => {
-        useFetchOppfolging.data.underOppfolging = true;
-        useFetchOppfolging.data.oppfolgingsPerioder = [
+        useFetchOppfolging.data!.underOppfolging = true;
+        useFetchOppfolging.data!.oppfolgingsPerioder = [
             {
                 aktorId: '1234567988888',
                 veileder: false,
@@ -203,8 +207,8 @@ describe('<Dialog/>', () => {
             }
         ];
         jest.spyOn(DialogProvider, 'useDialogContext').mockImplementation(() => useDialogContext);
-        jest.spyOn(AppContext, 'useOppfolgingContext').mockImplementation(() => useFetchOppfolging);
-        jest.spyOn(AppContext, 'useUserInfoContext').mockImplementation(() => userInfo);
+        jest.spyOn(OppfolgingProvider, 'useOppfolgingContext').mockImplementation(() => useFetchOppfolging);
+        jest.spyOn(BrukerProvider, 'useUserInfoContext').mockImplementation(() => userInfo);
         jest.spyOn(AppContext, 'useHarNivaa4Context').mockImplementation(() => ({
             harNivaa4: true,
             hasError: false,
