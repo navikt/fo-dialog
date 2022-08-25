@@ -10,9 +10,12 @@ export enum UpdateTypes {
     Oppfolging = 'OPPFOLGING',
     Aktivitet = 'AKTIVITET'
 }
-
+/*
+        'uppdate' er en skrivefeil, men jeg ser at det samme navnet blir brukt i aktivitetsplanen, arbeidsrettet-dialog og veilarbpersonflate,
+        så jeg gjør ikke noe med det inntil videre.
+    */
 interface UpdateEventType {
-    update: string;
+    uppdate: string;
     avsender?: string;
 }
 
@@ -20,7 +23,7 @@ const eventName = 'uppdate';
 
 export function dispatchUpdate(update: UpdateTypes) {
     window.dispatchEvent(
-        new CustomEvent<UpdateEventType>(eventName, { detail: { update: update, avsender: 'dialog' } })
+        new CustomEvent<UpdateEventType>(eventName, { detail: { uppdate: update, avsender: 'dialog' } })
     );
 }
 
@@ -37,7 +40,7 @@ export function UppdateEventHandler() {
             return;
         }
 
-        const updateType = event.detail.update;
+        const updateType = event.detail.uppdate;
         const avsennder = event.detail.avsender;
 
         if (avsennder === 'dialog') {
