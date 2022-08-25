@@ -6,10 +6,10 @@ import React from 'react';
 import { useParams } from 'react-router';
 
 import useKansendeMelding from '../../utils/UseKanSendeMelding';
+import { useUserInfoContext } from '../BrukerProvider';
 import { useDialogContext } from '../DialogProvider';
 import InfoVedIngenDialoger from '../info/InfoVedIngenDialoger';
 import OmDialogLenke from '../info/OmDialogLenke';
-import { useUserInfoContext } from '../Provider';
 import DialogListe from './DialogListe';
 import styles from './DialogOversikt.module.less';
 import DialogOverviewHeader from './NyDialogLink';

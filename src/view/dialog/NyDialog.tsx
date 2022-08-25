@@ -3,7 +3,7 @@ import React, { useEffect } from 'react';
 import { StringOrUndefined } from '../../utils/Typer';
 import useKansendeMelding from '../../utils/UseKanSendeMelding';
 import { getDialogTittel } from '../aktivitet/TextUtils';
-import { AktivitetContextType, MaybeAktivitet, findAktivitet, useAktivitetContext } from '../AktivitetProvider';
+import { MaybeAktivitet, findAktivitet, useAktivitetContext } from '../AktivitetProvider';
 import { useViewContext } from '../Provider';
 import { useAktivitetId } from '../utils/useAktivitetId';
 import { useSkjulHodefotForMobilVisning } from '../utils/useSkjulHodefotForMobilVisning';
@@ -16,7 +16,7 @@ export default function NyDialog() {
     useSkjulHodefotForMobilVisning();
 
     const aktivitetId: StringOrUndefined = useAktivitetId();
-    const aktivitetData: AktivitetContextType = useAktivitetContext();
+    const aktivitetData = useAktivitetContext();
     const aktivitet: MaybeAktivitet = findAktivitet(aktivitetData, aktivitetId);
 
     const defaultTema = getDialogTittel(aktivitet);

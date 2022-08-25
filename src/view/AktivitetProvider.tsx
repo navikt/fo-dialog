@@ -1,81 +1,140 @@
-import { FetchResult, Status, hasData, hasError } from '@nutgaard/use-fetch';
-import React, { useContext } from 'react';
+import React, { useCallback, useContext, useMemo, useState } from 'react';
 
+import { Status, hasError, isReloading } from '../api/typer';
 import { Aktivitet, ArenaAktivitet } from '../utils/aktivitetTypes';
-import { REQUEST_CONFIG, fnrQuery } from '../utils/Fetch';
+import { fetchData, fnrQuery, getApiBasePath } from '../utils/Fetch';
 import { StringOrNull } from '../utils/Typer';
-import useFetch from '../utils/UseFetch';
 
 export type MaybeAktivitet = Aktivitet | ArenaAktivitet | undefined;
 
-interface AktivitetResponse {
+export interface AktivitetDataProviderType {
+    aktiviteterStatus: Status;
+    arenaAktiviteterStatus: Status;
+    hentAktiviteter: () => Promise<Aktivitet[]>;
+    hentArenaAktiviteter: () => Promise<ArenaAktivitet[]>;
     aktiviteter: Aktivitet[];
-}
-export interface AktivitetContextType {
-    aktiviteter: FetchResult<AktivitetResponse>;
-    arenaAktiviter: FetchResult<ArenaAktivitet[]>;
+    arenaAktiviteter: ArenaAktivitet[];
 }
 
-const inital: AktivitetContextType = {
-    aktiviteter: {
-        status: Status.INIT,
-        statusCode: 0,
-        rerun(): void {}
-    },
-    arenaAktiviter: {
-        status: Status.INIT,
-        statusCode: 0,
-        rerun(): void {}
-    }
+export interface AktivitetState {
+    aktiviteterStatus: Status;
+    arenaAktiviteterStatus: Status;
+    aktiviteter: Aktivitet[];
+    arenaAktiviteter: ArenaAktivitet[];
+}
+
+const initAktivitetState: AktivitetState = {
+    aktiviteterStatus: Status.INITIAL,
+    arenaAktiviteterStatus: Status.INITIAL,
+    aktiviteter: [],
+    arenaAktiviteter: []
 };
 
-export const AktivitetContext = React.createContext(inital);
+export const AktivitetContext = React.createContext<AktivitetDataProviderType>({
+    aktiviteterStatus: Status.INITIAL,
+    arenaAktiviteterStatus: Status.INITIAL,
+    aktiviteter: new Array<Aktivitet>(),
+    arenaAktiviteter: new Array<ArenaAktivitet>(),
+    hentAktiviteter: () => Promise.resolve([]),
+    hentArenaAktiviteter: () => Promise.resolve([])
+});
 export const useAktivitetContext = () => useContext(AktivitetContext);
 
-export function harAktivitetDataFeil(aktivitetData: AktivitetContextType, arenaAktivitet: boolean): boolean {
+export function harAktivitetDataFeil(aktivitetData: AktivitetDataProviderType, arenaAktivitet: boolean): boolean {
     if (arenaAktivitet) {
-        return hasError(aktivitetData.arenaAktiviter);
+        return hasError(aktivitetData.arenaAktiviteterStatus);
     } else {
-        return hasError(aktivitetData.aktiviteter);
+        return hasError(aktivitetData.aktiviteterStatus);
     }
 }
 
-export function findAktivitet(aktivitetData: AktivitetContextType, aktivitetId?: StringOrNull): MaybeAktivitet {
+export const findAktivitet = (aktivitetData: AktivitetDataProviderType, aktivitetId?: StringOrNull): MaybeAktivitet => {
     if (!aktivitetId) {
         return undefined;
     }
 
-    const aktiviteter = hasData(aktivitetData.aktiviteter) ? aktivitetData.aktiviteter.data.aktiviteter : undefined;
-    const arena = hasData(aktivitetData.arenaAktiviter) ? aktivitetData.arenaAktiviter.data : undefined;
+    const aktiviteterHasData =
+        aktivitetData.aktiviteterStatus === Status.OK || aktivitetData.aktiviteterStatus === Status.RELOADING;
+    const aktiviteter: Aktivitet[] = aktiviteterHasData ? aktivitetData.aktiviteter : [];
 
-    if (aktivitetId.startsWith('ARENA')) {
-        return arena && arena.find((a) => a.id === aktivitetId);
-    }
-    return aktiviteter && aktiviteter.find((a) => a.id === aktivitetId);
+    const arenaHasData =
+        aktivitetData.arenaAktiviteterStatus === Status.OK || aktivitetData.arenaAktiviteterStatus === Status.RELOADING;
+    const arena: ArenaAktivitet[] = arenaHasData ? aktivitetData.arenaAktiviteter : [];
+
+    return [...aktiviteter, ...arena].find((aktivitet) => aktivitet.id === aktivitetId);
+};
+
+interface AktivitetResponse {
+    aktiviteter: Aktivitet[];
 }
 
-interface Props {
-    fnr?: string;
-    apiBasePath: string;
-    children: React.ReactNode;
-}
+export const useAktivitetDataProvider = (fnr?: string): AktivitetDataProviderType => {
+    const [state, setState] = useState<AktivitetState>(initAktivitetState);
 
-export function AktivitetProvider(props: Props) {
-    const query = fnrQuery(props.fnr);
-    const apiBasePath = props.apiBasePath;
+    const apiBasePath = getApiBasePath(fnr);
+    const query = fnrQuery(fnr);
 
-    const aktiviteterFetch = useFetch<AktivitetResponse>(
-        `${apiBasePath}/veilarbaktivitet/api/aktivitet${query}`,
-        REQUEST_CONFIG
-    );
-    const arenaAktiviteterFetch = useFetch<ArenaAktivitet[]>(
-        `${apiBasePath}/veilarbaktivitet/api/arena/tiltak${query}`,
-        REQUEST_CONFIG
+    const aktivitetUrl = useMemo(() => `${apiBasePath}/veilarbaktivitet/api/aktivitet${query}`, [apiBasePath, query]);
+    const arenaAktivitetUrl = useMemo(
+        () => `${apiBasePath}/veilarbaktivitet/api/arena/tiltak${query}`,
+        [apiBasePath, query]
     );
 
-    return (
-        <AktivitetContext.Provider value={{ aktiviteter: aktiviteterFetch, arenaAktiviter: arenaAktiviteterFetch }}>
-            {props.children}
-        </AktivitetContext.Provider>
-    );
-}
+    const hentAktiviteter: () => Promise<Aktivitet[]> = useCallback(() => {
+        setState((prevState) => ({
+            ...prevState,
+            status: isReloading(prevState.aktiviteterStatus) ? Status.RELOADING : Status.PENDING
+        }));
+        return fetchData<AktivitetResponse>(aktivitetUrl)
+            .then((response) => {
+                setState((prevState) => ({
+                    ...prevState,
+                    aktiviteterStatus: Status.OK,
+                    aktiviteter: response.aktiviteter
+                }));
+                return response.aktiviteter;
+            })
+            .catch(() => {
+                setState((prevState) => ({
+                    ...prevState,
+                    aktiviteterStatus: Status.ERROR
+                }));
+                return [];
+            });
+    }, [aktivitetUrl, setState]);
+
+    const hentArenaAktiviteter: () => Promise<ArenaAktivitet[]> = useCallback(() => {
+        setState((prevState) => ({
+            ...prevState,
+            status: isReloading(prevState.arenaAktiviteterStatus) ? Status.RELOADING : Status.PENDING
+        }));
+        return fetchData<ArenaAktivitet[]>(arenaAktivitetUrl)
+            .then((arenaAktiviteter) => {
+                setState((prevState) => ({
+                    aktiviteter: prevState.aktiviteter,
+                    aktiviteterStatus: prevState.aktiviteterStatus,
+                    arenaAktiviteterStatus: Status.OK,
+                    arenaAktiviteter: arenaAktiviteter
+                }));
+                return arenaAktiviteter;
+            })
+            .catch(() => {
+                setState((prevState) => ({
+                    ...prevState,
+                    arenaAktiviteterStatus: Status.ERROR
+                }));
+                return [];
+            });
+    }, [arenaAktivitetUrl, setState]);
+
+    return useMemo(() => {
+        return {
+            aktiviteterStatus: state.aktiviteterStatus,
+            arenaAktiviteterStatus: state.arenaAktiviteterStatus,
+            aktiviteter: state.aktiviteter,
+            arenaAktiviteter: state.arenaAktiviteter,
+            hentAktiviteter: hentAktiviteter,
+            hentArenaAktiviteter: hentArenaAktiviteter
+        };
+    }, [state, hentAktiviteter, hentArenaAktiviteter]);
+};

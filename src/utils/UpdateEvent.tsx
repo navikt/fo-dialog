@@ -2,7 +2,7 @@ import React from 'react';
 
 import { useAktivitetContext } from '../view/AktivitetProvider';
 import { useDialogContext } from '../view/DialogProvider';
-import { useOppfolgingContext } from '../view/Provider';
+import { useOppfolgingContext } from '../view/OppfolgingProvider';
 import { useEventListener } from '../view/utils/useEventListner';
 
 export enum UpdateTypes {
@@ -10,7 +10,10 @@ export enum UpdateTypes {
     Oppfolging = 'OPPFOLGING',
     Aktivitet = 'AKTIVITET'
 }
-
+/*
+        'uppdate' er en skrivefeil, men jeg ser at det samme navnet blir brukt i aktivitetsplanen, arbeidsrettet-dialog og veilarbpersonflate,
+        så jeg gjør ikke noe med det inntil videre.
+    */
 interface UpdateEventType {
     uppdate: string;
     avsender?: string;
@@ -29,7 +32,7 @@ function isUpdateEvent(toBeDetermined: CustomEvent): toBeDetermined is CustomEve
 }
 
 export function UppdateEventHandler() {
-    const { aktiviteter } = useAktivitetContext();
+    const aktivitetContext = useAktivitetContext();
     const dialogContext = useDialogContext();
     const oppfolgingContext = useOppfolgingContext();
     useEventListener(eventName, (event) => {
@@ -46,11 +49,11 @@ export function UppdateEventHandler() {
 
         switch (updateType) {
             case UpdateTypes.Aktivitet:
-                return aktiviteter.rerun();
+                return aktivitetContext.hentAktiviteter();
             case UpdateTypes.Dialog:
                 return dialogContext.hentDialoger();
             case UpdateTypes.Oppfolging:
-                return oppfolgingContext.rerun();
+                return oppfolgingContext.hentOppfolging();
         }
     });
 

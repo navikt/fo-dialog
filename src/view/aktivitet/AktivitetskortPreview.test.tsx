@@ -1,13 +1,13 @@
 import '../../utils/SetupEnzyme';
 
-import { Status } from '@nutgaard/use-fetch';
 import { mount } from 'enzyme';
 import React from 'react';
 import { MemoryRouter } from 'react-router';
 
+import { Status } from '../../api/typer';
 import { Aktivitet, AktivitetStatus, AktivitetTypes, KanalTypes } from '../../utils/aktivitetTypes';
-import * as AppContext from '../AktivitetProvider';
-import { AktivitetContextType } from '../AktivitetProvider';
+import * as AktivitetProvider from '../AktivitetProvider';
+import { AktivitetDataProviderType } from '../AktivitetProvider';
 import { AktivitetskortPreview, getInfoText } from './AktivitetskortPreview';
 
 describe('getInfoText', () => {
@@ -107,24 +107,18 @@ const aktivitet: Aktivitet = {
     arbeidsgiver: 'Testesen'
 };
 
-const aktivitetRes: AktivitetContextType = {
-    aktiviteter: {
-        status: Status.OK,
-        statusCode: 0,
-        data: { aktiviteter: [aktivitet] },
-        rerun(): void {}
-    },
-    arenaAktiviter: {
-        status: Status.OK,
-        statusCode: 0,
-        data: [],
-        rerun(): void {}
-    }
+const aktivitetRes: AktivitetDataProviderType = {
+    aktiviteterStatus: Status.OK,
+    arenaAktiviteterStatus: Status.OK,
+    aktiviteter: [aktivitet],
+    arenaAktiviteter: [],
+    hentAktiviteter: () => Promise.resolve([aktivitet]),
+    hentArenaAktiviteter: () => Promise.resolve([])
 };
 
 describe('<AktivitetskortPreview />', () => {
     it('skal rendre stillingsaktivitet som i snapshot', () => {
-        jest.spyOn(AppContext, 'useAktivitetContext').mockImplementation(() => aktivitetRes);
+        jest.spyOn(AktivitetProvider, 'useAktivitetContext').mockImplementation(() => aktivitetRes);
 
         const wrapper = mount(
             <MemoryRouter>

@@ -127,7 +127,6 @@
     },
     "devDependencies": {
         "@craco/craco": "^5.6.4",
-        "@nutgaard/use-fetch": "^2.3.1",
         "@types/amplitude-js": "^8.16.2",
         "@types/classnames": "^2.2.10",
         "@types/enzyme": "^3.10.5",

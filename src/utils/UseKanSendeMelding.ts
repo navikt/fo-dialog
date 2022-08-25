@@ -1,4 +1,5 @@
-import { dataOrUndefined, useHarNivaa4Context, useOppfolgingContext } from '../view/Provider';
+import { useOppfolgingContext } from '../view/OppfolgingProvider';
+import { dataOrUndefined, useHarNivaa4Context } from '../view/Provider';
 import { erProd } from './FellesFunksjoner';
 
 export default function useKansendeMelding(): boolean {
