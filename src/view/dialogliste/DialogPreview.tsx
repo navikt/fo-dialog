@@ -1,7 +1,7 @@
 import classNames from 'classnames';
 import { LenkepanelBase } from 'nav-frontend-lenkepanel';
 import { Normaltekst, Systemtittel, Undertekst } from 'nav-frontend-typografi';
-import React from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { Flipped, Flipper } from 'react-flip-toolkit';
 
 import WrapInReactLink from '../../felleskomponenter/WrapInReactLink';
@@ -18,6 +18,8 @@ interface TittelProps {
     aktivitet?: Aktivitet | ArenaAktivitet;
     tittel: StringOrNull;
 }
+
+const ALIGN_TO_BOTTOM: ScrollIntoViewOptions = { block: 'end', inline: 'nearest' };
 
 function Tittel(props: TittelProps) {
     const tittel = props.aktivitet ? getDialogTittel(props.aktivitet) : props.tittel;
@@ -48,8 +50,22 @@ interface Props {
 }
 
 function DialogPreview(props: Props) {
+    const dialogref = useRef<HTMLDivElement | null>();
+    const [firstTime, setFirstTime] = useState<boolean>(true);
+
     const { dialog, valgtDialogId } = props;
     const { id, sisteDato, aktivitetId, lest, overskrift, historisk } = dialog;
+    const detteErValgtDialog = id === valgtDialogId;
+
+    useEffect(() => {
+        const dialogElement: HTMLElement | null | undefined = dialogref?.current?.parentElement;
+        if (firstTime && dialogElement && detteErValgtDialog) {
+            dialogElement.focus();
+            dialogElement.scrollIntoView(ALIGN_TO_BOTTOM);
+            setFirstTime(false);
+        }
+    }, [dialogref, detteErValgtDialog, firstTime]);
+
     const aktivitetData = useAktivitetContext();
 
     const datoString = !!sisteDato ? formaterDate(sisteDato) : '';
@@ -59,7 +75,7 @@ function DialogPreview(props: Props) {
 
     const lenkepanelCls = classNames(styles.preview, {
         [styles.innholdUlest]: !erLest,
-        [styles.innholdValgt]: id === valgtDialogId
+        [styles.innholdValgt]: detteErValgtDialog
     });
     const markoer = erLest ? styles.markoerLest : styles.markoerUlest;
 
@@ -75,6 +91,7 @@ function DialogPreview(props: Props) {
                 <Normaltekst className="visually-hidden">{meldingerText(dialog.henvendelser.length)}</Normaltekst>
             </div>
             <Normaltekst aria-hidden="true">{dialog.henvendelser.length}</Normaltekst>
+            <div ref={(ref) => (dialogref.current = ref)}></div>
         </LenkepanelBase>
     );
 }

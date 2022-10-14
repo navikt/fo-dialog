@@ -9,7 +9,6 @@ import AppBody from './AppBody';
 import { EventHandler } from './EventHandler';
 import { Provider } from './Provider';
 import StatusAdvarsel from './statusAdvarsel/StatusAdvarsel';
-import ScrollToFocusedOnStart from './utils/ScrollToFocusedOnStart';
 import { getContextPath } from './utils/utils';
 
 interface Props {
@@ -30,9 +29,7 @@ function App(props: Props) {
                     <EventHandler />
                     <Provider fnr={fnr} erVeileder={!!fnr}>
                         <StatusAdvarsel />
-                        <ScrollToFocusedOnStart>
-                            <AppBody />
-                        </ScrollToFocusedOnStart>
+                        <AppBody />
                         <UppdateEventHandler />
                     </Provider>
                     <TimeoutModal hidden={!!fnr} fnr={fnr} />
