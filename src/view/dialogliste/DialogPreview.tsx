@@ -50,7 +50,7 @@ interface Props {
 }
 
 function DialogPreview(props: Props) {
-    const dialogref = useRef<HTMLDivElement | null>();
+    const dialogref = useRef<HTMLDivElement | null>(null);
     const [firstTime, setFirstTime] = useState<boolean>(true);
 
     const { dialog, valgtDialogId } = props;
@@ -91,7 +91,7 @@ function DialogPreview(props: Props) {
                 <Normaltekst className="visually-hidden">{meldingerText(dialog.henvendelser.length)}</Normaltekst>
             </div>
             <Normaltekst aria-hidden="true">{dialog.henvendelser.length}</Normaltekst>
-            <div ref={(ref) => (dialogref.current = ref)}></div>
+            <div ref={dialogref}></div>
         </LenkepanelBase>
     );
 }
