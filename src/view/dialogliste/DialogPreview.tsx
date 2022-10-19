@@ -10,6 +10,7 @@ import { formaterDate } from '../../utils/Date';
 import { DialogData, StringOrNull } from '../../utils/Typer';
 import { getDialogTittel } from '../aktivitet/TextUtils';
 import { findAktivitet, useAktivitetContext } from '../AktivitetProvider';
+import { useEventListener } from '../utils/useEventListner';
 import styles from './DialogPreview.module.less';
 import { EtikettListe } from './EtikettListe';
 import Ikon from './ikon/Ikon';
@@ -51,29 +52,27 @@ interface Props {
 
 function DialogPreview(props: Props) {
     const dialogref = useRef<HTMLDivElement | null>(null);
-    const [firstTime, setFirstTime] = useState<boolean>(true);
+    const [skalScrolle, setSkalScrolle] = useState<boolean>(true);
 
     const { dialog, valgtDialogId } = props;
     const { id, sisteDato, aktivitetId, lest, overskrift, historisk } = dialog;
     const detteErValgtDialog = id === valgtDialogId;
-    if (detteErValgtDialog) console.log('DialogPreview valgtdialog: ', valgtDialogId, ', id: ', id);
-    useEffect(() => {
-        console.log(
-            'DialogPreview - useEffect dialogref, detteErValgtDialog, firstTime, focused: ',
-            dialogref,
-            detteErValgtDialog,
-            firstTime,
-            document.activeElement
-        );
-        console.log('DialogPreview - dialogref.current ', dialogref?.current);
-        console.log('DialogPreview - dialogref.current.parentElement ', dialogref?.current?.parentElement);
 
+    useEventListener('visDialog', () => {
+        setSkalScrolle(true);
+    });
+
+    useEventListener('veilarbpersonflatefs.tab-clicked', () => {
+        setSkalScrolle(true);
+    });
+
+    useEffect(() => {
         const dialogElement: HTMLElement | null | undefined = dialogref?.current?.parentElement;
-        if (firstTime && dialogElement && detteErValgtDialog) {
+        if (skalScrolle && dialogElement && detteErValgtDialog) {
             dialogElement.scrollIntoView(ALIGN_TO_BOTTOM);
-            setFirstTime(false);
+            setSkalScrolle(false);
         }
-    }, [dialogref, detteErValgtDialog, firstTime]);
+    }, [dialogref, detteErValgtDialog, skalScrolle]);
 
     const aktivitetData = useAktivitetContext();
 
