@@ -62,10 +62,6 @@ function DialogPreview(props: Props) {
         setSkalScrolle(true);
     });
 
-    useEventListener('veilarbpersonflatefs.tab-clicked', () => {
-        setSkalScrolle(true);
-    });
-
     useEffect(() => {
         const dialogElement: HTMLElement | null | undefined = dialogref?.current?.parentElement;
         if (skalScrolle && dialogElement && detteErValgtDialog) {
