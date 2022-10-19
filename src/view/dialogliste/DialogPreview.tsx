@@ -56,11 +56,20 @@ function DialogPreview(props: Props) {
     const { dialog, valgtDialogId } = props;
     const { id, sisteDato, aktivitetId, lest, overskrift, historisk } = dialog;
     const detteErValgtDialog = id === valgtDialogId;
-
+    if (detteErValgtDialog) console.log('DialogPreview valgtdialog: ', valgtDialogId, ', id: ', id);
     useEffect(() => {
+        console.log(
+            'DialogPreview - useEffect dialogref, detteErValgtDialog, firstTime, focused: ',
+            dialogref,
+            detteErValgtDialog,
+            firstTime,
+            document.activeElement
+        );
+        console.log('DialogPreview - dialogref.current ', dialogref?.current);
+        console.log('DialogPreview - dialogref.current.parentElement ', dialogref?.current?.parentElement);
+
         const dialogElement: HTMLElement | null | undefined = dialogref?.current?.parentElement;
         if (firstTime && dialogElement && detteErValgtDialog) {
-            dialogElement.focus();
             dialogElement.scrollIntoView(ALIGN_TO_BOTTOM);
             setFirstTime(false);
         }
