@@ -50,6 +50,15 @@ interface Props {
     valgtDialogId?: string;
 }
 
+export enum TabId {
+    AKTIVITETSPLAN = 'AKTIVITETSPLAN',
+    DIALOG = 'DIALOG',
+    VEDTAKSSTOTTE = 'VEDTAKSSTOTTE',
+    DETALJER = 'DETALJER',
+    ARBEIDSMARKEDSTILTAK = 'ARBEIDSMARKEDSTILTAK'
+}
+
+export type TabChangeEvent = { tabId: string };
 function DialogPreview(props: Props) {
     const dialogref = useRef<HTMLDivElement | null>(null);
     const [skalScrolle, setSkalScrolle] = useState<boolean>(true);
@@ -58,8 +67,8 @@ function DialogPreview(props: Props) {
     const { id, sisteDato, aktivitetId, lest, overskrift, historisk } = dialog;
     const detteErValgtDialog = id === valgtDialogId;
 
-    useEventListener('visDialog', () => {
-        setSkalScrolle(true);
+    useEventListener<TabChangeEvent>('veilarbpersonflatefs.tab-clicked', ({ detail: { tabId } }) => {
+        if (tabId === TabId.DIALOG) setSkalScrolle(true);
     });
 
     useEffect(() => {
