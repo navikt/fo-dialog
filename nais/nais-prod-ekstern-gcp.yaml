@@ -75,7 +75,7 @@ spec:
             },
             {
               "from": "/dittnav",
-              "to": "{{MINSIDE_URL}}"
+              "to": "{{DITTNAV_URL}}"
             },
             {
               "from": "/veientilarbeid",
