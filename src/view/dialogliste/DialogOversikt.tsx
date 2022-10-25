@@ -25,7 +25,7 @@ const DialogOversiktHeader = (props: HeaderProps) => {
 
     return (
         <>
-            <Lenke href="/arbeid/dialog/dittnav" className={styles.dintnav}>
+            <Lenke href="/arbeid/dialog/minside" className={styles.dintnav}>
                 <VenstreChevron />
                 Min side
             </Lenke>
