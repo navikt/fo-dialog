@@ -61,7 +61,7 @@ export enum TabId {
 export type TabChangeEvent = { tabId: string };
 function DialogPreview(props: Props) {
     const dialogref = useRef<HTMLDivElement | null>(null);
-    const [skalScrolle, setSkalScrolle] = useState<boolean>(true);
+    const [skalScrolle, setSkalScrolle] = useState<boolean>(false);
 
     const { dialog, valgtDialogId } = props;
     const { id, sisteDato, aktivitetId, lest, overskrift, historisk } = dialog;
