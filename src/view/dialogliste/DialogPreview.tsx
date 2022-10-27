@@ -1,7 +1,7 @@
 import classNames from 'classnames';
 import { LenkepanelBase } from 'nav-frontend-lenkepanel';
 import { Normaltekst, Systemtittel, Undertekst } from 'nav-frontend-typografi';
-import React from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { Flipped, Flipper } from 'react-flip-toolkit';
 
 import WrapInReactLink from '../../felleskomponenter/WrapInReactLink';
@@ -10,6 +10,7 @@ import { formaterDate } from '../../utils/Date';
 import { DialogData, StringOrNull } from '../../utils/Typer';
 import { getDialogTittel } from '../aktivitet/TextUtils';
 import { findAktivitet, useAktivitetContext } from '../AktivitetProvider';
+import { useEventListener } from '../utils/useEventListner';
 import styles from './DialogPreview.module.less';
 import { EtikettListe } from './EtikettListe';
 import Ikon from './ikon/Ikon';
@@ -18,6 +19,8 @@ interface TittelProps {
     aktivitet?: Aktivitet | ArenaAktivitet;
     tittel: StringOrNull;
 }
+
+const ALIGN_TO_BOTTOM: ScrollIntoViewOptions = { block: 'end', inline: 'nearest' };
 
 function Tittel(props: TittelProps) {
     const tittel = props.aktivitet ? getDialogTittel(props.aktivitet) : props.tittel;
@@ -47,9 +50,35 @@ interface Props {
     valgtDialogId?: string;
 }
 
+export enum TabId {
+    AKTIVITETSPLAN = 'AKTIVITETSPLAN',
+    DIALOG = 'DIALOG',
+    VEDTAKSSTOTTE = 'VEDTAKSSTOTTE',
+    DETALJER = 'DETALJER',
+    ARBEIDSMARKEDSTILTAK = 'ARBEIDSMARKEDSTILTAK'
+}
+
+export type TabChangeEvent = { tabId: string };
 function DialogPreview(props: Props) {
+    const dialogref = useRef<HTMLDivElement | null>(null);
+    const [skalScrolle, setSkalScrolle] = useState<boolean>(true);
+
     const { dialog, valgtDialogId } = props;
     const { id, sisteDato, aktivitetId, lest, overskrift, historisk } = dialog;
+    const detteErValgtDialog = id === valgtDialogId;
+
+    useEventListener<TabChangeEvent>('veilarbpersonflatefs.tab-clicked', ({ detail: { tabId } }) => {
+        if (tabId === TabId.DIALOG) setSkalScrolle(true);
+    });
+
+    useEffect(() => {
+        const dialogElement: HTMLElement | null | undefined = dialogref?.current?.parentElement;
+        if (skalScrolle && dialogElement && detteErValgtDialog) {
+            dialogElement.scrollIntoView(ALIGN_TO_BOTTOM);
+            setSkalScrolle(false);
+        }
+    }, [dialogref, detteErValgtDialog, skalScrolle]);
+
     const aktivitetData = useAktivitetContext();
 
     const datoString = !!sisteDato ? formaterDate(sisteDato) : '';
@@ -59,7 +88,7 @@ function DialogPreview(props: Props) {
 
     const lenkepanelCls = classNames(styles.preview, {
         [styles.innholdUlest]: !erLest,
-        [styles.innholdValgt]: id === valgtDialogId
+        [styles.innholdValgt]: detteErValgtDialog
     });
     const markoer = erLest ? styles.markoerLest : styles.markoerUlest;
 
@@ -75,6 +104,7 @@ function DialogPreview(props: Props) {
                 <Normaltekst className="visually-hidden">{meldingerText(dialog.henvendelser.length)}</Normaltekst>
             </div>
             <Normaltekst aria-hidden="true">{dialog.henvendelser.length}</Normaltekst>
+            <div ref={dialogref}></div>
         </LenkepanelBase>
     );
 }
