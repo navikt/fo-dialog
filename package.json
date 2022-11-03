@@ -5,7 +5,7 @@
     "license": "MIT",
     "repository": "https://github.com/navikt/arbeidsrettet-dialog.git",
     "engines": {
-        "node": "16.x"
+        "node": "16.15.1"
     },
     "scripts": {
         "build-ekstern-prod": "cp nais/.env.prod.ekstern .env.local && npm run build",
