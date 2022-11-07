@@ -12,6 +12,7 @@
         "build-intern-prod": "cp nais/.env.prod.intern .env.local && npm run build",
         "build-ekstern-dev": "cp nais/.env.dev.ekstern .env.local && npm run build",
         "build-intern-dev": "cp nais/.env.dev.intern .env.local && npm run build",
+        "build-github-pages": "cp nais/.env.github.pages .env.local && npm run build",
         "start": "cross-env REACT_APP_MOCK=true PUBLIC_URL=/ craco start",
         "build": "cross-env REACT_APP_MOCK=false craco build",
         "test": "craco test",
