@@ -1,5 +1,5 @@
 import React from 'react';
-import { BrowserRouter as Router } from 'react-router-dom';
+import { BrowserRouter, HashRouter } from 'react-router-dom';
 
 import TimeoutModal from '../felleskomponenter/timeoutmodal/TimeoutModal';
 import { PageViewMetricCollector } from '../metrics/PageViewMetricCollector';
@@ -14,6 +14,13 @@ import { getContextPath } from './utils/utils';
 interface Props {
     fnr?: string;
     enhet?: string;
+}
+
+function Router(props: { basename: string; children?: React.ReactNode }) {
+    if (process.env.REACT_APP_USE_HASH_ROUTER === 'true') {
+        return <HashRouter>{props.children}</HashRouter>;
+    }
+    return <BrowserRouter basename={props.basename}>{props.children}</BrowserRouter>;
 }
 
 function App(props: Props) {
