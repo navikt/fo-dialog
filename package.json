@@ -14,7 +14,7 @@
         "build-intern-dev": "cp nais/.env.dev.intern .env.local && npm run build",
         "build-github-pages": "cp nais/.env.github.pages .env.local && npm run build",
         "start": "cross-env REACT_APP_MOCK=true PUBLIC_URL=/ craco start",
-        "build": "cross-env REACT_APP_MOCK=false craco build",
+        "build": "cross-env craco build",
         "test": "craco test",
         "test:coverage": "npm test -- --coverage --watchAll=false",
         "eject": "craco eject",
