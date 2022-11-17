@@ -48,8 +48,6 @@ spec:
       value: selvbetjening-idtoken
     - name: GCS_BUCKET_NAME
       value: arbeidsrettet-dialog-dev
-    - name: CONTEXT_PATH
-      value: /arbeid/dialog
     - name: JSON_CONFIG
       value: >
         {

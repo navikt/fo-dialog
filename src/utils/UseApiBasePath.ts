@@ -1,10 +1,19 @@
 import { useFnrContext } from '../view/Provider';
+import { usingHashRouting } from '../view/utils/utils';
 
 export default function useApiBasePath(): string {
     const fnr = useFnrContext();
-    return baseApiPath(fnr);
+    const erVeileder = !!fnr;
+    return baseApiPath(erVeileder);
 }
 
-export function baseApiPath(fnr?: string) {
-    return process.env.PUBLIC_URL && !fnr ? process.env.PUBLIC_URL : '';
+const pathPrefix = process.env.PUBLIC_URL;
+
+export function baseApiPath(erVeileder: boolean) {
+    if (usingHashRouting) return ''; // Only used in testing purposes
+    if (erVeileder) {
+        return ''; // veilarbpersonflate -> alle endepunkter starter med /veilarboppfolging/api
+    } else {
+        return pathPrefix || '';
+    }
 }

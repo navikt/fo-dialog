@@ -9,6 +9,7 @@ import { initAmplitude } from './metrics/amplitude-utils';
 import DemoBanner from './mock/demo/DemoBanner';
 import { erEksternBruker } from './mock/demo/sessionstorage';
 import App from './view/App';
+import { getBasename, usingHashRouting } from './view/utils/utils';
 
 const modalAlly = document.getElementById('modal-a11y-wrapper');
 const root = document.getElementById('root');
@@ -35,6 +36,14 @@ window.addEventListener(
     }, 100)
 );
 
+const gotoStartTestPage = (fnr?: string) => {
+    if (usingHashRouting) {
+        window.history.replaceState({}, '', `${process.env.PUBLIC_URL}/#/${fnr ?? ''}`);
+    } else {
+        window.history.replaceState({}, '', getBasename(fnr));
+    }
+};
+
 if (process.env.REACT_APP_MOCK === 'true') {
     require('./mock');
 
@@ -44,6 +53,8 @@ if (process.env.REACT_APP_MOCK === 'true') {
 
     const fnr = erEksternBruker() ? undefined : '12345678901';
     const AppWrapper = () => <App fnr={fnr} />;
+
+    gotoStartTestPage(fnr);
 
     NAVSPA.eksporter('arbeidsrettet-dialog', AppWrapper);
 } else {

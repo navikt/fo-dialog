@@ -10,7 +10,7 @@ import useApiBasePath from '../../utils/UseApiBasePath';
 import { findAktivitet, useAktivitetContext } from '../AktivitetProvider';
 import { dialogHeaderID2 } from '../dialog/DialogHeader';
 import { useFnrContext } from '../Provider';
-import { aktivitetLenke, visAktivitetsplan } from './AktivitetskortLinke';
+import { aktivitetLenke, visAktivitetsplan } from './AktivitetskortLenke';
 import styles from './AktivitetskortPreview.module.less';
 import { getTypeText } from './TextUtils';
 
