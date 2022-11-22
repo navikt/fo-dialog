@@ -9,18 +9,18 @@ describe('getBasenname', () => {
             '/arbeidsrettet-dialog/12345678901'
         );
     });
-    it('skal fjerne slash på starten', () => {
+    it('skal ikke legge til ekstra slash på starten', () => {
         expect(getBasenameFromFnrAndPathname('/arbeidsrettet-dialog', '12345678901')).toBe(
             '/arbeidsrettet-dialog/12345678901'
         );
     });
     it('skal fjerne slash på starten', () => {
         expect(getBasenameFromFnrAndPathname('/////////////////////arbeidsrettet-dialog', '12345678901')).toBe(
-            'arbeidsrettet-dialog/12345678901'
+            '/arbeidsrettet-dialog/12345678901'
         );
     });
     it('skal gi korrekt format', () => {
-        expect(getBasenameFromFnrAndPathname(undefined, '66612345678')).toBe('66612345678');
+        expect(getBasenameFromFnrAndPathname(undefined, '66612345678')).toBe('/66612345678');
     });
     it('skal ikke skape problemer når ingen er oppgitt', () => {
         expect(getBasenameFromFnrAndPathname()).toBe('/');
