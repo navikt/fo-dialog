@@ -9,7 +9,7 @@ import AppBody from './AppBody';
 import { EventHandler } from './EventHandler';
 import { Provider } from './Provider';
 import StatusAdvarsel from './statusAdvarsel/StatusAdvarsel';
-import { getBasename, getContextPath } from './utils/utils';
+import { getBasename } from './utils/utils';
 
 interface Props {
     fnr?: string;

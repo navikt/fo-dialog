@@ -1,5 +1,3 @@
-import { usingHashRouting } from '../view/utils/utils';
-
 function getCookie(name: string) {
     const re = new RegExp(`${name}=([^;]+)`);
     const match = re.exec(document.cookie);
@@ -45,6 +43,6 @@ export function toJson(response: Response) {
     return response;
 }
 
-export function getApiBasePath(fnr?: string) {
+export function getApiBasePath(_fnr?: string) {
     return '';
 }
