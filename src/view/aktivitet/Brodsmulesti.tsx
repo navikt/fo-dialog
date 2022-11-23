@@ -1,13 +1,13 @@
 import { Undertekst } from 'nav-frontend-typografi';
 import React from 'react';
 
-import { AktivitetStatus, AktivitetTypes, ArenaAktivitetTypes } from '../../utils/aktivitetTypes';
+import { AktivitetStatus, AlleAktivitetTypes } from '../../utils/aktivitetTypes';
 import styles from './Aktivitetskort.module.less';
 import { getStatusText, getTypeText } from './TextUtils';
 
 interface Props {
     status: AktivitetStatus;
-    type: AktivitetTypes | ArenaAktivitetTypes;
+    type: AlleAktivitetTypes;
 }
 
 export default function Brodsmulesti(props: Props) {

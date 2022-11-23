@@ -5,6 +5,7 @@ import { useParams } from 'react-router';
 import { findAktivitet, useAktivitetContext } from '../AktivitetProvider';
 import { useDialogContext } from '../DialogProvider';
 import { useAktivitetId } from '../utils/useAktivitetId';
+import { getAktivitetType } from '../utils/utils';
 import AktivitetIngress from './AktivitetIngress';
 import styles from './Aktivitetskort.module.less';
 import { AktivitetskortInfoBox } from './AktivitetskortInfoBox';
@@ -25,14 +26,14 @@ export function Aktivitetskort() {
         return null;
     }
 
-    const { status, tittel, type, avtalt, id } = aktivitet;
+    const { status, tittel, avtalt, id } = aktivitet;
 
     return (
         <section aria-label="Aktivitet knyttet til dialog" className={styles.aktivitetskort}>
             <AktivitetskortLenke aktivitetId={id} />
-            <Brodsmulesti status={status} type={type} />
+            <Brodsmulesti status={status} type={getAktivitetType(aktivitet)} />
             <Systemtittel>{tittel}</Systemtittel>
-            <AktivitetIngress aktivitetType={type} />
+            <AktivitetIngress aktivitetType={getAktivitetType(aktivitet)} />
             <AktivitetskortInfoBox aktivitet={aktivitet} />
             <AvtaltMarkering hidden={!avtalt} />
         </section>

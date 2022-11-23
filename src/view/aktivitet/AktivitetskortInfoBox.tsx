@@ -3,6 +3,7 @@ import React from 'react';
 import { Aktivitet, AktivitetTypes, ArenaAktivitet, ArenaAktivitetTypes } from '../../utils/aktivitetTypes';
 import BehandlingAktivitet from './BehandlingAktivitet';
 import EgenAktivitet from './EgenAktivitet';
+import EksternAktivitet from './EksternAktivitet';
 import GruppeAktivitet from './GruppeAktivitet';
 import IJobbAktivitet from './IJobbAktivitet';
 import MoteAktivitet from './MoteAktivitet';
@@ -36,6 +37,8 @@ export function AktivitetskortInfoBox(props: Props) {
             return <IJobbAktivitet aktivitet={aktivitet} />;
         case AktivitetTypes.STILLING_FRA_NAV:
             return <StillingFraNavAktivitet aktivitet={aktivitet} />;
+        case AktivitetTypes.EKSTERN_AKTIVITET:
+            return <EksternAktivitet aktivitet={aktivitet} />;
         case ArenaAktivitetTypes.GRUPPEAKTIVITET:
             return <GruppeAktivitet aktivitet={aktivitet} />;
         case ArenaAktivitetTypes.TILTAKSAKTIVITET:
