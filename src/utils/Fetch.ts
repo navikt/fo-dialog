@@ -43,6 +43,6 @@ export function toJson(response: Response) {
     return response;
 }
 
-export function getApiBasePath(_fnr?: string) {
-    return '';
+export function getPathnamePrefix() {
+    return process.env.PUBLIC_URL;
 }

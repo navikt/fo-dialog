@@ -3,7 +3,7 @@ import React, { useCallback, useContext, useMemo, useState } from 'react';
 
 import { Status } from '../api/typer';
 import { loggChangeInDialog } from '../felleskomponenter/logging';
-import { fetchData, fnrQuery, getApiBasePath } from '../utils/Fetch';
+import { fetchData, fnrQuery, getPathnamePrefix } from '../utils/Fetch';
 import { DialogData, NyDialogMeldingData, SistOppdatert } from '../utils/Typer';
 
 export interface DialogDataProviderType {
@@ -23,11 +23,11 @@ export const DialogContext = React.createContext<DialogDataProviderType>({
     dialoger: [],
     hentDialoger: () => Promise.resolve([]),
     pollForChanges: () => Promise.resolve(),
-    nyDialog: (melding: string, tema: string, aktivitetId?: string) => Promise.resolve({} as any),
-    nyHenvendelse: (melding: string, dialog: DialogData) => Promise.resolve(dialog),
-    lesDialog: (dialogId: String) => Promise.resolve({} as any),
-    setFerdigBehandlet: (dialog: DialogData, ferdigBehandlet: boolean) => Promise.resolve(dialog),
-    setVenterPaSvar: (dialog: DialogData, venterPaSvar: boolean) => Promise.resolve(dialog)
+    nyDialog: (_melding: string, _tema: string, _aktivitetId?: string) => Promise.resolve({} as any),
+    nyHenvendelse: (_melding: string, dialog: DialogData) => Promise.resolve(dialog),
+    lesDialog: (_dialogId: string) => Promise.resolve({} as any),
+    setFerdigBehandlet: (dialog: DialogData, _ferdigBehandlet: boolean) => Promise.resolve(dialog),
+    setVenterPaSvar: (dialog: DialogData, _venterPaSvar: boolean) => Promise.resolve(dialog)
 });
 
 export const useDialogContext = () => useContext(DialogContext);
@@ -48,7 +48,7 @@ export function useDialogDataProvider(fnr?: string): DialogDataProviderType {
     const [state, setState] = useState(initDialogState);
     const sistOppdatert = state.sistOppdatert;
 
-    const apiBasePath = getApiBasePath(fnr);
+    const apiBasePath = getPathnamePrefix();
     const query = fnrQuery(fnr);
 
     const baseUrl = useMemo(() => `${apiBasePath}/veilarbdialog/api/dialog${query}`, [apiBasePath, query]);
@@ -136,13 +136,13 @@ export function useDialogDataProvider(fnr?: string): DialogDataProviderType {
             }).then((dialog) => {
                 if (!!dialogId) {
                     updateDialogInDialoger(dialog);
-                    return dialog;
+                } else {
+                    setState((prevState) => ({
+                        ...prevState,
+                        status: Status.OK,
+                        dialoger: [...prevState.dialoger, dialog]
+                    }));
                 }
-                setState((prevState) => ({
-                    ...prevState,
-                    status: Status.OK,
-                    dialoger: [...prevState.dialoger, dialog]
-                }));
                 return dialog;
             });
         },

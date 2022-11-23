@@ -32,7 +32,9 @@ interface ViewContextType {
 
 export const ViewContext = React.createContext<ViewContextType>({
     viewState: initalState,
-    setViewState: () => {}
+    setViewState: () => {
+        /* do nothing */
+    }
 });
 
 export const useFnrContext = () => useContext(FNRContext);
@@ -61,7 +63,7 @@ export function Provider(props: Props) {
 
     const veilederNavn = useFetchVeilederNavn(erVeileder);
 
-    const { data: bruker, status: brukerstatus }: BrukerDataProviderType = useBrukerDataProvider(fnr);
+    const { data: bruker, status: brukerstatus }: BrukerDataProviderType = useBrukerDataProvider();
     const oppfolgingDataProvider = useOppfolgingDataProvider(fnr);
     const { status: oppfolgingstatus, hentOppfolging } = oppfolgingDataProvider;
 

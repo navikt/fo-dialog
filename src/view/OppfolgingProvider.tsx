@@ -1,7 +1,7 @@
 import React, { useCallback, useContext, useMemo, useState } from 'react';
 
 import { Status, isReloading } from '../api/typer';
-import { fetchData, fnrQuery, getApiBasePath } from '../utils/Fetch';
+import { fetchData, fnrQuery, getPathnamePrefix } from '../utils/Fetch';
 import { OppfolgingData } from '../utils/Typer';
 
 export interface OppfolgingDataProviderType {
@@ -30,7 +30,7 @@ export const useOppfolgingContext = () => useContext(OppfolgingContext);
 export const useOppfolgingDataProvider = (fnr?: string) => {
     const [state, setState] = useState<OppfolgingState>(initOppfolgingState);
 
-    const apiBasePath = getApiBasePath(fnr);
+    const apiBasePath = getPathnamePrefix();
     const query = fnrQuery(fnr);
 
     const oppfolgingUrl = useMemo(

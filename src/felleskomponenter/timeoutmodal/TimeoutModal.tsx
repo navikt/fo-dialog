@@ -6,7 +6,7 @@ import { Normaltekst, Systemtittel } from 'nav-frontend-typografi';
 import Veilederpanel from 'nav-frontend-veilederpanel';
 import React, { useContext, useEffect, useState } from 'react';
 
-import { getApiBasePath } from '../../utils/Fetch';
+import { getPathnamePrefix } from '../../utils/Fetch';
 import { UserInfoContext } from '../../view/BrukerProvider';
 import { getContextPath } from '../../view/utils/utils';
 import { hiddenIfHoc } from '../HiddenIfHoc';
@@ -27,12 +27,11 @@ function getHeaders() {
 }
 
 interface Props {
-    fnr?: string;
     visDemo?: boolean;
 }
 
 function TimeoutModal(props: Props) {
-    const { visDemo, fnr } = props;
+    const { visDemo } = props;
     const [skalVises, setSkalVises] = useState(false);
 
     const userInfo = useContext(UserInfoContext);
@@ -44,7 +43,7 @@ function TimeoutModal(props: Props) {
         : window.location.origin + '/arbeid/dialog';
 
     useEffect(() => {
-        fetch(getApiBasePath(fnr) + '/api/auth', {
+        fetch(getPathnamePrefix() + '/api/auth', {
             credentials: 'same-origin',
             headers: getHeaders()
         })
@@ -66,7 +65,7 @@ function TimeoutModal(props: Props) {
             .catch((e) => {
                 console.log('catch', e);
             });
-    }, [fnr, brukerId, erVeileder]);
+    }, [brukerId, erVeileder]);
 
     const apen = skalVises || !!visDemo;
 

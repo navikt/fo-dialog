@@ -24,6 +24,8 @@ import oppfolging from './Oppfolging';
 import { getSistOppdatert } from './SistOppdatert';
 import { veilederMe } from './Veileder';
 
+const apiPathnamePrefix = '/veilarbdialog/api';
+
 const loggingMiddleware: Middleware = (request, response) => {
     // tslint:disable
     console.groupCollapsed(`${request.method} ${request.url}`);
@@ -74,52 +76,38 @@ function fail() {
         detaljer: 'et object med noe rart'
     });
 }
-
-mock.post('/veilarboppfolging/api/oppfolging/settDigital', {});
-
-mock.get('/veilarbdialog/api/kladd', kladder);
-mock.post(
-    '/veilarbdialog/api/kladd',
-    ResponseUtils.combine(ResponseUtils.statusCode(204), ({ body }) => oppdaterKladd(body))
-);
-
-mock.get('/veilarbdialog/api/dialog', harDialogFeilerSkruddPa() ? fail() : dialoger);
-
-mock.post(
-    '/veilarbdialog/api/dialog',
-    harNyDialogEllerSendMeldingFeilerSkruddPa() ? fail() : ({ body }) => opprettEllerOppdaterDialog(body)
-);
-
-mock.put('/veilarbdialog/api/dialog/:dialogId/les', ({ pathParams }) => lesDialog(pathParams.dialogId));
-
-mock.put('/veilarbdialog/api/dialog/:dialogId/venter_pa_svar/:bool', ({ pathParams }) =>
+mock.get(`${apiPathnamePrefix}/kladd`, kladder);
+mock.get(`${apiPathnamePrefix}/dialog`, harDialogFeilerSkruddPa() ? fail() : dialoger);
+mock.put(`${apiPathnamePrefix}/dialog/:dialogId/les`, ({ pathParams }) => lesDialog(pathParams.dialogId));
+mock.put(`${apiPathnamePrefix}/dialog/:dialogId/venter_pa_svar/:bool`, ({ pathParams }) =>
     setVenterPaSvar(pathParams.dialogId, pathParams.bool === 'true')
 );
-mock.put('/veilarbdialog/api/dialog/:dialogId/ferdigbehandlet/:bool', ({ pathParams }) =>
+mock.put(`${apiPathnamePrefix}/dialog/:dialogId/ferdigbehandlet/:bool`, ({ pathParams }) =>
     setFerdigBehandlet(pathParams.dialogId, pathParams.bool === 'true')
 );
-
-mock.post('/veilarbdialog/api/logger/event', ({ body }) => {
+mock.get(`${apiPathnamePrefix}/dialog/sistOppdatert`, getSistOppdatert());
+mock.post(
+    `${apiPathnamePrefix}/kladd`,
+    ResponseUtils.combine(ResponseUtils.statusCode(204), ({ body }) => oppdaterKladd(body))
+);
+mock.post(
+    `${apiPathnamePrefix}/dialog`,
+    harNyDialogEllerSendMeldingFeilerSkruddPa() ? fail() : ({ body }) => opprettEllerOppdaterDialog(body)
+);
+mock.post(`${apiPathnamePrefix}/logger/event`, ({ body }) => {
     const event = body;
     console.log('Event', event.name, 'Fields:', event.fields, 'Tags:', event.tags);
     return {};
 });
 
-mock.get('/veilarbdialog/api/dialog/sistOppdatert', getSistOppdatert());
-
-mock.get('/veilarboppfolging/api/oppfolging/me', bruker());
-
-mock.get('/veilarboppfolging/api/oppfolging', oppfolging);
-
-mock.get('/veilarbaktivitet/api/aktivitet', harAktivitetFeilerSkruddPa() ? fail() : aktiviteter);
-
-mock.get('/veilarbaktivitet/api/arena/tiltak', harArenaaktivitetFeilerSkruddPa() ? fail() : arenaAktiviteter);
-
-mock.get('/api/auth', { remainingSeconds: 60 * 60 });
-
-mock.get('/veilarbveileder/api/veileder/me', veilederMe);
-
+mock.get(`/veilarboppfolging/api/oppfolging/me`, bruker());
+mock.get(`/veilarboppfolging/api/oppfolging`, oppfolging);
+mock.get(`/veilarbaktivitet/api/aktivitet`, harAktivitetFeilerSkruddPa() ? fail() : aktiviteter);
+mock.get(`/veilarbaktivitet/api/arena/tiltak`, harArenaaktivitetFeilerSkruddPa() ? fail() : arenaAktiviteter);
+mock.get(`/veilarbveileder/api/veileder/me`, veilederMe);
 mock.get(
-    '/veilarbperson/api/person/:fnr/harNivaa4',
+    `/veilarbperson/api/person/:fnr/harNivaa4`,
     harNivaa4Fieler() ? fail() : ({ pathParams }) => harNivaa4Data(pathParams.fnr)
 );
+mock.get(`/api/auth`, { remainingSeconds: 60 * 60 });
+mock.post(`/veilarboppfolging/api/oppfolging/settDigital`, {});

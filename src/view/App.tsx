@@ -40,7 +40,7 @@ function App(props: Props) {
                         <AppBody />
                         <UppdateEventHandler />
                     </Provider>
-                    <TimeoutModal hidden={!!fnr} fnr={fnr} />
+                    <TimeoutModal hidden={!!fnr} />
                 </div>
             </div>
             <PageViewMetricCollector />
