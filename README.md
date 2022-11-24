@@ -10,7 +10,7 @@ Dette prosjektet er satt opp med [Create React App](https://github.com/facebook/
 # Installere avhengigheter
 npm i
 
-# Bygge produksjons kode
+# Bygge produksjonskode
 npm build
 
 # Lokal utvikling med mock
