@@ -1,5 +1,6 @@
 import FetchMock, { Middleware, MiddlewareUtils, ResponseData, ResponseUtils } from 'yet-another-fetch-mock';
 
+import { getPathnamePrefix } from '../utils/Fetch';
 import aktiviteter from './Aktivitet';
 import { arenaAktiviteter } from './Arena';
 import bruker from './Bruker';
@@ -24,6 +25,7 @@ import oppfolging from './Oppfolging';
 import { getSistOppdatert } from './SistOppdatert';
 import { veilederMe } from './Veileder';
 
+const pathnamePrefix = getPathnamePrefix();
 const apiPathnamePrefix = '/veilarbdialog/api';
 
 const loggingMiddleware: Middleware = (request, response) => {
@@ -76,38 +78,43 @@ function fail() {
         detaljer: 'et object med noe rart'
     });
 }
-mock.get(`${apiPathnamePrefix}/kladd`, kladder);
-mock.get(`${apiPathnamePrefix}/dialog`, harDialogFeilerSkruddPa() ? fail() : dialoger);
-mock.put(`${apiPathnamePrefix}/dialog/:dialogId/les`, ({ pathParams }) => lesDialog(pathParams.dialogId));
-mock.put(`${apiPathnamePrefix}/dialog/:dialogId/venter_pa_svar/:bool`, ({ pathParams }) =>
+mock.get(`${pathnamePrefix}${apiPathnamePrefix}/kladd`, kladder);
+mock.get(`${pathnamePrefix}${apiPathnamePrefix}/dialog`, harDialogFeilerSkruddPa() ? fail() : dialoger);
+mock.put(`${pathnamePrefix}${apiPathnamePrefix}/dialog/:dialogId/les`, ({ pathParams }) =>
+    lesDialog(pathParams.dialogId)
+);
+mock.put(`${pathnamePrefix}${apiPathnamePrefix}/dialog/:dialogId/venter_pa_svar/:bool`, ({ pathParams }) =>
     setVenterPaSvar(pathParams.dialogId, pathParams.bool === 'true')
 );
-mock.put(`${apiPathnamePrefix}/dialog/:dialogId/ferdigbehandlet/:bool`, ({ pathParams }) =>
+mock.put(`${pathnamePrefix}${apiPathnamePrefix}/dialog/:dialogId/ferdigbehandlet/:bool`, ({ pathParams }) =>
     setFerdigBehandlet(pathParams.dialogId, pathParams.bool === 'true')
 );
-mock.get(`${apiPathnamePrefix}/dialog/sistOppdatert`, getSistOppdatert());
+mock.get(`${pathnamePrefix}${apiPathnamePrefix}/dialog/sistOppdatert`, getSistOppdatert());
 mock.post(
-    `${apiPathnamePrefix}/kladd`,
+    `${pathnamePrefix}${apiPathnamePrefix}/kladd`,
     ResponseUtils.combine(ResponseUtils.statusCode(204), ({ body }) => oppdaterKladd(body))
 );
 mock.post(
-    `${apiPathnamePrefix}/dialog`,
+    `${pathnamePrefix}${apiPathnamePrefix}/dialog`,
     harNyDialogEllerSendMeldingFeilerSkruddPa() ? fail() : ({ body }) => opprettEllerOppdaterDialog(body)
 );
-mock.post(`${apiPathnamePrefix}/logger/event`, ({ body }) => {
+mock.post(`${pathnamePrefix}${apiPathnamePrefix}/logger/event`, ({ body }) => {
     const event = body;
     console.log('Event', event.name, 'Fields:', event.fields, 'Tags:', event.tags);
     return {};
 });
 
-mock.get(`/veilarboppfolging/api/oppfolging/me`, bruker());
-mock.get(`/veilarboppfolging/api/oppfolging`, oppfolging);
-mock.get(`/veilarbaktivitet/api/aktivitet`, harAktivitetFeilerSkruddPa() ? fail() : aktiviteter);
-mock.get(`/veilarbaktivitet/api/arena/tiltak`, harArenaaktivitetFeilerSkruddPa() ? fail() : arenaAktiviteter);
-mock.get(`/veilarbveileder/api/veileder/me`, veilederMe);
+mock.get(`${pathnamePrefix}/veilarboppfolging/api/oppfolging/me`, bruker());
+mock.get(`${pathnamePrefix}/veilarboppfolging/api/oppfolging`, oppfolging);
+mock.get(`${pathnamePrefix}/veilarbaktivitet/api/aktivitet`, harAktivitetFeilerSkruddPa() ? fail() : aktiviteter);
 mock.get(
-    `/veilarbperson/api/person/:fnr/harNivaa4`,
+    `${pathnamePrefix}/veilarbaktivitet/api/arena/tiltak`,
+    harArenaaktivitetFeilerSkruddPa() ? fail() : arenaAktiviteter
+);
+mock.get(`${pathnamePrefix}/veilarbveileder/api/veileder/me`, veilederMe);
+mock.get(
+    `${pathnamePrefix}/veilarbperson/api/person/:fnr/harNivaa4`,
     harNivaa4Fieler() ? fail() : ({ pathParams }) => harNivaa4Data(pathParams.fnr)
 );
-mock.get(`/api/auth`, { remainingSeconds: 60 * 60 });
-mock.post(`/veilarboppfolging/api/oppfolging/settDigital`, {});
+mock.get(`${pathnamePrefix}/api/auth`, { remainingSeconds: 60 * 60 });
+mock.post(`${pathnamePrefix}/veilarboppfolging/api/oppfolging/settDigital`, {});
