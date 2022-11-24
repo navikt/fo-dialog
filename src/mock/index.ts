@@ -98,7 +98,7 @@ mock.post(
     `${pathnamePrefix}${apiPathnamePrefix}/dialog`,
     harNyDialogEllerSendMeldingFeilerSkruddPa() ? fail() : ({ body }) => opprettEllerOppdaterDialog(body)
 );
-mock.post(`${pathnamePrefix}${apiPathnamePrefix}/logger/event`, ({ body }) => {
+mock.post(`${apiPathnamePrefix}/logger/event`, ({ body }) => {
     const event = body;
     console.log('Event', event.name, 'Fields:', event.fields, 'Tags:', event.tags);
     return {};
