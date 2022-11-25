@@ -1,5 +1,7 @@
 import { JSONObject } from 'yet-another-fetch-mock';
 
+import { AktivitetTypes, EksternAktivitetTypes } from '../utils/aktivitetTypes';
+
 const moteAktivitet = {
     adresse: 'Nordre strandvei 56',
     ansettelsesforhold: null,
@@ -351,6 +353,28 @@ const stillingFraNav2 = {
         soknadsstatus: 'VENTER'
     }
 };
+const eksternAktivitet = {
+    versjon: '5345436',
+    id: 'EKSTERNAKTIVITET_1',
+    tittel: 'Asd eksternaktivitet 123',
+    type: AktivitetTypes.EKSTERN_AKTIVITET,
+    fraDato: '2019-08-14T00:00:00+02:00',
+    lenke: null,
+    beskrivelse: 'Ekstern aktivitet beskrivelse aaaaa aaaa aa.',
+    status: 'GJENNOMFORES',
+    opprettetDato: '2020-05-31T10:46:51.622+01:00',
+    endretDato: '2020-09-30T10:46:51.622+01:00',
+    endretAv: 'z990207',
+    historisk: false,
+    lagtInnAv: 'NAV',
+    transaksjonsType: 'STATUS_ENDRET',
+    eksternAktivitet: {
+        type: EksternAktivitetTypes.MIDLERTIDIG_LONNSTILSKUDD,
+        a: 123,
+        b: true,
+        c: 'test'
+    }
+};
 
 const aktiviteter = {
     aktiviteter: [
@@ -362,7 +386,8 @@ const aktiviteter = {
         sokeavtaleAktivitet2,
         ijobbAktivitet,
         stillingFraNav,
-        stillingFraNav2
+        stillingFraNav2,
+        eksternAktivitet
     ]
 };
 

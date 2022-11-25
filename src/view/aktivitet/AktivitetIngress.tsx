@@ -1,11 +1,11 @@
 import { Undertekst } from 'nav-frontend-typografi';
 import React from 'react';
 
-import { AktivitetTypes, ArenaAktivitetTypes } from '../../utils/aktivitetTypes';
+import { AktivitetTypes, AlleAktivitetTypes, ArenaAktivitetTypes } from '../../utils/aktivitetTypes';
 import styles from './Aktivitetskort.module.less';
 
 interface Props {
-    aktivitetType: AktivitetTypes | ArenaAktivitetTypes;
+    aktivitetType: AlleAktivitetTypes;
 }
 
 export default function AktivitetIngress(props: Props) {
@@ -16,7 +16,7 @@ export default function AktivitetIngress(props: Props) {
     );
 }
 
-function getAktivitetIngress(type: AktivitetTypes | ArenaAktivitetTypes): string {
+function getAktivitetIngress(type: AlleAktivitetTypes): string {
     switch (type) {
         case AktivitetTypes.MOTE:
             return 'NAV ønsker et møte med deg. Du må gi beskjed så raskt som mulig hvis tidspunktet ikke passer.';

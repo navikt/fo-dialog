@@ -8,8 +8,14 @@ export enum AktivitetTypes {
     BEHANDLING = 'BEHANDLING',
     MOTE = 'MOTE',
     SAMTALEREFERAT = 'SAMTALEREFERAT',
-    STILLING_FRA_NAV = 'STILLING_FRA_NAV'
+    STILLING_FRA_NAV = 'STILLING_FRA_NAV',
+    EKSTERN_AKTIVITET = 'EKSTERNAKTIVITET'
 }
+
+export type AlleAktivitetTypes =
+    | Exclude<AktivitetTypes, AktivitetTypes.EKSTERN_AKTIVITET>
+    | ArenaAktivitetTypes
+    | EksternAktivitetTypes;
 
 export enum KanalTypes {
     OPPMOTE = 'OPPMOTE',
@@ -118,8 +124,20 @@ export interface Aktivitet {
     referat: StringOrNull;
     erReferatPublisert: boolean;
 
-    //stillingFraNav
+    // stillingFraNav
     stillingFraNavData?: StillingFraNavData;
+
+    // eksternaktivitet
+    eksternAktivitet?: EksternAktivitetData;
+}
+
+export interface EksternAktivitetData {
+    type: EksternAktivitetTypes;
+}
+
+export enum EksternAktivitetTypes {
+    ARENA_TILTAK = 'ARENA_TILTAK',
+    MIDLERTIDIG_LONNSTILSKUDD = 'MIDLERTIDIG_LONNSTILSKUDD'
 }
 
 export enum ArenaAktivitetTypes {

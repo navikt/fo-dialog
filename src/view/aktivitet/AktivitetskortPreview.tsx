@@ -12,7 +12,7 @@ import { dialogHeaderID2 } from '../dialog/DialogHeader';
 import { useFnrContext } from '../Provider';
 import { aktivitetLenke, visAktivitetsplan } from './AktivitetskortLinke';
 import styles from './AktivitetskortPreview.module.less';
-import { getTypeText } from './TextUtils';
+import { getTypeTextByAktivitet } from './TextUtils';
 
 const UndertekstVisible = visibleIfHoc(Undertekst);
 
@@ -32,7 +32,7 @@ export function AktivitetskortPreview(props: Props) {
         return null;
     }
 
-    const typeTekst = getTypeText(aktivitet.type);
+    const typeTekst = getTypeTextByAktivitet(aktivitet);
     const infotekst = getInfoText(aktivitet);
 
     return (
@@ -80,6 +80,7 @@ export function getInfoText(aktivitet: Aktivitet | ArenaAktivitet): string | nul
             return aktivitet.ansettelsesforhold;
         case AktivitetTypes.STILLING_FRA_NAV:
             return aktivitet.beskrivelse;
+        case AktivitetTypes.EKSTERN_AKTIVITET:
         case ArenaAktivitetTypes.TILTAKSAKTIVITET:
         case ArenaAktivitetTypes.UTDANNINGSAKTIVITET:
         case ArenaAktivitetTypes.GRUPPEAKTIVITET:

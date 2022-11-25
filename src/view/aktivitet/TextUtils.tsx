@@ -2,8 +2,10 @@ import {
     Aktivitet,
     AktivitetStatus,
     AktivitetTypes,
+    AlleAktivitetTypes,
     ArenaAktivitet,
-    ArenaAktivitetTypes
+    ArenaAktivitetTypes,
+    EksternAktivitetTypes
 } from '../../utils/aktivitetTypes';
 
 export function getStatusText(status: AktivitetStatus): string {
@@ -21,7 +23,14 @@ export function getStatusText(status: AktivitetStatus): string {
     }
 }
 
-export function getTypeText(type: AktivitetTypes | ArenaAktivitetTypes): string {
+export function getTypeTextByAktivitet(aktivitet: Aktivitet | ArenaAktivitet): string {
+    if (aktivitet.type === AktivitetTypes.EKSTERN_AKTIVITET) {
+        return getTypeText(aktivitet.eksternAktivitet?.type!!);
+    }
+    return getTypeText(aktivitet.type);
+}
+
+export function getTypeText(type: AlleAktivitetTypes): string {
     switch (type) {
         case AktivitetTypes.MOTE:
             return 'Møte med NAV';
@@ -45,6 +54,10 @@ export function getTypeText(type: AktivitetTypes | ArenaAktivitetTypes): string 
             return 'Gruppeaktivitet';
         case ArenaAktivitetTypes.UTDANNINGSAKTIVITET:
             return 'Utdanning';
+        case EksternAktivitetTypes.ARENA_TILTAK:
+            return 'Tiltak gjennom NAV';
+        case EksternAktivitetTypes.MIDLERTIDIG_LONNSTILSKUDD:
+            return 'Avtale midlertidig lønnstilskudd';
     }
 }
 
@@ -62,6 +75,8 @@ export function getDialogTittel(aktivitet: Aktivitet | ArenaAktivitet | undefine
             return `Egenaktivitet: ${tittel}`;
         case AktivitetTypes.MOTE:
             return `Møte: ${tittel}`;
+        case AktivitetTypes.EKSTERN_AKTIVITET:
+            return `${getTypeText((aktivitet as Aktivitet).eksternAktivitet!!.type)}: ${tittel}`;
         default:
             return `${getTypeText(type)}: ${tittel}`;
     }
