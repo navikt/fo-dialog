@@ -43,6 +43,6 @@ export function toJson(response: Response) {
     return response;
 }
 
-export function getPathnamePrefix() {
-    return process.env.PUBLIC_URL;
+export function getPathnamePrefix(erVeileder?: boolean) {
+    return erVeileder ? '' : process.env.PUBLIC_URL;
 }

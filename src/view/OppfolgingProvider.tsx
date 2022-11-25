@@ -30,7 +30,7 @@ export const useOppfolgingContext = () => useContext(OppfolgingContext);
 export const useOppfolgingDataProvider = (fnr?: string) => {
     const [state, setState] = useState<OppfolgingState>(initOppfolgingState);
 
-    const apiBasePath = getPathnamePrefix();
+    const apiBasePath = getPathnamePrefix(!!fnr);
     const query = fnrQuery(fnr);
 
     const oppfolgingUrl = useMemo(

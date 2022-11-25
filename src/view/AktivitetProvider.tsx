@@ -71,7 +71,7 @@ interface AktivitetResponse {
 export const useAktivitetDataProvider = (fnr?: string): AktivitetDataProviderType => {
     const [state, setState] = useState<AktivitetState>(initAktivitetState);
 
-    const pathnamePrefix = getPathnamePrefix();
+    const pathnamePrefix = getPathnamePrefix(!!fnr);
     const query = fnrQuery(fnr);
 
     const aktivitetUrl = useMemo(

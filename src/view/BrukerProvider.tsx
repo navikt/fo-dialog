@@ -17,10 +17,10 @@ const initBrukerState: BrukerDataProviderType = {
 export const UserInfoContext = React.createContext<Bruker | null>(null);
 export const useUserInfoContext = () => useContext(UserInfoContext);
 
-export const useBrukerDataProvider = (): BrukerDataProviderType => {
+export const useBrukerDataProvider = (fnr?: string): BrukerDataProviderType => {
     const [state, setState] = useState<BrukerDataProviderType>(initBrukerState);
 
-    const apiBasePath = getPathnamePrefix();
+    const apiBasePath = getPathnamePrefix(!!fnr);
     const apiUrl = useMemo(() => `${apiBasePath}/veilarboppfolging/api/oppfolging/me`, [apiBasePath]);
 
     useEffect(() => {
