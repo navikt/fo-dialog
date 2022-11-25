@@ -1,3 +1,5 @@
+import * as process from 'process';
+
 function getCookie(name: string) {
     const re = new RegExp(`${name}=([^;]+)`);
     const match = re.exec(document.cookie);
@@ -44,5 +46,5 @@ export function toJson(response: Response) {
 }
 
 export function getPathnamePrefix(erVeileder?: boolean) {
-    return erVeileder ? '' : process.env.PUBLIC_URL;
+    return erVeileder && process.env.REACT_APP_USE_HASH_ROUTER != 'true' ? '' : process.env.PUBLIC_URL;
 }
