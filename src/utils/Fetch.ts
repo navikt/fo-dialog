@@ -46,5 +46,5 @@ export function toJson(response: Response) {
 }
 
 export function getPathnamePrefix(erVeileder?: boolean) {
-    return erVeileder && process.env.REACT_APP_USE_HASH_ROUTER != 'true' ? '' : process.env.PUBLIC_URL;
+    return erVeileder && process.env.REACT_APP_USE_HASH_ROUTER !== 'true' ? '' : process.env.PUBLIC_URL;
 }
