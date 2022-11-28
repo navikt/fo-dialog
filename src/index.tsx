@@ -37,10 +37,11 @@ window.addEventListener(
 );
 
 const gotoStartTestPage = (fnr?: string) => {
+    console.log('PUBLIC_URL', process.env.PUBLIC_URL);
     if (usingHashRouting) {
         window.history.replaceState({}, '', `${process.env.PUBLIC_URL}/#/${fnr ?? ''}`);
     } else {
-        window.history.replaceState({}, '', getBasename(fnr));
+        // window.history.replaceState({}, '', getBasename(fnr));
     }
 };
 
