@@ -1,6 +1,6 @@
 import FetchMock, { Middleware, MiddlewareUtils, ResponseData, ResponseUtils } from 'yet-another-fetch-mock';
 
-import { getPathnamePrefix } from '../utils/Fetch';
+import { baseApiPath } from '../utils/UseApiBasePath';
 import aktiviteter from './Aktivitet';
 import { arenaAktiviteter } from './Arena';
 import bruker from './Bruker';
@@ -25,7 +25,7 @@ import oppfolging from './Oppfolging';
 import { getSistOppdatert } from './SistOppdatert';
 import { veilederMe } from './Veileder';
 
-const pathnamePrefix = getPathnamePrefix();
+const pathnamePrefix = baseApiPath(true);
 const apiPathnamePrefix = '/veilarbdialog/api';
 
 const loggingMiddleware: Middleware = (request, response) => {
