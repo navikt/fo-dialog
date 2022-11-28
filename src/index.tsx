@@ -9,7 +9,7 @@ import { initAmplitude } from './metrics/amplitude-utils';
 import DemoBanner from './mock/demo/DemoBanner';
 import { erEksternBruker } from './mock/demo/sessionstorage';
 import App from './view/App';
-import { getBasename, usingHashRouting } from './view/utils/utils';
+import { usingHashRouting } from './view/utils/utils';
 
 const modalAlly = document.getElementById('modal-a11y-wrapper');
 const root = document.getElementById('root');
