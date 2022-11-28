@@ -117,6 +117,10 @@ export function Provider(props: Props) {
         console.log({ dialogstatus });
         return (
             <>
+                <p>rukerstatus: {brukerstatus}</p>
+                <p>ppfolgingstatus: {oppfolgingstatus}</p>
+                <p>ialogstatus: {dialogstatus}</p>
+
                 <AlertStripeFeil className={styles.feil}>
                     Noe gikk dessverre galt med systemet. Prøv igjen senere.
                 </AlertStripeFeil>
