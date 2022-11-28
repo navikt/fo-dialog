@@ -37,6 +37,7 @@ export interface DialogState {
     status: Status;
     sistOppdatert: Date;
     dialoger: DialogData[];
+    error?: string;
 }
 
 const initDialogState: DialogState = {
@@ -82,8 +83,9 @@ export function useDialogDataProvider(fnr?: string): DialogDataProviderType {
                 setState({ status: Status.OK, dialoger: dialoger, sistOppdatert: new Date() });
                 return dialoger;
             })
-            .catch(() => {
-                setState((prevState) => ({ ...prevState, status: Status.ERROR }));
+            .catch((e) => {
+                console.log(`hentDialoger: e:${e}`);
+                setState((prevState) => ({ ...prevState, status: Status.ERROR, error: e }));
                 return [];
             });
     }, [baseUrl, setState]);
