@@ -78,13 +78,15 @@ export function useDialogDataProvider(fnr?: string): DialogDataProviderType {
             ...prevState,
             status: isDialogReloading(prevState.status) ? Status.RELOADING : Status.PENDING
         }));
+        console.log('Blir kallt');
         return fetchData<DialogData[]>(baseUrl)
             .then((dialoger) => {
                 setState({ status: Status.OK, dialoger: dialoger, sistOppdatert: new Date() });
+                console.log(`Har kallt, det gikk bra: ${dialoger}`);
                 return dialoger;
             })
             .catch((e) => {
-                console.log(`hentDialoger: e:${e}`);
+                console.log(`hentDialoger, har kallt, det gikk dårlig: e:${e}`);
                 setState((prevState) => ({ ...prevState, status: Status.ERROR, error: e }));
                 return [];
             });
