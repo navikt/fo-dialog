@@ -112,10 +112,15 @@ export function Provider(props: Props) {
     ) {
         return <NavFrontendSpinner />;
     } else if (hasError(brukerstatus) || hasError(oppfolgingstatus) || hasDialogError(dialogstatus)) {
+        console.log(brukerstatus);
+        console.log(oppfolgingstatus);
+        console.log(dialogstatus);
         return (
-            <AlertStripeFeil className={styles.feil}>
-                Noe gikk dessverre galt med systemet. Prøv igjen senere.
-            </AlertStripeFeil>
+            <>
+                <AlertStripeFeil className={styles.feil}>
+                    Noe gikk dessverre galt med systemet. Prøv igjen senere.
+                </AlertStripeFeil>
+            </>
         );
     }
 
