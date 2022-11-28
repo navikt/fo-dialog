@@ -67,7 +67,7 @@ function TimeoutModal(props: Props) {
             .catch((e) => {
                 console.log('catch', e);
             });
-    }, [brukerId, erVeileder]);
+    }, [brukerId, erVeileder, baseApiPath]);
 
     const apen = skalVises || !!visDemo;
 
