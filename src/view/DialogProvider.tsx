@@ -5,7 +5,7 @@ import { Status } from '../api/typer';
 import { loggChangeInDialog } from '../felleskomponenter/logging';
 import { fetchData, fnrQuery } from '../utils/Fetch';
 import { DialogData, NyDialogMeldingData, SistOppdatert } from '../utils/Typer';
-import { baseApiPath } from '../utils/UseApiBasePath';
+import useApiBasePath from '../utils/UseApiBasePath';
 
 export interface DialogDataProviderType {
     status: Status;
@@ -49,7 +49,7 @@ export function useDialogDataProvider(fnr?: string): DialogDataProviderType {
     const [state, setState] = useState(initDialogState);
     const sistOppdatert = state.sistOppdatert;
 
-    const apiBasePath = baseApiPath(!!fnr);
+    const apiBasePath = useApiBasePath();
     const query = fnrQuery(fnr);
 
     const baseUrl = useMemo(() => `${apiBasePath}/veilarbdialog/api/dialog${query}`, [apiBasePath, query]);

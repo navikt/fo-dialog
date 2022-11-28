@@ -3,7 +3,7 @@ import React, { useCallback, useContext, useMemo, useState } from 'react';
 import { fetchData, fnrQuery } from '../utils/Fetch';
 import { valueOrNull } from '../utils/TypeHelper';
 import { KladdData, StringOrNull } from '../utils/Typer';
-import { baseApiPath } from '../utils/UseApiBasePath';
+import useApiBasePath from '../utils/UseApiBasePath';
 
 enum Status {
     INITIAL,
@@ -58,7 +58,7 @@ const initKladdState: KladdState = {
 export function useKladdDataProvider(fnr?: string): KladdDataProviderType {
     const [state, setState] = useState(initKladdState);
 
-    const apiBasePath = baseApiPath(!!fnr);
+    const apiBasePath = useApiBasePath();
     const query = fnrQuery(fnr);
 
     const baseUrl = useMemo(() => `${apiBasePath}/veilarbdialog/api/kladd${query}`, [apiBasePath, query]);

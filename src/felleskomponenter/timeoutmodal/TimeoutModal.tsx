@@ -6,7 +6,7 @@ import { Normaltekst, Systemtittel } from 'nav-frontend-typografi';
 import Veilederpanel from 'nav-frontend-veilederpanel';
 import React, { useContext, useEffect, useState } from 'react';
 
-import { baseApiPath } from '../../utils/UseApiBasePath';
+import useApiBasePath from '../../utils/UseApiBasePath';
 import { UserInfoContext } from '../../view/BrukerProvider';
 import { getContextPath } from '../../view/utils/utils';
 import { hiddenIfHoc } from '../HiddenIfHoc';
@@ -34,6 +34,8 @@ function TimeoutModal(props: Props) {
     const { visDemo } = props;
     const [skalVises, setSkalVises] = useState(false);
 
+    const baseApiPath = useApiBasePath();
+
     const userInfo = useContext(UserInfoContext);
     const erVeileder = userInfo?.erVeileder ?? 'ukjent';
     const brukerId = userInfo?.id ?? 'ukjent';
@@ -43,7 +45,7 @@ function TimeoutModal(props: Props) {
         : window.location.origin + '/arbeid/dialog';
 
     useEffect(() => {
-        fetch(baseApiPath(!!erVeileder) + '/api/auth', {
+        fetch(baseApiPath + '/api/auth', {
             credentials: 'same-origin',
             headers: getHeaders()
         })

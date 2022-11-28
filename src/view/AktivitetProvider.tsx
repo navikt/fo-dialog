@@ -4,7 +4,7 @@ import { Status, hasError, isReloading } from '../api/typer';
 import { Aktivitet, ArenaAktivitet } from '../utils/aktivitetTypes';
 import { fetchData, fnrQuery } from '../utils/Fetch';
 import { StringOrNull } from '../utils/Typer';
-import { baseApiPath } from '../utils/UseApiBasePath';
+import useApiBasePath from '../utils/UseApiBasePath';
 
 export type MaybeAktivitet = Aktivitet | ArenaAktivitet | undefined;
 
@@ -72,7 +72,7 @@ interface AktivitetResponse {
 export const useAktivitetDataProvider = (fnr?: string): AktivitetDataProviderType => {
     const [state, setState] = useState<AktivitetState>(initAktivitetState);
 
-    const pathnamePrefix = baseApiPath(!!fnr);
+    const pathnamePrefix = useApiBasePath();
     const query = fnrQuery(fnr);
 
     const aktivitetUrl = useMemo(
