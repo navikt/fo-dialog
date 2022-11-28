@@ -8,6 +8,7 @@ import useApiBasePath from '../utils/UseApiBasePath';
 export interface BrukerDataProviderType {
     data: Bruker | null;
     status: Status;
+    error?: string;
 }
 
 const initBrukerState: BrukerDataProviderType = {
@@ -36,9 +37,10 @@ export const useBrukerDataProvider = (): BrukerDataProviderType => {
                     status: Status.OK
                 });
             })
-            .catch(() => {
+            .catch((e) => {
                 setState((prevState) => ({
                     ...prevState,
+                    error: e,
                     status: Status.ERROR
                 }));
             });
@@ -46,6 +48,7 @@ export const useBrukerDataProvider = (): BrukerDataProviderType => {
 
     return {
         data: state.data,
-        status: state.status
+        status: state.status,
+        error: state.error
     };
 };

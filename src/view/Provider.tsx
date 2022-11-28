@@ -63,7 +63,7 @@ export function Provider(props: Props) {
 
     const veilederNavn = useFetchVeilederNavn(erVeileder);
 
-    const { data: bruker, status: brukerstatus }: BrukerDataProviderType = useBrukerDataProvider();
+    const { data: bruker, status: brukerstatus, error: brukerError }: BrukerDataProviderType = useBrukerDataProvider();
     const oppfolgingDataProvider = useOppfolgingDataProvider(fnr);
     const { status: oppfolgingstatus, hentOppfolging } = oppfolgingDataProvider;
 
@@ -113,18 +113,13 @@ export function Provider(props: Props) {
         return <NavFrontendSpinner />;
     } else if (hasError(brukerstatus) || hasError(oppfolgingstatus) || hasDialogError(dialogstatus)) {
         console.log({ brukerstatus });
+        console.log({ brukerError });
         console.log({ oppfolgingstatus });
         console.log({ dialogstatus });
         return (
-            <>
-                <p>rukerstatus: {brukerstatus}</p>
-                <p>ppfolgingstatus: {oppfolgingstatus}</p>
-                <p>ialogstatus: {dialogstatus}</p>
-
-                <AlertStripeFeil className={styles.feil}>
-                    Noe gikk dessverre galt med systemet. Prøv igjen senere.
-                </AlertStripeFeil>
-            </>
+            <AlertStripeFeil className={styles.feil}>
+                Noe gikk dessverre galt med systemet. Prøv igjen senere.
+            </AlertStripeFeil>
         );
     }
 
