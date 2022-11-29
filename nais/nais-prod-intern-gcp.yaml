@@ -37,5 +37,7 @@ spec:
       value: "false"
     - name: GCS_BUCKET_NAME
       value: arbeidsrettet-dialog-intern-prod
+    - name: CONTEXT_PATH
+      value: /arbeid/dialog
     - name: CORS_DOMAIN
       value: "*"
