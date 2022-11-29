@@ -13,3 +13,11 @@ export const getAktivitetType = (aktivitet: Aktivitet | ArenaAktivitet): AlleAkt
     }
     return aktivitet.type;
 };
+
+const fraOgMedForsteTegnSomIkkeErEnSlash = /[^/].*/;
+const utenSlashForan = (s: string): string => fraOgMedForsteTegnSomIkkeErEnSlash.exec(s)?.shift() ?? '';
+export const bareEnSlashForanEllerBlank = (s: string): string => {
+    const strippeds = utenSlashForan(s);
+    if (strippeds.length === 0) return '';
+    else return '/' + s;
+};

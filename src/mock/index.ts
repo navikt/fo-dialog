@@ -1,5 +1,6 @@
 import FetchMock, { Middleware, MiddlewareUtils, ResponseData, ResponseUtils } from 'yet-another-fetch-mock';
 
+import { bareEnSlashForanEllerBlank } from '../view/utils/utils';
 import aktiviteter from './Aktivitet';
 import { arenaAktiviteter } from './Arena';
 import bruker from './Bruker';
@@ -75,15 +76,19 @@ function fail() {
     });
 }
 
-mock.post('/veilarboppfolging/api/oppfolging/settDigital', {});
+let prefix = bareEnSlashForanEllerBlank(process.env.PUBLIC_URL);
 
-mock.get('/veilarbdialog/api/kladd', kladder);
+mock.post(prefix + '/veilarboppfolging/api/oppfolging/settDigital', {});
+
+console.log(prefix + '/veilarboppfolging/api/oppfolging/settDigital');
+
+mock.get(prefix + '/veilarbdialog/api/kladd', kladder);
 mock.post(
     '/veilarbdialog/api/kladd',
     ResponseUtils.combine(ResponseUtils.statusCode(204), ({ body }) => oppdaterKladd(body))
 );
 
-mock.get('/veilarbdialog/api/dialog', harDialogFeilerSkruddPa() ? fail() : dialoger);
+mock.get(prefix + '/veilarbdialog/api/dialog', harDialogFeilerSkruddPa() ? fail() : dialoger);
 
 mock.post(
     '/veilarbdialog/api/dialog',
@@ -105,21 +110,21 @@ mock.post('/veilarbdialog/api/logger/event', ({ body }) => {
     return {};
 });
 
-mock.get('/veilarbdialog/api/dialog/sistOppdatert', getSistOppdatert());
+mock.get(prefix + '/veilarbdialog/api/dialog/sistOppdatert', getSistOppdatert());
 
-mock.get('/veilarboppfolging/api/oppfolging/me', bruker());
+mock.get(prefix + '/veilarboppfolging/api/oppfolging/me', bruker());
 
-mock.get('/veilarboppfolging/api/oppfolging', oppfolging);
+mock.get(prefix + '/veilarboppfolging/api/oppfolging', oppfolging);
 
-mock.get('/veilarbaktivitet/api/aktivitet', harAktivitetFeilerSkruddPa() ? fail() : aktiviteter);
+mock.get(prefix + '/veilarbaktivitet/api/aktivitet', harAktivitetFeilerSkruddPa() ? fail() : aktiviteter);
 
-mock.get('/veilarbaktivitet/api/arena/tiltak', harArenaaktivitetFeilerSkruddPa() ? fail() : arenaAktiviteter);
+mock.get(prefix + '/veilarbaktivitet/api/arena/tiltak', harArenaaktivitetFeilerSkruddPa() ? fail() : arenaAktiviteter);
 
-mock.get('/api/auth', { remainingSeconds: 60 * 60 });
+mock.get(prefix + '/api/auth', { remainingSeconds: 60 * 60 });
 
-mock.get('/veilarbveileder/api/veileder/me', veilederMe);
+mock.get(prefix + '/veilarbveileder/api/veileder/me', veilederMe);
 
 mock.get(
-    '/veilarbperson/api/person/:fnr/harNivaa4',
+    prefix + '/veilarbperson/api/person/:fnr/harNivaa4',
     harNivaa4Fieler() ? fail() : ({ pathParams }) => harNivaa4Data(pathParams.fnr)
 );
