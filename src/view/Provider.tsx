@@ -63,7 +63,11 @@ export function Provider(props: Props) {
 
     const veilederNavn = useFetchVeilederNavn(erVeileder);
 
-    const { data: bruker, status: brukerstatus, error: brukerError }: BrukerDataProviderType = useBrukerDataProvider();
+    const {
+        data: bruker,
+        status: brukerstatus,
+        error: brukerError
+    }: BrukerDataProviderType = useBrukerDataProvider(fnr);
     const oppfolgingDataProvider = useOppfolgingDataProvider(fnr);
     const { status: oppfolgingstatus, hentOppfolging } = oppfolgingDataProvider;
 
