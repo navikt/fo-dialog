@@ -4,7 +4,6 @@ import { Status, isReloading } from '../api/typer';
 import { fetchData } from '../utils/Fetch';
 import { Bruker } from '../utils/Typer';
 import { baseApiPath } from '../utils/UseApiBasePath';
-import { useFnrContext } from './Provider';
 
 export interface BrukerDataProviderType {
     data: Bruker | null;
@@ -23,11 +22,10 @@ export const useUserInfoContext = () => useContext(UserInfoContext);
 export const useBrukerDataProvider = (): BrukerDataProviderType => {
     const [state, setState] = useState<BrukerDataProviderType>(initBrukerState);
 
-    const fnr = useFnrContext();
-    const [apiBasePath, setApiBasePath] = useState(baseApiPath(!!fnr));
+    const [apiBasePath, setApiBasePath] = useState<string>(baseApiPath(true));
     useEffect(() => {
-        setApiBasePath(baseApiPath(!!fnr));
-    }, [fnr]);
+        setApiBasePath(baseApiPath(state.data?.erVeileder ?? true));
+    }, [state.data]);
 
     const apiUrl = useMemo(() => `${apiBasePath}/veilarboppfolging/api/oppfolging/me`, [apiBasePath]);
 
