@@ -26,12 +26,11 @@ import { getSistOppdatert } from './SistOppdatert';
 import { veilederMe } from './Veileder';
 
 const pathnamePrefix = baseApiPath(true);
-const apiPathnamePrefix = '/veilarbdialog/api';
-
 const loggingMiddleware: Middleware = (request, response) => {
     // tslint:disable
     console.groupCollapsed(`${request.method} ${request.url}`);
     console.groupCollapsed('config');
+    console.log({ pathnamePrefix });
     console.log('queryParams', request.queryParams);
     console.log('pathParams', request.pathParams);
     console.log('body', request.body);
@@ -78,27 +77,27 @@ function fail() {
         detaljer: 'et object med noe rart'
     });
 }
-mock.get(`${pathnamePrefix}${apiPathnamePrefix}/kladd`, kladder);
-mock.get(`${pathnamePrefix}${apiPathnamePrefix}/dialog`, harDialogFeilerSkruddPa() ? fail() : dialoger);
-mock.put(`${pathnamePrefix}${apiPathnamePrefix}/dialog/:dialogId/les`, ({ pathParams }) =>
+mock.get(`${pathnamePrefix}/veilarbdialog/api/kladd`, kladder);
+mock.get(`${pathnamePrefix}/veilarbdialog/api/dialog`, harDialogFeilerSkruddPa() ? fail() : dialoger);
+mock.put(`${pathnamePrefix}/veilarbdialog/api/dialog/:dialogId/les`, ({ pathParams }) =>
     lesDialog(pathParams.dialogId)
 );
-mock.put(`${pathnamePrefix}${apiPathnamePrefix}/dialog/:dialogId/venter_pa_svar/:bool`, ({ pathParams }) =>
+mock.put(`${pathnamePrefix}/veilarbdialog/api/dialog/:dialogId/venter_pa_svar/:bool`, ({ pathParams }) =>
     setVenterPaSvar(pathParams.dialogId, pathParams.bool === 'true')
 );
-mock.put(`${pathnamePrefix}${apiPathnamePrefix}/dialog/:dialogId/ferdigbehandlet/:bool`, ({ pathParams }) =>
+mock.put(`${pathnamePrefix}/veilarbdialog/api/dialog/:dialogId/ferdigbehandlet/:bool`, ({ pathParams }) =>
     setFerdigBehandlet(pathParams.dialogId, pathParams.bool === 'true')
 );
-mock.get(`${pathnamePrefix}${apiPathnamePrefix}/dialog/sistOppdatert`, getSistOppdatert());
+mock.get(`${pathnamePrefix}/veilarbdialog/api/dialog/sistOppdatert`, getSistOppdatert());
 mock.post(
-    `${pathnamePrefix}${apiPathnamePrefix}/kladd`,
+    `${pathnamePrefix}/veilarbdialog/api/kladd`,
     ResponseUtils.combine(ResponseUtils.statusCode(204), ({ body }) => oppdaterKladd(body))
 );
 mock.post(
-    `${pathnamePrefix}${apiPathnamePrefix}/dialog`,
+    `${pathnamePrefix}/veilarbdialog/api/dialog`,
     harNyDialogEllerSendMeldingFeilerSkruddPa() ? fail() : ({ body }) => opprettEllerOppdaterDialog(body)
 );
-mock.post(`${apiPathnamePrefix}/logger/event`, ({ body }) => {
+mock.post(`/veilarbdialog/api/logger/event`, ({ body }) => {
     const event = body;
     console.log('Event', event.name, 'Fields:', event.fields, 'Tags:', event.tags);
     return {};

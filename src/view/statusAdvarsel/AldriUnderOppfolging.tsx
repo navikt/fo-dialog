@@ -1,7 +1,7 @@
 import Lenke from 'nav-frontend-lenker';
 import React from 'react';
 
-import useApiBasePath from '../../utils/UseApiBasePath';
+import { baseApiPath } from '../../utils/UseApiBasePath';
 import StatusAdvarselWrapper from './StatusAdvarselWrapper';
 
 interface Props {
@@ -17,7 +17,7 @@ function Veileder() {
 }
 
 function Bruker() {
-    const basePath = useApiBasePath();
+    const basePath = baseApiPath(false);
 
     return (
         <StatusAdvarselWrapper>

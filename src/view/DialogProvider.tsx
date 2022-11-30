@@ -5,7 +5,7 @@ import { Status } from '../api/typer';
 import { loggChangeInDialog } from '../felleskomponenter/logging';
 import { fetchData, fnrQuery } from '../utils/Fetch';
 import { DialogData, NyDialogMeldingData, SistOppdatert } from '../utils/Typer';
-import useApiBasePath from '../utils/UseApiBasePath';
+import { baseApiPath } from '../utils/UseApiBasePath';
 
 export interface DialogDataProviderType {
     status: Status;
@@ -50,7 +50,7 @@ export function useDialogDataProvider(fnr?: string): DialogDataProviderType {
     const [state, setState] = useState(initDialogState);
     const sistOppdatert = state.sistOppdatert;
 
-    const apiBasePath = useApiBasePath();
+    const apiBasePath = baseApiPath(!!fnr);
     const query = fnrQuery(fnr);
 
     const baseUrl = useMemo(() => `${apiBasePath}/veilarbdialog/api/dialog${query}`, [apiBasePath, query]);
@@ -78,7 +78,6 @@ export function useDialogDataProvider(fnr?: string): DialogDataProviderType {
             ...prevState,
             status: isDialogReloading(prevState.status) ? Status.RELOADING : Status.PENDING
         }));
-        console.log('Blir kallt');
         return fetchData<DialogData[]>(baseUrl)
             .then((dialoger) => {
                 setState({ status: Status.OK, dialoger: dialoger, sistOppdatert: new Date() });
