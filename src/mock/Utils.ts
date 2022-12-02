@@ -3,7 +3,11 @@ import * as process from 'process';
 import { runningOnGithubPages, settSammenmedSlasher } from '../view/utils/utils';
 
 export function rndId() {
-    return `${Math.floor(Math.random() * 100_000_000)}`;
+    const crypto: Crypto = window.crypto;
+    let array = new Uint32Array(1);
+    crypto.getRandomValues(array);
+
+    return `${Math.floor(array[0] % 100_000_000)}`;
 }
 
 export const gotoStartTestPage = (fnr?: string) => {
