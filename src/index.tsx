@@ -8,8 +8,8 @@ import ReactDOM from 'react-dom';
 import { initAmplitude } from './metrics/amplitude-utils';
 import DemoBanner from './mock/demo/DemoBanner';
 import { erEksternBruker } from './mock/demo/sessionstorage';
+import { gotoStartTestPage } from './mock/Utils';
 import App from './view/App';
-import { usingHashRouting } from './view/utils/utils';
 
 const modalAlly = document.getElementById('modal-a11y-wrapper');
 const root = document.getElementById('root');
@@ -30,20 +30,9 @@ window.addEventListener(
     'resize',
     throttle(() => {
         // We execute the same script as before
-
-        let vh = window.innerHeight * 0.01;
         document.documentElement.style.setProperty('--vh', `${vh}px`);
     }, 100)
 );
-
-const gotoStartTestPage = (fnr?: string) => {
-    console.log('PUBLIC_URL', process.env.PUBLIC_URL);
-    if (usingHashRouting) {
-        window.history.replaceState({}, '', `${process.env.PUBLIC_URL}/#/${fnr ?? ''}`);
-    } else {
-        // window.history.replaceState({}, '', getBasename(fnr));
-    }
-};
 
 if (process.env.REACT_APP_MOCK === 'true') {
     require('./mock');

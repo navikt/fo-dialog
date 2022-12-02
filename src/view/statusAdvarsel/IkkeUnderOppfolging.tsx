@@ -1,7 +1,7 @@
 import Lenke from 'nav-frontend-lenker';
 import React from 'react';
 
-import { baseApiPath } from '../../utils/UseApiBasePath';
+import { getPathnamePrefix } from '../../utils/UseApiBasePath';
 import StatusAdvarselWrapper from './StatusAdvarselWrapper';
 
 interface Props {
@@ -13,7 +13,7 @@ export default function IkkeUnderOppfolging(props: Props) {
 }
 
 function HarPerioderBruker() {
-    const basePath = baseApiPath(false);
+    const basePath = getPathnamePrefix(false);
     return (
         <StatusAdvarselWrapper>
             Du er ikke lenger registrert hos NAV. Hvis du fortsatt skal få oppfølging fra NAV og ha dialog med veileder

@@ -3,14 +3,19 @@ import { Aktivitet, AktivitetTypes, AlleAktivitetTypes, ArenaAktivitet } from '.
 export const erArenaAktivitet = (aktivitetId: string | null | undefined): boolean =>
     !!aktivitetId && aktivitetId.startsWith('ARENA');
 
-export const getBasename = (fnr?: string): string | undefined =>
-    getBasenameFromFnrAndPathname(process.env.PUBLIC_URL, fnr);
+export const getBasename = (fnr?: string): string => {
+    return settSammenmedSlasher(process.env.PUBLIC_URL, fnr);
+};
 
-const fraOgMedForsteTegnSomIkkeErEnSlash = /[^/].*/;
-const utenSlashForan = (s: string): string | undefined => fraOgMedForsteTegnSomIkkeErEnSlash.exec(s)?.shift() ?? '';
-
-export const getBasenameFromFnrAndPathname = (pathnamePrefix?: string, fnr?: string): string =>
-    '/' + utenSlashForan([pathnamePrefix, fnr].filter((x) => !!x).join('/'));
+export const settSammenmedSlasher = (...ss: Array<string | undefined>): string => {
+    const slasherImellom = ss
+        .filter((s: string | undefined): s is string => !!s)
+        .flatMap<string>((s) => s.split('/'))
+        .filter((s) => s.trim() !== '')
+        .join('/');
+    if (slasherImellom !== '') return '/' + slasherImellom;
+    else return '';
+};
 
 const erGCP = (): boolean => window.location.hostname.endsWith('intern.nav.no');
 
@@ -23,4 +28,4 @@ export const getAktivitetType = (aktivitet: Aktivitet | ArenaAktivitet): AlleAkt
     return aktivitet.type;
 };
 
-export const usingHashRouting = process.env.REACT_APP_USE_HASH_ROUTER === 'true';
+export const runningOnGithubPages = process.env.REACT_APP_USE_HASH_ROUTER === 'true';

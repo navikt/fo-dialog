@@ -1,6 +1,6 @@
 import FetchMock, { Middleware, MiddlewareUtils, ResponseData, ResponseUtils } from 'yet-another-fetch-mock';
 
-import { baseApiPath } from '../utils/UseApiBasePath';
+import { getPathnamePrefix } from '../utils/UseApiBasePath';
 import aktiviteter from './Aktivitet';
 import { arenaAktiviteter } from './Arena';
 import bruker from './Bruker';
@@ -25,12 +25,11 @@ import oppfolging from './Oppfolging';
 import { getSistOppdatert } from './SistOppdatert';
 import { veilederMe } from './Veileder';
 
-const pathnamePrefix = baseApiPath(true);
+const pathnamePrefix = getPathnamePrefix(true);
 const loggingMiddleware: Middleware = (request, response) => {
     // tslint:disable
     console.groupCollapsed(`${request.method} ${request.url}`);
     console.groupCollapsed('config');
-    console.log({ pathnamePrefix });
     console.log('queryParams', request.queryParams);
     console.log('pathParams', request.pathParams);
     console.log('body', request.body);

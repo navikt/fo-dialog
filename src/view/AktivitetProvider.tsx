@@ -4,7 +4,7 @@ import { Status, hasError, isReloading } from '../api/typer';
 import { Aktivitet, ArenaAktivitet } from '../utils/aktivitetTypes';
 import { fetchData, fnrQuery } from '../utils/Fetch';
 import { StringOrNull } from '../utils/Typer';
-import { baseApiPath } from '../utils/UseApiBasePath';
+import { getPathnamePrefix } from '../utils/UseApiBasePath';
 
 export type MaybeAktivitet = Aktivitet | ArenaAktivitet | undefined;
 
@@ -73,7 +73,7 @@ export const useAktivitetDataProvider = (fnr?: string): AktivitetDataProviderTyp
     const [state, setState] = useState<AktivitetState>(initAktivitetState);
 
     const query = fnrQuery(fnr);
-    const pathnamePrefix = baseApiPath(!!fnr);
+    const pathnamePrefix = getPathnamePrefix(!!fnr);
 
     const aktivitetUrl = useMemo(
         () => `${pathnamePrefix}/veilarbaktivitet/api/aktivitet${query}`,

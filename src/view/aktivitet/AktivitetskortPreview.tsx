@@ -1,12 +1,12 @@
 import { LenkepanelBase } from 'nav-frontend-lenkepanel';
 import { Systemtittel, Undertekst, Undertittel } from 'nav-frontend-typografi';
-import React, { useEffect, useState } from 'react';
+import React from 'react';
 
 import { visibleIfHoc } from '../../felleskomponenter/VisibleIfHoc';
 import { Aktivitet, AktivitetTypes, ArenaAktivitet, ArenaAktivitetTypes } from '../../utils/aktivitetTypes';
 import { formaterDate, getKlokkeslett } from '../../utils/Date';
 import { StringOrNull } from '../../utils/Typer';
-import { baseApiPath } from '../../utils/UseApiBasePath';
+import { getPathnamePrefix } from '../../utils/UseApiBasePath';
 import { findAktivitet, useAktivitetContext } from '../AktivitetProvider';
 import { dialogHeaderID2 } from '../dialog/DialogHeader';
 import { useFnrContext } from '../Provider';
@@ -24,10 +24,7 @@ export function AktivitetskortPreview(props: Props) {
     const { aktivitetId } = props;
     const fnr = useFnrContext();
     const aktivitetData = useAktivitetContext();
-    const [apiBasePath, setApiBasePath] = useState(baseApiPath(!!fnr));
-    useEffect(() => {
-        setApiBasePath(baseApiPath(!!fnr));
-    }, [fnr]);
+    const apiBasePath = getPathnamePrefix(!!fnr);
     const aktivitet = findAktivitet(aktivitetData, aktivitetId);
 
     if (!aktivitet) {

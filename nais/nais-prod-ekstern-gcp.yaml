@@ -50,7 +50,6 @@ spec:
       value: arbeidsrettet-dialog-prod
     - name: CONTEXT_PATH
       value: /arbeid/dialog
-      # TODO lenke til doc som forteller hvorfor vi må ha det
     - name: JSON_CONFIG
       value: >
         {

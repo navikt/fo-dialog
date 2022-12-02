@@ -1,12 +1,10 @@
-import { usingHashRouting } from '../view/utils/utils';
+import { runningOnGithubPages } from '../view/utils/utils';
 
-const pathPrefix = process.env.PUBLIC_URL;
-
-export function baseApiPath(erVeileder: boolean) {
-    if (usingHashRouting) return ''; // Only used in testing purposes
+export function getPathnamePrefix(erVeileder: boolean) {
+    if (runningOnGithubPages) return ''; // Only used in testing purposes
     if (erVeileder) {
-        return ''; // veilarbpersonflate -> alle endepunkter starter med /veilarboppfolging/api
+        return '';
     } else {
-        return pathPrefix || '';
+        return process.env.PUBLIC_URL || '';
     }
 }

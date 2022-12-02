@@ -5,7 +5,7 @@ import { Status } from '../api/typer';
 import { loggChangeInDialog } from '../felleskomponenter/logging';
 import { fetchData, fnrQuery } from '../utils/Fetch';
 import { DialogData, NyDialogMeldingData, SistOppdatert } from '../utils/Typer';
-import { baseApiPath } from '../utils/UseApiBasePath';
+import { getPathnamePrefix } from '../utils/UseApiBasePath';
 
 export interface DialogDataProviderType {
     status: Status;
@@ -50,7 +50,7 @@ export function useDialogDataProvider(fnr?: string): DialogDataProviderType {
     const [state, setState] = useState(initDialogState);
     const sistOppdatert = state.sistOppdatert;
 
-    const apiBasePath = baseApiPath(!!fnr);
+    const apiBasePath = getPathnamePrefix(!!fnr);
     const query = fnrQuery(fnr);
 
     const baseUrl = useMemo(() => `${apiBasePath}/veilarbdialog/api/dialog${query}`, [apiBasePath, query]);
@@ -81,11 +81,9 @@ export function useDialogDataProvider(fnr?: string): DialogDataProviderType {
         return fetchData<DialogData[]>(baseUrl)
             .then((dialoger) => {
                 setState({ status: Status.OK, dialoger: dialoger, sistOppdatert: new Date() });
-                console.log(`Har kallt, det gikk bra: ${dialoger}`);
                 return dialoger;
             })
             .catch((e) => {
-                console.log(`hentDialoger, har kallt, det gikk dårlig: e:${e}`);
                 setState((prevState) => ({ ...prevState, status: Status.ERROR, error: e }));
                 return [];
             });

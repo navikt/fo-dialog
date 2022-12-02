@@ -6,10 +6,8 @@ import { Normaltekst, Systemtittel } from 'nav-frontend-typografi';
 import Veilederpanel from 'nav-frontend-veilederpanel';
 import React, { useContext, useEffect, useState } from 'react';
 
-import { baseApiPath } from '../../utils/UseApiBasePath';
+import { getPathnamePrefix } from '../../utils/UseApiBasePath';
 import { UserInfoContext } from '../../view/BrukerProvider';
-import { useFnrContext } from '../../view/Provider';
-import { getContextPath } from '../../view/utils/utils';
 import { hiddenIfHoc } from '../HiddenIfHoc';
 import loggEvent from '../logging';
 import { ReactComponent as ObsSVG } from './obs.svg';
@@ -28,29 +26,22 @@ function getHeaders() {
 }
 
 interface Props {
+    fnr?: string;
     visDemo?: boolean;
 }
 
 function TimeoutModal(props: Props) {
-    const { visDemo } = props;
+    const { visDemo, fnr } = props;
     const [skalVises, setSkalVises] = useState(false);
 
     const userInfo = useContext(UserInfoContext);
     const erVeileder = userInfo?.erVeileder ?? 'ukjent';
     const brukerId = userInfo?.id ?? 'ukjent';
 
-    const fnr = useFnrContext();
-    const [apiBasePath, setApiBasePath] = useState(baseApiPath(!!fnr));
-    useEffect(() => {
-        setApiBasePath(baseApiPath(!!fnr));
-    }, [fnr]);
-
-    const baseUrl = userInfo?.erVeileder
-        ? window.location.origin + getContextPath()
-        : window.location.origin + '/arbeid/dialog';
+    const baseUrl = userInfo?.erVeileder ? window.location.origin + '' : window.location.origin + '/arbeid/dialog';
 
     useEffect(() => {
-        fetch(apiBasePath + '/api/auth', {
+        fetch(getPathnamePrefix(!!fnr) + '/api/auth', {
             credentials: 'same-origin',
             headers: getHeaders()
         })
@@ -72,7 +63,7 @@ function TimeoutModal(props: Props) {
             .catch((e) => {
                 console.log('catch', e);
             });
-    }, [brukerId, erVeileder, apiBasePath]);
+    }, [fnr, brukerId, erVeileder]);
 
     const apen = skalVises || !!visDemo;
 
