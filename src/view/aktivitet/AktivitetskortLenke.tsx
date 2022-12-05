@@ -25,7 +25,7 @@ interface Props {
 
 export default function AktivitetskortLenke(props: Props) {
     const fnr = useFnrContext();
-    const apiBasePath = getPathnamePrefix(!!fnr);
+    const apiBasePath = getPathnamePrefix();
     const aktivitetId = props.aktivitetId;
     return (
         <div className={styles.aktivitetkortlenke}>

@@ -73,7 +73,7 @@ export const useAktivitetDataProvider = (fnr?: string): AktivitetDataProviderTyp
     const [state, setState] = useState<AktivitetState>(initAktivitetState);
 
     const query = fnrQuery(fnr);
-    const pathnamePrefix = getPathnamePrefix(!!fnr);
+    const pathnamePrefix = getPathnamePrefix();
 
     const aktivitetUrl = useMemo(
         () => `${pathnamePrefix}/veilarbaktivitet/api/aktivitet${query}`,

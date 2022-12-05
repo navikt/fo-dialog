@@ -41,7 +41,7 @@ function TimeoutModal(props: Props) {
     const baseUrl = userInfo?.erVeileder ? window.location.origin + '' : window.location.origin + '/arbeid/dialog';
 
     useEffect(() => {
-        fetch(getPathnamePrefix(!!fnr) + '/api/auth', {
+        fetch(getPathnamePrefix() + '/api/auth', {
             credentials: 'same-origin',
             headers: getHeaders()
         })

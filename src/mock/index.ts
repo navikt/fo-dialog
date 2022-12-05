@@ -25,7 +25,7 @@ import oppfolging from './Oppfolging';
 import { getSistOppdatert } from './SistOppdatert';
 import { veilederMe } from './Veileder';
 
-const pathnamePrefix = getPathnamePrefix(true);
+const pathnamePrefix = getPathnamePrefix();
 const loggingMiddleware: Middleware = (request, response) => {
     // tslint:disable
     console.groupCollapsed(`${request.method} ${request.url}`);

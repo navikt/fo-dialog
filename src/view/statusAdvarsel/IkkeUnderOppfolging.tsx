@@ -13,7 +13,7 @@ export default function IkkeUnderOppfolging(props: Props) {
 }
 
 function HarPerioderBruker() {
-    const basePath = getPathnamePrefix(false);
+    const basePath = getPathnamePrefix();
     return (
         <StatusAdvarselWrapper>
             Du er ikke lenger registrert hos NAV. Hvis du fortsatt skal få oppfølging fra NAV og ha dialog med veileder

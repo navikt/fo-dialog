@@ -22,7 +22,7 @@ export const useUserInfoContext = () => useContext(UserInfoContext);
 export const useBrukerDataProvider = (fnr?: string): BrukerDataProviderType => {
     const [state, setState] = useState<BrukerDataProviderType>(initBrukerState);
 
-    const apiBasePath = getPathnamePrefix(!!fnr);
+    const apiBasePath = getPathnamePrefix();
 
     const apiUrl = useMemo(() => `${apiBasePath}/veilarboppfolging/api/oppfolging/me`, [apiBasePath]);
 

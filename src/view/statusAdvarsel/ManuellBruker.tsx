@@ -18,7 +18,7 @@ function ManuellBruker(props: Props) {
 
 function Bruker() {
     const oppfolgingData = useOppfolgingContext();
-    const apiBasePath = getPathnamePrefix(false);
+    const apiBasePath = getPathnamePrefix();
 
     const fjernManuell = () => {
         fetchData(`${apiBasePath}/veilarboppfolging/api/oppfolging/settDigital`, {

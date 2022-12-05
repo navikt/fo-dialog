@@ -58,7 +58,7 @@ const initKladdState: KladdState = {
 export function useKladdDataProvider(fnr?: string): KladdDataProviderType {
     const [state, setState] = useState(initKladdState);
 
-    const apiBasePath = getPathnamePrefix(!!fnr);
+    const apiBasePath = getPathnamePrefix();
     const query = fnrQuery(fnr);
 
     const baseUrl = useMemo(() => `${apiBasePath}/veilarbdialog/api/kladd${query}`, [apiBasePath, query]);

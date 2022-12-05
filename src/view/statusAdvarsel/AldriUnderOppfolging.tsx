@@ -17,7 +17,7 @@ function Veileder() {
 }
 
 function Bruker() {
-    const basePath = getPathnamePrefix(false);
+    const basePath = getPathnamePrefix();
 
     return (
         <StatusAdvarselWrapper>

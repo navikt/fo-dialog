@@ -1,10 +1,11 @@
 import { Aktivitet, AktivitetTypes, AlleAktivitetTypes, ArenaAktivitet } from '../../utils/aktivitetTypes';
+import { pathnamePrefix } from '../../utils/UseApiBasePath';
 
 export const erArenaAktivitet = (aktivitetId: string | null | undefined): boolean =>
     !!aktivitetId && aktivitetId.startsWith('ARENA');
 
 export const getBasename = (fnr?: string): string => {
-    return settSammenmedSlasher(process.env.PUBLIC_URL, fnr);
+    return settSammenmedSlasher(pathnamePrefix, fnr);
 };
 
 export const settSammenmedSlasher = (...ss: Array<string | undefined>): string => {

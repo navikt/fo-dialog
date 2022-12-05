@@ -1,5 +1,4 @@
-import * as process from 'process';
-
+import { getPathnamePrefix } from '../utils/UseApiBasePath';
 import { runningOnGithubPages, settSammenmedSlasher } from '../view/utils/utils';
 
 export function rndId() {
@@ -11,10 +10,10 @@ export function rndId() {
 }
 
 export const gotoStartTestPage = (fnr?: string) => {
-    console.log('PUBLIC_URL', process.env.PUBLIC_URL);
+    const pathnamePrefix = getPathnamePrefix();
     if (runningOnGithubPages) {
-        window.history.replaceState({}, '', settSammenmedSlasher(process.env.PUBLIC_URL, '#', fnr));
+        window.history.replaceState({}, '', settSammenmedSlasher(pathnamePrefix, '#', fnr));
     } else {
-        window.history.replaceState({}, '', settSammenmedSlasher(process.env.PUBLIC_URL, fnr));
+        window.history.replaceState({}, '', settSammenmedSlasher(pathnamePrefix, fnr));
     }
 };

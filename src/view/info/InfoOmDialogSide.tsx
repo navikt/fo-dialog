@@ -27,7 +27,7 @@ export function InfoOmDialogSide() {
                     <Normaltekst>
                         I dialogen kan du og veilederen din skrive til hverandre om arbeid og oppfølging. Dere kan blant
                         annet sende meldinger om aktivitetene dine i{' '}
-                        <Lenke href={`${getPathnamePrefix(false)}/aktivitetsplan`}>aktivitetsplanen</Lenke>.
+                        <Lenke href={`${getPathnamePrefix()}/aktivitetsplan`}>aktivitetsplanen</Lenke>.
                     </Normaltekst>
                 </div>
 

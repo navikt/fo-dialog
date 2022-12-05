@@ -24,7 +24,7 @@ export function AktivitetskortPreview(props: Props) {
     const { aktivitetId } = props;
     const fnr = useFnrContext();
     const aktivitetData = useAktivitetContext();
-    const apiBasePath = getPathnamePrefix(!!fnr);
+    const apiBasePath = getPathnamePrefix();
     const aktivitet = findAktivitet(aktivitetData, aktivitetId);
 
     if (!aktivitet) {

@@ -50,7 +50,7 @@ export function useDialogDataProvider(fnr?: string): DialogDataProviderType {
     const [state, setState] = useState(initDialogState);
     const sistOppdatert = state.sistOppdatert;
 
-    const apiBasePath = getPathnamePrefix(!!fnr);
+    const apiBasePath = getPathnamePrefix();
     const query = fnrQuery(fnr);
 
     const baseUrl = useMemo(() => `${apiBasePath}/veilarbdialog/api/dialog${query}`, [apiBasePath, query]);
