@@ -5,7 +5,11 @@ export const erArenaAktivitet = (aktivitetId: string | null | undefined): boolea
     !!aktivitetId && aktivitetId.startsWith('ARENA');
 
 export const getBasename = (fnr?: string): string => {
-    return settSammenmedSlasher(pathnamePrefix, fnr);
+    if (fnr) {
+        return '/' + fnr;
+    } else {
+        return settSammenmedSlasher(pathnamePrefix, fnr);
+    }
 };
 
 export const settSammenmedSlasher = (...ss: Array<string | undefined>): string => {

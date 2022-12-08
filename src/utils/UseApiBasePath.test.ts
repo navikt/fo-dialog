@@ -1,5 +1,6 @@
 import fs from 'fs';
 
+import { getBasename } from '../view/utils/utils';
 import { apiBasePath, pathnamePrefix } from './UseApiBasePath';
 
 const loadEnv = (path: string) => {
@@ -21,6 +22,7 @@ const loadEnv = (path: string) => {
 
 describe('base', () => {
     const oldEnv = process.env;
+    const fnr = '1234567890';
 
     afterEach(() => {
         process.env = oldEnv;
@@ -30,29 +32,37 @@ describe('base', () => {
     it('ekstern dev api-url should be PUBLIC_URL', () => {
         loadEnv('./nais/.env.dev.ekstern');
         const { pathnamePrefix, apiBasePath } = require('./UseApiBasePath');
+        const { getBasename } = require('../view/utils/utils');
         expect(pathnamePrefix).toBe('/arbeid/dialog');
         expect(apiBasePath).toBe('/arbeid/dialog');
+        expect(getBasename()).toBe('/arbeid/dialog');
     });
 
     it('intern dev api-url should be empty string', () => {
         loadEnv('./nais/.env.dev.intern');
         const { pathnamePrefix, apiBasePath } = require('./UseApiBasePath');
+        const { getBasename } = require('../view/utils/utils');
         expect(pathnamePrefix).toBe('/arbeid/dialog');
         expect(apiBasePath).toBe('');
+        expect(getBasename(fnr)).toBe(`/${fnr}`);
     });
 
     it('ekstern prod api-url should be PUBLIC_URL', () => {
         loadEnv('./nais/.env.prod.ekstern');
         const { pathnamePrefix, apiBasePath } = require('./UseApiBasePath');
+        const { getBasename } = require('../view/utils/utils');
         expect(pathnamePrefix).toBe('/arbeid/dialog');
         expect(apiBasePath).toBe('/arbeid/dialog');
+        expect(getBasename()).toBe('/arbeid/dialog');
     });
 
     it('intern prod api-url should be empty string', () => {
         loadEnv('./nais/.env.prod.intern');
         const { pathnamePrefix, apiBasePath } = require('./UseApiBasePath');
+        const { getBasename } = require('../view/utils/utils');
         expect(pathnamePrefix).toBe('/arbeid/dialog');
         expect(apiBasePath).toBe('');
+        expect(getBasename(fnr)).toBe(`/${fnr}`);
     });
 
     it('gh-pages api-url should be empty string', () => {
