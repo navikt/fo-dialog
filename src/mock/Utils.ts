@@ -1,4 +1,4 @@
-import { getPathnamePrefix } from '../utils/UseApiBasePath';
+import { pathnamePrefix } from '../utils/UseApiBasePath';
 import { runningOnGithubPages, settSammenmedSlasher } from '../view/utils/utils';
 
 export function rndId() {
@@ -10,7 +10,6 @@ export function rndId() {
 }
 
 export const gotoStartTestPage = (fnr?: string) => {
-    const pathnamePrefix = getPathnamePrefix();
     if (runningOnGithubPages) {
         window.history.replaceState({}, '', settSammenmedSlasher(pathnamePrefix, '#', fnr));
     } else {

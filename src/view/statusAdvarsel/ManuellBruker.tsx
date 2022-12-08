@@ -3,7 +3,7 @@ import React from 'react';
 
 import { fetchData } from '../../utils/Fetch';
 import { UpdateTypes, dispatchUpdate } from '../../utils/UpdateEvent';
-import { getPathnamePrefix } from '../../utils/UseApiBasePath';
+import { apiBasePath } from '../../utils/UseApiBasePath';
 import { useOppfolgingContext } from '../OppfolgingProvider';
 import styles from './AlertLess.module.less';
 import StatusAdvarselWrapper, { KanIkkeKontakteElektroniskVeileder } from './StatusAdvarselWrapper';
@@ -18,7 +18,6 @@ function ManuellBruker(props: Props) {
 
 function Bruker() {
     const oppfolgingData = useOppfolgingContext();
-    const apiBasePath = getPathnamePrefix();
 
     const fjernManuell = () => {
         fetchData(`${apiBasePath}/veilarboppfolging/api/oppfolging/settDigital`, {

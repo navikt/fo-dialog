@@ -2,7 +2,7 @@ import { HoyreChevron } from 'nav-frontend-chevron';
 import { Element } from 'nav-frontend-typografi';
 import React, { MouseEvent } from 'react';
 
-import { getPathnamePrefix } from '../../utils/UseApiBasePath';
+import { apiBasePath } from '../../utils/UseApiBasePath';
 import { useFnrContext } from '../Provider';
 import { getContextPath } from '../utils/utils';
 import styles from './Aktivitetskort.module.less';
@@ -25,7 +25,6 @@ interface Props {
 
 export default function AktivitetskortLenke(props: Props) {
     const fnr = useFnrContext();
-    const apiBasePath = getPathnamePrefix();
     const aktivitetId = props.aktivitetId;
     return (
         <div className={styles.aktivitetkortlenke}>

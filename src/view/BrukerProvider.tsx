@@ -3,7 +3,7 @@ import React, { useContext, useEffect, useMemo, useState } from 'react';
 import { Status, isReloading } from '../api/typer';
 import { fetchData } from '../utils/Fetch';
 import { Bruker } from '../utils/Typer';
-import { getPathnamePrefix } from '../utils/UseApiBasePath';
+import { apiBasePath } from '../utils/UseApiBasePath';
 
 export interface BrukerDataProviderType {
     data: Bruker | null;
@@ -21,8 +21,6 @@ export const useUserInfoContext = () => useContext(UserInfoContext);
 
 export const useBrukerDataProvider = (fnr?: string): BrukerDataProviderType => {
     const [state, setState] = useState<BrukerDataProviderType>(initBrukerState);
-
-    const apiBasePath = getPathnamePrefix();
 
     const apiUrl = useMemo(() => `${apiBasePath}/veilarboppfolging/api/oppfolging/me`, [apiBasePath]);
 

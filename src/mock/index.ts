@@ -1,6 +1,6 @@
 import FetchMock, { Middleware, MiddlewareUtils, ResponseData, ResponseUtils } from 'yet-another-fetch-mock';
 
-import { getPathnamePrefix } from '../utils/UseApiBasePath';
+import { apiBasePath } from '../utils/UseApiBasePath';
 import aktiviteter from './Aktivitet';
 import { arenaAktiviteter } from './Arena';
 import bruker from './Bruker';
@@ -25,7 +25,7 @@ import oppfolging from './Oppfolging';
 import { getSistOppdatert } from './SistOppdatert';
 import { veilederMe } from './Veileder';
 
-const pathnamePrefix = getPathnamePrefix();
+const apiBase = apiBasePath;
 const loggingMiddleware: Middleware = (request, response) => {
     // tslint:disable
     console.groupCollapsed(`${request.method} ${request.url}`);
@@ -76,24 +76,22 @@ function fail() {
         detaljer: 'et object med noe rart'
     });
 }
-mock.get(`${pathnamePrefix}/veilarbdialog/api/kladd`, kladder);
-mock.get(`${pathnamePrefix}/veilarbdialog/api/dialog`, harDialogFeilerSkruddPa() ? fail() : dialoger);
-mock.put(`${pathnamePrefix}/veilarbdialog/api/dialog/:dialogId/les`, ({ pathParams }) =>
-    lesDialog(pathParams.dialogId)
-);
-mock.put(`${pathnamePrefix}/veilarbdialog/api/dialog/:dialogId/venter_pa_svar/:bool`, ({ pathParams }) =>
+mock.get(`${apiBase}/veilarbdialog/api/kladd`, kladder);
+mock.get(`${apiBase}/veilarbdialog/api/dialog`, harDialogFeilerSkruddPa() ? fail() : dialoger);
+mock.put(`${apiBase}/veilarbdialog/api/dialog/:dialogId/les`, ({ pathParams }) => lesDialog(pathParams.dialogId));
+mock.put(`${apiBase}/veilarbdialog/api/dialog/:dialogId/venter_pa_svar/:bool`, ({ pathParams }) =>
     setVenterPaSvar(pathParams.dialogId, pathParams.bool === 'true')
 );
-mock.put(`${pathnamePrefix}/veilarbdialog/api/dialog/:dialogId/ferdigbehandlet/:bool`, ({ pathParams }) =>
+mock.put(`${apiBase}/veilarbdialog/api/dialog/:dialogId/ferdigbehandlet/:bool`, ({ pathParams }) =>
     setFerdigBehandlet(pathParams.dialogId, pathParams.bool === 'true')
 );
-mock.get(`${pathnamePrefix}/veilarbdialog/api/dialog/sistOppdatert`, getSistOppdatert());
+mock.get(`${apiBase}/veilarbdialog/api/dialog/sistOppdatert`, getSistOppdatert());
 mock.post(
-    `${pathnamePrefix}/veilarbdialog/api/kladd`,
+    `${apiBase}/veilarbdialog/api/kladd`,
     ResponseUtils.combine(ResponseUtils.statusCode(204), ({ body }) => oppdaterKladd(body))
 );
 mock.post(
-    `${pathnamePrefix}/veilarbdialog/api/dialog`,
+    `${apiBase}/veilarbdialog/api/dialog`,
     harNyDialogEllerSendMeldingFeilerSkruddPa() ? fail() : ({ body }) => opprettEllerOppdaterDialog(body)
 );
 mock.post(`/veilarbdialog/api/logger/event`, ({ body }) => {
@@ -102,17 +100,14 @@ mock.post(`/veilarbdialog/api/logger/event`, ({ body }) => {
     return {};
 });
 
-mock.get(`${pathnamePrefix}/veilarboppfolging/api/oppfolging/me`, bruker());
-mock.get(`${pathnamePrefix}/veilarboppfolging/api/oppfolging`, oppfolging);
-mock.get(`${pathnamePrefix}/veilarbaktivitet/api/aktivitet`, harAktivitetFeilerSkruddPa() ? fail() : aktiviteter);
+mock.get(`${apiBase}/veilarboppfolging/api/oppfolging/me`, bruker());
+mock.get(`${apiBase}/veilarboppfolging/api/oppfolging`, oppfolging);
+mock.get(`${apiBase}/veilarbaktivitet/api/aktivitet`, harAktivitetFeilerSkruddPa() ? fail() : aktiviteter);
+mock.get(`${apiBase}/veilarbaktivitet/api/arena/tiltak`, harArenaaktivitetFeilerSkruddPa() ? fail() : arenaAktiviteter);
+mock.get(`${apiBase}/veilarbveileder/api/veileder/me`, veilederMe);
 mock.get(
-    `${pathnamePrefix}/veilarbaktivitet/api/arena/tiltak`,
-    harArenaaktivitetFeilerSkruddPa() ? fail() : arenaAktiviteter
-);
-mock.get(`${pathnamePrefix}/veilarbveileder/api/veileder/me`, veilederMe);
-mock.get(
-    `${pathnamePrefix}/veilarbperson/api/person/:fnr/harNivaa4`,
+    `${apiBase}/veilarbperson/api/person/:fnr/harNivaa4`,
     harNivaa4Fieler() ? fail() : ({ pathParams }) => harNivaa4Data(pathParams.fnr)
 );
-mock.get(`${pathnamePrefix}/api/auth`, { remainingSeconds: 60 * 60 });
-mock.post(`${pathnamePrefix}/veilarboppfolging/api/oppfolging/settDigital`, {});
+mock.get(`${apiBase}/api/auth`, { remainingSeconds: 60 * 60 });
+mock.post(`${apiBase}/veilarboppfolging/api/oppfolging/settDigital`, {});

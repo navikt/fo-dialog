@@ -4,7 +4,7 @@ import { Status, hasError, isReloading } from '../api/typer';
 import { Aktivitet, ArenaAktivitet } from '../utils/aktivitetTypes';
 import { fetchData, fnrQuery } from '../utils/Fetch';
 import { StringOrNull } from '../utils/Typer';
-import { getPathnamePrefix } from '../utils/UseApiBasePath';
+import { apiBasePath } from '../utils/UseApiBasePath';
 
 export type MaybeAktivitet = Aktivitet | ArenaAktivitet | undefined;
 
@@ -73,15 +73,11 @@ export const useAktivitetDataProvider = (fnr?: string): AktivitetDataProviderTyp
     const [state, setState] = useState<AktivitetState>(initAktivitetState);
 
     const query = fnrQuery(fnr);
-    const pathnamePrefix = getPathnamePrefix();
 
-    const aktivitetUrl = useMemo(
-        () => `${pathnamePrefix}/veilarbaktivitet/api/aktivitet${query}`,
-        [pathnamePrefix, query]
-    );
+    const aktivitetUrl = useMemo(() => `${apiBasePath}/veilarbaktivitet/api/aktivitet${query}`, [apiBasePath, query]);
     const arenaAktivitetUrl = useMemo(
-        () => `${pathnamePrefix}/veilarbaktivitet/api/arena/tiltak${query}`,
-        [pathnamePrefix, query]
+        () => `${apiBasePath}/veilarbaktivitet/api/arena/tiltak${query}`,
+        [apiBasePath, query]
     );
 
     const hentAktiviteter: () => Promise<Aktivitet[]> = useCallback(() => {

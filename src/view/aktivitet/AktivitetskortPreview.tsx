@@ -6,7 +6,7 @@ import { visibleIfHoc } from '../../felleskomponenter/VisibleIfHoc';
 import { Aktivitet, AktivitetTypes, ArenaAktivitet, ArenaAktivitetTypes } from '../../utils/aktivitetTypes';
 import { formaterDate, getKlokkeslett } from '../../utils/Date';
 import { StringOrNull } from '../../utils/Typer';
-import { getPathnamePrefix } from '../../utils/UseApiBasePath';
+import { pathnamePrefix } from '../../utils/UseApiBasePath';
 import { findAktivitet, useAktivitetContext } from '../AktivitetProvider';
 import { dialogHeaderID2 } from '../dialog/DialogHeader';
 import { useFnrContext } from '../Provider';
@@ -24,7 +24,6 @@ export function AktivitetskortPreview(props: Props) {
     const { aktivitetId } = props;
     const fnr = useFnrContext();
     const aktivitetData = useAktivitetContext();
-    const apiBasePath = getPathnamePrefix();
     const aktivitet = findAktivitet(aktivitetData, aktivitetId);
 
     if (!aktivitet) {
@@ -41,7 +40,7 @@ export function AktivitetskortPreview(props: Props) {
                 {typeTekst}: {aktivitet?.tittel}
             </Undertittel>
             <LenkepanelBase
-                href={aktivitetLenke(apiBasePath, aktivitet.id)}
+                href={aktivitetLenke(pathnamePrefix, aktivitet.id)}
                 className={styles.lenkepanelbase}
                 onClick={visAktivitetsplan(aktivitet.id, fnr)}
             >

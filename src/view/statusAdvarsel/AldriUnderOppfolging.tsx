@@ -1,7 +1,7 @@
 import Lenke from 'nav-frontend-lenker';
 import React from 'react';
 
-import { getPathnamePrefix } from '../../utils/UseApiBasePath';
+import { pathnamePrefix } from '../../utils/UseApiBasePath';
 import StatusAdvarselWrapper from './StatusAdvarselWrapper';
 
 interface Props {
@@ -17,12 +17,10 @@ function Veileder() {
 }
 
 function Bruker() {
-    const basePath = getPathnamePrefix();
-
     return (
         <StatusAdvarselWrapper>
             Du må være registrert hos NAV for å ha digital dialog med veileder. <br />
-            <Lenke href={`${basePath}/arbeidssokerregistrering`}>Registrer deg hos NAV</Lenke>
+            <Lenke href={`${pathnamePrefix}/arbeidssokerregistrering`}>Registrer deg hos NAV</Lenke>
         </StatusAdvarselWrapper>
     );
 }

@@ -6,7 +6,7 @@ import { Normaltekst, Systemtittel } from 'nav-frontend-typografi';
 import Veilederpanel from 'nav-frontend-veilederpanel';
 import React, { useContext, useEffect, useState } from 'react';
 
-import { getPathnamePrefix } from '../../utils/UseApiBasePath';
+import { pathnamePrefix } from '../../utils/UseApiBasePath';
 import { UserInfoContext } from '../../view/BrukerProvider';
 import { hiddenIfHoc } from '../HiddenIfHoc';
 import loggEvent from '../logging';
@@ -41,7 +41,7 @@ function TimeoutModal(props: Props) {
     const baseUrl = userInfo?.erVeileder ? window.location.origin + '' : window.location.origin + '/arbeid/dialog';
 
     useEffect(() => {
-        fetch(getPathnamePrefix() + '/api/auth', {
+        fetch(pathnamePrefix + '/api/auth', {
             credentials: 'same-origin',
             headers: getHeaders()
         })
