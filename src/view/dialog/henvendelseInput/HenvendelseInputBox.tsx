@@ -16,7 +16,7 @@ import styles from './HenvendelseInputBox.module.less';
 
 const maxMeldingsLengde = 5000;
 
-const validerMelding = (melding: string, resten: any, props: { startTekst?: string }) => {
+const validerMelding = (melding: string, _resten: any, props: { startTekst?: string }) => {
     if (melding.length > maxMeldingsLengde) {
         return `Meldingen kan ikke være mer enn ${maxMeldingsLengde} tegn.`;
     }
@@ -109,7 +109,10 @@ const HenvendelseInputBox = (props: Props) => {
                 setViewState(sendtNyHenvendelse(viewState));
                 dispatchUpdate(UpdateTypes.Dialog);
             })
-            .catch(() => setNoeFeilet(true));
+            .catch((e) => {
+                console.log({ e });
+                setNoeFeilet(true);
+            });
     };
 
     const onChange = (e: React.ChangeEvent<HTMLInputElement>) => {

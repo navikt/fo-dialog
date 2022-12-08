@@ -1,12 +1,14 @@
-import React, { useContext, useEffect, useMemo, useState } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 
 import { Status, isReloading } from '../api/typer';
-import { fetchData, getApiBasePath } from '../utils/Fetch';
+import { fetchData } from '../utils/Fetch';
 import { Bruker } from '../utils/Typer';
+import { apiBasePath } from '../utils/UseApiBasePath';
 
 export interface BrukerDataProviderType {
     data: Bruker | null;
     status: Status;
+    error?: string;
 }
 
 const initBrukerState: BrukerDataProviderType = {
@@ -20,8 +22,7 @@ export const useUserInfoContext = () => useContext(UserInfoContext);
 export const useBrukerDataProvider = (fnr?: string): BrukerDataProviderType => {
     const [state, setState] = useState<BrukerDataProviderType>(initBrukerState);
 
-    const apiBasePath = getApiBasePath(fnr);
-    const apiUrl = useMemo(() => `${apiBasePath}/veilarboppfolging/api/oppfolging/me`, [apiBasePath]);
+    const apiUrl = `${apiBasePath}/veilarboppfolging/api/oppfolging/me`;
 
     useEffect(() => {
         setState((prevState) => ({
@@ -35,9 +36,10 @@ export const useBrukerDataProvider = (fnr?: string): BrukerDataProviderType => {
                     status: Status.OK
                 });
             })
-            .catch(() => {
+            .catch((e) => {
                 setState((prevState) => ({
                     ...prevState,
+                    error: e,
                     status: Status.ERROR
                 }));
             });
@@ -45,6 +47,7 @@ export const useBrukerDataProvider = (fnr?: string): BrukerDataProviderType => {
 
     return {
         data: state.data,
-        status: state.status
+        status: state.status,
+        error: state.error
     };
 };

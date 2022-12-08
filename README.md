@@ -18,6 +18,22 @@ npm start
 
 ```
 
+### Api-url-er
+
+Alle url-er **sitt prefiks** slutter alltid på `/veilarbdialog/api`
+
+Eksterne url-er sitt prefix har `/arbeid/dialog` i tillegg
+
+`PUBLIC_URL` blir tatt fra package.json -> "homepage" når den ikke er satt
+
+Ekstern eksempel:
+
+https://pto.dev.nav.no/arbeid/dialog/veilarbdialog/api/*
+
+Intern eksempel:
+
+https://veilarbpersonflate.dev.intern.nav.no/veilarbdialog/api/*
+
 ### Kontakt og spørsmål
 
 Opprett en issue i GitHub for eventuelle spørsmål.

@@ -1,3 +1,18 @@
+import { pathnamePrefix } from '../utils/UseApiBasePath';
+import { runningOnGithubPages, settSammenmedSlasher } from '../view/utils/utils';
+
 export function rndId() {
-    return `${Math.floor(Math.random() * 100000000)}`;
+    const crypto: Crypto = window.crypto;
+    let array = new Uint32Array(1);
+    crypto.getRandomValues(array);
+
+    return `${Math.floor(array[0] % 100_000_000)}`;
 }
+
+export const gotoStartTestPage = (fnr?: string) => {
+    if (runningOnGithubPages) {
+        window.history.replaceState({}, '', settSammenmedSlasher(pathnamePrefix, '#', fnr));
+    } else {
+        window.history.replaceState({}, '', settSammenmedSlasher(pathnamePrefix, fnr));
+    }
+};

@@ -9,7 +9,7 @@ import { getAktivitetType } from '../utils/utils';
 import AktivitetIngress from './AktivitetIngress';
 import styles from './Aktivitetskort.module.less';
 import { AktivitetskortInfoBox } from './AktivitetskortInfoBox';
-import AktivitetskortLenke from './AktivitetskortLinke';
+import AktivitetskortLenke from './AktivitetskortLenke';
 import Brodsmulesti from './Brodsmulesti';
 import AvtaltMarkering from './etiketter/avtalt-markering';
 

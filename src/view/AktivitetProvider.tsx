@@ -2,8 +2,9 @@ import React, { useCallback, useContext, useMemo, useState } from 'react';
 
 import { Status, hasError, isReloading } from '../api/typer';
 import { Aktivitet, ArenaAktivitet } from '../utils/aktivitetTypes';
-import { fetchData, fnrQuery, getApiBasePath } from '../utils/Fetch';
+import { fetchData, fnrQuery } from '../utils/Fetch';
 import { StringOrNull } from '../utils/Typer';
+import { apiBasePath } from '../utils/UseApiBasePath';
 
 export type MaybeAktivitet = Aktivitet | ArenaAktivitet | undefined;
 
@@ -71,14 +72,10 @@ interface AktivitetResponse {
 export const useAktivitetDataProvider = (fnr?: string): AktivitetDataProviderType => {
     const [state, setState] = useState<AktivitetState>(initAktivitetState);
 
-    const apiBasePath = getApiBasePath(fnr);
     const query = fnrQuery(fnr);
 
-    const aktivitetUrl = useMemo(() => `${apiBasePath}/veilarbaktivitet/api/aktivitet${query}`, [apiBasePath, query]);
-    const arenaAktivitetUrl = useMemo(
-        () => `${apiBasePath}/veilarbaktivitet/api/arena/tiltak${query}`,
-        [apiBasePath, query]
-    );
+    const aktivitetUrl = useMemo(() => `${apiBasePath}/veilarbaktivitet/api/aktivitet${query}`, [query]);
+    const arenaAktivitetUrl = useMemo(() => `${apiBasePath}/veilarbaktivitet/api/arena/tiltak${query}`, [query]);
 
     const hentAktiviteter: () => Promise<Aktivitet[]> = useCallback(() => {
         setState((prevState) => ({

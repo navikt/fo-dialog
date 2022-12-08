@@ -6,9 +6,8 @@ import { Normaltekst, Systemtittel } from 'nav-frontend-typografi';
 import Veilederpanel from 'nav-frontend-veilederpanel';
 import React, { useContext, useEffect, useState } from 'react';
 
-import { getApiBasePath } from '../../utils/Fetch';
+import { pathnamePrefix } from '../../utils/UseApiBasePath';
 import { UserInfoContext } from '../../view/BrukerProvider';
-import { getContextPath } from '../../view/utils/utils';
 import { hiddenIfHoc } from '../HiddenIfHoc';
 import loggEvent from '../logging';
 import { ReactComponent as ObsSVG } from './obs.svg';
@@ -39,12 +38,10 @@ function TimeoutModal(props: Props) {
     const erVeileder = userInfo?.erVeileder ?? 'ukjent';
     const brukerId = userInfo?.id ?? 'ukjent';
 
-    const baseUrl = userInfo?.erVeileder
-        ? window.location.origin + getContextPath()
-        : window.location.origin + '/arbeid/dialog';
+    const baseUrl = userInfo?.erVeileder ? window.location.origin + '' : window.location.origin + '/arbeid/dialog';
 
     useEffect(() => {
-        fetch(getApiBasePath(fnr) + '/api/auth', {
+        fetch(pathnamePrefix + '/api/auth', {
             credentials: 'same-origin',
             headers: getHeaders()
         })

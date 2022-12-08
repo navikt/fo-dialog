@@ -7,7 +7,7 @@ import { dataOrUndefined, useHarNivaa4Context } from '../Provider';
 import AldriUnderOppfolging from './AldriUnderOppfolging';
 import IkkeUnderOppfolging from './IkkeUnderOppfolging';
 import KanIkkeVarsles from './KanIkkeVarsles';
-import MannuelBruker from './Manuell';
+import ManuellBruker from './ManuellBruker';
 import { ManglerNivaa4, Nivaa4Feiler } from './Nivaa4';
 import ReservertKrr from './ReservertKrr';
 
@@ -39,7 +39,7 @@ export default function StatusAdvarsel() {
         return <ReservertKrr erVeileder={erVeileder} />;
     }
     if (manuellBruker) {
-        return <MannuelBruker erVeileder={erVeileder} />;
+        return <ManuellBruker erVeileder={erVeileder} />;
     }
     if (!kanVarsles && erProd()) {
         //erProd trengs da ingen av brukerne er registrert i krr i testmiljø

@@ -1,8 +1,9 @@
 import React, { useCallback, useContext, useMemo, useState } from 'react';
 
-import { fetchData, fnrQuery, getApiBasePath } from '../utils/Fetch';
+import { fetchData, fnrQuery } from '../utils/Fetch';
 import { valueOrNull } from '../utils/TypeHelper';
 import { KladdData, StringOrNull } from '../utils/Typer';
+import { apiBasePath } from '../utils/UseApiBasePath';
 
 enum Status {
     INITIAL,
@@ -17,10 +18,10 @@ export interface KladdDataProviderType {
     kladder: KladdData[];
     hentKladder: () => Promise<KladdData[]>;
     oppdaterKladd: (
-        dialogId?: StringOrNull,
-        aktivitetId?: StringOrNull,
-        tema?: StringOrNull,
-        melding?: StringOrNull
+        _dialogId?: StringOrNull,
+        _aktivitetId?: StringOrNull,
+        _tema?: StringOrNull,
+        _melding?: StringOrNull
     ) => void;
     slettKladd: (dialogId?: StringOrNull, aktivitetId?: StringOrNull) => void;
 }
@@ -30,12 +31,16 @@ export const KladdContext = React.createContext<KladdDataProviderType>({
     kladder: [],
     hentKladder: () => Promise.resolve([]),
     oppdaterKladd: (
-        dialogId?: StringOrNull,
-        aktivitetId?: StringOrNull,
-        tema?: StringOrNull,
-        melding?: StringOrNull
-    ) => {},
-    slettKladd: (dialogId?: StringOrNull, aktivitetId?: StringOrNull) => {}
+        _dialogId?: StringOrNull,
+        _aktivitetId?: StringOrNull,
+        _tema?: StringOrNull,
+        _melding?: StringOrNull
+    ) => {
+        /* do nothing */
+    },
+    slettKladd: (_dialogId?: StringOrNull, _aktivitetId?: StringOrNull) => {
+        /* do nothing */
+    }
 });
 
 export const useKladdContext = () => useContext(KladdContext);
@@ -53,10 +58,9 @@ const initKladdState: KladdState = {
 export function useKladdDataProvider(fnr?: string): KladdDataProviderType {
     const [state, setState] = useState(initKladdState);
 
-    const apiBasePath = getApiBasePath(fnr);
     const query = fnrQuery(fnr);
 
-    const baseUrl = useMemo(() => `${apiBasePath}/veilarbdialog/api/kladd${query}`, [apiBasePath, query]);
+    const baseUrl = useMemo(() => `${apiBasePath}/veilarbdialog/api/kladd${query}`, [query]);
 
     const hentKladder = useCallback(() => {
         setState((prevState) => ({

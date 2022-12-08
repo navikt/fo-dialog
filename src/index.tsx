@@ -8,6 +8,7 @@ import ReactDOM from 'react-dom';
 import { initAmplitude } from './metrics/amplitude-utils';
 import DemoBanner from './mock/demo/DemoBanner';
 import { erEksternBruker } from './mock/demo/sessionstorage';
+import { gotoStartTestPage } from './mock/Utils';
 import App from './view/App';
 
 const modalAlly = document.getElementById('modal-a11y-wrapper');
@@ -29,8 +30,6 @@ window.addEventListener(
     'resize',
     throttle(() => {
         // We execute the same script as before
-
-        let vh = window.innerHeight * 0.01;
         document.documentElement.style.setProperty('--vh', `${vh}px`);
     }, 100)
 );
@@ -44,6 +43,8 @@ if (process.env.REACT_APP_MOCK === 'true') {
 
     const fnr = erEksternBruker() ? undefined : '12345678901';
     const AppWrapper = () => <App fnr={fnr} />;
+
+    gotoStartTestPage(fnr);
 
     NAVSPA.eksporter('arbeidsrettet-dialog', AppWrapper);
 } else {

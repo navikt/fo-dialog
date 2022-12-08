@@ -32,7 +32,9 @@ interface ViewContextType {
 
 export const ViewContext = React.createContext<ViewContextType>({
     viewState: initalState,
-    setViewState: () => {}
+    setViewState: () => {
+        /* do nothing */
+    }
 });
 
 export const useFnrContext = () => useContext(FNRContext);
@@ -61,7 +63,11 @@ export function Provider(props: Props) {
 
     const veilederNavn = useFetchVeilederNavn(erVeileder);
 
-    const { data: bruker, status: brukerstatus }: BrukerDataProviderType = useBrukerDataProvider(fnr);
+    const {
+        data: bruker,
+        status: brukerstatus,
+        error: brukerError
+    }: BrukerDataProviderType = useBrukerDataProvider(fnr);
     const oppfolgingDataProvider = useOppfolgingDataProvider(fnr);
     const { status: oppfolgingstatus, hentOppfolging } = oppfolgingDataProvider;
 
@@ -116,7 +122,10 @@ export function Provider(props: Props) {
             </AlertStripeFeil>
         );
     }
-
+    console.log({ brukerstatus });
+    console.log({ brukerError });
+    console.log({ oppfolgingstatus });
+    console.log({ dialogstatus });
     return (
         <DialogContext.Provider value={dialogDataProvider}>
             <OppfolgingContext.Provider value={oppfolgingDataProvider}>
