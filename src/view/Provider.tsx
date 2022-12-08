@@ -122,10 +122,6 @@ export function Provider(props: Props) {
             </AlertStripeFeil>
         );
     }
-    console.log({ brukerstatus });
-    console.log({ brukerError });
-    console.log({ oppfolgingstatus });
-    console.log({ dialogstatus });
     return (
         <DialogContext.Provider value={dialogDataProvider}>
             <OppfolgingContext.Provider value={oppfolgingDataProvider}>
