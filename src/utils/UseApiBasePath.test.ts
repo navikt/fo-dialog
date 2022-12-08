@@ -1,5 +1,7 @@
 import fs from 'fs';
 
+import { apiBasePath, pathnamePrefix } from './UseApiBasePath';
+
 const loadEnv = (path: string) => {
     const mockEnv = fs
         .readFileSync(path, 'utf-8')
@@ -51,5 +53,12 @@ describe('base', () => {
         const { pathnamePrefix, apiBasePath } = require('./UseApiBasePath');
         expect(pathnamePrefix).toBe('/arbeid/dialog');
         expect(apiBasePath).toBe('');
+    });
+
+    it('gh-pages api-url should be empty string', () => {
+        loadEnv('./nais/.env.github.pages');
+        const { pathnamePrefix, apiBasePath } = require('./UseApiBasePath');
+        expect(pathnamePrefix).toBe('/arbeidsrettet-dialog');
+        expect(apiBasePath).toBe('/arbeidsrettet-dialog');
     });
 });
