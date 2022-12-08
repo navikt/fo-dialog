@@ -28,7 +28,7 @@ export const toggleFnrInUrl = (hashPart: string, fnr?: string) => {
 export const gotoStartTestPage = (fnr?: string) => {
     if (runningOnGithubPages) {
         const hashPartOfUrl = toggleFnrInUrl(window.location.hash, fnr);
-        window.history.replaceState({}, '', settSammenmedSlasher(pathnamePrefix, '#', hashPartOfUrl));
+        window.history.replaceState({}, '', settSammenmedSlasher(pathnamePrefix, hashPartOfUrl));
     } else {
         window.history.replaceState({}, '', settSammenmedSlasher(pathnamePrefix, fnr));
     }
