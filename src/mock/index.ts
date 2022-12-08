@@ -104,9 +104,9 @@ mock.get(`${apiBase}/veilarboppfolging/api/oppfolging/me`, bruker());
 mock.get(`${apiBase}/veilarboppfolging/api/oppfolging`, oppfolging);
 mock.get(`${apiBase}/veilarbaktivitet/api/aktivitet`, harAktivitetFeilerSkruddPa() ? fail() : aktiviteter);
 mock.get(`${apiBase}/veilarbaktivitet/api/arena/tiltak`, harArenaaktivitetFeilerSkruddPa() ? fail() : arenaAktiviteter);
-mock.get(`${apiBase}/veilarbveileder/api/veileder/me`, veilederMe);
+mock.get(`/veilarbveileder/api/veileder/me`, veilederMe);
 mock.get(
-    `${apiBase}/veilarbperson/api/person/:fnr/harNivaa4`,
+    `/veilarbperson/api/person/:fnr/harNivaa4`,
     harNivaa4Fieler() ? fail() : ({ pathParams }) => harNivaa4Data(pathParams.fnr)
 );
 mock.get(`${apiBase}/api/auth`, { remainingSeconds: 60 * 60 });
