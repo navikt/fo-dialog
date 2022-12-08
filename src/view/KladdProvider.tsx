@@ -60,7 +60,7 @@ export function useKladdDataProvider(fnr?: string): KladdDataProviderType {
 
     const query = fnrQuery(fnr);
 
-    const baseUrl = useMemo(() => `${apiBasePath}/veilarbdialog/api/kladd${query}`, [apiBasePath, query]);
+    const baseUrl = useMemo(() => `${apiBasePath}/veilarbdialog/api/kladd${query}`, [query]);
 
     const hentKladder = useCallback(() => {
         setState((prevState) => ({

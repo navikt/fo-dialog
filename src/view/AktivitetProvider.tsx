@@ -74,11 +74,8 @@ export const useAktivitetDataProvider = (fnr?: string): AktivitetDataProviderTyp
 
     const query = fnrQuery(fnr);
 
-    const aktivitetUrl = useMemo(() => `${apiBasePath}/veilarbaktivitet/api/aktivitet${query}`, [apiBasePath, query]);
-    const arenaAktivitetUrl = useMemo(
-        () => `${apiBasePath}/veilarbaktivitet/api/arena/tiltak${query}`,
-        [apiBasePath, query]
-    );
+    const aktivitetUrl = useMemo(() => `${apiBasePath}/veilarbaktivitet/api/aktivitet${query}`, [query]);
+    const arenaAktivitetUrl = useMemo(() => `${apiBasePath}/veilarbaktivitet/api/arena/tiltak${query}`, [query]);
 
     const hentAktiviteter: () => Promise<Aktivitet[]> = useCallback(() => {
         setState((prevState) => ({

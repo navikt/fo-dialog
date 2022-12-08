@@ -33,10 +33,7 @@ export const useOppfolgingDataProvider = (fnr?: string) => {
 
     const query = fnrQuery(fnr);
 
-    const oppfolgingUrl = useMemo(
-        () => `${apiBasePath}/veilarboppfolging/api/oppfolging${query}`,
-        [apiBasePath, query]
-    );
+    const oppfolgingUrl = useMemo(() => `${apiBasePath}/veilarboppfolging/api/oppfolging${query}`, [query]);
 
     const hentOppfolging: () => Promise<OppfolgingData | undefined> = useCallback(() => {
         setState((prevState) => ({

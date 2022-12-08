@@ -52,24 +52,18 @@ export function useDialogDataProvider(fnr?: string): DialogDataProviderType {
 
     const query = fnrQuery(fnr);
 
-    const baseUrl = useMemo(() => `${apiBasePath}/veilarbdialog/api/dialog${query}`, [apiBasePath, query]);
-    const sistOppdatertUrl = useMemo(
-        () => `${apiBasePath}/veilarbdialog/api/dialog/sistOppdatert${query}`,
-        [apiBasePath, query]
-    );
-    const lesUrl = useCallback(
-        (id: string) => `${apiBasePath}/veilarbdialog/api/dialog/${id}/les${query}`,
-        [apiBasePath, query]
-    );
+    const baseUrl = useMemo(() => `${apiBasePath}/veilarbdialog/api/dialog${query}`, [query]);
+    const sistOppdatertUrl = useMemo(() => `${apiBasePath}/veilarbdialog/api/dialog/sistOppdatert${query}`, [query]);
+    const lesUrl = useCallback((id: string) => `${apiBasePath}/veilarbdialog/api/dialog/${id}/les${query}`, [query]);
     const ferdigBehandletUrl = useCallback(
         (id: string, ferdigBehandlet: boolean) =>
             `${apiBasePath}/veilarbdialog/api/dialog/${id}/ferdigbehandlet/${ferdigBehandlet}${query}`,
-        [apiBasePath, query]
+        [query]
     );
     const venterPaSvarUrl = useCallback(
         (id: string, venterPaSvar: boolean) =>
             `${apiBasePath}/veilarbdialog/api/dialog/${id}/venter_pa_svar/${venterPaSvar}${query}`,
-        [apiBasePath, query]
+        [query]
     );
 
     const hentDialoger: () => Promise<DialogData[]> = useCallback(() => {

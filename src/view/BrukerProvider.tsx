@@ -1,4 +1,4 @@
-import React, { useContext, useEffect, useMemo, useState } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 
 import { Status, isReloading } from '../api/typer';
 import { fetchData } from '../utils/Fetch';
@@ -22,7 +22,7 @@ export const useUserInfoContext = () => useContext(UserInfoContext);
 export const useBrukerDataProvider = (fnr?: string): BrukerDataProviderType => {
     const [state, setState] = useState<BrukerDataProviderType>(initBrukerState);
 
-    const apiUrl = useMemo(() => `${apiBasePath}/veilarboppfolging/api/oppfolging/me`, [apiBasePath]);
+    const apiUrl = `${apiBasePath}/veilarboppfolging/api/oppfolging/me`;
 
     useEffect(() => {
         setState((prevState) => ({
