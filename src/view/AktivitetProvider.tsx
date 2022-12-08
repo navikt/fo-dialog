@@ -1,7 +1,7 @@
 import React, { useCallback, useContext, useMemo, useState } from 'react';
 
 import { Status, hasError, isReloading } from '../api/typer';
-import { Aktivitet, ArenaAktivitet } from '../utils/aktivitetTypes';
+import { Aktivitet, ArenaAktivitet, isArenaAktivitet } from '../utils/aktivitetTypes';
 import { fetchData, fnrQuery, getApiBasePath } from '../utils/Fetch';
 import { StringOrNull } from '../utils/Typer';
 
@@ -61,7 +61,12 @@ export const findAktivitet = (aktivitetData: AktivitetDataProviderType, aktivite
         aktivitetData.arenaAktiviteterStatus === Status.OK || aktivitetData.arenaAktiviteterStatus === Status.RELOADING;
     const arena: ArenaAktivitet[] = arenaHasData ? aktivitetData.arenaAktiviteter : [];
 
-    return [...aktiviteter, ...arena].find((aktivitet) => aktivitet.id === aktivitetId);
+    return [...aktiviteter, ...arena].find((aktivitet) => {
+        if (isArenaAktivitet(aktivitet)) {
+            return !!aktivitet.aktivitetId ? aktivitet.aktivitetId === aktivitetId : aktivitet.id === aktivitetId;
+        }
+        return aktivitet.id === aktivitetId;
+    });
 };
 
 interface AktivitetResponse {

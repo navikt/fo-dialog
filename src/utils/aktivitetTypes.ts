@@ -148,7 +148,8 @@ export enum ArenaAktivitetTypes {
 
 export interface ArenaAktivitet {
     //Felles
-    id: string;
+    id: string; // arenaid
+    aktivitetId: StringOrNull; // tekniskid hvis aktiviteten er migrert
     status: AktivitetStatus;
     type: ArenaAktivitetTypes;
     tittel: StringOrNull;
@@ -171,3 +172,7 @@ export interface ArenaAktivitet {
     // Gruppeaktivitet
     moeteplanListe: object[] | null;
 }
+
+export const isArenaAktivitet = (aktivitet: Aktivitet | ArenaAktivitet): aktivitet is ArenaAktivitet => {
+    return 'aktivitetId' in aktivitet;
+};
