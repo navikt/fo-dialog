@@ -61,7 +61,7 @@
     },
     "dependencies": {
         "@navikt/fnrvalidator": "^1.1.2",
-        "@navikt/navspa": "1.1.1",
+        "@navikt/navspa": "5.0.1",
         "@nutgaard/use-formstate": "^3.0.1",
         "amplitude-js": "^8.19.0",
         "babel-polyfill": "^6.26.0",
