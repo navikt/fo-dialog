@@ -58,6 +58,8 @@ export function getTypeText(type: AlleAktivitetTypes): string {
             return 'Tiltak gjennom NAV';
         case EksternAktivitetTypes.MIDLERTIDIG_LONNSTILSKUDD:
             return 'Avtale midlertidig lønnstilskudd';
+        case EksternAktivitetTypes.VARIG_LONNSTILSKUDD:
+            return 'Avtale varig lønnstilskudd';
     }
 }
 
