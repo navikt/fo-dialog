@@ -356,7 +356,7 @@ const stillingFraNav2 = {
 const midl_lonnstilsk = {
     versjon: '5345436',
     id: 'EKSTERNAKTIVITET_1',
-    tittel: 'Asd eksternaktivitet 123',
+    tittel: 'Baker Jonson',
     type: AktivitetTypes.EKSTERN_AKTIVITET,
     fraDato: '2019-08-14T00:00:00+02:00',
     lenke: null,
@@ -378,7 +378,7 @@ const midl_lonnstilsk = {
 const varig_lonnstilsk = {
     versjon: '5345436',
     id: 'EKSTERNAKTIVITET_2',
-    tittel: 'Asd eksternaktivitet 123',
+    tittel: 'Maler Hansson',
     type: AktivitetTypes.EKSTERN_AKTIVITET,
     fraDato: '2019-08-14T00:00:00+02:00',
     lenke: null,
@@ -403,7 +403,8 @@ const arena_tiltak = {
     id: 'EKSTERNAKTIVITET_3',
     tittel: 'Asd eksternaktivitet 123',
     type: AktivitetTypes.EKSTERN_AKTIVITET,
-    fraDato: '2019-08-14T00:00:00+02:00',
+    fraDato: '2022-08-14T00:00:00+02:00',
+    tilDato: '2023-08-10T07:45:00+02:00',
     lenke: null,
     beskrivelse: 'Ekstern aktivitet beskrivelse aaaaa aaaa aa.',
     status: 'GJENNOMFORES',
