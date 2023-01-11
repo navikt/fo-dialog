@@ -480,6 +480,60 @@ const dialoger: DialogData[] & JSONArray = [
             }
         ],
         egenskaper: []
+    },
+    {
+        id: '301',
+        overskrift: 'Baker Jonson',
+        sisteTekst: 'Er du fornøyd med oppgavene dine?',
+        sisteDato: '2021-09-01T11:52:20.615+01:00',
+        opprettetDato: '2022-09-01T11:52:20.535+01:00',
+        historisk: false,
+        lest: false,
+        venterPaSvar: true,
+        ferdigBehandlet: true,
+        lestAvBrukerTidspunkt: null,
+        erLestAvBruker: false,
+        aktivitetId: 'EKSTERNAKTIVITET_1',
+        henvendelser: [
+            {
+                id: '3000',
+                dialogId: '301',
+                avsender: 'VEILEDER',
+                avsenderId: 'Z123456',
+                sendt: '2021-02-01T11:52:20.615+01:00',
+                lest: false,
+                viktig: false,
+                tekst: 'Er du fornøyd med oppgavene dine?'
+            }
+        ],
+        egenskaper: []
+    },
+    {
+        id: '302',
+        overskrift: 'Maler Hansson',
+        sisteTekst: 'Er du fornøyd med fargene?',
+        sisteDato: '2021-09-01T11:52:20.615+01:00',
+        opprettetDato: '2022-09-01T11:52:20.535+01:00',
+        historisk: false,
+        lest: false,
+        venterPaSvar: true,
+        ferdigBehandlet: true,
+        lestAvBrukerTidspunkt: null,
+        erLestAvBruker: false,
+        aktivitetId: 'EKSTERNAKTIVITET_2',
+        henvendelser: [
+            {
+                id: '3001',
+                dialogId: '302',
+                avsender: 'VEILEDER',
+                avsenderId: 'Z123456',
+                sendt: '2021-02-01T11:52:20.615+01:00',
+                lest: false,
+                viktig: false,
+                tekst: 'Er du fornøyd med fargene?'
+            }
+        ],
+        egenskaper: []
     }
 ];
 

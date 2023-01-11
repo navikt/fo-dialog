@@ -137,7 +137,8 @@ export interface EksternAktivitetData {
 
 export enum EksternAktivitetTypes {
     ARENA_TILTAK = 'ARENA_TILTAK',
-    MIDLERTIDIG_LONNSTILSKUDD = 'MIDLERTIDIG_LONNSTILSKUDD'
+    MIDLERTIDIG_LONNSTILSKUDD = 'MIDLERTIDIG_LONNSTILSKUDD',
+    VARIG_LONNSTILSKUDD = 'VARIG_LONNSTILSKUDD'
 }
 
 export enum ArenaAktivitetTypes {

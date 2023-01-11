@@ -353,10 +353,10 @@ const stillingFraNav2 = {
         soknadsstatus: 'VENTER'
     }
 };
-const eksternAktivitet = {
+const midl_lonnstilsk = {
     versjon: '5345436',
     id: 'EKSTERNAKTIVITET_1',
-    tittel: 'Asd eksternaktivitet 123',
+    tittel: 'Baker Jonson',
     type: AktivitetTypes.EKSTERN_AKTIVITET,
     fraDato: '2019-08-14T00:00:00+02:00',
     lenke: null,
@@ -375,6 +375,52 @@ const eksternAktivitet = {
         c: 'test'
     }
 };
+const varig_lonnstilsk = {
+    versjon: '5345436',
+    id: 'EKSTERNAKTIVITET_2',
+    tittel: 'Maler Hansson',
+    type: AktivitetTypes.EKSTERN_AKTIVITET,
+    fraDato: '2019-08-14T00:00:00+02:00',
+    lenke: null,
+    beskrivelse: 'Ekstern aktivitet beskrivelse aaaaa aaaa aa.',
+    status: 'GJENNOMFORES',
+    opprettetDato: '2020-05-31T10:46:51.622+01:00',
+    endretDato: '2020-09-30T10:46:51.622+01:00',
+    endretAv: 'z990207',
+    historisk: false,
+    lagtInnAv: 'NAV',
+    transaksjonsType: 'STATUS_ENDRET',
+    eksternAktivitet: {
+        type: EksternAktivitetTypes.VARIG_LONNSTILSKUDD,
+        a: 123,
+        b: true,
+        c: 'test'
+    }
+};
+
+const arena_tiltak = {
+    versjon: '5345436',
+    id: 'EKSTERNAKTIVITET_3',
+    tittel: 'Asd eksternaktivitet 123',
+    type: AktivitetTypes.EKSTERN_AKTIVITET,
+    fraDato: '2022-08-14T00:00:00+02:00',
+    tilDato: '2023-08-10T07:45:00+02:00',
+    lenke: null,
+    beskrivelse: 'Ekstern aktivitet beskrivelse aaaaa aaaa aa.',
+    status: 'GJENNOMFORES',
+    opprettetDato: '2020-05-31T10:46:51.622+01:00',
+    endretDato: '2020-09-30T10:46:51.622+01:00',
+    endretAv: 'z990207',
+    historisk: false,
+    lagtInnAv: 'NAV',
+    transaksjonsType: 'STATUS_ENDRET',
+    eksternAktivitet: {
+        type: EksternAktivitetTypes.ARENA_TILTAK,
+        a: 123,
+        b: true,
+        c: 'test'
+    }
+};
 
 const aktiviteter = {
     aktiviteter: [
@@ -387,7 +433,9 @@ const aktiviteter = {
         ijobbAktivitet,
         stillingFraNav,
         stillingFraNav2,
-        eksternAktivitet
+        midl_lonnstilsk,
+        varig_lonnstilsk,
+        arena_tiltak
     ]
 };
 
