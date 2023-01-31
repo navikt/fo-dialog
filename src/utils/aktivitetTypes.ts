@@ -86,7 +86,7 @@ export interface Aktivitet {
     historisk: boolean;
     avsluttetKommentar: StringOrNull;
     avtalt: boolean;
-    lagtInnAv: StringOrNull;
+    endretAvType: StringOrNull;
     transaksjonsType: StringOrNull;
     malid: StringOrNull;
 

@@ -90,7 +90,7 @@ const aktivitet: Aktivitet = {
     jobbStatus: null,
     kanal: KanalTypes.INTERNETT,
     kontaktperson: null,
-    lagtInnAv: null,
+    endretAvType: null,
     lenke: null,
     malid: null,
     oppfolging: null,
