@@ -6,7 +6,7 @@ metadata:
   labels:
     team: pto
 spec:
-  image: ghcr.io/navikt/pto-frontend/pto-frontend:2023.01.13_08.11-4fff74d23073
+  image: ghcr.io/navikt/poao-frontend/poao-frontend:2023.01.13_08.09-36c09678654f
   port: 8080
   liveness:
     path: /arbeid/dialog/internal/isAlive
@@ -27,6 +27,17 @@ spec:
       memory: 256Mi
   ingresses:
     - https://pto.dev.nav.no/arbeid/dialog
+  idporten:
+    enabled: true
+    sidecar:
+      enabled: true
+      autoLogin: true
+      # Chrome does not send cookie with the site.webmanifest request, dont require login for that file
+      autoLoginIgnorePaths:
+        - /site.webmanifest
+  tokenx:
+    enabled:
+      true
   accessPolicy:
     outbound:
       rules:
@@ -36,50 +47,60 @@ spec:
   gcp:
     buckets:
       - name: arbeidsrettet-dialog-dev
+
   envFrom:
     - configmap: pto-config
     - configmap: loginservice-idporten
   env:
-    - name: ENFORCE_LOGIN
-      value: "true"
     - name: LOGIN_REDIRECT_URL
       value: https://loginservice.dev.nav.no/login?redirect={RETURN_TO_URL}&level=Level4
     - name: TOKEN_COOKIE_NAME
       value: selvbetjening-idtoken
-    - name: GCS_BUCKET_NAME
-      value: arbeidsrettet-dialog-dev
     - name: CONTEXT_PATH
       value: /arbeid/dialog
     - name: JSON_CONFIG
       value: >
         {
-          "fallbackStrategy": "serve",
+          "fallbackStrategy": "SERVE_INDEX_HTML",
+          "gcs" { "bucketName": "arbeidsrettet-dialog-dev" },
+          "auth": { "loginProvider": "ID_PORTEN" },
+          "header": {
+            "csp": {
+              "defaultSrc":["'self'", "*.nav.no"],
+              "scriptSrc":["*.nav.no","*.psplugin.com","*.hotjar.com","*.taskanalytics.com","'unsafe-inline'","'unsafe-eval'", "blob:", "*.boost.ai"],
+              "styleSrc":["*.nav.no","*.psplugin.com","'unsafe-inline'"],
+              "fontSrc":["*.psplugin.com","*.hotjar.com","cdn.nav.no","data:"],
+              "imgSrc":["*.nav.no","*.psplugin.com","*.vimeocdn.com","*.hotjar.com","www.vergic.com"],
+              "frameSrc":["*.hotjar.com","player.vimeo.com","video.qbrick.com"],
+              "connectSrc":["*.nav.no","*.boost.ai","*.psplugin.com","*.hotjar.com","*.hotjar.io","*.taskanalytics.com"]
+            }
+          },
           "proxies": [
-            { "from": "/veilarbaktivitet", "to": "http://pto-proxy/proxy/veilarbaktivitet" },
-            { "from": "/veilarbdialog", "to": "http://pto-proxy/proxy/veilarbdialog" },
-            { "from": "/veilarboppfolging", "to": "http://pto-proxy/proxy/veilarboppfolging" },
-            { "from": "/veilarblest", "to": "http://pto-proxy/proxy/veilarblest" }
+            { "fromPath": "/veilarbaktivitet", "toUrl": "http://pto-proxy/proxy/veilarbaktivitet" },
+            { "fromPath": "/veilarbdialog", "toUrl": "http://pto-proxy/proxy/veilarbdialog" },
+            { "fromPath": "/veilarboppfolging", "toUrl": "http://pto-proxy/proxy/veilarboppfolging" },
+            { "fromPath": "/veilarblest", "toUrl": "http://pto-proxy/proxy/veilarblest" }
           ],
           "redirects": [
               {
-                "from": "/api/auth",
-                "to": "/arbeid/dialog/auth/info"
+                "fromPath": "/api/auth",
+                "toUrl": "/arbeid/dialog/auth/info"
               },
               {
-                "from": "/aktivitetsplan",
-                "to": "{{AKTIVITETSPLAN_URL}}"
+                "fromPath": "/aktivitetsplan",
+                "toUrl": "{{AKTIVITETSPLAN_URL}}"
               },
               {
-                "from": "/arbeidssokerregistrering",
-                "to": "{{ARBEIDSSOKERREGISTRERING_URL}}"
+                "fromPath": "/arbeidssokerregistrering",
+                "toUrl": "{{ARBEIDSSOKERREGISTRERING_URL}}"
               },
               {
-                "from": "/minside",
-                "to": "{{MINSIDE_URL}}"
+                "fromPath": "/minside",
+                "toUrl": "{{MINSIDE_URL}}"
               },
               {
-                "from": "/veientilarbeid",
-                "to": "{{VEIENTILARBEID_URL}}"
+                "fromPath": "/veientilarbeid",
+                "toUrl": "{{VEIENTILARBEID_URL}}"
               }
           ]
         }
