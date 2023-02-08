@@ -48,6 +48,6 @@ spec:
             "bucketName": "arbeidsrettet-dialog-intern-dev"
           },
           "cors": {
-             "origin": "https://veilarbpersonflate.intern.nav.no"
+             "origin": "https://veilarbpersonflate.dev.intern.nav.no"
            }
         }
