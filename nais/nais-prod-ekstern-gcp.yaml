@@ -70,10 +70,10 @@ spec:
             }
           },
           "proxies": [
-            { "fromPath": "/veilarbaktivitet", "toUrl": "http://pto-proxy/proxy/veilarbaktivitet" },
-            { "fromPath": "/veilarbdialog", "toUrl": "http://pto-proxy/proxy/veilarbdialog" },
-            { "fromPath": "/veilarboppfolging", "toUrl": "http://pto-proxy/proxy/veilarboppfolging" },
-            { "fromPath": "/veilarblest", "toUrl": "http://pto-proxy/proxy/veilarblest" }
+            { "fromPath": "/veilarbaktivitet", "toUrl": "http://pto-proxy/proxy/veilarbaktivitet", "toApp": {"name": "veilarbaktivitet", "namespace": "pto", "cluster": "prod-fss" } },
+            { "fromPath": "/veilarbdialog", "toUrl": "http://pto-proxy/proxy/veilarbdialog", "toApp": {"name": "veilarbdialog", "namespace": "pto", "cluster": "prod-fss" } },
+            { "fromPath": "/veilarboppfolging", "toUrl": "http://pto-proxy/proxy/veilarboppfolging", "toApp": {"name": "veilarboppfolging", "namespace": "pto", "cluster": "prod-fss" } },
+            { "fromPath": "/veilarblest", "toUrl": "http://pto-proxy/proxy/veilarblest", "toApp": {"name": "veilarblest", "namespace": "pto", "cluster": "prod-fss" } }
           ],
           "redirects": [
             {
