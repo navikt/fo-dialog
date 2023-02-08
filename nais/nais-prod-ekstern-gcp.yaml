@@ -61,7 +61,7 @@ spec:
       value: >
         {
           "fallbackStrategy": "SERVE_INDEX_HTML",
-          "gcs" { "bucketName": "arbeidsrettet-dialog-prod" },
+          "gcs": { "bucketName": "arbeidsrettet-dialog-prod" },
           "auth": { "loginProvider": "ID_PORTEN" },
           "header": {
             "csp": {
