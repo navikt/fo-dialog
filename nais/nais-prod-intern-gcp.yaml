@@ -33,8 +33,6 @@ spec:
   envFrom:
     - configmap: pto-config
   env:
-    - name: CONTEXT_PATH
-      value: /arbeid/dialog
     - name: JSON_CONFIG
       value: >
         {
