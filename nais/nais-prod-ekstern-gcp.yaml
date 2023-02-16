@@ -61,7 +61,7 @@ spec:
           "header": {
             "csp": {
               "defaultSrc":["'self'", "*.nav.no"],
-              "scriptSrc":["*.nav.no","*.psplugin.com","*.hotjar.com","*.taskanalytics.com","'unsafe-inline'","'unsafe-eval'", "blob:", "*.boost.ai"],
+              "scriptSrc":["'self'", "*.nav.no","*.psplugin.com","*.hotjar.com","*.taskanalytics.com","'unsafe-inline'","'unsafe-eval'", "blob:", "*.boost.ai"],
               "styleSrc":["*.nav.no","*.psplugin.com","'unsafe-inline'"],
               "fontSrc":["*.psplugin.com","*.hotjar.com","cdn.nav.no","data:"],
               "imgSrc":["*.nav.no","*.psplugin.com","*.vimeocdn.com","*.hotjar.com","www.vergic.com"],
@@ -73,9 +73,9 @@ spec:
             { "fromPath": "/veilarbaktivitet", "toUrl": "https://veilarbaktivitet.prod-fss-pub.nais.io/veilarbaktivitet", "toApp": {"name": "veilarbaktivitet", "namespace": "pto", "cluster": "prod-fss" } },
             { "fromPath": "/veilarbdialog", "toUrl": "https://veilarbdialog.prod-fss-pub.nais.io/veilarbdialog", "toApp": {"name": "veilarbdialog", "namespace": "pto", "cluster": "prod-fss" } },
             { "fromPath": "/veilarboppfolging", "toUrl": "https://veilarboppfolging.prod-fss-pub.nais.io/veilarboppfolging", "toApp": {"name": "veilarboppfolging", "namespace": "pto", "cluster": "prod-fss" } },
-            { "fromPath": "/veilarblest", "toUrl": "http://veilarblest.prod-fss-pub.nais.io/veilarblest", "toApp": {"name": "veilarblest", "namespace": "pto", "cluster": "prod-fss" } }
+            { "fromPath": "/veilarblest", "toUrl": "https://veilarblest.prod-fss-pub.nais.io/veilarblest", "toApp": {"name": "veilarblest", "namespace": "pto", "cluster": "prod-fss" } }
           ],
-          "redirects": [  
+          "redirects": [
             {
               "fromPath": "/api/auth",
               "toUrl": "/arbeid/dialog/auth/info"
