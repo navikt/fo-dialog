@@ -42,7 +42,7 @@ spec:
     - name: JSON_CONFIG
       value: >
         {
-          "context-path": "/arbeid/dialog",
+          "contextPath": "/arbeid/dialog",
           "gcs": {
             "bucketName": "arbeidsrettet-dialog-intern-dev"
           },
