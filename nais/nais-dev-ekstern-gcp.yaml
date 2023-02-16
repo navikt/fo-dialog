@@ -9,10 +9,10 @@ spec:
   image: ghcr.io/navikt/poao-frontend/poao-frontend:2023.01.13_08.09-36c09678654f
   port: 8080
   liveness:
-    path: /arbeid/dialog/internal/alive
+    path: /internal/ready/alive
     initialDelay: 20
   readiness:
-    path: /arbeid/dialog/internal/ready
+    path: /internal/ready/ready
     initialDelay: 20
   replicas:
     min: 1
