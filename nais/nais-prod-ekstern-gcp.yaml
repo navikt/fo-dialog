@@ -70,12 +70,12 @@ spec:
             }
           },
           "proxies": [
-            { "fromPath": "/veilarbaktivitet", "toUrl": "http://pto-proxy/proxy/veilarbaktivitet", "toApp": {"name": "veilarbaktivitet", "namespace": "pto", "cluster": "prod-fss" } },
-            { "fromPath": "/veilarbdialog", "toUrl": "http://pto-proxy/proxy/veilarbdialog", "toApp": {"name": "veilarbdialog", "namespace": "pto", "cluster": "prod-fss" } },
-            { "fromPath": "/veilarboppfolging", "toUrl": "http://pto-proxy/proxy/veilarboppfolging", "toApp": {"name": "veilarboppfolging", "namespace": "pto", "cluster": "prod-fss" } },
-            { "fromPath": "/veilarblest", "toUrl": "http://pto-proxy/proxy/veilarblest", "toApp": {"name": "veilarblest", "namespace": "pto", "cluster": "prod-fss" } }
+            { "fromPath": "/veilarbaktivitet", "toUrl": "https://veilarbaktivitet.prod-fss-pub.nais.io/veilarbaktivitet", "toApp": {"name": "veilarbaktivitet", "namespace": "pto", "cluster": "prod-fss" } },
+            { "fromPath": "/veilarbdialog", "toUrl": "https://veilarbdialog.prod-fss-pub.nais.io/veilarbdialog", "toApp": {"name": "veilarbdialog", "namespace": "pto", "cluster": "prod-fss" } },
+            { "fromPath": "/veilarboppfolging", "toUrl": "https://veilarboppfolging.prod-fss-pub.nais.io/veilarboppfolging", "toApp": {"name": "veilarboppfolging", "namespace": "pto", "cluster": "prod-fss" } },
+            { "fromPath": "/veilarblest", "toUrl": "http://veilarblest.prod-fss-pub.nais.io/veilarblest", "toApp": {"name": "veilarblest", "namespace": "pto", "cluster": "prod-fss" } }
           ],
-          "redirects": [
+          "redirects": [  
             {
               "fromPath": "/api/auth",
               "toUrl": "/arbeid/dialog/auth/info"
