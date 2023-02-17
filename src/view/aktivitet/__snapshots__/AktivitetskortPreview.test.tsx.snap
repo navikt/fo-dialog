@@ -36,13 +36,13 @@ exports[`<AktivitetskortPreview /> skal rendre stillingsaktivitet som i snapshot
     </Undertittel>
     <LenkepanelBase
       border={false}
-      href="/aktivitetsplan/aktivitet/vis/123"
+      href="https://aktivitetsplan.dev.nav.no/aktivitet/vis/123"
       linkCreator={[Function]}
       onClick={[Function]}
     >
       <a
         className="lenkepanel"
-        href="/aktivitetsplan/aktivitet/vis/123"
+        href="https://aktivitetsplan.dev.nav.no/aktivitet/vis/123"
         onClick={[Function]}
       >
         <div>
