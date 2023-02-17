@@ -4,6 +4,7 @@ import Lenke from 'nav-frontend-lenker';
 import { Element, Normaltekst } from 'nav-frontend-typografi';
 import React, { useLayoutEffect } from 'react';
 
+import { aktivtetsplanUrl } from '../../metrics/constants';
 import { pathnamePrefix } from '../../utils/UseApiBasePath';
 import dialogStyle from '../dialog/Dialog.module.less';
 import { TittelHeader } from '../dialog/TittelHeader';
@@ -27,7 +28,7 @@ export function InfoOmDialogSide() {
                     <Normaltekst>
                         I dialogen kan du og veilederen din skrive til hverandre om arbeid og oppfølging. Dere kan blant
                         annet sende meldinger om aktivitetene dine i{' '}
-                        <Lenke href={`${pathnamePrefix}/aktivitetsplan`}>aktivitetsplanen</Lenke>.
+                        <Lenke href={`${aktivtetsplanUrl}`}>aktivitetsplanen</Lenke>.
                     </Normaltekst>
                 </div>
 
