@@ -6,13 +6,13 @@ metadata:
   labels:
     team: pto
 spec:
-  image: ghcr.io/navikt/poao-frontend/poao-frontend:2023.02.15_15.26-4e7baad4b314
+  image: ghcr.io/navikt/pto-frontend/pto-frontend:2023.01.13_08.11-4fff74d23073
   port: 8080
   liveness:
-    path: /internal/alive
+    path: /arbeid/dialog/internal/isAlive
     initialDelay: 20
   readiness:
-    path: /internal/ready
+    path: /arbeid/dialog/internal/isReady
     initialDelay: 20
   replicas:
     min: 2
@@ -26,19 +26,18 @@ spec:
       cpu: 500m
       memory: 512Mi
   ingresses:
-    - https://arbeidsrettet-dialog.intern.nav.no
+    - https://arbeidsrettet-dialog.intern.nav.no/arbeid/dialog
   gcp:
     buckets:
       - name: arbeidsrettet-dialog-intern-prod
+  envFrom:
+    - configmap: pto-config
   env:
-    - name: JSON_CONFIG
-      value: >
-        {
-          "contextPath": "/arbeid/dialog",
-          "gcs": {
-            "bucketName": "arbeidsrettet-dialog-intern-prod"
-          },
-          "cors": {
-             "origin": "https://veilarbpersonflate.intern.nav.no"
-           }
-        }
+    - name: ENFORCE_LOGIN
+      value: "false"
+    - name: GCS_BUCKET_NAME
+      value: arbeidsrettet-dialog-intern-prod
+    - name: CONTEXT_PATH
+      value: /arbeid/dialog
+    - name: CORS_DOMAIN
+      value: "*"
