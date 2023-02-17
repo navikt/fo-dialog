@@ -8,8 +8,6 @@ import { getContextPath } from '../utils/utils';
 import styles from './Aktivitetskort.module.less';
 
 export const aktivitetLenke = (aktivitetId: string) => {
-    console.log(process.env);
-    console.log({ aktivtetsplanUrl, lol: process.env.REACT_APP_AKTIVITETSPLAN_URL });
     return `${aktivtetsplanUrl}/aktivitet/vis/${aktivitetId}`;
 };
 
