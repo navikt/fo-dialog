@@ -38,12 +38,6 @@ spec:
   tokenx:
     enabled:
       true
-  accessPolicy:
-    outbound:
-      rules:
-        - application: pto-proxy
-      external:
-        - host: navnob2c.b2clogin.com
   gcp:
     buckets:
       - name: arbeidsrettet-dialog-prod
