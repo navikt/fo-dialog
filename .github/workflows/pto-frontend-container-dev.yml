@@ -1,5 +1,4 @@
 name: pto-frontend container dev
-run-name: Deploy feature container ${{ github.ref_name }} by @${{ github.actor }}
 
 on:
   push:
