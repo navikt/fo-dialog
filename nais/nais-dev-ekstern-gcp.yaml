@@ -69,27 +69,5 @@ spec:
             { "fromPath": "/veilarbdialog", "toUrl": "https://veilarbdialog.dev-fss-pub.nais.io/veilarbdialog", "toApp": {"name": "veilarbdialog", "namespace": "pto", "cluster": "dev-fss" } },
             { "fromPath": "/veilarboppfolging", "toUrl": "https://veilarboppfolging.dev-fss-pub.nais.io/veilarboppfolging", "toApp": {"name": "veilarboppfolging", "namespace": "pto", "cluster": "dev-fss" } },
             { "fromPath": "/veilarblest", "toUrl": "https://veilarblest.dev-fss-pub.nais.io/veilarblest", "toApp": {"name": "veilarblest", "namespace": "pto", "cluster": "dev-fss" } }
-          ],
-          "redirects": [
-              {
-                "fromPath": "/api/auth",
-                "toUrl": "/arbeid/dialog/auth/info"
-              },
-              {
-                "fromPath": "/aktivitetsplan",
-                "toUrl": "{{AKTIVITETSPLAN_URL}}"
-              },
-              {
-                "fromPath": "/arbeidssokerregistrering",
-                "toUrl": "{{ARBEIDSSOKERREGISTRERING_URL}}"
-              },
-              {
-                "fromPath": "/minside",
-                "toUrl": "{{MINSIDE_URL}}"
-              },
-              {
-                "fromPath": "/veientilarbeid",
-                "toUrl": "{{VEIENTILARBEID_URL}}"
-              }
           ]
         }

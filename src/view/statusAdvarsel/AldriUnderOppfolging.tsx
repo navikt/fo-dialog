@@ -1,7 +1,7 @@
 import Lenke from 'nav-frontend-lenker';
 import React from 'react';
 
-import { pathnamePrefix } from '../../utils/UseApiBasePath';
+import { arbeidssokerregistreringUrl } from '../../metrics/constants';
 import StatusAdvarselWrapper from './StatusAdvarselWrapper';
 
 interface Props {
@@ -20,7 +20,7 @@ function Bruker() {
     return (
         <StatusAdvarselWrapper>
             Du må være registrert hos NAV for å ha digital dialog med veileder. <br />
-            <Lenke href={`${pathnamePrefix}/arbeidssokerregistrering`}>Registrer deg hos NAV</Lenke>
+            <Lenke href={`${arbeidssokerregistreringUrl}`}>Registrer deg hos NAV</Lenke>
         </StatusAdvarselWrapper>
     );
 }
