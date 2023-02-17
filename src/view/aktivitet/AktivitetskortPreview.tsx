@@ -6,7 +6,6 @@ import { visibleIfHoc } from '../../felleskomponenter/VisibleIfHoc';
 import { Aktivitet, AktivitetTypes, ArenaAktivitet, ArenaAktivitetTypes } from '../../utils/aktivitetTypes';
 import { formaterDate, getKlokkeslett } from '../../utils/Date';
 import { StringOrNull } from '../../utils/Typer';
-import { pathnamePrefix } from '../../utils/UseApiBasePath';
 import { findAktivitet, useAktivitetContext } from '../AktivitetProvider';
 import { dialogHeaderID2 } from '../dialog/DialogHeader';
 import { useFnrContext } from '../Provider';
@@ -40,7 +39,7 @@ export function AktivitetskortPreview(props: Props) {
                 {typeTekst}: {aktivitet?.tittel}
             </Undertittel>
             <LenkepanelBase
-                href={aktivitetLenke(pathnamePrefix, aktivitet.id)}
+                href={aktivitetLenke(aktivitet.id)}
                 className={styles.lenkepanelbase}
                 onClick={visAktivitetsplan(aktivitet.id, fnr)}
             >

@@ -109,5 +109,5 @@ mock.get(
     `/veilarbperson/api/person/:fnr/harNivaa4`,
     harNivaa4Fieler() ? fail() : ({ pathParams }) => harNivaa4Data(pathParams.fnr)
 );
-mock.get(`${apiBase}/api/auth`, { remainingSeconds: 60 * 60 });
+mock.get(`${apiBase}/auth/info`, { remainingSeconds: 60 * 60 });
 mock.post(`${apiBase}/veilarboppfolging/api/oppfolging/settDigital`, {});

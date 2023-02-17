@@ -5,6 +5,7 @@ import { Systemtittel } from 'nav-frontend-typografi';
 import React from 'react';
 import { useParams } from 'react-router';
 
+import { minsideUrl } from '../../metrics/constants';
 import useKansendeMelding from '../../utils/UseKanSendeMelding';
 import { useUserInfoContext } from '../BrukerProvider';
 import { useDialogContext } from '../DialogProvider';
@@ -17,7 +18,6 @@ import DialogOverviewHeader from './NyDialogLink';
 interface HeaderProps {
     erVeileder: boolean;
 }
-
 const DialogOversiktHeader = (props: HeaderProps) => {
     if (props.erVeileder) {
         return null;
@@ -25,7 +25,7 @@ const DialogOversiktHeader = (props: HeaderProps) => {
 
     return (
         <>
-            <Lenke href="/arbeid/dialog/minside" className={styles.dintnav}>
+            <Lenke href={minsideUrl} className={styles.dintnav}>
                 <VenstreChevron />
                 Min side
             </Lenke>
