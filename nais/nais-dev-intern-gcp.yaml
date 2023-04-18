@@ -29,8 +29,6 @@ spec:
     - https://arbeidsrettet-dialog.intern.dev.nav.no
   accessPolicy:
     outbound:
-      rules:
-        - application: pto-proxy
       external:
         - host: navtestb2c.b2clogin.com
   gcp:

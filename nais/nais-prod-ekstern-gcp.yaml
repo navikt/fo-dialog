@@ -27,6 +27,14 @@ spec:
       memory: 512Mi
   ingresses:
     - https://www.nav.no/arbeid/dialog
+  accessPolicy:
+    outbound:
+      external:
+        - host: veilarbdialog.prod-fss-pub.nais.io
+        - host: veilarboppfolging.prod-fss-pub.nais.io
+        - host: veilarbaktivitet.prod-fss-pub.nais.io
+        - host: veilarbperson.prod-fss-pub.nais.io
+        - host: veilarbveileder.prod-fss-pub.nais.io
   idporten:
     enabled: true
     sidecar:
