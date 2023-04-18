@@ -41,17 +41,13 @@
     }
 
     .hide {
-        .hide();
+        display: none;
     }
 
     @media (max-width: @md-max-x), (max-height: @md-max-y) {
         .hide-on-smaller-then-md {
             display: none !important;
         }
-    }
-
-    .blokk-xs {
-        .blokk-xs();
     }
 
     .uu-mixin() {
@@ -82,10 +78,9 @@
     position: relative;
     flex-grow: 1;
     overflow: hidden;
-    color: @navMorkGra;
-    font-family: @font-family;
+    color: var(--a-gray-800);
     align-items: center;
-    background-color: @navGraBakgrunn;
+    background-color: var(--a-gray-100);
 }
 
 .konteinerUtside {

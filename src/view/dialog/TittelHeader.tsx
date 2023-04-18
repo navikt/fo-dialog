@@ -4,6 +4,7 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 
 import { ReactComponent as Lukk } from '../../fellesikoner/lukk.svg';
+import { useRoutes } from '../../routes';
 import styles from './DialogHeader.module.less';
 import { TilbakeKnapp } from './TilbakeKnapp';
 
@@ -14,8 +15,9 @@ export function TittelHeader(props: { children: string }) {
         </div>
     );
 
+    const { baseRoute } = useRoutes();
     const LukkKnapp = () => (
-        <Link to="/" title="lukk" className={styles.lukkeknapp}>
+        <Link to={baseRoute()} title="lukk" className={styles.lukkeknapp}>
             <Lukk />
         </Link>
     );

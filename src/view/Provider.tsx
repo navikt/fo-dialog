@@ -109,7 +109,11 @@ export function Provider(props: Props) {
         isPending(oppfolgingstatus) ||
         harLoggetInnNiva4.isPending
     ) {
-        return <Loader />;
+        return (
+            <div className="w-full h-full flex justify-center">
+                <Loader size="3xlarge" />
+            </div>
+        );
     } else if (hasError(brukerstatus) || hasError(oppfolgingstatus) || hasDialogError(dialogstatus)) {
         return <Alert variant="error">Noe gikk dessverre galt med systemet. Prøv igjen senere.</Alert>;
     }

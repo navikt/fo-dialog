@@ -128,16 +128,14 @@ const NyDialogForm = (props: Props) => {
     return (
         <div className={style.nyDialog}>
             <form className={style.nyDialogForm} onSubmit={state.onSubmit(handleSubmit)} autoComplete="off">
-                <form>
-                    <legend>
-                        <TittelHeader>Ny dialog</TittelHeader>
-                    </legend>
-                    <div className={style.skjemaInnhold}>
-                        <BodyShort className={style.infotekst}>{infoTekst}</BodyShort>
-                        <TemaInput onChange={onChange} state={state} aktivitetId={aktivitetId} />
-                        <SkrivMeldingInput maxMeldingsLengde={maxMeldingsLengde} state={state} onChange={onChange} />
-                    </div>
-                </form>
+                <legend>
+                    <TittelHeader>Ny dialog</TittelHeader>
+                </legend>
+                <div className={style.skjemaInnhold}>
+                    <BodyShort className={style.infotekst}>{infoTekst}</BodyShort>
+                    <TemaInput onChange={onChange} state={state} aktivitetId={aktivitetId} />
+                    <SkrivMeldingInput maxMeldingsLengde={maxMeldingsLengde} state={state} onChange={onChange} />
+                </div>
 
                 <Button loading={state.submitting}>Send</Button>
 

@@ -3,10 +3,8 @@
 .dialogOversikt {
     display: flex;
     flex-direction: column;
-    background-color: @navGraBakgrunn;
+    background-color: var(--a-gray-100);
     width: 100%;
-
-    .min-responsive({width: 35%; max-width: 30rem;});
 }
 
 .dialogListe {
@@ -19,12 +17,10 @@
 
 .dialogValgt {
     display: flex;
-    .max-responsive({display: none;});
 }
 
 .info {
     display: block;
-    .min-responsive({display: none;});
 }
 
 .tidligerePeriodeTittel {
@@ -46,11 +42,6 @@
     margin-left: -0.4rem;
 
     margin-top: 1rem;
-
-    //flat knapp
-    .knapp();
-    .knappmini-mixin();
-    .knappflat-mixin(@navBla, @white, @navDypBla);
 
     //overide flatknapp
     padding-left: 0;

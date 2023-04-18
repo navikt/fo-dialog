@@ -1,4 +1,4 @@
-import { BodyShort, Textarea } from '@navikt/ds-react';
+import { BodyShort } from '@navikt/ds-react';
 import React, { ReactNode } from 'react';
 
 import EksternLenke from '../../felleskomponenter/EksternLenke';
@@ -18,9 +18,7 @@ export default function InformasjonElement(props: TekstomradeProps) {
 
     return (
         <InformasjonElementRaw merkelapptekst={merkelapptekst}>
-            <Textarea label={'FIX LABEL'} className={styles.overflowEllipse}>
-                {verdi}
-            </Textarea>
+            <span className={styles.overflowEllipse}>{verdi}</span>
         </InformasjonElementRaw>
     );
 }

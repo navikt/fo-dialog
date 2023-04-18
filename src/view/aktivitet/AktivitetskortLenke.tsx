@@ -28,11 +28,7 @@ export default function AktivitetskortLenke(props: Props) {
     const aktivitetId = props.aktivitetId;
     return (
         <div className={styles.aktivitetkortlenke}>
-            <a
-                className={styles.flatLenke}
-                href={aktivitetLenke(aktivitetId)}
-                onClick={visAktivitetsplan(aktivitetId, fnr)}
-            >
+            <a href={aktivitetLenke(aktivitetId)} onClick={visAktivitetsplan(aktivitetId, fnr)}>
                 Gå til aktiviteten
                 <ChevronRightIcon />
             </a>

@@ -6,8 +6,9 @@ interface Props {
     id: string;
 }
 
-const Feilemelding = (props: Props) => (
-    <ErrorSummary id={props.id}>{props.feilmelding && <BodyShort>{props.feilmelding}</BodyShort>}</ErrorSummary>
-);
+const Feilemelding = (props: Props) =>
+    props.feilmelding ? (
+        <ErrorSummary id={props.id}>{props.feilmelding && <BodyShort>{props.feilmelding}</BodyShort>}</ErrorSummary>
+    ) : null;
 
 export default Feilemelding;

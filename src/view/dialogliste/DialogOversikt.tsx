@@ -48,7 +48,7 @@ const DialogOversikt = () => {
         <div className={visningCls}>
             <div className={styles.header}>
                 <DialogOversiktHeader erVeileder={erVeileder} />
-                <div className={styles.verktoylinje}>
+                <div className="flex mt-4 justify-between mr-6 items-center">
                     <DialogOverviewHeader visible={kanSendeMelding} />
                     <OmDialogLenke />
                 </div>

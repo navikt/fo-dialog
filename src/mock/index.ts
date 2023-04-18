@@ -1,3 +1,5 @@
+import '@navikt/ds-css';
+
 import FetchMock, { Middleware, MiddlewareUtils, ResponseData, ResponseUtils } from 'yet-another-fetch-mock';
 
 import { apiBasePath } from '../utils/UseApiBasePath';
@@ -94,7 +96,7 @@ mock.post(
     `${apiBase}/veilarbdialog/api/dialog`,
     harNyDialogEllerSendMeldingFeilerSkruddPa() ? fail() : ({ body }) => opprettEllerOppdaterDialog(body)
 );
-mock.post(`/veilarbdialog/api/logger/event`, ({ body }) => {
+mock.post(`${apiBase}/veilarbdialog/api/logger/event`, ({ body }) => {
     const event = body;
     console.log('Event', event.name, 'Fields:', event.fields, 'Tags:', event.tags);
     return {};

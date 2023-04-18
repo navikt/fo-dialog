@@ -5,10 +5,10 @@ import { APP_NAME, TEAM_NAME } from './constants';
 type EventDataValue = string | boolean | number | null | undefined;
 
 export const initAmplitude = (): void => {
-    const apiKey: string = process.env.REACT_APP_AMPLITUDE_KEY ?? 'default';
+    const apiKey: string = import.meta.env.VITE_AMPLITUDE_KEY ?? 'default';
 
     amplitude.getInstance().init(apiKey, '', {
-        apiEndpoint: process.env.REACT_APP_AMPLITUDE_API_URL,
+        apiEndpoint: import.meta.env.VITE_AMPLITUDE_API_URL,
         saveEvents: false,
         includeUtm: true,
         includeReferrer: true,

@@ -9,7 +9,7 @@ interface FrontendEvent {
 
 export default function loggEvent(eventNavn: string, feltObjekt?: object, tagObjekt?: object) {
     const event: FrontendEvent = { name: eventNavn, fields: feltObjekt, tags: tagObjekt };
-    const url = import.meta.env.VITE_LOGGER_API_URL ?? '/veilarbdialog/api/logger/event';
+    const url = import.meta.env.BASE_URL + 'veilarbdialog/api/logger/event';
     const config = {
         headers: {
             'Nav-Consumer-Id': 'aktivitetsplan',

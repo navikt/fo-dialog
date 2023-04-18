@@ -1,13 +1,15 @@
-// import './polyfill';
+import './polyfill';
+import './index.css';
 
-// import { Modal } from '@navikt/ds-react';
-// import NAVSPA from '@navikt/navspa';
-// import React from 'react';
-// import ReactDOM from 'react-dom';
+import { Modal } from '@navikt/ds-react';
+import NAVSPA from '@navikt/navspa';
+// This is to size the window correctly
+import throttle from 'lodash.throttle';
+import React from 'react';
+import ReactDOM from 'react-dom';
 
 // import { initAmplitude } from './metrics/amplitude-utils';
-// import DemoBanner from './mock/demo/DemoBanner';
-/*
+import DemoBanner from './mock/demo/DemoBanner';
 import { erEksternBruker } from './mock/demo/sessionstorage';
 import { gotoStartTestPage } from './mock/Utils';
 import App from './view/App';
@@ -15,12 +17,10 @@ import App from './view/App';
 const modalAlly = document.getElementById('modal-a11y-wrapper');
 const root = document.getElementById('root');
 
+// TODO: Only use this in dev?
 // initAmplitude();
 
 Modal.setAppElement(modalAlly ? document.getElementById('modal-a11y-wrapper') : root);
-
-// This is to size the window correctly
-const throttle = require('lodash.throttle');
 
 let vh = window.innerHeight * 0.01;
 // Then we set the value in the --vh custom property to the root of the document
@@ -33,22 +33,28 @@ window.addEventListener(
         // We execute the same script as before
         document.documentElement.style.setProperty('--vh', `${vh}px`);
     }, 100)
-);*/
+);
 
-if (import.meta.env.mode === 'development') {
-    /*
-    require('./mock');
+const navspaName = 'arbeidsrettet-dialog';
+function render() {
+    return window.NAVSPA[navspaName](document.getElementById('root'));
+}
 
-    const elem = document.createElement('div');
-    document.body.appendChild(elem);
-    ReactDOM.render(<DemoBanner />, elem);
+if (import.meta.env.MODE === 'development') {
+    import('./mock').then(() => {
+        const elem = document.createElement('div');
+        document.body.appendChild(elem);
+        ReactDOM.render(<DemoBanner />, elem);
 
-    const fnr = erEksternBruker() ? undefined : '12345678901';
-    const AppWrapper = () => <App fnr={fnr} />;
+        const fnr = erEksternBruker() ? undefined : '12345678901';
+        const AppWrapper = () => <App fnr={fnr} />;
 
-    gotoStartTestPage(fnr);
+        gotoStartTestPage(fnr);
 
-    NAVSPA.eksporter('arbeidsrettet-dialog', AppWrapper);*/
+        NAVSPA.eksporter(navspaName, AppWrapper);
+        render();
+    });
 } else {
-    // NAVSPA.eksporter('arbeidsrettet-dialog', App);
+    NAVSPA.eksporter(navspaName, App);
+    render();
 }

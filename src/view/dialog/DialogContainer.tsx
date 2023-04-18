@@ -4,6 +4,7 @@ import { Route, Switch } from 'react-router';
 
 import { useUserInfoContext } from '../BrukerProvider';
 import { InfoOmDialogSide } from '../info/InfoOmDialogSide';
+import { useFnrContext } from '../Provider';
 import Dialog from './Dialog';
 import styles from './DialogContainer.module.less';
 import DialogInfoMelding from './DialogInfoMelding';
@@ -13,13 +14,15 @@ function DialogContainer() {
     const bruker = useUserInfoContext();
     const cls = classNames(styles.dialogContainer, { [styles.brukerDialogContainer]: bruker?.erBruker });
 
+    const fnr = useFnrContext();
+
     return (
         <div className={cls}>
             <Switch>
-                <Route path="/informasjon" component={InfoOmDialogSide} />
-                <Route path="/ny" component={NyDialog} />
-                <Route path="/:dialogId" component={Dialog} />
-                <Route path="/" component={DialogInfoMelding} />
+                <Route path={`${fnr ? `/${fnr}` : ''}/informasjon`} component={InfoOmDialogSide} />
+                <Route path={`${fnr ? `/${fnr}` : ''}/ny`} component={NyDialog} />
+                <Route path={`${fnr ? `/${fnr}` : ''}/:dialogId`} component={Dialog} />
+                <Route path={`${fnr ? `/${fnr}` : '/'}`} component={DialogInfoMelding} />
             </Switch>
         </div>
     );

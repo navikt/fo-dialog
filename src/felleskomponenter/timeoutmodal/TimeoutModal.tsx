@@ -35,7 +35,9 @@ function TimeoutModal(props: Props) {
     const erVeileder = userInfo?.erVeileder ?? 'ukjent';
     const brukerId = userInfo?.id ?? 'ukjent';
 
-    const baseUrl = userInfo?.erVeileder ? window.location.origin + '' : window.location.origin + '/arbeid/dialog';
+    const baseUrl = userInfo?.erVeileder
+        ? window.location.origin + ''
+        : window.location.origin + import.meta.env.BASE_URL;
 
     useEffect(() => {
         fetch(pathnamePrefix + '/auth/info', {

@@ -12,17 +12,19 @@ interface IkonProps {
 
 function DialogPreviewIkon(props: IkonProps) {
     const erAktivitet: boolean = props.dialog.aktivitetId !== null;
-    const ikonCls = classNames(styles.ikon, { [styles.ulestIkon]: !props.dialog.lest && !props.dialog.historisk });
+    const ikonCls = classNames(styles.ikon, {
+        [styles.ulestIkon]: !props.dialog.lest && !props.dialog.historisk
+    });
     if (erAktivitet) {
         return (
             <div aria-hidden="true" className={ikonCls}>
-                <AktivitetsIkon />
+                <AktivitetsIkon className="w-10 h-10" />
             </div>
         );
     }
     return (
         <div aria-hidden="true" className={ikonCls}>
-            <DialogIkon />
+            <DialogIkon className="w-10 h-10" />
         </div>
     );
 }

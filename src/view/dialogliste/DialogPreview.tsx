@@ -2,8 +2,9 @@ import { BodyShort, Heading, LinkPanel } from '@navikt/ds-react';
 import classNames from 'classnames';
 import React, { useEffect, useRef, useState } from 'react';
 import { Flipped, Flipper } from 'react-flip-toolkit';
+import { useHistory } from 'react-router';
 
-import WrapInReactLink from '../../felleskomponenter/WrapInReactLink';
+import { useRoutes } from '../../routes';
 import { Aktivitet, ArenaAktivitet } from '../../utils/aktivitetTypes';
 import { formaterDate } from '../../utils/Date';
 import { DialogData, StringOrNull } from '../../utils/Typer';
@@ -85,25 +86,34 @@ function DialogPreview(props: Props) {
 
     const erLest = lest || historisk;
 
-    const lenkepanelCls = classNames(styles.preview, {
+    const lenkepanelCls = classNames('flex', styles.preview, {
         [styles.innholdUlest]: !erLest,
         [styles.innholdValgt]: detteErValgtDialog
     });
     const markoer = erLest ? styles.markoerLest : styles.markoerUlest;
 
+    const history = useHistory();
+
+    const { dialogRoute } = useRoutes();
+    const onGoTo = (event) => {
+        event.preventDefault();
+        history.push(dialogRoute(id));
+    };
     return (
-        <LinkPanel className={lenkepanelCls} href={`/${id}`} linkCreator={WrapInReactLink}>
-            <div className={markoer} />
-            <Ikon dialog={dialog} />
-            <div className={styles.content}>
-                <BodyShort className="visually-hidden">{typeText(dialog)}</BodyShort>
-                <Tittel tittel={overskrift} aktivitet={aktivitet} />
-                <BodyShort className={styles.dato}>{datoString}</BodyShort>
-                <EtikettListe dialog={dialog} />
-                <BodyShort className="visually-hidden">{meldingerText(dialog.henvendelser.length)}</BodyShort>
+        <LinkPanel className="my-2" href={dialogRoute(id)} onClick={onGoTo}>
+            <div className="flex">
+                <div className={markoer} />
+                <Ikon dialog={dialog} />
+                <div className="flex-1">
+                    <BodyShort className="hidden">{typeText(dialog)}</BodyShort>
+                    <Tittel tittel={overskrift} aktivitet={aktivitet} />
+                    <BodyShort className={styles.dato}>{datoString}</BodyShort>
+                    <EtikettListe dialog={dialog} />
+                    <BodyShort className="hidden">{meldingerText(dialog.henvendelser.length)}</BodyShort>
+                </div>
+                <BodyShort aria-hidden="true">{dialog.henvendelser.length}</BodyShort>
+                <div ref={dialogref}></div>
             </div>
-            <BodyShort aria-hidden="true">{dialog.henvendelser.length}</BodyShort>
-            <div ref={dialogref}></div>
         </LinkPanel>
     );
 }

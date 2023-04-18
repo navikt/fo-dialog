@@ -7,9 +7,9 @@
     <link rel="apple-touch-icon" sizes="180x180" href="/arbeid/dialog/apple-touch-icon.png">
     <link rel="icon" type="image/png" sizes="32x32" href="/arbeid/dialog/favicon-32x32.png">
     <link rel="icon" type="image/png" sizes="16x16" href="/arbeid/dialog/favicon-16x16.png">
-    <link rel="manifest" href="/arbeid/dialog/site.webmanifest">
+<!--    <link rel="manifest" href="/arbeid/dialog/site.webmanifest">-->
     <title>Arbeidsrettet Dialog</title>
-    <link href="<%=VITE_DEKORATOR_URL%>/css/client.css" rel="stylesheet" />
+<!--    <link href="<%- VITE_DEKORATOR_URL %>/css/client.css" rel="stylesheet" />-->
 </head>
 
 <body>
@@ -20,15 +20,9 @@
     </main>
 </div>
 <div id='decorator-footer'></div>
-<script type="module" src="src/index.tsx"></script>
-<div id='decorator-env' data-src='<%=VITE_DEKORATOR_URL%>/env?feedback=false&chatbot=false&footer=true'></div>
+<script type="module" src='src/index.tsx'></script>
+<!--<div id='decorator-env' data-src='<%- VITE_DEKORATOR_URL %>/env?feedback=false&chatbot=false&footer=true'></div>-->
 </body>
 
-<script src='<%=VITE_DEKORATOR_URL%>/client.js'></script>
-<script>
-    // function render() {
-    //     return NAVSPA['arbeidsrettet-dialog'](document.getElementById('root'));
-    // }
-    // render();
-</script>
+<!--<script src='<%- VITE_DEKORATOR_URL %>/client.js'></script>-->
 </html>

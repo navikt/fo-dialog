@@ -1,5 +1,4 @@
 import React, { useEffect } from 'react';
-import shajs from 'sha.js';
 import { v4 as uuidv4 } from 'uuid';
 
 import loggEvent from '../felleskomponenter/logging';
@@ -12,8 +11,13 @@ import DialogOversiktContainer from './dialogliste/DialogOversiktContainer';
 import { useOppfolgingContext } from './OppfolgingProvider';
 import { dataOrUndefined } from './Provider';
 
-function hash(string: string): string {
-    return shajs('sha256').update(string).digest('hex');
+function hash(val: string) {
+    const utf8 = new TextEncoder().encode(val);
+    return crypto.subtle.digest('SHA-256', utf8).then((hashBuffer) => {
+        const hashArray = Array.from(new Uint8Array(hashBuffer));
+        const hashHex = hashArray.map((bytes) => bytes.toString(16).padStart(2, '0')).join('');
+        return hashHex;
+    });
 }
 
 const useLogBruker = (brukerdata: Bruker | null, oppfolgingData?: OppfolgingData) => {

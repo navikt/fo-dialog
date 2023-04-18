@@ -2,19 +2,13 @@
 
 .lukkeknapp {
     align-self: start;
-    background-color: @white;
+    background-color: var(--a-white);
     margin-top: 0.5rem;
     margin-right: 0.5rem;
-
-    .knapp();
-    .knappmini-mixin();
-    .knappflat-mixin(@navBla, @white, @navDypBla);
 
     //overide flatknapp
     font-weight: 400;
     padding: 0.5rem;
-
-    .max-responsive({display: none;});
 }
 
 .headerContent {
@@ -25,14 +19,12 @@
 .dialogHeader {
     display: flex;
     align-items: center;
-    background-color: @navGraBakgrunn;
+    background-color: var(--a-gray-100);
     z-index: 0;
 }
 
 .tittelHeader {
     text-align: center;
-
-    .min-responsive({background-color: @white;});
 }
 
 .dialogHeaderShadow {
@@ -45,12 +37,10 @@
     padding: 1rem;
     flex-grow: 1;
     text-align: center;
-
-    .max-responsive({margin-left: -2.58rem; padding-left: 2.58rem;});
 }
 
 .feil {
     padding: 1rem;
-    background-color: @navGraBakgrunn;
+    background-color: var(--a-gray-100);
     z-index: 1000;
 }

@@ -16,13 +16,12 @@ interface Props {
     enhet?: string;
 }
 
-function Router({ fnr, children }: { fnr: string | undefined; children?: React.ReactNode }) {
-    if (process.env.REACT_APP_USE_HASH_ROUTER === 'true') {
-        return <HashRouter basename={fnr}>{children}</HashRouter>;
+function Router({ children }: { children?: React.ReactNode }) {
+    if (import.meta.env.VITE_USE_HASH_ROUTER === 'true') {
+        return <HashRouter>{children}</HashRouter>;
     }
 
-    const basename = getBasename(fnr);
-    return <BrowserRouter basename={basename}>{children}</BrowserRouter>;
+    return <BrowserRouter>{children}</BrowserRouter>;
 }
 
 function App(props: Props) {
@@ -31,7 +30,7 @@ function App(props: Props) {
     const appstyle = fnr ? styles.appInside : styles.app;
 
     return (
-        <Router fnr={fnr}>
+        <Router>
             <div className={wraperClass}>
                 <div className={appstyle}>
                     <EventHandler />

@@ -22,6 +22,7 @@ export function Dialog() {
     const kanSendeMelding = useKansendeMelding();
     const { lesDialog, dialoger } = useDialogContext();
     const { dialogId } = useParams();
+    console.log({ dialogId });
     const valgtDialog = dialoger.find((dialog) => dialog.id === dialogId);
     const fnr = useFnrContext();
     const bruker = useUserInfoContext();

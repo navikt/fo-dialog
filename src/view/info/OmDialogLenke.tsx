@@ -1,15 +1,17 @@
-import classNames from 'classnames';
+import { QuestionmarkIcon } from '@navikt/aksel-icons';
 import React from 'react';
 import { Link } from 'react-router-dom';
 
-import styles from './OmDialogLenke.module.less';
+import { useRoutes } from '../../routes';
 
 function OmDialogLenke() {
-    const knappCls = classNames('knapp knapp--flat knapp--kompakt knapp--mini', styles.omDialog);
-
+    const { informasjonRoute } = useRoutes();
     return (
-        <Link to="/informasjon" className={knappCls}>
-            <span>Om dialog</span>
+        <Link to={informasjonRoute()}>
+            <span className="flex">
+                <span>Om dialog</span>
+                <QuestionmarkIcon className="w-6 h-6" />
+            </span>
         </Link>
     );
 }

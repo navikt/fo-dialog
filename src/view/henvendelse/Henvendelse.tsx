@@ -1,4 +1,5 @@
 import { BodyShort, Chat, Textarea } from '@navikt/ds-react';
+import classNames from 'classnames';
 import React from 'react';
 
 import { ViktigMelding } from '../../felleskomponenter/etiketer/Etikett';
@@ -36,15 +37,15 @@ export function Henvendelse(props: Props) {
         <>
             <BodyShort className="visually-hidden">{accessibleText(erBruker, erMeldingFraBruker)}</BodyShort>
             <Chat.Bubble
-                className={classNameStyle}
+                className={classNames(classNameStyle)}
                 // topp={toppTekst}
                 // pilHoyre={erMeldingFraBruker}
                 // ikonClass={className}
             >
-                <ViktigMelding visible={viktigMarkering} className={styles.viktig} />
-                <Textarea label="FIX THIS LABEL" className="blokk-xs">
-                    {tekst}
-                </Textarea>
+                <div className="flex flex-col items-start">
+                    <ViktigMelding visible={viktigMarkering} />
+                    <span className="mt-2">{tekst}</span>
+                </div>
             </Chat.Bubble>
         </>
     );
