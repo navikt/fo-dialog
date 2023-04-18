@@ -1,4 +1,4 @@
-import Lenke from 'nav-frontend-lenker';
+import { Link } from '@navikt/ds-react';
 import React from 'react';
 
 import { arbeidssokerregistreringUrl } from '../../metrics/constants';
@@ -18,7 +18,7 @@ function HarPerioderBruker() {
             Du er ikke lenger registrert hos NAV. Hvis du fortsatt skal få oppfølging fra NAV og ha dialog med veileder
             må du være registrert.
             <br />
-            <Lenke href={`${arbeidssokerregistreringUrl}`}>Registrer deg hos NAV</Lenke>
+            <Link href={`${arbeidssokerregistreringUrl}`}>Registrer deg hos NAV</Link>
         </StatusAdvarselWrapper>
     );
 }

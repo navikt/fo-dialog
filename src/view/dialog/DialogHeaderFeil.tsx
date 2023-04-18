@@ -1,4 +1,4 @@
-import { AlertStripeFeil } from 'nav-frontend-alertstriper';
+import { Alert } from '@navikt/ds-react';
 import React from 'react';
 
 import styles from './DialogHeader.module.less';
@@ -16,9 +16,9 @@ function DialogHeaderFeil(props: Props) {
 
     return (
         <div className={styles.feil}>
-            <AlertStripeFeil>
+            <Alert variant="error">
                 Noe gikk galt, og du får dessverre ikke sett informasjon fra aktivitetsplanen. Prøv igjen senere.
-            </AlertStripeFeil>
+            </Alert>
         </div>
     );
 }

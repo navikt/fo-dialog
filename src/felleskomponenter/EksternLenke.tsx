@@ -1,4 +1,4 @@
-import Lenke from 'nav-frontend-lenker';
+import { Link } from '@navikt/ds-react';
 import React from 'react';
 
 import { ReactComponent as EksternLenkeIkon } from './ekstern-lenke.svg';
@@ -21,10 +21,10 @@ const EksternLenke = (props: PropTypes) => {
     const paddaLenke = trimmetLenke.match(httpRegex) ? trimmetLenke : `http://${trimmetLenke}`;
 
     return (
-        <Lenke href={paddaLenke}>
+        <Link href={paddaLenke}>
             {lenke}
             <EksternLenkeIkon />
-        </Lenke>
+        </Link>
     );
 };
 

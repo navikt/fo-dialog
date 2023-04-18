@@ -1,7 +1,5 @@
+import { BodyShort, Button } from '@navikt/ds-react';
 import useFormstate, { SubmitHandler } from '@nutgaard/use-formstate';
-import { Hovedknapp } from 'nav-frontend-knapper';
-import { SkjemaGruppe } from 'nav-frontend-skjema';
-import { Normaltekst } from 'nav-frontend-typografi';
 import React, { useEffect, useRef, useState } from 'react';
 import { useHistory } from 'react-router';
 
@@ -130,19 +128,20 @@ const NyDialogForm = (props: Props) => {
     return (
         <div className={style.nyDialog}>
             <form className={style.nyDialogForm} onSubmit={state.onSubmit(handleSubmit)} autoComplete="off">
-                <SkjemaGruppe legend={<TittelHeader>Ny dialog</TittelHeader>}>
+                <form>
+                    <legend>
+                        <TittelHeader>Ny dialog</TittelHeader>
+                    </legend>
                     <div className={style.skjemaInnhold}>
-                        <Normaltekst className={style.infotekst}>{infoTekst}</Normaltekst>
+                        <BodyShort className={style.infotekst}>{infoTekst}</BodyShort>
                         <TemaInput onChange={onChange} state={state} aktivitetId={aktivitetId} />
                         <SkrivMeldingInput maxMeldingsLengde={maxMeldingsLengde} state={state} onChange={onChange} />
                     </div>
-                </SkjemaGruppe>
+                </form>
 
-                <Hovedknapp title="Send" autoDisableVedSpinner spinner={state.submitting} className={style.sendKnapp}>
-                    Send
-                </Hovedknapp>
+                <Button loading={state.submitting}>Send</Button>
 
-                <AlertStripeFeilVisible visible={noeFeilet} className={style.feil}>
+                <AlertStripeFeilVisible variant="error" visible={noeFeilet}>
                     Noe gikk dessverre galt med systemet. Prøv igjen senere.
                 </AlertStripeFeilVisible>
             </form>

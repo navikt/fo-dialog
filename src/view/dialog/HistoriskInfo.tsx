@@ -1,4 +1,4 @@
-import { Normaltekst } from 'nav-frontend-typografi';
+import { BodyShort } from '@navikt/ds-react';
 import React from 'react';
 
 import NyDialogLink from '../dialogliste/NyDialogLink';
@@ -16,9 +16,9 @@ function HistoriskInfo(props: Props) {
 
     return (
         <div className={styles.historiskInfo}>
-            <Normaltekst className={styles.historiskTekst}>
+            <BodyShort className={styles.historiskTekst}>
                 Dette er en dialog fra en tidligere periode, og du kan derfor ikke svare på den.
-            </Normaltekst>
+            </BodyShort>
             <NyDialogLink visible={props.kanSendeMelding} />
         </div>
     );

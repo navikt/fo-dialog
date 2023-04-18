@@ -1,5 +1,5 @@
-import { AlertStripeFeil } from 'nav-frontend-alertstriper';
+import { Alert } from '@navikt/ds-react';
 
 import { visibleIfHoc } from './VisibleIfHoc';
 
-export default visibleIfHoc(AlertStripeFeil);
+export default visibleIfHoc(Alert);

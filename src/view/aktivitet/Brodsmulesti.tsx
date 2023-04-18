@@ -1,4 +1,4 @@
-import { Undertekst } from 'nav-frontend-typografi';
+import { BodyShort } from '@navikt/ds-react';
 import React from 'react';
 
 import { AktivitetStatus, AlleAktivitetTypes } from '../../utils/aktivitetTypes';
@@ -13,9 +13,9 @@ interface Props {
 export default function Brodsmulesti(props: Props) {
     return (
         <div className={styles.brodsmulesti}>
-            <Undertekst>
+            <BodyShort>
                 aktivitet / {getStatusText(props.status)} / {getTypeText(props.type)}
-            </Undertekst>
+            </BodyShort>
         </div>
     );
 }

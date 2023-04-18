@@ -1,4 +1,4 @@
-import Modal from 'nav-frontend-modal';
+import { Modal } from '@navikt/ds-react';
 import React, { useEffect, useState } from 'react';
 
 import DemoDashboard from './DemoDashboard';
@@ -46,7 +46,7 @@ function DemoBanner() {
     return (
         <div>
             <DemoIkon onClick={() => setOpen(true)} />
-            <Modal isOpen={open} contentLabel={''} onRequestClose={() => setOpen(false)} closeButton={true}>
+            <Modal open={open} onClose={() => setOpen(false)} closeButton={true}>
                 <DemoDashboard
                     skul={() => {
                         setSkult(true);

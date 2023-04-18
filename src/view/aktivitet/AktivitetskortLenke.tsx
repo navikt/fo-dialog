@@ -1,5 +1,4 @@
-import { HoyreChevron } from 'nav-frontend-chevron';
-import { Element } from 'nav-frontend-typografi';
+import { ChevronRightIcon } from '@navikt/aksel-icons';
 import React, { MouseEvent } from 'react';
 
 import { aktivtetsplanUrl } from '../../metrics/constants';
@@ -29,16 +28,14 @@ export default function AktivitetskortLenke(props: Props) {
     const aktivitetId = props.aktivitetId;
     return (
         <div className={styles.aktivitetkortlenke}>
-            <Element>
-                <a
-                    className={styles.flatLenke}
-                    href={aktivitetLenke(aktivitetId)}
-                    onClick={visAktivitetsplan(aktivitetId, fnr)}
-                >
-                    Gå til aktiviteten
-                    <HoyreChevron />
-                </a>
-            </Element>
+            <a
+                className={styles.flatLenke}
+                href={aktivitetLenke(aktivitetId)}
+                onClick={visAktivitetsplan(aktivitetId, fnr)}
+            >
+                Gå til aktiviteten
+                <ChevronRightIcon />
+            </a>
         </div>
     );
 }

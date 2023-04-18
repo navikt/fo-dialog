@@ -1,4 +1,4 @@
-import { Undertittel } from 'nav-frontend-typografi';
+import { Heading } from '@navikt/ds-react';
 import React from 'react';
 
 import InvertedLestMer from '../../felleskomponenter/InvertedLesMer';
@@ -76,7 +76,7 @@ function HistoriskeDialogerOversikt(props: HistoriskeDialogerProps) {
     return (
         <InvertedLestMer apneTekst={knapptekst} lukkTekst="Skjul">
             <section>
-                <Undertittel className={styles.tidligerePeriodeTittel}>{tittel}</Undertittel>
+                <Heading className={styles.tidligerePeriodeTittel}>{tittel}</Heading>
                 <DialogPreviewListe dialoger={historiske} valgDialog={valgDialog} />
             </section>
         </InvertedLestMer>

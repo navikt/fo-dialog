@@ -1,4 +1,4 @@
-import { Systemtittel } from 'nav-frontend-typografi';
+import { Heading } from '@navikt/ds-react';
 import React, { useEffect } from 'react';
 
 import { compareDates } from '../../utils/Date';
@@ -47,7 +47,7 @@ export function HenvendelseList(props: Props) {
 
     return (
         <section id="henvendelse-scroll-list" aria-label="Meldinger" className={styles.henvendelseList}>
-            <Systemtittel className="visually-hidden">Meldinger</Systemtittel>
+            <Heading className="visually-hidden">Meldinger</Heading>
             <div className={styles.henvendelseContainer}>
                 {sorterteHenvendelser.map((henvendelse, index) => (
                     <React.Fragment key={henvendelse.id}>

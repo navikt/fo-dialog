@@ -1,4 +1,4 @@
-import LesMerToggle from 'nav-frontend-lesmerpanel/lib/lesmerpanelToggle';
+import { ReadMore } from '@navikt/ds-react';
 import React, { useState } from 'react';
 import { UnmountClosed } from 'react-collapse';
 
@@ -21,11 +21,13 @@ export default function InvertedLestMer(props: Props) {
         return null;
     }
 
+    const tekst = vis ? lukkTekst : apneTekst;
+
     return (
         <div className={style.invertedLesMer}>
-            <div className={style.toggle}>
-                <LesMerToggle erApen={vis} onClick={toggle} apneTekst={apneTekst} lukkTekst={lukkTekst} />
-            </div>
+            <ReadMore open={vis} onClick={toggle} header={tekst}>
+                {children}
+            </ReadMore>
             <UnmountClosed isOpened={vis}>{children}</UnmountClosed>
         </div>
     );

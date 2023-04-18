@@ -1,5 +1,5 @@
+import { Heading } from '@navikt/ds-react';
 import classNames from 'classnames';
-import { Systemtittel } from 'nav-frontend-typografi';
 import React from 'react';
 import { Link } from 'react-router-dom';
 
@@ -10,7 +10,7 @@ import { TilbakeKnapp } from './TilbakeKnapp';
 export function TittelHeader(props: { children: string }) {
     const Tittel = () => (
         <div className={styles.headerContent}>
-            <Systemtittel className={styles.tittel}>{props.children}</Systemtittel>
+            <Heading className={styles.tittel}>{props.children}</Heading>
         </div>
     );
 

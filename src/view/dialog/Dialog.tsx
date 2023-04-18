@@ -1,4 +1,4 @@
-import { Systemtittel } from 'nav-frontend-typografi';
+import { Heading } from '@navikt/ds-react';
 import React, { useEffect, useState } from 'react';
 import { useParams } from 'react-router';
 
@@ -70,9 +70,9 @@ export function Dialog() {
 
     return (
         <section aria-labelledby={`${dialogHeaderID1} ${dialogHeaderID2}`} className={styles.dialog}>
-            <Systemtittel className="visually-hidden" aria-labelledby={`${dialogHeaderID1} ${dialogHeaderID2}`}>
+            <Heading className="visually-hidden" aria-labelledby={`${dialogHeaderID1} ${dialogHeaderID2}`}>
                 Dialog Header
-            </Systemtittel>
+            </Heading>
             <DialogHeader dialog={valgtDialog} visSkygge={!!bruker?.erBruker} />
             <ManagedDialogCheckboxes dialog={valgtDialog} visible={!!bruker?.erVeileder} />
             <HenvendelseList dialogData={valgtDialog} />

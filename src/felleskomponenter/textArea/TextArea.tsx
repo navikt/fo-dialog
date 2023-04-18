@@ -1,7 +1,5 @@
 import { FieldState } from '@nutgaard/use-formstate';
 import classNames from 'classnames';
-import { guid } from 'nav-frontend-js-utils';
-import { Label } from 'nav-frontend-skjema';
 import React, { ChangeEvent, useState } from 'react';
 import TextareaAutosize from 'react-textarea-autosize';
 
@@ -26,8 +24,13 @@ interface Props {
     onChange?: (e: ChangeEvent<HTMLTextAreaElement>) => void;
 }
 
+let id = 212121;
+const getId = () => {
+    id += 1;
+    return id.toString();
+};
 const useGuid = (): string => {
-    const useState1 = useState(guid());
+    const useState1 = useState(getId());
 
     return useState1[0];
 };
@@ -50,7 +53,7 @@ const EkspanderbartTekstArea = (props: Props) => {
         ...rest
     } = props;
 
-    const id = input.id ? input.id : guid();
+    const id = input.id ? input.id : getId();
     const feilmeldingId = useGuid();
     const feil = error && !!submittoken ? error : undefined;
     const labelTekst = 'Skriv en melding om arbeid og oppfølging';
@@ -66,7 +69,7 @@ const EkspanderbartTekstArea = (props: Props) => {
 
     return (
         <div className={styles.wrapper}>
-            {label && <Label htmlFor={id}>{label}</Label>}
+            {label && <label htmlFor={id}>{label}</label>}
             <TextareaAutosize
                 className={names}
                 minRows={minRows}

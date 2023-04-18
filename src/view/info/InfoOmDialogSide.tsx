@@ -1,7 +1,5 @@
+import { BodyLong, BodyShort, ExpansionCard, Heading, Link } from '@navikt/ds-react';
 import classNames from 'classnames';
-import Ekspanderbartpanel from 'nav-frontend-ekspanderbartpanel';
-import Lenke from 'nav-frontend-lenker';
-import { Element, Normaltekst } from 'nav-frontend-typografi';
 import React, { useLayoutEffect } from 'react';
 
 import { aktivtetsplanUrl } from '../../metrics/constants';
@@ -24,45 +22,45 @@ export function InfoOmDialogSide() {
 
             <div className={styles.side}>
                 <div className={styles.seksjon}>
-                    <Normaltekst>
+                    <BodyLong>
                         I dialogen kan du og veilederen din skrive til hverandre om arbeid og oppfølging. Dere kan blant
                         annet sende meldinger om aktivitetene dine i{' '}
-                        <Lenke href={`${aktivtetsplanUrl}`}>aktivitetsplanen</Lenke>.
-                    </Normaltekst>
+                        <Link href={`${aktivtetsplanUrl}`}>aktivitetsplanen</Link>.
+                    </BodyLong>
                 </div>
 
                 <div className={styles.seksjon}>
-                    <Element>Hvor raskt får du svar?</Element>
-                    <Normaltekst>
+                    <Heading level="2">Hvor raskt får du svar?</Heading>
+                    <BodyLong>
                         Vi svarer deg i løpet av noen dager. Haster det, eller du ikke får svar, kontakt oss på telefon
                         55 55 33 33.
-                    </Normaltekst>
+                    </BodyLong>
                 </div>
 
                 <div className={styles.seksjon}>
-                    <Element>Hvem skriver jeg til? </Element>
-                    <Normaltekst>
+                    <Heading level="2">Hvem skriver jeg til? </Heading>
+                    <BodyLong>
                         Du skriver til veilederen din på ditt NAV-kontor. Du kan også få svar fra andre kollegaer på
                         NAV-kontoret hvis veilederen din er syk eller på ferie.
-                    </Normaltekst>
+                    </BodyLong>
                 </div>
 
                 <div className={styles.seksjon}>
-                    <Element>Dialogen skal handle om arbeid og veiledning</Element>
-                    <Normaltekst>
+                    <Heading level="2">Dialogen skal handle om arbeid og veiledning</Heading>
+                    <BodyLong>
                         Meldingene i dialogen skal bare handle om det som er relevant for å komme i jobb eller
                         aktivitet. Har du spørsmål om økonomisk støtte, økonomisk sosialhjelp, boligsituasjon eller
                         annet, kan du
-                    </Normaltekst>
+                    </BodyLong>
                     <ul>
-                        <Normaltekst tag="li">
+                        <BodyShort as="li">
                             kontakte NAV i tjenesten{' '}
                             <a className="lenke" href="https://www.nav.no/skriv-til-oss">
                                 «Skriv til oss»
                             </a>
-                        </Normaltekst>
-                        <Normaltekst tag="li">ringe NAV på 55 55 33 33</Normaltekst>
-                        <Normaltekst tag="li">
+                        </BodyShort>
+                        <BodyShort as="li">ringe NAV på 55 55 33 33</BodyShort>
+                        <BodyShort as="li">
                             lese om{' '}
                             <a className="lenke" href="https://www.nav.no/arbeid/arbeidsledig-permittert">
                                 dagpenger
@@ -76,59 +74,62 @@ export function InfoOmDialogSide() {
                                 økonomisk sosialhjelp
                             </a>{' '}
                             på nav.no
-                        </Normaltekst>
-                        <Normaltekst tag="li">
+                        </BodyShort>
+                        <BodyShort as="li">
                             <a className="lenke" href="https://www.nav.no/kontaktoss">
                                 chatte med oss
                             </a>
                             . Chatten er ikke innlogget, du kan bare stille generelle spørsmål.
-                        </Normaltekst>
+                        </BodyShort>
                     </ul>
                 </div>
 
-                <Ekspanderbartpanel tittel="Rettigheter og personvern" border>
-                    <div className={styles.seksjon}>
-                        <Normaltekst>
-                            Informasjon du gir i meldinger til veilederen din brukes til å vurdere behovet ditt for
-                            hjelp fra NAV.
-                        </Normaltekst>
-                    </div>
-                    <div className={styles.seksjon}>
-                        <Element>Manuell oppfølging</Element>
-                        <Normaltekst>
-                            NAV henter informasjon om deg fra Folkeregisteret og sjekker mot Kontakt- og
-                            reservasjonsregisteret.
-                        </Normaltekst>
-                        <Normaltekst>
-                            Hvis du ikke ønsker å bruke den digitale dialogen, så kan du reservere deg mot digital
-                            kommunikasjon med det offentlige hos{' '}
-                            <a className="lenke" href="https://www.norge.no/nn/reservasjon">
-                                Norge.no
-                            </a>{' '}
-                            Hvis du reserverer deg mot digital kommunikasjon, vil NAV følge deg opp manuelt.
-                        </Normaltekst>
-                    </div>
+                <ExpansionCard aria-label="Rettigheter og personvern">
+                    <ExpansionCard.Header>Rettigheter og personvern</ExpansionCard.Header>
+                    <ExpansionCard.Content>
+                        <div className={styles.seksjon}>
+                            <BodyShort>
+                                Informasjon du gir i meldinger til veilederen din brukes til å vurdere behovet ditt for
+                                hjelp fra NAV.
+                            </BodyShort>
+                        </div>
+                        <div className={styles.seksjon}>
+                            <Heading level="2">Manuell oppfølging</Heading>
+                            <BodyShort>
+                                NAV henter informasjon om deg fra Folkeregisteret og sjekker mot Kontakt- og
+                                reservasjonsregisteret.
+                            </BodyShort>
+                            <BodyShort>
+                                Hvis du ikke ønsker å bruke den digitale dialogen, så kan du reservere deg mot digital
+                                kommunikasjon med det offentlige hos{' '}
+                                <a className="lenke" href="https://www.norge.no/nn/reservasjon">
+                                    Norge.no
+                                </a>{' '}
+                                Hvis du reserverer deg mot digital kommunikasjon, vil NAV følge deg opp manuelt.
+                            </BodyShort>
+                        </div>
 
-                    <Element>Deling og lagring</Element>
-                    <Normaltekst>
-                        Opplysningene i dialogen og aktivitetsplanen blir ikke delt med andre offentlige etater, med
-                        mindre de har rett til å hente slike opplysninger.
-                    </Normaltekst>
-                    <Normaltekst>
-                        Opplysningene i dialogen og aktivitetsplanen blir lagret og oppbevart etter arkivloven.
-                        Meldinger i dialogen kan ikke slettes når de først er opprettet.
-                    </Normaltekst>
-                    <Normaltekst>
-                        Les mer om{' '}
-                        <a
-                            className="lenke"
-                            href="https://www.nav.no/no/nav-og-samfunn/om-nav/personvern-i-arbeids-og-velferdsetaten"
-                        >
-                            hvordan NAV behandler personopplysninger
-                        </a>
-                        .
-                    </Normaltekst>
-                </Ekspanderbartpanel>
+                        <Heading level="2">Deling og lagring</Heading>
+                        <BodyShort>
+                            Opplysningene i dialogen og aktivitetsplanen blir ikke delt med andre offentlige etater, med
+                            mindre de har rett til å hente slike opplysninger.
+                        </BodyShort>
+                        <BodyShort>
+                            Opplysningene i dialogen og aktivitetsplanen blir lagret og oppbevart etter arkivloven.
+                            Meldinger i dialogen kan ikke slettes når de først er opprettet.
+                        </BodyShort>
+                        <BodyShort>
+                            Les mer om{' '}
+                            <a
+                                className="lenke"
+                                href="https://www.nav.no/no/nav-og-samfunn/om-nav/personvern-i-arbeids-og-velferdsetaten"
+                            >
+                                hvordan NAV behandler personopplysninger
+                            </a>
+                            .
+                        </BodyShort>
+                    </ExpansionCard.Content>
+                </ExpansionCard>
             </div>
         </section>
     );

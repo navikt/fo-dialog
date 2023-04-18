@@ -1,6 +1,5 @@
+import { BodyShort, GuidePanel } from '@navikt/ds-react';
 import classNames from 'classnames';
-import { Normaltekst } from 'nav-frontend-typografi';
-import Veilederpanel from 'nav-frontend-veilederpanel';
 import React from 'react';
 
 import { visibleIfHoc } from '../../felleskomponenter/VisibleIfHoc';
@@ -14,12 +13,14 @@ interface PropTypes {
 function InfoVedIngenDialoger(props: PropTypes) {
     return (
         <div className={classNames(props.className, styles.ingenDialoger)}>
-            <Veilederpanel type={'plakat'} kompakt fargetema="suksess" svg={<VeilederIkon />}>
-                <Normaltekst className={styles.avsnitt}>
+            <GuidePanel
+            // svg={<VeilederIkon />}
+            >
+                <BodyShort className={styles.avsnitt}>
                     Her kan du sende meldinger til veilederen din om arbeid og oppfølging.
-                </Normaltekst>
-                <Normaltekst className={styles.avsnitt}>Du får svar i løpet av noen dager.</Normaltekst>
-            </Veilederpanel>
+                </BodyShort>
+                <BodyShort className={styles.avsnitt}>Du får svar i løpet av noen dager.</BodyShort>
+            </GuidePanel>
         </div>
     );
 }

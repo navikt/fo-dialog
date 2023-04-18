@@ -1,4 +1,4 @@
-import { Normaltekst } from 'nav-frontend-typografi';
+import { BodyShort } from '@navikt/ds-react';
 import React from 'react';
 
 import styles from './TextArea.module.less';
@@ -20,8 +20,8 @@ export function Teller(props: TellerProps) {
     const text = igjen >= 0 ? `Du har ${igjen} tegn igjen` : `Du har ${Math.abs(igjen)} tegn for mye`;
 
     return (
-        <Normaltekst className={styles.teller} aria-live="polite">
+        <BodyShort className={styles.teller} aria-live="polite">
             {text}
-        </Normaltekst>
+        </BodyShort>
     );
 }

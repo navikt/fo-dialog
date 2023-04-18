@@ -1,6 +1,5 @@
+import { BodyShort, Heading, LinkPanel } from '@navikt/ds-react';
 import classNames from 'classnames';
-import { LenkepanelBase } from 'nav-frontend-lenkepanel';
-import { Normaltekst, Systemtittel, Undertekst } from 'nav-frontend-typografi';
 import React, { useEffect, useRef, useState } from 'react';
 import { Flipped, Flipper } from 'react-flip-toolkit';
 
@@ -25,9 +24,9 @@ const ALIGN_TO_BOTTOM: ScrollIntoViewOptions = { block: 'end', inline: 'nearest'
 function Tittel(props: TittelProps) {
     const tittel = props.aktivitet ? getDialogTittel(props.aktivitet) : props.tittel;
     return (
-        <Systemtittel tag="p" className={styles.heading}>
+        <Heading as="p" className={styles.heading}>
             {tittel}
-        </Systemtittel>
+        </Heading>
     );
 }
 
@@ -93,19 +92,19 @@ function DialogPreview(props: Props) {
     const markoer = erLest ? styles.markoerLest : styles.markoerUlest;
 
     return (
-        <LenkepanelBase className={lenkepanelCls} href={`/${id}`} linkCreator={WrapInReactLink}>
+        <LinkPanel className={lenkepanelCls} href={`/${id}`} linkCreator={WrapInReactLink}>
             <div className={markoer} />
             <Ikon dialog={dialog} />
             <div className={styles.content}>
-                <Normaltekst className="visually-hidden">{typeText(dialog)}</Normaltekst>
+                <BodyShort className="visually-hidden">{typeText(dialog)}</BodyShort>
                 <Tittel tittel={overskrift} aktivitet={aktivitet} />
-                <Undertekst className={styles.dato}>{datoString}</Undertekst>
+                <BodyShort className={styles.dato}>{datoString}</BodyShort>
                 <EtikettListe dialog={dialog} />
-                <Normaltekst className="visually-hidden">{meldingerText(dialog.henvendelser.length)}</Normaltekst>
+                <BodyShort className="visually-hidden">{meldingerText(dialog.henvendelser.length)}</BodyShort>
             </div>
-            <Normaltekst aria-hidden="true">{dialog.henvendelser.length}</Normaltekst>
+            <BodyShort aria-hidden="true">{dialog.henvendelser.length}</BodyShort>
             <div ref={dialogref}></div>
-        </LenkepanelBase>
+        </LinkPanel>
     );
 }
 

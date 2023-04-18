@@ -1,4 +1,4 @@
-import { Normaltekst } from 'nav-frontend-typografi';
+import { BodyShort } from '@navikt/ds-react';
 import React, { useEffect, useState } from 'react';
 
 import Hjelpetekst from '../../felleskomponenter/Hjelpetekst';
@@ -37,17 +37,17 @@ function Melding(props: { tekst?: string; erVeileder: boolean }) {
     return !tekst ? null : (
         <div className={styles.meldingContainer} aria-hidden={!hasRendred}>
             <OkMessage>
-                <Normaltekst>{tekst}</Normaltekst>
+                <BodyShort>{tekst}</BodyShort>
                 <Hjelpetekst className={styles.hjelpeTekst} hidden={!erVeileder}>
                     <div className={styles.hjelpeTekstInnhold}>
-                        <Normaltekst>
+                        <BodyShort>
                             Hvis ikke brukeren leser dialogmeldingen innen en halvtime, så vil brukeren motta meldingen
                             på den måten de har registrert i det offentlige kontaktregisteret. Brukeren får beskjed om
                             en ny melding og det lenkes til dialogen. Beskjeden sendes gjennom Altinn.
-                        </Normaltekst>
-                        <Normaltekst>
+                        </BodyShort>
+                        <BodyShort>
                             Sender du flere meldinger innen en halv time så blir det kun sendt én SMS eller e-post.
-                        </Normaltekst>
+                        </BodyShort>
                     </div>
                 </Hjelpetekst>
             </OkMessage>

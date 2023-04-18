@@ -1,12 +1,13 @@
-import './polyfill';
+// import './polyfill';
 
-import NAVSPA from '@navikt/navspa';
-import NavFrontendModal from 'nav-frontend-modal';
-import React from 'react';
-import ReactDOM from 'react-dom';
+// import { Modal } from '@navikt/ds-react';
+// import NAVSPA from '@navikt/navspa';
+// import React from 'react';
+// import ReactDOM from 'react-dom';
 
-import { initAmplitude } from './metrics/amplitude-utils';
-import DemoBanner from './mock/demo/DemoBanner';
+// import { initAmplitude } from './metrics/amplitude-utils';
+// import DemoBanner from './mock/demo/DemoBanner';
+/*
 import { erEksternBruker } from './mock/demo/sessionstorage';
 import { gotoStartTestPage } from './mock/Utils';
 import App from './view/App';
@@ -14,9 +15,9 @@ import App from './view/App';
 const modalAlly = document.getElementById('modal-a11y-wrapper');
 const root = document.getElementById('root');
 
-initAmplitude();
+// initAmplitude();
 
-NavFrontendModal.setAppElement(modalAlly ? document.getElementById('modal-a11y-wrapper') : root);
+Modal.setAppElement(modalAlly ? document.getElementById('modal-a11y-wrapper') : root);
 
 // This is to size the window correctly
 const throttle = require('lodash.throttle');
@@ -32,9 +33,10 @@ window.addEventListener(
         // We execute the same script as before
         document.documentElement.style.setProperty('--vh', `${vh}px`);
     }, 100)
-);
+);*/
 
-if (process.env.REACT_APP_MOCK === 'true') {
+if (import.meta.env.mode === 'development') {
+    /*
     require('./mock');
 
     const elem = document.createElement('div');
@@ -46,7 +48,7 @@ if (process.env.REACT_APP_MOCK === 'true') {
 
     gotoStartTestPage(fnr);
 
-    NAVSPA.eksporter('arbeidsrettet-dialog', AppWrapper);
+    NAVSPA.eksporter('arbeidsrettet-dialog', AppWrapper);*/
 } else {
-    NAVSPA.eksporter('arbeidsrettet-dialog', App);
+    // NAVSPA.eksporter('arbeidsrettet-dialog', App);
 }

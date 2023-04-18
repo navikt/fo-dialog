@@ -1,6 +1,4 @@
-import { Hovedknapp } from 'nav-frontend-knapper';
-import { CheckboksPanelGruppe, RadioPanelGruppe, SkjemaGruppe } from 'nav-frontend-skjema';
-import { Innholdstittel } from 'nav-frontend-typografi';
+import { Button, Checkbox, CheckboxGroup, Heading, Radio, RadioGroup } from '@navikt/ds-react';
 import React, { useState } from 'react';
 
 import styles from './DemoDashboard.module.less';
@@ -34,12 +32,11 @@ function endreBrukerType(value: string) {
     reload();
 }
 
-function getBrukerType() {
-    return erEksternBruker() ? BRUKER_TYPE.EKSTERN : BRUKER_TYPE.INTERN;
-}
-
-function endreTilstand(event: React.SyntheticEvent<EventTarget>) {
+function endreTilstand(checkedItems: any[]) {
     const checkbox = (event as React.ChangeEvent<HTMLInputElement>).currentTarget;
+    checkedItems.forEach(() => {
+        settSessionStorage(checkbox.id, true);
+    });
     settSessionStorage(checkbox.id, checkbox.checked);
     reload();
 }
@@ -57,11 +54,11 @@ function DemoDashboard(props: DemoDashboardProps) {
     const [failureRange, setFailureRange] = useState(getFailureRate());
     return (
         <section className={styles.demodashboard}>
-            <Innholdstittel className="blokk-s">DEMO</Innholdstittel>
-            <RadioPanelGruppe
-                legend="Brukertype"
-                name="brukertype-radio-panel"
-                radios={[
+            <Heading level="1" className="blokk-s">
+                DEMO
+            </Heading>
+            <RadioGroup legend="Brukertype" name="brukertype-radio-panel" onChange={(value) => endreBrukerType(value)}>
+                {[
                     {
                         label: 'Veileder',
                         value: BRUKER_TYPE.INTERN
@@ -70,13 +67,12 @@ function DemoDashboard(props: DemoDashboardProps) {
                         label: 'Eksternbruker',
                         value: BRUKER_TYPE.EKSTERN
                     }
-                ]}
-                checked={getBrukerType()}
-                onChange={(e, value) => endreBrukerType(value)}
-            />
-            <CheckboksPanelGruppe
-                legend="Brukers tilstand"
-                checkboxes={[
+                ].map((radio) => (
+                    <Radio value={radio.value}>{radio.label}</Radio>
+                ))}
+            </RadioGroup>
+            <CheckboxGroup legend="Brukers tilstand" onChange={endreTilstand}>
+                {[
                     {
                         label: 'Ikke under oppfølging',
                         id: SessionStorageElement.PRIVAT_BRUKER,
@@ -112,13 +108,13 @@ function DemoDashboard(props: DemoDashboardProps) {
                         id: SessionStorageElement.IKKE_NIVAA_4,
                         checked: harIkkeNivaa4()
                     }
-                ]}
-                onChange={endreTilstand}
-            />
+                ].map((box) => (
+                    <Checkbox value={box.id}>{box.label}</Checkbox>
+                ))}
+            </CheckboxGroup>
 
-            <CheckboksPanelGruppe
-                legend="Teknisk"
-                checkboxes={[
+            <CheckboxGroup legend="Teknisk" onChange={endreTilstand}>
+                {[
                     {
                         label: 'HodeFot mock',
                         id: SessionStorageElement.HODEFOT,
@@ -149,11 +145,12 @@ function DemoDashboard(props: DemoDashboardProps) {
                         id: SessionStorageElement.NIVA_4_FEILER,
                         checked: harNivaa4Fieler()
                     }
-                ]}
-                onChange={endreTilstand}
-            />
-            <SkjemaGruppe className={styles.tekniskKolonne}>
-                <Hovedknapp onClick={props.skul}>Skul demo banner</Hovedknapp>
+                ].map((box) => (
+                    <Checkbox value={box.id}>{box.label}</Checkbox>
+                ))}
+            </CheckboxGroup>
+            <form className={styles.tekniskKolonne}>
+                <Button onClick={props.skul}>Skul demo banner</Button>
 
                 <div className={styles.range}>
                     <label className="" htmlFor="myRange">
@@ -169,7 +166,7 @@ function DemoDashboard(props: DemoDashboardProps) {
                         onBlur={() => endreFeilureRate(failureRange)}
                     />
                 </div>
-            </SkjemaGruppe>
+            </form>
         </section>
     );
 }

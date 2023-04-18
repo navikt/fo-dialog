@@ -1,7 +1,7 @@
 import '../utils/SetupEnzyme';
 
+import { Checkbox } from '@navikt/ds-react';
 import { mount } from 'enzyme';
-import { Checkbox } from 'nav-frontend-skjema';
 import React from 'react';
 import { MemoryRouter } from 'react-router';
 

@@ -1,9 +1,6 @@
 import './Timeoutmodal.less';
 
-import { Hovedknapp } from 'nav-frontend-knapper';
-import NavFrontendModal from 'nav-frontend-modal';
-import { Normaltekst, Systemtittel } from 'nav-frontend-typografi';
-import Veilederpanel from 'nav-frontend-veilederpanel';
+import { BodyShort, Button, GuidePanel, Heading, Modal } from '@navikt/ds-react';
 import React, { useContext, useEffect, useState } from 'react';
 
 import { pathnamePrefix } from '../../utils/UseApiBasePath';
@@ -68,33 +65,34 @@ function TimeoutModal(props: Props) {
     const apen = skalVises || !!visDemo;
 
     return (
-        <NavFrontendModal
-            isOpen={apen}
+        <Modal
+            open={apen}
             className="timeoutbox-modal"
-            contentLabel="Du må logge inn på nytt."
+            // contentLabel="Du må logge inn på nytt."
             shouldCloseOnOverlayClick={false}
             closeButton={false}
-            onRequestClose={() => setSkalVises(false)}
+            onClose={() => setSkalVises(false)}
         >
-            <Veilederpanel svg={<ObsSVG />} type="plakat" kompakt={true}>
+            <GuidePanel
+                // svg={<ObsSVG />}
+                type="plakat"
+                kompakt={true}
+            >
                 <div className="timeoutbox-nedtelling">
-                    <Systemtittel className="timeoutbox-modal__tittel">Du er logget ut.</Systemtittel>
-                    <Normaltekst className="timeoutbox-modal__beskrivelse">
+                    <Heading className="timeoutbox-modal__tittel">Du er logget ut.</Heading>
+                    <BodyShort className="timeoutbox-modal__beskrivelse">
                         Du må logge inn på nytt.
                         <br />
                         Du kan fortsette der du slapp etter innlogging.
-                    </Normaltekst>
+                    </BodyShort>
 
-                    <Hovedknapp
-                        className="timeoutbox-modal__startpaanytt"
-                        onClick={() => window.location.assign(baseUrl)}
-                    >
+                    <Button className="timeoutbox-modal__startpaanytt" onClick={() => window.location.assign(baseUrl)}>
                         {/* Loginservice støtter kun returnurl til baseUrl */}
                         Start på nytt nå
-                    </Hovedknapp>
+                    </Button>
                 </div>
-            </Veilederpanel>
-        </NavFrontendModal>
+            </GuidePanel>
+        </Modal>
     );
 }
 

@@ -1,4 +1,4 @@
-import { Hovedknapp } from 'nav-frontend-knapper';
+import { Button } from '@navikt/ds-react';
 import React from 'react';
 
 import { fetchData } from '../../utils/Fetch';
@@ -32,10 +32,10 @@ function Bruker() {
             <StatusAdvarselWrapper>
                 Du har ikke digital oppfølging fra NAV. Du kan derfor ikke ha digital dialog med veileder
             </StatusAdvarselWrapper>
-            <Hovedknapp onClick={fjernManuell} className={styles.knapp}>
+            <Button onClick={fjernManuell} className={styles.knapp}>
                 {' '}
                 Endre til digital oppfølging{' '}
-            </Hovedknapp>
+            </Button>
         </div>
     );
 }

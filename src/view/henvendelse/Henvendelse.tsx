@@ -1,13 +1,10 @@
-import Snakkeboble from 'nav-frontend-snakkeboble';
-import Tekstomrade, { LinebreakRule, LinkRule, ParagraphRule } from 'nav-frontend-tekstomrade';
-import { Normaltekst } from 'nav-frontend-typografi';
+import { BodyShort, Chat, Textarea } from '@navikt/ds-react';
 import React from 'react';
 
 import { ViktigMelding } from '../../felleskomponenter/etiketer/Etikett';
 import { formaterDateAndTime } from '../../utils/Date';
 import { HenvendelseData } from '../../utils/Typer';
 import { useUserInfoContext } from '../BrukerProvider';
-import { markdownLink } from './CustomRules';
 import styles from './Henvendelse.module.less';
 
 function accessibleText(erBruker: boolean, erMeldingFraBruker: boolean) {
@@ -37,18 +34,18 @@ export function Henvendelse(props: Props) {
 
     return (
         <>
-            <Normaltekst className="visually-hidden">{accessibleText(erBruker, erMeldingFraBruker)}</Normaltekst>
-            <Snakkeboble
+            <BodyShort className="visually-hidden">{accessibleText(erBruker, erMeldingFraBruker)}</BodyShort>
+            <Chat.Bubble
                 className={classNameStyle}
-                topp={toppTekst}
-                pilHoyre={erMeldingFraBruker}
-                ikonClass={className}
+                // topp={toppTekst}
+                // pilHoyre={erMeldingFraBruker}
+                // ikonClass={className}
             >
                 <ViktigMelding visible={viktigMarkering} className={styles.viktig} />
-                <Tekstomrade rules={[LinkRule, LinebreakRule, ParagraphRule, markdownLink]} className="blokk-xs">
+                <Textarea label="FIX THIS LABEL" className="blokk-xs">
                     {tekst}
-                </Tekstomrade>
-            </Snakkeboble>
+                </Textarea>
+            </Chat.Bubble>
         </>
     );
 }

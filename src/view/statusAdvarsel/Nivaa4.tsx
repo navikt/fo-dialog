@@ -1,5 +1,4 @@
-import Hjelpetekst from 'nav-frontend-hjelpetekst';
-import { PopoverOrientering } from 'nav-frontend-popover';
+import { HelpText } from '@navikt/ds-react';
 import React from 'react';
 
 import StatusAdvarselWrapper from './StatusAdvarselWrapper';
@@ -10,10 +9,10 @@ interface Props {
 }
 
 const Mere = () => (
-    <Hjelpetekst type={PopoverOrientering.Over}>
+    <HelpText placement="top">
         Denne brukeren har ikke vært innlogget de siste 18 månedene med nivå 4 (for eksempel BankID). <br />
         Du kan derfor ikke sende forhåndsorientering, varsel og meldinger.
-    </Hjelpetekst>
+    </HelpText>
 );
 
 const ManglerNivaa4Veileder = () => (

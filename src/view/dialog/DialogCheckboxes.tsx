@@ -1,4 +1,4 @@
-import { Checkbox } from 'nav-frontend-skjema';
+import { Checkbox, CheckboxGroup } from '@navikt/ds-react';
 import React from 'react';
 
 import { DialogData } from '../../utils/Typer';
@@ -17,20 +17,24 @@ interface Props {
 
 const DialogCheckboxes = (props: Props) => (
     <div className={styles.checkboxBlock}>
-        <Checkbox
-            label="Venter på svar fra NAV"
-            checked={!props.ferdigBehandlet}
-            className={styles.checkboxItem}
-            disabled={props.disabled}
-            onChange={() => props.toggleFerdigBehandlet(!props.ferdigBehandlet)}
-        />
-        <Checkbox
-            label="Venter på svar fra bruker"
-            checked={props.venterPaSvar}
-            className={styles.checkboxItem}
-            disabled={props.disabled}
-            onChange={() => props.toggleVenterPaSvar(!props.venterPaSvar)}
-        />
+        <CheckboxGroup legend={'Filter'}>
+            <Checkbox
+                checked={!props.ferdigBehandlet}
+                className={styles.checkboxItem}
+                disabled={props.disabled}
+                onChange={() => props.toggleFerdigBehandlet(!props.ferdigBehandlet)}
+            >
+                Venter på svar fra NAV
+            </Checkbox>
+            <Checkbox
+                checked={props.venterPaSvar}
+                className={styles.checkboxItem}
+                disabled={props.disabled}
+                onChange={() => props.toggleVenterPaSvar(!props.venterPaSvar)}
+            >
+                Venter på svar fra bruker
+            </Checkbox>
+        </CheckboxGroup>
     </div>
 );
 

@@ -1,6 +1,4 @@
 import classNames from 'classnames';
-// @ts-ignore
-import Ikon from 'nav-frontend-ikoner-assets';
 import React from 'react';
 import { Link } from 'react-router-dom';
 
@@ -12,7 +10,6 @@ function OmDialogLenke() {
     return (
         <Link to="/informasjon" className={knappCls}>
             <span>Om dialog</span>
-            <Ikon kind="help-circle" />
         </Link>
     );
 }

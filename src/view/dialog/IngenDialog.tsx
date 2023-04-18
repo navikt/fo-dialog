@@ -1,4 +1,4 @@
-import AlertStripe from 'nav-frontend-alertstriper';
+import { Alert } from '@navikt/ds-react';
 import React from 'react';
 
 import styles from './Dialog.module.less';
@@ -6,9 +6,7 @@ import styles from './Dialog.module.less';
 export function IngenDialog() {
     return (
         <div className={styles.dialog}>
-            <AlertStripe className={styles.ingenDialog} type="advarsel">
-                Dialogen eksisterer ikke.
-            </AlertStripe>
+            <Alert variant="error">Dialogen eksisterer ikke.</Alert>
         </div>
     );
 }

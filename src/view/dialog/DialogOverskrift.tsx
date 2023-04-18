@@ -1,4 +1,4 @@
-import { Undertittel } from 'nav-frontend-typografi';
+import { Heading } from '@navikt/ds-react';
 import React from 'react';
 
 import { StringOrNull } from '../../utils/Typer';
@@ -11,7 +11,7 @@ interface DialogOverskriftProps {
 
 export const DialogOverskrift = (props: DialogOverskriftProps) =>
     props.tekst ? (
-        <Undertittel id={dialogHeaderID2} className={styles.tittel}>
+        <Heading id={dialogHeaderID2} className={styles.tittel}>
             {props.tekst}
-        </Undertittel>
+        </Heading>
     ) : null;

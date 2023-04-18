@@ -1,7 +1,6 @@
+import { ChevronLeftIcon } from '@navikt/aksel-icons';
+import { Heading, Link } from '@navikt/ds-react';
 import classNames from 'classnames';
-import { VenstreChevron } from 'nav-frontend-chevron';
-import Lenke from 'nav-frontend-lenker';
-import { Systemtittel } from 'nav-frontend-typografi';
 import React from 'react';
 import { useParams } from 'react-router';
 
@@ -25,13 +24,13 @@ const DialogOversiktHeader = (props: HeaderProps) => {
 
     return (
         <>
-            <Lenke href={minsideUrl} className={styles.dintnav}>
-                <VenstreChevron />
+            <Link href={minsideUrl} className={styles.dintnav}>
+                <ChevronLeftIcon />
                 Min side
-            </Lenke>
-            <Systemtittel tag="h1" className={styles.tittel}>
+            </Link>
+            <Heading level={'1'} className={styles.tittel}>
                 Dialog med veilederen din
-            </Systemtittel>
+            </Heading>
         </>
     );
 };

@@ -1,4 +1,4 @@
-import { Systemtittel } from 'nav-frontend-typografi';
+import { Heading } from '@navikt/ds-react';
 import React from 'react';
 import { useParams } from 'react-router';
 
@@ -32,7 +32,7 @@ export function Aktivitetskort() {
         <section aria-label="Aktivitet knyttet til dialog" className={styles.aktivitetskort}>
             <AktivitetskortLenke aktivitetId={id} />
             <Brodsmulesti status={status} type={getAktivitetType(aktivitet)} />
-            <Systemtittel>{tittel}</Systemtittel>
+            <Heading>{tittel}</Heading>
             <AktivitetIngress aktivitetType={getAktivitetType(aktivitet)} />
             <AktivitetskortInfoBox aktivitet={aktivitet} />
             <AvtaltMarkering hidden={!avtalt} />

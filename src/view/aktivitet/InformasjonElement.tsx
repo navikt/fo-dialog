@@ -1,5 +1,4 @@
-import Tekstomrade from 'nav-frontend-tekstomrade';
-import { Undertekst } from 'nav-frontend-typografi';
+import { BodyShort, Textarea } from '@navikt/ds-react';
 import React, { ReactNode } from 'react';
 
 import EksternLenke from '../../felleskomponenter/EksternLenke';
@@ -19,7 +18,9 @@ export default function InformasjonElement(props: TekstomradeProps) {
 
     return (
         <InformasjonElementRaw merkelapptekst={merkelapptekst}>
-            <Tekstomrade className={styles.overflowEllipse}>{verdi}</Tekstomrade>
+            <Textarea label={'FIX LABEL'} className={styles.overflowEllipse}>
+                {verdi}
+            </Textarea>
         </InformasjonElementRaw>
     );
 }
@@ -49,7 +50,7 @@ export function InformasjonElementRaw(props: PropTypes) {
 
     return (
         <div className={styles.informasjonselement}>
-            <Undertekst children={merkelapptekst} className={styles.merkelapp} />
+            <BodyShort children={merkelapptekst} className={styles.merkelapp} />
             {children}
         </div>
     );

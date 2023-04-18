@@ -1,5 +1,5 @@
+import { Button } from '@navikt/ds-react';
 import { Formstate } from '@nutgaard/use-formstate';
-import { Hovedknapp } from 'nav-frontend-knapper';
 import React from 'react';
 
 import EkspanderbartTekstArea from '../../../felleskomponenter/textArea/TextArea';
@@ -33,15 +33,9 @@ const HenvendelseInput = (props: HenvendelseInputProps) => {
                 onChange={onChange}
                 {...state.fields.melding}
             />
-            <Hovedknapp
-                className={styles.sendKnapp}
-                title="Send"
-                autoDisableVedSpinner
-                spinner={laster}
-                htmlType="submit"
-            >
+            <Button className={styles.sendKnapp} title="Send" autoDisableVedSpinner spinner={laster} htmlType="submit">
                 Send
-            </Hovedknapp>
+            </Button>
         </div>
     );
 };

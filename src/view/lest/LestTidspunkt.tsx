@@ -1,4 +1,4 @@
-import { Undertekst } from 'nav-frontend-typografi';
+import { BodyShort } from '@navikt/ds-react';
 import React from 'react';
 
 import { visibleIfHoc } from '../../felleskomponenter/VisibleIfHoc';
@@ -15,7 +15,7 @@ function LestAvTidspunkt(props: Props) {
     return (
         <div className={'henvendelse-item ' + styles.lestContainer}>
             <Pil className={styles.pil} />
-            <Undertekst>{`Lest av bruker ${tidspunktMedRiktigFormat}`}</Undertekst>
+            <BodyShort>{`Lest av bruker ${tidspunktMedRiktigFormat}`}</BodyShort>
         </div>
     );
 }

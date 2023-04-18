@@ -1,11 +1,11 @@
 import '../../utils/SetupEnzyme';
 
+import { BodyShort } from '@navikt/ds-react';
 import { mount, shallow } from 'enzyme';
-import Tekstomrade from 'nav-frontend-tekstomrade';
-import { Undertekst } from 'nav-frontend-typografi';
 import React from 'react';
 
 import EksternLenke from '../../felleskomponenter/EksternLenke';
+import TextArea from '../../felleskomponenter/textArea/TextArea';
 import InformasjonElement, { InformasjonElementRaw } from './InformasjonElement';
 
 describe('<InformasjonElement />', () => {
@@ -14,11 +14,11 @@ describe('<InformasjonElement />', () => {
         const verdi = 'Verdi på merkelapp';
         const wrapper = mount(<InformasjonElement merkelapptekst={merkelapptekst} verdi={verdi} />);
 
-        expect(wrapper.find(Undertekst).exists).toBeTruthy();
-        expect(wrapper.find(Undertekst).text()).toEqual(merkelapptekst);
+        expect(wrapper.find(BodyShort).exists).toBeTruthy();
+        expect(wrapper.find(BodyShort).text()).toEqual(merkelapptekst);
 
-        expect(wrapper.find(Tekstomrade).exists()).toBeTruthy();
-        expect(wrapper.find(Tekstomrade).text()).toEqual(verdi);
+        expect(wrapper.find(TextArea).exists()).toBeTruthy();
+        expect(wrapper.find(TextArea).text()).toEqual(verdi);
     });
 
     it('skal vise children om det er oppgitt', () => {
@@ -30,15 +30,15 @@ describe('<InformasjonElement />', () => {
         );
         const wrapper = mount(jsx);
 
-        expect(wrapper.find(Undertekst).exists).toBeTruthy();
-        expect(wrapper.find(Undertekst).text()).toEqual(merkelapptekst);
+        expect(wrapper.find(BodyShort).exists).toBeTruthy();
+        expect(wrapper.find(BodyShort).text()).toEqual(merkelapptekst);
         expect(wrapper.find(EksternLenke).exists()).toBeTruthy();
     });
 
     it('skal skjules om hverken tekst eller children er oppgitt', () => {
         const merkelapptekst = 'merkelappteksten';
         const wrapper = shallow(<InformasjonElement merkelapptekst={merkelapptekst} verdi={null} />);
-        expect(wrapper.find(Undertekst).exists()).toBeFalsy();
+        expect(wrapper.find(BodyShort).exists()).toBeFalsy();
     });
 
     it('skal matche snapshot når EksternLenke er child', () => {

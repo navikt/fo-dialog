@@ -1,5 +1,4 @@
-import { LenkepanelBase } from 'nav-frontend-lenkepanel';
-import { Systemtittel, Undertekst, Undertittel } from 'nav-frontend-typografi';
+import { BodyShort, Heading, LinkPanel } from '@navikt/ds-react';
 import React from 'react';
 
 import { visibleIfHoc } from '../../felleskomponenter/VisibleIfHoc';
@@ -13,7 +12,7 @@ import { aktivitetLenke, visAktivitetsplan } from './AktivitetskortLenke';
 import styles from './AktivitetskortPreview.module.less';
 import { getTypeTextByAktivitet } from './TextUtils';
 
-const UndertekstVisible = visibleIfHoc(Undertekst);
+const UndertekstVisible = visibleIfHoc(BodyShort);
 
 interface Props {
     aktivitetId?: StringOrNull;
@@ -34,28 +33,30 @@ export function AktivitetskortPreview(props: Props) {
 
     return (
         <section aria-label="Aktivitet knyttet til dialog" className={styles.aktivitetSeksjon}>
-            <Systemtittel className="visually-hidden">Aktivitet knyttet til dialog</Systemtittel>
-            <Undertittel className={styles.storSkjermTittel}>
+            <Heading level="2" className="visually-hidden">
+                Aktivitet knyttet til dialog
+            </Heading>
+            <Heading level="3" className={styles.storSkjermTittel}>
                 {typeTekst}: {aktivitet?.tittel}
-            </Undertittel>
-            <LenkepanelBase
+            </Heading>
+            <LinkPanel
                 href={aktivitetLenke(aktivitet.id)}
                 className={styles.lenkepanelbase}
                 onClick={visAktivitetsplan(aktivitet.id, fnr)}
             >
                 <div className={styles.aktivteskortWrapper}>
                     <div className={styles.info}>
-                        <Undertekst className={styles.tittel}>{typeTekst}</Undertekst>
-                        <Undertittel id={dialogHeaderID2} className={styles.tittel}>
+                        <BodyShort className={styles.tittel}>{typeTekst}</BodyShort>
+                        <Heading level="4" id={dialogHeaderID2} className={styles.tittel}>
                             {aktivitet.tittel}
-                        </Undertittel>
+                        </Heading>
                         <UndertekstVisible visible={!!infotekst} className={styles.tittel}>
                             {infotekst}
                         </UndertekstVisible>
                     </div>
                     <p className={styles.lesmer}>Gå til aktiviteten</p>
                 </div>
-            </LenkepanelBase>
+            </LinkPanel>
         </section>
     );
 }
