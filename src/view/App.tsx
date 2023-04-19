@@ -1,6 +1,7 @@
 import React from 'react';
 import { BrowserRouter, HashRouter } from 'react-router-dom';
 
+import { USE_HASH_ROUTER } from '../constants';
 import TimeoutModal from '../felleskomponenter/timeoutmodal/TimeoutModal';
 import { PageViewMetricCollector } from '../metrics/PageViewMetricCollector';
 import { UppdateEventHandler } from '../utils/UpdateEvent';
@@ -9,7 +10,6 @@ import AppBody from './AppBody';
 import { EventHandler } from './EventHandler';
 import { Provider } from './Provider';
 import StatusAdvarsel from './statusAdvarsel/StatusAdvarsel';
-import { getBasename } from './utils/utils';
 
 interface Props {
     fnr?: string;
@@ -17,7 +17,7 @@ interface Props {
 }
 
 function Router({ children }: { children?: React.ReactNode }) {
-    if (import.meta.env.VITE_USE_HASH_ROUTER === 'true') {
+    if (USE_HASH_ROUTER) {
         return <HashRouter>{children}</HashRouter>;
     }
 

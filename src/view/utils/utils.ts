@@ -32,5 +32,3 @@ export const getAktivitetType = (aktivitet: Aktivitet | ArenaAktivitet): AlleAkt
     }
     return aktivitet.type;
 };
-
-export const runningOnGithubPages = import.meta.env.VITE_USE_HASH_ROUTER === 'true';

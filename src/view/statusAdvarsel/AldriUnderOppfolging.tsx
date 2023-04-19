@@ -1,7 +1,7 @@
 import { Link } from '@navikt/ds-react';
 import React from 'react';
 
-import { arbeidssokerregistreringUrl } from '../../metrics/constants';
+import { arbeidssokerregistreringUrl } from '../../constants';
 import StatusAdvarselWrapper from './StatusAdvarselWrapper';
 
 interface Props {

@@ -1,5 +1,6 @@
+import { USE_HASH_ROUTER } from '../constants';
 import { pathnamePrefix } from '../utils/UseApiBasePath';
-import { runningOnGithubPages, settSammenmedSlasher } from '../view/utils/utils';
+import { settSammenmedSlasher } from '../view/utils/utils';
 
 export function rndId() {
     const crypto: Crypto = window.crypto;
@@ -26,7 +27,7 @@ export const toggleFnrInUrl = (hashPart: string, fnr?: string) => {
 };
 
 export const gotoStartTestPage = (fnr?: string) => {
-    if (runningOnGithubPages) {
+    if (USE_HASH_ROUTER) {
         const hashPartOfUrl = toggleFnrInUrl(window.location.hash, fnr);
         window.history.replaceState({}, '', settSammenmedSlasher(pathnamePrefix, hashPartOfUrl));
     } else {

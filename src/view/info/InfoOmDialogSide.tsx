@@ -2,7 +2,7 @@ import { BodyLong, BodyShort, ExpansionCard, Heading, Link } from '@navikt/ds-re
 import classNames from 'classnames';
 import React, { useLayoutEffect } from 'react';
 
-import { aktivtetsplanUrl } from '../../metrics/constants';
+import { aktivtetsplanUrl } from '../../constants';
 import dialogStyle from '../dialog/Dialog.module.less';
 import { TittelHeader } from '../dialog/TittelHeader';
 import { useSkjulHodefotForMobilVisning } from '../utils/useSkjulHodefotForMobilVisning';

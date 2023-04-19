@@ -4,7 +4,7 @@ import classNames from 'classnames';
 import React from 'react';
 import { useParams } from 'react-router';
 
-import { minsideUrl } from '../../metrics/constants';
+import { minsideUrl } from '../../constants';
 import useKansendeMelding from '../../utils/UseKanSendeMelding';
 import { useUserInfoContext } from '../BrukerProvider';
 import { useDialogContext } from '../DialogProvider';

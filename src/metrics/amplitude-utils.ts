@@ -1,6 +1,6 @@
 import amplitude from 'amplitude-js';
 
-import { APP_NAME, TEAM_NAME } from './constants';
+import { APP_NAME, TEAM_NAME } from '../constants';
 
 type EventDataValue = string | boolean | number | null | undefined;
 

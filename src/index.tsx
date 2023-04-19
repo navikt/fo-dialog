@@ -10,6 +10,7 @@ import throttle from 'lodash.throttle';
 import React from 'react';
 import ReactDOM from 'react-dom';
 
+import { USE_MOCK } from './constants';
 // import { initAmplitude } from './metrics/amplitude-utils';
 import DemoBanner from './mock/demo/DemoBanner';
 import { erEksternBruker } from './mock/demo/sessionstorage';
@@ -43,7 +44,7 @@ function render() {
     return window.NAVSPA[navspaName](document.getElementById('root'));
 }
 
-if (import.meta.env.MODE === 'development') {
+if (USE_MOCK) {
     const fnr = erEksternBruker() ? undefined : '12345678901';
     gotoStartTestPage(fnr);
 

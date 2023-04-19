@@ -2,7 +2,7 @@ import { ChevronRightIcon } from '@navikt/aksel-icons';
 import { Link } from '@navikt/ds-react';
 import React, { MouseEvent } from 'react';
 
-import { aktivtetsplanUrl } from '../../metrics/constants';
+import { aktivtetsplanUrl } from '../../constants';
 import { useFnrContext } from '../Provider';
 import { getContextPath } from '../utils/utils';
 import styles from './Aktivitetskort.module.less';
