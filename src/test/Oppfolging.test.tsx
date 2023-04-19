@@ -18,7 +18,7 @@ import DialogPreview from '../view/dialogliste/DialogPreview';
 import NyDialogLink from '../view/dialogliste/NyDialogLink';
 import * as DialogProvider from '../view/DialogProvider';
 import { DialogDataProviderType } from '../view/DialogProvider';
-import { HenvendelseList } from '../view/henvendelse/HenvendelseList';
+import { MeldingList } from '../view/melding/MeldingList';
 import * as OppfolgingProvider from '../view/OppfolgingProvider';
 import { OppfolgingDataProviderType } from '../view/OppfolgingProvider';
 import * as AppContext from '../view/Provider';
@@ -191,7 +191,7 @@ describe('<Dialog/>', () => {
             </MemoryRouter>
         );
         expect(wrapper.find(HenvendelseInputBox).exists()).toBeTruthy();
-        expect(wrapper.find(HenvendelseList).exists()).toBeTruthy();
+        expect(wrapper.find(MeldingList).exists()).toBeTruthy();
         expect(wrapper.find(Checkbox).exists()).toBeFalsy();
     });
     test('Bruker under oppf. viser komponenter i Dialog', () => {
@@ -222,6 +222,6 @@ describe('<Dialog/>', () => {
         );
         expect(wrapper.find(DialogHeader).exists()).toBeTruthy();
         expect(wrapper.find(HenvendelseInputBox).exists()).toBeTruthy();
-        expect(wrapper.find(HenvendelseList).exists()).toBeTruthy();
+        expect(wrapper.find(MeldingList).exists()).toBeTruthy();
     });
 });

@@ -21,7 +21,7 @@ interface Props {
     viktigMarkering: boolean;
 }
 
-export function Henvendelse(props: Props) {
+export function Melding(props: Props) {
     const { viktigMarkering } = props;
     const { avsender, sendt, tekst, avsenderId } = props.henvendelseData;
     const brukerData = useUserInfoContext();

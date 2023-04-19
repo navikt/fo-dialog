@@ -5,8 +5,8 @@ import { compareDates } from '../../utils/Date';
 import { DialogData, HenvendelseData, StringOrNull } from '../../utils/Typer';
 import LestAvTidspunkt from '../lest/LestTidspunkt';
 import { useSkjulHodefotForMobilVisning } from '../utils/useSkjulHodefotForMobilVisning';
-import { Henvendelse } from './Henvendelse';
 import styles from './HenvendelseList.module.less';
+import { Melding } from './Melding';
 
 interface Props {
     dialogData: DialogData;
@@ -22,7 +22,7 @@ function sisteLesteHenvendelse(lest: StringOrNull, henvendelser: HenvendelseData
     return sistLeste ? sistLeste.id : null;
 }
 
-export function HenvendelseList(props: Props) {
+export function MeldingList(props: Props) {
     const { lestAvBrukerTidspunkt, henvendelser } = props.dialogData;
 
     const sorterteHenvendelser = !!henvendelser ? henvendelser.sort((a, b) => compareDates(b.sendt, a.sendt)) : [];
@@ -52,7 +52,7 @@ export function HenvendelseList(props: Props) {
                 {sorterteHenvendelser.map((henvendelse, index) => (
                     <React.Fragment key={henvendelse.id}>
                         <div className={styles.henvendelseItem}>
-                            <Henvendelse
+                            <Melding
                                 henvendelseData={henvendelse}
                                 viktigMarkering={(erViktig && index === 0) || henvendelse.viktig}
                             />

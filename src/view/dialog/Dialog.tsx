@@ -6,7 +6,7 @@ import { UpdateTypes, dispatchUpdate } from '../../utils/UpdateEvent';
 import useKansendeMelding from '../../utils/UseKanSendeMelding';
 import { useUserInfoContext } from '../BrukerProvider';
 import { useDialogContext } from '../DialogProvider';
-import { HenvendelseList } from '../henvendelse/HenvendelseList';
+import { MeldingList } from '../melding/MeldingList';
 import { useFnrContext, useViewContext } from '../Provider';
 import { useEventListener } from '../utils/useEventListner';
 import { endreDialogSomVises } from '../ViewState';
@@ -75,7 +75,7 @@ export function Dialog() {
             </Heading>
             <DialogHeader dialog={valgtDialog} visSkygge={!!bruker?.erBruker} />
             <ManagedDialogCheckboxes dialog={valgtDialog} visible={!!bruker?.erVeileder} />
-            <HenvendelseList dialogData={valgtDialog} />
+            <MeldingList dialogData={valgtDialog} />
             <DialogSendtBekreftelse viewState={viewState} dialog={valgtDialog} fnr={fnr} />
             <HistoriskInfo hidden={aktivDialog} kanSendeMelding={kanSendeMelding} />
             <DialogInputBoxVisible
