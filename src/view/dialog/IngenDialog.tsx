@@ -5,8 +5,8 @@ import styles from './Dialog.module.less';
 
 export function IngenDialog() {
     return (
-        <div className={styles.dialog}>
-            <Alert variant="error">Dialogen eksisterer ikke.</Alert>
+        <div className="m-4 flex flex-col flex-1">
+            <Alert variant="warning">Dialogen eksisterer ikke.</Alert>
         </div>
     );
 }

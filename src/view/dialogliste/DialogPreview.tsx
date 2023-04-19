@@ -86,9 +86,9 @@ function DialogPreview(props: Props) {
 
     const erLest = lest || historisk;
 
-    const lenkepanelCls = classNames('flex', styles.preview, {
+    const lenkepanelCls = classNames('my-2', styles.preview, {
         [styles.innholdUlest]: !erLest,
-        [styles.innholdValgt]: detteErValgtDialog
+        ['bg-surface-selected border-border-selected']: detteErValgtDialog
     });
     const markoer = erLest ? styles.markoerLest : styles.markoerUlest;
 
@@ -100,11 +100,11 @@ function DialogPreview(props: Props) {
         history.push(dialogRoute(id));
     };
     return (
-        <LinkPanel className="my-2" href={dialogRoute(id)} onClick={onGoTo}>
+        <LinkPanel className={lenkepanelCls} href={dialogRoute(id)} onClick={onGoTo}>
             <div className="flex">
                 <div className={markoer} />
                 <Ikon dialog={dialog} />
-                <div className="flex-1">
+                <div className="flex-1 ">
                     <BodyShort className="hidden">{typeText(dialog)}</BodyShort>
                     <Tittel tittel={overskrift} aktivitet={aktivitet} />
                     <BodyShort className={styles.dato}>{datoString}</BodyShort>

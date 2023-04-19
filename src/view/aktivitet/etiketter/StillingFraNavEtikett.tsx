@@ -1,3 +1,4 @@
+import { Tag } from '@navikt/ds-react';
 import classNames from 'classnames';
 import React from 'react';
 
@@ -44,11 +45,8 @@ function StillingFraNavEtikett(props: Props) {
 
     const cls = getCls(etikett);
 
-    return (
-        <EtikettBase className={classNames(cls, className)} hidden={hidden || cls === styles.ikkeStartet}>
-            {getText(etikett)}
-        </EtikettBase>
-    );
+    if (hidden) return null;
+    return <Tag variant="alt1">{getText(etikett)}</Tag>;
 }
 
 export default StillingFraNavEtikett;

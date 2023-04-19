@@ -6,6 +6,6 @@ import styles from './TilbakeKnapp.module.less';
 
 export const TilbakeKnapp = () => (
     <Link to="/" title="Til dialoger" className={styles.tilbakeTilOversikt}>
-        <ChevronLeftIcon stor />
+        <ChevronLeftIcon />
     </Link>
 );

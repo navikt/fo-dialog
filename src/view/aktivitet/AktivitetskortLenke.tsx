@@ -1,4 +1,5 @@
 import { ChevronRightIcon } from '@navikt/aksel-icons';
+import { Link } from '@navikt/ds-react';
 import React, { MouseEvent } from 'react';
 
 import { aktivtetsplanUrl } from '../../metrics/constants';
@@ -28,10 +29,10 @@ export default function AktivitetskortLenke(props: Props) {
     const aktivitetId = props.aktivitetId;
     return (
         <div className={styles.aktivitetkortlenke}>
-            <a href={aktivitetLenke(aktivitetId)} onClick={visAktivitetsplan(aktivitetId, fnr)}>
+            <Link href={aktivitetLenke(aktivitetId)} onClick={visAktivitetsplan(aktivitetId, fnr)}>
                 Gå til aktiviteten
                 <ChevronRightIcon />
-            </a>
+            </Link>
         </div>
     );
 }

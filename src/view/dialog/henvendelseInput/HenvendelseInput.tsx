@@ -33,7 +33,7 @@ const HenvendelseInput = (props: HenvendelseInputProps) => {
                 onChange={onChange}
                 {...state.fields.melding}
             />
-            <Button className={styles.sendKnapp} title="Send" autoDisableVedSpinner spinner={laster} htmlType="submit">
+            <Button className={styles.sendKnapp} title="Send" loading={laster} type="submit">
                 Send
             </Button>
         </div>

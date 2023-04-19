@@ -1,4 +1,5 @@
 module.exports = {
+    important: '#root',
     presets: [require('@navikt/ds-tailwind')],
     content: ['./index.html', './src/**/*.{js,ts,jsx,tsx}'],
     variants: {
