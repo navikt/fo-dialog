@@ -12,12 +12,16 @@ import NyDialog from './NyDialog';
 
 function DialogContainer() {
     const bruker = useUserInfoContext();
-    const cls = classNames(styles.dialogContainer, { [styles.brukerDialogContainer]: bruker?.erBruker });
+    const cls = classNames();
 
     const fnr = useFnrContext();
 
     return (
-        <div className={cls}>
+        <div
+            className={classNames('col-start-2 col-span-2 bg-white overflow-auto flex', styles.dialogContainer, {
+                [styles.brukerDialogContainer]: bruker?.erBruker
+            })}
+        >
             <Switch>
                 <Route path={`${fnr ? `/${fnr}` : ''}/informasjon`} component={InfoOmDialogSide} />
                 <Route path={`${fnr ? `/${fnr}` : ''}/ny`} component={NyDialog} />

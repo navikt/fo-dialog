@@ -1,3 +1,4 @@
+import classNames from 'classnames';
 import React from 'react';
 import { Route, Switch } from 'react-router';
 
@@ -8,7 +9,7 @@ import { Aktivitetskort } from './Aktivitetskort';
 function AktivitetContainer() {
     const fnr = useFnrContext();
     return (
-        <div className={styles.aktivitetContainer}>
+        <div className={classNames('col-span-1')}>
             <Switch>
                 <Route path={`${fnr ? `/${fnr}` : ''}/ny`} component={Aktivitetskort} />
                 <Route path={`${fnr ? `/${fnr}` : ''}/:dialogId`} component={Aktivitetskort} />

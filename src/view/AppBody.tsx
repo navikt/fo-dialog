@@ -1,3 +1,4 @@
+import classNames from 'classnames';
 import React, { useEffect } from 'react';
 import { v4 as uuidv4 } from 'uuid';
 
@@ -54,7 +55,7 @@ export default function AppBody() {
     }
 
     return (
-        <div className={styles.app__body}>
+        <div className={classNames('flex flex-1 overflow-hidden w-full grid grid-cols-4', styles.app__body)}>
             <DialogOversiktContainer />
             <DialogContainer />
             <AktivitetContainer />

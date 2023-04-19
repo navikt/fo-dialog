@@ -28,6 +28,8 @@ export function Aktivitetskort() {
 
     const { status, tittel, avtalt, id } = aktivitet;
 
+    console.log('Viser aktivitetskort');
+
     return (
         <section aria-label="Aktivitet knyttet til dialog" className={styles.aktivitetskort}>
             <AktivitetskortLenke aktivitetId={id} />

@@ -1,14 +1,9 @@
 @import (reference) '../variabler';
 
 .dialogContainer {
-    background-color: var(--a-white);
-    overflow: auto;
-    display: flex;
-    flex-grow: 1;
     max-height: 100vh; /* Fallback for browsers that do not support Custom Properties */
     max-height: calc(var(--vh, 1vh) * 100);
-
-    .min-responsive({width: 65%;});
+    //.min-responsive({width: 65%;});
 }
 
 .brukerDialogContainer {
