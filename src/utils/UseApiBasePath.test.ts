@@ -64,11 +64,4 @@ describe('base', () => {
         expect(apiBasePath).toBe('');
         expect(getBasename(fnr)).toBe(`/${fnr}`);
     });
-
-    it('gh-pages api-url should be empty string', () => {
-        loadEnv('./nais/.env.github.pages');
-        const { pathnamePrefix, apiBasePath } = require('./UseApiBasePath');
-        expect(pathnamePrefix).toBe('/arbeidsrettet-dialog');
-        expect(apiBasePath).toBe('/arbeidsrettet-dialog');
-    });
 });

@@ -43,7 +43,7 @@ function render() {
 
 if (import.meta.env.MODE === 'development') {
     const fnr = erEksternBruker() ? undefined : '12345678901';
-    window.history.replaceState({}, '', pathnamePrefix + fnr);
+    gotoStartTestPage(fnr);
 
     import('./mock').then(() => {
         const elem = document.createElement('div');
@@ -51,8 +51,6 @@ if (import.meta.env.MODE === 'development') {
         ReactDOM.render(<DemoBanner />, elem);
 
         const AppWrapper = () => <App fnr={fnr} />;
-
-        gotoStartTestPage(fnr);
 
         NAVSPA.eksporter(navspaName, AppWrapper);
         render();

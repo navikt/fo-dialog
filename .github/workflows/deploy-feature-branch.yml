@@ -12,7 +12,7 @@ jobs:
     name: Deploy to dev extern
     uses: navikt/arbeidsrettet-dialog/.github/workflows/gcp-root.yml@main
     with:
-      kommando: npm run build-ekstern-dev
+      kommando: npm run build:dev-ekstern
       bucket: arbeidsrettet-dialog-dev
       releaseName: dev-ekstern
     secrets:
@@ -22,7 +22,7 @@ jobs:
     name: Deploy application to dev intern
     uses: navikt/arbeidsrettet-dialog/.github/workflows/gcp-root.yml@main
     with:
-      kommando: npm run build-intern-dev
+      kommando: npm run build:intern-dev
       bucket: arbeidsrettet-dialog-intern-dev
       releaseName: dev-intern
     secrets:
