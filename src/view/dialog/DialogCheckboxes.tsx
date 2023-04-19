@@ -1,4 +1,5 @@
 import { Checkbox, CheckboxGroup } from '@navikt/ds-react';
+import classNames from 'classnames';
 import React from 'react';
 
 import { Status } from '../../api/typer';
@@ -27,24 +28,26 @@ const DialogCheckboxes = ({
     venterPaSvar,
     disabled
 }: Props) => (
-    <div className={styles.checkboxBlock}>
+    <div className={classNames('border-b border-border-divider relative', styles.checkboxBlock)}>
         <CheckboxGroup legend={'Filter'} value={values}>
-            <Checkbox
-                value={'ferdigBehandlet'}
-                className={styles.checkboxItem}
-                disabled={disabled || loading}
-                onChange={() => toggleFerdigBehandlet(!ferdigBehandlet)}
-            >
-                Venter på svar fra NAV
-            </Checkbox>
-            <Checkbox
-                value={'venterPaSvar'}
-                className={styles.checkboxItem}
-                disabled={disabled || loading}
-                onChange={() => toggleVenterPaSvar(!venterPaSvar)}
-            >
-                Venter på svar fra bruker
-            </Checkbox>
+            <div className="flex">
+                <Checkbox
+                    value={'ferdigBehandlet'}
+                    className={styles.checkboxItem}
+                    disabled={disabled || loading}
+                    onChange={() => toggleFerdigBehandlet(!ferdigBehandlet)}
+                >
+                    Venter på svar fra NAV
+                </Checkbox>
+                <Checkbox
+                    value={'venterPaSvar'}
+                    className={styles.checkboxItem}
+                    disabled={disabled || loading}
+                    onChange={() => toggleVenterPaSvar(!venterPaSvar)}
+                >
+                    Venter på svar fra bruker
+                </Checkbox>
+            </div>
         </CheckboxGroup>
     </div>
 );

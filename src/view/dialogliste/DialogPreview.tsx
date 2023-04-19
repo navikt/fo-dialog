@@ -86,7 +86,7 @@ function DialogPreview(props: Props) {
 
     const erLest = lest || historisk;
 
-    const lenkepanelCls = classNames('my-2', styles.preview, {
+    const lenkepanelCls = classNames('my-2 border', styles.preview, {
         [styles.innholdUlest]: !erLest,
         ['bg-surface-selected border-border-selected']: detteErValgtDialog
     });

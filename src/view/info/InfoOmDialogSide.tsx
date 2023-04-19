@@ -8,7 +8,7 @@ import { TittelHeader } from '../dialog/TittelHeader';
 import { useSkjulHodefotForMobilVisning } from '../utils/useSkjulHodefotForMobilVisning';
 import styles from './InfoOmDialogSide.module.less';
 
-const cls = classNames('border-x border-border-default', dialogStyle.overflowAuto, dialogStyle.dialog);
+const cls = classNames(dialogStyle.overflowAuto, dialogStyle.dialog);
 
 export function InfoOmDialogSide() {
     useSkjulHodefotForMobilVisning();

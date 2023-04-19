@@ -1,7 +1,7 @@
 import '@navikt/ds-css';
 
-import './polyfill';
 import './index.css';
+import './polyfill';
 
 import { Modal } from '@navikt/ds-react';
 import NAVSPA from '@navikt/navspa';

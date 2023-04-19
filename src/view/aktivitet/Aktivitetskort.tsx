@@ -28,13 +28,13 @@ export function Aktivitetskort() {
 
     const { status, tittel, avtalt, id } = aktivitet;
 
-    console.log('Viser aktivitetskort');
-
     return (
-        <section aria-label="Aktivitet knyttet til dialog" className={styles.aktivitetskort}>
+        <section aria-label="Aktivitet knyttet til dialog" className="m-4">
             <AktivitetskortLenke aktivitetId={id} />
             <Brodsmulesti status={status} type={getAktivitetType(aktivitet)} />
-            <Heading>{tittel}</Heading>
+            <Heading size="large" level="2">
+                {tittel}
+            </Heading>
             <AktivitetIngress aktivitetType={getAktivitetType(aktivitet)} />
             <AktivitetskortInfoBox aktivitet={aktivitet} />
             <AvtaltMarkering hidden={!avtalt} />

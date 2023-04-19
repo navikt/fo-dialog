@@ -1,6 +1,4 @@
 import { Link } from '@navikt/ds-react';
-import { ASTNode, ReactElementDescription, Rule, RuleScope } from '@navikt/textparser';
-import { getText } from '@navikt/textparser/dist/utils';
 import React, { MouseEvent, ReactNode } from 'react';
 
 import { useFnrContext } from '../Provider';

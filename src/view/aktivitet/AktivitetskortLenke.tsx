@@ -1,11 +1,9 @@
-import { ChevronRightIcon } from '@navikt/aksel-icons';
 import { Link } from '@navikt/ds-react';
 import React, { MouseEvent } from 'react';
 
 import { aktivtetsplanUrl } from '../../constants';
 import { useFnrContext } from '../Provider';
 import { getContextPath } from '../utils/utils';
-import styles from './Aktivitetskort.module.less';
 
 export const aktivitetLenke = (aktivitetId: string) => {
     return `${aktivtetsplanUrl}/aktivitet/vis/${aktivitetId}`;
@@ -28,11 +26,8 @@ export default function AktivitetskortLenke(props: Props) {
     const fnr = useFnrContext();
     const aktivitetId = props.aktivitetId;
     return (
-        <div className={styles.aktivitetkortlenke}>
-            <Link href={aktivitetLenke(aktivitetId)} onClick={visAktivitetsplan(aktivitetId, fnr)}>
-                Gå til aktiviteten
-                <ChevronRightIcon />
-            </Link>
-        </div>
+        <Link className="mb-8" href={aktivitetLenke(aktivitetId)} onClick={visAktivitetsplan(aktivitetId, fnr)}>
+            Gå til aktiviteten
+        </Link>
     );
 }

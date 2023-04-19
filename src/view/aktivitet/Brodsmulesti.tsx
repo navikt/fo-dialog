@@ -1,8 +1,7 @@
-import { BodyShort } from '@navikt/ds-react';
+import { Detail } from '@navikt/ds-react';
 import React from 'react';
 
 import { AktivitetStatus, AlleAktivitetTypes } from '../../utils/aktivitetTypes';
-import styles from './Aktivitetskort.module.less';
 import { getStatusText, getTypeText } from './TextUtils';
 
 interface Props {
@@ -12,10 +11,10 @@ interface Props {
 
 export default function Brodsmulesti(props: Props) {
     return (
-        <div className={styles.brodsmulesti}>
-            <BodyShort>
+        <div className="uppercase text-text-default">
+            <Detail>
                 aktivitet / {getStatusText(props.status)} / {getTypeText(props.type)}
-            </BodyShort>
+            </Detail>
         </div>
     );
 }

@@ -41,11 +41,12 @@ const DialogOversikt = () => {
     const { dialogId } = useParams();
     const userInfoContext = useUserInfoContext();
     const erVeileder = !!userInfoContext?.erVeileder;
-
-    const visningCls = dialogId ? classNames(styles.dialogOversikt, styles.dialogValgt) : styles.dialogOversikt;
-
     return (
-        <div className={visningCls}>
+        <div
+            className={classNames('border-r border-border-divider', styles.dialogOversikt, {
+                [styles.dialogValgt]: !!dialogId
+            })}
+        >
             <div className={styles.header}>
                 <DialogOversiktHeader erVeileder={erVeileder} />
                 <div className="flex mt-4 justify-between mr-6 items-center">
