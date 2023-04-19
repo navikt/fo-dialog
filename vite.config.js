@@ -11,6 +11,7 @@ export default defineConfig(({ mode }) => {
     console.log(env);
 
     return {
+        appType: 'spa',
         build: {
             manifest: 'asset-manifest.json',
             outDir: 'build'

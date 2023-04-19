@@ -36,17 +36,19 @@ export function Henvendelse(props: Props) {
     return (
         <>
             <BodyShort className="visually-hidden">{accessibleText(erBruker, erMeldingFraBruker)}</BodyShort>
-            <Chat.Bubble
-                className={classNames(classNameStyle)}
-                // topp={toppTekst}
-                // pilHoyre={erMeldingFraBruker}
-                // ikonClass={className}
-            >
-                <div className="flex flex-col items-start">
-                    <ViktigMelding visible={viktigMarkering} />
-                    <span className="mt-2">{tekst}</span>
-                </div>
-            </Chat.Bubble>
+            <Chat avatar="NAV" position={erMeldingFraBruker ? 'left' : 'right'}>
+                <Chat.Bubble
+                    className={classNames(classNameStyle)}
+                    // topp={toppTekst}
+                    // pilHoyre={erMeldingFraBruker}
+                    // ikonClass={className}
+                >
+                    <div className="flex flex-col items-start">
+                        <ViktigMelding visible={viktigMarkering} />
+                        <span className="mt-2">{tekst}</span>
+                    </div>
+                </Chat.Bubble>
+            </Chat>
         </>
     );
 }

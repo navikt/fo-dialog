@@ -8,7 +8,7 @@ import { TittelHeader } from '../dialog/TittelHeader';
 import { useSkjulHodefotForMobilVisning } from '../utils/useSkjulHodefotForMobilVisning';
 import styles from './InfoOmDialogSide.module.less';
 
-const cls = classNames(dialogStyle.overflowAuto, dialogStyle.dialog);
+const cls = classNames('border-x border-border-default', dialogStyle.overflowAuto, dialogStyle.dialog);
 
 export function InfoOmDialogSide() {
     useSkjulHodefotForMobilVisning();
@@ -85,7 +85,9 @@ export function InfoOmDialogSide() {
                 </div>
 
                 <ExpansionCard aria-label="Rettigheter og personvern">
-                    <ExpansionCard.Header>Rettigheter og personvern</ExpansionCard.Header>
+                    <ExpansionCard.Header>
+                        <ExpansionCard.Title>Rettigheter og personvern</ExpansionCard.Title>
+                    </ExpansionCard.Header>
                     <ExpansionCard.Content>
                         <div className={styles.seksjon}>
                             <BodyShort>

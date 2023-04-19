@@ -1,3 +1,4 @@
+import { Tag } from '@navikt/ds-react';
 import classNames from 'classnames';
 import React from 'react';
 
@@ -6,16 +7,13 @@ import EtikettBase from './etikett-base';
 
 interface Props {
     hidden?: boolean;
-    className?: string;
 }
 
 function AvtaltMarkering(props: Props) {
-    const { className, hidden } = props;
+    const { hidden } = props;
 
-    if (hidden) {
-        return null;
-    }
-    return <EtikettBase className={classNames(styles.etikett, className)}>Avtalt med NAV</EtikettBase>;
+    if (hidden) return null;
+    return <Tag variant="info">Avtalt med NAV</Tag>;
 }
 
 export default AvtaltMarkering;

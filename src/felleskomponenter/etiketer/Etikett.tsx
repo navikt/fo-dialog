@@ -17,16 +17,16 @@ interface VenterSvarFraBrukerProps {
 export function VenterSvarFraBruker(props: VenterSvarFraBrukerProps) {
     const tekst = props.erVeileder ? 'Venter på svar fra bruker' : 'Venter på svar fra deg';
     if (!props.visible) return null;
-    return <Tag variant="neutral">{tekst}</Tag>;
+    return <Tag variant="info">{tekst}</Tag>;
 }
 
 export function VenterSvarFraNAV(props: Props) {
     if (!props.visible) return null;
-    return <Tag variant="neutral">Venter på svar fra NAV</Tag>;
+    return <Tag variant="info">Venter på svar fra NAV</Tag>;
 }
 
 export function ViktigMelding(props: Props) {
     const cls = classNames(styles.viktigMelding, props.className);
     if (!props.visible) return null;
-    return <Tag variant="neutral">Viktig melding</Tag>;
+    return <Tag variant="info">Viktig melding</Tag>;
 }
