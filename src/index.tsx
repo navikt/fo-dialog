@@ -12,6 +12,7 @@ import ReactDOM from 'react-dom';
 import DemoBanner from './mock/demo/DemoBanner';
 import { erEksternBruker } from './mock/demo/sessionstorage';
 import { gotoStartTestPage } from './mock/Utils';
+import { pathnamePrefix } from './utils/UseApiBasePath';
 import App from './view/App';
 
 const modalAlly = document.getElementById('modal-a11y-wrapper');
@@ -41,12 +42,14 @@ function render() {
 }
 
 if (import.meta.env.MODE === 'development') {
+    const fnr = erEksternBruker() ? undefined : '12345678901';
+    window.history.replaceState({}, '', pathnamePrefix + fnr);
+
     import('./mock').then(() => {
         const elem = document.createElement('div');
         document.body.appendChild(elem);
         ReactDOM.render(<DemoBanner />, elem);
 
-        const fnr = erEksternBruker() ? undefined : '12345678901';
         const AppWrapper = () => <App fnr={fnr} />;
 
         gotoStartTestPage(fnr);
