@@ -35,7 +35,7 @@ export function Melding(props: Props) {
 
     return (
         <>
-            <BodyShort className="visually-hidden">{accessibleText(erBruker, erMeldingFraBruker)}</BodyShort>
+            <BodyShort className="hidden">{accessibleText(erBruker, erMeldingFraBruker)}</BodyShort>
             <Chat avatar="NAV" position={erMeldingFraBruker ? 'left' : 'right'}>
                 <Chat.Bubble
                     className={classNames(classNameStyle)}

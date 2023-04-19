@@ -5,7 +5,6 @@ import { v4 as uuidv4 } from 'uuid';
 import loggEvent from '../felleskomponenter/logging';
 import { Bruker, OppfolgingData } from '../utils/Typer';
 import AktivitetContainer from './aktivitet/AktivitetContainer';
-import styles from './App.module.less';
 import { useUserInfoContext } from './BrukerProvider';
 import DialogContainer from './dialog/DialogContainer';
 import DialogOversiktContainer from './dialogliste/DialogOversiktContainer';
@@ -55,7 +54,7 @@ export default function AppBody() {
     }
 
     return (
-        <div className={classNames('flex flex-1 overflow-hidden w-full grid grid-cols-4', styles.app__body)}>
+        <div className={'overflow-hidden grid grid-cols-4 max-w-[1920px] h-[calc(100vh-80px)]'}>
             <DialogOversiktContainer />
             <DialogContainer />
             <AktivitetContainer />

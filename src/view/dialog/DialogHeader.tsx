@@ -19,7 +19,7 @@ interface DialogHeaderProps {
 }
 
 export function DialogHeader(props: DialogHeaderProps) {
-    const { dialog, aktivitetId, visSkygge } = props;
+    const { dialog, aktivitetId } = props;
     const aktivitetID = aktivitetId || dialog?.aktivitetId;
 
     const aktivitetData = useAktivitetContext();
@@ -29,7 +29,7 @@ export function DialogHeader(props: DialogHeaderProps) {
     return (
         <>
             <DialogHeaderFeil visible={erFeil} />
-            <div className={classNames(styles.dialogHeader, { [styles.dialogHeaderShadow]: visSkygge })}>
+            <div className="flex items-center">
                 <TilbakeKnapp />
                 <HeaderInnhold
                     viseAktivitet={viseAktivitet}

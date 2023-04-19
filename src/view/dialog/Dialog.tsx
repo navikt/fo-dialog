@@ -69,8 +69,8 @@ export function Dialog() {
     const kanSendeHenveldelse = kanSendeMelding && aktivDialog;
 
     return (
-        <section aria-labelledby={`${dialogHeaderID1} ${dialogHeaderID2}`} className={styles.dialog}>
-            <Heading className="visually-hidden" aria-labelledby={`${dialogHeaderID1} ${dialogHeaderID2}`}>
+        <section aria-labelledby={`${dialogHeaderID1} ${dialogHeaderID2}`} className="flex flex-col grow">
+            <Heading className="hidden" aria-labelledby={`${dialogHeaderID1} ${dialogHeaderID2}`}>
                 Dialog Header
             </Heading>
             <DialogHeader dialog={valgtDialog} visSkygge={!!bruker?.erBruker} />

@@ -5,43 +5,9 @@
 :global {
     html,
     body,
-    #root {
-        height: 100%;
-    }
-
-    #root {
-        display: flex;
-        flex-grow: 1;
-        overflow: hidden;
-    }
-
     body {
         display: flex;
         flex-direction: column;
-    }
-
-    #pagewrapper {
-        margin-bottom: 0 !important; //overstyrer decorator
-        padding-bottom: 0 !important; //overstyrer decorator
-        display: flex;
-        flex-direction: column;
-        flex-grow: 1;
-        height: auto; //samme som decorator
-        min-height: 100%; //samme som decorator
-
-        .max-responsive({min-height: max-content;});
-    }
-
-    #maincontent {
-        display: flex;
-        flex-direction: column;
-        flex-grow: 1;
-        height: 100%;
-        overflow: hidden;
-    }
-
-    .hide {
-        display: none;
     }
 
     @media (max-width: @md-max-x), (max-height: @md-max-y) {
@@ -70,35 +36,4 @@
         }
     }
     .uu-mixin();
-}
-
-.app {
-    display: flex;
-    flex-direction: column;
-    position: relative;
-    flex-grow: 1;
-    overflow: hidden;
-    color: var(--a-gray-800);
-    align-items: center;
-}
-
-.konteinerUtside {
-    display: flex;
-    width: 100%;
-}
-
-.konteinerInside {
-    height: 100%;
-    width: 100%;
-}
-
-.appInside {
-    .app();
-    min-height: 30rem;
-    width: 100%;
-    height: 100%;
-}
-
-.app__body {
-    max-width: 1920px;
 }

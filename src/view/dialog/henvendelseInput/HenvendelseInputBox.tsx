@@ -1,3 +1,4 @@
+import { Textarea } from '@navikt/ds-react';
 import useFormstate, { SubmitHandler } from '@nutgaard/use-formstate';
 import React, { useEffect, useLayoutEffect, useRef, useState } from 'react';
 
@@ -135,6 +136,7 @@ const HenvendelseInputBox = (props: Props) => {
                     kanSendeHenvendelse={kanSendeHenveldelse}
                     maxMeldingsLengde={maxMeldingsLengde}
                 />
+
                 <AlertStripeFeilVisible visible={noeFeilet} className={styles.feil}>
                     Noe gikk dessverre galt med systemet. Prøv igjen senere.
                 </AlertStripeFeilVisible>

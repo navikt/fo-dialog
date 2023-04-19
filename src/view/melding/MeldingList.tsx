@@ -46,9 +46,9 @@ export function MeldingList(props: Props) {
     const sisteHenvendelseLestAvBruker = sisteLesteHenvendelse(lestAvBrukerTidspunkt, sorterteHenvendelser);
 
     return (
-        <section id="henvendelse-scroll-list" aria-label="Meldinger" className={styles.henvendelseList}>
-            <Heading className="visually-hidden">Meldinger</Heading>
-            <div className={styles.henvendelseContainer}>
+        <section id="henvendelse-scroll-list" aria-label="Meldinger" className="mt-4 grow overflow-y-scroll">
+            <Heading className="hidden">Meldinger</Heading>
+            <div className="">
                 {sorterteHenvendelser.map((henvendelse, index) => (
                     <React.Fragment key={henvendelse.id}>
                         <div className={styles.henvendelseItem}>

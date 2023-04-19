@@ -18,9 +18,12 @@ function DialogContainer() {
 
     return (
         <div
-            className={classNames('col-start-2 col-span-2 bg-white overflow-auto flex', styles.dialogContainer, {
-                [styles.brukerDialogContainer]: bruker?.erBruker
-            })}
+            className={classNames(
+                'col-start-2 col-span-2 bg-white overflow-auto flex h-[calc(100vh-80px)] overflow-y-scroll',
+                {
+                    // [styles.brukerDialogContainer]: bruker?.erBruker
+                }
+            )}
         >
             <Switch>
                 <Route path={`${fnr ? `/${fnr}` : ''}/informasjon`} component={InfoOmDialogSide} />

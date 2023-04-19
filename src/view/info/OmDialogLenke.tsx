@@ -1,17 +1,17 @@
 import { QuestionmarkIcon } from '@navikt/aksel-icons';
+import { Link } from '@navikt/ds-react';
 import React from 'react';
-import { Link } from 'react-router-dom';
+import { useHistory } from 'react-router';
 
 import { useRoutes } from '../../routes';
 
 function OmDialogLenke() {
     const { informasjonRoute } = useRoutes();
+    const history = useHistory();
+    const gotoInformasjon = () => history.push(informasjonRoute());
     return (
-        <Link to={informasjonRoute()}>
-            <span className="flex">
-                <span>Om dialog</span>
-                <QuestionmarkIcon className="w-6 h-6" />
-            </span>
+        <Link onClick={gotoInformasjon} href={informasjonRoute()}>
+            Om dialog
         </Link>
     );
 }

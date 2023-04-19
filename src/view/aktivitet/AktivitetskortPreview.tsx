@@ -33,7 +33,7 @@ export function AktivitetskortPreview(props: Props) {
 
     return (
         <section aria-label="Aktivitet knyttet til dialog" className={styles.aktivitetSeksjon}>
-            <Heading level="2" className="visually-hidden">
+            <Heading level="2" className="hidden">
                 Aktivitet knyttet til dialog
             </Heading>
             <Heading level="3" className={styles.storSkjermTittel}>

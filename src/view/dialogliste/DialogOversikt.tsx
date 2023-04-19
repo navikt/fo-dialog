@@ -43,7 +43,7 @@ const DialogOversikt = () => {
     const erVeileder = !!userInfoContext?.erVeileder;
     return (
         <div
-            className={classNames('border-r border-border-divider', styles.dialogOversikt, {
+            className={classNames('flex border-r border-border-divider', styles.dialogOversikt, {
                 [styles.dialogValgt]: !!dialogId
             })}
         >
@@ -54,7 +54,7 @@ const DialogOversikt = () => {
                     <OmDialogLenke />
                 </div>
             </div>
-            <InfoVedIngenDialoger className={styles.info} visible={dialoger.length === 0} />
+            <InfoVedIngenDialoger className="block" visible={dialoger.length === 0} />
             <DialogListe />
         </div>
     );

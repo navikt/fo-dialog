@@ -3,7 +3,6 @@ import { useParams } from 'react-router';
 
 import { DialogData } from '../../utils/Typer';
 import { useDialogContext } from '../DialogProvider';
-import styles from './DialogOversikt.module.less';
 import { DialogPreviewListe } from './DialogPreview';
 import HistoriskeDialogerOversikt from './HistoriskDialogListe';
 
@@ -24,10 +23,8 @@ export function DialogListe() {
     const sorterteDialoger = dialoger.sort((a, b) => sortDialoger(a, b));
     const { naaverende, historiske } = sorterteDialoger.reduce(splitHistoriske, { naaverende: [], historiske: [] });
 
-    console.log(dialoger);
-
     return (
-        <div className={styles.dialogListe} role="navigation" aria-label="Dialoger">
+        <div className="px-4 border-b-4 pt-2 flex-1" role="navigation" aria-label="Dialoger">
             <DialogPreviewListe dialoger={naaverende} valgDialog={dialogId} />
             <HistoriskeDialogerOversikt historiske={historiske} valgDialog={dialogId} />
         </div>

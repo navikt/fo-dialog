@@ -1,4 +1,4 @@
-import { Button } from '@navikt/ds-react';
+import { Button, Textarea } from '@navikt/ds-react';
 import { Formstate } from '@nutgaard/use-formstate';
 import React from 'react';
 
@@ -23,17 +23,25 @@ const HenvendelseInput = (props: HenvendelseInputProps) => {
     }
 
     return (
-        <div className={styles.skrivMelding}>
-            <EkspanderbartTekstArea
-                placeholder="Skriv om arbeid og oppfølging"
-                maxLength={maxMeldingsLengde}
-                visTellerFra={1000}
-                autoFocus={autoFocus}
-                submittoken={state.submittoken}
+        <div className="flex items-end space-x-4 m-4">
+            {/*<EkspanderbartTekstArea*/}
+            {/*    placeholder="Skriv om arbeid og oppfølging"*/}
+            {/*    maxLength={maxMeldingsLengde}*/}
+            {/*    visTellerFra={1000}*/}
+            {/*    autoFocus={autoFocus}*/}
+            {/*    submittoken={state.submittoken}*/}
+            {/*    onChange={onChange}*/}
+            {/*    {...state.fields.melding}*/}
+            {/*/>*/}
+            <Textarea
+                className="grow"
                 onChange={onChange}
-                {...state.fields.melding}
+                autoFocus={autoFocus}
+                value={state.fields.melding.input.value}
+                label={'Skriv om arbeid og oppfølging'}
+                maxLength={maxMeldingsLengde}
             />
-            <Button className={styles.sendKnapp} title="Send" loading={laster} type="submit">
+            <Button title="Send" loading={laster}>
                 Send
             </Button>
         </div>

@@ -93,7 +93,6 @@ function DialogPreview(props: Props) {
     const markoer = erLest ? styles.markoerLest : styles.markoerUlest;
 
     const history = useHistory();
-
     const { dialogRoute } = useRoutes();
     const onGoTo = (event) => {
         event.preventDefault();
@@ -102,7 +101,7 @@ function DialogPreview(props: Props) {
     return (
         <LinkPanel className={lenkepanelCls} href={dialogRoute(id)} onClick={onGoTo}>
             <div className="flex">
-                <div className={markoer} />
+                {/*<div className={markoer} />*/}
                 <Ikon dialog={dialog} />
                 <div className="flex-1 ">
                     <BodyShort className="hidden">{typeText(dialog)}</BodyShort>

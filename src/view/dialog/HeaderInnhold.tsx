@@ -15,7 +15,7 @@ export const HeaderInnhold = (props: PropsTypes) => {
     const { viseAktivitet, dialogOverskrift, aktivitetId } = props;
 
     const UUMarkering = () => (
-        <div id={dialogHeaderID1} className="hide">
+        <div id={dialogHeaderID1} className="hidden">
             Dialog om:
         </div>
     );
