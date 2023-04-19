@@ -1,3 +1,5 @@
+import '@navikt/ds-css';
+
 import './polyfill';
 import './index.css';
 
@@ -45,16 +47,18 @@ if (import.meta.env.MODE === 'development') {
     const fnr = erEksternBruker() ? undefined : '12345678901';
     gotoStartTestPage(fnr);
 
-    import('./mock').then(() => {
-        const elem = document.createElement('div');
-        document.body.appendChild(elem);
-        ReactDOM.render(<DemoBanner />, elem);
+    import('./mock')
+        .then(({ default: startWorker }) => startWorker())
+        .then(() => {
+            const elem = document.createElement('div');
+            document.body.appendChild(elem);
+            ReactDOM.render(<DemoBanner />, elem);
 
-        const AppWrapper = () => <App fnr={fnr} />;
+            const AppWrapper = () => <App fnr={fnr} />;
 
-        NAVSPA.eksporter(navspaName, AppWrapper);
-        render();
-    });
+            NAVSPA.eksporter(navspaName, AppWrapper);
+            render();
+        });
 } else {
     NAVSPA.eksporter(navspaName, App);
     render();
