@@ -6,8 +6,8 @@ on:
       - main
     paths:
       - '.github/workflows/pto-frontend-container-prod.yml'
-      - 'nais/nais-prod-ekstern-gcp.yml'
-      - 'nais/nais-prod-intern-gcp.yml'
+      - 'nais/nais-prod-ekstern-gcp.yaml'
+      - 'nais/nais-prod-intern-gcp.yaml'
 
 concurrency:
   group: pto_frontend_container_prod
