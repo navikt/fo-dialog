@@ -49,9 +49,6 @@ spec:
   gcp:
     buckets:
       - name: arbeidsrettet-dialog-dev
-  envFrom:
-    - configmap: pto-config
-    - configmap: loginservice-idporten
   env:
     - name: JSON_CONFIG
       value: >
