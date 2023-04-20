@@ -127,7 +127,7 @@ const HenvendelseInputBox = (props: Props) => {
     };
 
     return (
-        <section aria-label="Ny melding">
+        <section aria-label="Ny melding" className="border-t border-border-divider">
             <form onSubmit={state.onSubmit(onSubmit)} noValidate autoComplete="off">
                 <HenvendelseInput
                     laster={state.submitting}

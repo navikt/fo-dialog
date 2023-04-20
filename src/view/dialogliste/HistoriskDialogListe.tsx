@@ -76,7 +76,7 @@ function HistoriskeDialogerOversikt(props: HistoriskeDialogerProps) {
     return (
         <InvertedLestMer apneTekst={knapptekst} lukkTekst="Skjul">
             <section>
-                <Heading className={styles.tidligerePeriodeTittel}>{tittel}</Heading>
+                <Heading level="3">{tittel}</Heading>
                 <DialogPreviewListe dialoger={historiske} valgDialog={valgDialog} />
             </section>
         </InvertedLestMer>

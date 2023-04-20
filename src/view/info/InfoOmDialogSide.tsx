@@ -18,10 +18,9 @@ export function InfoOmDialogSide() {
 
     return (
         <section aria-label="Om dialog" id="om-dialog" className={cls} tabIndex={-1}>
-            <TittelHeader>Om dialog</TittelHeader>
-
             <div className={styles.side}>
-                <div className={styles.seksjon}>
+                <Heading size="large">Om dialog</Heading>
+                <div className={'mb-8'}>
                     <BodyLong>
                         I dialogen kan du og veilederen din skrive til hverandre om arbeid og oppfølging. Dere kan blant
                         annet sende meldinger om aktivitetene dine i{' '}
@@ -29,24 +28,30 @@ export function InfoOmDialogSide() {
                     </BodyLong>
                 </div>
 
-                <div className={styles.seksjon}>
-                    <Heading level="2">Hvor raskt får du svar?</Heading>
+                <div className={'mb-8'}>
+                    <Heading size="medium" level="2">
+                        Hvor raskt får du svar?
+                    </Heading>
                     <BodyLong>
                         Vi svarer deg i løpet av noen dager. Haster det, eller du ikke får svar, kontakt oss på telefon
                         55 55 33 33.
                     </BodyLong>
                 </div>
 
-                <div className={styles.seksjon}>
-                    <Heading level="2">Hvem skriver jeg til? </Heading>
+                <div className={'mb-8'}>
+                    <Heading size="medium" level="2">
+                        Hvem skriver jeg til?{' '}
+                    </Heading>
                     <BodyLong>
                         Du skriver til veilederen din på ditt NAV-kontor. Du kan også få svar fra andre kollegaer på
                         NAV-kontoret hvis veilederen din er syk eller på ferie.
                     </BodyLong>
                 </div>
 
-                <div className={styles.seksjon}>
-                    <Heading level="2">Dialogen skal handle om arbeid og veiledning</Heading>
+                <div className={'mb-8'}>
+                    <Heading size="medium" level="2">
+                        Dialogen skal handle om arbeid og veiledning
+                    </Heading>
                     <BodyLong>
                         Meldingene i dialogen skal bare handle om det som er relevant for å komme i jobb eller
                         aktivitet. Har du spørsmål om økonomisk støtte, økonomisk sosialhjelp, boligsituasjon eller
@@ -89,14 +94,16 @@ export function InfoOmDialogSide() {
                         <ExpansionCard.Title>Rettigheter og personvern</ExpansionCard.Title>
                     </ExpansionCard.Header>
                     <ExpansionCard.Content>
-                        <div className={styles.seksjon}>
+                        <div className={'mb-8'}>
                             <BodyShort>
                                 Informasjon du gir i meldinger til veilederen din brukes til å vurdere behovet ditt for
                                 hjelp fra NAV.
                             </BodyShort>
                         </div>
-                        <div className={styles.seksjon}>
-                            <Heading level="2">Manuell oppfølging</Heading>
+                        <div className={'mb-8'}>
+                            <Heading size="medium" level="2">
+                                Manuell oppfølging
+                            </Heading>
                             <BodyShort>
                                 NAV henter informasjon om deg fra Folkeregisteret og sjekker mot Kontakt- og
                                 reservasjonsregisteret.
@@ -111,7 +118,9 @@ export function InfoOmDialogSide() {
                             </BodyShort>
                         </div>
 
-                        <Heading level="2">Deling og lagring</Heading>
+                        <Heading size="medium" level="2">
+                            Deling og lagring
+                        </Heading>
                         <BodyShort>
                             Opplysningene i dialogen og aktivitetsplanen blir ikke delt med andre offentlige etater, med
                             mindre de har rett til å hente slike opplysninger.

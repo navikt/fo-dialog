@@ -9,7 +9,7 @@ interface Props {
 
 export function OkMessage(props: Props) {
     return (
-        <div className={styles.container}>
+        <div className="border-t justify-end border-border-divider flex p-4">
             <OkIcon className={styles.icon} />
             {props.children}
         </div>

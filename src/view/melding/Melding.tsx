@@ -34,9 +34,13 @@ export function Melding(props: Props) {
     const classNameStyle = erMeldingFraBruker ? styles.hendvendelsebruker : styles.hendvendelse;
 
     return (
-        <>
+        <div className="mt-4">
             <BodyShort className="hidden">{accessibleText(erBruker, erMeldingFraBruker)}</BodyShort>
-            <Chat avatar="NAV" position={erMeldingFraBruker ? 'left' : 'right'}>
+            <Chat
+                timestamp={toppTekst}
+                avatar={erMeldingFraBruker ? 'Meg' : 'NAV'}
+                position={erMeldingFraBruker ? 'left' : 'right'}
+            >
                 <Chat.Bubble
                     className={classNames(classNameStyle)}
                     // topp={toppTekst}
@@ -49,6 +53,6 @@ export function Melding(props: Props) {
                     </div>
                 </Chat.Bubble>
             </Chat>
-        </>
+        </div>
     );
 }

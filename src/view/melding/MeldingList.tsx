@@ -47,8 +47,10 @@ export function MeldingList(props: Props) {
 
     return (
         <section id="henvendelse-scroll-list" aria-label="Meldinger" className="mt-4 grow overflow-y-scroll">
-            <Heading className="hidden">Meldinger</Heading>
-            <div className="">
+            <Heading level="3" className="hidden">
+                Meldinger
+            </Heading>
+            <div className="mb-4">
                 {sorterteHenvendelser.map((henvendelse, index) => (
                     <React.Fragment key={henvendelse.id}>
                         <div className={styles.henvendelseItem}>

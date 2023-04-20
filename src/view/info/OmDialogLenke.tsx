@@ -8,7 +8,10 @@ import { useRoutes } from '../../routes';
 function OmDialogLenke() {
     const { informasjonRoute } = useRoutes();
     const history = useHistory();
-    const gotoInformasjon = () => history.push(informasjonRoute());
+    const gotoInformasjon = (e) => {
+        e.preventDefault();
+        history.push(informasjonRoute());
+    };
     return (
         <Link onClick={gotoInformasjon} href={informasjonRoute()}>
             Om dialog
