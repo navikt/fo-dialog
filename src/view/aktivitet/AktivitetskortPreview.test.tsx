@@ -1,6 +1,4 @@
-import '../../utils/SetupEnzyme';
-
-import { mount } from 'enzyme';
+import { render } from '@testing-library/react';
 import React from 'react';
 import { MemoryRouter } from 'react-router';
 
@@ -118,15 +116,14 @@ const aktivitetRes: AktivitetDataProviderType = {
 
 describe('<AktivitetskortPreview />', () => {
     it('skal rendre stillingsaktivitet som i snapshot', () => {
-        jest.spyOn(AktivitetProvider, 'useAktivitetContext').mockImplementation(() => aktivitetRes);
+        vi.spyOn(AktivitetProvider, 'useAktivitetContext').mockImplementation(() => aktivitetRes);
 
-        const wrapper = mount(
+        const wrapper = render(
             <MemoryRouter>
                 <AktivitetskortPreview aktivitetId={'123'} />
             </MemoryRouter>
         );
-        expect(wrapper.children().children().first()).toMatchSnapshot();
-        expect(wrapper.children().length).toBe(1);
-        expect(wrapper.children().children().length).toBe(1);
+
+        expect(wrapper.baseElement).toMatchSnapshot();
     });
 });

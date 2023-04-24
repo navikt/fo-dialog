@@ -8,8 +8,6 @@ import svgr from 'vite-plugin-svgr';
 export default defineConfig(({ mode }) => {
     const env = loadEnv(mode, process.cwd());
 
-    console.log(env);
-
     return {
         appType: 'spa',
         build: {
@@ -34,11 +32,12 @@ export default defineConfig(({ mode }) => {
         ],
         server: {
             port: 3000
+        },
+        test: {
+            environment: 'jsdom',
+            include: ['**/*.test.tsx'],
+            globals: true,
+            setupFiles: ['./src/test/setup.tsx']
         }
-        // test: {
-        //     environment: 'jsdom',
-        //     globals: true,
-        //     setupFiles: ['./src/setupTests.jsx']
-        // }
     };
 });
