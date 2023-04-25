@@ -1,6 +1,3 @@
-import '@navikt/ds-css';
-
-import './index.css';
 import './polyfill';
 
 import { Modal } from '@navikt/ds-react';
@@ -10,13 +7,13 @@ import throttle from 'lodash.throttle';
 import React from 'react';
 import ReactDOM from 'react-dom';
 
+import App from './App';
 import { USE_MOCK } from './constants';
 // import { initAmplitude } from './metrics/amplitude-utils';
 import DemoBanner from './mock/demo/DemoBanner';
 import { erEksternBruker } from './mock/demo/sessionstorage';
 import { gotoStartTestPage } from './mock/Utils';
 import { pathnamePrefix } from './utils/UseApiBasePath';
-import App from './view/App';
 
 const modalAlly = document.getElementById('modal-a11y-wrapper');
 const root = document.getElementById('root');
