@@ -125,32 +125,30 @@ const HenvendelseInputBox = (props: Props) => {
     };
 
     return (
-        <section aria-label="Ny melding" className="border-t border-border-divider">
-            <form onSubmit={handleSubmit((data) => onSubmit(data))} noValidate autoComplete="off">
-                {kanSendeHenveldelse ? (
-                    <div className="flex items-end space-x-4 m-4">
-                        <Textarea
-                            className="grow"
-                            {...register('melding')}
-                            onChange={(event) => {
-                                onChange(event);
-                                register('melding').onChange(event);
-                            }}
-                            error={errors.melding && errors.melding.message}
-                            label={'Skriv om arbeid og oppfølging'}
-                            hideLabel
-                        />
-                        <Button title="Send" loading={isSubmitting} disabled={!isDirty}>
-                            Send
-                        </Button>
-                    </div>
-                ) : null}
+        <form onSubmit={handleSubmit((data) => onSubmit(data))} noValidate autoComplete="off">
+            {kanSendeHenveldelse ? (
+                <div className="flex items-end space-x-4">
+                    <Textarea
+                        className="grow"
+                        {...register('melding')}
+                        onChange={(event) => {
+                            onChange(event);
+                            register('melding').onChange(event);
+                        }}
+                        error={errors.melding && errors.melding.message}
+                        label={'Skriv om arbeid og oppfølging'}
+                        hideLabel
+                    />
+                    <Button title="Send" loading={isSubmitting} disabled={!isDirty}>
+                        Send
+                    </Button>
+                </div>
+            ) : null}
 
-                <AlertStripeVisible variant="error" visible={noeFeilet}>
-                    Noe gikk dessverre galt med systemet. Prøv igjen senere.
-                </AlertStripeVisible>
-            </form>
-        </section>
+            <AlertStripeVisible variant="error" visible={noeFeilet}>
+                Noe gikk dessverre galt med systemet. Prøv igjen senere.
+            </AlertStripeVisible>
+        </form>
     );
 };
 

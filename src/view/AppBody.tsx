@@ -53,7 +53,8 @@ export default function AppBody() {
     }
 
     return (
-        <div className={'overflow-hidden grid grid-cols-4 max-w-[1920px] h-[calc(100vh-80px)]'}>
+        // <div className={'overflow-hidden grid grid-cols-4 max-w-[1920px] h-[calc(100vh-80px)]'}>
+        <div className={'overflow-hidden grid grid-cols-4 max-w-[1920px]'}>
             <DialogOversiktContainer />
             <DialogContainer />
             <AktivitetContainer />

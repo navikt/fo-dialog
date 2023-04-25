@@ -1,4 +1,5 @@
-import { BodyShort, Chat, Textarea } from '@navikt/ds-react';
+import { PersonIcon } from '@navikt/aksel-icons';
+import { BodyShort, Chat } from '@navikt/ds-react';
 import classNames from 'classnames';
 import React from 'react';
 
@@ -33,13 +34,20 @@ export function Melding(props: Props) {
     const className = erMeldingFraBruker ? styles.brukerIkon : styles.veilederIkon;
     const classNameStyle = erMeldingFraBruker ? styles.hendvendelsebruker : styles.hendvendelse;
 
+    const erFraSegSelv = (erBruker && erMeldingFraBruker) || (!erBruker && !erMeldingFraBruker);
+
+    const backgroundColor = erFraSegSelv ? 'rgba(230, 240, 255, 1)' : 'rgba(255, 255, 255, 1)';
+    const avatarBgColor = erFraSegSelv ? 'rgba(204, 225, 255, 1)' : 'rgba(255, 255, 255, 1)';
+
     return (
         <div className="mt-4">
             <BodyShort className="hidden">{accessibleText(erBruker, erMeldingFraBruker)}</BodyShort>
             <Chat
                 timestamp={toppTekst}
-                avatar={erMeldingFraBruker ? 'Meg' : 'NAV'}
-                position={erMeldingFraBruker ? 'left' : 'right'}
+                avatar={erMeldingFraBruker ? <PersonIcon className={'!w-6 !h-6'} /> : 'NAV'}
+                position={erMeldingFraBruker ? 'right' : 'left'}
+                backgroundColor={backgroundColor}
+                avatarBgColor={avatarBgColor}
             >
                 <Chat.Bubble
                     className={classNames(classNameStyle)}

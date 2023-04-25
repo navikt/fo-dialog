@@ -1,4 +1,5 @@
 import { Heading } from '@navikt/ds-react';
+import classNames from 'classnames';
 import React, { useEffect, useState } from 'react';
 import { useParams } from 'react-router';
 
@@ -74,15 +75,20 @@ export function Dialog() {
                 Dialog Header
             </Heading>
             <DialogHeader dialog={valgtDialog} visSkygge={!!bruker?.erBruker} />
-            <ManagedDialogCheckboxes dialog={valgtDialog} visible={!!bruker?.erVeileder} />
             <MeldingList dialogData={valgtDialog} />
             <DialogSendtBekreftelse viewState={viewState} dialog={valgtDialog} fnr={fnr} />
             <HistoriskInfo hidden={aktivDialog} kanSendeMelding={kanSendeMelding} />
-            <DialogInputBoxVisible
-                key={valgtDialog.id}
-                dialog={valgtDialog}
-                kanSendeHenveldelse={kanSendeHenveldelse}
-            />
+            <section
+                aria-label="Ny melding"
+                className={classNames('border-t border-border-divider p-4', { 'pt-2': !!bruker?.erVeileder })}
+            >
+                <ManagedDialogCheckboxes dialog={valgtDialog} visible={!!bruker?.erVeileder} />
+                <DialogInputBoxVisible
+                    key={valgtDialog.id}
+                    dialog={valgtDialog}
+                    kanSendeHenveldelse={kanSendeHenveldelse}
+                />
+            </section>
         </section>
     );
 }

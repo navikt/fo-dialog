@@ -20,23 +20,25 @@ interface Props {
     enhet?: string;
 }
 
-function Router({ children }: { children?: React.ReactNode }) {
+const Router = ({ children }: { children?: React.ReactNode }) => {
     if (USE_HASH_ROUTER) {
         return <HashRouter>{children}</HashRouter>;
     }
 
     return <BrowserRouter>{children}</BrowserRouter>;
-}
+};
 
-function App(props: Props) {
+const App = (props: Props) => {
     const { fnr } = props;
     const wrapperClass = fnr ? '' : 'flex width-full';
-    const appstyle = fnr ? 'min-h-120' : 'relative flex flex-col flex-1 overflow-hidden itemst-center';
+    // const appstyle = fnr ? 'min-h-120' : 'relative flex flex-col flex-1 overflow-hidden itemst-center';
 
     return (
         <Router>
-            <div className={classNames('h-[calc(100vh-80px)]', wrapperClass)}>
-                <div className={appstyle}>
+            {/*<div className={classNames('h-[calc(100vh-80px)]', wrapperClass)}>*/}
+            <div className={classNames(wrapperClass)}>
+                {/*<div className={appstyle}>*/}
+                <div className={''}>
                     <EventHandler />
                     <Provider fnr={fnr} erVeileder={!!fnr}>
                         <StatusAdvarsel />
@@ -49,6 +51,6 @@ function App(props: Props) {
             <PageViewMetricCollector />
         </Router>
     );
-}
+};
 
 export default App;

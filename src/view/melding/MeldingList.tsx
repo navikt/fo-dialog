@@ -46,8 +46,12 @@ export function MeldingList(props: Props) {
     const sisteHenvendelseLestAvBruker = sisteLesteHenvendelse(lestAvBrukerTidspunkt, sorterteHenvendelser);
 
     return (
-        <section id="henvendelse-scroll-list" aria-label="Meldinger" className="mt-4 grow overflow-y-scroll">
-            <Heading level="3" className="hidden">
+        <section
+            id="henvendelse-scroll-list"
+            aria-label="Meldinger"
+            className="px-4 grow overflow-y-scroll bg-gray-100"
+        >
+            <Heading level="3" size={'medium'} className="hidden">
                 Meldinger
             </Heading>
             <div className="mb-4">

@@ -19,7 +19,8 @@ function DialogContainer() {
     return (
         <div
             className={classNames(
-                'col-start-2 col-span-2 bg-white overflow-auto flex h-[calc(100vh-80px)] overflow-y-scroll',
+                // 'col-start-2 col-span-2 bg-white overflow-auto flex h-[calc(100vh-80px)] overflow-y-scroll',
+                'col-start-2 col-span-2 bg-white overflow-auto flex overflow-y-hidden h-screen',
                 {
                     // [styles.brukerDialogContainer]: bruker?.erBruker
                 }

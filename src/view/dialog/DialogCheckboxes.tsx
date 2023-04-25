@@ -28,8 +28,9 @@ const DialogCheckboxes = ({
     venterPaSvar,
     disabled
 }: Props) => (
-    <div className={classNames('border-b border-border-divider relative', styles.checkboxBlock)}>
-        <CheckboxGroup legend={'Filter'} value={values}>
+    // <div className={'border-b border-border-divider relative px-4'}>
+    <div className={'mb-2'}>
+        <CheckboxGroup legend={'Filter'} hideLegend value={values}>
             <div className="flex">
                 <Checkbox
                     value={'ferdigBehandlet'}
