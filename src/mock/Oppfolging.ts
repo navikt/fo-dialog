@@ -5,7 +5,7 @@ import {
     erManuellBruker,
     erPrivatBruker,
     ingenOppfPerioder
-} from './demo/sessionstorage';
+} from './demo/localstorage';
 
 const oppfPerioder: PeriodeData[] = [
     {

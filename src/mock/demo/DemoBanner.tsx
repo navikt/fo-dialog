@@ -3,7 +3,7 @@ import React, { useEffect, useState } from 'react';
 
 import DemoDashboard from './DemoDashboard';
 import { DemoIkon } from './DemoIkon';
-import { harHodeFotSkruddPa } from './sessionstorage';
+import { harHodeFotSkruddPa } from './localstorage';
 
 function DemoBanner() {
     const [open, setOpen] = useState(false);

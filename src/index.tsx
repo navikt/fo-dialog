@@ -11,7 +11,7 @@ import App from './App';
 import { USE_MOCK } from './constants';
 // import { initAmplitude } from './metrics/amplitude-utils';
 import DemoBanner from './mock/demo/DemoBanner';
-import { erEksternBruker } from './mock/demo/sessionstorage';
+import { erEksternBruker } from './mock/demo/localstorage';
 import { gotoStartTestPage } from './mock/Utils';
 import { pathnamePrefix } from './utils/UseApiBasePath';
 

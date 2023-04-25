@@ -9,7 +9,7 @@ import {
     harDialogFeilerSkruddPa,
     harNivaa4Fieler,
     harNyDialogEllerSendMeldingFeilerSkruddPa
-} from './demo/sessionstorage';
+} from './demo/localstorage';
 import dialoger, {
     kladder,
     lesDialog,

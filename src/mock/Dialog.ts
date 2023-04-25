@@ -2,7 +2,7 @@ import { ResponseComposition, RestContext, RestRequest } from 'msw';
 
 import { DialogData, HenvendelseData, KladdData, NyDialogMeldingData } from '../utils/Typer';
 import bruker from './Bruker';
-import { erEksternBruker, harIngenDialoger } from './demo/sessionstorage';
+import { erEksternBruker, harIngenDialoger } from './demo/localstorage';
 import { rndId } from './Utils';
 
 const dialoger: DialogData[] = [
