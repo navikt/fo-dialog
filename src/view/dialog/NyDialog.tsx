@@ -33,7 +33,7 @@ export default function NyDialog() {
 
     return (
         <NyDialogForm
-            onSubmit={() => setViewState(sendtNyDialog(viewState))}
+            setViewState={() => setViewState(sendtNyDialog(viewState))}
             defaultTema={defaultTema}
             aktivitetId={aktivitet?.id}
             key={aktivitet?.id}

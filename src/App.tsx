@@ -1,15 +1,19 @@
+import '@navikt/ds-css';
+
+import './tailwind.css';
+
 import classNames from 'classnames';
 import React from 'react';
 import { BrowserRouter, HashRouter } from 'react-router-dom';
 
-import { USE_HASH_ROUTER } from '../constants';
-import TimeoutModal from '../felleskomponenter/timeoutmodal/TimeoutModal';
-import { PageViewMetricCollector } from '../metrics/PageViewMetricCollector';
-import { UppdateEventHandler } from '../utils/UpdateEvent';
-import AppBody from './AppBody';
-import { EventHandler } from './EventHandler';
-import { Provider } from './Provider';
-import StatusAdvarsel from './statusAdvarsel/StatusAdvarsel';
+import { USE_HASH_ROUTER } from './constants';
+import TimeoutModal from './felleskomponenter/timeoutmodal/TimeoutModal';
+import { PageViewMetricCollector } from './metrics/PageViewMetricCollector';
+import { UppdateEventHandler } from './utils/UpdateEvent';
+import AppBody from './view/AppBody';
+import { EventHandler } from './view/EventHandler';
+import { Provider } from './view/Provider';
+import StatusAdvarsel from './view/statusAdvarsel/StatusAdvarsel';
 
 interface Props {
     fnr?: string;
