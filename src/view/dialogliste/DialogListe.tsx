@@ -24,7 +24,7 @@ export function DialogListe() {
     const { naaverende, historiske } = sorterteDialoger.reduce(splitHistoriske, { naaverende: [], historiske: [] });
 
     return (
-        <div className="px-4 border-b-4 pt-2 flex-1" role="navigation" aria-label="Dialoger">
+        <div className="border-b-4 pt-2 flex-1" role="navigation" aria-label="Dialoger">
             <DialogPreviewListe dialoger={naaverende} valgDialog={dialogId} />
             <HistoriskeDialogerOversikt historiske={historiske} valgDialog={dialogId} />
         </div>

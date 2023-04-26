@@ -29,6 +29,7 @@ export type MeldingFormValues = z.infer<typeof schema>;
 interface Props {
     dialog: DialogData;
     kanSendeHenveldelse: boolean;
+    erBruker: boolean;
 }
 
 const HenvendelseInputBox = (props: Props) => {
@@ -138,6 +139,8 @@ const HenvendelseInputBox = (props: Props) => {
                         error={errors.melding && errors.melding.message}
                         label={'Skriv om arbeid og oppfølging'}
                         hideLabel
+                        placeholder={'Skriv om arbeid og oppfølging'}
+                        minRows={props.erBruker ? 2 : 3}
                     />
                     <Button title="Send" loading={isSubmitting} disabled={!isDirty}>
                         Send

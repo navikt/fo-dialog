@@ -1,12 +1,12 @@
 import { Link } from '@navikt/ds-react';
 import React, { MouseEvent } from 'react';
 
-import { aktivtetsplanUrl } from '../../constants';
+import { AKTIVITETSPLAN_URL } from '../../constants';
 import { useFnrContext } from '../Provider';
 import { getContextPath } from '../utils/utils';
 
 export const aktivitetLenke = (aktivitetId: string) => {
-    return `${aktivtetsplanUrl}/aktivitet/vis/${aktivitetId}`;
+    return `${AKTIVITETSPLAN_URL}/aktivitet/vis/${aktivitetId}`;
 };
 
 export const visAktivitetsplan = (aktivitetID: string, fnrContext?: string) => (event: MouseEvent) => {

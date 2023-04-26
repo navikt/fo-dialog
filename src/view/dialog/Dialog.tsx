@@ -75,8 +75,7 @@ export function Dialog() {
                 Dialog Header
             </Heading>
             <DialogHeader dialog={valgtDialog} visSkygge={!!bruker?.erBruker} />
-            <MeldingList dialogData={valgtDialog} />
-            <DialogSendtBekreftelse viewState={viewState} dialog={valgtDialog} fnr={fnr} />
+            <MeldingList dialogData={valgtDialog} viewState={viewState} fnr={fnr} />
             <HistoriskInfo hidden={aktivDialog} kanSendeMelding={kanSendeMelding} />
             <section
                 aria-label="Ny melding"
@@ -87,6 +86,7 @@ export function Dialog() {
                     key={valgtDialog.id}
                     dialog={valgtDialog}
                     kanSendeHenveldelse={kanSendeHenveldelse}
+                    erBruker={!!bruker?.erBruker}
                 />
             </section>
         </section>

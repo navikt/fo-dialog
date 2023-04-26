@@ -7,7 +7,6 @@ import { DialogData } from '../../utils/Typer';
 import { useDialogContext } from '../DialogProvider';
 import { useOppfolgingContext } from '../OppfolgingProvider';
 import { dataOrUndefined } from '../Provider';
-import styles from './DialogCheckboxes.module.less';
 
 interface Props {
     toggleFerdigBehandlet(ferdigBehandler: boolean): void;
@@ -28,13 +27,12 @@ const DialogCheckboxes = ({
     venterPaSvar,
     disabled
 }: Props) => (
-    // <div className={'border-b border-border-divider relative px-4'}>
-    <div className={'mb-2'}>
+    <div className="mb-2">
         <CheckboxGroup legend={'Filter'} hideLegend value={values}>
             <div className="flex">
                 <Checkbox
                     value={'ferdigBehandlet'}
-                    className={styles.checkboxItem}
+                    className="pr-8"
                     disabled={disabled || loading}
                     onChange={() => toggleFerdigBehandlet(!ferdigBehandlet)}
                 >
@@ -42,7 +40,7 @@ const DialogCheckboxes = ({
                 </Checkbox>
                 <Checkbox
                     value={'venterPaSvar'}
-                    className={styles.checkboxItem}
+                    className="pr-8"
                     disabled={disabled || loading}
                     onChange={() => toggleVenterPaSvar(!venterPaSvar)}
                 >

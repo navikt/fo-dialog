@@ -3,13 +3,17 @@ import React, { useEffect } from 'react';
 
 import { compareDates } from '../../utils/Date';
 import { DialogData, HenvendelseData, StringOrNull } from '../../utils/Typer';
+import DialogSendtBekreftelse from '../dialog/DialogSendtBekreftelse';
 import LestAvTidspunkt from '../lest/LestTidspunkt';
 import { useSkjulHodefotForMobilVisning } from '../utils/useSkjulHodefotForMobilVisning';
+import { ViewState } from '../ViewState';
 import styles from './HenvendelseList.module.less';
 import { Melding } from './Melding';
 
 interface Props {
     dialogData: DialogData;
+    viewState: ViewState;
+    fnr?: string;
 }
 
 function sisteLesteHenvendelse(lest: StringOrNull, henvendelser: HenvendelseData[]) {
@@ -70,6 +74,7 @@ export function MeldingList(props: Props) {
                     </React.Fragment>
                 ))}
             </div>
+            <DialogSendtBekreftelse viewState={props.viewState} dialog={props.dialogData} fnr={props.fnr} />
         </section>
     );
 }

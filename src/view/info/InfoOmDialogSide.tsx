@@ -2,7 +2,7 @@ import { BodyLong, BodyShort, ExpansionCard, Heading, Link } from '@navikt/ds-re
 import classNames from 'classnames';
 import React, { useLayoutEffect } from 'react';
 
-import { aktivtetsplanUrl } from '../../constants';
+import { AKTIVITETSPLAN_URL } from '../../constants';
 import dialogStyle from '../dialog/Dialog.module.less';
 import { TittelHeader } from '../dialog/TittelHeader';
 import { useSkjulHodefotForMobilVisning } from '../utils/useSkjulHodefotForMobilVisning';
@@ -24,7 +24,7 @@ export function InfoOmDialogSide() {
                     <BodyLong>
                         I dialogen kan du og veilederen din skrive til hverandre om arbeid og oppfølging. Dere kan blant
                         annet sende meldinger om aktivitetene dine i{' '}
-                        <Link href={`${aktivtetsplanUrl}`}>aktivitetsplanen</Link>.
+                        <Link href={`${AKTIVITETSPLAN_URL}`}>aktivitetsplanen</Link>.
                     </BodyLong>
                 </div>
 

@@ -8,7 +8,7 @@ const useHenvendelseStartTekst = () => {
         return '';
     }
 
-    return '\nHilsen ' + veilederNavn;
+    return '\n\nHilsen ' + veilederNavn;
 };
 
 export default useHenvendelseStartTekst;

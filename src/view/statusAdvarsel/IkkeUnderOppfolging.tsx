@@ -1,7 +1,7 @@
 import { Link } from '@navikt/ds-react';
 import React from 'react';
 
-import { arbeidssokerregistreringUrl } from '../../constants';
+import { ARBEIDSSOKERREGISTRERING_URL } from '../../constants';
 import StatusAdvarselWrapper from './StatusAdvarselWrapper';
 
 interface Props {
@@ -18,7 +18,7 @@ function HarPerioderBruker() {
             Du er ikke lenger registrert hos NAV. Hvis du fortsatt skal få oppfølging fra NAV og ha dialog med veileder
             må du være registrert.
             <br />
-            <Link href={`${arbeidssokerregistreringUrl}`}>Registrer deg hos NAV</Link>
+            <Link href={`${ARBEIDSSOKERREGISTRERING_URL}`}>Registrer deg hos NAV</Link>
         </StatusAdvarselWrapper>
     );
 }

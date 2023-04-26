@@ -30,7 +30,7 @@ const useLogBruker = (brukerdata: Bruker | null, oppfolgingData?: OppfolgingData
     }, [underOppfolging, erBruker, aktorId]);
 };
 
-export default function AppBody() {
+const AppBody = () => {
     const oppfolgingContext = useOppfolgingContext();
     const brukerdata = useUserInfoContext();
     const oppfolgingData = dataOrUndefined(oppfolgingContext);
@@ -60,4 +60,6 @@ export default function AppBody() {
             <AktivitetContainer />
         </div>
     );
-}
+};
+
+export default AppBody;

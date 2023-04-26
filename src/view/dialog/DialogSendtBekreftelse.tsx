@@ -1,8 +1,7 @@
-import { BodyShort } from '@navikt/ds-react';
+import { Alert, BodyShort } from '@navikt/ds-react';
 import React, { useEffect, useState } from 'react';
 
 import Hjelpetekst from '../../felleskomponenter/Hjelpetekst';
-import OkMessage from '../../felleskomponenter/mesage/OkMessage';
 import { DialogData, StringOrNull } from '../../utils/Typer';
 import { HandlingsType, ViewState } from '../ViewState';
 import styles from './DialogSendtBekreftelse.module.less';
@@ -35,10 +34,12 @@ function Melding(props: { tekst?: string; erVeileder: boolean }) {
     const { tekst, erVeileder } = props;
 
     return !tekst ? null : (
-        <div className={styles.meldingContainer} aria-hidden={!hasRendred}>
-            <OkMessage>
+        <div className="flex justify-center" aria-hidden={!hasRendred}>
+            <Alert variant="success" inline>
                 <BodyShort>{tekst}</BodyShort>
-                <Hjelpetekst className={styles.hjelpeTekst} hidden={!erVeileder}>
+            </Alert>
+            {erVeileder && (
+                <Hjelpetekst className="ml-1.5" hidden={!erVeileder}>
                     <div className={styles.hjelpeTekstInnhold}>
                         <BodyShort>
                             Hvis ikke brukeren leser dialogmeldingen innen en halvtime, så vil brukeren motta meldingen
@@ -50,7 +51,7 @@ function Melding(props: { tekst?: string; erVeileder: boolean }) {
                         </BodyShort>
                     </div>
                 </Hjelpetekst>
-            </OkMessage>
+            )}
         </div>
     );
 }
@@ -62,7 +63,7 @@ function DialogSendtBekreftelse(props: Props) {
     const tekst = getTekst(viewState.sistHandlingsType, erVeileder, dialog.overskrift);
 
     return (
-        <div role="status">
+        <div role="status" className="pb-4">
             <Melding erVeileder={erVeileder} tekst={tekst} />
         </div>
     );

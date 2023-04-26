@@ -1,4 +1,3 @@
-import { QuestionmarkIcon } from '@navikt/aksel-icons';
 import { Link } from '@navikt/ds-react';
 import React from 'react';
 import { useHistory } from 'react-router';
