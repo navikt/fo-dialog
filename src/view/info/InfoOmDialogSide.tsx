@@ -60,16 +60,16 @@ export function InfoOmDialogSide() {
                     </BodyLong>
                     <ul className="list-disc mt-4 pl-8">
                         <li>
-                            <BodyShort as="li">
+                            <BodyShort>
                                 kontakte NAV i tjenesten{' '}
                                 <Link href="https://www.nav.no/person/kontakt-oss/skriv-til-oss">«Skriv til oss»</Link>
                             </BodyShort>
                         </li>
                         <li>
-                            <BodyShort as="li">ringe NAV på 55 55 33 33</BodyShort>
+                            <BodyShort>ringe NAV på 55 55 33 33</BodyShort>
                         </li>
                         <li>
-                            <BodyShort as="li">
+                            <BodyShort>
                                 lese om <Link href="https://www.nav.no/arbeid/arbeidsledig-permittert">dagpenger</Link>,{' '}
                                 <Link href="https://www.nav.no/aap">arbeidsavklaringspenger</Link>,{' '}
                                 <Link href="https://www.nav.no/okonomisk-sosialhjelp">økonomisk sosialhjelp</Link> på
@@ -77,7 +77,7 @@ export function InfoOmDialogSide() {
                             </BodyShort>
                         </li>
                         <li>
-                            <BodyShort as="li">
+                            <BodyShort>
                                 <Link href="https://www.nav.no/kontaktoss">chatte med oss</Link>. Chatten er ikke
                                 innlogget, du kan bare stille generelle spørsmål.
                             </BodyShort>
@@ -112,21 +112,21 @@ export function InfoOmDialogSide() {
                         <Heading size="medium" level="2">
                             Deling og lagring
                         </Heading>
-                        <BodyShort>
+                        <BodyLong>
                             Opplysningene i dialogen og aktivitetsplanen blir ikke delt med andre offentlige etater, med
                             mindre de har rett til å hente slike opplysninger.
-                        </BodyShort>
-                        <BodyShort>
+                        </BodyLong>
+                        <BodyLong>
                             Opplysningene i dialogen og aktivitetsplanen blir lagret og oppbevart etter arkivloven.
                             Meldinger i dialogen kan ikke slettes når de først er opprettet.
-                        </BodyShort>
-                        <BodyShort>
+                        </BodyLong>
+                        <BodyLong>
                             Les mer om{' '}
                             <Link href="https://www.nav.no/no/nav-og-samfunn/om-nav/personvern-i-arbeids-og-velferdsetaten">
                                 hvordan NAV behandler personopplysninger
                             </Link>
                             .
-                        </BodyShort>
+                        </BodyLong>
                     </ExpansionCard.Content>
                 </ExpansionCard>
             </div>

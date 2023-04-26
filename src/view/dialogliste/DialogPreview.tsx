@@ -86,10 +86,6 @@ function DialogPreview(props: Props) {
 
     const erLest = lest || historisk;
 
-    const lenkepanelCls = classNames('my-2 border', styles.preview, {
-        [styles.innholdUlest]: !erLest,
-        ['bg-surface-selected border-border-selected']: detteErValgtDialog
-    });
     const markoer = erLest ? styles.markoerLest : styles.markoerUlest;
 
     const history = useHistory();
@@ -99,7 +95,14 @@ function DialogPreview(props: Props) {
         history.push(dialogRoute(id));
     };
     return (
-        <LinkPanel className={lenkepanelCls} href={dialogRoute(id)} onClick={onGoTo}>
+        <LinkPanel
+            className={classNames('my-2 border', styles.preview, {
+                [styles.innholdUlest]: !erLest,
+                ['bg-surface-selected border-border-selected']: detteErValgtDialog
+            })}
+            href={dialogRoute(id)}
+            onClick={onGoTo}
+        >
             <div className="flex">
                 {/*<div className={markoer} />*/}
                 <Ikon dialog={dialog} />
