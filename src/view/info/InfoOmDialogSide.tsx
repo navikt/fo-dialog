@@ -91,25 +91,22 @@ export function InfoOmDialogSide() {
                     </ExpansionCard.Header>
                     <ExpansionCard.Content>
                         <div className={'mb-8'}>
-                            <BodyShort>
+                            <BodyLong>
                                 Informasjon du gir i meldinger til veilederen din brukes til å vurdere behovet ditt for
                                 hjelp fra NAV.
-                            </BodyShort>
+                            </BodyLong>
                         </div>
                         <div className={'mb-8'}>
                             <Heading size="medium" level="2">
                                 Manuell oppfølging
                             </Heading>
-                            <BodyShort>
+                            <BodyLong>
                                 NAV henter informasjon om deg fra Folkeregisteret og sjekker mot Kontakt- og
-                                reservasjonsregisteret.
-                            </BodyShort>
-                            <BodyShort>
-                                Hvis du ikke ønsker å bruke den digitale dialogen, så kan du reservere deg mot digital
-                                kommunikasjon med det offentlige hos{' '}
-                                <Link href="https://www.norge.no/nn/reservasjon">Norge.no</Link> Hvis du reserverer deg
+                                reservasjonsregisteret. Hvis du ikke ønsker å bruke den digitale dialogen, så kan du
+                                reservere deg mot digital kommunikasjon med det offentlige hos{' '}
+                                <Link href="https://www.norge.no/nn/reservasjon">Norge.no</Link>. Hvis du reserverer deg
                                 mot digital kommunikasjon, vil NAV følge deg opp manuelt.
-                            </BodyShort>
+                            </BodyLong>
                         </div>
 
                         <Heading size="medium" level="2">
