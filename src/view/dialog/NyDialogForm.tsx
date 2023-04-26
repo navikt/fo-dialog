@@ -105,7 +105,7 @@ const NyDialogForm = (props: Props) => {
         register,
         handleSubmit,
         watch,
-        formState: { errors, isDirty, isSubmitting }
+        formState: { errors, isSubmitting }
     } = useForm<NyDialogFormValues>({
         defaultValues,
         resolver: zodResolver(schema)
@@ -154,9 +154,7 @@ const NyDialogForm = (props: Props) => {
                     Noe gikk dessverre galt med systemet. Prøv igjen senere.
                 </AlertStripeVisible>
 
-                <Button loading={isSubmitting} disabled={!isDirty}>
-                    Send
-                </Button>
+                <Button loading={isSubmitting}>Send</Button>
             </form>
         </div>
     );

@@ -93,7 +93,7 @@ const HenvendelseInputBox = (props: Props) => {
         register,
         handleSubmit,
         reset,
-        formState: { errors, isDirty, isSubmitting }
+        formState: { errors, isSubmitting }
     } = useForm<MeldingFormValues>({
         defaultValues,
         resolver: zodResolver(schema)
@@ -142,7 +142,7 @@ const HenvendelseInputBox = (props: Props) => {
                         placeholder={'Skriv om arbeid og oppfølging'}
                         minRows={props.erBruker ? 2 : 3}
                     />
-                    <Button title="Send" loading={isSubmitting} disabled={!isDirty}>
+                    <Button title="Send" loading={isSubmitting}>
                         Send
                     </Button>
                 </div>

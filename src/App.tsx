@@ -33,7 +33,7 @@ const App = (props: Props) => {
     return (
         <Router>
             <div className="flex w-full">
-                <div className={'flex max-w-[1000px] min-w-full justify-center '}>
+                <div className={'flex  min-w-full justify-center '}>
                     <EventHandler />
                     <Provider fnr={fnr} erVeileder={!!fnr}>
                         <StatusAdvarsel />

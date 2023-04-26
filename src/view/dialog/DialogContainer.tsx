@@ -15,7 +15,7 @@ function DialogContainer() {
 
     return (
         <div
-            className={classNames('col-start-2 col-span-2 bg-white overflow-auto flex overflow-y-hidden h-screen', {
+            className={classNames('w-full bg-white overflow-auto flex overflow-y-hidden h-screen', {
                 // [styles.brukerDialogContainer]: bruker?.erBruker
             })}
         >
