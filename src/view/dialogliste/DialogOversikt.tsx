@@ -1,4 +1,3 @@
-import { ChevronLeftIcon } from '@navikt/aksel-icons';
 import { Heading, Link } from '@navikt/ds-react';
 import classNames from 'classnames';
 import React from 'react';
@@ -43,12 +42,12 @@ const DialogOversikt = () => {
     const erVeileder = !!userInfoContext?.erVeileder;
     return (
         <div
-            className={classNames('flex border-r border-border-divider', styles.dialogOversikt, {
+            className={classNames('flex border-r border-border-divider h-screen', styles.dialogOversikt, {
                 [styles.dialogValgt]: !!dialogId
             })}
         >
             <DialogOversiktHeader erVeileder={erVeileder} />
-            <div className="px-4 bg-gray-100 pt-4">
+            <div className="px-4 bg-gray-100 pt-4 overflow-y-scroll">
                 <DialogOverviewHeader visible={kanSendeMelding} />
                 <InfoVedIngenDialoger className="block" visible={dialoger.length === 0} />
                 <DialogListe />
