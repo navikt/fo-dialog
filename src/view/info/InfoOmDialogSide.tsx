@@ -2,13 +2,8 @@ import { BodyLong, BodyShort, ExpansionCard, Heading, Link } from '@navikt/ds-re
 import classNames from 'classnames';
 import React, { useLayoutEffect } from 'react';
 
-import { AKTIVITETSPLAN_URL } from '../../constants';
 import dialogStyle from '../dialog/Dialog.module.less';
-import { TittelHeader } from '../dialog/TittelHeader';
 import { useSkjulHodefotForMobilVisning } from '../utils/useSkjulHodefotForMobilVisning';
-import styles from './InfoOmDialogSide.module.less';
-
-const cls = classNames(dialogStyle.overflowAuto, dialogStyle.dialog);
 
 export function InfoOmDialogSide() {
     useSkjulHodefotForMobilVisning();
@@ -17,14 +12,20 @@ export function InfoOmDialogSide() {
     });
 
     return (
-        <section aria-label="Om dialog" id="om-dialog" className={cls} tabIndex={-1}>
-            <div className={styles.side}>
-                <Heading size="large">Om dialog</Heading>
+        <section
+            aria-label="Om dialog"
+            id="om-dialog"
+            className={classNames(dialogStyle.overflowAuto, dialogStyle.dialog, 'max-w-2xl w-full p-8')}
+            tabIndex={-1}
+        >
+            <div>
+                <Heading size="large" spacing>
+                    Om dialog
+                </Heading>
                 <div className={'mb-8'}>
                     <BodyLong>
                         I dialogen kan du og veilederen din skrive til hverandre om arbeid og oppfølging. Dere kan blant
-                        annet sende meldinger om aktivitetene dine i{' '}
-                        <Link href={`${AKTIVITETSPLAN_URL}`}>aktivitetsplanen</Link>.
+                        annet sende meldinger om aktivitetene dine i aktivitetsplanen.
                     </BodyLong>
                 </div>
 
@@ -57,35 +58,30 @@ export function InfoOmDialogSide() {
                         aktivitet. Har du spørsmål om økonomisk støtte, økonomisk sosialhjelp, boligsituasjon eller
                         annet, kan du
                     </BodyLong>
-                    <ul>
-                        <BodyShort as="li">
-                            kontakte NAV i tjenesten{' '}
-                            <a className="lenke" href="https://www.nav.no/skriv-til-oss">
-                                «Skriv til oss»
-                            </a>
-                        </BodyShort>
-                        <BodyShort as="li">ringe NAV på 55 55 33 33</BodyShort>
-                        <BodyShort as="li">
-                            lese om{' '}
-                            <a className="lenke" href="https://www.nav.no/arbeid/arbeidsledig-permittert">
-                                dagpenger
-                            </a>
-                            ,{' '}
-                            <a className="lenke" href="https://www.nav.no/aap">
-                                arbeidsavklaringspenger
-                            </a>
-                            ,{' '}
-                            <a className="lenke" href="https://www.nav.no/okonomisk-sosialhjelp">
-                                økonomisk sosialhjelp
-                            </a>{' '}
-                            på nav.no
-                        </BodyShort>
-                        <BodyShort as="li">
-                            <a className="lenke" href="https://www.nav.no/kontaktoss">
-                                chatte med oss
-                            </a>
-                            . Chatten er ikke innlogget, du kan bare stille generelle spørsmål.
-                        </BodyShort>
+                    <ul className="list-disc mt-4 pl-8">
+                        <li>
+                            <BodyShort as="li">
+                                kontakte NAV i tjenesten{' '}
+                                <Link href="https://www.nav.no/person/kontakt-oss/skriv-til-oss">«Skriv til oss»</Link>
+                            </BodyShort>
+                        </li>
+                        <li>
+                            <BodyShort as="li">ringe NAV på 55 55 33 33</BodyShort>
+                        </li>
+                        <li>
+                            <BodyShort as="li">
+                                lese om <Link href="https://www.nav.no/arbeid/arbeidsledig-permittert">dagpenger</Link>,{' '}
+                                <Link href="https://www.nav.no/aap">arbeidsavklaringspenger</Link>,{' '}
+                                <Link href="https://www.nav.no/okonomisk-sosialhjelp">økonomisk sosialhjelp</Link> på
+                                nav.no
+                            </BodyShort>
+                        </li>
+                        <li>
+                            <BodyShort as="li">
+                                <Link href="https://www.nav.no/kontaktoss">chatte med oss</Link>. Chatten er ikke
+                                innlogget, du kan bare stille generelle spørsmål.
+                            </BodyShort>
+                        </li>
                     </ul>
                 </div>
 
@@ -111,10 +107,8 @@ export function InfoOmDialogSide() {
                             <BodyShort>
                                 Hvis du ikke ønsker å bruke den digitale dialogen, så kan du reservere deg mot digital
                                 kommunikasjon med det offentlige hos{' '}
-                                <a className="lenke" href="https://www.norge.no/nn/reservasjon">
-                                    Norge.no
-                                </a>{' '}
-                                Hvis du reserverer deg mot digital kommunikasjon, vil NAV følge deg opp manuelt.
+                                <Link href="https://www.norge.no/nn/reservasjon">Norge.no</Link> Hvis du reserverer deg
+                                mot digital kommunikasjon, vil NAV følge deg opp manuelt.
                             </BodyShort>
                         </div>
 
@@ -131,12 +125,9 @@ export function InfoOmDialogSide() {
                         </BodyShort>
                         <BodyShort>
                             Les mer om{' '}
-                            <a
-                                className="lenke"
-                                href="https://www.nav.no/no/nav-og-samfunn/om-nav/personvern-i-arbeids-og-velferdsetaten"
-                            >
+                            <Link href="https://www.nav.no/no/nav-og-samfunn/om-nav/personvern-i-arbeids-og-velferdsetaten">
                                 hvordan NAV behandler personopplysninger
-                            </a>
+                            </Link>
                             .
                         </BodyShort>
                     </ExpansionCard.Content>

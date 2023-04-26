@@ -31,7 +31,6 @@ export function Melding(props: Props) {
     const erMeldingFraBruker: boolean = avsender === 'BRUKER';
     const date: string = formaterDateAndTime(sendt);
     const toppTekst = erMeldingFraBruker || !avsenderId ? date : `${date} - ${avsenderId}`;
-    const className = erMeldingFraBruker ? styles.brukerIkon : styles.veilederIkon;
     const classNameStyle = erMeldingFraBruker ? styles.hendvendelsebruker : styles.hendvendelse;
 
     const erFraSegSelv = (erBruker && erMeldingFraBruker) || (!erBruker && !erMeldingFraBruker);
@@ -49,15 +48,10 @@ export function Melding(props: Props) {
                 backgroundColor={backgroundColor}
                 avatarBgColor={avatarBgColor}
             >
-                <Chat.Bubble
-                    className={classNames(classNameStyle)}
-                    // topp={toppTekst}
-                    // pilHoyre={erMeldingFraBruker}
-                    // ikonClass={className}
-                >
+                <Chat.Bubble className={classNames(classNameStyle)}>
                     <div className="flex flex-col items-start">
                         <ViktigMelding visible={viktigMarkering} />
-                        <span className="mt-2">{tekst}</span>
+                        <span className="mt-2 whitespace-pre-wrap">{tekst}</span>
                     </div>
                 </Chat.Bubble>
             </Chat>

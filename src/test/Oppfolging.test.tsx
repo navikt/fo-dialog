@@ -131,7 +131,6 @@ describe('<DialogContainer/>', () => {
                 <DialogListe />
             </MemoryRouter>
         );
-        // console.log(wrapper.baseElement);
         expect(queryByText('Ny dialog')).toBeNull();
         expect(getByRole('navigation').children.length).toBeGreaterThan(0);
     });

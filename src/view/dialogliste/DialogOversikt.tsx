@@ -16,7 +16,7 @@ import DialogOverviewHeader from './NyDialogLink';
 
 const DialogOversiktHeader = ({ erVeileder }: { erVeileder: boolean }) => {
     return (
-        <div className="px-2">
+        <div className="px-4 border-b border-border-divider">
             <div className="flex justify-between py-2">
                 {!erVeileder ? (
                     <>

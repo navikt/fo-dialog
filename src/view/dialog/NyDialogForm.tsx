@@ -1,5 +1,6 @@
 import { zodResolver } from '@hookform/resolvers/zod';
 import { Button, GuidePanel, Heading, TextField, Textarea } from '@navikt/ds-react';
+import classNames from 'classnames';
 import React, { useEffect, useRef, useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { useHistory } from 'react-router';
@@ -113,7 +114,7 @@ const NyDialogForm = (props: Props) => {
     const meldingValue = watch('melding');
 
     return (
-        <div className={style.nyDialog}>
+        <div className={classNames(style.nyDialog, 'bg-gray-100')}>
             <form className="p-8 space-y-8" onSubmit={handleSubmit((data) => onSubmit(data))} autoComplete="off">
                 <Heading size="large" level="1">
                     Start en ny dialog

@@ -1,20 +1,20 @@
-import { Link } from '@navikt/ds-react';
-import React from 'react';
-import { useHistory } from 'react-router';
+import { Link, Modal } from '@navikt/ds-react';
+import React, { useState } from 'react';
 
-import { useRoutes } from '../../routes';
+import { InfoOmDialogSide } from './InfoOmDialogSide';
 
 function OmDialogLenke() {
-    const { informasjonRoute } = useRoutes();
-    const history = useHistory();
-    const gotoInformasjon = (e) => {
-        e.preventDefault();
-        history.push(informasjonRoute());
-    };
+    const [open, setOpen] = useState(false);
+
     return (
-        <Link onClick={gotoInformasjon} href={informasjonRoute()}>
-            Om dialog
-        </Link>
+        <>
+            <Link as="button" onClick={() => setOpen(true)}>
+                Om dialog
+            </Link>
+            <Modal open={open} onClose={() => setOpen(!open)} closeButton={true}>
+                <InfoOmDialogSide />
+            </Modal>
+        </>
     );
 }
 

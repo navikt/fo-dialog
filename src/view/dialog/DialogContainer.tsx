@@ -3,31 +3,23 @@ import React from 'react';
 import { Route, Switch } from 'react-router';
 
 import { useUserInfoContext } from '../BrukerProvider';
-import { InfoOmDialogSide } from '../info/InfoOmDialogSide';
 import { useFnrContext } from '../Provider';
 import Dialog from './Dialog';
-import styles from './DialogContainer.module.less';
 import DialogInfoMelding from './DialogInfoMelding';
 import NyDialog from './NyDialog';
 
 function DialogContainer() {
     const bruker = useUserInfoContext();
-    const cls = classNames();
 
     const fnr = useFnrContext();
 
     return (
         <div
-            className={classNames(
-                // 'col-start-2 col-span-2 bg-white overflow-auto flex h-[calc(100vh-80px)] overflow-y-scroll',
-                'col-start-2 col-span-2 bg-white overflow-auto flex overflow-y-hidden h-screen',
-                {
-                    // [styles.brukerDialogContainer]: bruker?.erBruker
-                }
-            )}
+            className={classNames('col-start-2 col-span-2 bg-white overflow-auto flex overflow-y-hidden h-screen', {
+                // [styles.brukerDialogContainer]: bruker?.erBruker
+            })}
         >
             <Switch>
-                <Route path={`${fnr ? `/${fnr}` : ''}/informasjon`} component={InfoOmDialogSide} />
                 <Route path={`${fnr ? `/${fnr}` : ''}/ny`} component={NyDialog} />
                 <Route path={`${fnr ? `/${fnr}` : ''}/:dialogId`} component={Dialog} />
                 <Route path={`${fnr ? `/${fnr}` : '/'}`} component={DialogInfoMelding} />
