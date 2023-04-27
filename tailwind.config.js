@@ -7,11 +7,8 @@ module.exports = {
     plugins: [],
     theme: {
         screens: {
-            sm: '640px',
             md: '768px',
-            lg: '992px',
-            xl: '1280px',
-            'tavle-max-width': '1700px'
+            lg: '1024px'
         },
         colors: {
             'border-default': 'rgba(0, 0, 0, 0.44)',

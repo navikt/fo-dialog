@@ -18,7 +18,7 @@ interface HistoriskeDialogerTekst {
     tittel: string;
 }
 
-const defultTekst = {
+const defaultTekst = {
     knapptekst: 'Se dialoger fra tidligere perioder',
     tittel: 'Dialoger fra tidligere perioder'
 };
@@ -38,7 +38,7 @@ function useTekst(): HistoriskeDialogerTekst {
     const oppfolgingData = dataOrUndefined(oppfolgingContext);
 
     if (!oppfolgingData) {
-        return defultTekst;
+        return defaultTekst;
     }
 
     const underOppfolging = oppfolgingData.underOppfolging;
@@ -62,7 +62,7 @@ function useTekst(): HistoriskeDialogerTekst {
         return bareKVPTekst;
     }
 
-    return defultTekst;
+    return defaultTekst;
 }
 
 function HistoriskeDialogerOversikt(props: HistoriskeDialogerProps) {

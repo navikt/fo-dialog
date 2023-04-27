@@ -1,3 +1,4 @@
+import classNames from 'classnames';
 import React from 'react';
 import { Route, Switch } from 'react-router';
 
@@ -8,7 +9,12 @@ function AktivitetContainer() {
     const fnr = useFnrContext();
     return (
         // <div className="col-span-1 border-l border-border-divider h-[calc(100vh-80px)] overflow-y-scroll">
-        <div className="w-full max-w-[17rem] border-l border-border-divider overflow-y-hidden">
+        <div
+            className={classNames(
+                'hidden xl:flex',
+                'w-full max-w-[17rem] border-l border-border-divider overflow-y-hidden'
+            )}
+        >
             <Switch>
                 <Route path={`${fnr ? `/${fnr}` : ''}/ny`} component={Aktivitetskort} />
                 <Route path={`${fnr ? `/${fnr}` : ''}/:dialogId`} component={Aktivitetskort} />

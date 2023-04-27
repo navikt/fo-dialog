@@ -12,7 +12,7 @@ interface Props {
 
 function DialogIkkeValgt(props: Props) {
     return (
-        <div className={classNames(props.className, styles.dialogIkkeValgt)}>
+        <div className={classNames(props.className)}>
             <IngenValgteDialoger />
             <BodyShort>Velg en dialog for å lese den</BodyShort>
         </div>

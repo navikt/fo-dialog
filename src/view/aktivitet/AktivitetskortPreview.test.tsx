@@ -6,7 +6,7 @@ import { Status } from '../../api/typer';
 import { Aktivitet, AktivitetStatus, AktivitetTypes, KanalTypes } from '../../utils/aktivitetTypes';
 import * as AktivitetProvider from '../AktivitetProvider';
 import { AktivitetDataProviderType } from '../AktivitetProvider';
-import { AktivitetskortPreview, getInfoText } from './AktivitetskortPreview';
+import { DialogMedAktivitetHeader, getInfoText } from './DialogMedAktivitetHeader';
 
 describe('getInfoText', () => {
     it('skal returnere korrekt tekst for stillingsaktivitet', () => {
@@ -120,7 +120,7 @@ describe('<AktivitetskortPreview />', () => {
 
         const wrapper = render(
             <MemoryRouter>
-                <AktivitetskortPreview aktivitetId={'123'} />
+                <DialogMedAktivitetHeader aktivitetId={'123'} />
             </MemoryRouter>
         );
 

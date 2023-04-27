@@ -15,7 +15,10 @@ import { useUserInfoContext } from '../BrukerProvider';
 import { useDialogContext } from '../DialogProvider';
 import { findKladd, useKladdContext } from '../KladdProvider';
 import { cutStringAtLength } from '../utils/stringUtils';
+import { dialogHeaderID2 } from './DialogHeader';
+import styles from './DialogHeader.module.less';
 import style from './NyDialogForm.module.less';
+import { TilbakeKnapp } from './TilbakeKnapp';
 import useHenvendelseStartTekst from './UseHenvendelseStartTekst';
 
 const maxMeldingsLengde = 5000;
@@ -114,11 +117,14 @@ const NyDialogForm = (props: Props) => {
     const meldingValue = watch('melding');
 
     return (
-        <div className={classNames(style.nyDialog, 'bg-gray-100')}>
-            <form className="p-8 space-y-8" onSubmit={handleSubmit((data) => onSubmit(data))} autoComplete="off">
-                <Heading size="large" level="1">
+        <div className={'bg-gray-100 h-full w-full'}>
+            <div className="bg-white p-4 flex items-center gap-x-4 border-b border-border-divider">
+                <TilbakeKnapp className="md:hidden" />
+                <Heading level="1" size="medium">
                     Start en ny dialog
                 </Heading>
+            </div>
+            <form className="p-8 space-y-8" onSubmit={handleSubmit((data) => onSubmit(data))} autoComplete="off">
                 {!erVeileder ? (
                     <GuidePanel>
                         Her kan du skrive til din veileder om arbeid og oppfølging. Du vil få svar i løpet av noen
@@ -126,7 +132,7 @@ const NyDialogForm = (props: Props) => {
                     </GuidePanel>
                 ) : null}
                 <TextField
-                    label="Tema / Tittel (obligatorisk)"
+                    label="Tema (obligatorisk)"
                     description="Skriv kort hva dialogen skal handle om"
                     disabled={!!aktivitetId}
                     autoFocus
@@ -154,7 +160,18 @@ const NyDialogForm = (props: Props) => {
                     Noe gikk dessverre galt med systemet. Prøv igjen senere.
                 </AlertStripeVisible>
 
-                <Button loading={isSubmitting}>Send</Button>
+                <div className="flex flex-row gap-x-4">
+                    <Button loading={isSubmitting}>Send</Button>
+                    <Button
+                        variant="tertiary"
+                        onClick={(e) => {
+                            e.preventDefault();
+                            history.goBack();
+                        }}
+                    >
+                        Avbryt
+                    </Button>
+                </div>
             </form>
         </div>
     );

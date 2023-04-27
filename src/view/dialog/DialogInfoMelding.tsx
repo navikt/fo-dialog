@@ -3,7 +3,6 @@ import React from 'react';
 import { useDialogContext } from '../DialogProvider';
 import DialogIkkeValgt from '../info/DialogIkkeValgt';
 import InfoVedIngenDialoger from '../info/InfoVedIngenDialoger';
-import styles from './DialogInfoMelding.module.less';
 
 const DialogInfoMelding = () => {
     const { dialoger } = useDialogContext();
@@ -11,8 +10,8 @@ const DialogInfoMelding = () => {
 
     return (
         <>
-            <InfoVedIngenDialoger className={styles.info} visible={!harDialoger} />
-            <DialogIkkeValgt className={styles.info} visible={harDialoger} />
+            <InfoVedIngenDialoger className={''} visible={!harDialoger} />
+            <DialogIkkeValgt className={'hidden md:flex w-full'} visible={harDialoger} />
         </>
     );
 };

@@ -53,9 +53,7 @@ const AppBody = () => {
     }
 
     return (
-        // <div className={'overflow-hidden grid grid-cols-4 max-w-[1920px] h-[calc(100vh-80px)]'}>
-        // <div className={'overflow-hidden grid grid-cols-4 max-w-[1920px]'}>
-        <div className={'overflow-hidden max-w-[1920px] flex flex-row'}>
+        <div className={'overflow-hidden flex flex-row w-full'}>
             <DialogOversiktContainer />
             <DialogContainer />
             <AktivitetContainer />

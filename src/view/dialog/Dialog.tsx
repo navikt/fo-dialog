@@ -18,6 +18,7 @@ import DialogSendtBekreftelse from './DialogSendtBekreftelse';
 import DialogInputBoxVisible from './henvendelseInput/HenvendelseInputBox';
 import HistoriskInfo from './HistoriskInfo';
 import { IngenDialog } from './IngenDialog';
+import { TilbakeKnapp } from './TilbakeKnapp';
 
 export function Dialog() {
     const kanSendeMelding = useKansendeMelding();
@@ -70,7 +71,10 @@ export function Dialog() {
     const kanSendeHenveldelse = kanSendeMelding && aktivDialog;
 
     return (
-        <section aria-labelledby={`${dialogHeaderID1} ${dialogHeaderID2}`} className="flex flex-col grow">
+        <section
+            aria-labelledby={`${dialogHeaderID1} ${dialogHeaderID2}`}
+            className={classNames('flex flex-col grow w-full h-screen')}
+        >
             <Heading className="hidden" aria-labelledby={`${dialogHeaderID1} ${dialogHeaderID2}`}>
                 Dialog Header
             </Heading>
@@ -79,7 +83,7 @@ export function Dialog() {
             <HistoriskInfo hidden={aktivDialog} kanSendeMelding={kanSendeMelding} />
             <section
                 aria-label="Ny melding"
-                className={classNames('border-t border-border-divider p-4', { 'pt-2': !!bruker?.erVeileder })}
+                className={classNames('border-t border-border-divider p-4 bg-white', { 'pt-2': !!bruker?.erVeileder })}
             >
                 <ManagedDialogCheckboxes dialog={valgtDialog} visible={!!bruker?.erVeileder} />
                 <DialogInputBoxVisible

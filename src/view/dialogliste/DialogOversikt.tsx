@@ -10,13 +10,12 @@ import { useDialogContext } from '../DialogProvider';
 import InfoVedIngenDialoger from '../info/InfoVedIngenDialoger';
 import OmDialogLenke from '../info/OmDialogLenke';
 import DialogListe from './DialogListe';
-import styles from './DialogOversikt.module.less';
 import DialogOverviewHeader from './NyDialogLink';
 
 const DialogOversiktHeader = ({ erVeileder }: { erVeileder: boolean }) => {
     return (
-        <div className="px-4 border-b border-border-divider">
-            <div className="flex justify-between py-2">
+        <div className="p-4 flex flex-col gap-y-2 border-b border-border-divider">
+            <div className="flex md:justify-between gap-x-4">
                 {!erVeileder ? (
                     <>
                         <Link href={MINSIDE_URL}>Min side</Link>
@@ -26,7 +25,7 @@ const DialogOversiktHeader = ({ erVeileder }: { erVeileder: boolean }) => {
                 <OmDialogLenke />
             </div>
             {!erVeileder ? (
-                <Heading level="1" size="large" className="mb-2">
+                <Heading level="1" size="medium">
                     Dialog med veilederen din
                 </Heading>
             ) : null}
@@ -42,9 +41,10 @@ const DialogOversikt = () => {
     const erVeileder = !!userInfoContext?.erVeileder;
     return (
         <div
-            className={classNames('flex border-r border-border-divider h-screen', styles.dialogOversikt, {
-                [styles.dialogValgt]: !!dialogId
-            })}
+            className={classNames(
+                { 'hidden md:flex flex-col': !!dialogId },
+                'border-r border-border-divider w-full h-full md:max-w-[20rem]'
+            )}
         >
             <DialogOversiktHeader erVeileder={erVeileder} />
             <div className="px-4 bg-gray-100 pt-4 overflow-y-scroll">

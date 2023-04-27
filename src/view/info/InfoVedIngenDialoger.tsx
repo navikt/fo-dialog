@@ -12,7 +12,7 @@ interface PropTypes {
 
 function InfoVedIngenDialoger(props: PropTypes) {
     return (
-        <div className={classNames(props.className, styles.ingenDialoger)}>
+        <div className={classNames(props.className)}>
             <GuidePanel
             // svg={<VeilederIkon />}
             >

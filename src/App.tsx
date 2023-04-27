@@ -32,16 +32,14 @@ const App = (props: Props) => {
 
     return (
         <Router>
-            <div className="flex w-full">
-                <div className={'flex  min-w-full justify-center '}>
-                    <EventHandler />
-                    <Provider fnr={fnr} erVeileder={!!fnr}>
-                        <StatusAdvarsel />
-                        <AppBody />
-                        <UppdateEventHandler />
-                    </Provider>
-                    <TimeoutModal hidden={!!fnr} fnr={fnr} />
-                </div>
+            <div className="flex min-w-full min-h-screen">
+                <EventHandler />
+                <Provider fnr={fnr} erVeileder={!!fnr}>
+                    <StatusAdvarsel />
+                    <AppBody />
+                    <UppdateEventHandler />
+                </Provider>
+                <TimeoutModal hidden={!!fnr} fnr={fnr} />
             </div>
             <PageViewMetricCollector />
         </Router>
