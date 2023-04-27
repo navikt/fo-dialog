@@ -42,14 +42,14 @@ const DialogOversikt = () => {
     return (
         <div
             className={classNames(
-                { 'hidden md:flex flex-col': !!dialogId },
-                'border-r border-border-divider w-full h-full md:max-w-[20rem]'
+                { hidden: !!dialogId },
+                'border-r border-border-divider w-full h-full md:max-w-[20rem] md:h-screen md:flex md:flex-col'
             )}
         >
             <DialogOversiktHeader erVeileder={erVeileder} />
-            <div className="px-4 bg-gray-100 pt-4 overflow-y-scroll">
+            <div className="px-4 bg-gray-100 pt-4 overflow-y-scroll h-full">
                 <DialogOverviewHeader visible={kanSendeMelding} />
-                <InfoVedIngenDialoger className="block" visible={dialoger.length === 0} />
+                <InfoVedIngenDialoger className="md:hidden mt-4" visible={dialoger.length === 0} />
                 <DialogListe />
             </div>
         </div>

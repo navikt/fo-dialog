@@ -44,7 +44,7 @@ const NyDialogForm = (props: Props) => {
     const { hentDialoger, nyDialog } = useDialogContext();
     const bruker = useUserInfoContext();
     const history = useHistory();
-    const { dialogRoute } = useRoutes();
+    const { dialogRoute, baseRoute } = useRoutes();
     const [noeFeilet, setNoeFeilet] = useState(false);
     const startTekst = useHenvendelseStartTekst();
 
@@ -166,7 +166,7 @@ const NyDialogForm = (props: Props) => {
                         variant="tertiary"
                         onClick={(e) => {
                             e.preventDefault();
-                            history.goBack();
+                            history.push(baseRoute());
                         }}
                     >
                         Avbryt
