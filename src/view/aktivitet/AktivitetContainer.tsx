@@ -11,7 +11,7 @@ function AktivitetContainer() {
         // <div className="col-span-1 border-l border-border-divider h-[calc(100vh-80px)] overflow-y-scroll">
         <div
             className={classNames(
-                'hidden xl:flex',
+                'hidden lg:flex',
                 'w-full max-w-[17rem] border-l border-border-divider overflow-y-hidden'
             )}
         >
