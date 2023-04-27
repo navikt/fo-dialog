@@ -73,7 +73,7 @@ export function Dialog() {
     return (
         <section
             aria-labelledby={`${dialogHeaderID1} ${dialogHeaderID2}`}
-            className={classNames('flex flex-col grow w-full h-screen')}
+            className={classNames('flex flex-col grow w-full h-screen lg:max-w-lgContainer')}
         >
             <Heading className="hidden" aria-labelledby={`${dialogHeaderID1} ${dialogHeaderID2}`}>
                 Dialog Header

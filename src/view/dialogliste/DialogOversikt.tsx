@@ -47,7 +47,7 @@ const DialogOversikt = () => {
             )}
         >
             <DialogOversiktHeader erVeileder={erVeileder} />
-            <div className="px-4 bg-gray-100 pt-4 overflow-y-scroll h-full">
+            <div className="px-4 bg-gray-100 pt-4 overflow-y-scroll h-full border-r border-border-divider">
                 <DialogOverviewHeader visible={kanSendeMelding} />
                 <InfoVedIngenDialoger className="md:hidden mt-4" visible={dialoger.length === 0} />
                 <DialogListe />

@@ -224,6 +224,9 @@ module.exports = {
             minWidth: {
                 52: '13rem'
             },
+            maxWidth: {
+                lgContainer: '700px'
+            },
             maxHeight: {
                 'screen-h-1/2': '50vh'
             },

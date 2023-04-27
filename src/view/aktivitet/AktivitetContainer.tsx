@@ -12,7 +12,7 @@ function AktivitetContainer() {
         <div
             className={classNames(
                 'hidden lg:flex',
-                'w-full max-w-[17rem] border-l border-border-divider overflow-y-hidden'
+                'w-full max-w-[30rem] border-l border-border-divider overflow-y-hidden'
             )}
         >
             <Switch>
