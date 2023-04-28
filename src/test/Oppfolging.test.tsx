@@ -7,13 +7,10 @@ import { Status } from '../api/typer';
 import { Bruker, DialogData, OppfolgingData, PeriodeData } from '../utils/Typer';
 import * as BrukerProvider from '../view/BrukerProvider';
 import DialogContainer from '../view/dialog/DialogContainer';
-import { DialogHeader } from '../view/dialog/DialogHeader';
-import HenvendelseInputBox from '../view/dialog/henvendelseInput/HenvendelseInputBox';
 import DialogListe from '../view/dialogliste/DialogListe';
 import DialogOversikt from '../view/dialogliste/DialogOversikt';
 import * as DialogProvider from '../view/DialogProvider';
 import { DialogDataProviderType } from '../view/DialogProvider';
-import { MeldingList } from '../view/melding/MeldingList';
 import * as OppfolgingProvider from '../view/OppfolgingProvider';
 import { OppfolgingDataProviderType } from '../view/OppfolgingProvider';
 import * as AppContext from '../view/Provider';
@@ -158,14 +155,14 @@ describe('<DialogContainer/>', () => {
                 <DialogOversikt />
             </MemoryRouter>
         );
-        getByText('Ny dialog');
+        getByText('Start en ny dialog');
         getByText(dialoger[0].overskrift);
     });
 });
 
 describe('<Dialog/>', () => {
     test('Bruker ikke under oppf. skjuler dialogcontroller og viser fortsatt henvendelser', () => {
-        useFetchOppfolging.data!.underOppfolging = true;
+        useFetchOppfolging.data!.underOppfolging = false;
         useFetchOppfolging.data!.oppfolgingsPerioder = [
             {
                 aktorId: '1234567988888',
@@ -179,14 +176,15 @@ describe('<Dialog/>', () => {
         vi.spyOn(DialogProvider, 'useDialogContext').mockImplementation(() => useDialogContext);
         vi.spyOn(OppfolgingProvider, 'useOppfolgingContext').mockImplementation(() => useFetchOppfolging);
         Element.prototype.scrollIntoView = () => {};
-        const { queryByLabelText, getByText } = render(
+        const { queryByLabelText, queryByText, queryByRole } = render(
             <MemoryRouter initialEntries={['/1']}>
                 <DialogContainer />
             </MemoryRouter>
         );
-        expect(queryByLabelText('Ny melding')).toBeNull();
+
+        expect(queryByRole('form')).toBeNull();
         expect(queryByLabelText('Meldinger')).toBeTruthy();
-        getByText('Venter på svar fra NAV');
+        expect(queryByText('Venter på svar fra NAV')).toBeNull();
     });
     test('Bruker under oppf. viser komponenter i Dialog', () => {
         useFetchOppfolging.data!.underOppfolging = true;

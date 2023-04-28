@@ -9,7 +9,6 @@ import { findAktivitet, useAktivitetContext } from '../AktivitetProvider';
 import { dialogHeaderID2 } from '../dialog/DialogHeader';
 import { useFnrContext } from '../Provider';
 import { aktivitetLenke, visAktivitetsplan } from './AktivitetskortLenke';
-import styles from './DialogMedAktivitetHeader.module.less';
 import { getTypeTextByAktivitet } from './TextUtils';
 
 const UndertekstVisible = visibleIfHoc(BodyShort);
@@ -32,7 +31,7 @@ export function DialogMedAktivitetHeader(props: Props) {
     // const infotekst = getInfoText(aktivitet);
 
     return (
-        <section aria-label="Aktivitet knyttet til dialog" className={styles.aktivitetSeksjon}>
+        <section aria-label="Aktivitet knyttet til dialog">
             <Detail aria-hidden="true">{typeTekst}</Detail>
             <Heading level="2" size="medium" aria-label={`${typeTekst}: ${aktivitet?.tittel}`}>
                 {aktivitet?.tittel}

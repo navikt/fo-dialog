@@ -12,7 +12,7 @@ export const TilbakeKnapp = ({ className }: Props) => {
     const { baseRoute } = useRoutes();
 
     return (
-        <Link to={baseRoute} title="Til dialoger" className={className}>
+        <Link to={baseRoute()} title="Til dialoger" className={className}>
             <ChevronLeftIcon />
         </Link>
     );

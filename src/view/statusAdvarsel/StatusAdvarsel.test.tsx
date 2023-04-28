@@ -1,5 +1,6 @@
 import { render } from '@testing-library/react';
 import React from 'react';
+import { expect } from 'vitest';
 
 import { Status } from '../../api/typer';
 import { HarNivaa4Response } from '../../api/useFetchHarNivaa4';
@@ -67,19 +68,16 @@ describe('<AlertStripeContainer/>', () => {
         vi.spyOn(OppfolgingContext, 'useOppfolgingContext').mockImplementation(() => useFetchOppfolging);
         vi.spyOn(AppContext, 'useHarNivaa4Context').mockImplementation(() => useNivaa4);
 
-        const wrapper = render(<StatusAdvarsel />);
-        console.log(wrapper.baseElement);
-        expect(wrapper.baseElement).toBe(<AldriUnderOppfolging erVeileder={true} />);
-        console.log(wrapper);
-        // expect(wrapper.matchesElement(<AldriUnderOppfolging erVeileder={true} />)).toBeTruthy();
+        const { getByText } = render(<StatusAdvarsel />);
+        getByText('Denne brukeren har ikke tidligere dialoger i Modia.');
     });
     it('Bruker uten oppf.perioder og ikke under oppf. viser en advarsel - bruker. ', () => {
         vi.spyOn(BrukerContext, 'useUserInfoContext').mockImplementation(() => bruker);
         vi.spyOn(OppfolgingContext, 'useOppfolgingContext').mockImplementation(() => useFetchOppfolging);
         vi.spyOn(AppContext, 'useHarNivaa4Context').mockImplementation(() => useNivaa4);
 
-        const wrapper = render(<StatusAdvarsel />);
-        expect(wrapper.matchesElement(<AldriUnderOppfolging erVeileder={false} />)).toBeTruthy();
+        const { getByText } = render(<StatusAdvarsel />);
+        getByText('Du må være registrert hos NAV for å ha digital dialog med veileder.');
     });
     it('Bruker med oppf.perioder og ikke under oppf. viser en advarsel - bruker. ', () => {
         useFetchOppfolging.data!.oppfolgingsPerioder = oppfPerioder;
@@ -88,8 +86,11 @@ describe('<AlertStripeContainer/>', () => {
         vi.spyOn(OppfolgingContext, 'useOppfolgingContext').mockImplementation(() => useFetchOppfolging);
         vi.spyOn(AppContext, 'useHarNivaa4Context').mockImplementation(() => useNivaa4);
 
-        const wrapper = render(<StatusAdvarsel />);
-        expect(wrapper.matchesElement(<IkkeUnderOppfolging erVeileder={false} />)).toBeTruthy();
+        const { getByText, getByRole } = render(<StatusAdvarsel />);
+        getByText(
+            'Du er ikke lenger registrert hos NAV. Hvis du fortsatt skal få oppfølging fra NAV og ha dialog med veileder må du være registrert.'
+        );
+        expect(getByRole('link').textContent).toBe('Registrer deg hos NAV');
     });
     it('Bruker med oppf.perioder, ikke under oppf. gir ingen feilmelding - veileder', () => {
         useFetchOppfolging.data!.oppfolgingsPerioder = oppfPerioder;
@@ -99,7 +100,7 @@ describe('<AlertStripeContainer/>', () => {
         vi.spyOn(AppContext, 'useHarNivaa4Context').mockImplementation(() => useNivaa4);
 
         const wrapper = render(<StatusAdvarsel />);
-        expect(wrapper.matchesElement(<IkkeUnderOppfolging erVeileder={true} />)).toBeTruthy();
+        expect(wrapper.baseElement.textContent).toBeFalsy();
     });
 
     it('Bruker registret KRR viser en advarsel - veileder.', () => {
@@ -109,8 +110,8 @@ describe('<AlertStripeContainer/>', () => {
         vi.spyOn(OppfolgingContext, 'useOppfolgingContext').mockImplementation(() => useFetchOppfolging);
         vi.spyOn(AppContext, 'useHarNivaa4Context').mockImplementation(() => useNivaa4);
 
-        const wrapper = render(<StatusAdvarsel />);
-        expect(wrapper.matchesElement(<ReservertKrr erVeileder={true} />)).toBeTruthy();
+        const { getByText } = render(<StatusAdvarsel />);
+        getByText('Du kan ikke kontakte denne brukeren elektronisk.');
     });
     it('Bruker registret KRR viser en advarsel - bruker. ', () => {
         useFetchOppfolging.data!.underOppfolging = true;
@@ -119,8 +120,11 @@ describe('<AlertStripeContainer/>', () => {
         vi.spyOn(OppfolgingContext, 'useOppfolgingContext').mockImplementation(() => useFetchOppfolging);
         vi.spyOn(AppContext, 'useHarNivaa4Context').mockImplementation(() => useNivaa4);
 
-        const wrapper = render(<StatusAdvarsel />);
-        expect(wrapper.matchesElement(<ReservertKrr erVeileder={false} />)).toBeTruthy();
+        const { getByText, getByRole } = render(<StatusAdvarsel />);
+        getByText(
+            'For å ta i bruk den digitale dialogen med din veileder, må du fjerne reservasjonen din mot digital kommunikasjon.'
+        );
+        expect(getByRole('link').textContent).toBe('Gå til Norge.no for å fjerne reservasjonen');
     });
     // test('Bruker kan ikke varsles viser en advarsel - bruker. ', () => {
     //     useFetchOppfolging.data.underOppfolging = true;
@@ -154,8 +158,8 @@ describe('<AlertStripeContainer/>', () => {
         vi.spyOn(OppfolgingContext, 'useOppfolgingContext').mockImplementation(() => useFetchOppfolging);
         vi.spyOn(AppContext, 'useHarNivaa4Context').mockImplementation(() => useNivaa4);
 
-        const wrapper = render(<StatusAdvarsel />);
-        expect(wrapper.matchesElement(<ManglerNivaa4 erVeileder={true} />)).toBeTruthy();
+        const { getByText } = render(<StatusAdvarsel />);
+        getByText('Denne brukeren kan ikke logge inn i aktivitetsplan og dialog.');
     });
 
     it('Nivaa4Feiler - veileder', () => {
@@ -170,8 +174,8 @@ describe('<AlertStripeContainer/>', () => {
         vi.spyOn(OppfolgingContext, 'useOppfolgingContext').mockImplementation(() => useFetchOppfolging);
         vi.spyOn(AppContext, 'useHarNivaa4Context').mockImplementation(() => useNivaa4);
 
-        const wrapper = render(<StatusAdvarsel />);
-        expect(wrapper.matchesElement(<Nivaa4Feiler erVeileder={true} />)).toBeTruthy();
+        const { getByText } = render(<StatusAdvarsel />);
+        getByText('Noe gikk galt, og du får dessverre ikke sendt dialogmeldinger. Prøv igjen senere.');
     });
 
     it('ingen varsler for gyldig status - veileder', () => {
@@ -187,7 +191,7 @@ describe('<AlertStripeContainer/>', () => {
         vi.spyOn(AppContext, 'useHarNivaa4Context').mockImplementation(() => useNivaa4);
 
         const wrapper = render(<StatusAdvarsel />);
-        expect(wrapper.isEmptyRender()).toBeTruthy();
+        expect(wrapper.baseElement.textContent).toBeFalsy();
     });
 
     it('ingen varsler for gyldig status - bruker. ', () => {
@@ -203,6 +207,6 @@ describe('<AlertStripeContainer/>', () => {
         vi.spyOn(AppContext, 'useHarNivaa4Context').mockImplementation(() => useNivaa4);
 
         const wrapper = render(<StatusAdvarsel />);
-        expect(wrapper.isEmptyRender()).toBeTruthy();
+        expect(wrapper.baseElement.textContent).toBeFalsy();
     });
 });

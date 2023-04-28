@@ -20,7 +20,7 @@ const ManglerNivaa4Veileder = () => (
         Denne brukeren kan ikke logge inn i aktivitetsplan og dialog. <Mere />
     </StatusAdvarselWrapper>
 );
-const Nivaa4FeilerVeilede = () => (
+const Nivaa4FeilerVeileder = () => (
     <StatusAdvarselWrapper>
         Noe gikk galt, og du får dessverre ikke sendt dialogmeldinger. Prøv igjen senere.
     </StatusAdvarselWrapper>
@@ -29,4 +29,4 @@ const Nivaa4FeilerVeilede = () => (
 export const ManglerNivaa4 = (props: Props) =>
     props.erVeileder ? <ManglerNivaa4Veileder /> : <TekniskFeilBrukerstotte />;
 export const Nivaa4Feiler = (props: Props) =>
-    props.erVeileder ? <Nivaa4FeilerVeilede /> : <TekniskFeilBrukerstotte />;
+    props.erVeileder ? <Nivaa4FeilerVeileder /> : <TekniskFeilBrukerstotte />;
