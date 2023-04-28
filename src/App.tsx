@@ -32,7 +32,7 @@ const App = (props: Props) => {
 
     return (
         <Router>
-            <div className="flex min-w-full min-h-screen">
+            <div className="flex min-w-full min-h-screen flex-col">
                 <EventHandler />
                 <Provider fnr={fnr} erVeileder={!!fnr}>
                     <StatusAdvarsel />

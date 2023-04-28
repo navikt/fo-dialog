@@ -5,7 +5,6 @@ import { fetchData } from '../../utils/Fetch';
 import { UpdateTypes, dispatchUpdate } from '../../utils/UpdateEvent';
 import { apiBasePath } from '../../utils/UseApiBasePath';
 import { useOppfolgingContext } from '../OppfolgingProvider';
-import styles from './AlertLess.module.less';
 import StatusAdvarselWrapper, { KanIkkeKontakteElektroniskVeileder } from './StatusAdvarselWrapper';
 
 interface Props {
@@ -28,11 +27,11 @@ function Bruker() {
     };
 
     return (
-        <div className={styles.flexColum}>
+        <div className="flex flex-col">
             <StatusAdvarselWrapper>
                 Du har ikke digital oppfølging fra NAV. Du kan derfor ikke ha digital dialog med veileder
             </StatusAdvarselWrapper>
-            <Button onClick={fjernManuell} className={styles.knapp}>
+            <Button onClick={fjernManuell} className="mt-4 self-center">
                 {' '}
                 Endre til digital oppfølging{' '}
             </Button>
