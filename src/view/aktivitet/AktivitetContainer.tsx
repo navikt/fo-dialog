@@ -1,6 +1,6 @@
 import classNames from 'classnames';
 import React from 'react';
-import { Route, Switch } from 'react-router';
+import { Route, Routes } from 'react-router';
 
 import { useFnrContext } from '../Provider';
 import { Aktivitetskort } from './Aktivitetskort';
@@ -15,10 +15,10 @@ function AktivitetContainer() {
                 'w-full max-w-[30rem] border-l border-border-divider overflow-y-hidden'
             )}
         >
-            <Switch>
-                <Route path={`${fnr ? `/${fnr}` : ''}/ny`} component={Aktivitetskort} />
-                <Route path={`${fnr ? `/${fnr}` : ''}/:dialogId`} component={Aktivitetskort} />
-            </Switch>
+            <Routes>
+                <Route path={`${fnr ? `/${fnr}` : ''}/ny`} element={<Aktivitetskort />} />
+                <Route path={`${fnr ? `/${fnr}` : ''}/:dialogId`} element={<Aktivitetskort />} />
+            </Routes>
         </div>
     );
 }

@@ -1,9 +1,8 @@
 import { zodResolver } from '@hookform/resolvers/zod';
 import { Button, GuidePanel, Heading, TextField, Textarea } from '@navikt/ds-react';
-import classNames from 'classnames';
 import React, { useEffect, useRef, useState } from 'react';
 import { useForm } from 'react-hook-form';
-import { useHistory } from 'react-router';
+import { useNavigate } from 'react-router';
 import { z } from 'zod';
 
 import AlertStripeVisible from '../../felleskomponenter/AlertStripeVisible';
@@ -16,8 +15,6 @@ import { useDialogContext } from '../DialogProvider';
 import { findKladd, useKladdContext } from '../KladdProvider';
 import { cutStringAtLength } from '../utils/stringUtils';
 import { dialogHeaderID2 } from './DialogHeader';
-import styles from './DialogHeader.module.less';
-import style from './NyDialogForm.module.less';
 import { TilbakeKnapp } from './TilbakeKnapp';
 import useHenvendelseStartTekst from './UseHenvendelseStartTekst';
 
@@ -43,7 +40,7 @@ const NyDialogForm = (props: Props) => {
     const { defaultTema, setViewState, aktivitetId } = props;
     const { hentDialoger, nyDialog } = useDialogContext();
     const bruker = useUserInfoContext();
-    const history = useHistory();
+    const navigate = useNavigate();
     const { dialogRoute, baseRoute } = useRoutes();
     const [noeFeilet, setNoeFeilet] = useState(false);
     const startTekst = useHenvendelseStartTekst();
@@ -96,7 +93,7 @@ const NyDialogForm = (props: Props) => {
             .then((dialog) => {
                 slettKladd(null, props.aktivitetId);
                 setViewState();
-                history.push(dialogRoute(dialog.id));
+                navigate(dialogRoute(dialog.id));
                 dispatchUpdate(UpdateTypes.Dialog);
                 return dialog;
             })
@@ -166,7 +163,7 @@ const NyDialogForm = (props: Props) => {
                         variant="tertiary"
                         onClick={(e) => {
                             e.preventDefault();
-                            history.push(baseRoute());
+                            navigate(baseRoute());
                         }}
                     >
                         Avbryt

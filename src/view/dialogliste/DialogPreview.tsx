@@ -2,7 +2,7 @@ import { BodyShort, Heading, LinkPanel } from '@navikt/ds-react';
 import classNames from 'classnames';
 import React, { useEffect, useRef, useState } from 'react';
 import { Flipped, Flipper } from 'react-flip-toolkit';
-import { useHistory } from 'react-router';
+import { useNavigate } from 'react-router';
 
 import { useRoutes } from '../../routes';
 import { Aktivitet, ArenaAktivitet } from '../../utils/aktivitetTypes';
@@ -88,11 +88,11 @@ function DialogPreview(props: Props) {
 
     const markoer = erLest ? styles.markoerLest : styles.markoerUlest;
 
-    const history = useHistory();
+    const navigate = useNavigate();
     const { dialogRoute } = useRoutes();
     const onGoTo = (event) => {
         event.preventDefault();
-        history.push(dialogRoute(id));
+        navigate(dialogRoute(id));
     };
     return (
         <LinkPanel

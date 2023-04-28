@@ -7,7 +7,7 @@ import { ReactComponent as IngenValgteDialoger } from '../dialog/ingen-valgt.svg
 const DialogIkkeValgt = () => {
     return (
         <div>
-            <IngenValgteDialoger className="w-40" />
+            <IngenValgteDialoger className="w-40 mx-auto" />
             <BodyShort>Velg en dialog for å lese den</BodyShort>
         </div>
     );

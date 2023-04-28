@@ -1,5 +1,5 @@
 import React from 'react';
-import { Route, Switch } from 'react-router';
+import { Route, Routes } from 'react-router';
 
 import { useFnrContext } from '../Provider';
 import DialogOversikt from './DialogOversikt';
@@ -7,8 +7,8 @@ import DialogOversikt from './DialogOversikt';
 export default function DialogOversiktContainer() {
     const fnr = useFnrContext();
     return (
-        <Switch>
-            <Route path={`${fnr ? `/${fnr}` : ''}/:dialogId?`} component={DialogOversikt} />
-        </Switch>
+        <Routes>
+            <Route path={`${fnr ? `/${fnr}` : ''}/:dialogId?`} element={<DialogOversikt />} />
+        </Routes>
     );
 }

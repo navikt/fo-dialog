@@ -7,7 +7,6 @@ import { useDialogContext } from '../DialogProvider';
 import { useAktivitetId } from '../utils/useAktivitetId';
 import { getAktivitetType } from '../utils/utils';
 import AktivitetIngress from './AktivitetIngress';
-import styles from './Aktivitetskort.module.less';
 import { AktivitetskortInfoBox } from './AktivitetskortInfoBox';
 import AktivitetskortLenke from './AktivitetskortLenke';
 import Brodsmulesti from './Brodsmulesti';
