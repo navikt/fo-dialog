@@ -17,7 +17,11 @@ interface VenterSvarFraBrukerProps {
 export function VenterSvarFraBruker(props: VenterSvarFraBrukerProps) {
     const tekst = props.erVeileder ? 'Venter på svar fra bruker' : 'Venter på svar fra deg';
     if (!props.visible) return null;
-    return <Tag variant="info">{tekst}</Tag>;
+    return (
+        <Tag variant="info" size="small">
+            {tekst}
+        </Tag>
+    );
 }
 
 export function VenterSvarFraNAV(props: Props) {

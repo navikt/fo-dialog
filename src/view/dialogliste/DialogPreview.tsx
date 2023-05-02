@@ -1,4 +1,4 @@
-import { BodyShort, Heading, LinkPanel } from '@navikt/ds-react';
+import { BodyShort, Detail, Heading, LinkPanel } from '@navikt/ds-react';
 import classNames from 'classnames';
 import React, { useEffect, useRef, useState } from 'react';
 import { Flipped, Flipper } from 'react-flip-toolkit';
@@ -25,7 +25,7 @@ const ALIGN_TO_BOTTOM: ScrollIntoViewOptions = { block: 'end', inline: 'nearest'
 function Tittel(props: TittelProps) {
     const tittel = props.aktivitet ? getDialogTittel(props.aktivitet) : props.tittel;
     return (
-        <Heading as="p" className={styles.heading}>
+        <Heading level="2" size="small">
             {tittel}
         </Heading>
     );
@@ -96,24 +96,26 @@ function DialogPreview(props: Props) {
     };
     return (
         <LinkPanel
-            className={classNames('my-2 border', styles.preview, {
+            className={classNames('my-2 border !gap-0', styles.preview, {
                 [styles.innholdUlest]: !erLest,
                 ['bg-surface-selected border-border-selected']: detteErValgtDialog
             })}
             href={dialogRoute(id)}
             onClick={onGoTo}
         >
-            <div className="flex">
+            <div className="flex flex-row">
                 {/*<div className={markoer} />*/}
                 <Ikon dialog={dialog} />
-                <div className="flex-1 ">
+                <div className="flex-grow">
                     <BodyShort className="hidden">{typeText(dialog)}</BodyShort>
                     <Tittel tittel={overskrift} aktivitet={aktivitet} />
-                    <BodyShort className={styles.dato}>{datoString}</BodyShort>
+                    <Detail>{datoString}</Detail>
                     <EtikettListe dialog={dialog} />
                     <BodyShort className="hidden">{meldingerText(dialog.henvendelser.length)}</BodyShort>
                 </div>
-                <BodyShort aria-hidden="true">{dialog.henvendelser.length}</BodyShort>
+                {/*<BodyShort aria-hidden="true" className="flex items-center">*/}
+                {/*    {dialog.henvendelser.length}*/}
+                {/*</BodyShort>*/}
                 <div ref={dialogref}></div>
             </div>
         </LinkPanel>
