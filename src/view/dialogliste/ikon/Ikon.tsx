@@ -1,32 +1,31 @@
+import { ChatElipsisIcon, TasklistIcon } from '@navikt/aksel-icons';
 import classNames from 'classnames';
 import React from 'react';
 
 import { DialogData } from '../../../utils/Typer';
-import { ReactComponent as AktivitetsIkon } from './aktivitet-dialog-lest.svg';
 import styles from './Ikon.module.less';
-import { ReactComponent as DialogIkon } from './snakkeboble.svg';
 
 interface IkonProps {
     dialog: DialogData;
 }
 
-function DialogPreviewIkon(props: IkonProps) {
+const DialogPreviewIkon = (props: IkonProps) => {
     const erAktivitet: boolean = props.dialog.aktivitetId !== null;
-    const ikonCls = classNames(styles.ikon, {
+    const ikonCls = classNames('relative shrink-0 basis-6 mr-2 self-center', {
         [styles.ulestIkon]: !props.dialog.lest && !props.dialog.historisk
     });
     if (erAktivitet) {
         return (
             <div aria-hidden="true" className={ikonCls}>
-                <AktivitetsIkon className="w-10 h-10" />
+                <TasklistIcon className="w-6 h-6" />
             </div>
         );
     }
     return (
         <div aria-hidden="true" className={ikonCls}>
-            <DialogIkon className="w-10 h-10" />
+            <ChatElipsisIcon className="w-6 h-6" />
         </div>
     );
-}
+};
 
 export default DialogPreviewIkon;
