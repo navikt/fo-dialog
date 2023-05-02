@@ -1,7 +1,7 @@
 import { USE_HASH_ROUTER } from '../constants';
 
-const stripTrailingSlash = (baseUrl: string) => {
-    return baseUrl.endsWith('/') ? baseUrl.substring(0, baseUrl.length - 1) : baseUrl;
+export const stripTrailingSlash = (str: string) => {
+    return str.endsWith('/') ? str.substring(0, str.length - 1) : str;
 };
 
 export const pathnamePrefix = stripTrailingSlash(import.meta.env.BASE_URL);

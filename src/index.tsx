@@ -57,8 +57,9 @@ if (USE_MOCK) {
 
             const AppWrapper = () => <App fnr={fnr} />;
 
-            NAVSPA.eksporter(navspaName, AppWrapper);
-            render();
+            // NAVSPA.eksporter(navspaName, AppWrapper);
+            // render();
+            ReactDOM.render(AppWrapper(), document.getElementById('root') as HTMLElement);
         });
 } else {
     NAVSPA.eksporter(navspaName, App);

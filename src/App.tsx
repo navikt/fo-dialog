@@ -3,12 +3,14 @@ import '@navikt/ds-css';
 import './tailwind.css';
 
 import React from 'react';
+import { Route, Routes } from 'react-router';
 import { BrowserRouter, HashRouter } from 'react-router-dom';
 
 import { USE_HASH_ROUTER } from './constants';
 import TimeoutModal from './felleskomponenter/timeoutmodal/TimeoutModal';
 import { PageViewMetricCollector } from './metrics/PageViewMetricCollector';
 import { UppdateEventHandler } from './utils/UpdateEvent';
+import { stripTrailingSlash } from './utils/UseApiBasePath';
 import AppBody from './view/AppBody';
 import { EventHandler } from './view/EventHandler';
 import { Provider } from './view/Provider';
@@ -23,8 +25,8 @@ const Router = ({ children }: { children?: React.ReactNode }) => {
     if (USE_HASH_ROUTER) {
         return <HashRouter>{children}</HashRouter>;
     }
-
-    return <BrowserRouter>{children}</BrowserRouter>;
+    const basename = stripTrailingSlash(import.meta.env.BASE_URL);
+    return <BrowserRouter basename={basename}>{children}</BrowserRouter>;
 };
 
 const App = (props: Props) => {
@@ -36,7 +38,10 @@ const App = (props: Props) => {
                 <EventHandler />
                 <Provider fnr={fnr} erVeileder={!!fnr}>
                     <StatusAdvarsel />
-                    <AppBody />
+
+                    <Routes>
+                        <Route path="/*" element={<AppBody />}></Route>
+                    </Routes>
                     <UppdateEventHandler />
                 </Provider>
                 <TimeoutModal hidden={!!fnr} fnr={fnr} />
