@@ -18,6 +18,8 @@ import { pathnamePrefix } from './utils/UseApiBasePath';
 const modalAlly = document.getElementById('modal-a11y-wrapper');
 const root = document.getElementById('root');
 
+console.log('env', import.meta.env);
+
 // TODO: Only use this in dev?
 // initAmplitude();
 
