@@ -40,7 +40,8 @@ window.addEventListener(
 
 const navspaName = 'arbeidsrettet-dialog';
 function render() {
-    return window.NAVSPA[navspaName](document.getElementById('root'));
+    const rootElement = document.getElementById('root');
+    ReactDOM.render(<App fnr={undefined} key={'1'} />, rootElement as HTMLElement);
 }
 
 if (USE_MOCK) {
