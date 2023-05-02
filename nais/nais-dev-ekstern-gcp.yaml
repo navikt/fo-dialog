@@ -26,7 +26,7 @@ spec:
       cpu: 250m
       memory: 256Mi
   ingresses:
-    - https://pto.dev.nav.no/arbeid/dialog
+    - https://pto.ekstern.dev.nav.no/arbeid/dialog
   accessPolicy:
     outbound:
       external:
@@ -49,9 +49,6 @@ spec:
   gcp:
     buckets:
       - name: arbeidsrettet-dialog-dev
-  envFrom:
-    - configmap: pto-config
-    - configmap: loginservice-idporten
   env:
     - name: JSON_CONFIG
       value: >

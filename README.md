@@ -28,7 +28,7 @@ Eksterne url-er sitt prefix har `/arbeid/dialog` i tillegg
 
 Ekstern eksempel:
 
-https://pto.dev.nav.no/arbeid/dialog/veilarbdialog/api/*
+https://pto.ekstern.dev.nav.no/arbeid/dialog/veilarbdialog/api/*
 
 Intern eksempel:
 
