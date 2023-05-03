@@ -21,7 +21,8 @@ jobs:
 
   dev-intern:
     name: Deploy application to dev intern
-    uses: navikt/arbeidsrettet-dialog/.github/workflows/gcp-root.yml@main
+# TODO @aksel2 -> @main etter merge
+    uses: navikt/arbeidsrettet-dialog/.github/workflows/gcp-root.yml@aksel-2
     with:
       kommando: npm run build:intern-dev
       bucket: arbeidsrettet-dialog-intern-dev

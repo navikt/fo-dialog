@@ -1,6 +1,9 @@
 import { ReadMore } from '@navikt/ds-react';
+import classNames from 'classnames';
 import React, { useState } from 'react';
-// import { UnmountClosed } from 'react-collapse';
+import { Collapse } from 'react-collapse';
+
+import style from './InvertedLesMer.module.less';
 
 interface Props {
     apneTekst: string;
@@ -22,11 +25,11 @@ export default function InvertedLestMer(props: Props) {
     const tekst = vis ? lukkTekst : apneTekst;
 
     return (
-        <div className="mb-4">
-            <ReadMore onClick={toggle} header={tekst}>
-                {children}
-            </ReadMore>
-            {/*<UnmountClosed isOpened={vis}>{children}</UnmountClosed>*/}
+        <div className={classNames('mb-4', style.invertedLesMer)}>
+            <div>
+                <ReadMore open={vis} onClick={toggle} header={tekst} children={null} />
+            </div>
+            <Collapse isOpened={vis}>{vis ? children : null}</Collapse>
         </div>
     );
 }

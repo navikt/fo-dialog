@@ -5,7 +5,6 @@ import InvertedLestMer from '../../felleskomponenter/InvertedLesMer';
 import { DialogData } from '../../utils/Typer';
 import { useOppfolgingContext } from '../OppfolgingProvider';
 import { dataOrUndefined } from '../Provider';
-import styles from './DialogOversikt.module.less';
 import { DialogPreviewListe } from './DialogPreview';
 
 interface HistoriskeDialogerProps {
@@ -76,7 +75,9 @@ function HistoriskeDialogerOversikt(props: HistoriskeDialogerProps) {
     return (
         <InvertedLestMer apneTekst={knapptekst} lukkTekst="Skjul">
             <section>
-                <Heading level="3">{tittel}</Heading>
+                <Heading level="3" size="small">
+                    {tittel}
+                </Heading>
                 <DialogPreviewListe dialoger={historiske} valgDialog={valgDialog} />
             </section>
         </InvertedLestMer>
