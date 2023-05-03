@@ -1,7 +1,6 @@
 import React from 'react';
 import { BrowserRouter, HashRouter } from 'react-router-dom';
 
-import TimeoutModal from '../felleskomponenter/timeoutmodal/TimeoutModal';
 import { PageViewMetricCollector } from '../metrics/PageViewMetricCollector';
 import { UppdateEventHandler } from '../utils/UpdateEvent';
 import styles from './App.module.less';
@@ -40,7 +39,6 @@ function App(props: Props) {
                         <AppBody />
                         <UppdateEventHandler />
                     </Provider>
-                    <TimeoutModal hidden={!!fnr} fnr={fnr} />
                 </div>
             </div>
             <PageViewMetricCollector />
