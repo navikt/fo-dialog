@@ -24,7 +24,7 @@ jobs:
 # TODO @aksel2 -> @main etter merge
     uses: navikt/arbeidsrettet-dialog/.github/workflows/gcp-root.yml@aksel-2
     with:
-      kommando: npm run build:intern-dev
+      kommando: npm run build:dev-intern
       bucket: arbeidsrettet-dialog-intern-dev
       releaseName: dev-intern
     secrets:
