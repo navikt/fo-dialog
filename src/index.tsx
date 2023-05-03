@@ -13,12 +13,9 @@ import { USE_MOCK } from './constants';
 import DemoBanner from './mock/demo/DemoBanner';
 import { erEksternBruker } from './mock/demo/localstorage';
 import { gotoStartTestPage } from './mock/Utils';
-import { pathnamePrefix } from './utils/UseApiBasePath';
 
 const modalAlly = document.getElementById('modal-a11y-wrapper');
 const root = document.getElementById('root');
-
-console.log('env', import.meta.env);
 
 // TODO: Only use this in dev?
 // initAmplitude();
@@ -38,11 +35,26 @@ window.addEventListener(
     }, 100)
 );
 
-const navspaName = 'arbeidsrettet-dialog';
-function render() {
+const exportToNavSpa = () => {
+    NAVSPA.eksporter('arbeidsrettet-dialog', App);
+    // Denne må lazy importeres fordi den laster inn all css selv inn under sin egen shadow-root
+    import('./webcomponentWrapper').then(({ Dialog }) => {
+        customElements.define('dab-dialog', Dialog);
+    });
+};
+
+const renderAsRootApp = (fnr?: string) => {
     const rootElement = document.getElementById('root');
-    ReactDOM.render(<App fnr={undefined} key={'1'} />, rootElement as HTMLElement);
-}
+    ReactDOM.render(<App fnr={fnr} key={'1'} />, rootElement as HTMLElement);
+};
+
+const renderApp = (fnr?: string) => {
+    if (['dev-intern', 'prod-intern'].includes(import.meta.env.MODE)) {
+        exportToNavSpa();
+    } else {
+        renderAsRootApp(fnr);
+    }
+};
 
 if (USE_MOCK) {
     const fnr = erEksternBruker() ? undefined : '12345678901';
@@ -54,14 +66,8 @@ if (USE_MOCK) {
             const elem = document.createElement('div');
             document.body.appendChild(elem);
             ReactDOM.render(<DemoBanner />, elem);
-
-            const AppWrapper = () => <App fnr={fnr} />;
-
-            // NAVSPA.eksporter(navspaName, AppWrapper);
-            // render();
-            ReactDOM.render(AppWrapper(), document.getElementById('root') as HTMLElement);
+            renderApp(fnr);
         });
 } else {
-    NAVSPA.eksporter(navspaName, App);
-    render();
+    renderApp();
 }
