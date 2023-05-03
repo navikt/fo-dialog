@@ -7,7 +7,6 @@ import { Route, Routes } from 'react-router';
 import { BrowserRouter, HashRouter } from 'react-router-dom';
 
 import { USE_HASH_ROUTER } from './constants';
-import TimeoutModal from './felleskomponenter/timeoutmodal/TimeoutModal';
 import { PageViewMetricCollector } from './metrics/PageViewMetricCollector';
 import { UppdateEventHandler } from './utils/UpdateEvent';
 import { stripTrailingSlash } from './utils/UseApiBasePath';
@@ -44,7 +43,6 @@ const App = (props: Props) => {
                     </Routes>
                     <UppdateEventHandler />
                 </Provider>
-                <TimeoutModal hidden={!!fnr} fnr={fnr} />
             </div>
             <PageViewMetricCollector />
         </Router>
