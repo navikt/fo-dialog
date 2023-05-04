@@ -32,6 +32,7 @@ const DialogCheckboxes = ({
             <div className="flex">
                 <Checkbox
                     value={'ferdigBehandlet'}
+                    size="small"
                     className="pr-8"
                     disabled={disabled || loading}
                     onChange={() => toggleFerdigBehandlet(!ferdigBehandlet)}
@@ -40,6 +41,7 @@ const DialogCheckboxes = ({
                 </Checkbox>
                 <Checkbox
                     value={'venterPaSvar'}
+                    size="small"
                     className="pr-8"
                     disabled={disabled || loading}
                     onChange={() => toggleVenterPaSvar(!venterPaSvar)}

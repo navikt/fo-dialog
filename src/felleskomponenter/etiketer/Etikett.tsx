@@ -18,7 +18,7 @@ export function VenterSvarFraBruker(props: VenterSvarFraBrukerProps) {
     const tekst = props.erVeileder ? 'Venter på svar fra bruker' : 'Venter på svar fra deg';
     if (!props.visible) return null;
     return (
-        <Tag variant="info" size="small">
+        <Tag variant="warning" size="small">
             {tekst}
         </Tag>
     );
@@ -26,11 +26,19 @@ export function VenterSvarFraBruker(props: VenterSvarFraBrukerProps) {
 
 export function VenterSvarFraNAV(props: Props) {
     if (!props.visible) return null;
-    return <Tag variant="info">Venter på svar fra NAV</Tag>;
+    return (
+        <Tag variant="info" size="small">
+            Venter på svar fra NAV
+        </Tag>
+    );
 }
 
 export function ViktigMelding(props: Props) {
     const cls = classNames(styles.viktigMelding, props.className);
     if (!props.visible) return null;
-    return <Tag variant="info">Viktig melding</Tag>;
+    return (
+        <Tag variant="error" size="small">
+            Viktig melding
+        </Tag>
+    );
 }
