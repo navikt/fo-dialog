@@ -35,8 +35,15 @@ window.addEventListener(
     }, 100)
 );
 
+const AppWebComponent = ({ fnr }: { fnr: string }) => {
+    return React.createElement('dab-dialog', {
+        // eslint-disable-next-line
+        ['data-fnr']: fnr
+    });
+};
+
 const exportToNavSpa = () => {
-    NAVSPA.eksporter('arbeidsrettet-dialog', App);
+    NAVSPA.eksporter('arbeidsrettet-dialog', AppWebComponent);
     // Denne må lazy importeres fordi den laster inn all css selv inn under sin egen shadow-root
     import('./webcomponentWrapper').then(({ Dialog }) => {
         customElements.define('dab-dialog', Dialog);
@@ -49,11 +56,11 @@ const renderAsRootApp = (fnr?: string) => {
 };
 
 const renderApp = (fnr?: string) => {
-    if (['dev-intern', 'prod-intern'].includes(import.meta.env.MODE)) {
-        exportToNavSpa();
-    } else {
-        renderAsRootApp(fnr);
-    }
+    // if (['dev-intern', 'prod-intern'].includes(import.meta.env.MODE)) {
+    exportToNavSpa();
+    // } else {
+    //     renderAsRootApp(fnr);
+    // }
 };
 
 if (USE_MOCK) {
