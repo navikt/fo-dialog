@@ -133,15 +133,15 @@ export function DialogPreviewListe(props: ListeProps) {
     if (dialoger.length === 0) return null;
     return (
         <Flipper flipKey={dialoger.map((d) => d.id).join('')}>
-            <div role="list" aria-label="Dialogliste">
+            <ul aria-label="Dialogliste">
                 {dialoger.map((dialog) => (
                     <Flipped flipId={dialog.id} key={dialog.id}>
-                        <div role="listitem">
+                        <li>
                             <DialogPreview dialog={dialog} key={dialog.id} valgtDialogId={valgDialog} />
-                        </div>
+                        </li>
                     </Flipped>
                 ))}
-            </div>
+            </ul>
         </Flipper>
     );
 }
