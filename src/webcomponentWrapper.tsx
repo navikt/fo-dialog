@@ -51,5 +51,4 @@ export class DabDialog extends HTMLElement {
     }
 }
 
-NAVSPA.setAdapter(new React17Adapter());
 NAVSPA.eksporter('arbeidsrettet-dialog', AppWebComponent);
