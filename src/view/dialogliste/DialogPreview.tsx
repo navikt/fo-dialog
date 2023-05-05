@@ -90,7 +90,7 @@ function DialogPreview(props: Props) {
         navigate(dialogRoute(id));
     };
     return (
-        <LinkPanel className={classNames('my-2 border !gap-0 p-2')} href={dialogRoute(id)} onClick={onGoTo}>
+        <LinkPanel className={classNames('my-1 border !gap-0 p-2')} href={dialogRoute(id)} onClick={onGoTo}>
             <div className="flex flex-row">
                 <Ikon dialog={dialog} />
                 <div className="flex-grow">

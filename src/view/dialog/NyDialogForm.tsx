@@ -14,17 +14,16 @@ import { useUserInfoContext } from '../BrukerProvider';
 import { useDialogContext } from '../DialogProvider';
 import { findKladd, useKladdContext } from '../KladdProvider';
 import { cutStringAtLength } from '../utils/stringUtils';
-import { dialogHeaderID2 } from './DialogHeader';
 import { TilbakeKnapp } from './TilbakeKnapp';
 import useHenvendelseStartTekst from './UseHenvendelseStartTekst';
 
 const maxMeldingsLengde = 5000;
 
 const schema = z.object({
-    tema: z.string().min(1, 'Du må skrive hva meldingen handler om').max(100, 'Tema kan ikke være mer enn 100 tegn'),
+    tema: z.string().min(1, 'Du må skrive et tema for dialogen').max(100, 'Tema kan ikke være mer enn 100 tegn'),
     melding: z
         .string()
-        .min(1, 'Du må fylle ut en melding')
+        .min(1, 'Du må skrive en melding')
         .max(maxMeldingsLengde, `Meldingen kan ikke være mer enn ${maxMeldingsLengde}`)
 });
 
