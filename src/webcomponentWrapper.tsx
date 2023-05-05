@@ -3,6 +3,7 @@ import { Modal, Provider as ModalProvider } from '@navikt/ds-react';
 import navspa from '@navikt/navspa';
 import React from 'react';
 import ReactDOM from 'react-dom';
+import { createRoot } from 'react-dom/client';
 
 import App from './App';
 import AppWebComponent from './AppWebComponent';
@@ -29,11 +30,11 @@ export class DabDialog extends HTMLElement {
 
         console.log('getattribute fnr', fnr);
 
-        ReactDOM.render(
+        const root = createRoot(appRoot);
+        root.render(
             <ModalProvider appElement={appRoot} rootElement={shadowDomFirstChild}>
                 <App key={'1'} fnr={fnr} />
-            </ModalProvider>,
-            appRoot
+            </ModalProvider>
         );
 
         // Mount modal under correct root-node
