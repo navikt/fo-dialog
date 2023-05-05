@@ -1,9 +1,12 @@
 import dsStyles from '@navikt/ds-css/dist/index.css?inline';
 import { Modal, Provider as ModalProvider } from '@navikt/ds-react';
+import NAVSPA from '@navikt/navspa';
+import { React17Adapter } from '@navikt/navspa-react-17-adapter';
 import React from 'react';
 import ReactDOM from 'react-dom';
 
 import App from './App';
+import AppWebComponent from './AppWebComponent';
 import tailwindCss from './tailwind.css?inline';
 
 export class DabDialog extends HTMLElement {
@@ -47,3 +50,6 @@ export class DabDialog extends HTMLElement {
         return ['data-fnr'];
     }
 }
+
+NAVSPA.setAdapter(new React17Adapter());
+NAVSPA.eksporter('arbeidsrettet-dialog', AppWebComponent);
