@@ -5,7 +5,6 @@ import './polyfill';
 import React from 'react';
 import ReactDOM from 'react-dom';
 
-import AppWebComponent from './AppWebComponent';
 import { USE_MOCK } from './constants';
 import { initAmplitude } from './metrics/amplitude-utils';
 import DemoBanner from './mock/demo/DemoBanner';
@@ -27,8 +26,9 @@ import { gotoStartTestPage } from './mock/Utils';
 
 const exportToNavSpa = () => {
     // Denne må lazy importeres fordi den laster inn all css selv inn under sin egen shadow-root
-    import('./webcomponentWrapper').then(({ DabDialog }) => {
+    import('./webcomponentWrapper').then(({ DabDialog, NAVSPA, WebComponentRoot }) => {
         customElements.define('dab-dialog', DabDialog);
+        NAVSPA.eksporter('arbeidsrettet-dialog', WebComponentRoot);
     });
 };
 

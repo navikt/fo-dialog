@@ -1,6 +1,6 @@
 import dsStyles from '@navikt/ds-css/dist/index.css?inline';
 import { Modal, Provider as ModalProvider } from '@navikt/ds-react';
-import NAVSPA from '@navikt/navspa';
+import navspa from '@navikt/navspa';
 import React from 'react';
 import ReactDOM from 'react-dom';
 
@@ -49,5 +49,5 @@ export class DabDialog extends HTMLElement {
         return ['data-fnr'];
     }
 }
-
-NAVSPA.eksporter('arbeidsrettet-dialog', AppWebComponent);
+export const NAVSPA = navspa;
+export const WebComponentRoot = AppWebComponent;
