@@ -29,12 +29,11 @@ export class DabDialog extends HTMLElement {
 
         try {
             const root = createRoot(appRoot);
-            console.log(root.render);
-            debugger;
+            console.log(appRoot);
             root.render(
-                <ModalProvider appElement={appRoot} rootElement={shadowDomFirstChild}>
-                    <App key={'1'} fnr={fnr} />
-                </ModalProvider>
+                // <ModalProvider appElement={appRoot} rootElement={shadowDomFirstChild}>
+                <App key={'1'} fnr={fnr} />
+                // </ModalProvider>
             );
 
             // Mount modal under correct root-node
