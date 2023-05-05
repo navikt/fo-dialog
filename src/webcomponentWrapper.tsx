@@ -1,7 +1,6 @@
 import dsStyles from '@navikt/ds-css/dist/index.css?inline';
 import { Modal, Provider as ModalProvider } from '@navikt/ds-react';
 import NAVSPA from '@navikt/navspa';
-import { React17Adapter } from '@navikt/navspa-react-17-adapter';
 import React from 'react';
 import ReactDOM from 'react-dom';
 
