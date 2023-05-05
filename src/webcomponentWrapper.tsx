@@ -25,7 +25,7 @@ export class DabDialog extends HTMLElement {
 
         const fnr = this.getAttribute('data-fnr') ?? undefined;
 
-        // ReactDOM.render(<App fnr={fnr} key={'1'} />, appRoot);
+        console.log('getattribute fnr', fnr);
         ReactDOM.render(
             <ModalProvider appElement={appRoot} rootElement={shadowDomFirstChild}>
                 <App fnr={fnr} key={'1'} />
