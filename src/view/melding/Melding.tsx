@@ -1,13 +1,11 @@
 import { PersonIcon } from '@navikt/aksel-icons';
 import { BodyShort, Chat } from '@navikt/ds-react';
-import classNames from 'classnames';
 import React from 'react';
 
 import { ViktigMelding } from '../../felleskomponenter/etiketer/Etikett';
 import { formaterDateAndTime } from '../../utils/Date';
 import { HenvendelseData } from '../../utils/Typer';
 import { useUserInfoContext } from '../BrukerProvider';
-import styles from './Henvendelse.module.less';
 
 function accessibleText(erBruker: boolean, erMeldingFraBruker: boolean) {
     if (erMeldingFraBruker) {
@@ -31,7 +29,6 @@ export function Melding(props: Props) {
     const erMeldingFraBruker: boolean = avsender === 'BRUKER';
     const date: string = formaterDateAndTime(sendt);
     const toppTekst = erMeldingFraBruker || !avsenderId ? date : `${date} - ${avsenderId}`;
-    const classNameStyle = erMeldingFraBruker ? styles.hendvendelsebruker : styles.hendvendelse;
 
     const erFraSegSelv = (erBruker && erMeldingFraBruker) || (!erBruker && !erMeldingFraBruker);
 
@@ -48,7 +45,7 @@ export function Melding(props: Props) {
                 backgroundColor={backgroundColor}
                 avatarBgColor={avatarBgColor}
             >
-                <Chat.Bubble className={classNames(classNameStyle)}>
+                <Chat.Bubble>
                     <div className="flex flex-col items-start">
                         <ViktigMelding visible={viktigMarkering} />
                         <span className="mt-2 whitespace-pre-wrap">{tekst}</span>

@@ -11,7 +11,6 @@ import { DialogData, StringOrNull } from '../../utils/Typer';
 import { getDialogTittel } from '../aktivitet/TextUtils';
 import { findAktivitet, useAktivitetContext } from '../AktivitetProvider';
 import { useEventListener } from '../utils/useEventListner';
-import styles from './DialogPreview.module.less';
 import { EtikettListe } from './EtikettListe';
 import Ikon from './ikon/Ikon';
 
@@ -84,27 +83,15 @@ function DialogPreview(props: Props) {
     const datoString = !!sisteDato ? formaterDate(sisteDato) : '';
     const aktivitet = findAktivitet(aktivitetData, aktivitetId);
 
-    const erLest = lest || historisk;
-
-    const markoer = erLest ? styles.markoerLest : styles.markoerUlest;
-
     const navigate = useNavigate();
     const { dialogRoute } = useRoutes();
-    const onGoTo = (event) => {
+    const onGoTo = (event: React.MouseEvent<HTMLElement>) => {
         event.preventDefault();
         navigate(dialogRoute(id));
     };
     return (
-        <LinkPanel
-            className={classNames('my-2 border !gap-0', styles.preview, {
-                [styles.innholdUlest]: !erLest,
-                ['bg-surface-selected border-border-selected']: detteErValgtDialog
-            })}
-            href={dialogRoute(id)}
-            onClick={onGoTo}
-        >
+        <LinkPanel className={classNames('my-2 border !gap-0 p-2')} href={dialogRoute(id)} onClick={onGoTo}>
             <div className="flex flex-row">
-                {/*<div className={markoer} />*/}
                 <Ikon dialog={dialog} />
                 <div className="flex-grow">
                     <BodyShort className="hidden">{typeText(dialog)}</BodyShort>

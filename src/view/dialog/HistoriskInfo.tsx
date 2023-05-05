@@ -2,7 +2,6 @@ import { BodyShort } from '@navikt/ds-react';
 import React from 'react';
 
 import NyDialogLink from '../dialogliste/NyDialogLink';
-import styles from './HistoriskInfo.module.less';
 
 interface Props {
     kanSendeMelding: boolean;
@@ -15,8 +14,8 @@ function HistoriskInfo(props: Props) {
     }
 
     return (
-        <div className={styles.historiskInfo}>
-            <BodyShort className={styles.historiskTekst}>
+        <div className="flex flex-col justify-center items-center m-4">
+            <BodyShort className="pb-8">
                 Dette er en dialog fra en tidligere periode, og du kan derfor ikke svare på den.
             </BodyShort>
             <NyDialogLink visible={props.kanSendeMelding} />

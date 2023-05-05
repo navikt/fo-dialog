@@ -1,13 +1,12 @@
 import './polyfill';
 
-import { Modal } from '@navikt/ds-react';
 import NAVSPA from '@navikt/navspa';
 // This is to size the window correctly
 // import throttle from 'lodash.throttle';
 import React from 'react';
 import ReactDOM from 'react-dom';
 
-import App from './App';
+import AppWebComponent from './AppWebComponent';
 import { USE_MOCK } from './constants';
 import { initAmplitude } from './metrics/amplitude-utils';
 import DemoBanner from './mock/demo/DemoBanner';
@@ -27,33 +26,26 @@ import { gotoStartTestPage } from './mock/Utils';
 //     }, 100)
 // );
 
-const AppWebComponent = ({ fnr }: { fnr: string }) => {
-    return React.createElement('dab-dialog', {
-        // eslint-disable-next-line
-        ['data-fnr']: fnr
-    });
-};
-
 const exportToNavSpa = () => {
     NAVSPA.eksporter('arbeidsrettet-dialog', AppWebComponent);
     // Denne må lazy importeres fordi den laster inn all css selv inn under sin egen shadow-root
-    import('./webcomponentWrapper').then(({ Dialog }) => {
-        customElements.define('dab-dialog', Dialog);
+    import('./webcomponentWrapper').then(({ DabDialog }) => {
+        customElements.define('dab-dialog', DabDialog);
     });
 };
 
 const renderAsRootApp = (fnr?: string) => {
-    const rootElement = document.getElementById('root');
-    Modal.setAppElement(rootElement);
-    ReactDOM.render(<App fnr={fnr} key={'1'} />, rootElement as HTMLElement);
+    import('./rootWrapper').then(({ renderAsReactRoot }) => {
+        renderAsReactRoot(fnr);
+    });
 };
 
 const renderApp = (fnr?: string) => {
-    if (['dev-intern', 'prod-intern'].includes(import.meta.env.MODE)) {
-        exportToNavSpa();
-    } else {
-        renderAsRootApp(fnr);
-    }
+    // if (['dev-intern', 'prod-intern'].includes(import.meta.env.MODE)) {
+    exportToNavSpa();
+    // } else {
+    // renderAsRootApp(fnr);
+    // }
 };
 
 if (USE_MOCK) {

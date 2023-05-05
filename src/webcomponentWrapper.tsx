@@ -1,14 +1,12 @@
 import dsStyles from '@navikt/ds-css/dist/index.css?inline';
-import { Modal } from '@navikt/ds-react';
+import { Modal, Provider as ModalProvider } from '@navikt/ds-react';
 import React from 'react';
 import * as ReactDOM from 'react-dom';
 
 import App from './App';
-// import lessCss from './index.less?inline';
-// import modulesCss from './moduler/aktivitet/aktivitet-kort/Aktivitetskort.module.less?inline';
 import tailwindCss from './tailwind.css?inline';
 
-export class Dialog extends HTMLElement {
+export class DabDialog extends HTMLElement {
     setFnr?: (fnr: string) => void;
     connectedCallback() {
         // Cant mount on shadowRoot, create a extra div for mounting modal
@@ -27,7 +25,13 @@ export class Dialog extends HTMLElement {
 
         const fnr = this.getAttribute('data-fnr') ?? undefined;
 
-        ReactDOM.render(<App fnr={fnr} key={'1'} />, appRoot);
+        // ReactDOM.render(<App fnr={fnr} key={'1'} />, appRoot);
+        ReactDOM.render(
+            <ModalProvider appElement={appRoot} rootElement={shadowDomFirstChild}>
+                <App fnr={fnr} key={'1'} />
+            </ModalProvider>,
+            appRoot
+        );
 
         // Mount modal under correct root-node
         Modal.setAppElement(appRoot);

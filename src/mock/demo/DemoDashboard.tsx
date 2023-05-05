@@ -13,7 +13,6 @@ import {
     harAktivitetFeilerSkruddPa,
     harArenaaktivitetFeilerSkruddPa,
     harDialogFeilerSkruddPa,
-    harHodeFotSkruddPa,
     harIkkeNivaa4,
     harIngenDialoger,
     harNivaa4Fieler,
@@ -76,11 +75,6 @@ const brukerTilstandRadios = [
 ];
 
 const tekniskTilstandRadios = [
-    {
-        label: 'HodeFot mock',
-        value: LocalStorageElement.HODEFOT,
-        checked: harHodeFotSkruddPa()
-    },
     {
         label: 'Dialog feiler',
         value: LocalStorageElement.DIALOG_FEILER,

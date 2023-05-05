@@ -7,7 +7,6 @@ export const LocalStorageElement = {
     KAN_IKKE_VARSLES: 'bruker_kan_ikke_varsles',
     IKKE_NIVAA_4: 'ikke_nivaa_4',
     INGEN_DIALOGER: 'ingen_dialoger',
-    HODEFOT: 'hodefot',
     FAILURE_RATE: 'failure_rate',
     DIALOG_FEILER: 'dialog_feiler',
     AKTIVITET_FEILER: 'aktivitet_feiler',
@@ -48,8 +47,6 @@ export const erEksternBruker = () => hentFraLocalStorage(LocalStorageElement.BRU
 export const harIngenDialoger = () => erSatt(LocalStorageElement.INGEN_DIALOGER);
 
 export const harIkkeNivaa4 = () => erSatt(LocalStorageElement.IKKE_NIVAA_4);
-
-export const harHodeFotSkruddPa = () => erSatt(LocalStorageElement.HODEFOT);
 
 export const harDialogFeilerSkruddPa = () => erSatt(LocalStorageElement.DIALOG_FEILER);
 

@@ -1,7 +1,3 @@
-import '@navikt/ds-css';
-
-import './tailwind.css';
-
 import React from 'react';
 import { Route, Routes } from 'react-router';
 import { BrowserRouter, HashRouter } from 'react-router-dom';
