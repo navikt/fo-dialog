@@ -1,7 +1,7 @@
 import dsStyles from '@navikt/ds-css/dist/index.css?inline';
 import { Modal, Provider as ModalProvider } from '@navikt/ds-react';
 import React from 'react';
-import * as ReactDOM from 'react-dom';
+import { createRoot } from 'react-dom/client';
 
 import App from './App';
 import tailwindCss from './tailwind.css?inline';
@@ -26,11 +26,12 @@ export class DabDialog extends HTMLElement {
         const fnr = this.getAttribute('data-fnr') ?? undefined;
 
         console.log('getattribute fnr', fnr);
-        ReactDOM.render(
+
+        const root = createRoot(appRoot);
+        root.render(
             <ModalProvider appElement={appRoot} rootElement={shadowDomFirstChild}>
                 <App fnr={fnr} key={'1'} />
-            </ModalProvider>,
-            appRoot
+            </ModalProvider>
         );
 
         // Mount modal under correct root-node
