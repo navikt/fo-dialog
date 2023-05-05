@@ -28,8 +28,8 @@ const App = (props: Props) => {
     const { fnr } = props;
 
     return (
-        <Router>
-            <div className="flex min-w-full min-h-screen flex-col">
+        <div className="flex min-w-full min-h-screen flex-col">
+            <Router>
                 <EventHandler />
                 <Provider fnr={fnr} erVeileder={!!fnr}>
                     <StatusAdvarsel />
@@ -39,9 +39,9 @@ const App = (props: Props) => {
                     </Routes>
                     <UppdateEventHandler />
                 </Provider>
-            </div>
-            <PageViewMetricCollector />
-        </Router>
+                <PageViewMetricCollector />
+            </Router>
+        </div>
     );
 };
 
