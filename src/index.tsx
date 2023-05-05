@@ -41,11 +41,11 @@ const renderAsRootApp = (fnr?: string) => {
 };
 
 const renderApp = (fnr?: string) => {
-    // if (['dev-intern', 'prod-intern'].includes(import.meta.env.MODE)) {
-    exportToNavSpa();
-    // } else {
-    // renderAsRootApp(fnr);
-    // }
+    if (['dev-intern', 'prod-intern'].includes(import.meta.env.MODE)) {
+        exportToNavSpa();
+    } else {
+        renderAsRootApp(fnr);
+    }
 };
 
 if (USE_MOCK) {
