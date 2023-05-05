@@ -1,12 +1,9 @@
 import dsStyles from '@navikt/ds-css/dist/index.css?inline';
 import { Modal, Provider as ModalProvider } from '@navikt/ds-react';
-import navspa from '@navikt/navspa';
 import React from 'react';
-import ReactDOM from 'react-dom';
 import { createRoot } from 'react-dom/client';
 
 import App from './App';
-import AppWebComponent from './AppWebComponent';
 import tailwindCss from './tailwind.css?inline';
 
 export class DabDialog extends HTMLElement {
@@ -50,5 +47,3 @@ export class DabDialog extends HTMLElement {
         return ['data-fnr'];
     }
 }
-export const NAVSPA = navspa;
-export const WebComponentRoot = AppWebComponent;

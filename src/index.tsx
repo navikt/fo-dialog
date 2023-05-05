@@ -1,10 +1,12 @@
 import './polyfill';
 
+import NAVSPA from '@navikt/navspa';
 // This is to size the window correctly
 // import throttle from 'lodash.throttle';
 import React from 'react';
 import ReactDOM from 'react-dom';
 
+import AppWebComponent from './AppWebComponent';
 import { USE_MOCK } from './constants';
 import { initAmplitude } from './metrics/amplitude-utils';
 import DemoBanner from './mock/demo/DemoBanner';
@@ -25,10 +27,10 @@ import { gotoStartTestPage } from './mock/Utils';
 // );
 
 const exportToNavSpa = () => {
+    NAVSPA.eksporter('arbeidsrettet-dialog', AppWebComponent);
     // Denne må lazy importeres fordi den laster inn all css selv inn under sin egen shadow-root
-    import('./webcomponentWrapper').then(({ DabDialog, NAVSPA, WebComponentRoot }) => {
+    import('./webcomponentWrapper').then(({ DabDialog }) => {
         customElements.define('dab-dialog', DabDialog);
-        NAVSPA.eksporter('arbeidsrettet-dialog', WebComponentRoot);
     });
 };
 
