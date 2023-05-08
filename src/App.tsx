@@ -34,9 +34,10 @@ const App = (props: Props) => {
                 <Provider fnr={fnr} erVeileder={!!fnr}>
                     <StatusAdvarsel />
 
-                    <Routes>
-                        <Route path="/*" element={<AppBody />}></Route>
-                    </Routes>
+                    <AppBody />
+                    {/*<Routes>*/}
+                    {/*    <Route path="/*" element={<AppBody />}></Route>*/}
+                    {/*</Routes>*/}
                     <UppdateEventHandler />
                 </Provider>
                 <PageViewMetricCollector />
