@@ -35,7 +35,7 @@ function AktivitetContainer() {
                     ) : null
                 }
             />
-            {/*<Route path={`${fnr ? `/${fnr}` : '/'}`} element={<div />} />*/}
+            <Route path={`${fnr ? `/${fnr}` : '/'}`} element={null} />
         </Routes>
     );
 }

@@ -1,4 +1,3 @@
-import { pathnamePrefix } from '../../api/UseApiBasePath';
 import { Aktivitet, AktivitetTypes, AlleAktivitetTypes, ArenaAktivitet } from '../../utils/aktivitetTypes';
 
 export const erArenaAktivitet = (aktivitetId: string | null | undefined): boolean =>
@@ -8,7 +7,7 @@ export const getBasename = (fnr?: string): string => {
     if (fnr) {
         return '/' + fnr;
     } else {
-        return settSammenmedSlasher(pathnamePrefix, fnr);
+        return settSammenmedSlasher(import.meta.env.VITE_DIALOG_API_URL, fnr);
     }
 };
 

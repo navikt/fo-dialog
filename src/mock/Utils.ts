@@ -1,4 +1,5 @@
-import { pathnamePrefix } from '../api/UseApiBasePath';
+import { joinPaths } from '@navikt/navspa/dist/async/utils';
+
 import { USE_HASH_ROUTER } from '../constants';
 import { settSammenmedSlasher } from '../view/utils/utils';
 
@@ -27,10 +28,13 @@ export const toggleFnrInUrl = (hashPart: string, fnr?: string) => {
 };
 
 export const gotoStartTestPage = (fnr?: string) => {
+    const pathnamePrefix = `${import.meta.env.BASE_URL}${USE_HASH_ROUTER ? '#/' : ''}`;
+    console.log('pathnameprefix', pathnamePrefix);
+    console.log('fnr', fnr);
     if (USE_HASH_ROUTER) {
-        const hashPartOfUrl = toggleFnrInUrl(window.location.hash, fnr);
-        window.history.replaceState({}, '', settSammenmedSlasher(pathnamePrefix, hashPartOfUrl));
+        // const hashPartOfUrl = toggleFnrInUrl(window.location.hash, fnr);
+        window.history.replaceState({}, '', pathnamePrefix);
     } else {
-        window.history.replaceState({}, '', settSammenmedSlasher(pathnamePrefix, fnr));
+        window.history.replaceState({}, '', `${pathnamePrefix}${fnr ?? ''}`);
     }
 };
