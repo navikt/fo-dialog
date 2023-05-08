@@ -4,7 +4,7 @@ import { Route, Routes } from 'react-router';
 import { BrowserRouter, HashRouter } from 'react-router-dom';
 
 import { stripTrailingSlash } from './api/UseApiBasePath';
-import { USE_HASH_ROUTER, internFlate } from './constants';
+import { USE_HASH_ROUTER, erInternFlate } from './constants';
 import { PageViewMetricCollector } from './metrics/PageViewMetricCollector';
 import { UppdateEventHandler } from './utils/UpdateEvent';
 import AppBody from './view/AppBody';
@@ -22,7 +22,7 @@ const Router = ({ children }: { children?: React.ReactNode }) => {
         return <HashRouter>{children}</HashRouter>;
     }
     let basename = stripTrailingSlash(import.meta.env.BASE_URL);
-    return <BrowserRouter basename={internFlate ? '' : basename}>{children}</BrowserRouter>;
+    return <BrowserRouter basename={erInternFlate ? '' : basename}>{children}</BrowserRouter>;
 };
 
 const App = (props: Props) => {
@@ -30,8 +30,8 @@ const App = (props: Props) => {
     return (
         <div
             className={cx('flex flex-col', {
-                'h-[calc(100vh-180px)]': internFlate,
-                'h-[calc(100vh-80px)]': !internFlate
+                'h-[calc(100vh-180px)]': erInternFlate,
+                'h-[calc(100vh-72px)] md:h-[calc(100vh-80px)]': !erInternFlate
             })}
         >
             <Router>
