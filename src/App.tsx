@@ -1,9 +1,10 @@
+import cx from 'classnames';
 import React from 'react';
 import { Route, Routes } from 'react-router';
 import { BrowserRouter, HashRouter } from 'react-router-dom';
 
 import { stripTrailingSlash } from './api/UseApiBasePath';
-import { USE_HASH_ROUTER } from './constants';
+import { USE_HASH_ROUTER, internFlate } from './constants';
 import { PageViewMetricCollector } from './metrics/PageViewMetricCollector';
 import { UppdateEventHandler } from './utils/UpdateEvent';
 import AppBody from './view/AppBody';
@@ -21,25 +22,25 @@ const Router = ({ children }: { children?: React.ReactNode }) => {
         return <HashRouter>{children}</HashRouter>;
     }
     let basename = stripTrailingSlash(import.meta.env.BASE_URL);
-    const internFlate = ['dev-intern', 'prod-intern'].includes(import.meta.env.MODE);
-
     return <BrowserRouter basename={internFlate ? '' : basename}>{children}</BrowserRouter>;
 };
 
 const App = (props: Props) => {
     const { fnr } = props;
-
     return (
-        <div className="flex min-w-full min-h-screen flex-col">
+        <div
+            className={cx('flex flex-col', {
+                'h-[calc(100vh-180px)]': internFlate,
+                'h-[calc(100vh-80px)]': !internFlate
+            })}
+        >
             <Router>
                 <EventHandler />
                 <Provider fnr={fnr} erVeileder={!!fnr}>
                     <StatusAdvarsel />
-
-                    <AppBody />
-                    {/*<Routes>*/}
-                    {/*    <Route path={fnr ? `/:fnr/:dialogId?/*` : `/:dialogId?/*`} element={<AppBody />}></Route>*/}
-                    {/*</Routes>*/}
+                    <Routes>
+                        <Route path={fnr ? '/:fnr/*' : '/*'} element={<AppBody />}></Route>
+                    </Routes>
                     <UppdateEventHandler />
                 </Provider>
                 <PageViewMetricCollector />

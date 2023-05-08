@@ -8,3 +8,5 @@ export const USE_MOCK = import.meta.env.DEV || USE_HASH_ROUTER;
 export const MINSIDE_URL = import.meta.env.VITE_MINSIDE_URL as string;
 export const ARBEIDSSOKERREGISTRERING_URL = import.meta.env.VITE_MINSIDE_URL as string;
 export const AKTIVITETSPLAN_URL = import.meta.env.VITE_AKTIVITETSPLAN_URL as string;
+
+export const internFlate = ['dev-intern', 'prod-intern'].includes(import.meta.env.MODE);
