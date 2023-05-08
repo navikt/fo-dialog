@@ -1,9 +1,9 @@
 import { Button } from '@navikt/ds-react';
 import React from 'react';
 
+import { OppfolgingsApi } from '../../api/UseApiBasePath';
 import { fetchData } from '../../utils/Fetch';
 import { UpdateTypes, dispatchUpdate } from '../../utils/UpdateEvent';
-import { apiBasePath } from '../../utils/UseApiBasePath';
 import { useOppfolgingContext } from '../OppfolgingProvider';
 import StatusAdvarselWrapper, { KanIkkeKontakteElektroniskVeileder } from './StatusAdvarselWrapper';
 
@@ -19,7 +19,7 @@ function Bruker() {
     const oppfolgingData = useOppfolgingContext();
 
     const fjernManuell = () => {
-        fetchData(`${apiBasePath}/veilarboppfolging/api/oppfolging/settDigital`, {
+        fetchData(OppfolgingsApi.settDigigtal, {
             method: 'POST'
         })
             .then(oppfolgingData.hentOppfolging)

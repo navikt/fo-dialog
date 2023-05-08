@@ -2,10 +2,10 @@ import React from 'react';
 import { Route, Routes } from 'react-router';
 import { BrowserRouter, HashRouter } from 'react-router-dom';
 
+import { stripTrailingSlash } from './api/UseApiBasePath';
 import { USE_HASH_ROUTER } from './constants';
 import { PageViewMetricCollector } from './metrics/PageViewMetricCollector';
 import { UppdateEventHandler } from './utils/UpdateEvent';
-import { stripTrailingSlash } from './utils/UseApiBasePath';
 import AppBody from './view/AppBody';
 import { EventHandler } from './view/EventHandler';
 import { Provider } from './view/Provider';

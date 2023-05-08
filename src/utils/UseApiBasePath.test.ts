@@ -1,7 +1,7 @@
 import fs from 'fs';
 
+import { apiBasePath, pathnamePrefix } from '../api/UseApiBasePath';
 import { getBasename } from '../view/utils/utils';
-import { apiBasePath, pathnamePrefix } from './UseApiBasePath';
 
 const loadEnv = (path: string) => {
     const mockEnv = fs
@@ -31,7 +31,7 @@ describe('base', () => {
 
     it('ekstern dev api-url should be PUBLIC_URL', () => {
         loadEnv('./nais/.env.dev.ekstern');
-        const { pathnamePrefix, apiBasePath } = require('./UseApiBasePath');
+        const { pathnamePrefix, apiBasePath } = require('../api/UseApiBasePath');
         const { getBasename } = require('../view/utils/utils');
         expect(pathnamePrefix).toBe('/arbeid/dialog');
         expect(apiBasePath).toBe('/arbeid/dialog');
@@ -40,7 +40,7 @@ describe('base', () => {
 
     it('intern dev api-url should be empty string', () => {
         loadEnv('./nais/.env.dev.intern');
-        const { pathnamePrefix, apiBasePath } = require('./UseApiBasePath');
+        const { pathnamePrefix, apiBasePath } = require('../api/UseApiBasePath');
         const { getBasename } = require('../view/utils/utils');
         expect(pathnamePrefix).toBe('/arbeid/dialog');
         expect(apiBasePath).toBe('');
@@ -49,7 +49,7 @@ describe('base', () => {
 
     it('ekstern prod api-url should be PUBLIC_URL', () => {
         loadEnv('./nais/.env.prod.ekstern');
-        const { pathnamePrefix, apiBasePath } = require('./UseApiBasePath');
+        const { pathnamePrefix, apiBasePath } = require('../api/UseApiBasePath');
         const { getBasename } = require('../view/utils/utils');
         expect(pathnamePrefix).toBe('/arbeid/dialog');
         expect(apiBasePath).toBe('/arbeid/dialog');
@@ -58,7 +58,7 @@ describe('base', () => {
 
     it('intern prod api-url should be empty string', () => {
         loadEnv('./nais/.env.prod.intern');
-        const { pathnamePrefix, apiBasePath } = require('./UseApiBasePath');
+        const { pathnamePrefix, apiBasePath } = require('../api/UseApiBasePath');
         const { getBasename } = require('../view/utils/utils');
         expect(pathnamePrefix).toBe('/arbeid/dialog');
         expect(apiBasePath).toBe('');

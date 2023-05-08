@@ -1,5 +1,5 @@
+import { pathnamePrefix } from '../api/UseApiBasePath';
 import { USE_HASH_ROUTER } from '../constants';
-import { pathnamePrefix } from '../utils/UseApiBasePath';
 import { settSammenmedSlasher } from '../view/utils/utils';
 
 export function rndId() {

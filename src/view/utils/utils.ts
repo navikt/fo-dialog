@@ -1,5 +1,5 @@
+import { pathnamePrefix } from '../../api/UseApiBasePath';
 import { Aktivitet, AktivitetTypes, AlleAktivitetTypes, ArenaAktivitet } from '../../utils/aktivitetTypes';
-import { pathnamePrefix } from '../../utils/UseApiBasePath';
 
 export const erArenaAktivitet = (aktivitetId: string | null | undefined): boolean =>
     !!aktivitetId && aktivitetId.startsWith('ARENA');
