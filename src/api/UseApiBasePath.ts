@@ -3,7 +3,7 @@ import { USE_HASH_ROUTER } from '../constants';
 export const stripTrailingSlash = (str: string) => {
     return str.endsWith('/') ? str.substring(0, str.length - 1) : str;
 };
-export const apiBasePath = USE_HASH_ROUTER ? '' : stripTrailingSlash(import.meta.env.VITE_DIALOG_API_URL);
+export const apiBasePath = USE_HASH_ROUTER ? '' : stripTrailingSlash(import.meta.env.VITE_DIALOG_API_URL ?? '/');
 
 const dialogBasePath = `${apiBasePath}/veilarbdialog/api`;
 export const DialogApi = {
