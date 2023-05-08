@@ -32,7 +32,7 @@ export function EtikettListe(props: Props) {
 
     const erVeileder = !!userInfo && userInfo.erVeileder;
 
-    const dialogErViktig = true || erViktig(props.dialog, dataOrUndefined(oppfolging));
+    const dialogErViktig = erViktig(props.dialog, dataOrUndefined(oppfolging));
 
     const venterPaSvar = props.dialog.venterPaSvar;
     const visVenterPaaNav = !!userInfo && !props.dialog.ferdigBehandlet && erVeileder;

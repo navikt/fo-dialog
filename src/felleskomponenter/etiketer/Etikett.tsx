@@ -33,8 +33,7 @@ export function VenterSvarFraNAV(props: Props) {
     );
 }
 
-export function ViktigMelding(props: Props) {
-    const cls = classNames(styles.viktigMelding, props.className);
+export function ViktigMelding(props: { visible: boolean }) {
     if (!props.visible) return null;
     return (
         <Tag variant="error" size="small">
