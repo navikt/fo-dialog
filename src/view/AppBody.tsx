@@ -6,7 +6,7 @@ import { Bruker, OppfolgingData } from '../utils/Typer';
 import AktivitetContainer from './aktivitet/AktivitetContainer';
 import { useUserInfoContext } from './BrukerProvider';
 import DialogContainer from './dialog/DialogContainer';
-import DialogOversiktContainer from './dialogliste/DialogOversiktContainer';
+import DialogOversikt from './dialogliste/DialogOversikt';
 import { useOppfolgingContext } from './OppfolgingProvider';
 import { dataOrUndefined } from './Provider';
 
@@ -54,7 +54,7 @@ const AppBody = () => {
 
     return (
         <div className={'overflow-hidden flex flex-row w-full'}>
-            <DialogOversiktContainer />
+            <DialogOversikt />
             <DialogContainer />
             <AktivitetContainer />
         </div>

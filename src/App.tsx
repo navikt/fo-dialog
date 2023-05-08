@@ -38,7 +38,7 @@ const App = (props: Props) => {
 
                     <AppBody />
                     {/*<Routes>*/}
-                    {/*    <Route path="/*" element={<AppBody />}></Route>*/}
+                    {/*    <Route path={fnr ? `/:fnr/:dialogId?/*` : `/:dialogId?/*`} element={<AppBody />}></Route>*/}
                     {/*</Routes>*/}
                     <UppdateEventHandler />
                 </Provider>

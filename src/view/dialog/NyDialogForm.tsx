@@ -81,7 +81,6 @@ const NyDialogForm = (props: Props) => {
     };
 
     const onSubmit = (data: NyDialogFormValues) => {
-        console.log('onsubmit data', data);
         const { tema, melding } = data;
 
         timer.current && clearInterval(timer.current);

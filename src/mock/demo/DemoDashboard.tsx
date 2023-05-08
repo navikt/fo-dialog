@@ -116,7 +116,6 @@ const DemoDashboard = (props: Props) => {
 
     const endreTilstand: React.MouseEventHandler<HTMLInputElement> = (e) => {
         const checkbox = e.currentTarget;
-        console.log(checkbox);
         const saveInSessionStorage = Object.values(LocalStorageElement).indexOf(checkbox.id) > -1;
         if (saveInSessionStorage) {
             settLocalStorage(checkbox.id, checkbox.checked);

@@ -29,7 +29,5 @@ export const toggleFnrInUrl = (hashPart: string, fnr?: string) => {
 
 export const gotoStartTestPage = (fnr?: string) => {
     const pathnamePrefix = `${import.meta.env.BASE_URL}${USE_HASH_ROUTER ? '#/' : ''}`;
-    console.log('pathnameprefix', pathnamePrefix);
-    console.log('fnr', fnr);
     window.history.replaceState({}, '', `${pathnamePrefix}${fnr ?? ''}`);
 };

@@ -24,12 +24,8 @@ export class DabDialog extends HTMLElement {
         shadowRoot.appendChild(styleElem);
 
         const fnr = this.getAttribute('data-fnr') ?? undefined;
-
-        console.log('getattribute fnr', fnr);
-
         try {
             const root = createRoot(appRoot);
-            console.log(appRoot);
             root.render(
                 <ModalProvider appElement={appRoot} rootElement={shadowDomFirstChild}>
                     <App key={'1'} fnr={fnr} />
