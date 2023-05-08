@@ -20,8 +20,9 @@ const Router = ({ children }: { children?: React.ReactNode }) => {
     if (USE_HASH_ROUTER) {
         return <HashRouter>{children}</HashRouter>;
     }
-    const basename = stripTrailingSlash(import.meta.env.BASE_URL);
-    return <BrowserRouter basename={basename}>{children}</BrowserRouter>;
+    let basename = stripTrailingSlash(import.meta.env.BASE_URL);
+    const internFlate = ['dev-intern', 'prod-intern'].includes(import.meta.env.MODE);
+    return <BrowserRouter basename={internFlate ? '' : basename}>{children}</BrowserRouter>;
 };
 
 const App = (props: Props) => {
