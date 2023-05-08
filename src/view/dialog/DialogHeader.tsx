@@ -33,15 +33,17 @@ export function DialogHeader(props: DialogHeaderProps) {
     return (
         <>
             <DialogHeaderFeil visible={erFeil} />
-            <div className="bg-white p-4 flex items-center gap-x-4 border-b border-border-divider">
-                <TilbakeKnapp className="md:hidden" />
+            <div className="bg-white px-4 py-2  flex flex-col gap-x-4 border-b border-border-divider">
                 <UUMarkering />
                 {viseAktivitet ? (
                     <DialogMedAktivitetHeader aktivitetId={aktivitetId} />
                 ) : (
-                    <Heading level="1" size="medium">
-                        {dialog?.overskrift}
-                    </Heading>
+                    <div className="flex flex-row gap-x-2">
+                        <TilbakeKnapp className="md:hidden" />
+                        <Heading level="1" size="small">
+                            {dialog?.overskrift}
+                        </Heading>
+                    </div>
                 )}
             </div>
         </>
