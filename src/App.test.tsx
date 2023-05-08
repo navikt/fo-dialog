@@ -1,11 +1,11 @@
 import React from 'react';
-import ReactDOM from 'react-dom';
+import { createRoot } from 'react-dom/client';
 import { it } from 'vitest';
 
-import Routing from './App';
+import App from './App';
 
 it('renders without crashing', () => {
-    const div = document.createElement('div');
-    ReactDOM.render(<Routing />, div);
-    ReactDOM.unmountComponentAtNode(div);
+    const root = createRoot(document.createElement('div'));
+    root.render(<App />);
+    root.unmount();
 });
