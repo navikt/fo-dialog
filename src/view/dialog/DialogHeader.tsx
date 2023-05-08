@@ -33,7 +33,7 @@ export function DialogHeader(props: DialogHeaderProps) {
     return (
         <>
             <DialogHeaderFeil visible={erFeil} />
-            <div className="bg-white px-4 py-2  flex flex-col gap-x-4 border-b border-border-divider">
+            <div className="bg-white px-4 py-2  flex flex-col gap-x-4 border-b border-border-divider border-r">
                 <UUMarkering />
                 {viseAktivitet ? (
                     <DialogMedAktivitetHeader aktivitetId={aktivitetId} />

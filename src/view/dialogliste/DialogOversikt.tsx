@@ -43,7 +43,7 @@ const DialogOversikt = () => {
         <div
             className={classNames(
                 { hidden: !!dialogId },
-                'border-r border-border-divider w-full h-full md:max-w-[20rem] md:h-screen md:flex md:flex-col'
+                'border-r border-border-divider w-full h-full md:max-w-[20rem] md:flex md:flex-col'
             )}
         >
             <DialogOversiktHeader erVeileder={erVeileder} />
