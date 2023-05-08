@@ -10,9 +10,9 @@
     "scripts": {
         "dev": "vite",
         "build:dev-ekstern": "vite build --mode=dev-ekstern --base=/arbeid/dialog/",
-        "build:dev-intern": "vite build --mode=dev-intern --base=https://arbeidsrettet-dialog.intern.dev.nav.no",
+        "build:dev-intern": "vite build --mode=dev-intern --base=https://arbeidsrettet-dialog.intern.dev.nav.no/",
         "build:prod-ekstern": "vite build --mode=prod-ekstern --base=/arbeid/dialog/",
-        "build:prod-intern": "vite build --mode=prod-intern --base=https://arbeidsrettet-dialog.intern.nav.no",
+        "build:prod-intern": "vite build --mode=prod-intern --base=https://arbeidsrettet-dialog.intern.nav.no/",
         "build:gh-pages": "VITE_USE_HASH_ROUTER=true vite build --mode=dev-ekstern --base=/arbeidsrettet-dialog/",
         "build": "vite build",
         "test": "vitest",
