@@ -44,7 +44,8 @@ function Melding(props: { tekst?: string; erVeileder: boolean }) {
                         <BodyShort>
                             Hvis ikke brukeren leser dialogmeldingen innen en halvtime, så vil brukeren motta meldingen
                             på den måten de har registrert i det offentlige kontaktregisteret. Brukeren får beskjed om
-                            en ny melding og det lenkes til dialogen. Beskjeden sendes gjennom Altinn.
+                            en ny melding og det lenkes til dialogen. Beskjeden sendes gjennom Altinn i åpningstiden
+                            9-17 på hverdager.
                         </BodyShort>
                         <BodyShort>
                             Sender du flere meldinger innen en halv time så blir det kun sendt én SMS eller e-post.
