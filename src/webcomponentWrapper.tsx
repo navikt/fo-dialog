@@ -5,7 +5,7 @@ import { createRoot } from 'react-dom/client';
 
 import App from './App';
 import tailwindCss from './tailwind.css?inline';
-import DialogPreviewCss from './view/dialogliste/DialogPreview.module.less?inline';
+import dialogOversiktStyles from './view/dialogliste/DialogPreview.module.css?inline';
 
 export class DabDialog extends HTMLElement {
     setFnr?: (fnr: string) => void;
@@ -21,7 +21,7 @@ export class DabDialog extends HTMLElement {
 
         // Load styles under this shadowDom-node, not root element
         const styleElem = document.createElement('style');
-        styleElem.innerHTML = dsStyles + tailwindCss + DialogPreviewCss;
+        styleElem.innerHTML = dsStyles + tailwindCss + dialogOversiktStyles;
         shadowRoot.appendChild(styleElem);
 
         const fnr = this.getAttribute('data-fnr') ?? undefined;

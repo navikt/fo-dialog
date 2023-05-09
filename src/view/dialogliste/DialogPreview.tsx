@@ -10,7 +10,7 @@ import { DialogData, StringOrNull } from '../../utils/Typer';
 import { getDialogTittel } from '../aktivitet/TextUtils';
 import { findAktivitet, useAktivitetContext } from '../AktivitetProvider';
 import { useEventListener } from '../utils/useEventListner';
-import styles from './DialogPreview.module.less';
+import styles from './DialogPreview.module.css';
 import { EtikettListe } from './EtikettListe';
 import Ikon from './ikon/Ikon';
 
@@ -119,15 +119,31 @@ interface ListeProps {
     valgDialog?: string;
 }
 
-export function DialogPreviewListe(props: ListeProps) {
-    const { dialoger, valgDialog } = props;
+let skalFadeIn = false;
+export function DialogPreviewListe({ dialoger, valgDialog }: ListeProps) {
+    const [antallDialoger, setAntallDialoger] = useState<number | undefined>(undefined);
+
+    useEffect(() => {
+        if (antallDialoger === undefined) {
+            skalFadeIn = false;
+        } else if (dialoger.length === antallDialoger + 1) {
+            skalFadeIn = true;
+        }
+        setAntallDialoger(dialoger.length);
+    }, [dialoger]);
 
     if (dialoger.length === 0) return null;
-    console.log(dialoger);
     return (
         <ul aria-label="Dialogliste">
-            {dialoger.map((dialog) => (
-                <DialogPreview dialog={dialog} key={dialog.id} valgtDialogId={valgDialog} />
+            {dialoger.map((dialog, index) => (
+                <li
+                    key={dialog.id}
+                    className={classNames('', {
+                        [styles.fadeIn]: index === 0 && skalFadeIn
+                    })}
+                >
+                    <DialogPreview dialog={dialog} key={dialog.id} valgtDialogId={valgDialog} />
+                </li>
             ))}
         </ul>
     );
