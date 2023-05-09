@@ -52,7 +52,7 @@ const AppBody = () => {
     }
 
     return (
-        <div className={'overflow-hidden flex flex-row w-full'}>
+        <div className={'overflow-hidden flex flex-row w-full h-full'}>
             <DialogOversikt />
             <Outlet />
         </div>

@@ -141,6 +141,7 @@ const HenvendelseInputBox = (props: Props) => {
                         hideLabel
                         placeholder={'Skriv om arbeid og oppfølging'}
                         minRows={props.erBruker ? 2 : 3}
+                        maxRows={10}
                     />
                     <Button title="Send" loading={isSubmitting}>
                         Send

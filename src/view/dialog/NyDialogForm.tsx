@@ -149,6 +149,7 @@ const NyDialogForm = (props: Props) => {
                         onChange(undefined, event.target.value);
                         register('melding').onChange(event);
                     }}
+                    maxRows={10}
                 />
 
                 <AlertStripeVisible variant="error" visible={noeFeilet}>
