@@ -1,7 +1,6 @@
 import { BodyShort, Detail, Heading, LinkPanel } from '@navikt/ds-react';
 import classNames from 'classnames';
 import React, { useEffect, useRef, useState } from 'react';
-import { Flipped, Flipper } from 'react-flip-toolkit';
 import { useNavigate } from 'react-router';
 
 import { useRoutes } from '../../routes';
@@ -11,6 +10,7 @@ import { DialogData, StringOrNull } from '../../utils/Typer';
 import { getDialogTittel } from '../aktivitet/TextUtils';
 import { findAktivitet, useAktivitetContext } from '../AktivitetProvider';
 import { useEventListener } from '../utils/useEventListner';
+import styles from './DialogPreview.module.less';
 import { EtikettListe } from './EtikettListe';
 import Ikon from './ikon/Ikon';
 
@@ -72,6 +72,7 @@ function DialogPreview(props: Props) {
 
     useEffect(() => {
         const dialogElement: HTMLElement | null | undefined = dialogref?.current?.parentElement;
+        console.log(dialogElement);
         if (skalScrolle && dialogElement && detteErValgtDialog) {
             dialogElement.scrollIntoView(ALIGN_TO_BOTTOM);
             setSkalScrolle(false);
@@ -90,19 +91,23 @@ function DialogPreview(props: Props) {
         navigate(dialogRoute(id));
     };
     return (
-        <LinkPanel className={classNames('my-1 border !gap-0 p-2 max-w-full')} href={dialogRoute(id)} onClick={onGoTo}>
+        <LinkPanel
+            className={classNames('my-1 border !gap-0 p-2 max-w-full', styles.dialogPreview)}
+            href={dialogRoute(id)}
+            onClick={onGoTo}
+        >
             <div className="flex flex-row">
                 <Ikon dialog={dialog} />
-                <div className="flex-grow">
+                <div className="flex-grow min-w-0">
                     <BodyShort className="hidden">{typeText(dialog)}</BodyShort>
                     <Tittel tittel={overskrift} aktivitet={aktivitet} />
                     <Detail>{datoString}</Detail>
                     <EtikettListe dialog={dialog} />
                     <BodyShort className="hidden">{meldingerText(dialog.henvendelser.length)}</BodyShort>
                 </div>
-                {/*<BodyShort aria-hidden="true" className="flex items-center">*/}
-                {/*    {dialog.henvendelser.length}*/}
-                {/*</BodyShort>*/}
+                <BodyShort aria-hidden="true" className="flex items-center ml-2">
+                    {dialog.henvendelser.length}
+                </BodyShort>
                 <div ref={dialogref}></div>
             </div>
         </LinkPanel>
@@ -118,18 +123,13 @@ export function DialogPreviewListe(props: ListeProps) {
     const { dialoger, valgDialog } = props;
 
     if (dialoger.length === 0) return null;
+    console.log(dialoger);
     return (
-        <Flipper flipKey={dialoger.map((d) => d.id).join('')}>
-            <ul aria-label="Dialogliste">
-                {dialoger.map((dialog) => (
-                    <Flipped flipId={dialog.id} key={dialog.id}>
-                        <li>
-                            <DialogPreview dialog={dialog} key={dialog.id} valgtDialogId={valgDialog} />
-                        </li>
-                    </Flipped>
-                ))}
-            </ul>
-        </Flipper>
+        <ul aria-label="Dialogliste">
+            {dialoger.map((dialog) => (
+                <DialogPreview dialog={dialog} key={dialog.id} valgtDialogId={valgDialog} />
+            ))}
+        </ul>
     );
 }
 
