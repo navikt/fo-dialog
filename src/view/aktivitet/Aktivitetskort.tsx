@@ -2,7 +2,6 @@ import { Heading } from '@navikt/ds-react';
 import classNames from 'classnames';
 import React from 'react';
 
-import { Aktivitet, ArenaAktivitet } from '../../utils/aktivitetTypes';
 import { useSelectedAktivitet } from '../utils/useAktivitetId';
 import { getAktivitetType } from '../utils/utils';
 import AktivitetIngress from './AktivitetIngress';

@@ -39,7 +39,7 @@ export function DialogMedAktivitetHeader(props: Props) {
                         {infotekst && <Detail>{infotekst}</Detail>}
                     </div>
                 </div>
-                <div className="flex flex-row md:flex-col items-center justify-between md:items-end">
+                <div className="flex flex-row md:flex-col items-center justify-between md:items-end lg:hidden">
                     <Detail aria-hidden="true">{typeTekst.toUpperCase()}</Detail>
                     <Link href={aktivitetLenke(aktivitet.id)} onClick={visAktivitetsplan(aktivitet.id, fnr)}>
                         Gå til aktiviteten
