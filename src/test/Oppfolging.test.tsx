@@ -6,6 +6,7 @@ import { MemoryRouter } from 'react-router';
 import { Status } from '../api/typer';
 import { Bruker, DialogData, OppfolgingData, PeriodeData } from '../utils/Typer';
 import * as BrukerProvider from '../view/BrukerProvider';
+import Dialog from '../view/dialog/Dialog';
 import DialogContainer from '../view/dialog/DialogContainer';
 import DialogListe from '../view/dialogliste/DialogListe';
 import DialogOversikt from '../view/dialogliste/DialogOversikt';
@@ -178,7 +179,7 @@ describe('<Dialog/>', () => {
         Element.prototype.scrollIntoView = () => {};
         const { queryByLabelText, queryByText, queryByRole } = render(
             <MemoryRouter initialEntries={['/1']}>
-                <DialogContainer />
+                <Dialog />
             </MemoryRouter>
         );
 
@@ -209,7 +210,7 @@ describe('<Dialog/>', () => {
         Element.prototype.scrollIntoView = () => {};
         const wrapper = render(
             <MemoryRouter initialEntries={['/1']}>
-                <DialogContainer />
+                <Dialog />
             </MemoryRouter>
         );
         wrapper.queryByLabelText('Ny melding');

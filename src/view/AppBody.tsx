@@ -1,11 +1,10 @@
 import React, { useEffect } from 'react';
+import { Outlet } from 'react-router';
 import { v4 as uuidv4 } from 'uuid';
 
 import loggEvent from '../felleskomponenter/logging';
 import { Bruker, OppfolgingData } from '../utils/Typer';
-import AktivitetContainer from './aktivitet/AktivitetContainer';
 import { useUserInfoContext } from './BrukerProvider';
-import DialogContainer from './dialog/DialogContainer';
 import DialogOversikt from './dialogliste/DialogOversikt';
 import { useOppfolgingContext } from './OppfolgingProvider';
 import { dataOrUndefined } from './Provider';
@@ -55,8 +54,7 @@ const AppBody = () => {
     return (
         <div className={'overflow-hidden flex flex-row w-full'}>
             <DialogOversikt />
-            <DialogContainer />
-            <AktivitetContainer />
+            <Outlet />
         </div>
     );
 };

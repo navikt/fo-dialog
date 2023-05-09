@@ -7,7 +7,11 @@ import { stripTrailingSlash } from './api/UseApiBasePath';
 import { USE_HASH_ROUTER, erInternFlate } from './constants';
 import { PageViewMetricCollector } from './metrics/PageViewMetricCollector';
 import { UppdateEventHandler } from './utils/UpdateEvent';
+import { Aktivitetskort } from './view/aktivitet/Aktivitetskort';
 import AppBody from './view/AppBody';
+import Dialog from './view/dialog/Dialog';
+import DialogInfoMelding from './view/dialog/DialogInfoMelding';
+import NyDialog from './view/dialog/NyDialog';
 import { EventHandler } from './view/EventHandler';
 import { Provider } from './view/Provider';
 import StatusAdvarsel from './view/statusAdvarsel/StatusAdvarsel';
@@ -39,7 +43,27 @@ const App = (props: Props) => {
                 <Provider fnr={fnr} erVeileder={!!fnr}>
                     <StatusAdvarsel />
                     <Routes>
-                        <Route path={fnr ? '/:fnr/*' : '/*'} element={<AppBody />}></Route>
+                        <Route path={fnr ? '/:fnr' : ''} element={<AppBody />}>
+                            <Route
+                                path={`ny`}
+                                element={
+                                    <>
+                                        <NyDialog />
+                                        <div className="border-l border-border-divider"></div>
+                                    </>
+                                }
+                            />
+                            <Route
+                                path={`:dialogId`}
+                                element={
+                                    <>
+                                        <Dialog />
+                                        <Aktivitetskort />
+                                    </>
+                                }
+                            />
+                            <Route index element={<DialogInfoMelding />} />
+                        </Route>
                     </Routes>
                     <UppdateEventHandler />
                 </Provider>

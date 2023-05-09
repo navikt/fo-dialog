@@ -13,7 +13,7 @@ import AvtaltMarkering from './etiketter/avtalt-markering';
 
 export function Aktivitetskort() {
     const aktivitet = useSelectedAktivitet();
-    if (!aktivitet) return null;
+    if (!aktivitet) return <div className="border-l border-border-divider" />;
     const { status, tittel, avtalt, id } = aktivitet;
     return (
         <div

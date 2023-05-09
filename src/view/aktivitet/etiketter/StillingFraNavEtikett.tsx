@@ -39,12 +39,8 @@ export interface Props {
 }
 
 function StillingFraNavEtikett(props: Props) {
-    const { etikett, className, hidden } = props;
-
+    const { etikett, hidden } = props;
     if (!etikett) return null;
-
-    const cls = getCls(etikett);
-
     if (hidden) return null;
     return <Tag variant="alt1">{getText(etikett)}</Tag>;
 }

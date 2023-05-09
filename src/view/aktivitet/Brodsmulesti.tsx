@@ -13,7 +13,7 @@ export default function Brodsmulesti(props: Props) {
     return (
         <div className="uppercase text-text-default">
             <Detail>
-                aktivitet / {getStatusText(props.status)} / {getTypeText(props.type)}
+                {getStatusText(props.status)} / {getTypeText(props.type)}
             </Detail>
         </div>
     );
