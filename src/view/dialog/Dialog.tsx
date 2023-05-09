@@ -13,14 +13,11 @@ import { useFnrContext, useViewContext } from '../Provider';
 import { useSelectedDialog } from '../utils/useAktivitetId';
 import { useEventListener } from '../utils/useEventListner';
 import { endreDialogSomVises } from '../ViewState';
-import styles from './Dialog.module.less';
 import ManagedDialogCheckboxes from './DialogCheckboxes';
 import { DialogHeader, dialogHeaderID1, dialogHeaderID2 } from './DialogHeader';
-import DialogSendtBekreftelse from './DialogSendtBekreftelse';
 import DialogInputBoxVisible from './henvendelseInput/HenvendelseInputBox';
 import HistoriskInfo from './HistoriskInfo';
 import { IngenDialog } from './IngenDialog';
-import { TilbakeKnapp } from './TilbakeKnapp';
 
 export function Dialog() {
     const kanSendeMelding = useKansendeMelding();

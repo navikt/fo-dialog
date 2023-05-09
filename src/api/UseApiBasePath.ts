@@ -14,7 +14,8 @@ export const DialogApi = {
     kladd: (query: string | undefined) => `${dialogBasePath}/kladd${query}`,
     hentDialog: (query: string | undefined) => `${dialogBasePath}/dialog${query}`,
     sistOppdatert: (query: string | undefined) => `${dialogBasePath}/dialog/sistOppdatert${query}`,
-    settLest: (dialogId: string, query: string | undefined) => `${dialogBasePath}/dialog/${dialogId}/les${query}`
+    settLest: (dialogId: string, query: string | undefined) => `${dialogBasePath}/dialog/${dialogId}/les${query}`,
+    logg: '/logger/event'
 };
 
 const aktivitetBasePath = `${apiBasePath}/veilarbaktivitet/api`;

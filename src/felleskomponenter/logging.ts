@@ -1,3 +1,4 @@
+import { DialogApi } from '../api/UseApiBasePath';
 import { logAmplitudeEvent } from '../metrics/amplitude-utils';
 import { DialogData } from '../utils/Typer';
 
@@ -9,7 +10,7 @@ interface FrontendEvent {
 
 export default function loggEvent(eventNavn: string, feltObjekt?: object, tagObjekt?: object) {
     const event: FrontendEvent = { name: eventNavn, fields: feltObjekt, tags: tagObjekt };
-    const url = import.meta.env.BASE_URL + 'veilarbdialog/api/logger/event';
+    const url = DialogApi.logg;
     const config = {
         headers: {
             'Nav-Consumer-Id': 'aktivitetsplan',
