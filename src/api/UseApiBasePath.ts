@@ -15,7 +15,7 @@ export const DialogApi = {
     hentDialog: (query: string | undefined) => `${dialogBasePath}/dialog${query}`,
     sistOppdatert: (query: string | undefined) => `${dialogBasePath}/dialog/sistOppdatert${query}`,
     settLest: (dialogId: string, query: string | undefined) => `${dialogBasePath}/dialog/${dialogId}/les${query}`,
-    logg: '/logger/event'
+    logg: `${dialogBasePath}/logger/event`
 };
 
 const aktivitetBasePath = `${apiBasePath}/veilarbaktivitet/api`;
