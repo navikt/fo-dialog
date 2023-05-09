@@ -1,5 +1,6 @@
 import { Heading } from '@navikt/ds-react';
 import classNames from 'classnames';
+import { d } from 'msw/lib/glossary-de6278a9';
 import React, { useEffect, useState } from 'react';
 import { useParams } from 'react-router';
 
@@ -27,7 +28,7 @@ export function Dialog() {
     const params = useParams();
 
     const valgtDialog = useSelectedDialog();
-    const { dialogId } = valgtDialog?.id;
+    const dialogId = valgtDialog?.id;
     const fnr = useFnrContext();
     const bruker = useUserInfoContext();
 
@@ -59,6 +60,7 @@ export function Dialog() {
 
     useEffect(() => {
         if (!lest && activeTab && activePersonflateTab) {
+            if (!dialogId) return;
             lesDialog(dialogId).then(() => {
                 dispatchUpdate(UpdateTypes.Dialog);
                 window.dispatchEvent(new Event('aktivitetsplan.dialog.lest')); //lest teller i personflata

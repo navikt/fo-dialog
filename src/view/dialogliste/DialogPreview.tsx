@@ -24,7 +24,7 @@ const ALIGN_TO_BOTTOM: ScrollIntoViewOptions = { block: 'end', inline: 'nearest'
 function Tittel(props: TittelProps) {
     const tittel = props.aktivitet ? getDialogTittel(props.aktivitet) : props.tittel;
     return (
-        <Heading level="2" size="small">
+        <Heading className="text-ellipsis overflow-hidden" level="2" size="small">
             {tittel}
         </Heading>
     );
@@ -90,7 +90,7 @@ function DialogPreview(props: Props) {
         navigate(dialogRoute(id));
     };
     return (
-        <LinkPanel className={classNames('my-1 border !gap-0 p-2')} href={dialogRoute(id)} onClick={onGoTo}>
+        <LinkPanel className={classNames('my-1 border !gap-0 p-2 max-w-full')} href={dialogRoute(id)} onClick={onGoTo}>
             <div className="flex flex-row">
                 <Ikon dialog={dialog} />
                 <div className="flex-grow">
