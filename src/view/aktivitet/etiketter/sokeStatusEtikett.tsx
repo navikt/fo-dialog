@@ -57,7 +57,11 @@ function SokeStatusEtikett(props: Props) {
     if (hidden) return;
     const cls = getCls(etikett);
 
-    return <Tag variant="alt1">{getText(etikett)}</Tag>;
+    return (
+        <Tag className="mr-2" variant="alt1" size="small">
+            {getText(etikett)}
+        </Tag>
+    );
 }
 
 export default SokeStatusEtikett;

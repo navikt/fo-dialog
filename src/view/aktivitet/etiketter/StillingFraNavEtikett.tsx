@@ -42,7 +42,11 @@ function StillingFraNavEtikett(props: Props) {
     const { etikett, hidden } = props;
     if (!etikett) return null;
     if (hidden) return null;
-    return <Tag variant="alt1">{getText(etikett)}</Tag>;
+    return (
+        <Tag className="mr-2" variant="alt1" size="small">
+            {getText(etikett)}
+        </Tag>
+    );
 }
 
 export default StillingFraNavEtikett;
