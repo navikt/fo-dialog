@@ -1,13 +1,13 @@
 import { Checkbox } from '@navikt/ds-react';
 import { render } from '@testing-library/react';
 import React from 'react';
-import { MemoryRouter } from 'react-router';
+import { MemoryRouter, Route, Routes } from 'react-router';
 
 import { Status } from '../api/typer';
+import App from '../App';
 import { Bruker, DialogData, OppfolgingData, PeriodeData } from '../utils/Typer';
 import * as BrukerProvider from '../view/BrukerProvider';
 import Dialog from '../view/dialog/Dialog';
-import DialogContainer from '../view/dialog/DialogContainer';
 import DialogListe from '../view/dialogliste/DialogListe';
 import DialogOversikt from '../view/dialogliste/DialogOversikt';
 import * as DialogProvider from '../view/DialogProvider';
@@ -179,7 +179,9 @@ describe('<Dialog/>', () => {
         Element.prototype.scrollIntoView = () => {};
         const { queryByLabelText, queryByText, queryByRole } = render(
             <MemoryRouter initialEntries={['/1']}>
-                <Dialog />
+                <Routes>
+                    <Route path={'/:dialogId'} element={<Dialog />} />
+                </Routes>
             </MemoryRouter>
         );
 
@@ -210,7 +212,9 @@ describe('<Dialog/>', () => {
         Element.prototype.scrollIntoView = () => {};
         const wrapper = render(
             <MemoryRouter initialEntries={['/1']}>
-                <Dialog />
+                <Routes>
+                    <Route path={'/:dialogId'} element={<Dialog />} />
+                </Routes>
             </MemoryRouter>
         );
         wrapper.queryByLabelText('Ny melding');

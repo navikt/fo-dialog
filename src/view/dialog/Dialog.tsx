@@ -9,6 +9,7 @@ import { useUserInfoContext } from '../BrukerProvider';
 import { useDialogContext } from '../DialogProvider';
 import { MeldingList } from '../melding/MeldingList';
 import { useFnrContext, useViewContext } from '../Provider';
+import { useSelectedDialog } from '../utils/useAktivitetId';
 import { useEventListener } from '../utils/useEventListner';
 import { endreDialogSomVises } from '../ViewState';
 import styles from './Dialog.module.less';
@@ -22,9 +23,11 @@ import { TilbakeKnapp } from './TilbakeKnapp';
 
 export function Dialog() {
     const kanSendeMelding = useKansendeMelding();
-    const { lesDialog, dialoger } = useDialogContext();
-    const { dialogId } = useParams();
-    const valgtDialog = dialoger.find((dialog) => dialog.id === dialogId);
+    const { lesDialog } = useDialogContext();
+    const params = useParams();
+
+    const valgtDialog = useSelectedDialog();
+    const { dialogId } = valgtDialog?.id;
     const fnr = useFnrContext();
     const bruker = useUserInfoContext();
 
