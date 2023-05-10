@@ -3,9 +3,11 @@ import { Outlet } from 'react-router';
 import { v4 as uuidv4 } from 'uuid';
 
 import loggEvent from '../felleskomponenter/logging';
+import { PageViewMetricCollector } from '../metrics/PageViewMetricCollector';
 import { Bruker, OppfolgingData } from '../utils/Typer';
 import { useUserInfoContext } from './BrukerProvider';
 import DialogOversikt from './dialogliste/DialogOversikt';
+import { EventHandler } from './EventHandler';
 import { useOppfolgingContext } from './OppfolgingProvider';
 import { dataOrUndefined } from './Provider';
 
@@ -55,6 +57,8 @@ const AppBody = () => {
         <div className={'overflow-hidden flex flex-row w-full h-full'}>
             <DialogOversikt />
             <Outlet />
+            <PageViewMetricCollector />
+            <EventHandler />
         </div>
     );
 };

@@ -1,7 +1,7 @@
 import { Heading, Link } from '@navikt/ds-react';
 import classNames from 'classnames';
 import React from 'react';
-import { useParams } from 'react-router';
+import { useLocation, useMatches, useParams } from 'react-router';
 
 import { AKTIVITETSPLAN_URL, MINSIDE_URL } from '../../constants';
 import useKansendeMelding from '../../utils/UseKanSendeMelding';
@@ -9,6 +9,7 @@ import { useUserInfoContext } from '../BrukerProvider';
 import { useDialogContext } from '../DialogProvider';
 import InfoVedIngenDialoger from '../info/InfoVedIngenDialoger';
 import OmDialogLenke from '../info/OmDialogLenke';
+import { useSelectedDialog } from '../utils/useAktivitetId';
 import DialogListe from './DialogListe';
 import DialogOverviewHeader from './NyDialogLink';
 
@@ -36,13 +37,15 @@ const DialogOversiktHeader = ({ erVeileder }: { erVeileder: boolean }) => {
 const DialogOversikt = () => {
     const kanSendeMelding = useKansendeMelding();
     const { dialoger } = useDialogContext();
-    const { dialogId } = useParams();
+    const dialog = useSelectedDialog();
+    const matches = useMatches();
+    const isNyRoute = matches.some((match) => match.pathname.startsWith('/ny'));
     const userInfoContext = useUserInfoContext();
     const erVeileder = !!userInfoContext?.erVeileder;
     return (
         <div
             className={classNames(
-                { hidden: !!dialogId },
+                { hidden: !!dialog || isNyRoute } /* Hvis liten skjerm, bare vis dialog-liste på "Homepage"  */,
                 'border-r border-border-divider w-full h-full md:max-w-[20rem] md:flex md:flex-col'
             )}
         >

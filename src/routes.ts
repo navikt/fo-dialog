@@ -10,11 +10,11 @@ const baseRoute = (fnr?: string) => () => fnr ? `/${fnr}` : `/`;
 const informasjonRoute = (fnr?: string) => () => fnr ? `/${fnr}/informasjon` : `/informasjon`;
 
 export const useRoutes = () => {
-    const fnr = useFnrContext();
+    // const fnr = useFnrContext();
     return {
-        baseRoute: baseRoute(fnr),
-        dialogRoute: dialogRoute(fnr),
-        nyRoute: nyRoute(fnr),
-        informasjonRoute: informasjonRoute(fnr)
+        baseRoute: baseRoute(undefined),
+        dialogRoute: dialogRoute(undefined),
+        nyRoute: nyRoute(undefined),
+        informasjonRoute: informasjonRoute(undefined)
     };
 };

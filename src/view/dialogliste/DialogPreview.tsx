@@ -72,7 +72,6 @@ function DialogPreview(props: Props) {
 
     useEffect(() => {
         const dialogElement: HTMLElement | null | undefined = dialogref?.current?.parentElement;
-        console.log(dialogElement);
         if (skalScrolle && dialogElement && detteErValgtDialog) {
             dialogElement.scrollIntoView(ALIGN_TO_BOTTOM);
             setSkalScrolle(false);
