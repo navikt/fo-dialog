@@ -40,7 +40,7 @@ export function Melding(props: Props) {
             <BodyShort className="hidden">{accessibleText(erBruker, erMeldingFraBruker)}</BodyShort>
             <Chat
                 timestamp={toppTekst}
-                avatar={erMeldingFraBruker ? <PersonIcon className={'!w-6 !h-6'} /> : 'NAV'}
+                avatar={erMeldingFraBruker ? <PersonIcon aria-hidden className={'!w-6 !h-6'} /> : 'NAV'}
                 position={erMeldingFraBruker ? 'right' : 'left'}
                 backgroundColor={backgroundColor}
                 avatarBgColor={avatarBgColor}
