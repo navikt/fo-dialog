@@ -46,6 +46,8 @@ const NyDialogForm = (props: Props) => {
 
     const { kladder, oppdaterKladd, slettKladd } = useKladdContext();
     const kladd = findKladd(kladder, null, aktivitetId);
+    const autoFocusTema = !aktivitetId;
+    console.log('autofocustema', autoFocusTema);
 
     const [gjeldendeInput, setGjeldendeInput] = useState<{ tema?: StringOrNull; melding?: StringOrNull }>({
         tema: kladd?.overskrift,
@@ -130,7 +132,7 @@ const NyDialogForm = (props: Props) => {
                     label="Tema (obligatorisk)"
                     description="Skriv kort hva dialogen skal handle om"
                     disabled={!!aktivitetId}
-                    autoFocus
+                    autoFocus={autoFocusTema}
                     {...register('tema')}
                     error={errors.tema && errors.tema.message}
                     onChange={(event) => {
@@ -144,6 +146,7 @@ const NyDialogForm = (props: Props) => {
                     maxLength={5000}
                     {...register('melding')}
                     error={errors.melding && errors.melding.message}
+                    autoFocus={!autoFocusTema}
                     value={meldingValue}
                     onChange={(event) => {
                         onChange(undefined, event.target.value);
