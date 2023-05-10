@@ -38,8 +38,8 @@ const DialogOversikt = () => {
     const kanSendeMelding = useKansendeMelding();
     const { dialoger } = useDialogContext();
     const dialog = useSelectedDialog();
-    const matches = useMatches();
-    const isNyRoute = matches.some((match) => match.pathname.startsWith('/ny'));
+    const location = useLocation();
+    const isNyRoute = location.pathname.startsWith('/ny');
     const userInfoContext = useUserInfoContext();
     const erVeileder = !!userInfoContext?.erVeileder;
     return (
