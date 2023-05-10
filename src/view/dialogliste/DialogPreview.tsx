@@ -93,7 +93,7 @@ function DialogPreview(props: Props) {
     return (
         <LinkPanel
             className={classNames('my-1 border !gap-0 p-2 max-w-full', styles.dialogPreview, {
-                'bg-[#cce1ff]': detteErValgtDialog
+                'bg-[#e6f0ff]': detteErValgtDialog
             })}
             href={dialogRoute(id)}
             onClick={onGoTo}
