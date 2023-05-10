@@ -32,8 +32,8 @@ export function Melding(props: Props) {
 
     const erFraSegSelv = (erBruker && erMeldingFraBruker) || (!erBruker && !erMeldingFraBruker);
 
-    const backgroundColor = erFraSegSelv ? 'rgba(230, 240, 255, 1)' : 'rgba(255, 255, 255, 1)';
-    const avatarBgColor = erFraSegSelv ? 'rgba(204, 225, 255, 1)' : 'rgba(255, 255, 255, 1)';
+    const backgroundColor = erFraSegSelv ? 'rgba(235, 252, 255, 1)' : 'rgba(255, 255, 255, 1)';
+    const avatarBgColor = erFraSegSelv ? 'rgba(181, 241, 255, 1)' : 'rgba(255, 255, 255, 1)';
 
     return (
         <div className="mt-4">
