@@ -89,9 +89,12 @@ function DialogPreview(props: Props) {
         event.preventDefault();
         navigate(dialogRoute(id));
     };
+
     return (
         <LinkPanel
-            className={classNames('my-1 border !gap-0 p-2 max-w-full', styles.dialogPreview)}
+            className={classNames('my-1 border !gap-0 p-2 max-w-full', styles.dialogPreview, {
+                'bg-[#cce1ff]': detteErValgtDialog
+            })}
             href={dialogRoute(id)}
             onClick={onGoTo}
         >
