@@ -1,7 +1,7 @@
 import { Heading, Link } from '@navikt/ds-react';
 import classNames from 'classnames';
 import React from 'react';
-import { useLocation, useMatches, useParams } from 'react-router';
+import { useLocation } from 'react-router';
 
 import { AKTIVITETSPLAN_URL, MINSIDE_URL } from '../../constants';
 import useKansendeMelding from '../../utils/UseKanSendeMelding';
