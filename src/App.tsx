@@ -58,8 +58,8 @@ const Routes = ({ children }: { children?: React.ReactNode }) => {
         const hashRouter = createHashRouter(dialogRoutes);
         return <RouterProvider router={hashRouter} />;
     }
-    let basename = fnr ?? '';
-    if (!erInternFlate) basename = stripTrailingSlash(import.meta.env.BASE_URL + (fnr ?? ''));
+    let basename = stripTrailingSlash(import.meta.env.BASE_URL + (fnr ?? ''));
+    if (erInternFlate) basename = `/${fnr}`;
     const browserRouter = createBrowserRouter(dialogRoutes, { basename });
     return <RouterProvider router={browserRouter} />;
 };
