@@ -7,14 +7,12 @@ import { createBrowserRouter, createHashRouter } from 'react-router-dom';
 
 import { stripTrailingSlash } from './api/UseApiBasePath';
 import { USE_HASH_ROUTER, erInternFlate } from './constants';
-import { PageViewMetricCollector } from './metrics/PageViewMetricCollector';
 import { UppdateEventHandler } from './utils/UpdateEvent';
 import { Aktivitetskort } from './view/aktivitet/Aktivitetskort';
 import AppBody from './view/AppBody';
 import Dialog from './view/dialog/Dialog';
 import DialogInfoMelding from './view/dialog/DialogInfoMelding';
 import NyDialog from './view/dialog/NyDialog';
-import { EventHandler } from './view/EventHandler';
 import { Provider, useFnrContext } from './view/Provider';
 import StatusAdvarsel from './view/statusAdvarsel/StatusAdvarsel';
 
@@ -60,7 +58,8 @@ const Routes = ({ children }: { children?: React.ReactNode }) => {
         const hashRouter = createHashRouter(dialogRoutes);
         return <RouterProvider router={hashRouter} />;
     }
-    let basename = stripTrailingSlash(import.meta.env.BASE_URL + (fnr ?? ''));
+    let basename = fnr ?? '';
+    if (!erInternFlate) basename = stripTrailingSlash(import.meta.env.BASE_URL + (fnr ?? ''));
     const browserRouter = createBrowserRouter(dialogRoutes, { basename });
     return <RouterProvider router={browserRouter} />;
 };
