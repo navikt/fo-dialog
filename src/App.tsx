@@ -31,7 +31,7 @@ const dialogRoutes = [
                 element: (
                     <>
                         <NyDialog />
-                        <div className="border-l border-border-divider"></div>
+                        <Aktivitetskort />
                     </>
                 )
             },
@@ -52,7 +52,7 @@ const dialogRoutes = [
     }
 ];
 
-const Routes = ({ children }: { children?: React.ReactNode }) => {
+const Routes = () => {
     const fnr = useFnrContext();
     if (USE_HASH_ROUTER) {
         const hashRouter = createHashRouter(dialogRoutes);

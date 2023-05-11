@@ -21,7 +21,6 @@ export function useAktivitetId(): string | undefined {
 
 export const useSelectedAktivitet = (): MaybeAktivitet => {
     const dialog = useSelectedDialog();
-    if (!dialog) return;
     const aktivitetData = useAktivitetContext();
     const aktivitetId = useAktivitetId() ?? dialog?.aktivitetId;
     return findAktivitet(aktivitetData, aktivitetId);
