@@ -47,7 +47,6 @@ const NyDialogForm = (props: Props) => {
     const { kladder, oppdaterKladd, slettKladd } = useKladdContext();
     const kladd = findKladd(kladder, null, aktivitetId);
     const autoFocusTema = !aktivitetId;
-    console.log('autofocustema', autoFocusTema);
 
     const [gjeldendeInput, setGjeldendeInput] = useState<{ tema?: StringOrNull; melding?: StringOrNull }>({
         tema: kladd?.overskrift,
