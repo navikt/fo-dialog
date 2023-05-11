@@ -48,7 +48,7 @@ export function DialogHeader() {
                 {viseAktivitet ? (
                     <DialogMedAktivitetHeader />
                 ) : (
-                    <div className="pl-2 py-2 flex flex-row gap-x-2">
+                    <div className="pl-4 py-2 flex flex-row gap-x-2">
                         <TilbakeKnapp className="md:hidden" />
                         <Heading level="1" size="small">
                             {dialog?.overskrift}
