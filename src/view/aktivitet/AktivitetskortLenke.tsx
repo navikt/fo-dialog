@@ -1,8 +1,6 @@
-import { Link } from '@navikt/ds-react';
 import React, { MouseEvent } from 'react';
 
 import { AKTIVITETSPLAN_URL } from '../../constants';
-import { useFnrContext } from '../Provider';
 import { getContextPath } from '../utils/utils';
 
 export const aktivitetLenke = (aktivitetId: string) => {
@@ -17,17 +15,3 @@ export const visAktivitetsplan = (aktivitetID: string, fnrContext?: string) => (
     window.history.replaceState({}, 'aktivitetsplan', `${getContextPath()}/${fnrContext}/aktivitet/vis/${aktivitetID}`);
     window.dispatchEvent(new CustomEvent('visAktivitetsplan', { detail: aktivitetID }));
 };
-
-interface Props {
-    aktivitetId: string;
-}
-
-export default function AktivitetskortLenke(props: Props) {
-    const fnr = useFnrContext();
-    const aktivitetId = props.aktivitetId;
-    return (
-        <Link className="mb-8" href={aktivitetLenke(aktivitetId)} onClick={visAktivitetsplan(aktivitetId, fnr)}>
-            Gå til aktiviteten
-        </Link>
-    );
-}

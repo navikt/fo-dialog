@@ -7,6 +7,7 @@ import { StringOrNull } from '../../utils/Typer';
 import { findAktivitet, useAktivitetContext } from '../AktivitetProvider';
 import { TilbakeKnapp } from '../dialog/TilbakeKnapp';
 import { useFnrContext } from '../Provider';
+import { useSelectedAktivitet } from '../utils/useAktivitetId';
 import { aktivitetLenke, visAktivitetsplan } from './AktivitetskortLenke';
 import { getTypeTextByAktivitet } from './TextUtils';
 
@@ -15,10 +16,8 @@ interface Props {
 }
 
 export function DialogMedAktivitetHeader(props: Props) {
-    const { aktivitetId } = props;
+    const aktivitet = useSelectedAktivitet();
     const fnr = useFnrContext();
-    const aktivitetData = useAktivitetContext();
-    const aktivitet = findAktivitet(aktivitetData, aktivitetId);
 
     if (!aktivitet) {
         return null;
@@ -29,21 +28,23 @@ export function DialogMedAktivitetHeader(props: Props) {
 
     return (
         <section aria-label="Aktivitet knyttet til dialog">
-            <div className="flex flex-col md:flex-row md:justify-between">
-                <div className="flex flex-row items-center gap-x-2">
+            <div className="flex w-full flex-col md:flex-row">
+                <div className="flex flex-1 flex-row items-center gap-x-2 lg:max-w-lgContainer">
                     <TilbakeKnapp className="md:hidden" />
-                    <div>
+                    <div className="ml-4">
                         <Heading level="2" size="small" aria-label={`${typeTekst}: ${aktivitet?.tittel}`}>
                             {aktivitet?.tittel}
                         </Heading>
                         {infotekst && <Detail>{infotekst}</Detail>}
                     </div>
                 </div>
-                <div className="flex flex-row md:flex-col items-center justify-between md:items-end lg:hidden">
-                    <Detail aria-hidden="true">{typeTekst.toUpperCase()}</Detail>
-                    <Link href={aktivitetLenke(aktivitet.id)} onClick={visAktivitetsplan(aktivitet.id, fnr)}>
-                        Gå til aktiviteten
-                    </Link>
+                <div className="flex-1 md:max-w-[30rem]">
+                    <div className="px-2 mt-2 md:mt-0 lg:pl-4 flex-row md:flex-col items-center justify-between md:items-end lg:items-start flex">
+                        <Detail aria-hidden="true">{typeTekst.toUpperCase()}</Detail>
+                        <Link href={aktivitetLenke(aktivitet.id)} onClick={visAktivitetsplan(aktivitet.id, fnr)}>
+                            Gå til aktiviteten
+                        </Link>
+                    </div>
                 </div>
             </div>
         </section>

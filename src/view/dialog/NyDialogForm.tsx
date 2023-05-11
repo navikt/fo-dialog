@@ -114,12 +114,6 @@ const NyDialogForm = (props: Props) => {
 
     return (
         <div className={'bg-gray-100 h-full w-full lg:max-w-lgContainer'}>
-            <div className="bg-white p-4 flex items-center gap-x-4 border-b border-border-divider">
-                <TilbakeKnapp className="md:hidden" />
-                <Heading level="1" size="medium">
-                    Start en ny dialog
-                </Heading>
-            </div>
             <form className="p-8 space-y-8" onSubmit={handleSubmit((data) => onSubmit(data))} autoComplete="off">
                 {!erVeileder ? (
                     <GuidePanel>

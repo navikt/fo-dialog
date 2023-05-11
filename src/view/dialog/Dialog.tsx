@@ -80,7 +80,6 @@ export function Dialog() {
             <Heading className="hidden" aria-labelledby={`${dialogHeaderID1} ${dialogHeaderID2}`}>
                 Dialog Header
             </Heading>
-            <DialogHeader dialog={valgtDialog} visSkygge={!!bruker?.erBruker} />
             <MeldingList dialogData={valgtDialog} viewState={viewState} fnr={fnr} />
             <HistoriskInfo hidden={aktivDialog} kanSendeMelding={kanSendeMelding} />
             <section

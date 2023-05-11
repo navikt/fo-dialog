@@ -43,7 +43,7 @@ function StillingFraNavEtikett(props: Props) {
     if (!etikett) return null;
     if (hidden) return null;
     return (
-        <Tag className="mr-2" variant="alt1" size="small">
+        <Tag className="mr-2" variant="success" size="small">
             {getText(etikett)}
         </Tag>
     );

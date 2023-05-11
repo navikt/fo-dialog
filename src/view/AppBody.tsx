@@ -6,6 +6,7 @@ import loggEvent from '../felleskomponenter/logging';
 import { PageViewMetricCollector } from '../metrics/PageViewMetricCollector';
 import { Bruker, OppfolgingData } from '../utils/Typer';
 import { useUserInfoContext } from './BrukerProvider';
+import { DialogHeader } from './dialog/DialogHeader';
 import DialogOversikt from './dialogliste/DialogOversikt';
 import { EventHandler } from './EventHandler';
 import { useOppfolgingContext } from './OppfolgingProvider';
@@ -56,7 +57,12 @@ const AppBody = () => {
     return (
         <div className={'overflow-hidden flex flex-row w-full h-full'}>
             <DialogOversikt />
-            <Outlet />
+            <div className="h-full flex flex-col flex-1">
+                <DialogHeader />
+                <div className="flex flex-1">
+                    <Outlet />
+                </div>
+            </div>
             <PageViewMetricCollector />
             <EventHandler />
         </div>

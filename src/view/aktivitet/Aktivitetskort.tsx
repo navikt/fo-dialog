@@ -6,7 +6,6 @@ import { useSelectedAktivitet } from '../utils/useAktivitetId';
 import { getAktivitetType } from '../utils/utils';
 import AktivitetIngress from './AktivitetIngress';
 import { AktivitetskortInfoBox } from './AktivitetskortInfoBox';
-import AktivitetskortLenke from './AktivitetskortLenke';
 import Brodsmulesti from './Brodsmulesti';
 import AvtaltMarkering from './etiketter/avtalt-markering';
 
@@ -22,7 +21,6 @@ export function Aktivitetskort() {
             )}
         >
             <section aria-label="Aktivitet knyttet til dialog" className="m-4">
-                <AktivitetskortLenke aktivitetId={id} />
                 <Brodsmulesti status={status} type={getAktivitetType(aktivitet)} />
                 <Heading size="large" level="2">
                     {tittel}
