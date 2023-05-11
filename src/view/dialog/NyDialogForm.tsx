@@ -112,14 +112,18 @@ const NyDialogForm = (props: Props) => {
 
     const meldingValue = watch('melding');
 
+    const bigScreen = window.innerWidth >= 768;
+
     return (
         <div className={'bg-gray-100 h-full w-full lg:max-w-lgContainer'}>
             <form className="p-8 space-y-8" onSubmit={handleSubmit((data) => onSubmit(data))} autoComplete="off">
                 {!erVeileder ? (
-                    <GuidePanel>
-                        Her kan du skrive til din veileder om arbeid og oppfølging. Du vil få svar i løpet av noen
-                        dager.
-                    </GuidePanel>
+                    <>
+                        <GuidePanel poster={!bigScreen}>
+                            Her kan du skrive til din veileder om arbeid og oppfølging. Du vil få svar i løpet av noen
+                            dager.
+                        </GuidePanel>
+                    </>
                 ) : null}
                 <TextField
                     label="Tema (obligatorisk)"

@@ -136,18 +136,20 @@ export function DialogPreviewListe({ dialoger, valgDialog }: ListeProps) {
 
     if (dialoger.length === 0) return null;
     return (
-        <ul aria-label="Dialogliste">
-            {dialoger.map((dialog, index) => (
-                <li
-                    key={dialog.id}
-                    className={classNames('', {
-                        [styles.fadeIn]: index === 0 && skalFadeIn
-                    })}
-                >
-                    <DialogPreview dialog={dialog} key={dialog.id} valgtDialogId={valgDialog} />
-                </li>
-            ))}
-        </ul>
+        <div role="region" aria-live="polite">
+            <ul aria-label="Dialogliste">
+                {dialoger.map((dialog, index) => (
+                    <li
+                        key={dialog.id}
+                        className={classNames('', {
+                            [styles.fadeIn]: index === 0 && skalFadeIn
+                        })}
+                    >
+                        <DialogPreview dialog={dialog} key={dialog.id} valgtDialogId={valgDialog} />
+                    </li>
+                ))}
+            </ul>
+        </div>
     );
 }
 
