@@ -9,7 +9,7 @@ const DialogInfoMelding = () => {
     const harDialoger = dialoger.length > 0;
 
     return (
-        <div className="w-full md:flex items-center justify-center hidden p-4">
+        <div className="bg-gray-100 border-r border-border-divider w-full md:flex justify-center hidden pt-8 lg:max-w-lgContainer">
             <InfoVedIngenDialoger visible={!harDialoger} />
             <DialogIkkeValgt visible={harDialoger} />
         </div>
