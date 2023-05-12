@@ -43,7 +43,7 @@ spec:
               "fromPath": "/arbeid/dialog/*",
               "toUrl": "https://arbeidsrettet-dialog.intern.dev.nav.no",
               "preserveFromPath": false
-            },
+            }
           ],
           "gcs": {
             "bucketName": "arbeidsrettet-dialog-intern-dev"
