@@ -27,7 +27,6 @@ spec:
       memory: 512Mi
   ingresses:
     - https://arbeidsrettet-dialog.intern.nav.no
-    - https://arbeidsrettet-dialog.intern.nav.no/arbeid/dialog
   gcp:
     buckets:
       - name: arbeidsrettet-dialog-intern-prod
@@ -35,6 +34,13 @@ spec:
     - name: JSON_CONFIG
       value: >
         {
+          "redirects": [
+            {
+              "fromPath": "/arbeid/dialog/*",
+              "toUrl": "https://arbeidsrettet-dialog.intern.nav.no",
+              "preserveFromPath": false
+            },
+          ],
           "gcs": {
             "bucketName": "arbeidsrettet-dialog-intern-prod"
           },
