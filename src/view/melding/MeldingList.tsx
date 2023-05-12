@@ -1,5 +1,5 @@
 import { Heading } from '@navikt/ds-react';
-import React, { useEffect } from 'react';
+import React, { useEffect, useRef } from 'react';
 
 import { compareDates } from '../../utils/Date';
 import { DialogData, HenvendelseData, StringOrNull } from '../../utils/Typer';
@@ -29,15 +29,16 @@ function sisteLesteHenvendelse(lest: StringOrNull, henvendelser: HenvendelseData
 export function MeldingList(props: Props) {
     const { lestAvBrukerTidspunkt, henvendelser } = props.dialogData;
 
+    const meldingListRef = useRef<HTMLElement>(null);
+
     const sorterteHenvendelser = !!henvendelser ? henvendelser.sort((a, b) => compareDates(b.sendt, a.sendt)) : [];
 
     useSkjulHodefotForMobilVisning();
 
     useEffect(() => {
         requestAnimationFrame(() => {
-            const elem = document.querySelector('#henvendelse-scroll-list');
-            if (elem !== null) {
-                elem.scrollTo({ top: elem.scrollHeight, behavior: 'auto' });
+            if (meldingListRef) {
+                meldingListRef.current?.scrollTo({ top: meldingListRef.current.scrollHeight, behavior: 'auto' });
             }
         });
     }, [henvendelser]);
@@ -54,6 +55,7 @@ export function MeldingList(props: Props) {
             id="henvendelse-scroll-list"
             aria-label="Meldinger"
             className="px-4 grow overflow-y-scroll bg-gray-100"
+            ref={meldingListRef}
         >
             <Heading level="3" size={'medium'} className="hidden">
                 Meldinger
