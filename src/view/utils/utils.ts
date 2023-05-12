@@ -1,5 +1,4 @@
 import { Aktivitet, AktivitetTypes, AlleAktivitetTypes, ArenaAktivitet } from '../../utils/aktivitetTypes';
-import { pathnamePrefix } from '../../utils/UseApiBasePath';
 
 export const erArenaAktivitet = (aktivitetId: string | null | undefined): boolean =>
     !!aktivitetId && aktivitetId.startsWith('ARENA');
@@ -8,7 +7,7 @@ export const getBasename = (fnr?: string): string => {
     if (fnr) {
         return '/' + fnr;
     } else {
-        return settSammenmedSlasher(pathnamePrefix, fnr);
+        return settSammenmedSlasher(import.meta.env.VITE_DIALOG_API_URL, fnr);
     }
 };
 
@@ -32,5 +31,3 @@ export const getAktivitetType = (aktivitet: Aktivitet | ArenaAktivitet): AlleAkt
     }
     return aktivitet.type;
 };
-
-export const runningOnGithubPages = process.env.REACT_APP_USE_HASH_ROUTER === 'true';

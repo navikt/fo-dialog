@@ -1,4 +1,4 @@
-import { Undertekst } from 'nav-frontend-typografi';
+import { BodyShort } from '@navikt/ds-react';
 import React from 'react';
 
 import { AktivitetTypes, AlleAktivitetTypes, ArenaAktivitetTypes } from '../../utils/aktivitetTypes';
@@ -11,7 +11,7 @@ interface Props {
 export default function AktivitetIngress(props: Props) {
     return (
         <div className={styles.ingress}>
-            <Undertekst>{getAktivitetIngress(props.aktivitetType)}</Undertekst>
+            <BodyShort>{getAktivitetIngress(props.aktivitetType)}</BodyShort>
         </div>
     );
 }

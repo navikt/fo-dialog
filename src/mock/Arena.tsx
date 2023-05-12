@@ -1,6 +1,4 @@
-import { JSONArray } from 'yet-another-fetch-mock';
-
-export const arenaAktiviteter: JSONArray = [
+export const arenaAktiviteter = [
     {
         id: 'ARENATA11',
         status: 'GJENNOMFORES',

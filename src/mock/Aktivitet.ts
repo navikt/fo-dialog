@@ -1,5 +1,3 @@
-import { JSONObject } from 'yet-another-fetch-mock';
-
 import { AktivitetTypes, EksternAktivitetTypes } from '../utils/aktivitetTypes';
 
 const moteAktivitet = {
@@ -439,7 +437,7 @@ const aktiviteter = {
     ]
 };
 
-export function getAktivitet(id: string): JSONObject {
+export function getAktivitet(id: string) {
     const aktivitet = aktiviteter.aktiviteter.find((akt) => akt.id === id);
     return aktivitet ? aktivitet : {};
 }

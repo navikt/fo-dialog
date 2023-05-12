@@ -1,0 +1,30 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`<AktivitetskortPreview /> > skal rendre stillingsaktivitet som i snapshot 1`] = `
+<body>
+  <div>
+    <section
+      aria-label="Aktivitet knyttet til dialog"
+    >
+      <p
+        aria-hidden="true"
+        class="navds-detail"
+      >
+        Stilling
+      </p>
+      <h2
+        aria-label="Stilling: Kantinemedarbeider"
+        class="navds-heading navds-heading--medium"
+      >
+        Kantinemedarbeider
+      </h2>
+      <a
+        class="navds-link"
+        href="https://aktivitetsplan.dev.nav.no/aktivitet/vis/123"
+      >
+        Gå til aktiviteten
+      </a>
+    </section>
+  </div>
+</body>
+`;

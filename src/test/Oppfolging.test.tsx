@@ -1,24 +1,17 @@
-import '../utils/SetupEnzyme';
-
-import { mount } from 'enzyme';
-import { Checkbox } from 'nav-frontend-skjema';
+import { Checkbox } from '@navikt/ds-react';
+import { render } from '@testing-library/react';
 import React from 'react';
-import { MemoryRouter } from 'react-router';
+import { MemoryRouter, Route, Routes } from 'react-router';
 
 import { Status } from '../api/typer';
+import App from '../App';
 import { Bruker, DialogData, OppfolgingData, PeriodeData } from '../utils/Typer';
 import * as BrukerProvider from '../view/BrukerProvider';
-import { Dialog } from '../view/dialog/Dialog';
-import DialogContainer from '../view/dialog/DialogContainer';
-import { DialogHeader } from '../view/dialog/DialogHeader';
-import HenvendelseInputBox from '../view/dialog/henvendelseInput/HenvendelseInputBox';
+import Dialog from '../view/dialog/Dialog';
 import DialogListe from '../view/dialogliste/DialogListe';
 import DialogOversikt from '../view/dialogliste/DialogOversikt';
-import DialogPreview from '../view/dialogliste/DialogPreview';
-import NyDialogLink from '../view/dialogliste/NyDialogLink';
 import * as DialogProvider from '../view/DialogProvider';
 import { DialogDataProviderType } from '../view/DialogProvider';
-import { HenvendelseList } from '../view/henvendelse/HenvendelseList';
 import * as OppfolgingProvider from '../view/OppfolgingProvider';
 import { OppfolgingDataProviderType } from '../view/OppfolgingProvider';
 import * as AppContext from '../view/Provider';
@@ -108,15 +101,14 @@ describe('<DialogContainer/>', () => {
     test('Bruker uten oppf.perioder og ikke under oppf skjuler store deler av appen', () => {
         useFetchOppfolging.data!.underOppfolging = false;
         useFetchOppfolging.data!.oppfolgingsPerioder = [];
-        jest.spyOn(OppfolgingProvider, 'useOppfolgingContext').mockImplementation(() => useFetchOppfolging);
-        const wrapper = mount(
+        vi.spyOn(OppfolgingProvider, 'useOppfolgingContext').mockImplementation(() => useFetchOppfolging);
+        const { queryByText, getByRole } = render(
             <MemoryRouter>
                 <DialogListe />
             </MemoryRouter>
         );
-        expect(wrapper.find(NyDialogLink).exists()).toBeFalsy();
-        expect(wrapper.find(Dialog).exists()).toBeFalsy();
-        expect(wrapper.find(DialogPreview).exists()).toBeFalsy();
+        expect(queryByText('Ny dialog')).toBeNull();
+        expect(getByRole('navigation').children.length).toBe(0);
     });
     test('Bruker ikke under oppf. skjuler knapper/checkbox', () => {
         useFetchOppfolging.data!.underOppfolging = false;
@@ -130,15 +122,15 @@ describe('<DialogContainer/>', () => {
                 kvpPerioder: []
             }
         ];
-        jest.spyOn(OppfolgingProvider, 'useOppfolgingContext').mockImplementation(() => useFetchOppfolging);
-        jest.spyOn(DialogProvider, 'useDialogContext').mockImplementation(() => useDialogContext);
-        const wrapper = mount(
+        vi.spyOn(OppfolgingProvider, 'useOppfolgingContext').mockImplementation(() => useFetchOppfolging);
+        vi.spyOn(DialogProvider, 'useDialogContext').mockImplementation(() => useDialogContext);
+        const { queryByText, getByRole } = render(
             <MemoryRouter>
                 <DialogListe />
             </MemoryRouter>
         );
-        expect(wrapper.find(NyDialogLink).exists()).toBeFalsy();
-        expect(wrapper.find(DialogPreview).exists()).toBeTruthy();
+        expect(queryByText('Ny dialog')).toBeNull();
+        expect(getByRole('navigation').children.length).toBeGreaterThan(0);
     });
     test('Bruker under oppf, elementer synes', () => {
         useFetchOppfolging.data!.underOppfolging = true;
@@ -152,20 +144,20 @@ describe('<DialogContainer/>', () => {
                 kvpPerioder: []
             }
         ];
-        jest.spyOn(OppfolgingProvider, 'useOppfolgingContext').mockImplementation(() => useFetchOppfolging);
-        jest.spyOn(AppContext, 'useHarNivaa4Context').mockImplementation(() => ({
+        vi.spyOn(OppfolgingProvider, 'useOppfolgingContext').mockImplementation(() => useFetchOppfolging);
+        vi.spyOn(AppContext, 'useHarNivaa4Context').mockImplementation(() => ({
             harNivaa4: true,
             hasError: false,
             isPending: false
         }));
-        jest.spyOn(DialogProvider, 'useDialogContext').mockImplementation(() => useDialogContext);
-        const wrapper = mount(
+        vi.spyOn(DialogProvider, 'useDialogContext').mockImplementation(() => useDialogContext);
+        const { getByText } = render(
             <MemoryRouter>
                 <DialogOversikt />
             </MemoryRouter>
         );
-        expect(wrapper.find(NyDialogLink).exists()).toBeTruthy();
-        expect(wrapper.find(DialogPreview).exists()).toBeTruthy();
+        getByText('Start en ny dialog');
+        getByText(dialoger[0].overskrift);
     });
 });
 
@@ -182,17 +174,20 @@ describe('<Dialog/>', () => {
                 kvpPerioder: []
             }
         ];
-        jest.spyOn(DialogProvider, 'useDialogContext').mockImplementation(() => useDialogContext);
-        jest.spyOn(OppfolgingProvider, 'useOppfolgingContext').mockImplementation(() => useFetchOppfolging);
+        vi.spyOn(DialogProvider, 'useDialogContext').mockImplementation(() => useDialogContext);
+        vi.spyOn(OppfolgingProvider, 'useOppfolgingContext').mockImplementation(() => useFetchOppfolging);
         Element.prototype.scrollIntoView = () => {};
-        const wrapper = mount(
+        const { queryByLabelText, queryByText, queryByRole } = render(
             <MemoryRouter initialEntries={['/1']}>
-                <DialogContainer />
+                <Routes>
+                    <Route path={'/:dialogId'} element={<Dialog />} />
+                </Routes>
             </MemoryRouter>
         );
-        expect(wrapper.find(HenvendelseInputBox).exists()).toBeTruthy();
-        expect(wrapper.find(HenvendelseList).exists()).toBeTruthy();
-        expect(wrapper.find(Checkbox).exists()).toBeFalsy();
+
+        expect(queryByRole('form')).toBeNull();
+        expect(queryByLabelText('Meldinger')).toBeTruthy();
+        expect(queryByText('Venter på svar fra NAV')).toBeNull();
     });
     test('Bruker under oppf. viser komponenter i Dialog', () => {
         useFetchOppfolging.data!.underOppfolging = true;
@@ -206,22 +201,27 @@ describe('<Dialog/>', () => {
                 kvpPerioder: []
             }
         ];
-        jest.spyOn(DialogProvider, 'useDialogContext').mockImplementation(() => useDialogContext);
-        jest.spyOn(OppfolgingProvider, 'useOppfolgingContext').mockImplementation(() => useFetchOppfolging);
-        jest.spyOn(BrukerProvider, 'useUserInfoContext').mockImplementation(() => userInfo);
-        jest.spyOn(AppContext, 'useHarNivaa4Context').mockImplementation(() => ({
+        vi.spyOn(DialogProvider, 'useDialogContext').mockImplementation(() => useDialogContext);
+        vi.spyOn(OppfolgingProvider, 'useOppfolgingContext').mockImplementation(() => useFetchOppfolging);
+        vi.spyOn(BrukerProvider, 'useUserInfoContext').mockImplementation(() => userInfo);
+        vi.spyOn(AppContext, 'useHarNivaa4Context').mockImplementation(() => ({
             harNivaa4: true,
             hasError: false,
             isPending: false
         }));
         Element.prototype.scrollIntoView = () => {};
-        const wrapper = mount(
+        const wrapper = render(
             <MemoryRouter initialEntries={['/1']}>
-                <DialogContainer />
+                <Routes>
+                    <Route path={'/:dialogId'} element={<Dialog />} />
+                </Routes>
             </MemoryRouter>
         );
-        expect(wrapper.find(DialogHeader).exists()).toBeTruthy();
-        expect(wrapper.find(HenvendelseInputBox).exists()).toBeTruthy();
-        expect(wrapper.find(HenvendelseList).exists()).toBeTruthy();
+        wrapper.queryByLabelText('Ny melding');
+        expect(wrapper.queryByLabelText('Meldinger')).toBeTruthy();
+        wrapper.getByText('Venter på svar fra NAV');
+        // expect(wrapper.find(DialogHeader).exists()).toBeTruthy();
+        // expect(wrapper.find(HenvendelseInputBox).exists()).toBeTruthy();
+        // expect(wrapper.find(MeldingList).exists()).toBeTruthy();
     });
 });

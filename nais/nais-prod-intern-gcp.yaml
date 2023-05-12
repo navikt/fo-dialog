@@ -34,7 +34,13 @@ spec:
     - name: JSON_CONFIG
       value: >
         {
-          "contextPath": "/arbeid/dialog",
+          "redirects": [
+            {
+              "fromPath": "/arbeid/dialog/*",
+              "toUrl": "https://arbeidsrettet-dialog.intern.nav.no",
+              "preserveFromPath": false
+            }
+          ],
           "gcs": {
             "bucketName": "arbeidsrettet-dialog-intern-prod"
           },

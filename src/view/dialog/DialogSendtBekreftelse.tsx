@@ -1,8 +1,7 @@
-import { Normaltekst } from 'nav-frontend-typografi';
+import { Alert, BodyShort } from '@navikt/ds-react';
 import React, { useEffect, useState } from 'react';
 
 import Hjelpetekst from '../../felleskomponenter/Hjelpetekst';
-import OkMessage from '../../felleskomponenter/mesage/OkMessage';
 import { DialogData, StringOrNull } from '../../utils/Typer';
 import { HandlingsType, ViewState } from '../ViewState';
 import styles from './DialogSendtBekreftelse.module.less';
@@ -35,22 +34,25 @@ function Melding(props: { tekst?: string; erVeileder: boolean }) {
     const { tekst, erVeileder } = props;
 
     return !tekst ? null : (
-        <div className={styles.meldingContainer} aria-hidden={!hasRendred}>
-            <OkMessage>
-                <Normaltekst>{tekst}</Normaltekst>
-                <Hjelpetekst className={styles.hjelpeTekst} hidden={!erVeileder}>
+        <div className="flex justify-center" aria-hidden={!hasRendred}>
+            <Alert variant="success" inline>
+                <BodyShort>{tekst}</BodyShort>
+            </Alert>
+            {erVeileder && (
+                <Hjelpetekst className="ml-1.5" hidden={!erVeileder}>
                     <div className={styles.hjelpeTekstInnhold}>
-                        <Normaltekst>
+                        <BodyShort>
                             Hvis ikke brukeren leser dialogmeldingen innen en halvtime, så vil brukeren motta meldingen
                             på den måten de har registrert i det offentlige kontaktregisteret. Brukeren får beskjed om
-                            en ny melding og det lenkes til dialogen. Beskjeden sendes gjennom Altinn.
-                        </Normaltekst>
-                        <Normaltekst>
+                            en ny melding og det lenkes til dialogen. Beskjeden sendes gjennom Altinn i åpningstiden
+                            9-17 på hverdager.
+                        </BodyShort>
+                        <BodyShort>
                             Sender du flere meldinger innen en halv time så blir det kun sendt én SMS eller e-post.
-                        </Normaltekst>
+                        </BodyShort>
                     </div>
                 </Hjelpetekst>
-            </OkMessage>
+            )}
         </div>
     );
 }
@@ -62,7 +64,7 @@ function DialogSendtBekreftelse(props: Props) {
     const tekst = getTekst(viewState.sistHandlingsType, erVeileder, dialog.overskrift);
 
     return (
-        <div role="status">
+        <div role="status" className="pb-4">
             <Melding erVeileder={erVeileder} tekst={tekst} />
         </div>
     );

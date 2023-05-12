@@ -1,27 +1,23 @@
-import classNames from 'classnames';
-import { Normaltekst } from 'nav-frontend-typografi';
-import Veilederpanel from 'nav-frontend-veilederpanel';
+import { BodyShort, GuidePanel } from '@navikt/ds-react';
 import React from 'react';
 
 import { visibleIfHoc } from '../../felleskomponenter/VisibleIfHoc';
-import styles from './InfoVedIngenDialoger.module.less';
-import { ReactComponent as VeilederIkon } from './veileder.svg';
 
-interface PropTypes {
-    className: string;
+interface Props {
+    className?: string;
 }
 
-function InfoVedIngenDialoger(props: PropTypes) {
+const InfoVedIngenDialoger = ({ className }: Props) => {
     return (
-        <div className={classNames(props.className, styles.ingenDialoger)}>
-            <Veilederpanel type={'plakat'} kompakt fargetema="suksess" svg={<VeilederIkon />}>
-                <Normaltekst className={styles.avsnitt}>
+        <div className={className}>
+            <GuidePanel>
+                <BodyShort className="block pb-2">
                     Her kan du sende meldinger til veilederen din om arbeid og oppfølging.
-                </Normaltekst>
-                <Normaltekst className={styles.avsnitt}>Du får svar i løpet av noen dager.</Normaltekst>
-            </Veilederpanel>
+                </BodyShort>
+                <BodyShort className="block pb-2">Du får svar i løpet av noen dager.</BodyShort>
+            </GuidePanel>
         </div>
     );
-}
+};
 
 export default visibleIfHoc(InfoVedIngenDialoger);

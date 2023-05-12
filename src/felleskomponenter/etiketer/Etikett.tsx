@@ -1,7 +1,5 @@
-import classNames from 'classnames';
+import { Tag } from '@navikt/ds-react';
 import React from 'react';
-
-import styles from './Etiketter.module.less';
 
 interface Props {
     visible: boolean;
@@ -13,43 +11,30 @@ interface VenterSvarFraBrukerProps {
     erVeileder: boolean;
 }
 
-interface EtiketProps {
-    visible: boolean;
-    children: string;
-    clasName: string;
-}
-
-function Etiket(props: EtiketProps) {
-    if (!props.visible) {
-        return null;
-    }
-    const classname = classNames(styles.etikett, props.clasName);
-    return <div className={classname}>{props.children}</div>;
-}
-
 export function VenterSvarFraBruker(props: VenterSvarFraBrukerProps) {
     const tekst = props.erVeileder ? 'Venter på svar fra bruker' : 'Venter på svar fra deg';
-
+    if (!props.visible) return null;
     return (
-        <Etiket visible={props.visible} clasName={styles.venterPaBruker}>
+        <Tag variant="warning" size="small">
             {tekst}
-        </Etiket>
+        </Tag>
     );
 }
 
 export function VenterSvarFraNAV(props: Props) {
+    if (!props.visible) return null;
     return (
-        <Etiket visible={props.visible} clasName={styles.venterPaNav}>
+        <Tag variant="info" size="small">
             Venter på svar fra NAV
-        </Etiket>
+        </Tag>
     );
 }
 
-export function ViktigMelding(props: Props) {
-    const cls = classNames(styles.viktigMelding, props.className);
+export function ViktigMelding(props: { visible: boolean }) {
+    if (!props.visible) return null;
     return (
-        <Etiket visible={props.visible} clasName={cls}>
+        <Tag variant="error" size="small">
             Viktig melding
-        </Etiket>
+        </Tag>
     );
 }

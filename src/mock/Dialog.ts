@@ -1,11 +1,11 @@
-import { JSONArray, JSONObject, ResponseUtils } from 'yet-another-fetch-mock';
+import { ResponseComposition, RestContext, RestRequest } from 'msw';
 
 import { DialogData, HenvendelseData, KladdData, NyDialogMeldingData } from '../utils/Typer';
 import bruker from './Bruker';
-import { erEksternBruker, harIngenDialoger } from './demo/sessionstorage';
+import { erEksternBruker, harIngenDialoger } from './demo/localstorage';
 import { rndId } from './Utils';
 
-const dialoger: DialogData[] & JSONArray = [
+const dialoger: DialogData[] = [
     {
         id: '10',
         overskrift: 'Systemutvikler',
@@ -537,17 +537,20 @@ const dialoger: DialogData[] & JSONArray = [
     }
 ];
 
-export function lesDialog(dialogId: string) {
+export const lesDialog = (req: RestRequest, res: ResponseComposition, ctx: RestContext) => {
+    const dialogId = req.params.dialogId;
     const dialog: any = dialoger.find((dlg) => dlg.id === dialogId);
     if (dialog) {
         dialog.lest = true;
-        return ResponseUtils.jsonPromise(dialog);
+        return dialog;
     }
-    return Promise.resolve({ status: 404 });
-}
 
-export function opprettEllerOppdaterDialog(update: NyDialogMeldingData): DialogData & JSONObject {
-    const dialogId = !update.dialogId || update.dialogId === '' ? rndId() : `${update.dialogId}`;
+    return res(ctx.status(404));
+};
+
+export const opprettEllerOppdaterDialog = async (req: RestRequest): Promise<DialogData> => {
+    const body = (await req.json()) as NyDialogMeldingData;
+    const dialogId = !body.dialogId || body.dialogId === '' ? rndId() : `${body.dialogId}`;
     const nyHenvendelse: HenvendelseData = {
         id: rndId(),
         dialogId: dialogId,
@@ -556,14 +559,14 @@ export function opprettEllerOppdaterDialog(update: NyDialogMeldingData): DialogD
         sendt: new Date().toISOString(),
         lest: true,
         viktig: false,
-        tekst: update.tekst
+        tekst: body.tekst
     };
 
-    const eksisterendeDialog = dialoger.find((dialog) => update.dialogId !== undefined && dialog.id === dialogId);
+    const eksisterendeDialog = dialoger.find((dialog) => body.dialogId !== undefined && dialog.id === dialogId);
 
     if (eksisterendeDialog) {
         const oldDialog = eksisterendeDialog;
-        oldDialog.sisteTekst = update.tekst;
+        oldDialog.sisteTekst = body.tekst;
         oldDialog.sisteDato = nyHenvendelse.sendt;
         oldDialog.henvendelser.push(nyHenvendelse);
 
@@ -572,13 +575,13 @@ export function opprettEllerOppdaterDialog(update: NyDialogMeldingData): DialogD
             oldDialog.venterPaSvar = false;
         }
 
-        return oldDialog as DialogData & JSONObject;
+        return oldDialog as DialogData;
     } else {
         const nyDialog: DialogData = {
             id: nyHenvendelse.dialogId,
             overskrift:
-                update.overskrift === undefined || update.overskrift === null ? rndId().toString() : update.overskrift,
-            sisteTekst: update.tekst,
+                body.overskrift === undefined || body.overskrift === null ? rndId().toString() : body.overskrift,
+            sisteTekst: body.tekst,
             sisteDato: new Date().toISOString(),
             opprettetDato: new Date().toISOString(),
             historisk: false,
@@ -587,29 +590,29 @@ export function opprettEllerOppdaterDialog(update: NyDialogMeldingData): DialogD
             ferdigBehandlet: bruker().erVeileder,
             lestAvBrukerTidspunkt: null,
             erLestAvBruker: false,
-            aktivitetId: update.aktivitetId || null,
+            aktivitetId: body.aktivitetId || null,
             henvendelser: [nyHenvendelse],
             egenskaper: []
         };
         dialoger.push(nyDialog);
-        return nyDialog as DialogData & JSONObject;
+        return nyDialog as DialogData;
     }
+};
+
+export function setVenterPaSvar(req: RestRequest) {
+    const dialog = dialoger.find((dlg) => dlg.id === req.params.dialogId);
+    if (dialog) {
+        dialog.venterPaSvar = req.params.bool === 'true';
+    }
+    return dialog as DialogData;
 }
 
-export function setVenterPaSvar(dialogId: string, venterPaSvar: boolean) {
-    const dialog = dialoger.find((dlg) => dlg.id === dialogId);
+export function setFerdigBehandlet(req: RestRequest) {
+    const dialog = dialoger.find((dlg) => dlg.id === req.params.dialogId);
     if (dialog) {
-        dialog.venterPaSvar = venterPaSvar;
+        dialog.ferdigBehandlet = req.params.bool === 'true';
     }
-    return dialog as DialogData & JSONObject;
-}
-
-export function setFerdigBehandlet(dialogId: string, ferdigBehandlet: boolean) {
-    const dialog = dialoger.find((dlg) => dlg.id === dialogId);
-    if (dialog) {
-        dialog.ferdigBehandlet = ferdigBehandlet;
-    }
-    return dialog as DialogData & JSONObject;
+    return dialog as DialogData;
 }
 
 export const opprettDialogEtterRender = () => {
@@ -658,7 +661,7 @@ export const opprettDialogEtterRender = () => {
     }, 2000);
 };
 
-export const kladder: KladdData[] & JSONArray = [
+export const kladder: KladdData[] = [
     {
         dialogId: null,
         aktivitetId: 'SOKEAVTALE1',

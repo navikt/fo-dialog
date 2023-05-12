@@ -1,15 +1,33 @@
 import queryString from 'query-string';
-import { useLocation } from 'react-router';
+import { useLocation, useParams } from 'react-router';
 
-function getFirst(maybeArray: string | string[]): string {
+import { DialogData } from '../../utils/Typer';
+import { MaybeAktivitet, findAktivitet, useAktivitetContext } from '../AktivitetProvider';
+import { useDialogContext } from '../DialogProvider';
+
+function getFirst(maybeArray: string | (string | null)[]): string | undefined {
     if (Array.isArray(maybeArray)) {
-        return maybeArray[0];
+        const first = maybeArray[0];
+        return first ?? undefined;
     }
     return maybeArray;
 }
 
-export function useAktivitetId() {
+export function useAktivitetId(): string | undefined {
     const location = useLocation();
     const { aktivitetId } = queryString.parse(location.search);
-    return !!aktivitetId ? getFirst(aktivitetId) : undefined;
+    return aktivitetId ? getFirst(aktivitetId) : undefined;
 }
+
+export const useSelectedAktivitet = (): MaybeAktivitet => {
+    const dialog = useSelectedDialog();
+    const aktivitetData = useAktivitetContext();
+    const aktivitetId = useAktivitetId() ?? dialog?.aktivitetId;
+    return findAktivitet(aktivitetData, aktivitetId);
+};
+export const useSelectedDialog = (): DialogData | undefined => {
+    const { dialoger } = useDialogContext();
+    const params = useParams();
+    const { dialogId } = params;
+    return dialoger.find((dialog) => dialog.id === dialogId);
+};

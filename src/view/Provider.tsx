@@ -1,5 +1,4 @@
-import { AlertStripeFeil } from 'nav-frontend-alertstriper';
-import NavFrontendSpinner from 'nav-frontend-spinner';
+import { Alert, Loader } from '@navikt/ds-react';
 import React, { Dispatch, SetStateAction, useContext, useEffect, useState } from 'react';
 
 import { Status, hasData, hasError, isPending } from '../api/typer';
@@ -110,13 +109,13 @@ export function Provider(props: Props) {
         isPending(oppfolgingstatus) ||
         harLoggetInnNiva4.isPending
     ) {
-        return <NavFrontendSpinner />;
-    } else if (hasError(brukerstatus) || hasError(oppfolgingstatus) || hasDialogError(dialogstatus)) {
         return (
-            <AlertStripeFeil className={styles.feil}>
-                Noe gikk dessverre galt med systemet. Prøv igjen senere.
-            </AlertStripeFeil>
+            <div className="w-full h-full flex justify-center">
+                <Loader size="3xlarge" />
+            </div>
         );
+    } else if (hasError(brukerstatus) || hasError(oppfolgingstatus) || hasDialogError(dialogstatus)) {
+        return <Alert variant="error">Noe gikk dessverre galt med systemet. Prøv igjen senere.</Alert>;
     }
     return (
         <DialogContext.Provider value={dialogDataProvider}>

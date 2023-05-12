@@ -1,11 +1,10 @@
-import { Hovedknapp } from 'nav-frontend-knapper';
+import { Button } from '@navikt/ds-react';
 import React from 'react';
 
+import { OppfolgingsApi } from '../../api/UseApiBasePath';
 import { fetchData } from '../../utils/Fetch';
 import { UpdateTypes, dispatchUpdate } from '../../utils/UpdateEvent';
-import { apiBasePath } from '../../utils/UseApiBasePath';
 import { useOppfolgingContext } from '../OppfolgingProvider';
-import styles from './AlertLess.module.less';
 import StatusAdvarselWrapper, { KanIkkeKontakteElektroniskVeileder } from './StatusAdvarselWrapper';
 
 interface Props {
@@ -20,7 +19,7 @@ function Bruker() {
     const oppfolgingData = useOppfolgingContext();
 
     const fjernManuell = () => {
-        fetchData(`${apiBasePath}/veilarboppfolging/api/oppfolging/settDigital`, {
+        fetchData(OppfolgingsApi.settDigigtal, {
             method: 'POST'
         })
             .then(oppfolgingData.hentOppfolging)
@@ -28,14 +27,14 @@ function Bruker() {
     };
 
     return (
-        <div className={styles.flexColum}>
+        <div className="flex flex-col">
             <StatusAdvarselWrapper>
                 Du har ikke digital oppfølging fra NAV. Du kan derfor ikke ha digital dialog med veileder
             </StatusAdvarselWrapper>
-            <Hovedknapp onClick={fjernManuell} className={styles.knapp}>
+            <Button onClick={fjernManuell} className="mt-4 self-center">
                 {' '}
                 Endre til digital oppfølging{' '}
-            </Hovedknapp>
+            </Button>
         </div>
     );
 }

@@ -1,12 +1,6 @@
-@import (reference) '~nav-frontend-core/less/_variabler';
-@import (reference) '~nav-frontend-typografi-style/src/mixins';
-@import (reference) '~nav-frontend-typografi-style/src/fontimports';
-
 .etikett {
-    .typo-normal-mixin();
     font-size: 0.8rem;
     display: inline-block;
-    border-radius: @border-radius-small;
     margin-right: 0.3rem;
     margin-top: 0.2rem;
     margin-bottom: 0.15rem;
@@ -14,16 +8,16 @@
 }
 
 .venterPaBruker {
-    background-color: @navLimeGronnLighten80;
-    border: 1px @navLimeGronnLighten20 solid;
+    background-color: var(--a-limegreen-600);
+    border: 1px var(--a-limegreen-300) solid;
 }
 
 .venterPaNav {
-    background-color: @navLillaLighten80;
-    border: 1px @navLillaLighten20 solid;
+    background-color: var(--a-purple-600);
+    border: 1px var(--a-purple-300) solid;
 }
 
 .viktigMelding {
-    background-color: @redErrorLighten80;
-    border: 1px @redErrorLighten20 solid;
+    background-color: var(--a-red-500);
+    border: 1px var(--a-red-300) solid;
 }

@@ -1,104 +1,81 @@
-// Jest Snapshot v1, https://goo.gl/fbAQLP
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
 
-exports[`<AktivitetskortPreview /> skal rendre stillingsaktivitet som i snapshot 1`] = `
-<AktivitetskortPreview
-  aktivitetId="123"
->
-  <section
-    aria-label="Aktivitet knyttet til dialog"
-  >
-    <Systemtittel
-      className="visually-hidden"
+exports[`<AktivitetskortPreview /> > skal rendre stillingsaktivitet som i snapshot 1`] = `
+<body>
+  <div>
+    <section
+      aria-label="Aktivitet knyttet til dialog"
+      class="_aktivitetSeksjon_4c9fd1"
     >
-      <TypografiBase
-        className="visually-hidden"
-        type="systemtittel"
+      <h2
+        class="visually-hidden navds-heading navds-heading--undefined"
       >
-        <h2
-          className="typo-systemtittel visually-hidden"
-        >
-          Aktivitet knyttet til dialog
-        </h2>
-      </TypografiBase>
-    </Systemtittel>
-    <Undertittel>
-      <TypografiBase
-        type="undertittel"
+        Aktivitet knyttet til dialog
+      </h2>
+      <h3
+        class="_storSkjermTittel_4c9fd1 navds-heading navds-heading--undefined"
       >
-        <h2
-          className="typo-undertittel"
-        >
-          Stilling
-          : 
-          Kantinemedarbeider
-        </h2>
-      </TypografiBase>
-    </Undertittel>
-    <LenkepanelBase
-      border={false}
-      href="https://aktivitetsplan.dev.nav.no/aktivitet/vis/123"
-      linkCreator={[Function]}
-      onClick={[Function]}
-    >
+        Stilling
+        : 
+        Kantinemedarbeider
+      </h3>
       <a
-        className="lenkepanel"
+        class="navds-panel navds-link-panel _lenkepanelbase_4c9fd1 navds-panel--border"
         href="https://aktivitetsplan.dev.nav.no/aktivitet/vis/123"
-        onClick={[Function]}
       >
-        <div>
-          <div>
-            <Undertekst>
-              <TypografiBase
-                type="undertekst"
-              >
-                <p
-                  className="typo-undertekst"
-                >
-                  Stilling
-                </p>
-              </TypografiBase>
-            </Undertekst>
-            <Undertittel
-              id="dialog_header_2"
+        <div
+          class="navds-link-panel__content"
+        >
+          <div
+            class="_aktivteskortWrapper_4c9fd1"
+          >
+            <div
+              class="_info_4c9fd1"
             >
-              <TypografiBase
+              <p
+                class="_tittel_4c9fd1 navds-body-short"
+              >
+                Stilling
+              </p>
+              <h4
+                class="navds-heading navds-heading--undefined"
                 id="dialog_header_2"
-                type="undertittel"
               >
-                <h2
-                  className="typo-undertittel"
-                  id="dialog_header_2"
-                >
-                  Kantinemedarbeider
-                </h2>
-              </TypografiBase>
-            </Undertittel>
-            <WithVisibleIf
-              visible={true}
+                Kantinemedarbeider
+              </h4>
+              <p
+                class="navds-body-short"
+              >
+                Testesen
+              </p>
+            </div>
+            <p
+              class="_lesmer_4c9fd1"
             >
-              <Undertekst>
-                <TypografiBase
-                  type="undertekst"
-                >
-                  <p
-                    className="typo-undertekst"
-                  >
-                    Testesen
-                  </p>
-                </TypografiBase>
-              </Undertekst>
-            </WithVisibleIf>
+              Gå til aktiviteten
+            </p>
           </div>
-          <p>
-            Gå til aktiviteten
-          </p>
         </div>
-        <span
-          className="lenkepanel__indikator"
-          key="indikator"
-        />
+        <svg
+          aria-hidden="true"
+          class="navds-link-panel__chevron"
+          fill="none"
+          focusable="false"
+          height="1em"
+          role="img"
+          viewBox="0 0 24 24"
+          width="1em"
+          xmlns="http://www.w3.org/2000/svg"
+        >
+          <path
+            clip-rule="evenodd"
+            d="m17.414 12-7.707 7.707-1.414-1.414L14.586 12 8.293 5.707l1.414-1.414L17.414 12Z"
+            fill="currentColor"
+            fill-rule="evenodd"
+          />
+        </svg>
       </a>
-    </LenkepanelBase>
-  </section>
-</AktivitetskortPreview>
+    </section>
+  </div>
+</body>
 `;

@@ -1,61 +1,60 @@
+import { Heading, Link } from '@navikt/ds-react';
 import classNames from 'classnames';
-import { VenstreChevron } from 'nav-frontend-chevron';
-import Lenke from 'nav-frontend-lenker';
-import { Systemtittel } from 'nav-frontend-typografi';
 import React from 'react';
-import { useParams } from 'react-router';
+import { useLocation } from 'react-router';
 
-import { minsideUrl } from '../../metrics/constants';
+import { AKTIVITETSPLAN_URL, MINSIDE_URL } from '../../constants';
 import useKansendeMelding from '../../utils/UseKanSendeMelding';
 import { useUserInfoContext } from '../BrukerProvider';
 import { useDialogContext } from '../DialogProvider';
 import InfoVedIngenDialoger from '../info/InfoVedIngenDialoger';
 import OmDialogLenke from '../info/OmDialogLenke';
+import { useSelectedDialog } from '../utils/useAktivitetId';
 import DialogListe from './DialogListe';
-import styles from './DialogOversikt.module.less';
 import DialogOverviewHeader from './NyDialogLink';
 
-interface HeaderProps {
-    erVeileder: boolean;
-}
-const DialogOversiktHeader = (props: HeaderProps) => {
-    if (props.erVeileder) {
-        return null;
-    }
-
+const DialogOversiktHeader = ({ erVeileder }: { erVeileder: boolean }) => {
     return (
-        <>
-            <Lenke href={minsideUrl} className={styles.dintnav}>
-                <VenstreChevron />
-                Min side
-            </Lenke>
-            <Systemtittel tag="h1" className={styles.tittel}>
-                Dialog med veilederen din
-            </Systemtittel>
-        </>
+        <div className="p-4 flex flex-col gap-y-2 border-b border-border-divider">
+            <div className="flex md:justify-between gap-x-4">
+                {!erVeileder ? (
+                    <>
+                        <Link href={MINSIDE_URL}>Min side</Link>
+                        <Link href={AKTIVITETSPLAN_URL}>Aktivitetsplan</Link>
+                    </>
+                ) : null}
+                <OmDialogLenke />
+            </div>
+            {!erVeileder ? (
+                <Heading level="1" size="medium">
+                    Dialog med veilederen din
+                </Heading>
+            ) : null}
+        </div>
     );
 };
 
 const DialogOversikt = () => {
     const kanSendeMelding = useKansendeMelding();
     const { dialoger } = useDialogContext();
-    const { dialogId } = useParams();
+    const dialog = useSelectedDialog();
+    const location = useLocation();
+    const isNyRoute = location.pathname.startsWith('/ny');
     const userInfoContext = useUserInfoContext();
     const erVeileder = !!userInfoContext?.erVeileder;
-
-    const visningCls = dialogId ? classNames(styles.dialogOversikt, styles.dialogValgt) : styles.dialogOversikt;
-
     return (
-        <div className={visningCls}>
-            <div className={styles.header}>
-                <DialogOversiktHeader erVeileder={erVeileder} />
-                <div className={styles.verktoylinje}>
-                    <DialogOverviewHeader visible={kanSendeMelding} />
-                    <OmDialogLenke />
-                </div>
+        <div
+            className={classNames(
+                { hidden: !!dialog || isNyRoute } /* Hvis liten skjerm, bare vis dialog-liste på "Homepage"  */,
+                'border-r border-border-divider w-full h-full md:max-w-[20rem] md:flex md:flex-col'
+            )}
+        >
+            <DialogOversiktHeader erVeileder={erVeileder} />
+            <div className="px-2 pb-8 bg-gray-100 pt-4 overflow-y-scroll h-full border-r border-border-divider">
+                <DialogOverviewHeader visible={kanSendeMelding} />
+                <InfoVedIngenDialoger className="md:hidden mt-4" visible={dialoger.length === 0} />
+                <DialogListe />
             </div>
-            <InfoVedIngenDialoger className={styles.info} visible={dialoger.length === 0} />
-            <DialogListe />
         </div>
     );
 };

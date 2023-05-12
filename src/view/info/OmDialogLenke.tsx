@@ -1,19 +1,20 @@
-import classNames from 'classnames';
-// @ts-ignore
-import Ikon from 'nav-frontend-ikoner-assets';
-import React from 'react';
-import { Link } from 'react-router-dom';
+import { Link, Modal } from '@navikt/ds-react';
+import React, { useState } from 'react';
 
-import styles from './OmDialogLenke.module.less';
+import { InfoOmDialogSide } from './InfoOmDialogSide';
 
 function OmDialogLenke() {
-    const knappCls = classNames('knapp knapp--flat knapp--kompakt knapp--mini', styles.omDialog);
+    const [open, setOpen] = useState(false);
 
     return (
-        <Link to="/informasjon" className={knappCls}>
-            <span>Om dialog</span>
-            <Ikon kind="help-circle" />
-        </Link>
+        <>
+            <Link as="button" onClick={() => setOpen(true)}>
+                Om dialog
+            </Link>
+            <Modal open={open} onClose={() => setOpen(!open)} closeButton={true}>
+                <InfoOmDialogSide />
+            </Modal>
+        </>
     );
 }
 

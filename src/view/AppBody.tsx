@@ -1,19 +1,24 @@
 import React, { useEffect } from 'react';
-import shajs from 'sha.js';
+import { Outlet } from 'react-router';
 import { v4 as uuidv4 } from 'uuid';
 
 import loggEvent from '../felleskomponenter/logging';
+import { PageViewMetricCollector } from '../metrics/PageViewMetricCollector';
 import { Bruker, OppfolgingData } from '../utils/Typer';
-import AktivitetContainer from './aktivitet/AktivitetContainer';
-import styles from './App.module.less';
 import { useUserInfoContext } from './BrukerProvider';
-import DialogContainer from './dialog/DialogContainer';
-import DialogOversiktContainer from './dialogliste/DialogOversiktContainer';
+import { DialogHeader } from './dialog/DialogHeader';
+import DialogOversikt from './dialogliste/DialogOversikt';
+import { EventHandler } from './EventHandler';
 import { useOppfolgingContext } from './OppfolgingProvider';
 import { dataOrUndefined } from './Provider';
 
-function hash(string: string): string {
-    return shajs('sha256').update(string).digest('hex');
+function hash(val: string) {
+    const utf8 = new TextEncoder().encode(val);
+    return crypto.subtle.digest('SHA-256', utf8).then((hashBuffer) => {
+        const hashArray = Array.from(new Uint8Array(hashBuffer));
+        const hashHex = hashArray.map((bytes) => bytes.toString(16).padStart(2, '0')).join('');
+        return hashHex;
+    });
 }
 
 const useLogBruker = (brukerdata: Bruker | null, oppfolgingData?: OppfolgingData) => {
@@ -27,7 +32,7 @@ const useLogBruker = (brukerdata: Bruker | null, oppfolgingData?: OppfolgingData
     }, [underOppfolging, erBruker, aktorId]);
 };
 
-export default function AppBody() {
+const AppBody = () => {
     const oppfolgingContext = useOppfolgingContext();
     const brukerdata = useUserInfoContext();
     const oppfolgingData = dataOrUndefined(oppfolgingContext);
@@ -50,10 +55,18 @@ export default function AppBody() {
     }
 
     return (
-        <div className={styles.app__body}>
-            <DialogOversiktContainer />
-            <DialogContainer />
-            <AktivitetContainer />
+        <div className={'overflow-hidden flex flex-row w-full h-full'}>
+            <DialogOversikt />
+            <div className="h-full flex flex-col flex-1">
+                <DialogHeader />
+                <div className="flex flex-1 min-h-0">
+                    <Outlet />
+                </div>
+            </div>
+            <PageViewMetricCollector />
+            <EventHandler />
         </div>
     );
-}
+};
+
+export default AppBody;

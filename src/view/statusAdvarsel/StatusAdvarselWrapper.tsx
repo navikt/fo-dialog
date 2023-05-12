@@ -1,12 +1,10 @@
-import { AlertStripeAdvarsel } from 'nav-frontend-alertstriper';
+import { Alert } from '@navikt/ds-react';
 import React from 'react';
-
-import styles from './AlertLess.module.less';
 
 export default function StatusAdvarselWrapper(props: { children: React.ReactNode }) {
     return (
-        <div className={styles.alertstripeWrapper}>
-            <AlertStripeAdvarsel>{props.children}</AlertStripeAdvarsel>
+        <div className="flex justify-center p-4 border-b border-border-divider">
+            <Alert variant="warning">{props.children}</Alert>
         </div>
     );
 }

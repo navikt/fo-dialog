@@ -1,7 +1,8 @@
 import React, { useLayoutEffect } from 'react';
-import { useHistory } from 'react-router';
+import { useNavigate } from 'react-router';
 
 import loggEvent from '../felleskomponenter/logging';
+import { useRoutes } from '../routes';
 import { useEventListener } from './utils/useEventListner';
 
 interface EventDetails {
@@ -25,13 +26,14 @@ function loggingAntallBrukere() {
 }
 
 export function EventHandler() {
-    const history = useHistory();
+    const navigate = useNavigate();
+    const { dialogRoute, nyRoute } = useRoutes();
     useEventListener<EventDetails>('visDialog', (event) => {
         const { dialogId, aktivitetId } = event.detail;
         if (!!dialogId) {
-            history.push(`/${dialogId}`);
+            navigate(dialogRoute(dialogId));
         } else if (!!aktivitetId) {
-            history.push(`/ny?aktivitetId=${aktivitetId}`);
+            navigate(nyRoute(aktivitetId));
         }
     });
 

@@ -1,11 +1,12 @@
-import { Checkbox } from 'nav-frontend-skjema';
+import { Checkbox, CheckboxGroup } from '@navikt/ds-react';
+import classNames from 'classnames';
 import React from 'react';
 
+import { Status } from '../../api/typer';
 import { DialogData } from '../../utils/Typer';
 import { useDialogContext } from '../DialogProvider';
 import { useOppfolgingContext } from '../OppfolgingProvider';
 import { dataOrUndefined } from '../Provider';
-import styles from './DialogCheckboxes.module.less';
 
 interface Props {
     toggleFerdigBehandlet(ferdigBehandler: boolean): void;
@@ -13,24 +14,42 @@ interface Props {
     ferdigBehandlet: boolean;
     venterPaSvar: boolean;
     disabled: boolean;
+    values: ('ferdigBehandlet' | 'venterPaSvar')[];
+    loading: boolean;
 }
 
-const DialogCheckboxes = (props: Props) => (
-    <div className={styles.checkboxBlock}>
-        <Checkbox
-            label="Venter på svar fra NAV"
-            checked={!props.ferdigBehandlet}
-            className={styles.checkboxItem}
-            disabled={props.disabled}
-            onChange={() => props.toggleFerdigBehandlet(!props.ferdigBehandlet)}
-        />
-        <Checkbox
-            label="Venter på svar fra bruker"
-            checked={props.venterPaSvar}
-            className={styles.checkboxItem}
-            disabled={props.disabled}
-            onChange={() => props.toggleVenterPaSvar(!props.venterPaSvar)}
-        />
+const DialogCheckboxes = ({
+    values,
+    ferdigBehandlet,
+    toggleFerdigBehandlet,
+    toggleVenterPaSvar,
+    loading,
+    venterPaSvar,
+    disabled
+}: Props) => (
+    <div className="mb-2">
+        <CheckboxGroup legend={'Filter'} hideLegend value={values}>
+            <div className="flex">
+                <Checkbox
+                    value={'ferdigBehandlet'}
+                    size="small"
+                    className="pr-8"
+                    disabled={disabled || loading}
+                    onChange={() => toggleFerdigBehandlet(!ferdigBehandlet)}
+                >
+                    Venter på svar fra NAV
+                </Checkbox>
+                <Checkbox
+                    value={'venterPaSvar'}
+                    size="small"
+                    className="pr-8"
+                    disabled={disabled || loading}
+                    onChange={() => toggleVenterPaSvar(!venterPaSvar)}
+                >
+                    Venter på svar fra bruker
+                </Checkbox>
+            </div>
+        </CheckboxGroup>
     </div>
 );
 
@@ -58,9 +77,18 @@ const ManagedDialogCheckboxes = (props: ManagedProps) => {
     };
     const disabled = dialog.historisk || !oppfolgingData?.underOppfolging;
 
+    const values = [
+        !dialog.ferdigBehandlet ? ('ferdigBehandlet' as const) : undefined,
+        dialog.venterPaSvar ? ('venterPaSvar' as const) : undefined
+    ].filter((it) => !!it);
+
+    const laster = dialogContext.status === Status.PENDING || dialogContext.status === Status.RELOADING;
+
     return (
         <DialogCheckboxes
+            values={values}
             disabled={disabled}
+            loading={laster}
             toggleFerdigBehandlet={toggleFerdigBehandlet}
             toggleVenterPaSvar={toggleVenterPaSvar}
             ferdigBehandlet={dialog.ferdigBehandlet}

@@ -1,4 +1,4 @@
-import Lenke from 'nav-frontend-lenker';
+import { Link } from '@navikt/ds-react';
 import React from 'react';
 
 import StatusAdvarselWrapper, { KanIkkeKontakteElektroniskVeileder } from './StatusAdvarselWrapper';
@@ -16,7 +16,7 @@ function BrukerKrr() {
         <StatusAdvarselWrapper>
             For å ta i bruk den digitale dialogen med din veileder, må du fjerne reservasjonen din mot digital
             kommunikasjon.
-            <Lenke href="https://www.norge.no/nn/reservasjon">Gå til Norge.no for å fjerne reservasjonen</Lenke>
+            <Link href="https://www.norge.no/nn/reservasjon">Gå til Norge.no for å fjerne reservasjonen</Link>
         </StatusAdvarselWrapper>
     );
 }

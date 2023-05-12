@@ -1,17 +1,16 @@
+import { BodyShort, Detail, Heading, LinkPanel } from '@navikt/ds-react';
 import classNames from 'classnames';
-import { LenkepanelBase } from 'nav-frontend-lenkepanel';
-import { Normaltekst, Systemtittel, Undertekst } from 'nav-frontend-typografi';
 import React, { useEffect, useRef, useState } from 'react';
-import { Flipped, Flipper } from 'react-flip-toolkit';
+import { useNavigate } from 'react-router';
 
-import WrapInReactLink from '../../felleskomponenter/WrapInReactLink';
+import { useRoutes } from '../../routes';
 import { Aktivitet, ArenaAktivitet } from '../../utils/aktivitetTypes';
 import { formaterDate } from '../../utils/Date';
 import { DialogData, StringOrNull } from '../../utils/Typer';
 import { getDialogTittel } from '../aktivitet/TextUtils';
 import { findAktivitet, useAktivitetContext } from '../AktivitetProvider';
 import { useEventListener } from '../utils/useEventListner';
-import styles from './DialogPreview.module.less';
+import styles from './DialogPreview.module.css';
 import { EtikettListe } from './EtikettListe';
 import Ikon from './ikon/Ikon';
 
@@ -25,9 +24,9 @@ const ALIGN_TO_BOTTOM: ScrollIntoViewOptions = { block: 'end', inline: 'nearest'
 function Tittel(props: TittelProps) {
     const tittel = props.aktivitet ? getDialogTittel(props.aktivitet) : props.tittel;
     return (
-        <Systemtittel tag="p" className={styles.heading}>
+        <Heading className="text-ellipsis overflow-hidden" level="2" size="small">
             {tittel}
-        </Systemtittel>
+        </Heading>
     );
 }
 
@@ -84,28 +83,36 @@ function DialogPreview(props: Props) {
     const datoString = !!sisteDato ? formaterDate(sisteDato) : '';
     const aktivitet = findAktivitet(aktivitetData, aktivitetId);
 
-    const erLest = lest || historisk;
-
-    const lenkepanelCls = classNames(styles.preview, {
-        [styles.innholdUlest]: !erLest,
-        [styles.innholdValgt]: detteErValgtDialog
-    });
-    const markoer = erLest ? styles.markoerLest : styles.markoerUlest;
+    const navigate = useNavigate();
+    const { dialogRoute } = useRoutes();
+    const onGoTo = (event: React.MouseEvent<HTMLElement>) => {
+        event.preventDefault();
+        navigate(dialogRoute(id));
+    };
 
     return (
-        <LenkepanelBase className={lenkepanelCls} href={`/${id}`} linkCreator={WrapInReactLink}>
-            <div className={markoer} />
-            <Ikon dialog={dialog} />
-            <div className={styles.content}>
-                <Normaltekst className="visually-hidden">{typeText(dialog)}</Normaltekst>
-                <Tittel tittel={overskrift} aktivitet={aktivitet} />
-                <Undertekst className={styles.dato}>{datoString}</Undertekst>
-                <EtikettListe dialog={dialog} />
-                <Normaltekst className="visually-hidden">{meldingerText(dialog.henvendelser.length)}</Normaltekst>
+        <LinkPanel
+            className={classNames('my-1 border !gap-0 p-2 max-w-full', styles.dialogPreview, {
+                'bg-[#e6f0ff]': detteErValgtDialog
+            })}
+            href={dialogRoute(id)}
+            onClick={onGoTo}
+        >
+            <div className="flex flex-row">
+                <Ikon dialog={dialog} />
+                <div className="flex-grow min-w-0">
+                    <BodyShort className="hidden">{typeText(dialog)}</BodyShort>
+                    <Tittel tittel={overskrift} aktivitet={aktivitet} />
+                    <Detail>{datoString}</Detail>
+                    <EtikettListe dialog={dialog} />
+                    <BodyShort className="hidden">{meldingerText(dialog.henvendelser.length)}</BodyShort>
+                </div>
+                <BodyShort aria-hidden="true" className="flex items-center ml-2">
+                    {dialog.henvendelser.length}
+                </BodyShort>
+                <div ref={dialogref}></div>
             </div>
-            <Normaltekst aria-hidden="true">{dialog.henvendelser.length}</Normaltekst>
-            <div ref={dialogref}></div>
-        </LenkepanelBase>
+        </LinkPanel>
     );
 }
 
@@ -114,22 +121,35 @@ interface ListeProps {
     valgDialog?: string;
 }
 
-export function DialogPreviewListe(props: ListeProps) {
-    const { dialoger, valgDialog } = props;
+let skalFadeIn = false;
+export function DialogPreviewListe({ dialoger, valgDialog }: ListeProps) {
+    const [antallDialoger, setAntallDialoger] = useState<number | undefined>(undefined);
+
+    useEffect(() => {
+        if (antallDialoger === undefined) {
+            skalFadeIn = false;
+        } else if (dialoger.length === antallDialoger + 1) {
+            skalFadeIn = true;
+        }
+        setAntallDialoger(dialoger.length);
+    }, [dialoger]);
 
     if (dialoger.length === 0) return null;
     return (
-        <Flipper flipKey={dialoger.map((d) => d.id).join('')}>
-            <div role="list" aria-label="Dialogliste">
-                {dialoger.map((dialog) => (
-                    <Flipped flipId={dialog.id} key={dialog.id}>
-                        <div role="listitem">
-                            <DialogPreview dialog={dialog} key={dialog.id} valgtDialogId={valgDialog} />
-                        </div>
-                    </Flipped>
+        <div role="region" aria-live="polite">
+            <ul aria-label="Dialogliste">
+                {dialoger.map((dialog, index) => (
+                    <li
+                        key={dialog.id}
+                        className={classNames('', {
+                            [styles.fadeIn]: index === 0 && skalFadeIn
+                        })}
+                    >
+                        <DialogPreview dialog={dialog} key={dialog.id} valgtDialogId={valgDialog} />
+                    </li>
                 ))}
-            </div>
-        </Flipper>
+            </ul>
+        </div>
     );
 }
 

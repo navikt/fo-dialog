@@ -1,5 +1,7 @@
-import { pathnamePrefix } from '../utils/UseApiBasePath';
-import { runningOnGithubPages, settSammenmedSlasher } from '../view/utils/utils';
+import { joinPaths } from '@navikt/navspa/dist/async/utils';
+
+import { USE_HASH_ROUTER } from '../constants';
+import { settSammenmedSlasher } from '../view/utils/utils';
 
 export function rndId() {
     const crypto: Crypto = window.crypto;
@@ -26,10 +28,6 @@ export const toggleFnrInUrl = (hashPart: string, fnr?: string) => {
 };
 
 export const gotoStartTestPage = (fnr?: string) => {
-    if (runningOnGithubPages) {
-        const hashPartOfUrl = toggleFnrInUrl(window.location.hash, fnr);
-        window.history.replaceState({}, '', settSammenmedSlasher(pathnamePrefix, hashPartOfUrl));
-    } else {
-        window.history.replaceState({}, '', settSammenmedSlasher(pathnamePrefix, fnr));
-    }
+    const pathnamePrefix = `${import.meta.env.BASE_URL}${USE_HASH_ROUTER ? '#/' : ''}`;
+    window.history.replaceState({}, '', `${pathnamePrefix}${fnr ?? ''}`);
 };

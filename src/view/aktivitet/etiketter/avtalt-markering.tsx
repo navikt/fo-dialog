@@ -1,21 +1,19 @@
-import classNames from 'classnames';
+import { Tag } from '@navikt/ds-react';
 import React from 'react';
-
-import styles from './avtalt-markering.module.less';
-import EtikettBase from './etikett-base';
 
 interface Props {
     hidden?: boolean;
-    className?: string;
 }
 
 function AvtaltMarkering(props: Props) {
-    const { className, hidden } = props;
+    const { hidden } = props;
 
-    if (hidden) {
-        return null;
-    }
-    return <EtikettBase className={classNames(styles.etikett, className)}>Avtalt med NAV</EtikettBase>;
+    if (hidden) return null;
+    return (
+        <Tag className="mr-2" variant="alt3-filled" size="small">
+            Avtalt med NAV
+        </Tag>
+    );
 }
 
 export default AvtaltMarkering;

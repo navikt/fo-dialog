@@ -1,3 +1,4 @@
+import { Tag } from '@navikt/ds-react';
 import classNames from 'classnames';
 import React from 'react';
 
@@ -38,16 +39,13 @@ export interface Props {
 }
 
 function StillingFraNavEtikett(props: Props) {
-    const { etikett, className, hidden } = props;
-
+    const { etikett, hidden } = props;
     if (!etikett) return null;
-
-    const cls = getCls(etikett);
-
+    if (hidden) return null;
     return (
-        <EtikettBase className={classNames(cls, className)} hidden={hidden || cls === styles.ikkeStartet}>
+        <Tag className="mr-2" variant="success" size="small">
             {getText(etikett)}
-        </EtikettBase>
+        </Tag>
     );
 }
 

@@ -1,0 +1,21 @@
+name: Test
+
+on: [push, workflow_dispatch]
+
+env:
+  PRINT_PAYLOAD: true
+  TZ: Europe/Amsterdam
+  CI: true
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - uses: actions/setup-node@v3
+        with:
+          node-version: 18
+      - run: npm ci
+      - run: npm run prettier-check
+      - run: npm run test
+      - run: npm run build

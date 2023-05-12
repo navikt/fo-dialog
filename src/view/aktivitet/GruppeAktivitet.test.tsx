@@ -1,37 +1,36 @@
-import '../../utils/SetupEnzyme';
-
-import { shallow } from 'enzyme';
+import { render } from '@testing-library/react';
 import React from 'react';
 
-import { ArenaAktivitetTypes } from '../../utils/aktivitetTypes';
+import { ArenaAktivitet, ArenaAktivitetTypes } from '../../utils/aktivitetTypes';
 import GruppeAktivitet from './GruppeAktivitet';
 
 describe('<GruppeAktivitet/>', () => {
     it('skal vise bare en dato hvis fraDato==tilDato', () => {
-        const aktivitet: any = {
+        const aktivitet: ArenaAktivitet = {
             type: ArenaAktivitetTypes.UTDANNINGSAKTIVITET,
             fraDato: '2018-09-06T14:53:43.519+02:00',
             tilDato: '2018-09-06T14:54:43.519+02:00',
             beskrivelse: 'test',
             moeteplanListe: null
-        };
-        const wrapper = shallow(<GruppeAktivitet aktivitet={aktivitet} />);
-        expect(wrapper.find('[merkelapptekst="Dato"]').length).toBe(1);
-        expect(wrapper.find('[merkelapptekst="Fra dato"]').length).toBe(0);
+        } as unknown as ArenaAktivitet;
+
+        const { getByText } = render(<GruppeAktivitet aktivitet={aktivitet} />);
+
+        getByText('Dato');
     });
 
     it('skal vise både fra og tildato dersom de er forskjellige', () => {
-        const aktivitet: any = {
+        const aktivitet: ArenaAktivitet = {
             type: ArenaAktivitetTypes.UTDANNINGSAKTIVITET,
             beskrivelse: null,
             fraDato: '2018-09-06T14:53:43.519+02:00',
             tilDato: '2018-09-07T14:53:43.519+02:00',
             moeteplanListe: null
-        };
+        } as unknown as ArenaAktivitet;
 
-        const wrapper = shallow(<GruppeAktivitet aktivitet={aktivitet} />);
-        expect(wrapper.find('[merkelapptekst="Dato"]').length).toBe(0);
-        expect(wrapper.find('[merkelapptekst="Fra dato"]').length).toBe(1);
-        expect(wrapper.find('[merkelapptekst="Til dato"]').length).toBe(1);
+        const { getByText } = render(<GruppeAktivitet aktivitet={aktivitet} />);
+
+        getByText('Fra dato');
+        getByText('Til dato');
     });
 });

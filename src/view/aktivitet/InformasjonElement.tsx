@@ -1,10 +1,9 @@
-import Tekstomrade from 'nav-frontend-tekstomrade';
-import { Undertekst } from 'nav-frontend-typografi';
+import { Heading } from '@navikt/ds-react';
+import classNames from 'classnames';
 import React, { ReactNode } from 'react';
 
 import EksternLenke from '../../felleskomponenter/EksternLenke';
 import { StringOrNull } from '../../utils/Typer';
-import styles from './AktivitetskortInfoBox.module.less';
 
 interface TekstomradeProps {
     merkelapptekst: string;
@@ -19,7 +18,7 @@ export default function InformasjonElement(props: TekstomradeProps) {
 
     return (
         <InformasjonElementRaw merkelapptekst={merkelapptekst}>
-            <Tekstomrade className={styles.overflowEllipse}>{verdi}</Tekstomrade>
+            <span className="text-ellipsis overflow-hidden">{verdi}</span>
         </InformasjonElementRaw>
     );
 }
@@ -48,8 +47,8 @@ export function InformasjonElementRaw(props: PropTypes) {
     if (!children) return null;
 
     return (
-        <div className={styles.informasjonselement}>
-            <Undertekst children={merkelapptekst} className={styles.merkelapp} />
+        <div className={classNames('grow flex-wrap min-w-4 my-4')}>
+            <Heading level="3">{merkelapptekst}</Heading>
             {children}
         </div>
     );

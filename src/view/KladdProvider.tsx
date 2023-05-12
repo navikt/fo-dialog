@@ -1,9 +1,9 @@
 import React, { useCallback, useContext, useMemo, useState } from 'react';
 
+import { DialogApi } from '../api/UseApiBasePath';
 import { fetchData, fnrQuery } from '../utils/Fetch';
 import { valueOrNull } from '../utils/TypeHelper';
 import { KladdData, StringOrNull } from '../utils/Typer';
-import { apiBasePath } from '../utils/UseApiBasePath';
 
 enum Status {
     INITIAL,
@@ -59,15 +59,14 @@ export function useKladdDataProvider(fnr?: string): KladdDataProviderType {
     const [state, setState] = useState(initKladdState);
 
     const query = fnrQuery(fnr);
-
-    const baseUrl = useMemo(() => `${apiBasePath}/veilarbdialog/api/kladd${query}`, [query]);
+    const kladdUrl = useMemo(() => DialogApi.kladd(query), [query]);
 
     const hentKladder = useCallback(() => {
         setState((prevState) => ({
             ...prevState,
             status: isKladdReloading(prevState.status) ? Status.RELOADING : Status.PENDING
         }));
-        return fetchData<KladdData[]>(baseUrl)
+        return fetchData<KladdData[]>(kladdUrl)
             .then((kladder) => {
                 setState({ status: Status.OK, kladder: kladder });
                 return kladder;
@@ -76,7 +75,7 @@ export function useKladdDataProvider(fnr?: string): KladdDataProviderType {
                 setState((prevState) => ({ ...prevState, status: Status.ERROR }));
                 return [];
             });
-    }, [baseUrl, setState]);
+    }, [kladdUrl, setState]);
 
     const oppdaterKladd = useCallback(
         (dialogId?: StringOrNull, aktivitetId?: StringOrNull, tema?: StringOrNull, melding?: StringOrNull) => {
@@ -93,12 +92,12 @@ export function useKladdDataProvider(fnr?: string): KladdDataProviderType {
                 return { ...prevState, kladder: ny };
             });
 
-            fetchData<void>(baseUrl, {
+            fetchData<void>(kladdUrl, {
                 method: 'post',
                 body: JSON.stringify(kladdData)
             });
         },
-        [setState, baseUrl]
+        [setState, kladdUrl]
     );
 
     const slettKladd = useCallback(

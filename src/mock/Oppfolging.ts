@@ -1,5 +1,3 @@
-import { JSONArray } from 'yet-another-fetch-mock';
-
 import { PeriodeData } from '../utils/Typer';
 import {
     brukerKanIkkeVarsles,
@@ -7,9 +5,9 @@ import {
     erManuellBruker,
     erPrivatBruker,
     ingenOppfPerioder
-} from './demo/sessionstorage';
+} from './demo/localstorage';
 
-const oppfPerioder: PeriodeData[] & JSONArray = [
+const oppfPerioder: PeriodeData[] = [
     {
         aktorId: '1234567988888',
         veileder: false,

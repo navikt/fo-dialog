@@ -1,5 +1,4 @@
-import Hjelpetekst from 'nav-frontend-hjelpetekst';
-import { PopoverOrientering } from 'nav-frontend-popover';
+import { HelpText } from '@navikt/ds-react';
 import React from 'react';
 
 import StatusAdvarselWrapper from './StatusAdvarselWrapper';
@@ -10,10 +9,10 @@ interface Props {
 }
 
 const Mere = () => (
-    <Hjelpetekst type={PopoverOrientering.Over}>
+    <HelpText placement="top">
         Denne brukeren har ikke vært innlogget de siste 18 månedene med nivå 4 (for eksempel BankID). <br />
         Du kan derfor ikke sende forhåndsorientering, varsel og meldinger.
-    </Hjelpetekst>
+    </HelpText>
 );
 
 const ManglerNivaa4Veileder = () => (
@@ -21,7 +20,7 @@ const ManglerNivaa4Veileder = () => (
         Denne brukeren kan ikke logge inn i aktivitetsplan og dialog. <Mere />
     </StatusAdvarselWrapper>
 );
-const Nivaa4FeilerVeilede = () => (
+const Nivaa4FeilerVeileder = () => (
     <StatusAdvarselWrapper>
         Noe gikk galt, og du får dessverre ikke sendt dialogmeldinger. Prøv igjen senere.
     </StatusAdvarselWrapper>
@@ -30,4 +29,4 @@ const Nivaa4FeilerVeilede = () => (
 export const ManglerNivaa4 = (props: Props) =>
     props.erVeileder ? <ManglerNivaa4Veileder /> : <TekniskFeilBrukerstotte />;
 export const Nivaa4Feiler = (props: Props) =>
-    props.erVeileder ? <Nivaa4FeilerVeilede /> : <TekniskFeilBrukerstotte />;
+    props.erVeileder ? <Nivaa4FeilerVeileder /> : <TekniskFeilBrukerstotte />;

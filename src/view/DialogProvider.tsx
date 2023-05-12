@@ -2,10 +2,10 @@ import { isAfter } from 'date-fns';
 import React, { useCallback, useContext, useMemo, useState } from 'react';
 
 import { Status } from '../api/typer';
+import { DialogApi } from '../api/UseApiBasePath';
 import { loggChangeInDialog } from '../felleskomponenter/logging';
 import { fetchData, fnrQuery } from '../utils/Fetch';
 import { DialogData, NyDialogMeldingData, SistOppdatert } from '../utils/Typer';
-import { apiBasePath } from '../utils/UseApiBasePath';
 
 export interface DialogDataProviderType {
     status: Status;
@@ -52,17 +52,15 @@ export function useDialogDataProvider(fnr?: string): DialogDataProviderType {
 
     const query = fnrQuery(fnr);
 
-    const baseUrl = useMemo(() => `${apiBasePath}/veilarbdialog/api/dialog${query}`, [query]);
-    const sistOppdatertUrl = useMemo(() => `${apiBasePath}/veilarbdialog/api/dialog/sistOppdatert${query}`, [query]);
-    const lesUrl = useCallback((id: string) => `${apiBasePath}/veilarbdialog/api/dialog/${id}/les${query}`, [query]);
+    const dialogUrl = useMemo(() => DialogApi.hentDialog(query), [query]);
+    const sistOppdatertUrl = useMemo(() => DialogApi.sistOppdatert(query), [query]);
+    const lesUrl = useCallback((id: string) => DialogApi.settLest(id, query), [query]);
     const ferdigBehandletUrl = useCallback(
-        (id: string, ferdigBehandlet: boolean) =>
-            `${apiBasePath}/veilarbdialog/api/dialog/${id}/ferdigbehandlet/${ferdigBehandlet}${query}`,
+        (id: string, ferdigBehandlet: boolean) => DialogApi.ferdigBehandlet(id, ferdigBehandlet, query),
         [query]
     );
     const venterPaSvarUrl = useCallback(
-        (id: string, venterPaSvar: boolean) =>
-            `${apiBasePath}/veilarbdialog/api/dialog/${id}/venter_pa_svar/${venterPaSvar}${query}`,
+        (id: string, venterPaSvar: boolean) => DialogApi.venterPaSvar(id, venterPaSvar, query),
         [query]
     );
 
@@ -71,7 +69,7 @@ export function useDialogDataProvider(fnr?: string): DialogDataProviderType {
             ...prevState,
             status: isDialogReloading(prevState.status) ? Status.RELOADING : Status.PENDING
         }));
-        return fetchData<DialogData[]>(baseUrl)
+        return fetchData<DialogData[]>(dialogUrl)
             .then((dialoger) => {
                 setState({ status: Status.OK, dialoger: dialoger, sistOppdatert: new Date() });
                 return dialoger;
@@ -80,13 +78,13 @@ export function useDialogDataProvider(fnr?: string): DialogDataProviderType {
                 setState((prevState) => ({ ...prevState, status: Status.ERROR, error: e }));
                 return [];
             });
-    }, [baseUrl, setState]);
+    }, [dialogUrl, setState]);
 
     const pollForChanges = useCallback(() => {
         return fetchData<SistOppdatert>(sistOppdatertUrl).then((data) => {
             if (!!data.sistOppdatert) {
                 if (isAfter(data.sistOppdatert, sistOppdatert)) {
-                    fetchData<DialogData[]>(baseUrl).then((dialoger) => {
+                    fetchData<DialogData[]>(dialogUrl).then((dialoger) => {
                         setState((prevState) => {
                             loggChangeInDialog(prevState.dialoger, dialoger);
                             return { status: Status.OK, dialoger: dialoger, sistOppdatert: new Date() };
@@ -95,7 +93,7 @@ export function useDialogDataProvider(fnr?: string): DialogDataProviderType {
                 }
             }
         });
-    }, [baseUrl, sistOppdatertUrl, setState, sistOppdatert]);
+    }, [dialogUrl, sistOppdatertUrl, setState, sistOppdatert]);
 
     const updateDialogInDialoger = useCallback(
         (dialog: DialogData) => {
@@ -125,7 +123,7 @@ export function useDialogDataProvider(fnr?: string): DialogDataProviderType {
                 aktivitetId: aktivitetId
             };
 
-            return fetchData<DialogData>(baseUrl, {
+            return fetchData<DialogData>(dialogUrl, {
                 method: 'post',
                 body: JSON.stringify(nyDialogData)
             }).then((dialog) => {
@@ -141,7 +139,7 @@ export function useDialogDataProvider(fnr?: string): DialogDataProviderType {
                 return dialog;
             });
         },
-        [setState, baseUrl, updateDialogInDialoger]
+        [setState, dialogUrl, updateDialogInDialoger]
     );
 
     const nyDialog = useCallback(

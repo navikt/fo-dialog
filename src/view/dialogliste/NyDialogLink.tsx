@@ -1,18 +1,19 @@
+import { PlusIcon } from '@navikt/aksel-icons';
+import { Button } from '@navikt/ds-react';
 import React from 'react';
-import { Link } from 'react-router-dom';
+import { useNavigate } from 'react-router';
 
 import { visibleIfHoc } from '../../felleskomponenter/VisibleIfHoc';
-import styles from './NyDialogLink.module.less';
-import { ReactComponent as PlussIkon } from './pluss.svg';
+import { useRoutes } from '../../routes';
 
 const NyDialogLink = () => {
+    const navigate = useNavigate();
+    const { nyRoute } = useRoutes();
+    const goToNy = () => navigate(nyRoute());
     return (
-        <div className={styles.header}>
-            <Link className={styles.dialogKnapp} to={'/ny'}>
-                <PlussIkon className={styles.plusslogo} />
-                Ny dialog
-            </Link>
-        </div>
+        <Button className="w-full" onClick={goToNy} icon={<PlusIcon aria-hidden />}>
+            Start en ny dialog
+        </Button>
     );
 };
 export default visibleIfHoc(NyDialogLink);
