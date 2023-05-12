@@ -10,8 +10,7 @@ import { DialogData } from '../../../utils/Typer';
 import { UpdateTypes, dispatchUpdate } from '../../../utils/UpdateEvent';
 import { useDialogContext } from '../../DialogProvider';
 import { useKladdContext } from '../../KladdProvider';
-import { useOppfolgingContext } from '../../OppfolgingProvider';
-import { dataOrUndefined, useViewContext } from '../../Provider';
+import { useViewContext } from '../../Provider';
 import { HandlingsType, sendtNyHenvendelse } from '../../ViewState';
 import useHenvendelseStartTekst from '../UseHenvendelseStartTekst';
 
@@ -33,8 +32,6 @@ interface Props {
 }
 
 const HenvendelseInputBox = (props: Props) => {
-    const oppfolgingContext = useOppfolgingContext();
-    const oppfolging = dataOrUndefined(oppfolgingContext);
     const { hentDialoger, nyHenvendelse } = useDialogContext();
     const [noeFeilet, setNoeFeilet] = useState(false);
     const startTekst = useHenvendelseStartTekst();
@@ -70,10 +67,6 @@ const HenvendelseInputBox = (props: Props) => {
             timer.current && callback.current && callback.current();
         };
     }, []);
-
-    if (!oppfolging?.underOppfolging || valgtDialog.historisk) {
-        return null;
-    }
 
     const defaultValues: MeldingFormValues = {
         melding: !!kladd?.tekst ? kladd.tekst : startTekst

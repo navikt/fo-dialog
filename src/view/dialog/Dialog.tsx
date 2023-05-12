@@ -9,20 +9,22 @@ import useKansendeMelding from '../../utils/UseKanSendeMelding';
 import { useUserInfoContext } from '../BrukerProvider';
 import { useDialogContext } from '../DialogProvider';
 import { MeldingList } from '../melding/MeldingList';
-import { useFnrContext, useViewContext } from '../Provider';
+import { useOppfolgingContext } from '../OppfolgingProvider';
+import { dataOrUndefined, useFnrContext, useViewContext } from '../Provider';
 import { useSelectedDialog } from '../utils/useAktivitetId';
 import { useEventListener } from '../utils/useEventListner';
 import { endreDialogSomVises } from '../ViewState';
 import ManagedDialogCheckboxes from './DialogCheckboxes';
-import { DialogHeader, dialogHeaderID1, dialogHeaderID2 } from './DialogHeader';
+import { dialogHeaderID1, dialogHeaderID2 } from './DialogHeader';
 import DialogInputBoxVisible from './henvendelseInput/HenvendelseInputBox';
 import HistoriskInfo from './HistoriskInfo';
 import { IngenDialog } from './IngenDialog';
 
 export function Dialog() {
+    const oppfolgingContext = useOppfolgingContext();
+    const oppfolging = dataOrUndefined(oppfolgingContext);
     const kanSendeMelding = useKansendeMelding();
     const { lesDialog } = useDialogContext();
-    const params = useParams();
 
     const valgtDialog = useSelectedDialog();
     const dialogId = valgtDialog?.id;
@@ -87,12 +89,14 @@ export function Dialog() {
                 className={classNames('border-t border-border-divider p-4 bg-white', { 'pt-2': !!bruker?.erVeileder })}
             >
                 <ManagedDialogCheckboxes dialog={valgtDialog} visible={!!bruker?.erVeileder} />
-                <DialogInputBoxVisible
-                    key={valgtDialog.id}
-                    dialog={valgtDialog}
-                    kanSendeHenveldelse={kanSendeHenveldelse}
-                    erBruker={!!bruker?.erBruker}
-                />
+                {!oppfolging?.underOppfolging || valgtDialog.historisk ? null : (
+                    <DialogInputBoxVisible
+                        key={valgtDialog.id}
+                        dialog={valgtDialog}
+                        kanSendeHenveldelse={kanSendeHenveldelse}
+                        erBruker={!!bruker?.erBruker}
+                    />
+                )}
             </section>
         </section>
     );
