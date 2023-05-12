@@ -27,6 +27,7 @@ spec:
       memory: 512Mi
   ingresses:
     - https://arbeidsrettet-dialog.intern.nav.no
+    - https://arbeidsrettet-dialog.intern.nav.no/arbeid/dialog
   gcp:
     buckets:
       - name: arbeidsrettet-dialog-intern-prod

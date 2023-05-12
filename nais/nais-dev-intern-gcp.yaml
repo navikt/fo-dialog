@@ -27,6 +27,7 @@ spec:
       memory: 256Mi
   ingresses:
     - https://arbeidsrettet-dialog.intern.dev.nav.no
+    - https://arbeidsrettet-dialog.intern.dev.nav.no/arbeid/dialog
   accessPolicy:
     outbound:
       external:
