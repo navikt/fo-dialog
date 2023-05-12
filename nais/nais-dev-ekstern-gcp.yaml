@@ -71,6 +71,6 @@ spec:
           "proxies": [
             { "fromPath": "/veilarbaktivitet", "toUrl": "https://veilarbaktivitet.dev-fss-pub.nais.io/veilarbaktivitet", "toApp": {"name": "veilarbaktivitet", "namespace": "pto", "cluster": "dev-fss" } },
             { "fromPath": "/veilarbdialog", "toUrl": "https://veilarbdialog.dev-fss-pub.nais.io/veilarbdialog", "toApp": {"name": "veilarbdialog", "namespace": "pto", "cluster": "dev-fss" } },
-            { "fromPath": "/veilarboppfolging", "toUrl": "https://veilarboppfolging.dev-fss-pub.nais.io/veilarboppfolging", "toApp": {"name": "veilarboppfolging", "namespace": "pto", "cluster": "dev-fss" } },
+            { "fromPath": "/veilarboppfolging", "toUrl": "https://veilarboppfolging.dev-fss-pub.nais.io/veilarboppfolging", "toApp": {"name": "veilarboppfolging", "namespace": "pto", "cluster": "dev-fss" } }
           ]
         }
