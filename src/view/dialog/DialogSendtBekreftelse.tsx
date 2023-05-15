@@ -9,7 +9,7 @@ import styles from './DialogSendtBekreftelse.module.less';
 function getTekst(handling: HandlingsType, erVeileder: boolean, overskrift: StringOrNull) {
     if (erVeileder && HandlingsType.ingen !== handling) {
         return 'Sendt. Bruker får beskjed på sms eller e-post om en halvtime';
-    } else if (HandlingsType.nyHenvendelse === handling) {
+    } else if (HandlingsType.nyMelding === handling) {
         return 'Sendt. Du får svar i løpet av noen dager.';
     } else if (HandlingsType.nyDialog === handling) {
         if (!overskrift) {

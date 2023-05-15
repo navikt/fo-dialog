@@ -24,11 +24,11 @@ export interface DialogData {
     ferdigBehandlet: boolean;
     lestAvBrukerTidspunkt: StringOrNull;
     erLestAvBruker: boolean;
-    henvendelser: HenvendelseData[];
+    henvendelser: MeldingsData[];
     egenskaper: string[];
 }
 
-export interface HenvendelseData {
+export interface MeldingsData {
     id: string;
     dialogId: string;
     avsender: string;

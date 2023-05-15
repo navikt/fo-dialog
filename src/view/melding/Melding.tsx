@@ -1,10 +1,10 @@
 import { PersonIcon } from '@navikt/aksel-icons';
-import { BodyShort, Chat } from '@navikt/ds-react';
+import { BodyShort, Chat, Link } from '@navikt/ds-react';
 import React from 'react';
 
 import { ViktigMelding } from '../../felleskomponenter/etiketer/Etikett';
 import { formaterDateAndTime } from '../../utils/Date';
-import { HenvendelseData } from '../../utils/Typer';
+import { MeldingsData } from '../../utils/Typer';
 import { useUserInfoContext } from '../BrukerProvider';
 
 function accessibleText(erBruker: boolean, erMeldingFraBruker: boolean) {
@@ -16,7 +16,7 @@ function accessibleText(erBruker: boolean, erMeldingFraBruker: boolean) {
 }
 
 interface Props {
-    henvendelseData: HenvendelseData;
+    henvendelseData: MeldingsData;
     viktigMarkering: boolean;
 }
 
@@ -48,10 +48,51 @@ export function Melding(props: Props) {
                 <Chat.Bubble>
                     <div className="flex flex-col items-start">
                         <ViktigMelding visible={viktigMarkering} />
-                        <span className="mt-2 whitespace-pre-wrap">{tekst}</span>
+                        <span className="mt-2 whitespace-pre-wrap">{toNodes(linkify(tekst))}</span>
                     </div>
                 </Chat.Bubble>
             </Chat>
         </div>
     );
+}
+
+const urlRegex = /(((\b(https?):\/\/)|(www\.))[-A-Z0-9+&@#\/%?=~_|!:,.;]*[-A-Z0-9+&@#\/%=~_|])/gi;
+interface TextSection {
+    value: string;
+    type: 'text' | 'link';
+}
+const toNodes = (sections: TextSection[]) => {
+    return (
+        <>
+            {sections.map((section, index) => {
+                if (section.type === 'text') {
+                    return <span key={index}>{section.value}</span>;
+                } else {
+                    return (
+                        <Link key={index} href={section.value}>
+                            {section.value}
+                        </Link>
+                    );
+                }
+            })}
+        </>
+    );
+};
+function linkify(text: string): TextSection[] {
+    const matches = text.match(urlRegex);
+    if (!matches?.length) return [{ value: text, type: 'text' }];
+    return matches.reduce(
+        ({ sections, remainingText }, nextMatch) => {
+            const [beforeText, ...rest] = remainingText.split(nextMatch);
+            return {
+                remainingText: rest.join(''),
+                sections: [
+                    ...sections,
+                    { value: beforeText, type: 'text' as const },
+                    { value: nextMatch, type: 'link' as const }
+                ]
+            };
+        },
+        { sections: [] as TextSection[], remainingText: text }
+    ).sections;
 }

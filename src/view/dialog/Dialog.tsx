@@ -1,14 +1,12 @@
 import { Heading } from '@navikt/ds-react';
 import classNames from 'classnames';
-import { d } from 'msw/lib/glossary-de6278a9';
 import React, { useEffect, useState } from 'react';
-import { useParams } from 'react-router';
 
 import { UpdateTypes, dispatchUpdate } from '../../utils/UpdateEvent';
 import useKansendeMelding from '../../utils/UseKanSendeMelding';
 import { useUserInfoContext } from '../BrukerProvider';
 import { useDialogContext } from '../DialogProvider';
-import { MeldingList } from '../melding/MeldingList';
+import { Meldinger } from '../melding/Meldinger';
 import { useOppfolgingContext } from '../OppfolgingProvider';
 import { dataOrUndefined, useFnrContext, useViewContext } from '../Provider';
 import { useSelectedDialog } from '../utils/useAktivitetId';
@@ -16,7 +14,7 @@ import { useEventListener } from '../utils/useEventListner';
 import { endreDialogSomVises } from '../ViewState';
 import ManagedDialogCheckboxes from './DialogCheckboxes';
 import { dialogHeaderID1, dialogHeaderID2 } from './DialogHeader';
-import DialogInputBoxVisible from './henvendelseInput/HenvendelseInputBox';
+import DialogInputBoxVisible from './henvendelseInput/MeldingInputBox';
 import HistoriskInfo from './HistoriskInfo';
 import { IngenDialog } from './IngenDialog';
 
@@ -82,7 +80,7 @@ export function Dialog() {
             <Heading className="hidden" aria-labelledby={`${dialogHeaderID1} ${dialogHeaderID2}`}>
                 Dialog Header
             </Heading>
-            <MeldingList dialogData={valgtDialog} viewState={viewState} fnr={fnr} />
+            <Meldinger dialogData={valgtDialog} viewState={viewState} fnr={fnr} />
             <HistoriskInfo hidden={aktivDialog} kanSendeMelding={kanSendeMelding} />
             <section aria-label="Ny melding" className={classNames('border-t border-border-divider bg-white p-4')}>
                 <ManagedDialogCheckboxes dialog={valgtDialog} visible={!!bruker?.erVeileder} />

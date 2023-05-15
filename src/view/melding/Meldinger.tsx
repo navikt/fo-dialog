@@ -2,13 +2,13 @@ import { Heading } from '@navikt/ds-react';
 import React, { useEffect, useRef } from 'react';
 
 import { compareDates } from '../../utils/Date';
-import { DialogData, HenvendelseData, StringOrNull } from '../../utils/Typer';
+import { DialogData, MeldingsData, StringOrNull } from '../../utils/Typer';
 import DialogSendtBekreftelse from '../dialog/DialogSendtBekreftelse';
 import LestAvTidspunkt from '../lest/LestTidspunkt';
 import { useSkjulHodefotForMobilVisning } from '../utils/useSkjulHodefotForMobilVisning';
 import { ViewState } from '../ViewState';
-import styles from './HenvendelseList.module.less';
 import { Melding } from './Melding';
+import styles from './Meldinger.less';
 
 interface Props {
     dialogData: DialogData;
@@ -16,7 +16,7 @@ interface Props {
     fnr?: string;
 }
 
-function sisteLesteHenvendelse(lest: StringOrNull, henvendelser: HenvendelseData[]) {
+function sisteLesteHenvendelse(lest: StringOrNull, henvendelser: MeldingsData[]) {
     if (!lest) {
         return null;
     }
@@ -26,7 +26,7 @@ function sisteLesteHenvendelse(lest: StringOrNull, henvendelser: HenvendelseData
     return sistLeste ? sistLeste.id : null;
 }
 
-export function MeldingList(props: Props) {
+export function Meldinger(props: Props) {
     const { lestAvBrukerTidspunkt, henvendelser } = props.dialogData;
 
     const meldingListRef = useRef<HTMLElement>(null);
