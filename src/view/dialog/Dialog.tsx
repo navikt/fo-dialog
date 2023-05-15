@@ -84,10 +84,7 @@ export function Dialog() {
             </Heading>
             <MeldingList dialogData={valgtDialog} viewState={viewState} fnr={fnr} />
             <HistoriskInfo hidden={aktivDialog} kanSendeMelding={kanSendeMelding} />
-            <section
-                aria-label="Ny melding"
-                className={classNames('border-t border-border-divider bg-white', { 'p-4': bruker?.erVeileder })}
-            >
+            <section aria-label="Ny melding" className={classNames('border-t border-border-divider bg-white p-4')}>
                 <ManagedDialogCheckboxes dialog={valgtDialog} visible={!!bruker?.erVeileder} />
                 {!oppfolging?.underOppfolging || valgtDialog.historisk ? null : (
                     <DialogInputBoxVisible
