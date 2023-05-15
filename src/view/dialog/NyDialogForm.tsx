@@ -115,7 +115,7 @@ const NyDialogForm = (props: Props) => {
     const bigScreen = window.innerWidth >= 768;
 
     return (
-        <div className={'bg-gray-100 h-full w-full lg:max-w-lgContainer'}>
+        <div className={'bg-gray-100 h-full w-full lg:max-w-lgContainer overflow-scroll'}>
             <form className="p-8 space-y-8" onSubmit={handleSubmit((data) => onSubmit(data))} autoComplete="off">
                 {!erVeileder ? (
                     <>

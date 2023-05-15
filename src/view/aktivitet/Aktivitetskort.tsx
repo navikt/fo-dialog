@@ -17,7 +17,7 @@ export function Aktivitetskort() {
         <div
             className={classNames(
                 'hidden lg:flex',
-                'w-full max-w-[30rem] border-l border-border-divider overflow-y-hidden'
+                'w-full max-w-[30rem] border-l border-border-divider overflow-scroll mb-4'
             )}
         >
             <section aria-label="Aktivitet knyttet til dialog" className="m-4">
