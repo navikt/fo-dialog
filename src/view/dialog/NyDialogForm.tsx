@@ -115,8 +115,12 @@ const NyDialogForm = (props: Props) => {
     const bigScreen = window.innerWidth >= 768;
 
     return (
-        <div className={'bg-gray-100 h-full w-full lg:max-w-lgContainer'}>
-            <form className="p-8 space-y-8" onSubmit={handleSubmit((data) => onSubmit(data))} autoComplete="off">
+        <div className={'bg-gray-100 h-full w-full lg:max-w-lgContainer xl:max-w-none'}>
+            <form
+                className="p-8 space-y-8 xl:max-w-248 xl:w-full"
+                onSubmit={handleSubmit((data) => onSubmit(data))}
+                autoComplete="off"
+            >
                 {!erVeileder ? (
                     <>
                         <GuidePanel poster={!bigScreen}>

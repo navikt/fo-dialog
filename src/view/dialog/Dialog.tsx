@@ -77,7 +77,7 @@ export function Dialog() {
     return (
         <section
             aria-labelledby={`${dialogHeaderID1} ${dialogHeaderID2}`}
-            className={classNames('flex flex-col grow w-full lg:max-w-lgContainer')}
+            className={classNames('flex flex-col grow w-full lg:max-w-lgContainer xl:max-w-none')}
         >
             <Heading className="hidden" aria-labelledby={`${dialogHeaderID1} ${dialogHeaderID2}`}>
                 Dialog Header
@@ -86,17 +86,21 @@ export function Dialog() {
             <HistoriskInfo hidden={aktivDialog} kanSendeMelding={kanSendeMelding} />
             <section
                 aria-label="Ny melding"
-                className={classNames('border-t border-border-divider p-4 bg-white', { 'pt-2': !!bruker?.erVeileder })}
+                className={classNames('border-t xl:flex xl:justify-center border-border-divider p-4 bg-white', {
+                    'pt-2': !!bruker?.erVeileder
+                })}
             >
-                <ManagedDialogCheckboxes dialog={valgtDialog} visible={!!bruker?.erVeileder} />
-                {!oppfolging?.underOppfolging || valgtDialog.historisk ? null : (
-                    <DialogInputBoxVisible
-                        key={valgtDialog.id}
-                        dialog={valgtDialog}
-                        kanSendeHenveldelse={kanSendeHenveldelse}
-                        erBruker={!!bruker?.erBruker}
-                    />
-                )}
+                <div className="xl:max-w-248 xl:w-full">
+                    <ManagedDialogCheckboxes dialog={valgtDialog} visible={!!bruker?.erVeileder} />
+                    {!oppfolging?.underOppfolging || valgtDialog.historisk ? null : (
+                        <DialogInputBoxVisible
+                            key={valgtDialog.id}
+                            dialog={valgtDialog}
+                            kanSendeHenveldelse={kanSendeHenveldelse}
+                            erBruker={!!bruker?.erBruker}
+                        />
+                    )}
+                </div>
             </section>
         </section>
     );

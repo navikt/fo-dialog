@@ -54,29 +54,31 @@ export function MeldingList(props: Props) {
         <section
             id="henvendelse-scroll-list"
             aria-label="Meldinger"
-            className="px-4 grow overflow-y-scroll bg-gray-100"
+            className="px-4 grow overflow-y-scroll bg-gray-100 xl:flex xl:justify-center"
             ref={meldingListRef}
         >
-            <Heading level="3" size={'medium'} className="hidden">
-                Meldinger
-            </Heading>
-            <div className="mb-4">
-                {sorterteHenvendelser.map((henvendelse, index) => (
-                    <React.Fragment key={henvendelse.id}>
-                        <div className={styles.henvendelseItem}>
-                            <Melding
-                                henvendelseData={henvendelse}
-                                viktigMarkering={(erViktig && index === 0) || henvendelse.viktig}
+            <div className="xl:max-w-248 xl:w-full ">
+                <Heading level="3" size={'medium'} className="hidden">
+                    Meldinger
+                </Heading>
+                <div className="mb-4">
+                    {sorterteHenvendelser.map((henvendelse, index) => (
+                        <React.Fragment key={henvendelse.id}>
+                            <div className={styles.henvendelseItem}>
+                                <Melding
+                                    henvendelseData={henvendelse}
+                                    viktigMarkering={(erViktig && index === 0) || henvendelse.viktig}
+                                />
+                            </div>
+                            <LestAvTidspunkt
+                                tidspunkt={lestAvBrukerTidspunkt!}
+                                visible={henvendelse.id === sisteHenvendelseLestAvBruker}
                             />
-                        </div>
-                        <LestAvTidspunkt
-                            tidspunkt={lestAvBrukerTidspunkt!}
-                            visible={henvendelse.id === sisteHenvendelseLestAvBruker}
-                        />
-                    </React.Fragment>
-                ))}
+                        </React.Fragment>
+                    ))}
+                </div>
+                <DialogSendtBekreftelse viewState={props.viewState} dialog={props.dialogData} fnr={props.fnr} />
             </div>
-            <DialogSendtBekreftelse viewState={props.viewState} dialog={props.dialogData} fnr={props.fnr} />
         </section>
     );
 }
