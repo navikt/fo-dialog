@@ -1,5 +1,6 @@
 import { PersonIcon } from '@navikt/aksel-icons';
 import { BodyShort, Chat, Link } from '@navikt/ds-react';
+import classNames from 'classnames';
 import React from 'react';
 
 import { ViktigMelding } from '../../felleskomponenter/etiketer/Etikett';
@@ -45,8 +46,9 @@ export function Melding(props: Props) {
                 position={erMeldingFraBruker ? 'right' : 'left'}
                 backgroundColor={backgroundColor}
                 avatarBgColor={avatarBgColor}
+                className={classNames('p-0', { 'md:pl-16': erMeldingFraBruker, 'md:pr-16': !erMeldingFraBruker })}
             >
-                <Chat.Bubble>
+                <Chat.Bubble className="">
                     <div className="flex flex-col items-start">
                         <ViktigMelding visible={viktigMarkering} />
                         <span className="mt-2 whitespace-pre-wrap">{linkify(tekst)}</span>
