@@ -11,7 +11,7 @@ jobs:
   dev-ekstern:
     name: Deploy to dev extern
   #    TODO @cdn -> @main før merge
-    uses: navikt/arbeidsrettet-dialog/.github/workflows/dev-ekstern.yml@cdn
+    uses: navikt/arbeidsrettet-dialog/.github/workflows/deploy-ekstern.yml@cdn
     with:
       kommando: npm run build:dev-ekstern
       bucket: arbeidsrettet-dialog-dev
