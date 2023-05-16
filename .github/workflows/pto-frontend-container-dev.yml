@@ -8,7 +8,6 @@ on:
     paths:
       - '.github/workflows/pto-frontend-container-dev.yml'
       - 'nais/nais-dev-ekstern-gcp.yaml'
-      - 'nais/nais-dev-intern-gcp.yaml'
   workflow_dispatch:
 
 concurrency:
@@ -23,11 +22,6 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
-      - name: deploy gcp dev intern
-        uses: nais/deploy/actions/deploy@v1
-        env:
-          CLUSTER: dev-gcp
-          RESOURCE: nais/nais-dev-intern-gcp.yaml
       - name: deploy gcp dev ekstern
         uses: nais/deploy/actions/deploy@v1
         env:
