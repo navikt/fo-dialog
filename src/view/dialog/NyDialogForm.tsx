@@ -116,7 +116,7 @@ const NyDialogForm = (props: Props) => {
     return (
         <div className={'bg-gray-100 h-full w-full lg:max-w-lgContainer overflow-scroll xl:max-w-none'}>
             <form
-                className="p-8 space-y-8 xl:max-w-248 xl:w-full"
+                className="p-8 space-y-8 xl:max-w-max-paragraph xl:w-full"
                 onSubmit={handleSubmit((data) => onSubmit(data))}
                 autoComplete="off"
             >
