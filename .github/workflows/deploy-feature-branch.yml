@@ -10,7 +10,8 @@ concurrency:
 jobs:
   dev-ekstern:
     name: Deploy to dev extern
-    uses: navikt/arbeidsrettet-dialog/.github/workflows/dev-ekstern.yml@main
+  #    TODO @cdn -> @main før merge
+    uses: navikt/arbeidsrettet-dialog/.github/workflows/dev-ekstern.yml@cdn
     with:
       kommando: npm run build:dev-ekstern
       bucket: arbeidsrettet-dialog-dev
