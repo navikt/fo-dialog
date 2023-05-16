@@ -4,6 +4,7 @@ import React, { ReactNode } from 'react';
 
 import EksternLenke from '../../felleskomponenter/EksternLenke';
 import { StringOrNull } from '../../utils/Typer';
+import { linkify } from '../melding/linkify';
 
 interface TekstomradeProps {
     merkelapptekst: string;
@@ -18,7 +19,7 @@ export default function InformasjonElement(props: TekstomradeProps) {
 
     return (
         <InformasjonElementRaw merkelapptekst={merkelapptekst}>
-            <span className="text-ellipsis overflow-hidden">{verdi}</span>
+            <span className="text-ellipsis overflow-hidden">{linkify(verdi)}</span>
         </InformasjonElementRaw>
     );
 }

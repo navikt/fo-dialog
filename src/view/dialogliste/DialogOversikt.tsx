@@ -46,7 +46,7 @@ const DialogOversikt = () => {
         <div
             className={classNames(
                 { hidden: !!dialog || isNyRoute } /* Hvis liten skjerm, bare vis dialog-liste på "Homepage"  */,
-                'border-r border-border-divider w-full h-full md:max-w-80 md:flex md:flex-col xl:max-w-none xl:min-w-[320px] xl:w-[16.7vw]'
+                'flex flex-col border-r border-border-divider w-full h-full md:max-w-80 md:flex md:flex-col xl:max-w-none xl:min-w-[320px] xl:w-[16.7vw]'
             )}
         >
             <DialogOversiktHeader erVeileder={erVeileder} />
