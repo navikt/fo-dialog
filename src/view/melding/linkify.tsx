@@ -16,7 +16,7 @@ const toNodes = (sections: TextSection[]) => {
                     return <span key={index}>{section.value}</span>;
                 } else {
                     return (
-                        <Link key={index} href={section.value}>
+                        <Link className="break-all" key={index} href={section.value}>
                             {section.value}
                         </Link>
                     );
