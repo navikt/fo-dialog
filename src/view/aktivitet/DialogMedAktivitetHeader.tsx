@@ -31,7 +31,7 @@ export function DialogMedAktivitetHeader(props: Props) {
             <div className="flex w-full flex-col md:flex-row">
                 <div className="flex flex-1 flex-row items-center gap-x-2 lg:max-w-lgContainer xl:max-w-none">
                     <TilbakeKnapp className="md:hidden" />
-                    <div className="ml-4">
+                    <div className="md:ml-4">
                         <Heading level="2" size="small" aria-label={`${typeTekst}: ${aktivitet?.tittel}`}>
                             {aktivitet?.tittel}
                         </Heading>
