@@ -51,7 +51,9 @@ const DialogOversikt = () => {
         >
             <DialogOversiktHeader erVeileder={erVeileder} />
             <div className="flex flex-col px-2 pb-8 bg-gray-100 pt-4 overflow-y-scroll h-full border-r border-border-divider">
-                <DialogOverviewHeader visible={kanSendeMelding} />
+                <div className="p-2">
+                    <DialogOverviewHeader visible={kanSendeMelding} />
+                </div>
                 <InfoVedIngenDialoger className="md:hidden mt-4" visible={dialoger.length === 0} />
                 <DialogListe />
             </div>

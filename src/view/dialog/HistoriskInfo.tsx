@@ -18,7 +18,9 @@ function HistoriskInfo(props: Props) {
             <BodyShort className="pb-8">
                 Dette er en dialog fra en tidligere periode, og du kan derfor ikke svare på den.
             </BodyShort>
-            <NyDialogLink visible={props.kanSendeMelding} />
+            <div className="self-start">
+                <NyDialogLink visible={props.kanSendeMelding} />
+            </div>
         </div>
     );
 }
