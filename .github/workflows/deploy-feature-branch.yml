@@ -24,4 +24,3 @@ jobs:
     with:
       kommando: npm run build:dev-intern
       bucket: arbeidsrettet-dialog-dev-intern
-      cdnEnv: cdn.dev.nav.no
