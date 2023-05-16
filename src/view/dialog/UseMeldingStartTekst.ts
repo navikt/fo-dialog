@@ -1,6 +1,6 @@
 import { useVeilederDataContext } from '../Provider';
 
-const useHenvendelseStartTekst = () => {
+const useMeldingStartTekst = () => {
     const veilederData = useVeilederDataContext();
     const { veilederNavn } = veilederData;
 
@@ -11,4 +11,4 @@ const useHenvendelseStartTekst = () => {
     return '\n\nHilsen ' + veilederNavn;
 };
 
-export default useHenvendelseStartTekst;
+export default useMeldingStartTekst;

@@ -11,8 +11,8 @@ import { UpdateTypes, dispatchUpdate } from '../../../utils/UpdateEvent';
 import { useDialogContext } from '../../DialogProvider';
 import { useKladdContext } from '../../KladdProvider';
 import { useViewContext } from '../../Provider';
-import { HandlingsType, sendtNyHenvendelse } from '../../ViewState';
-import useHenvendelseStartTekst from '../UseHenvendelseStartTekst';
+import { HandlingsType, sendtNyMelding } from '../../ViewState';
+import useMeldingStartTekst from '../UseMeldingStartTekst';
 
 const maxMeldingsLengde = 5000;
 
@@ -31,10 +31,10 @@ interface Props {
     erBruker: boolean;
 }
 
-const HenvendelseInputBox = (props: Props) => {
-    const { hentDialoger, nyHenvendelse } = useDialogContext();
+const MeldingInputBox = (props: Props) => {
+    const { hentDialoger, nyMelding } = useDialogContext();
     const [noeFeilet, setNoeFeilet] = useState(false);
-    const startTekst = useHenvendelseStartTekst();
+    const startTekst = useMeldingStartTekst();
 
     const { kladder, oppdaterKladd, slettKladd } = useKladdContext();
     const kladd = kladder.find((k) => k.aktivitetId === props.dialog.aktivitetId && k.dialogId === props.dialog.id);
@@ -100,7 +100,7 @@ const HenvendelseInputBox = (props: Props) => {
         timer.current = undefined;
 
         loggEvent('arbeidsrettet-dialog.ny.henvendelse', { paaAktivitet: !!valgtDialog.aktivitetId });
-        return nyHenvendelse(melding, valgtDialog)
+        return nyMelding(melding, valgtDialog)
             .then((dialog) => {
                 slettKladd(valgtDialog.id, valgtDialog.aktivitetId);
                 return dialog;
@@ -109,7 +109,7 @@ const HenvendelseInputBox = (props: Props) => {
             .then(() => {
                 setNoeFeilet(false);
                 reset();
-                setViewState(sendtNyHenvendelse(viewState));
+                setViewState(sendtNyMelding(viewState));
                 dispatchUpdate(UpdateTypes.Dialog);
             })
             .catch((e) => {
@@ -149,4 +149,4 @@ const HenvendelseInputBox = (props: Props) => {
     );
 };
 
-export default HenvendelseInputBox;
+export default MeldingInputBox;

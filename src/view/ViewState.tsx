@@ -5,7 +5,7 @@ export interface ViewState {
 
 export enum HandlingsType {
     ingen,
-    nyHenvendelse,
+    nyMelding,
     nyDialog
 }
 
@@ -22,8 +22,8 @@ export function endreDialogSomVises(state?: ViewState, dialogId?: string): ViewS
     return { ...initalState, dialogSomVises: dialogId };
 }
 
-export function sendtNyHenvendelse(state: ViewState): ViewState {
-    return { ...state, sistHandlingsType: HandlingsType.nyHenvendelse };
+export function sendtNyMelding(state: ViewState): ViewState {
+    return { ...state, sistHandlingsType: HandlingsType.nyMelding };
 }
 
 export function sendtNyDialog(state: ViewState): ViewState {

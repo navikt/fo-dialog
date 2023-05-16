@@ -13,7 +13,7 @@ export interface DialogDataProviderType {
     hentDialoger: () => Promise<DialogData[]>;
     pollForChanges: () => Promise<void>;
     nyDialog: (melding: string, tema: string, aktivitetId?: string) => Promise<DialogData>;
-    nyHenvendelse: (melding: string, dialog: DialogData) => Promise<DialogData>;
+    nyMelding: (melding: string, dialog: DialogData) => Promise<DialogData>;
     lesDialog: (dialogId: string) => Promise<DialogData>;
     setFerdigBehandlet: (dialog: DialogData, ferdigBehandlet: boolean) => Promise<DialogData>;
     setVenterPaSvar: (dialog: DialogData, venterPaSvar: boolean) => Promise<DialogData>;
@@ -25,7 +25,7 @@ export const DialogContext = React.createContext<DialogDataProviderType>({
     hentDialoger: () => Promise.resolve([]),
     pollForChanges: () => Promise.resolve(),
     nyDialog: (_melding: string, _tema: string, _aktivitetId?: string) => Promise.resolve({} as any),
-    nyHenvendelse: (_melding: string, dialog: DialogData) => Promise.resolve(dialog),
+    nyMelding: (_melding: string, dialog: DialogData) => Promise.resolve(dialog),
     lesDialog: (_dialogId: string) => Promise.resolve({} as any),
     setFerdigBehandlet: (dialog: DialogData, _ferdigBehandlet: boolean) => Promise.resolve(dialog),
     setVenterPaSvar: (dialog: DialogData, _venterPaSvar: boolean) => Promise.resolve(dialog)
@@ -149,7 +149,7 @@ export function useDialogDataProvider(fnr?: string): DialogDataProviderType {
         [sendMelding]
     );
 
-    const nyHenvendelse = useCallback(
+    const nyMelding = useCallback(
         (melding: string, dialog: DialogData) => {
             return sendMelding(melding, undefined, dialog.id);
         },
@@ -191,12 +191,12 @@ export function useDialogDataProvider(fnr?: string): DialogDataProviderType {
             hentDialoger,
             pollForChanges,
             nyDialog,
-            nyHenvendelse,
+            nyMelding,
             lesDialog,
             setFerdigBehandlet,
             setVenterPaSvar
         };
-    }, [state, hentDialoger, pollForChanges, nyDialog, nyHenvendelse, lesDialog, setFerdigBehandlet, setVenterPaSvar]);
+    }, [state, hentDialoger, pollForChanges, nyDialog, nyMelding, lesDialog, setFerdigBehandlet, setVenterPaSvar]);
 }
 
 function isDialogReloading(status: Status) {

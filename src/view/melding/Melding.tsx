@@ -1,11 +1,12 @@
 import { PersonIcon } from '@navikt/aksel-icons';
-import { BodyShort, Chat } from '@navikt/ds-react';
+import { BodyShort, Chat, Link } from '@navikt/ds-react';
 import React from 'react';
 
 import { ViktigMelding } from '../../felleskomponenter/etiketer/Etikett';
 import { formaterDateAndTime } from '../../utils/Date';
-import { HenvendelseData } from '../../utils/Typer';
+import { MeldingsData } from '../../utils/Typer';
 import { useUserInfoContext } from '../BrukerProvider';
+import { linkify } from './linkify';
 
 function accessibleText(erBruker: boolean, erMeldingFraBruker: boolean) {
     if (erMeldingFraBruker) {
@@ -16,7 +17,7 @@ function accessibleText(erBruker: boolean, erMeldingFraBruker: boolean) {
 }
 
 interface Props {
-    henvendelseData: HenvendelseData;
+    henvendelseData: MeldingsData;
     viktigMarkering: boolean;
 }
 
@@ -48,7 +49,7 @@ export function Melding(props: Props) {
                 <Chat.Bubble>
                     <div className="flex flex-col items-start">
                         <ViktigMelding visible={viktigMarkering} />
-                        <span className="mt-2 whitespace-pre-wrap">{tekst}</span>
+                        <span className="mt-2 whitespace-pre-wrap">{linkify(tekst)}</span>
                     </div>
                 </Chat.Bubble>
             </Chat>

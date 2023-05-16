@@ -14,8 +14,7 @@ import { useUserInfoContext } from '../BrukerProvider';
 import { useDialogContext } from '../DialogProvider';
 import { findKladd, useKladdContext } from '../KladdProvider';
 import { cutStringAtLength } from '../utils/stringUtils';
-import { TilbakeKnapp } from './TilbakeKnapp';
-import useHenvendelseStartTekst from './UseHenvendelseStartTekst';
+import useMeldingStartTekst from './UseMeldingStartTekst';
 
 const maxMeldingsLengde = 5000;
 
@@ -42,7 +41,7 @@ const NyDialogForm = (props: Props) => {
     const navigate = useNavigate();
     const { dialogRoute, baseRoute } = useRoutes();
     const [noeFeilet, setNoeFeilet] = useState(false);
-    const startTekst = useHenvendelseStartTekst();
+    const startTekst = useMeldingStartTekst();
 
     const { kladder, oppdaterKladd, slettKladd } = useKladdContext();
     const kladd = findKladd(kladder, null, aktivitetId);

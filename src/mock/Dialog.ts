@@ -1,6 +1,6 @@
 import { ResponseComposition, RestContext, RestRequest } from 'msw';
 
-import { DialogData, HenvendelseData, KladdData, NyDialogMeldingData } from '../utils/Typer';
+import { DialogData, KladdData, MeldingsData, NyDialogMeldingData } from '../utils/Typer';
 import bruker from './Bruker';
 import { erEksternBruker, harIngenDialoger } from './demo/localstorage';
 import { rndId } from './Utils';
@@ -551,7 +551,7 @@ export const lesDialog = (req: RestRequest, res: ResponseComposition, ctx: RestC
 export const opprettEllerOppdaterDialog = async (req: RestRequest): Promise<DialogData> => {
     const body = (await req.json()) as NyDialogMeldingData;
     const dialogId = !body.dialogId || body.dialogId === '' ? rndId() : `${body.dialogId}`;
-    const nyHenvendelse: HenvendelseData = {
+    const nyMelding: MeldingsData = {
         id: rndId(),
         dialogId: dialogId,
         avsender: erEksternBruker() ? 'BRUKER' : 'NAV',
@@ -567,8 +567,8 @@ export const opprettEllerOppdaterDialog = async (req: RestRequest): Promise<Dial
     if (eksisterendeDialog) {
         const oldDialog = eksisterendeDialog;
         oldDialog.sisteTekst = body.tekst;
-        oldDialog.sisteDato = nyHenvendelse.sendt;
-        oldDialog.henvendelser.push(nyHenvendelse);
+        oldDialog.sisteDato = nyMelding.sendt;
+        oldDialog.henvendelser.push(nyMelding);
 
         if (!bruker().erVeileder) {
             oldDialog.ferdigBehandlet = false;
@@ -578,7 +578,7 @@ export const opprettEllerOppdaterDialog = async (req: RestRequest): Promise<Dial
         return oldDialog as DialogData;
     } else {
         const nyDialog: DialogData = {
-            id: nyHenvendelse.dialogId,
+            id: nyMelding.dialogId,
             overskrift:
                 body.overskrift === undefined || body.overskrift === null ? rndId().toString() : body.overskrift,
             sisteTekst: body.tekst,
@@ -591,7 +591,7 @@ export const opprettEllerOppdaterDialog = async (req: RestRequest): Promise<Dial
             lestAvBrukerTidspunkt: null,
             erLestAvBruker: false,
             aktivitetId: body.aktivitetId || null,
-            henvendelser: [nyHenvendelse],
+            henvendelser: [nyMelding],
             egenskaper: []
         };
         dialoger.push(nyDialog);
@@ -645,7 +645,7 @@ export const opprettDialogEtterRender = () => {
             egenskaper: []
         };
         dialoger.push(nyDialog);
-        const nyHenvendelse: HenvendelseData = {
+        const meldingsData: MeldingsData = {
             id: rndId(),
             dialogId: '2',
             avsender: erEksternBruker() ? 'NAV' : 'BRUKER',
@@ -656,7 +656,7 @@ export const opprettDialogEtterRender = () => {
             tekst: 'Hei, hvordan går det?'
         };
         const d = dialoger.find((d) => d.id === '2');
-        d!.henvendelser.push(nyHenvendelse);
+        d!.henvendelser.push(meldingsData);
         d!.lest = false;
     }, 2000);
 };
@@ -675,10 +675,6 @@ export const kladder: KladdData[] = [
         tekst: 'Jeg lurer på masse rart'
     }
 ];
-
-export function oppdaterKladd(data: KladdData) {
-    return null;
-}
 
 const dialog = () => {
     opprettDialogEtterRender();
