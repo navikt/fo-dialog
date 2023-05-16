@@ -46,11 +46,11 @@ const DialogOversikt = () => {
         <div
             className={classNames(
                 { hidden: !!dialog || isNyRoute } /* Hvis liten skjerm, bare vis dialog-liste på "Homepage"  */,
-                'border-r border-border-divider w-full h-full md:max-w-[20rem] md:flex md:flex-col'
+                'border-r border-border-divider w-full h-full md:max-w-80 md:flex md:flex-col xl:max-w-none xl:w-[16.7vw]'
             )}
         >
             <DialogOversiktHeader erVeileder={erVeileder} />
-            <div className="px-2 pb-8 bg-gray-100 pt-4 overflow-y-scroll h-full border-r border-border-divider">
+            <div className="flex flex-col px-2 pb-8 bg-gray-100 pt-4 overflow-y-scroll h-full border-r border-border-divider">
                 <DialogOverviewHeader visible={kanSendeMelding} />
                 <InfoVedIngenDialoger className="md:hidden mt-4" visible={dialoger.length === 0} />
                 <DialogListe />
