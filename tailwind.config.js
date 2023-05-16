@@ -8,7 +8,8 @@ module.exports = {
     theme: {
         screens: {
             md: '768px',
-            lg: '1024px'
+            lg: '1024px',
+            xl: '1280px'
         },
         colors: {
             'border-default': 'rgba(0, 0, 0, 0.44)',
@@ -225,6 +226,10 @@ module.exports = {
                 52: '13rem'
             },
             maxWidth: {
+                80: '20rem',
+                'screen-w-1/3': '33vw',
+                'max-paragraph': '40rem',
+                248: '62rem',
                 lgContainer: '700px'
             },
             maxHeight: {
@@ -251,6 +256,7 @@ module.exports = {
                 24: '6rem',
                 32: '8rem',
                 '05': '0.125rem',
+                80: '20rem',
                 104: '26rem',
                 120: '40rem'
             },

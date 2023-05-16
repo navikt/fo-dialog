@@ -1,5 +1,5 @@
 import { zodResolver } from '@hookform/resolvers/zod';
-import { Button, GuidePanel, Heading, TextField, Textarea } from '@navikt/ds-react';
+import { Button, GuidePanel, TextField, Textarea } from '@navikt/ds-react';
 import React, { useEffect, useRef, useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { useNavigate } from 'react-router';
@@ -114,8 +114,12 @@ const NyDialogForm = (props: Props) => {
     const bigScreen = window.innerWidth >= 768;
 
     return (
-        <div className={'bg-gray-100 h-full w-full lg:max-w-lgContainer overflow-scroll'}>
-            <form className="p-8 space-y-8" onSubmit={handleSubmit((data) => onSubmit(data))} autoComplete="off">
+        <div className="bg-gray-100 h-full w-full lg:max-w-lgContainer overflow-x-scroll xl:max-w-none">
+            <form
+                className="p-8 space-y-8 xl:max-w-max-paragraph xl:w-full"
+                onSubmit={handleSubmit((data) => onSubmit(data))}
+                autoComplete="off"
+            >
                 {!erVeileder ? (
                     <>
                         <GuidePanel poster={!bigScreen}>

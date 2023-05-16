@@ -14,11 +14,13 @@ function HistoriskInfo(props: Props) {
     }
 
     return (
-        <div className="flex flex-col justify-center items-center m-4">
+        <div className="flex flex-col justify-center items-center m-4 xl:self-center xl:max-w-max-paragraph">
             <BodyShort className="pb-8">
                 Dette er en dialog fra en tidligere periode, og du kan derfor ikke svare på den.
             </BodyShort>
-            <NyDialogLink visible={props.kanSendeMelding} />
+            <div className="self-start">
+                <NyDialogLink visible={props.kanSendeMelding} />
+            </div>
         </div>
     );
 }

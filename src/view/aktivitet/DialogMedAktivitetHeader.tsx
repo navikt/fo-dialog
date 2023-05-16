@@ -29,7 +29,7 @@ export function DialogMedAktivitetHeader(props: Props) {
     return (
         <section aria-label="Aktivitet knyttet til dialog">
             <div className="flex w-full flex-col md:flex-row">
-                <div className="flex flex-1 flex-row items-center gap-x-2 lg:max-w-lgContainer">
+                <div className="flex flex-1 flex-row items-center gap-x-2 lg:max-w-lgContainer xl:max-w-none">
                     <TilbakeKnapp className="md:hidden" />
                     <div className="ml-4">
                         <Heading level="2" size="small" aria-label={`${typeTekst}: ${aktivitet?.tittel}`}>
@@ -38,7 +38,7 @@ export function DialogMedAktivitetHeader(props: Props) {
                         {infotekst && <Detail>{infotekst}</Detail>}
                     </div>
                 </div>
-                <div className="flex-1 md:max-w-[30rem]">
+                <div className="flex-1 md:max-w-[30rem] xl:max-w-screen-w-1/3">
                     <div className="px-2 mt-2 md:mt-0 lg:pl-4 flex-row md:flex-col items-center justify-between md:items-end lg:items-start flex">
                         <Detail aria-hidden="true">{typeTekst.toUpperCase()}</Detail>
                         <Link href={aktivitetLenke(aktivitet.id)} onClick={visAktivitetsplan(aktivitet.id, fnr)}>
