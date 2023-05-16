@@ -69,8 +69,8 @@ const App = (props: Props) => {
     return (
         <div
             className={cx('flex flex-col', {
-                'min-h-[calc(100vh-180px)] md:h-[calc(100vh-180px)]': erInternFlate,
-                'min-h-[calc(100vh-72px)] md:h-[calc(100vh-80px)]': !erInternFlate
+                'min-h-[calc(100vh-180px)] h-[calc(100vh-180px)]': erInternFlate,
+                'min-h-[calc(100vh-72px)] h-[calc(100vh-80px)]': !erInternFlate
             })}
         >
             <Provider fnr={fnr} erVeileder={!!fnr}>
