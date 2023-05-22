@@ -7,8 +7,11 @@ Dette prosjektet er satt opp med [Create React App](https://github.com/facebook/
 ### Komme i gang
 
 ```sh
+# Installer bun
+curl -fsSL https://bun.sh/install | bash
+
 # Installere avhengigheter
-npm i
+bun install
 
 # Bygge produksjonskode
 npm build
