@@ -108,7 +108,7 @@ const MeldingInputBox = (props: Props) => {
             .then(hentDialoger)
             .then(() => {
                 setNoeFeilet(false);
-                reset();
+                reset({ melding: startTekst });
                 setViewState(sendtNyMelding(viewState));
                 dispatchUpdate(UpdateTypes.Dialog);
             })
