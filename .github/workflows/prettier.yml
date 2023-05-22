@@ -12,8 +12,8 @@ jobs:
           node-version: 12
       - name: Format
         run: |
-          npm ci
-          npm run format-all
+          pnpm install
+          pnpm run format-all
       - name: Commit changes
         uses: stefanzweifel/git-auto-commit-action@v4.6.0
         with:

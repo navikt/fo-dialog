@@ -15,7 +15,7 @@ jobs:
       - uses: actions/setup-node@v3
         with:
           node-version: 18
-      - run: npm ci
-      - run: npm run prettier-check
-      - run: npm run test
-      - run: npm run build
+      - run: pnpm install
+      - run: pnpm run prettier-check
+      - run: pnpm run test
+      - run: pnpm run build
