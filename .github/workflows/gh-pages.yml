@@ -28,6 +28,8 @@ jobs:
               uses: oven-sh/setup-bun@v1
             - name: Install dependencies (bun)
               run: bun install
+            - name: Initalize MSW
+              run: npx msw init ./public
             - name: Build
               run: npm run build:gh-pages
             - name: Deploy
