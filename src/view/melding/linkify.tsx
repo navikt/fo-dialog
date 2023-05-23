@@ -15,8 +15,11 @@ const toNodes = (sections: TextSection[]) => {
                 if (section.type === 'text') {
                     return <span key={index}>{section.value}</span>;
                 } else {
+                    const href = section.value.toLowerCase().startsWith('www.')
+                        ? `https://${section.value}`
+                        : section.value;
                     return (
-                        <Link className="break-all" key={index} href={section.value}>
+                        <Link className="break-all" key={index} href={href}>
                             {section.value}
                         </Link>
                     );
