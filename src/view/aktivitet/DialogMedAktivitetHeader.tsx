@@ -4,7 +4,6 @@ import React from 'react';
 import { Aktivitet, AktivitetTypes, ArenaAktivitet, ArenaAktivitetTypes } from '../../utils/aktivitetTypes';
 import { formaterDate, getKlokkeslett } from '../../utils/Date';
 import { StringOrNull } from '../../utils/Typer';
-import { findAktivitet, useAktivitetContext } from '../AktivitetProvider';
 import { TilbakeKnapp } from '../dialog/TilbakeKnapp';
 import { useFnrContext } from '../Provider';
 import { useSelectedAktivitet } from '../utils/useAktivitetId';
@@ -31,7 +30,7 @@ export function DialogMedAktivitetHeader(props: Props) {
             <div className="flex flex-1 flex-row items-center gap-x-2 lg:max-w-lgContainer xl:max-w-none">
                 <TilbakeKnapp className="md:hidden" />
                 <div className="md:ml-4">
-                    <Heading level="2" size="small" aria-label={`${typeTekst}: ${aktivitet?.tittel}`}>
+                    <Heading level="1" size="small" aria-label={`${typeTekst}: ${aktivitet?.tittel}`}>
                         {aktivitet?.tittel}
                     </Heading>
                     {infotekst && <Detail>{infotekst}</Detail>}

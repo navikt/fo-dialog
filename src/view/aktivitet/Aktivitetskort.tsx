@@ -1,5 +1,4 @@
 import { Heading } from '@navikt/ds-react';
-import classNames from 'classnames';
 import React from 'react';
 
 import { useSelectedAktivitet } from '../utils/useAktivitetId';
@@ -12,7 +11,7 @@ import AvtaltMarkering from './etiketter/avtalt-markering';
 export function Aktivitetskort() {
     const aktivitet = useSelectedAktivitet();
     if (!aktivitet) return <div className="border-l xl:max-w-screen-w-1/3 xl:w-full border-border-divider" />;
-    const { status, tittel, avtalt, id } = aktivitet;
+    const { status, tittel, avtalt } = aktivitet;
     return (
         <div className="hidden lg:flex lg:max-w-[320px] w-full xl:max-w-screen-w-1/3 border-l border-border-divider">
             <section
@@ -20,7 +19,7 @@ export function Aktivitetskort() {
                 className="m-4 mr-0 xl:max-w-max-paragraph w-full overflow-x-visible overflow-y-auto"
             >
                 <Brodsmulesti status={status} type={getAktivitetType(aktivitet)} />
-                <Heading size="large" level="2">
+                <Heading size="large" level="1">
                     {tittel}
                 </Heading>
                 <AktivitetIngress aktivitetType={getAktivitetType(aktivitet)} />
