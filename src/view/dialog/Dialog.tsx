@@ -1,4 +1,3 @@
-import { Heading } from '@navikt/ds-react';
 import classNames from 'classnames';
 import React, { useEffect, useState } from 'react';
 
@@ -13,7 +12,6 @@ import { useSelectedDialog } from '../utils/useAktivitetId';
 import { useEventListener } from '../utils/useEventListner';
 import { endreDialogSomVises } from '../ViewState';
 import ManagedDialogCheckboxes from './DialogCheckboxes';
-import { dialogHeaderID1, dialogHeaderID2 } from './DialogHeader';
 import DialogInputBoxVisible from './henvendelseInput/MeldingInputBox';
 import HistoriskInfo from './HistoriskInfo';
 import { IngenDialog } from './IngenDialog';
@@ -73,13 +71,7 @@ export function Dialog() {
     const kanSendeHenveldelse = kanSendeMelding && aktivDialog;
 
     return (
-        <section
-            aria-labelledby={`${dialogHeaderID1} ${dialogHeaderID2}`}
-            className={classNames('flex flex-col grow w-full lg:max-w-lgContainer xl:max-w-none')}
-        >
-            <Heading className="hidden" aria-labelledby={`${dialogHeaderID1} ${dialogHeaderID2}`}>
-                Dialog Header
-            </Heading>
+        <section className={classNames('flex flex-col grow w-full lg:max-w-lgContainer xl:max-w-none')}>
             <Meldinger dialogData={valgtDialog} viewState={viewState} fnr={fnr} />
             <HistoriskInfo hidden={aktivDialog} kanSendeMelding={kanSendeMelding} />
             <section

@@ -49,7 +49,9 @@ export function InformasjonElementRaw(props: PropTypes) {
 
     return (
         <div className={classNames('grow flex-wrap min-w-4 my-4')}>
-            <Heading level="3">{merkelapptekst}</Heading>
+            <Heading level="2" size="xsmall">
+                {merkelapptekst}
+            </Heading>
             {children}
         </div>
     );
