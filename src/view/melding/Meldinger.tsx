@@ -56,6 +56,7 @@ export function Meldinger(props: Props) {
             aria-label="Meldinger"
             className="px-4 grow overflow-y-scroll bg-gray-100 xl:flex xl:justify-center"
             ref={meldingListRef}
+            tabIndex={0}
         >
             <div className="xl:max-w-248 xl:w-full ">
                 <Heading level="3" size={'medium'} className="hidden">

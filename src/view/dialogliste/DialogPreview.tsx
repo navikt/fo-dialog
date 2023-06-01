@@ -96,6 +96,7 @@ function DialogPreview(props: Props) {
                 'bg-[#e6f0ff]': detteErValgtDialog
             })}
             href={dialogRoute(id)}
+            aria-current={detteErValgtDialog && true}
             onClick={onGoTo}
         >
             <div className="flex flex-row">
