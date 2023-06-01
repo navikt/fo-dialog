@@ -71,7 +71,7 @@ export function Dialog() {
     const kanSendeHenveldelse = kanSendeMelding && aktivDialog;
 
     return (
-        <section className={classNames('flex flex-col grow w-full lg:max-w-lgContainer xl:max-w-none')} tabIndex={0}>
+        <section className={classNames('flex flex-col grow w-full lg:max-w-lgContainer xl:max-w-none')}>
             <Meldinger dialogData={valgtDialog} viewState={viewState} fnr={fnr} />
             <HistoriskInfo hidden={aktivDialog} kanSendeMelding={kanSendeMelding} />
             <section
