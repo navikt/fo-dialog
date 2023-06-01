@@ -22,7 +22,7 @@ export function DialogHeader() {
         return (
             <div className="bg-white p-4 pl-6 md:pl-8 flex items-center gap-x-4 border-b border-border-divider">
                 <TilbakeKnapp className="md:hidden" />
-                <Heading level="2" size="medium">
+                <Heading level="1" size="medium">
                     Start en ny dialog
                 </Heading>
             </div>
