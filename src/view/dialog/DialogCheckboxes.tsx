@@ -2,6 +2,7 @@ import { Checkbox, CheckboxGroup } from '@navikt/ds-react';
 import React from 'react';
 
 import { Status } from '../../api/typer';
+import { notEmpty } from '../../utils/TypeHelper';
 import { DialogData } from '../../utils/Typer';
 import { useDialogContext } from '../DialogProvider';
 import { useOppfolgingContext } from '../OppfolgingProvider';
@@ -79,7 +80,7 @@ const ManagedDialogCheckboxes = (props: ManagedProps) => {
     const values = [
         !dialog.ferdigBehandlet ? ('ferdigBehandlet' as const) : undefined,
         dialog.venterPaSvar ? ('venterPaSvar' as const) : undefined
-    ].filter((it) => !!it);
+    ].filter(notEmpty);
 
     const laster = dialogContext.status === Status.PENDING || dialogContext.status === Status.RELOADING;
 

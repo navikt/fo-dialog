@@ -31,7 +31,7 @@ export enum AktivitetStatus {
     AVBRUTT = 'AVBRUTT'
 }
 
-export type StillingsStatus =
+export type StillingStatus =
     | 'INGEN_VALGT'
     | 'SOKNAD_SENDT'
     | 'INNKALT_TIL_INTERVJU'
@@ -91,7 +91,7 @@ export interface Aktivitet {
     malid: StringOrNull;
 
     // stillingaktivitet
-    etikett: StillingsStatus;
+    etikett: StillingStatus;
     kontaktperson: StringOrNull;
     arbeidsgiver: StringOrNull;
     arbeidssted: StringOrNull;

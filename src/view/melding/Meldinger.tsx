@@ -8,7 +8,6 @@ import LestAvTidspunkt from '../lest/LestTidspunkt';
 import { useSkjulHodefotForMobilVisning } from '../utils/useSkjulHodefotForMobilVisning';
 import { ViewState } from '../ViewState';
 import { Melding } from './Melding';
-import styles from './Meldinger.less';
 
 interface Props {
     dialogData: DialogData;
@@ -65,12 +64,10 @@ export function Meldinger(props: Props) {
                 <div className="mb-4">
                     {sorterteHenvendelser.map((henvendelse, index) => (
                         <React.Fragment key={henvendelse.id}>
-                            <div className={styles.henvendelseItem}>
-                                <Melding
-                                    henvendelseData={henvendelse}
-                                    viktigMarkering={(erViktig && index === 0) || henvendelse.viktig}
-                                />
-                            </div>
+                            <Melding
+                                henvendelseData={henvendelse}
+                                viktigMarkering={(erViktig && index === 0) || henvendelse.viktig}
+                            />
                             <LestAvTidspunkt
                                 tidspunkt={lestAvBrukerTidspunkt!}
                                 visible={henvendelse.id === sisteHenvendelseLestAvBruker}
