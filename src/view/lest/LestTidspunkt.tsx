@@ -12,7 +12,7 @@ interface Props {
 function LestAvTidspunkt(props: Props) {
     const tidspunktMedRiktigFormat = formaterDateAndTime(props.tidspunkt);
     return (
-        <div className="flex pt-2 pb-4 justify-center items-center text-gray-600">
+        <div className="flex items-center justify-center pb-4 pt-2 text-gray-600">
             <Pil className="mr-2 fill-gray-600" />
             <BodyShort>{`Lest av bruker ${tidspunktMedRiktigFormat}`}</BodyShort>
         </div>

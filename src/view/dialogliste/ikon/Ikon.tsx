@@ -11,13 +11,13 @@ const DialogPreviewIkon = (props: IkonProps) => {
     const erAktivitet: boolean = props.dialog.aktivitetId !== null;
     const ulest = !props.dialog.lest && !props.dialog.historisk;
     return (
-        <div aria-hidden="true" className="relative shrink-0 basis-6 mr-2 self-center">
-            {erAktivitet ? <TasklistIcon className="w-6 h-6" /> : <ChatElipsisIcon className="w-6 h-6" />}
+        <div aria-hidden="true" className="relative mr-2 shrink-0 basis-6 self-center">
+            {erAktivitet ? <TasklistIcon className="h-6 w-6" /> : <ChatElipsisIcon className="h-6 w-6" />}
             {ulest ? <UlestMarkering /> : null}
         </div>
     );
 };
 
-const UlestMarkering = () => <div className="w-3 h-3 top-3 left-3 absolute bg-red-400 rounded-full"></div>;
+const UlestMarkering = () => <div className="absolute left-3 top-3 h-3 w-3 rounded-full bg-red-400"></div>;
 
 export default DialogPreviewIkon;

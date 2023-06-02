@@ -3,7 +3,7 @@ import React from 'react';
 
 export default function StatusAdvarselWrapper(props: { children: React.ReactNode }) {
     return (
-        <div className="flex justify-center p-4 border-b border-border-divider">
+        <div className="flex justify-center border-b border-border-divider p-4">
             <Alert variant="warning">{props.children}</Alert>
         </div>
     );

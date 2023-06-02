@@ -15,7 +15,7 @@ export function InfoOmDialogSide() {
         <section
             aria-label="Om dialog"
             id="om-dialog"
-            className={classNames(dialogStyle.overflowAuto, dialogStyle.dialog, 'max-w-2xl w-full p-8')}
+            className={classNames(dialogStyle.overflowAuto, dialogStyle.dialog, 'w-full max-w-2xl p-8')}
             tabIndex={-1}
         >
             <div>
@@ -58,7 +58,7 @@ export function InfoOmDialogSide() {
                         aktivitet. Har du spørsmål om økonomisk støtte, økonomisk sosialhjelp, boligsituasjon eller
                         annet, kan du
                     </BodyLong>
-                    <ul className="list-disc mt-4 pl-8">
+                    <ul className="mt-4 list-disc pl-8">
                         <li>
                             <BodyShort>
                                 kontakte NAV i tjenesten{' '}

@@ -14,7 +14,7 @@ function HistoriskInfo(props: Props) {
     }
 
     return (
-        <div className="flex flex-col justify-center items-center m-4 xl:self-center xl:max-w-max-paragraph">
+        <div className="m-4 flex flex-col items-center justify-center xl:max-w-max-paragraph xl:self-center">
             <BodyShort className="pb-4">
                 Dette er en dialog fra en tidligere periode, og du kan derfor ikke svare på den.
             </BodyShort>
