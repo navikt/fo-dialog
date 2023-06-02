@@ -1,101 +1,161 @@
 // Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
 
-exports[`<EksternLenke/> > skal ikke padde href med protokoll, http 1`] = `ShallowWrapper {}`;
-
-exports[`<EksternLenke/> > skal ikke padde href med protokoll, https 1`] = `ShallowWrapper {}`;
-
-exports[`<EksternLenke/> > skal padde href med protokoll når det mangler 1`] = `ShallowWrapper {}`;
-
-exports[`<EksternLenke/> > skal padde href med protokoll når det mangler, www 1`] = `ShallowWrapper {}`;
-
-exports[`<EksternLenke/> skal ikke padde href med protokoll, http 1`] = `
-<Lenke
-  href="http://nav.no"
->
-  http://nav.no
-  <ForwardRef(SvgEksternLenke) />
-</Lenke>
-`;
-
-exports[`<EksternLenke/> skal ikke padde href med protokoll, https 1`] = `
-<Lenke
-  href="https://nav.no"
->
-  https://nav.no
-  <ForwardRef(SvgEksternLenke) />
-</Lenke>
-`;
-
-exports[`<EksternLenke/> skal padde href med protokoll når det mangler 1`] = `
-<Lenke
-  href="http://nav.no"
->
-  nav.no
-  <ForwardRef(SvgEksternLenke) />
-</Lenke>
-`;
-
-exports[`<EksternLenke/> skal padde href med protokoll når det mangler, www 1`] = `
-<Lenke
-  href="http://www.nav.no"
->
-  www.nav.no
-  <ForwardRef(SvgEksternLenke) />
-</Lenke>
-`;
-
-exports[`skal padde href med protokoll når det mangler, www 1`] = `
-{
-  "asFragment": [Function],
-  "baseElement": <body>
-    <div>
-      <a
-        class="navds-link"
-        href="http://www.nav.no"
+exports[`<EksternLenke/> > skal ikke padde href med protokoll, http 1`] = `
+<body>
+  <div>
+    <a
+      class="navds-link"
+      href="http://nav.no"
+    >
+      http://nav.no
+      <svg
+        height="14px"
+        viewBox="0 0 14 14"
+        xmlns="http://www.w3.org/2000/svg"
       >
-        www.nav.no
-        <svg
-          height="14px"
-          viewBox="0 0 14 14"
-          xmlns="http://www.w3.org/2000/svg"
+        <g
+          fill="none"
+          id="ikon_external_link"
         >
           <g
-            fill="none"
-            id="ikon_external_link"
+            id="LINE/interface/-external-link"
+            stroke="#0067C5"
+            transform="translate(2 2)"
           >
             <g
-              id="LINE/interface/-external-link"
-              stroke="#0067C5"
-              transform="translate(2 2)"
+              id="external-link"
             >
+              <path
+                d="M10,7.07712912 L10,8.33333333 C10,9.25380792 9.25380792,10 8.33333333,10 L1.66666667,10 C0.746192084,10 0,9.25380792 0,8.33333333 L0,1.66666667 C0,0.746192084 0.746192084,0 1.66666667,0 L2.94199316,0"
+                id="Rectangle-6"
+              />
               <g
-                id="external-link"
+                id="Group-7"
+                transform="translate(4)"
               >
                 <path
-                  d="M10,7.07712912 L10,8.33333333 C10,9.25380792 9.25380792,10 8.33333333,10 L1.66666667,10 C0.746192084,10 0,9.25380792 0,8.33333333 L0,1.66666667 C0,0.746192084 0.746192084,0 1.66666667,0 L2.94199316,0"
-                  id="Rectangle-6"
+                  d="M0,6 L6,0"
+                  id="Line-6"
                 />
-                <g
-                  id="Group-7"
-                  transform="translate(4)"
-                >
-                  <path
-                    d="M0,6 L6,0"
-                    id="Line-6"
-                  />
-                  <polyline
-                    id="Path-2"
-                    points="2.00719286 0 6 0 6 4.06130668"
-                  />
-                </g>
+                <polyline
+                  id="Path-2"
+                  points="2.00719286 0 6 0 6 4.06130668"
+                />
               </g>
             </g>
           </g>
-        </svg>
-      </a>
-    </div>
-  </body>,
-  "container": <div>
+        </g>
+      </svg>
+    </a>
+  </div>
+</body>
+`;
+
+exports[`<EksternLenke/> > skal ikke padde href med protokoll, https 1`] = `
+<body>
+  <div>
+    <a
+      class="navds-link"
+      href="https://nav.no"
+    >
+      https://nav.no
+      <svg
+        height="14px"
+        viewBox="0 0 14 14"
+        xmlns="http://www.w3.org/2000/svg"
+      >
+        <g
+          fill="none"
+          id="ikon_external_link"
+        >
+          <g
+            id="LINE/interface/-external-link"
+            stroke="#0067C5"
+            transform="translate(2 2)"
+          >
+            <g
+              id="external-link"
+            >
+              <path
+                d="M10,7.07712912 L10,8.33333333 C10,9.25380792 9.25380792,10 8.33333333,10 L1.66666667,10 C0.746192084,10 0,9.25380792 0,8.33333333 L0,1.66666667 C0,0.746192084 0.746192084,0 1.66666667,0 L2.94199316,0"
+                id="Rectangle-6"
+              />
+              <g
+                id="Group-7"
+                transform="translate(4)"
+              >
+                <path
+                  d="M0,6 L6,0"
+                  id="Line-6"
+                />
+                <polyline
+                  id="Path-2"
+                  points="2.00719286 0 6 0 6 4.06130668"
+                />
+              </g>
+            </g>
+          </g>
+        </g>
+      </svg>
+    </a>
+  </div>
+</body>
+`;
+
+exports[`<EksternLenke/> > skal padde href med protokoll når det mangler 1`] = `
+<body>
+  <div>
+    <a
+      class="navds-link"
+      href="http://nav.no"
+    >
+      nav.no
+      <svg
+        height="14px"
+        viewBox="0 0 14 14"
+        xmlns="http://www.w3.org/2000/svg"
+      >
+        <g
+          fill="none"
+          id="ikon_external_link"
+        >
+          <g
+            id="LINE/interface/-external-link"
+            stroke="#0067C5"
+            transform="translate(2 2)"
+          >
+            <g
+              id="external-link"
+            >
+              <path
+                d="M10,7.07712912 L10,8.33333333 C10,9.25380792 9.25380792,10 8.33333333,10 L1.66666667,10 C0.746192084,10 0,9.25380792 0,8.33333333 L0,1.66666667 C0,0.746192084 0.746192084,0 1.66666667,0 L2.94199316,0"
+                id="Rectangle-6"
+              />
+              <g
+                id="Group-7"
+                transform="translate(4)"
+              >
+                <path
+                  d="M0,6 L6,0"
+                  id="Line-6"
+                />
+                <polyline
+                  id="Path-2"
+                  points="2.00719286 0 6 0 6 4.06130668"
+                />
+              </g>
+            </g>
+          </g>
+        </g>
+      </svg>
+    </a>
+  </div>
+</body>
+`;
+
+exports[`<EksternLenke/> > skal padde href med protokoll når det mangler, www 1`] = `
+<body>
+  <div>
     <a
       class="navds-link"
       href="http://www.nav.no"
@@ -140,57 +200,6 @@ exports[`skal padde href med protokoll når det mangler, www 1`] = `
         </g>
       </svg>
     </a>
-  </div>,
-  "debug": [Function],
-  "findAllByAltText": [Function],
-  "findAllByDisplayValue": [Function],
-  "findAllByLabelText": [Function],
-  "findAllByPlaceholderText": [Function],
-  "findAllByRole": [Function],
-  "findAllByTestId": [Function],
-  "findAllByText": [Function],
-  "findAllByTitle": [Function],
-  "findByAltText": [Function],
-  "findByDisplayValue": [Function],
-  "findByLabelText": [Function],
-  "findByPlaceholderText": [Function],
-  "findByRole": [Function],
-  "findByTestId": [Function],
-  "findByText": [Function],
-  "findByTitle": [Function],
-  "getAllByAltText": [Function],
-  "getAllByDisplayValue": [Function],
-  "getAllByLabelText": [Function],
-  "getAllByPlaceholderText": [Function],
-  "getAllByRole": [Function],
-  "getAllByTestId": [Function],
-  "getAllByText": [Function],
-  "getAllByTitle": [Function],
-  "getByAltText": [Function],
-  "getByDisplayValue": [Function],
-  "getByLabelText": [Function],
-  "getByPlaceholderText": [Function],
-  "getByRole": [Function],
-  "getByTestId": [Function],
-  "getByText": [Function],
-  "getByTitle": [Function],
-  "queryAllByAltText": [Function],
-  "queryAllByDisplayValue": [Function],
-  "queryAllByLabelText": [Function],
-  "queryAllByPlaceholderText": [Function],
-  "queryAllByRole": [Function],
-  "queryAllByTestId": [Function],
-  "queryAllByText": [Function],
-  "queryAllByTitle": [Function],
-  "queryByAltText": [Function],
-  "queryByDisplayValue": [Function],
-  "queryByLabelText": [Function],
-  "queryByPlaceholderText": [Function],
-  "queryByRole": [Function],
-  "queryByTestId": [Function],
-  "queryByText": [Function],
-  "queryByTitle": [Function],
-  "rerender": [Function],
-  "unmount": [Function],
-}
+  </div>
+</body>
 `;
