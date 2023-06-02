@@ -1,6 +1,4 @@
-import '@navikt/ds-css';
-
-import './tailwind.css';
+import './global.css';
 
 import { Modal } from '@navikt/ds-react';
 import React from 'react';
