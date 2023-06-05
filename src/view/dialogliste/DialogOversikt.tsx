@@ -11,7 +11,7 @@ import InfoVedIngenDialoger from '../info/InfoVedIngenDialoger';
 import OmDialogLenke from '../info/OmDialogLenke';
 import { useSelectedDialog } from '../utils/useAktivitetId';
 import DialogListe from './DialogListe';
-import DialogOverviewHeader from './NyDialogLink';
+import NyDialogLink from './NyDialogLink';
 
 const DialogOversiktHeader = ({ erVeileder }: { erVeileder: boolean }) => {
     return (
@@ -42,6 +42,7 @@ const DialogOversikt = () => {
     const isNyRoute = location.pathname.startsWith('/ny');
     const userInfoContext = useUserInfoContext();
     const erVeileder = !!userInfoContext?.erVeileder;
+    const ingenDialoger = dialoger.length === 0;
     return (
         <div
             className={classNames(
@@ -51,10 +52,8 @@ const DialogOversikt = () => {
         >
             <DialogOversiktHeader erVeileder={erVeileder} />
             <div className="flex h-full flex-col overflow-y-scroll border-r border-border-divider bg-gray-100 px-2 pb-8 pt-4">
-                <div className="p-2">
-                    <DialogOverviewHeader visible={kanSendeMelding} />
-                </div>
-                <InfoVedIngenDialoger className="mt-4 md:hidden" visible={dialoger.length === 0} />
+                <div className="p-2">{kanSendeMelding ? <NyDialogLink /> : null}</div>
+                {ingenDialoger ? <InfoVedIngenDialoger className="mt-4 md:hidden" /> : null}
                 <DialogListe />
             </div>
         </div>

@@ -3,7 +3,6 @@ import { Button } from '@navikt/ds-react';
 import React from 'react';
 import { useNavigate } from 'react-router';
 
-import { visibleIfHoc } from '../../felleskomponenter/VisibleIfHoc';
 import { useRoutes } from '../../routes';
 
 const NyDialogLink = () => {
@@ -16,4 +15,4 @@ const NyDialogLink = () => {
         </Button>
     );
 };
-export default visibleIfHoc(NyDialogLink);
+export default NyDialogLink;

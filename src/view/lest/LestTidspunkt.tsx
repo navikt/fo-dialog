@@ -1,7 +1,6 @@
 import { BodyShort } from '@navikt/ds-react';
 import React from 'react';
 
-import { visibleIfHoc } from '../../felleskomponenter/VisibleIfHoc';
 import { formaterDateAndTime } from '../../utils/Date';
 import { ReactComponent as Pil } from './pil.svg';
 
@@ -19,4 +18,4 @@ function LestAvTidspunkt(props: Props) {
     );
 }
 
-export default visibleIfHoc(LestAvTidspunkt);
+export default LestAvTidspunkt;

@@ -68,10 +68,9 @@ export function Meldinger(props: Props) {
                                 henvendelseData={henvendelse}
                                 viktigMarkering={(erViktig && index === 0) || henvendelse.viktig}
                             />
-                            <LestAvTidspunkt
-                                tidspunkt={lestAvBrukerTidspunkt!}
-                                visible={henvendelse.id === sisteHenvendelseLestAvBruker}
-                            />
+                            {henvendelse.id === sisteHenvendelseLestAvBruker ? (
+                                <LestAvTidspunkt tidspunkt={lestAvBrukerTidspunkt!} />
+                            ) : null}
                         </React.Fragment>
                     ))}
                 </div>

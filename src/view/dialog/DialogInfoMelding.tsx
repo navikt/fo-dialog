@@ -1,6 +1,5 @@
 import React from 'react';
 
-import { Aktivitetskort } from '../aktivitet/Aktivitetskort';
 import { useDialogContext } from '../DialogProvider';
 import DialogIkkeValgt from '../info/DialogIkkeValgt';
 import InfoVedIngenDialoger from '../info/InfoVedIngenDialoger';
@@ -11,8 +10,7 @@ const DialogInfoMelding = () => {
 
     return (
         <div className="hidden w-full justify-center border-r border-border-divider bg-gray-100 pt-8 md:flex lg:max-w-lgContainer xl:max-w-none">
-            <InfoVedIngenDialoger visible={!harDialoger} />
-            <DialogIkkeValgt visible={harDialoger} />
+            {harDialoger ? <DialogIkkeValgt /> : <InfoVedIngenDialoger />}
         </div>
     );
 };

@@ -1,7 +1,6 @@
 import { BodyShort } from '@navikt/ds-react';
 import React from 'react';
 
-import { visibleIfHoc } from '../../felleskomponenter/VisibleIfHoc';
 import { ReactComponent as IngenValgteDialoger } from '../dialog/ingen-valgt.svg';
 
 const DialogIkkeValgt = () => {
@@ -13,4 +12,4 @@ const DialogIkkeValgt = () => {
     );
 };
 
-export default visibleIfHoc(DialogIkkeValgt);
+export default DialogIkkeValgt;
