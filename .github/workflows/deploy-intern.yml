@@ -10,6 +10,11 @@ on:
         required: true
         type: string
 
+env:
+  PRINT_PAYLOAD: true
+  TZ: Europe/Amsterdam
+  CI: true
+
 jobs:
   deploy:
     name: Deploy application to dev
