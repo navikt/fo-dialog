@@ -1,20 +1,15 @@
-import { useFnrContext } from './view/Provider';
-
-const dialogRoute = (fnr?: string) => (id: string) => fnr ? `/${fnr}/${id}` : `/${id}`;
 const aktivitetQuery = (aktivitetId?: string) => (aktivitetId ? `?aktivitetId=${aktivitetId}` : '');
-const nyRoute =
-    (fnr?: string) =>
-    (aktivitetId: string | undefined = undefined) =>
-        fnr ? `/${fnr}/ny${aktivitetQuery(aktivitetId)}` : `/ny` + aktivitetQuery(aktivitetId);
-const baseRoute = (fnr?: string) => () => fnr ? `/${fnr}` : `/`;
-const informasjonRoute = (fnr?: string) => () => fnr ? `/${fnr}/informasjon` : `/informasjon`;
+
+const baseRoute = () => '/';
+const dialogRoute = (id: string) => `/${id}`;
+const nyRoute = (aktivitetId: string | undefined = undefined) => `/ny${aktivitetQuery(aktivitetId)}`;
+const informasjonRoute = () => '/informasjon';
 
 export const useRoutes = () => {
-    // const fnr = useFnrContext();
     return {
-        baseRoute: baseRoute(undefined),
-        dialogRoute: dialogRoute(undefined),
-        nyRoute: nyRoute(undefined),
-        informasjonRoute: informasjonRoute(undefined)
+        baseRoute,
+        dialogRoute,
+        nyRoute,
+        informasjonRoute
     };
 };

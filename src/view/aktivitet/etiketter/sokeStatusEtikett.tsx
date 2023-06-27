@@ -1,65 +1,36 @@
 import { Tag } from '@navikt/ds-react';
-import classNames from 'classnames';
+import { TagProps } from '@navikt/ds-react/src/tag/Tag';
 import React from 'react';
 
-import { StillingsStatus } from '../../../utils/aktivitetTypes';
-import EtikettBase from './etikett-base';
-import styles from './sokestatusEtikett.module.less';
+import { StillingStatus } from '../../../utils/aktivitetTypes';
 
-const INGEN_VALGT = 'INGEN_VALGT';
-const SOKNAD_SENDT = 'SOKNAD_SENDT';
-const INNKALT_TIL_INTERVJU = 'INNKALT_TIL_INTERVJU';
-const AVSLAG = 'AVSLAG';
-const JOBBTILBUD = 'JOBBTILBUD';
+interface Etikett {
+    text: string;
+    variant: TagProps['variant'];
+}
 
-const getCls = (etikettnavn?: StillingsStatus): string => {
-    switch (etikettnavn) {
-        case SOKNAD_SENDT:
-            return styles.soknadSendt;
-        case INNKALT_TIL_INTERVJU:
-            return styles.inkaltTilIntervju;
-        case JOBBTILBUD:
-            return styles.jobbtilbud;
-        case AVSLAG:
-            return styles.avslag;
-        case INGEN_VALGT:
-        case undefined:
-        case null:
-            return styles.ikkeStartet;
-    }
+const getEtikett: Record<Exclude<StillingStatus, undefined | null>, Etikett> = {
+    SOKNAD_SENDT: { text: 'Sendt søknad og venter på svar', variant: 'success' },
+    INNKALT_TIL_INTERVJU: { text: 'Skal på intervju', variant: 'info' },
+    JOBBTILBUD: { text: 'Fått jobbtilbud 🎉', variant: 'warning' },
+    AVSLAG: { text: 'Ikke fått jobben', variant: 'neutral' },
+    INGEN_VALGT: { text: 'Fått avslag', variant: 'neutral' }
 };
 
-const getText = (etikettnavn?: StillingsStatus): string => {
-    switch (etikettnavn) {
-        case SOKNAD_SENDT:
-            return 'Sendt søknad og venter på svar';
-        case INNKALT_TIL_INTERVJU:
-            return 'Skal på intervju';
-        case JOBBTILBUD:
-            return 'Fått jobbtilbud 🎉';
-        case AVSLAG:
-            return 'Fått avslag';
-        case INGEN_VALGT:
-        case undefined:
-        case null:
-            return 'Ikke startet';
-    }
-};
-
-export interface Props {
-    etikett?: StillingsStatus;
-    className?: string;
-    hidden?: boolean;
+interface Props {
+    etikett?: StillingStatus;
 }
 
 function SokeStatusEtikett(props: Props) {
-    const { etikett, className, hidden } = props;
-    if (hidden) return;
-    const cls = getCls(etikett);
+    const { etikett } = props;
+
+    if (!etikett) return null;
+
+    const { text, variant } = getEtikett[etikett];
 
     return (
-        <Tag className="mr-2" variant="alt1" size="small">
-            {getText(etikett)}
+        <Tag className="mr-2" variant={variant} size="small">
+            {text}
         </Tag>
     );
 }

@@ -1,11 +1,10 @@
 import { zodResolver } from '@hookform/resolvers/zod';
-import { Button, GuidePanel, TextField, Textarea } from '@navikt/ds-react';
+import { Alert, Button, GuidePanel, TextField, Textarea } from '@navikt/ds-react';
 import React, { useEffect, useRef, useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { useNavigate } from 'react-router';
 import { z } from 'zod';
 
-import AlertStripeVisible from '../../felleskomponenter/AlertStripeVisible';
 import loggEvent from '../../felleskomponenter/logging';
 import { useRoutes } from '../../routes';
 import { StringOrNull } from '../../utils/Typer';
@@ -114,9 +113,9 @@ const NyDialogForm = (props: Props) => {
     const bigScreen = window.innerWidth >= 768;
 
     return (
-        <div className="bg-gray-100 h-full w-full lg:max-w-lgContainer overflow-x-scroll xl:max-w-none">
+        <div className="h-full w-full overflow-x-scroll bg-gray-100 lg:max-w-lgContainer xl:max-w-none">
             <form
-                className="p-8 space-y-8 xl:max-w-max-paragraph xl:w-full"
+                className="space-y-8 p-8 xl:w-full xl:max-w-max-paragraph"
                 onSubmit={handleSubmit((data) => onSubmit(data))}
                 autoComplete="off"
             >
@@ -155,9 +154,9 @@ const NyDialogForm = (props: Props) => {
                     maxRows={10}
                 />
 
-                <AlertStripeVisible variant="error" visible={noeFeilet}>
-                    Noe gikk dessverre galt med systemet. Prøv igjen senere.
-                </AlertStripeVisible>
+                {noeFeilet ? (
+                    <Alert variant="error">Noe gikk dessverre galt med systemet. Prøv igjen senere.</Alert>
+                ) : null}
 
                 <div className="flex flex-row gap-x-4">
                     <Button loading={isSubmitting}>Send</Button>

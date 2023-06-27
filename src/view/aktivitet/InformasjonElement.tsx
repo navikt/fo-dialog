@@ -19,7 +19,7 @@ export default function InformasjonElement(props: TekstomradeProps) {
 
     return (
         <InformasjonElementRaw merkelapptekst={merkelapptekst}>
-            <span className="text-ellipsis overflow-hidden">{linkify(verdi)}</span>
+            <span className="overflow-hidden text-ellipsis">{linkify(verdi)}</span>
         </InformasjonElementRaw>
     );
 }
@@ -48,7 +48,7 @@ export function InformasjonElementRaw(props: PropTypes) {
     if (!children) return null;
 
     return (
-        <div className={classNames('grow flex-wrap min-w-4 my-4')}>
+        <div className={classNames('min-w-4 my-4 grow flex-wrap')}>
             <Heading level="2" size="xsmall">
                 {merkelapptekst}
             </Heading>

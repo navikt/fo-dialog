@@ -1,8 +1,6 @@
 import { BodyShort, GuidePanel } from '@navikt/ds-react';
 import React from 'react';
 
-import { visibleIfHoc } from '../../felleskomponenter/VisibleIfHoc';
-
 interface Props {
     className?: string;
 }
@@ -20,4 +18,4 @@ const InfoVedIngenDialoger = ({ className }: Props) => {
     );
 };
 
-export default visibleIfHoc(InfoVedIngenDialoger);
+export default InfoVedIngenDialoger;

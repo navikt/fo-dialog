@@ -11,12 +11,12 @@ import InfoVedIngenDialoger from '../info/InfoVedIngenDialoger';
 import OmDialogLenke from '../info/OmDialogLenke';
 import { useSelectedDialog } from '../utils/useAktivitetId';
 import DialogListe from './DialogListe';
-import DialogOverviewHeader from './NyDialogLink';
+import NyDialogLink from './NyDialogLink';
 
 const DialogOversiktHeader = ({ erVeileder }: { erVeileder: boolean }) => {
     return (
-        <div className="p-4 flex flex-col gap-y-2 border-b border-border-divider">
-            <div className="flex md:justify-between gap-x-4">
+        <div className="flex flex-col gap-y-2 border-b border-border-divider p-4">
+            <div className="flex gap-x-4 md:justify-between">
                 {!erVeileder ? (
                     <>
                         <Link href={MINSIDE_URL}>Min side</Link>
@@ -42,19 +42,18 @@ const DialogOversikt = () => {
     const isNyRoute = location.pathname.startsWith('/ny');
     const userInfoContext = useUserInfoContext();
     const erVeileder = !!userInfoContext?.erVeileder;
+    const ingenDialoger = dialoger.length === 0;
     return (
         <div
             className={classNames(
                 { hidden: !!dialog || isNyRoute } /* Hvis liten skjerm, bare vis dialog-liste på "Homepage"  */,
-                'flex flex-col border-r border-border-divider w-full h-full md:max-w-80 md:flex md:flex-col xl:max-w-none xl:min-w-[320px] xl:w-[16.7vw]'
+                'flex h-full w-full flex-col border-r border-border-divider md:flex md:max-w-xs md:flex-col xl:w-[16.7vw] xl:min-w-[320px] xl:max-w-none'
             )}
         >
             <DialogOversiktHeader erVeileder={erVeileder} />
-            <div className="flex flex-col px-2 pb-8 bg-gray-100 pt-4 overflow-y-scroll h-full border-r border-border-divider">
-                <div className="p-2">
-                    <DialogOverviewHeader visible={kanSendeMelding} />
-                </div>
-                <InfoVedIngenDialoger className="md:hidden mt-4" visible={dialoger.length === 0} />
+            <div className="flex h-full flex-col overflow-y-scroll border-r border-border-divider bg-gray-100 px-2 pb-8 pt-4">
+                <div className="p-2">{kanSendeMelding ? <NyDialogLink /> : null}</div>
+                {ingenDialoger ? <InfoVedIngenDialoger className="mt-4 md:hidden" /> : null}
                 <DialogListe />
             </div>
         </div>

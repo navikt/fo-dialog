@@ -1,10 +1,9 @@
 import { zodResolver } from '@hookform/resolvers/zod';
-import { Button, Textarea } from '@navikt/ds-react';
+import { Alert, Button, Textarea } from '@navikt/ds-react';
 import React, { ChangeEvent, useEffect, useLayoutEffect, useRef, useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { z } from 'zod';
 
-import AlertStripeVisible from '../../../felleskomponenter/AlertStripeVisible';
 import loggEvent from '../../../felleskomponenter/logging';
 import { DialogData } from '../../../utils/Typer';
 import { UpdateTypes, dispatchUpdate } from '../../../utils/UpdateEvent';
@@ -142,9 +141,7 @@ const MeldingInputBox = (props: Props) => {
                 </div>
             ) : null}
 
-            <AlertStripeVisible variant="error" visible={noeFeilet}>
-                Noe gikk dessverre galt med systemet. Prøv igjen senere.
-            </AlertStripeVisible>
+            {noeFeilet ? <Alert variant="error">Noe gikk dessverre galt med systemet. Prøv igjen senere.</Alert> : null}
         </form>
     );
 };

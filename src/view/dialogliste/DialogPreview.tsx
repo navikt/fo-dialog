@@ -24,7 +24,7 @@ const ALIGN_TO_BOTTOM: ScrollIntoViewOptions = { block: 'end', inline: 'nearest'
 function Tittel(props: TittelProps) {
     const tittel = props.aktivitet ? getDialogTittel(props.aktivitet) : props.tittel;
     return (
-        <Heading className="text-ellipsis overflow-hidden" level="2" size="small">
+        <Heading className="overflow-hidden text-ellipsis" level="2" size="small">
             {tittel}
         </Heading>
     );
@@ -92,7 +92,7 @@ function DialogPreview(props: Props) {
 
     return (
         <LinkPanel
-            className={classNames('my-1 border !gap-0 p-2 max-w-full', styles.dialogPreview, {
+            className={classNames('my-1 max-w-full !gap-0 border p-2', styles.dialogPreview, {
                 'bg-[#e6f0ff]': detteErValgtDialog
             })}
             href={dialogRoute(id)}
@@ -101,14 +101,14 @@ function DialogPreview(props: Props) {
         >
             <div className="flex flex-row">
                 <Ikon dialog={dialog} />
-                <div className="flex-grow min-w-0">
+                <div className="min-w-0 flex-grow">
                     <BodyShort className="hidden">{typeText(dialog)}</BodyShort>
                     <Tittel tittel={overskrift} aktivitet={aktivitet} />
                     <Detail>{datoString}</Detail>
                     <EtikettListe dialog={dialog} />
                     <BodyShort className="hidden">{meldingerText(dialog.henvendelser.length)}</BodyShort>
                 </div>
-                <BodyShort aria-hidden="true" className="flex items-center ml-2">
+                <BodyShort aria-hidden="true" className="ml-2 flex items-center">
                     {dialog.henvendelser.length}
                 </BodyShort>
                 <div ref={dialogref}></div>

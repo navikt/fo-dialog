@@ -20,7 +20,7 @@ export function DialogHeader() {
 
     if (isNyRoute) {
         return (
-            <div className="bg-white p-4 pl-6 md:pl-8 flex items-center gap-x-4 border-b border-border-divider">
+            <div className="flex items-center gap-x-4 border-b border-border-divider bg-white p-4 pl-6 md:pl-8">
                 <TilbakeKnapp className="md:hidden" />
                 <Heading level="1" size="medium">
                     Start en ny dialog
@@ -33,12 +33,12 @@ export function DialogHeader() {
     return (
         <>
             <DialogHeaderFeil visible={erFeil} />
-            <div className="bg-white py-2 flex flex-col gap-x-4 border-b border-border-divider">
+            <div className="flex flex-col gap-x-4 border-b border-border-divider bg-white py-2">
                 <section aria-label="Dialog header">
                     {viseAktivitet ? (
                         <DialogMedAktivitetHeader />
                     ) : (
-                        <div className="pl-4 py-2 flex flex-row gap-x-2">
+                        <div className="flex flex-row gap-x-2 py-2 pl-4">
                             <TilbakeKnapp className="md:hidden" />
                             <Heading level="1" size="small">
                                 {dialog?.overskrift}

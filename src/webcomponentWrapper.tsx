@@ -1,10 +1,9 @@
-import dsStyles from '@navikt/ds-css/dist/index.css?inline';
 import { Modal, Provider as ModalProvider } from '@navikt/ds-react';
 import React from 'react';
 import { createRoot } from 'react-dom/client';
 
 import App from './App';
-import tailwindCss from './tailwind.css?inline';
+import globalCss from './global.css?inline';
 import dialogOversiktStyles from './view/dialogliste/DialogPreview.module.css?inline';
 
 export class DabDialog extends HTMLElement {
@@ -21,7 +20,7 @@ export class DabDialog extends HTMLElement {
 
         // Load styles under this shadowDom-node, not root element
         const styleElem = document.createElement('style');
-        styleElem.innerHTML = dsStyles + tailwindCss + dialogOversiktStyles;
+        styleElem.innerHTML = globalCss + dialogOversiktStyles;
         shadowRoot.appendChild(styleElem);
 
         const fnr = this.getAttribute('data-fnr') ?? undefined;

@@ -618,8 +618,8 @@ export function setFerdigBehandlet(req: RestRequest) {
 export const opprettDialogEtterRender = () => {
     setTimeout(() => {
         const dialogId = Math.floor(Math.random() * 100);
-        const nyDialog = {
-            id: dialogId,
+        const nyDialog: DialogData = {
+            id: `${dialogId}`,
             overskrift: 'Sender denne mens du ser på :)',
             sisteTekst: 'Halla, hvordan ser dette ut?',
             sisteDato: new Date().toISOString(),
@@ -634,11 +634,12 @@ export const opprettDialogEtterRender = () => {
             henvendelser: [
                 {
                     id: '3666',
-                    dialogId: dialogId,
+                    dialogId: `${dialogId}`,
                     avsender: 'VEILEDER',
                     avsenderId: 'Z123456',
                     sendt: new Date().toISOString(),
                     lest: false,
+                    viktig: false,
                     tekst: 'Halla, hvordan ser dette ut?'
                 }
             ],

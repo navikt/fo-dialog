@@ -71,14 +71,14 @@ export function Dialog() {
     const kanSendeHenveldelse = kanSendeMelding && aktivDialog;
 
     return (
-        <section className={classNames('flex flex-col grow w-full lg:max-w-lgContainer xl:max-w-none')}>
+        <section className={classNames('flex w-full grow flex-col lg:max-w-lgContainer xl:max-w-none')}>
             <Meldinger dialogData={valgtDialog} viewState={viewState} fnr={fnr} />
             <HistoriskInfo hidden={aktivDialog} kanSendeMelding={kanSendeMelding} />
             <section
                 aria-label="Ny melding"
-                className="border-t xl:flex xl:justify-center border-border-divider p-4 bg-white"
+                className="border-t border-border-divider bg-white p-4 xl:flex xl:justify-center"
             >
-                <div className="xl:max-w-248 xl:w-full">
+                <div className="xl:w-full xl:max-w-248">
                     <ManagedDialogCheckboxes dialog={valgtDialog} visible={!!bruker?.erVeileder} />
                     {!oppfolging?.underOppfolging || valgtDialog.historisk ? null : (
                         <DialogInputBoxVisible

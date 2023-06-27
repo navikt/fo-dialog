@@ -5,9 +5,6 @@ export function valueOrNull<T>(val?: T): T | null {
     return val;
 }
 
-export function valueOrUndefined<T>(val?: T): T | undefined {
-    if (val === null) {
-        return undefined;
-    }
-    return val;
+export function notEmpty<T>(value: T | null | undefined): value is T {
+    return value !== null && value !== undefined;
 }

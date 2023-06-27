@@ -8,7 +8,6 @@ import LestAvTidspunkt from '../lest/LestTidspunkt';
 import { useSkjulHodefotForMobilVisning } from '../utils/useSkjulHodefotForMobilVisning';
 import { ViewState } from '../ViewState';
 import { Melding } from './Melding';
-import styles from './Meldinger.less';
 
 interface Props {
     dialogData: DialogData;
@@ -54,27 +53,24 @@ export function Meldinger(props: Props) {
         <section
             id="henvendelse-scroll-list"
             aria-label="Meldinger"
-            className="px-4 grow overflow-y-scroll bg-gray-100 xl:flex xl:justify-center"
+            className="grow overflow-y-scroll bg-gray-100 px-4 xl:flex xl:justify-center"
             ref={meldingListRef}
             tabIndex={0}
         >
-            <div className="xl:max-w-248 xl:w-full ">
+            <div className="xl:w-full xl:max-w-248 ">
                 <Heading level="3" size={'medium'} className="hidden">
                     Meldinger
                 </Heading>
                 <div className="mb-4">
                     {sorterteHenvendelser.map((henvendelse, index) => (
                         <React.Fragment key={henvendelse.id}>
-                            <div className={styles.henvendelseItem}>
-                                <Melding
-                                    henvendelseData={henvendelse}
-                                    viktigMarkering={(erViktig && index === 0) || henvendelse.viktig}
-                                />
-                            </div>
-                            <LestAvTidspunkt
-                                tidspunkt={lestAvBrukerTidspunkt!}
-                                visible={henvendelse.id === sisteHenvendelseLestAvBruker}
+                            <Melding
+                                henvendelseData={henvendelse}
+                                viktigMarkering={(erViktig && index === 0) || henvendelse.viktig}
                             />
+                            {henvendelse.id === sisteHenvendelseLestAvBruker ? (
+                                <LestAvTidspunkt tidspunkt={lestAvBrukerTidspunkt!} />
+                            ) : null}
                         </React.Fragment>
                     ))}
                 </div>

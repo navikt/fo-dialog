@@ -1,7 +1,6 @@
-import { Alert, BodyShort } from '@navikt/ds-react';
+import { Alert, BodyShort, HelpText } from '@navikt/ds-react';
 import React, { useEffect, useState } from 'react';
 
-import Hjelpetekst from '../../felleskomponenter/Hjelpetekst';
 import { DialogData, StringOrNull } from '../../utils/Typer';
 import { HandlingsType, ViewState } from '../ViewState';
 import styles from './DialogSendtBekreftelse.module.less';
@@ -39,7 +38,7 @@ function Melding(props: { tekst?: string; erVeileder: boolean }) {
                 <BodyShort>{tekst}</BodyShort>
             </Alert>
             {erVeileder && (
-                <Hjelpetekst className="ml-1.5" hidden={!erVeileder}>
+                <HelpText className="ml-1.5">
                     <div className={styles.hjelpeTekstInnhold}>
                         <BodyShort>
                             Hvis ikke brukeren leser dialogmeldingen innen en halvtime, så vil brukeren motta meldingen
@@ -51,7 +50,7 @@ function Melding(props: { tekst?: string; erVeileder: boolean }) {
                             Sender du flere meldinger innen en halv time så blir det kun sendt én SMS eller e-post.
                         </BodyShort>
                     </div>
-                </Hjelpetekst>
+                </HelpText>
             )}
         </div>
     );

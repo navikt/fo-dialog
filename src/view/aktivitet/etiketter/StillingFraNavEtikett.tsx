@@ -1,50 +1,35 @@
 import { Tag } from '@navikt/ds-react';
-import classNames from 'classnames';
+import { TagProps } from '@navikt/ds-react/src/tag/Tag';
 import React from 'react';
 
 import { StillingFraNavSoknadsstatus } from '../../../utils/aktivitetTypes';
-import EtikettBase from './etikett-base';
-import styles from './sokestatusEtikett.module.less';
 
-const getCls = (etikettnavn: StillingFraNavSoknadsstatus): string => {
-    switch (etikettnavn) {
-        case StillingFraNavSoknadsstatus.VENTER:
-            return styles.navGronnLighten60;
-        case StillingFraNavSoknadsstatus.SKAL_PAA_INTERVJU:
-            return styles.navLysBlaLighten60;
-        case StillingFraNavSoknadsstatus.JOBBTILBUD:
-            return styles.navOransjeLighten60;
-        case StillingFraNavSoknadsstatus.AVSLAG:
-            return styles.navGra20;
-    }
+interface Etikett {
+    text: string;
+    variant: TagProps['variant'];
+}
+
+const getEtikett: Record<StillingFraNavSoknadsstatus, Etikett> = {
+    VENTER: { text: 'Venter på å bli kontaktet', variant: 'success' },
+    SKAL_PAA_INTERVJU: { text: 'Skal på intervju', variant: 'info' },
+    JOBBTILBUD: { text: 'Fått jobbtilbud 🎉', variant: 'neutral' },
+    AVSLAG: { text: 'Ikke fått jobben', variant: 'neutral' }
 };
 
-const getText = (etikettnavn: StillingFraNavSoknadsstatus): string => {
-    switch (etikettnavn) {
-        case StillingFraNavSoknadsstatus.VENTER:
-            return 'Venter på å bli kontaktet';
-        case StillingFraNavSoknadsstatus.SKAL_PAA_INTERVJU:
-            return 'Skal på intervju';
-        case StillingFraNavSoknadsstatus.JOBBTILBUD:
-            return 'Fått jobbtilbud 🎉';
-        case StillingFraNavSoknadsstatus.AVSLAG:
-            return 'Fått avslag';
-    }
-};
-
-export interface Props {
+interface Props {
     etikett?: StillingFraNavSoknadsstatus;
-    className?: string;
-    hidden?: boolean;
 }
 
 function StillingFraNavEtikett(props: Props) {
-    const { etikett, hidden } = props;
+    const { etikett } = props;
+
     if (!etikett) return null;
-    if (hidden) return null;
+
+    const { text, variant } = getEtikett[etikett];
+
     return (
-        <Tag className="mr-2" variant="success" size="small">
-            {getText(etikett)}
+        <Tag className="mr-2" variant={variant} size="small">
+            {text}
         </Tag>
     );
 }

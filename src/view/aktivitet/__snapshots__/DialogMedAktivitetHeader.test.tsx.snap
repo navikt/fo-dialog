@@ -28,3 +28,9 @@ exports[`<AktivitetskortPreview /> > skal rendre stillingsaktivitet som i snapsh
   </div>
 </body>
 `;
+
+exports[`<DialogMedAktivitetHeader /> > skal rendre stillingsaktivitet som i snapshot 1`] = `
+<body>
+  <div />
+</body>
+`;

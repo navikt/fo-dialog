@@ -9,7 +9,6 @@ interface PropTypes {
     aktivitet: Aktivitet;
 }
 
-//TODO: Må sette tekst "Dato ikke satt" på tildato?
 export default function StillingAktivitet(props: PropTypes) {
     const { fraDato, tilDato, arbeidsgiver, kontaktperson, arbeidssted, beskrivelse, lenke, etikett } = props.aktivitet;
 

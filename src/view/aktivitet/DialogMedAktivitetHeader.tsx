@@ -37,7 +37,7 @@ export function DialogMedAktivitetHeader(props: Props) {
                 </div>
             </div>
             <div className="flex-1 md:max-w-[320px] xl:max-w-screen-w-1/3">
-                <div className="px-2 mt-2 md:mt-0 lg:pl-4 flex-row md:flex-col items-center justify-between md:items-end lg:items-start flex">
+                <div className="mt-2 flex flex-row items-center justify-between px-2 md:mt-0 md:flex-col md:items-end lg:items-start lg:pl-4">
                     <Detail aria-hidden="true">{typeTekst.toUpperCase()}</Detail>
                     <Link href={aktivitetLenke(aktivitet.id)} onClick={visAktivitetsplan(aktivitet.id, fnr)}>
                         Gå til aktiviteten
