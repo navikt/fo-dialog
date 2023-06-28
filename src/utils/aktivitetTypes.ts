@@ -53,7 +53,10 @@ export enum StillingFraNavSoknadsstatus {
     VENTER = 'VENTER',
     SKAL_PAA_INTERVJU = 'SKAL_PAA_INTERVJU',
     JOBBTILBUD = 'JOBBTILBUD',
-    AVSLAG = 'AVSLAG'
+    AVSLAG = 'AVSLAG',
+    CV_DELT = 'CV_DELT',
+    IKKE_FATT_JOBBEN = 'IKKE_FATT_JOBBEN',
+    FATT_JOBBEN = 'FATT_JOBBEN'
 }
 export interface StillingFraNavData {
     cvKanDelesData: CvKanDelesData;
