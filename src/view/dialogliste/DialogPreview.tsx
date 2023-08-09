@@ -102,7 +102,7 @@ function DialogPreview(props: Props) {
             <div className="flex flex-row">
                 <Ikon dialog={dialog} />
                 <div className="min-w-0 flex-grow">
-                    <BodyShort className="hidden">{typeText(dialog)}</BodyShort>
+                    <BodyShort className="sr-only">{typeText(dialog)}</BodyShort>
                     <Tittel tittel={overskrift} aktivitet={aktivitet} />
                     <Detail>{datoString}</Detail>
                     <EtikettListe dialog={dialog} />
