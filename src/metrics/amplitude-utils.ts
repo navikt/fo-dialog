@@ -11,7 +11,7 @@ export const initAmplitude = (): void => {
         apiEndpoint: import.meta.env.VITE_AMPLITUDE_API_URL,
         saveEvents: false,
         includeUtm: true,
-        includeReferrer: true,
+        includeReferrer: false,
         platform: window.location.toString()
     });
 };
