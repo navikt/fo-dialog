@@ -58,6 +58,7 @@ const Routes = () => {
         return <RouterProvider router={hashRouter} />;
     }
     let basename = stripTrailingSlash(import.meta.env.BASE_URL);
+    if (erInternFlate) basename = `/`;
     const browserRouter = createBrowserRouter(dialogRoutes, { basename });
     return <RouterProvider router={browserRouter} />;
 };
