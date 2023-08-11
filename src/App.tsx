@@ -53,13 +53,11 @@ const dialogRoutes = [
 ];
 
 const Routes = () => {
-    const fnr = useFnrContext();
     if (USE_HASH_ROUTER) {
         const hashRouter = createHashRouter(dialogRoutes);
         return <RouterProvider router={hashRouter} />;
     }
-    let basename = stripTrailingSlash(import.meta.env.BASE_URL + (fnr ?? ''));
-    if (erInternFlate) basename = `/${fnr}`;
+    let basename = stripTrailingSlash(import.meta.env.BASE_URL);
     const browserRouter = createBrowserRouter(dialogRoutes, { basename });
     return <RouterProvider router={browserRouter} />;
 };
