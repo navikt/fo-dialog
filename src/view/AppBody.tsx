@@ -3,7 +3,6 @@ import { Outlet } from 'react-router';
 import { v4 as uuidv4 } from 'uuid';
 
 import loggEvent from '../felleskomponenter/logging';
-import { PageViewMetricCollector } from '../metrics/PageViewMetricCollector';
 import { Bruker, OppfolgingData } from '../utils/Typer';
 import { useUserInfoContext } from './BrukerProvider';
 import { DialogHeader } from './dialog/DialogHeader';
@@ -63,7 +62,6 @@ const AppBody = () => {
                     <Outlet />
                 </div>
             </div>
-            <PageViewMetricCollector />
             <EventHandler />
         </div>
     );
