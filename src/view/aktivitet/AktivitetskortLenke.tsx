@@ -7,11 +7,11 @@ export const aktivitetLenke = (aktivitetId: string) => {
     return `${AKTIVITETSPLAN_URL}/aktivitet/vis/${aktivitetId}`;
 };
 
-export const visAktivitetsplan = (aktivitetID: string, fnrContext?: string) => (event: MouseEvent) => {
-    if (!fnrContext) {
+export const visAktivitetsplan = (aktivitetID: string, fnr?: string) => (event: MouseEvent) => {
+    if (!fnr) {
         return;
     }
     event.preventDefault();
-    window.history.replaceState({}, 'aktivitetsplan', `${getContextPath()}/${fnrContext}/aktivitet/vis/${aktivitetID}`);
+    window.history.replaceState({}, 'aktivitetsplan', `${getContextPath()}/aktivitet/vis/${aktivitetID}`);
     window.dispatchEvent(new CustomEvent('visAktivitetsplan', { detail: aktivitetID }));
 };
