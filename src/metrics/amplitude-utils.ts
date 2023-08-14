@@ -33,10 +33,6 @@ export const logAmplitudeEvent = (eventName: string, data?: { [key: string]: Eve
     });
 };
 
-export const loggSidevisning = (pathname: string): void => {
-    logAmplitudeEvent('sidevisning', { path: pathname });
-};
-
 export const loggKlikk = (eventType: string, verdi?: string, status?: string) => {
     logAmplitudeEvent('klikk', { eventType, verdi, status });
 };
