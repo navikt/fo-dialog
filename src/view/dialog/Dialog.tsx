@@ -1,6 +1,9 @@
+import { Loader } from '@navikt/ds-react';
 import classNames from 'classnames';
 import React, { useEffect, useState } from 'react';
+import { useNavigate } from 'react-router';
 
+import { useRoutes } from '../../routes';
 import { UpdateTypes, dispatchUpdate } from '../../utils/UpdateEvent';
 import useKansendeMelding from '../../utils/UseKanSendeMelding';
 import { useUserInfoContext } from '../BrukerProvider';
@@ -14,7 +17,6 @@ import { endreDialogSomVises } from '../ViewState';
 import ManagedDialogCheckboxes from './DialogCheckboxes';
 import DialogInputBoxVisible from './henvendelseInput/MeldingInputBox';
 import HistoriskInfo from './HistoriskInfo';
-import { IngenDialog } from './IngenDialog';
 
 export function Dialog() {
     const oppfolgingContext = useOppfolgingContext();
@@ -63,8 +65,11 @@ export function Dialog() {
         }
     }, [dialogId, lest, activeTab, activePersonflateTab, lesDialog]);
 
+    const routes = useRoutes();
+    const navigate = useNavigate();
     if (!valgtDialog) {
-        return <IngenDialog />;
+        navigate(routes.baseRoute(), { replace: true });
+        return <Loader />;
     }
 
     const aktivDialog = !valgtDialog.historisk;
