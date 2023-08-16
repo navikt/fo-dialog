@@ -11,7 +11,7 @@ concurrency:
 jobs:
   dev-ekstern:
     name: Deploy to dev extern
-    uses: navikt/arbeidsrettet-dialog/.github/workflows/deploy-ekstern.yml@main
+    uses: ./.github/workflows/deploy-ekstern.yml
     with:
       kommando: npm run build:dev-ekstern
       bucket: arbeidsrettet-dialog-dev
@@ -20,7 +20,7 @@ jobs:
 
   dev-intern:
     name: Deploy application to dev intern
-    uses: navikt/arbeidsrettet-dialog/.github/workflows/deploy-intern.yml@main
+    uses: ./.github/workflows/deploy-intern.yml
     with:
       kommando: npm run build:dev-intern
       bucket: arbeidsrettet-dialog-dev-intern
@@ -30,7 +30,7 @@ jobs:
     needs:
       - dev-ekstern
       - dev-intern
-    uses: navikt/arbeidsrettet-dialog/.github/workflows/deploy-ekstern.yml@main
+    uses: ./.github/workflows/deploy-ekstern.yml
     with:
       kommando: npm run build:prod-ekstern
       bucket: arbeidsrettet-dialog-prod
@@ -40,7 +40,7 @@ jobs:
   prod-intern:
     name: Deploy application to prod intern
     needs: dev-intern
-    uses: navikt/arbeidsrettet-dialog/.github/workflows/deploy-intern.yml@main
+    uses: ./.github/workflows/deploy-intern.yml
     with:
       kommando: npm run build:prod-intern
       bucket: arbeidsrettet-dialog-prod-intern
