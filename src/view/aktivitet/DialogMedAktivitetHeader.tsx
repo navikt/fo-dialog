@@ -16,7 +16,6 @@ interface Props {
 
 export function DialogMedAktivitetHeader(props: Props) {
     const aktivitet = useSelectedAktivitet();
-    const fnr = useFnrContext();
 
     if (!aktivitet) {
         return null;
