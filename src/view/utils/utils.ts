@@ -21,10 +21,6 @@ export const settSammenmedSlasher = (...ss: Array<string | undefined>): string =
     else return '';
 };
 
-const erGCP = (): boolean => window.location.hostname.endsWith('intern.nav.no');
-
-export const getContextPath = (): string => (erGCP() ? '' : '/veilarbpersonflatefs');
-
 export const getAktivitetType = (aktivitet: Aktivitet | ArenaAktivitet): AlleAktivitetTypes => {
     if (aktivitet.type === AktivitetTypes.EKSTERN_AKTIVITET) {
         return aktivitet.eksternAktivitet!!.type;

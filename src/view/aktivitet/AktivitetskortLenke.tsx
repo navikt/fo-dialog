@@ -1,17 +1,13 @@
-import React, { MouseEvent } from 'react';
+import { MouseEvent } from 'react';
 
 import { AKTIVITETSPLAN_URL } from '../../constants';
-import { getContextPath } from '../utils/utils';
 
 export const aktivitetLenke = (aktivitetId: string) => {
     return `${AKTIVITETSPLAN_URL}/aktivitet/vis/${aktivitetId}`;
 };
 
-export const visAktivitetsplan = (aktivitetID: string, fnr?: string) => (event: MouseEvent) => {
-    if (!fnr) {
-        return;
-    }
+export const visAktivitetsplan = (aktivitetID: string) => (event: MouseEvent) => {
     event.preventDefault();
-    window.history.replaceState({}, 'aktivitetsplan', `${getContextPath()}/aktivitet/vis/${aktivitetID}`);
+    window.history.replaceState({}, 'aktivitetsplan', `/aktivitet/vis/${aktivitetID}`);
     window.dispatchEvent(new CustomEvent('visAktivitetsplan', { detail: aktivitetID }));
 };
