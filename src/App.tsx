@@ -2,7 +2,7 @@ import path from 'path';
 
 import cx from 'classnames';
 import React from 'react';
-import { RouterProvider } from 'react-router';
+import { Navigate, RouterProvider, useParams } from 'react-router';
 import { createBrowserRouter, createHashRouter } from 'react-router-dom';
 
 import { stripTrailingSlash } from './api/UseApiBasePath';
@@ -13,13 +13,18 @@ import AppBody from './view/AppBody';
 import Dialog from './view/dialog/Dialog';
 import DialogInfoMelding from './view/dialog/DialogInfoMelding';
 import NyDialog from './view/dialog/NyDialog';
-import { Provider, useFnrContext } from './view/Provider';
+import { Provider } from './view/Provider';
 import StatusAdvarsel from './view/statusAdvarsel/StatusAdvarsel';
 
 interface Props {
     fnr?: string;
     enhet?: string;
 }
+
+const RedirectToDialogWithoutFnr = () => {
+    const params = useParams();
+    return <Navigate replace to={`/` + params.dialogId} />;
+};
 
 const dialogRoutes = [
     {
@@ -47,6 +52,10 @@ const dialogRoutes = [
             {
                 path: '',
                 element: <DialogInfoMelding />
+            },
+            {
+                path: ':fnr/:dialogId',
+                element: <RedirectToDialogWithoutFnr />
             }
         ]
     }
