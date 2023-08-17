@@ -3,7 +3,7 @@ import path from 'path';
 import cx from 'classnames';
 import React from 'react';
 import { Navigate, RouterProvider, useParams } from 'react-router';
-import { createBrowserRouter, createHashRouter } from 'react-router-dom';
+import { createBrowserRouter, createHashRouter, useSearchParams } from 'react-router-dom';
 
 import { stripTrailingSlash } from './api/UseApiBasePath';
 import { USE_HASH_ROUTER, erInternFlate } from './constants';
@@ -23,6 +23,10 @@ interface Props {
 
 const RedirectToDialogWithoutFnr = () => {
     const params = useParams();
+    const [queryParams, _] = useSearchParams();
+    if (params.dialogId === 'ny') {
+        return <Navigate replace to={`/ny?aktivitetId=` + queryParams.get('aktivitetId')} />;
+    }
     return <Navigate replace to={`/` + params.dialogId} />;
 };
 
