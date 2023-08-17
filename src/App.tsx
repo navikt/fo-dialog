@@ -22,12 +22,16 @@ interface Props {
 }
 
 const RedirectToDialogWithoutFnr = () => {
+    // /:fnr/:dialogId -> /:dialogId
     const params = useParams();
-    const [queryParams, _] = useSearchParams();
-    if (params.dialogId === 'ny') {
-        return <Navigate replace to={`/ny?aktivitetId=` + queryParams.get('aktivitetId')} />;
-    }
     return <Navigate replace to={`/` + params.dialogId} />;
+};
+const RedirectToNyDialogWithoutFnr = () => {
+    // Handle route /:fnr/ny?aktivitetId=<id> -> /ny?aktivitetId=<id>
+    const [queryParams, _] = useSearchParams();
+    const aktivitetId = queryParams.get('aktivitetId');
+    const queryPart = aktivitetId ? '' : '?aktivitetId=' + aktivitetId;
+    return <Navigate replace to={`/ny${queryPart}`} />;
 };
 
 const dialogRoutes = [
@@ -56,6 +60,10 @@ const dialogRoutes = [
             {
                 path: '',
                 element: <DialogInfoMelding />
+            },
+            {
+                path: ':fnr/ny',
+                element: <RedirectToNyDialogWithoutFnr />
             },
             {
                 path: ':fnr/:dialogId',
