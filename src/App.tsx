@@ -2,8 +2,8 @@ import path from 'path';
 
 import cx from 'classnames';
 import React from 'react';
-import { RouterProvider } from 'react-router';
-import { createBrowserRouter, createHashRouter } from 'react-router-dom';
+import { Navigate, RouterProvider, useParams } from 'react-router';
+import { createBrowserRouter, createHashRouter, useSearchParams } from 'react-router-dom';
 
 import { stripTrailingSlash } from './api/UseApiBasePath';
 import { USE_HASH_ROUTER, erInternFlate } from './constants';
@@ -13,13 +13,26 @@ import AppBody from './view/AppBody';
 import Dialog from './view/dialog/Dialog';
 import DialogInfoMelding from './view/dialog/DialogInfoMelding';
 import NyDialog from './view/dialog/NyDialog';
-import { Provider, useFnrContext } from './view/Provider';
+import { Provider } from './view/Provider';
 import StatusAdvarsel from './view/statusAdvarsel/StatusAdvarsel';
 
 interface Props {
     fnr?: string;
     enhet?: string;
 }
+
+const RedirectToDialogWithoutFnr = () => {
+    // /:fnr/:dialogId -> /:dialogId
+    const params = useParams();
+    return <Navigate replace to={`/` + params.dialogId} />;
+};
+const RedirectToNyDialogWithoutFnr = () => {
+    // Handle route /:fnr/ny?aktivitetId=<id> -> /ny?aktivitetId=<id>
+    const [queryParams, _] = useSearchParams();
+    const aktivitetId = queryParams.get('aktivitetId');
+    const queryPart = aktivitetId ? '?aktivitetId=' + aktivitetId : '';
+    return <Navigate replace to={`/ny${queryPart}`} />;
+};
 
 const dialogRoutes = [
     {
@@ -47,19 +60,26 @@ const dialogRoutes = [
             {
                 path: '',
                 element: <DialogInfoMelding />
+            },
+            {
+                path: ':fnr/ny',
+                element: <RedirectToNyDialogWithoutFnr />
+            },
+            {
+                path: ':fnr/:dialogId',
+                element: <RedirectToDialogWithoutFnr />
             }
         ]
     }
 ];
 
 const Routes = () => {
-    const fnr = useFnrContext();
     if (USE_HASH_ROUTER) {
         const hashRouter = createHashRouter(dialogRoutes);
         return <RouterProvider router={hashRouter} />;
     }
-    let basename = stripTrailingSlash(import.meta.env.BASE_URL + (fnr ?? ''));
-    if (erInternFlate) basename = `/${fnr}`;
+    let basename = stripTrailingSlash(import.meta.env.BASE_URL);
+    if (erInternFlate) basename = `/`;
     const browserRouter = createBrowserRouter(dialogRoutes, { basename });
     return <RouterProvider router={browserRouter} />;
 };

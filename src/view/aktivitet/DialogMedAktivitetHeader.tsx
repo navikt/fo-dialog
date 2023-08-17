@@ -16,7 +16,6 @@ interface Props {
 
 export function DialogMedAktivitetHeader(props: Props) {
     const aktivitet = useSelectedAktivitet();
-    const fnr = useFnrContext();
 
     if (!aktivitet) {
         return null;
@@ -39,7 +38,7 @@ export function DialogMedAktivitetHeader(props: Props) {
             <div className="flex-1 md:max-w-[320px] xl:max-w-screen-w-1/3">
                 <div className="mt-2 flex flex-row items-center justify-between px-2 md:mt-0 md:flex-col md:items-end lg:items-start lg:pl-4">
                     <Detail aria-hidden="true">{typeTekst.toUpperCase()}</Detail>
-                    <Link href={aktivitetLenke(aktivitet.id)} onClick={visAktivitetsplan(aktivitet.id, fnr)}>
+                    <Link href={aktivitetLenke(aktivitet.id)} onClick={visAktivitetsplan(aktivitet.id)}>
                         Gå til aktiviteten
                     </Link>
                 </div>

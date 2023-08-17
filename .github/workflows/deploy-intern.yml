@@ -43,7 +43,7 @@ jobs:
           cdn-team-name: dab
           source: ./build/
           destination: /${{ inputs.bucket }}/
-          cache-invalidate: true
+          cache-invalidation: true
       - name: Setup gcloud
         uses: google-github-actions/setup-gcloud@v0
       - name: Set Cache policy no-store for asset-manifest
