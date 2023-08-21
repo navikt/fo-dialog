@@ -43,8 +43,4 @@ jobs:
           cdn-team-name: dab
           source: ./build/
           destination: /${{ inputs.bucket }}/
-          cache-invalidation: true
-      - name: Setup gcloud
-        uses: google-github-actions/setup-gcloud@v0
-      - name: Set Cache policy no-store for asset-manifest
-        run: gsutil setmeta -h "Cache-Control:no-store" gs://frontend-plattform-prod-dab/dab/${{ inputs.bucket }}/build/asset-manifest.json
+          no-cache-paths: build/asset-manifest.json
