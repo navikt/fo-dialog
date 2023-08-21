@@ -68,6 +68,10 @@ const dialogRoutes = [
             {
                 path: ':fnr/:dialogId',
                 element: <RedirectToDialogWithoutFnr />
+            },
+            {
+                path: '*',
+                element: <Navigate to={'/'} />
             }
         ]
     }
