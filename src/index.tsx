@@ -1,16 +1,11 @@
 import './polyfill';
 
-import NAVSPA from '@navikt/navspa';
-import React from 'react';
-
-import AppWebComponent from './AppWebComponent';
 import { USE_MOCK } from './constants';
 import { initAmplitude } from './metrics/amplitude-utils';
 import { erEksternBruker } from './mock/demo/localstorage';
 import { gotoStartTestPage } from './mock/Utils';
 
 const exportToNavSpa = () => {
-    NAVSPA.eksporter('arbeidsrettet-dialog', AppWebComponent);
     // Denne må lazy importeres fordi den laster inn all css selv inn under sin egen shadow-root
     import('./webcomponentWrapper').then(({ DabDialog }) => {
         customElements.define('dab-dialog', DabDialog);
