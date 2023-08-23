@@ -57,7 +57,6 @@
         "@navikt/ds-css": "^3.2.2",
         "@navikt/ds-react": "^3.2.2",
         "@navikt/ds-tailwind": "^3.2.2",
-        "@navikt/navspa": "6.0.1",
         "@vitejs/plugin-react-swc": "^3.3.1",
         "amplitude-js": "^8.21.9",
         "core-js": "^3.30.2",

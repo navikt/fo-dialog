@@ -1,7 +1,4 @@
-import { joinPaths } from '@navikt/navspa/dist/async/utils';
-
 import { USE_HASH_ROUTER } from '../constants';
-import { settSammenmedSlasher } from '../view/utils/utils';
 
 export function rndId() {
     const crypto: Crypto = window.crypto;
