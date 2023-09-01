@@ -3,6 +3,11 @@ run-name: Deploy feature branch ${{ github.ref_name }} by @${{ github.actor }}
 on:
   workflow_dispatch:
 
+permissions:
+  contents: 'read'
+  id-token: 'write'
+  packages: 'write'
+
 concurrency:
   group: deploy-feature-branch
   cancel-in-progress: true
