@@ -45,17 +45,14 @@ const DialogOversikt = () => {
     const ingenDialoger = dialoger.length === 0;
     return (
         <div
-            // style={{ zIndex: 100000 }}
             className={classNames(
                 { hidden: !!dialog || isNyRoute } /* Hvis liten skjerm, bare vis dialog-liste på "Homepage"  */,
-                'w-full flex-col border-r border-border-divider ' +
-                    'md:flex md:max-w-xs ' +
+                'flex w-full flex-col border-r border-border-divider ' +
+                    'md:max-w-xs ' +
                     'xl:w-[16.7vw] xl:min-w-[320px] xl:max-w-none'
-                // 'flex h-full w-full flex-col border-r border-border-divider md:flex md:max-w-xs md:flex-col xl:w-[16.7vw] xl:min-w-[320px] xl:max-w-none'
             )}
         >
             <DialogOversiktHeader erVeileder={erVeileder} />
-            {/*<div className="flex max-h-full flex-col overflow-y-scroll border-r border-border-divider bg-gray-100 px-2 pb-2 pt-4">*/}
             <div className="relative flex flex-1 flex-col overflow-y-scroll border-r border-border-divider bg-gray-100 px-2 pb-2 pt-4">
                 <div className="p-2">{kanSendeMelding ? <NyDialogLink /> : null}</div>
                 {ingenDialoger ? <InfoVedIngenDialoger className="mt-4 md:hidden" /> : null}

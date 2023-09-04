@@ -13,3 +13,7 @@
     animation-timing-function: ease;
     animation-name: fade-in-animation;
 }
+
+.dialogPreview > div {
+    width: calc(100% - 1.5rem) !important;
+}
