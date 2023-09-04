@@ -54,16 +54,16 @@ const AppBody = () => {
     }
 
     return (
-        <div className={'flex h-full w-full flex-row overflow-hidden'}>
+        <>
             <DialogOversikt />
-            <div className="flex h-full flex-1 flex-col">
+            <div className="flex flex-1 flex-col">
                 <DialogHeader />
                 <div className="flex min-h-0 flex-1">
                     <Outlet />
                 </div>
             </div>
             <EventHandler />
-        </div>
+        </>
     );
 };
 
