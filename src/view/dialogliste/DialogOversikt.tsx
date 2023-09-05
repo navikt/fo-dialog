@@ -43,11 +43,14 @@ const DialogOversikt = () => {
     const userInfoContext = useUserInfoContext();
     const erVeileder = !!userInfoContext?.erVeileder;
     const ingenDialoger = dialoger.length === 0;
+    const erSidebar = !!dialog || isNyRoute;
     return (
         <div
             className={classNames(
-                { hidden: !!dialog || isNyRoute } /* Hvis liten skjerm, bare vis dialog-liste på "Homepage"  */,
-                'flex w-full flex-col border-r border-border-divider ' +
+                /* Hvis liten skjerm, bare vis dialog-liste på "Homepage", ikke som sideBar  */
+                { 'hidden md:flex': erSidebar },
+                { flex: !erSidebar },
+                'w-full flex-col border-r border-border-divider ' +
                     'md:max-w-xs ' +
                     'xl:w-[16.7vw] xl:min-w-[320px] xl:max-w-none'
             )}
