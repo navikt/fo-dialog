@@ -2,7 +2,7 @@ import { fetchData } from '../utils/Fetch';
 
 const dialogvarslerUrl = 'dialogvarsler.ekstern.dev.nav.no';
 const ticketUrl = `/dialogvarsler/ws-auth-ticket`;
-const socketUrl = `ws://${dialogvarslerUrl}/ws-auth-ticket`;
+const socketUrl = `ws://${dialogvarslerUrl}/ws`;
 
 enum EventTypes {
     NY_MELDING = 'NY_MELDING'
