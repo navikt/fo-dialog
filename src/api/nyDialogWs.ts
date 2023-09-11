@@ -13,13 +13,18 @@ export const listenForNyDialogEvents = (callback: () => void, fnr?: string) => {
     if (!fnr) return;
     const body = { fnr };
     const socket = new WebSocket(socketUrl);
-    fetchData<string>(ticketUrl, { body: JSON.stringify(body), method: 'POST' }).then((ticket) => {
-        socket.send(ticket);
-        socket.addEventListener('message', (event) => {
-            if (event.data !== EventTypes.NY_MELDING) return;
-            callback();
+    fetch(ticketUrl, { body: JSON.stringify(body), method: 'POST' })
+        .then((response) => {
+            if (!response.ok) throw Error('Failed to fetch ticket for websocket');
+            return response.text();
+        })
+        .then((ticket) => {
+            socket.send(ticket);
+            socket.addEventListener('message', (event) => {
+                if (event.data !== EventTypes.NY_MELDING) return;
+                callback();
+            });
         });
-    });
     return () => {
         socket.close();
     };
