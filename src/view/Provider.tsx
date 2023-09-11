@@ -1,6 +1,7 @@
 import { Alert, Loader } from '@navikt/ds-react';
-import React, { Dispatch, SetStateAction, useContext, useEffect, useState } from 'react';
+import React, { Dispatch, SetStateAction, useContext, useEffect, useMemo, useState } from 'react';
 
+import { listenForNyDialogEvents } from '../api/nyDialogWs';
 import { Status, hasData, hasError, isPending } from '../api/typer';
 import useFetchHarNivaa4, { HarNivaa4Response } from '../api/useFetchHarNivaa4';
 import useFetchVeilederNavn from '../api/useHentVeilederData';
@@ -92,16 +93,20 @@ export function Provider(props: Props) {
         hentKladder();
     }, [hentDialoger, hentKladder]);
 
+    const brukerStatusErLastet = hasData(brukerstatus);
+    const dialogStatusOk = hasData(dialogstatus);
     useEffect(() => {
-        if (isDialogOk(dialogstatus) && hasData(brukerstatus)) {
+        if (dialogStatusOk && brukerStatusErLastet) {
             //stop interval when encountering error
-            if (bruker) {
+            if (bruker?.erBruker) {
                 let interval: NodeJS.Timeout;
                 interval = setInterval(() => pollForChanges().catch(() => clearInterval(interval)), 10000);
                 return () => clearInterval(interval);
+            } else if (bruker?.erVeileder) {
+                return listenForNyDialogEvents(() => {}, fnr);
             }
         }
-    }, [dialogstatus, bruker, brukerstatus, pollForChanges]);
+    }, [dialogStatusOk, bruker, brukerStatusErLastet, pollForChanges]);
 
     if (
         isDialogPending(dialogstatus) ||
