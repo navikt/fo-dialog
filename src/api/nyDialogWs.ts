@@ -13,7 +13,7 @@ export const listenForNyDialogEvents = (callback: () => void, fnr?: string) => {
     if (!fnr) return;
     const body = { fnr };
     const socket = new WebSocket(socketUrl);
-    fetch(ticketUrl, { body: JSON.stringify(body), method: 'POST' })
+    fetch(ticketUrl, { body: JSON.stringify(body), method: 'POST', headers: { 'Content-Type': 'application/json' } })
         .then((response) => {
             if (!response.ok) throw Error('Failed to fetch ticket for websocket');
             return response.text();
