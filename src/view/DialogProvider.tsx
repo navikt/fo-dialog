@@ -64,12 +64,8 @@ export function useDialogDataProvider(fnr?: string): DialogDataProviderType {
         [query]
     );
 
-    const hentDialoger: () => Promise<DialogData[]> = useCallback(() => {
-        setState((prevState) => ({
-            ...prevState,
-            status: isDialogReloading(prevState.status) ? Status.RELOADING : Status.PENDING
-        }));
-        return fetchData<DialogData[]>(dialogUrl)
+    const silentlyHentDialoger = () =>
+        fetchData<DialogData[]>(dialogUrl)
             .then((dialoger) => {
                 setState({ status: Status.OK, dialoger: dialoger, sistOppdatert: new Date() });
                 return dialoger;
@@ -78,21 +74,20 @@ export function useDialogDataProvider(fnr?: string): DialogDataProviderType {
                 setState((prevState) => ({ ...prevState, status: Status.ERROR, error: e }));
                 return [];
             });
+
+    const hentDialoger: () => Promise<DialogData[]> = useCallback(() => {
+        setState((prevState) => ({
+            ...prevState,
+            status: isDialogReloading(prevState.status) ? Status.RELOADING : Status.PENDING
+        }));
+        return silentlyHentDialoger();
     }, [dialogUrl, setState]);
 
-    const pollForChanges = useCallback(() => {
-        return fetchData<SistOppdatert>(sistOppdatertUrl).then((data) => {
-            if (!!data.sistOppdatert) {
-                if (isAfter(data.sistOppdatert, sistOppdatert)) {
-                    fetchData<DialogData[]>(dialogUrl).then((dialoger) => {
-                        setState((prevState) => {
-                            loggChangeInDialog(prevState.dialoger, dialoger);
-                            return { status: Status.OK, dialoger: dialoger, sistOppdatert: new Date() };
-                        });
-                    });
-                }
-            }
-        });
+    const pollForChanges = useCallback(async () => {
+        let data = await fetchData<SistOppdatert>(sistOppdatertUrl);
+        if (!!data.sistOppdatert && isAfter(data.sistOppdatert, sistOppdatert)) {
+            await silentlyHentDialoger();
+        }
     }, [dialogUrl, sistOppdatertUrl, setState, sistOppdatert]);
 
     const updateDialogInDialoger = useCallback(
