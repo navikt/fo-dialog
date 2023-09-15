@@ -8,8 +8,11 @@ import { useSelectedDialog } from '../utils/useAktivitetId';
 import { erArenaAktivitet } from '../utils/utils';
 import DialogHeaderFeil from './DialogHeaderFeil';
 import { TilbakeKnapp } from './TilbakeKnapp';
+import {useCompactMode} from "../FeatureToggleProvider";
+import classNames from "classnames";
 
 export function DialogHeader() {
+    const compactMode = useCompactMode()
     const dialog = useSelectedDialog();
     const aktivitetId = dialog?.aktivitetId;
     const isNyRoute = useLocation().pathname === '/ny';
@@ -38,7 +41,7 @@ export function DialogHeader() {
                     {viseAktivitet ? (
                         <DialogMedAktivitetHeader />
                     ) : (
-                        <div className="flex flex-row gap-x-2 py-2 pl-4">
+                        <div className={classNames("flex flex-row gap-x-2 pl-4", {"py-2" : !compactMode} )}>
                             <TilbakeKnapp className="md:hidden" />
                             <Heading level="1" size="small">
                                 {dialog?.overskrift}

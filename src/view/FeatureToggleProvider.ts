@@ -23,10 +23,12 @@ const initBrukerState: BrukerDataProviderType = {
     status: Status.INITIAL
 };
 
-export const FeatureToggleContext = React.createContext<Features | null>({
+export const FeatureToggleContext = React.createContext<Features>({
     'arbeidsrettet-dialog.vis-skjul-aktivitet-knapp': false
 });
 export const useFeatureToggleContext = () => useContext(FeatureToggleContext);
+
+export const useCompactMode = () =>   useFeatureToggleContext()["arbeidsrettet-dialog.vis-skjul-aktivitet-knapp"]
 
 export const useFeatureToggleProvider = (): BrukerDataProviderType => {
     const [state, setState] = useState<BrukerDataProviderType>(initBrukerState);

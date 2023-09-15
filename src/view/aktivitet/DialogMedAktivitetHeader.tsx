@@ -1,4 +1,4 @@
-import { Detail, Heading, Link } from '@navikt/ds-react';
+import {BodyShort, Detail, Heading, Link} from '@navikt/ds-react';
 import React from 'react';
 
 import { Aktivitet, AktivitetTypes, ArenaAktivitet, ArenaAktivitetTypes } from '../../utils/aktivitetTypes';
@@ -9,12 +9,15 @@ import { useFnrContext } from '../Provider';
 import { useSelectedAktivitet } from '../utils/useAktivitetId';
 import { aktivitetLenke, visAktivitetsplan } from './AktivitetskortLenke';
 import { getTypeTextByAktivitet } from './TextUtils';
+import {useCompactMode} from "../FeatureToggleProvider";
+import classNames from "classnames";
 
 interface Props {
     aktivitetId?: StringOrNull;
 }
 
 export function DialogMedAktivitetHeader(props: Props) {
+    const compactMode = useCompactMode()
     const aktivitet = useSelectedAktivitet();
 
     if (!aktivitet) {
@@ -28,16 +31,16 @@ export function DialogMedAktivitetHeader(props: Props) {
         <div className="flex w-full flex-col md:flex-row">
             <div className="flex flex-1 flex-row items-center gap-x-2 lg:max-w-lgContainer xl:max-w-none">
                 <TilbakeKnapp className="md:hidden" />
-                <div className="md:ml-4">
+                <div className={classNames("md:ml-4", {"flex items-baseline gap-2": compactMode})}>
                     <Heading level="1" size="small" aria-label={`${typeTekst}: ${aktivitet?.tittel}`}>
                         {aktivitet?.tittel}
                     </Heading>
-                    {infotekst && <Detail>{infotekst}</Detail>}
+                    {infotekst && (compactMode ? <BodyShort className="text-text-subtle">{infotekst}</BodyShort> : <Detail>{infotekst}</Detail>)}
                 </div>
             </div>
             <div className="flex-1 md:max-w-[320px] xl:max-w-screen-w-1/3">
                 <div className="mt-2 flex flex-row items-center justify-between px-2 md:mt-0 md:flex-col md:items-end lg:items-start lg:pl-4">
-                    <Detail aria-hidden="true">{typeTekst.toUpperCase()}</Detail>
+                    {!compactMode && <Detail aria-hidden="true">{typeTekst.toUpperCase()}</Detail>}
                     <Link href={aktivitetLenke(aktivitet.id)} onClick={visAktivitetsplan(aktivitet.id)}>
                         Gå til aktiviteten
                     </Link>
