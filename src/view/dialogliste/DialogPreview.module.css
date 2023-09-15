@@ -17,11 +17,15 @@
 .dialogPreview > div {
     width: calc(100% - 1.5rem) !important;
 }
+.linkPanelCompactMode {
+    display: flex;
+    flex-direction: row;
+    padding: 0 0.5rem;
+}
 .ulestDialogCompactMode {
-    padding: 0;
+    padding-left: 0;
 }
 .ulestDialogCompactMode > div {
-    padding-right: 0.5rem;
     display: flex;
     flex-direction: row;
 }

@@ -97,6 +97,7 @@ function DialogPreview(props: Props) {
         <LinkPanel
             className={classNames('my-1 max-w-full !gap-0 border p-2', styles.dialogPreview, {
                 'bg-[#e6f0ff]': detteErValgtDialog,
+                [styles.linkPanelCompactMode]: compactMode,
                 [styles.ulestDialogCompactMode]: !dialog.lest && compactMode
             })}
             href={dialogRoute(id)}
