@@ -1,16 +1,24 @@
-import {Button, Link, Modal} from '@navikt/ds-react';
+import { Button, Link, Modal } from '@navikt/ds-react';
 import React, { useState } from 'react';
 
+import { useCompactMode } from '../FeatureToggleProvider';
 import { InfoOmDialogSide } from './InfoOmDialogSide';
 
 function OmDialogLenke() {
     const [open, setOpen] = useState(false);
 
+    const compactMode = useCompactMode();
     return (
         <>
-            <Button variant="tertiary" size="small" className="flex-grow" as="button" onClick={() => setOpen(true)}>
-                Om dialogen
-            </Button>
+            {compactMode ? (
+                <Button variant="tertiary" size="small" className="flex-grow" as="button" onClick={() => setOpen(true)}>
+                    Om dialogen
+                </Button>
+            ) : (
+                <Link as="button" onClick={() => setOpen(true)}>
+                    Om dialog
+                </Link>
+            )}
             <Modal open={open} onClose={() => setOpen(!open)} closeButton={true}>
                 <InfoOmDialogSide />
             </Modal>

@@ -1,8 +1,10 @@
+import classNames from 'classnames';
 import React from 'react';
 import { useParams } from 'react-router';
 
 import { DialogData } from '../../utils/Typer';
 import { useDialogContext } from '../DialogProvider';
+import { useCompactMode } from '../FeatureToggleProvider';
 import { DialogPreviewListe } from './DialogPreview';
 import HistoriskeDialogerOversikt from './HistoriskDialogListe';
 
@@ -23,8 +25,9 @@ export function DialogListe() {
     const sorterteDialoger = dialoger.sort((a, b) => sortDialoger(a, b));
     const { naaverende, historiske } = sorterteDialoger.reduce(splitHistoriske, { naaverende: [], historiske: [] });
 
+    const compactMode = useCompactMode();
     return (
-        <div className="flex-1 pt-2" role="navigation" aria-label="Dialoger">
+        <div className={classNames('flex-1', { 'pt-2': !compactMode })} role="navigation" aria-label="Dialoger">
             <DialogPreviewListe dialoger={naaverende} valgDialog={dialogId} />
             <HistoriskeDialogerOversikt historiske={historiske} valgDialog={dialogId} />
         </div>
