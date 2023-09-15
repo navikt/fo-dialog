@@ -12,13 +12,13 @@ export type Feature = (typeof ALL_TOGGLES)[number];
 export type Features = Record<Feature, boolean>;
 export const featureToggleQuery = new URLSearchParams({ feature: FeatureToggle.VIS_SKJUL_AKTIVITET_KNAPP }).toString();
 
-export interface BrukerDataProviderType {
+export interface FeatureData {
     data: Features;
     status: Status;
     error?: string;
 }
 
-const initBrukerState: BrukerDataProviderType = {
+const initBrukerState: FeatureData = {
     data: { 'arbeidsrettet-dialog.vis-skjul-aktivitet-knapp': false },
     status: Status.INITIAL
 };
@@ -28,11 +28,31 @@ export const FeatureToggleContext = React.createContext<Features>({
 });
 export const useFeatureToggleContext = () => useContext(FeatureToggleContext);
 
-export const useCompactMode = () =>   useFeatureToggleContext()["arbeidsrettet-dialog.vis-skjul-aktivitet-knapp"]
+export const useCompactMode = () => useFeatureToggleContext()['arbeidsrettet-dialog.vis-skjul-aktivitet-knapp'];
 
-export const useFeatureToggleProvider = (): BrukerDataProviderType => {
-    const [state, setState] = useState<BrukerDataProviderType>(initBrukerState);
+const onStorageChange = (setState: (value: (prevState: FeatureData) => FeatureData) => void) => (event: any) => {
+    const mode = localStorage.getItem('compactMode');
+    setState((state: FeatureData) => {
+        return {
+            ...state,
+            data: { 'arbeidsrettet-dialog.vis-skjul-aktivitet-knapp': mode === 'compact' }
+        };
+    });
+};
+
+export const useFeatureToggleProvider = (): FeatureData => {
+    const [state, setState] = useState<FeatureData>(initBrukerState);
     const apiUrl = AktivitetApi.hentFeatureToggles;
+
+    useEffect(() => {
+        const listener = onStorageChange(setState);
+        window.addEventListener('storage', listener);
+        return () => {
+            console.log('Removing listener');
+            removeEventListener('storage', listener);
+        };
+    }, []);
+
     useEffect(() => {
         setState((prevState) => ({
             ...prevState,

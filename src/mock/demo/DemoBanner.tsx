@@ -1,4 +1,4 @@
-import { Modal } from '@navikt/ds-react';
+import { Modal, ToggleGroup } from '@navikt/ds-react';
 import React, { useState } from 'react';
 
 import DemoDashboard from './DemoDashboard';
@@ -23,6 +23,18 @@ function DemoBanner() {
                     }}
                 />
             </Modal>
+            <div className="fixed bottom-10 right-10 bg-white drop-shadow-xl" style={{ zIndex: 1000 }}>
+                <ToggleGroup
+                    defaultValue="vanlig"
+                    onChange={(event) => {
+                        localStorage.setItem('compactMode', event);
+                        window.dispatchEvent(new Event('storage'));
+                    }}
+                >
+                    <ToggleGroup.Item value="vanlig">Vanlig</ToggleGroup.Item>
+                    <ToggleGroup.Item value="compact">Compact</ToggleGroup.Item>
+                </ToggleGroup>
+            </div>
         </div>
     );
 }
