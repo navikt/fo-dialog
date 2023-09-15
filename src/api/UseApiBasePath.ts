@@ -1,4 +1,5 @@
 import { USE_HASH_ROUTER } from '../constants';
+import { FeatureToggle, featureToggleQuery } from '../view/FeatureToggleProvider';
 
 export const stripTrailingSlash = (str: string) => {
     return str.endsWith('/') ? str.substring(0, str.length - 1) : str;
@@ -21,7 +22,8 @@ export const DialogApi = {
 const aktivitetBasePath = `${apiBasePath}/veilarbaktivitet/api`;
 export const AktivitetApi = {
     hentAktiviteter: (query: string) => `${aktivitetBasePath}/aktivitet${query}`,
-    hentArenaAktiviteter: (query: string) => `${aktivitetBasePath}/arena/tiltak${query}`
+    hentArenaAktiviteter: (query: string) => `${aktivitetBasePath}/arena/tiltak${query}`,
+    hentFeatureToggles: `${aktivitetBasePath}/feature?${featureToggleQuery}`
 };
 
 const oppfolgingBasePath = `${apiBasePath}/veilarboppfolging/api`;

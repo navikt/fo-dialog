@@ -8,6 +8,7 @@ import { UpdateTypes, dispatchUpdate } from '../../utils/UpdateEvent';
 import useKansendeMelding from '../../utils/UseKanSendeMelding';
 import { useUserInfoContext } from '../BrukerProvider';
 import { useDialogContext } from '../DialogProvider';
+import { useFeatureToggleContext } from '../FeatureToggleProvider';
 import { Meldinger } from '../melding/Meldinger';
 import { useOppfolgingContext } from '../OppfolgingProvider';
 import { dataOrUndefined, useFnrContext, useViewContext } from '../Provider';
