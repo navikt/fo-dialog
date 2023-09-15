@@ -1,4 +1,4 @@
-import { Link, Modal } from '@navikt/ds-react';
+import {Button, Link, Modal} from '@navikt/ds-react';
 import React, { useState } from 'react';
 
 import { InfoOmDialogSide } from './InfoOmDialogSide';
@@ -8,9 +8,9 @@ function OmDialogLenke() {
 
     return (
         <>
-            <Link as="button" onClick={() => setOpen(true)}>
-                Om dialog
-            </Link>
+            <Button variant="tertiary" size="small" className="flex-grow" as="button" onClick={() => setOpen(true)}>
+                Om dialogen
+            </Button>
             <Modal open={open} onClose={() => setOpen(!open)} closeButton={true}>
                 <InfoOmDialogSide />
             </Modal>

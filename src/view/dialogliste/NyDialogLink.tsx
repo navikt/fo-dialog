@@ -10,8 +10,8 @@ const NyDialogLink = () => {
     const { nyRoute } = useRoutes();
     const goToNy = () => navigate(nyRoute());
     return (
-        <Button className="w-full" onClick={goToNy} icon={<PlusIcon aria-hidden />}>
-            Start en ny dialog
+        <Button className="flex-grow" size="small" onClick={goToNy} icon={<PlusIcon aria-hidden />}>
+            Ny dialog
         </Button>
     );
 };

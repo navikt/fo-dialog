@@ -23,7 +23,7 @@ function DemoBanner() {
                     }}
                 />
             </Modal>
-            <div className="fixed bottom-10 right-10 bg-white drop-shadow-xl" style={{ zIndex: 1000 }}>
+            <div className="fixed bottom-10 right-10 bg-white drop-shadow-lg" style={{ zIndex: 1000 }}>
                 <ToggleGroup
                     defaultValue="vanlig"
                     onChange={(event) => {

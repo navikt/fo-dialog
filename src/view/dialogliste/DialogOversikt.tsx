@@ -12,8 +12,13 @@ import OmDialogLenke from '../info/OmDialogLenke';
 import { useSelectedDialog } from '../utils/useAktivitetId';
 import DialogListe from './DialogListe';
 import NyDialogLink from './NyDialogLink';
+import {useCompactMode} from "../FeatureToggleProvider";
 
 const DialogOversiktHeader = ({ erVeileder }: { erVeileder: boolean }) => {
+
+    const compactMode = useCompactMode();
+
+    if(compactMode) return null
     return (
         <div className="flex flex-col gap-y-2 border-b border-border-divider p-4">
             <div className="flex gap-x-4 md:justify-between">
@@ -23,7 +28,7 @@ const DialogOversiktHeader = ({ erVeileder }: { erVeileder: boolean }) => {
                         <Link href={AKTIVITETSPLAN_URL}>Aktivitetsplan</Link>
                     </>
                 ) : null}
-                <OmDialogLenke />
+                {!compactMode && <OmDialogLenke />}
             </div>
             {!erVeileder ? (
                 <Heading level="1" size="medium">
@@ -43,6 +48,8 @@ const DialogOversikt = () => {
     const userInfoContext = useUserInfoContext();
     const erVeileder = !!userInfoContext?.erVeileder;
     const ingenDialoger = dialoger.length === 0;
+    const compactMode = useCompactMode();
+
     return (
         <div
             className={classNames(
@@ -52,8 +59,15 @@ const DialogOversikt = () => {
         >
             <DialogOversiktHeader erVeileder={erVeileder} />
             <div className="flex h-full flex-col overflow-y-scroll border-r border-border-divider bg-gray-100 px-2 pb-8 pt-4">
-                <div className="p-2">{kanSendeMelding ? <NyDialogLink /> : null}</div>
-                {ingenDialoger ? <InfoVedIngenDialoger className="mt-4 md:hidden" /> : null}
+                {!compactMode ?
+                    <>
+                        <div className="p-2">{kanSendeMelding ? <NyDialogLink /> : null}</div>
+                        {ingenDialoger ? <InfoVedIngenDialoger className="mt-4 md:hidden" /> : null}
+                    </>
+                    : <>
+                    {kanSendeMelding ? <div className="p-2 flex "><NyDialogLink /><OmDialogLenke /></div> : null}
+                    {ingenDialoger ? <InfoVedIngenDialoger className="mt-4 md:hidden" /> : null}</>
+                }
                 <DialogListe />
             </div>
         </div>
