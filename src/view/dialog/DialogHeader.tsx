@@ -26,7 +26,7 @@ export function DialogHeader() {
             <div
                 className={classNames('flex items-center gap-x-4 border-b border-border-divider bg-white', {
                     'p-4 pl-6 md:pl-8': !compactMode,
-                    'p-2 pl-4': compactMode
+                    'p-1.5 pl-4': compactMode
                 })}
             >
                 <TilbakeKnapp className="md:hidden" />
@@ -41,7 +41,12 @@ export function DialogHeader() {
     return (
         <>
             <DialogHeaderFeil visible={erFeil} />
-            <div className="flex flex-col gap-x-4 border-b border-border-divider bg-white py-2">
+            <div
+                className={classNames('flex flex-col gap-x-4 border-b border-border-divider bg-white', {
+                    'py-1': compactMode,
+                    'py-2': !compactMode
+                })}
+            >
                 <section aria-label="Dialog header">
                     {viseAktivitet ? (
                         <DialogMedAktivitetHeader />

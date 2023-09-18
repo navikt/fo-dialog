@@ -16,6 +16,7 @@ import NyDialogLink from './NyDialogLink';
 
 const DialogOversiktHeader = ({ erVeileder }: { erVeileder: boolean }) => {
     const compactMode = useCompactMode();
+    if (compactMode && erVeileder) return null;
     return (
         <div
             className={classNames('flex flex-col gap-y-2 border-b border-border-divider  px-4', {
@@ -81,7 +82,7 @@ const DialogOversikt = () => {
                 ) : (
                     <>
                         {kanSendeMelding ? (
-                            <div className="flex gap-2 p-1">
+                            <div className="flex gap-2 p-1 pb-2">
                                 <NyDialogLink />
                                 <OmDialogLenke />
                             </div>
