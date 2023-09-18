@@ -6,9 +6,10 @@ import { useNavigate } from 'react-router';
 import { useRoutes } from '../../routes';
 import { UpdateTypes, dispatchUpdate } from '../../utils/UpdateEvent';
 import useKansendeMelding from '../../utils/UseKanSendeMelding';
+import { useVisAktivitet } from '../AktivitetToggleContext';
 import { useUserInfoContext } from '../BrukerProvider';
 import { useDialogContext } from '../DialogProvider';
-import { useFeatureToggleContext } from '../FeatureToggleProvider';
+import { useCompactMode, useFeatureToggleContext } from '../FeatureToggleProvider';
 import { Meldinger } from '../melding/Meldinger';
 import { useOppfolgingContext } from '../OppfolgingProvider';
 import { dataOrUndefined, useFnrContext, useViewContext } from '../Provider';
@@ -22,6 +23,7 @@ import HistoriskInfo from './HistoriskInfo';
 export function Dialog() {
     const oppfolgingContext = useOppfolgingContext();
     const oppfolging = dataOrUndefined(oppfolgingContext);
+    const compactMode = useCompactMode();
     const kanSendeMelding = useKansendeMelding();
     const { lesDialog } = useDialogContext();
 
@@ -29,6 +31,7 @@ export function Dialog() {
     const dialogId = valgtDialog?.id;
     const fnr = useFnrContext();
     const bruker = useUserInfoContext();
+    const visAktivitet = useVisAktivitet();
 
     const { viewState, setViewState } = useViewContext();
     const [activeTab, setActiveTab] = useState(!document.hidden);
@@ -83,14 +86,26 @@ export function Dialog() {
     const kanSendeHenveldelse = kanSendeMelding && aktivDialog;
 
     return (
-        <section className={classNames('flex w-full grow flex-col lg:max-w-lgContainer xl:max-w-none')}>
-            <Meldinger dialogData={valgtDialog} viewState={viewState} fnr={fnr} />
-            <HistoriskInfo hidden={aktivDialog} kanSendeMelding={kanSendeMelding} />
+        <section
+            className={classNames('flex w-full grow xl:max-w-none', {
+                'flex-row': compactMode && !visAktivitet,
+                'flex-col': !compactMode || visAktivitet,
+                'lg:max-w-lgContainer xl:max-w-none': !compactMode
+            })}
+        >
+            <div className={classNames('flex grow flex-col', { 'flex-1': compactMode && !visAktivitet })}>
+                <Meldinger dialogData={valgtDialog} viewState={viewState} fnr={fnr} />
+                <HistoriskInfo hidden={aktivDialog} kanSendeMelding={kanSendeMelding} />
+            </div>
             <section
                 aria-label="Ny melding"
-                className="border-t border-border-divider bg-white p-4 xl:flex xl:justify-center"
+                className={classNames('border-t border-border-divider bg-white p-4 xl:flex xl:justify-center', {
+                    'flex-1 grow': compactMode && !visAktivitet
+                })}
             >
-                <div className="xl:w-full xl:max-w-248">
+                <div
+                    className={classNames('xl:w-full xl:max-w-248', { 'flex flex-col ': compactMode && !visAktivitet })}
+                >
                     <ManagedDialogCheckboxes dialog={valgtDialog} visible={!!bruker?.erVeileder} />
                     {!oppfolging?.underOppfolging || valgtDialog.historisk ? null : (
                         <DialogInputBoxVisible

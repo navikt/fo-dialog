@@ -2,6 +2,7 @@ import { Heading } from '@navikt/ds-react';
 import React from 'react';
 
 import { useVisAktivitet } from '../AktivitetToggleContext';
+import { useCompactMode } from '../FeatureToggleProvider';
 import { useSelectedAktivitet } from '../utils/useAktivitetId';
 import { getAktivitetType } from '../utils/utils';
 import AktivitetIngress from './AktivitetIngress';
@@ -11,9 +12,15 @@ import AvtaltMarkering from './etiketter/avtalt-markering';
 
 export function Aktivitetskort() {
     const aktivitet = useSelectedAktivitet();
+    const compactMode = useCompactMode();
     const visAktivitet = useVisAktivitet();
-    if (!aktivitet || !visAktivitet)
+    if (!aktivitet || !visAktivitet) {
+        if (compactMode) {
+            return null;
+        }
         return <div className="border-l border-border-divider xl:w-full xl:max-w-screen-w-1/3" />;
+    }
+
     const { status, tittel, avtalt } = aktivitet;
     return (
         <div className="hidden w-full border-l border-border-divider lg:flex lg:max-w-[320px] xl:max-w-screen-w-1/3">

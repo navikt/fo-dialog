@@ -94,7 +94,8 @@ const App = (props: Props) => {
         <div
             className={cx('flex', {
                 'max-h-[calc(100vh-180px)] min-h-[calc(100vh-180px)]': erInternFlate,
-                'max-h-[calc(100vh-80px)] min-h-[calc(100vh-80px)]': !erInternFlate
+                'max-h-[calc(100vh-140px)] min-h-[calc(100vh-140px)]': !erInternFlate
+                // TODO 60 px skal fjernes fra !erinternflate
             })}
         >
             <Provider fnr={fnr} erVeileder={!!fnr}>

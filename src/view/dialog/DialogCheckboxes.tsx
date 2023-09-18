@@ -1,10 +1,12 @@
 import { Checkbox, CheckboxGroup } from '@navikt/ds-react';
+import classNames from 'classnames';
 import React from 'react';
 
 import { Status } from '../../api/typer';
 import { notEmpty } from '../../utils/TypeHelper';
 import { DialogData } from '../../utils/Typer';
 import { useDialogContext } from '../DialogProvider';
+import { useCompactMode } from '../FeatureToggleProvider';
 import { useOppfolgingContext } from '../OppfolgingProvider';
 import { dataOrUndefined } from '../Provider';
 
@@ -26,32 +28,36 @@ const DialogCheckboxes = ({
     loading,
     venterPaSvar,
     disabled
-}: Props) => (
-    <div className="mb-2">
-        <CheckboxGroup legend={'Filter'} hideLegend value={values}>
-            <div className="flex">
-                <Checkbox
-                    value={'ferdigBehandlet'}
-                    size="small"
-                    className="pr-8"
-                    disabled={disabled || loading}
-                    onChange={() => toggleFerdigBehandlet(!ferdigBehandlet)}
-                >
-                    Venter på svar fra NAV
-                </Checkbox>
-                <Checkbox
-                    value={'venterPaSvar'}
-                    size="small"
-                    className="pr-8"
-                    disabled={disabled || loading}
-                    onChange={() => toggleVenterPaSvar(!venterPaSvar)}
-                >
-                    Venter på svar fra bruker
-                </Checkbox>
-            </div>
-        </CheckboxGroup>
-    </div>
-);
+}: Props) => {
+    const compactMode = useCompactMode();
+
+    return (
+        <div className="mb-2">
+            <CheckboxGroup legend={'Filter'} hideLegend value={values}>
+                <div className="flex">
+                    <Checkbox
+                        value={'ferdigBehandlet'}
+                        size="small"
+                        className={classNames({ 'pr-4': compactMode, 'pr-8': !compactMode })}
+                        disabled={disabled || loading}
+                        onChange={() => toggleFerdigBehandlet(!ferdigBehandlet)}
+                    >
+                        Venter på svar fra NAV
+                    </Checkbox>
+                    <Checkbox
+                        value={'venterPaSvar'}
+                        size="small"
+                        className="pr-8"
+                        disabled={disabled || loading}
+                        onChange={() => toggleVenterPaSvar(!venterPaSvar)}
+                    >
+                        Venter på svar fra bruker
+                    </Checkbox>
+                </div>
+            </CheckboxGroup>
+        </div>
+    );
+};
 
 interface ManagedProps {
     dialog: DialogData;

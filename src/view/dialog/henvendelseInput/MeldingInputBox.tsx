@@ -1,5 +1,6 @@
 import { zodResolver } from '@hookform/resolvers/zod';
 import { Alert, Button, Textarea } from '@navikt/ds-react';
+import classNames from 'classnames';
 import React, { ChangeEvent, useEffect, useLayoutEffect, useRef, useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { z } from 'zod';
@@ -7,7 +8,9 @@ import { z } from 'zod';
 import loggEvent from '../../../felleskomponenter/logging';
 import { DialogData } from '../../../utils/Typer';
 import { UpdateTypes, dispatchUpdate } from '../../../utils/UpdateEvent';
+import { useVisAktivitet } from '../../AktivitetToggleContext';
 import { useDialogContext } from '../../DialogProvider';
+import { useCompactMode } from '../../FeatureToggleProvider';
 import { useKladdContext } from '../../KladdProvider';
 import { useViewContext } from '../../Provider';
 import { HandlingsType, sendtNyMelding } from '../../ViewState';
@@ -34,6 +37,8 @@ const MeldingInputBox = (props: Props) => {
     const { hentDialoger, nyMelding } = useDialogContext();
     const [noeFeilet, setNoeFeilet] = useState(false);
     const startTekst = useMeldingStartTekst();
+    const compactMode = useCompactMode();
+    const visAktivitet = useVisAktivitet();
 
     const { kladder, oppdaterKladd, slettKladd } = useKladdContext();
     const kladd = kladder.find((k) => k.aktivitetId === props.dialog.aktivitetId && k.dialogId === props.dialog.id);
@@ -118,9 +123,19 @@ const MeldingInputBox = (props: Props) => {
     };
 
     return (
-        <form onSubmit={handleSubmit((data) => onSubmit(data))} noValidate autoComplete="off">
+        <form
+            className={classNames({ 'flex grow flex-col': compactMode && !visAktivitet })}
+            onSubmit={handleSubmit((data) => onSubmit(data))}
+            noValidate
+            autoComplete="off"
+        >
             {kanSendeHenveldelse ? (
-                <div className="flex items-end space-x-4">
+                <div
+                    className={classNames('flex', {
+                        'grow flex-col items-stretch space-y-4': compactMode && !visAktivitet,
+                        'items-end space-x-4': !compactMode || visAktivitet
+                    })}
+                >
                     <Textarea
                         className="grow"
                         {...register('melding')}
@@ -132,10 +147,10 @@ const MeldingInputBox = (props: Props) => {
                         label={'Skriv om arbeid og oppfølging'}
                         hideLabel
                         placeholder={'Skriv om arbeid og oppfølging'}
-                        minRows={props.erBruker ? 2 : 3}
-                        maxRows={10}
+                        minRows={compactMode && !visAktivitet ? 10 : props.erBruker ? 2 : 3}
+                        maxRows={compactMode && !visAktivitet ? 15 : 10}
                     />
-                    <Button title="Send" loading={isSubmitting}>
+                    <Button className={classNames({ 'self-start': compactMode })} title="Send" loading={isSubmitting}>
                         Send
                     </Button>
                 </div>
