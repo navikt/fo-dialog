@@ -5,6 +5,7 @@ import React from 'react';
 import { Aktivitet, AktivitetTypes, ArenaAktivitet, ArenaAktivitetTypes } from '../../utils/aktivitetTypes';
 import { formaterDate, getKlokkeslett } from '../../utils/Date';
 import { StringOrNull } from '../../utils/Typer';
+import { useVisAktivitetContext } from '../AktivitetToggleContext';
 import { TilbakeKnapp } from '../dialog/TilbakeKnapp';
 import { useCompactMode } from '../FeatureToggleProvider';
 import { useFnrContext } from '../Provider';
@@ -19,8 +20,7 @@ interface Props {
 export function DialogMedAktivitetHeader(props: Props) {
     const compactMode = useCompactMode();
     const aktivitet = useSelectedAktivitet();
-
-    console.log({ compactMode });
+    const { visAktivitet, setVisAktivitet } = useVisAktivitetContext();
 
     if (!aktivitet) {
         return null;
@@ -56,7 +56,17 @@ export function DialogMedAktivitetHeader(props: Props) {
                     <Link href={aktivitetLenke(aktivitet.id)} onClick={visAktivitetsplan(aktivitet.id)}>
                         Gå til aktiviteten
                     </Link>
-                    {compactMode && <Switch size="small">Vis aktiviteten</Switch>}
+                    {compactMode && (
+                        <Switch
+                            value={visAktivitet.toString()}
+                            onChange={(_) => {
+                                setVisAktivitet(!visAktivitet);
+                            }}
+                            size="small"
+                        >
+                            Vis aktiviteten
+                        </Switch>
+                    )}
                 </div>
             </div>
         </div>

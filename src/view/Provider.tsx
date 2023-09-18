@@ -5,6 +5,7 @@ import { Status, hasData, hasError, isPending } from '../api/typer';
 import useFetchHarNivaa4, { HarNivaa4Response } from '../api/useFetchHarNivaa4';
 import useFetchVeilederNavn from '../api/useHentVeilederData';
 import { AktivitetContext, useAktivitetDataProvider } from './AktivitetProvider';
+import { AktivitetToggleContext, AktivitetToggleProvider } from './AktivitetToggleContext';
 import { BrukerDataProviderType, UserInfoContext, useBrukerDataProvider } from './BrukerProvider';
 import { DialogContext, hasDialogError, isDialogOk, isDialogPending, useDialogDataProvider } from './DialogProvider';
 import { FeatureToggleContext, useFeatureToggleProvider } from './FeatureToggleProvider';
@@ -130,7 +131,7 @@ export function Provider(props: Props) {
                                     <FNRContext.Provider value={fnr}>
                                         <ViewContext.Provider value={{ viewState: viewState, setViewState: setState }}>
                                             <FeatureToggleContext.Provider value={feature}>
-                                                {children}
+                                                <AktivitetToggleProvider>{children}</AktivitetToggleProvider>
                                             </FeatureToggleContext.Provider>
                                         </ViewContext.Provider>
                                     </FNRContext.Provider>
