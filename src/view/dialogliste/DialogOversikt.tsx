@@ -70,12 +70,9 @@ const DialogOversikt = () => {
             )}
         >
             <DialogOversiktHeader erVeileder={erVeileder} />
-            <div className="relative flex flex-1 flex-col overflow-y-scroll border-r border-border-divider bg-gray-100 px-2 pb-2 pt-4">
-                <div className="p-2">{kanSendeMelding ? <NyDialogLink /> : null}</div>
-                {ingenDialoger ? <InfoVedIngenDialoger className="mt-4 md:hidden" /> : null}
             <div
                 className={classNames(
-                    'flex h-full flex-col overflow-y-scroll border-r border-border-divider bg-gray-100 px-2 pb-8',
+                    'relative flex h-full flex-1 flex-col overflow-y-scroll border-r border-border-divider bg-gray-100 px-2 pb-2',
                     {
                         'pt-4': !compactMode,
                         'pt-2': compactMode
@@ -84,7 +81,7 @@ const DialogOversikt = () => {
             >
                 {!compactMode ? (
                     <>
-                        <div className="p-2">{kanSendeMelding ? <NyDialogLink /> : null}</div>
+                        <div className="p-2 pt-0.5">{kanSendeMelding ? <NyDialogLink /> : null}</div>
                         {ingenDialoger ? <InfoVedIngenDialoger className="mt-4 md:hidden" /> : null}
                     </>
                 ) : (
