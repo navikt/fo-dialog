@@ -115,7 +115,7 @@ export function Provider(props: Props) {
         harLoggetInnNiva4.isPending
     ) {
         return (
-            <div className="flex h-full w-full justify-center">
+            <div className="flex flex-1 justify-center self-center">
                 <Loader size="3xlarge" />
             </div>
         );

@@ -67,8 +67,14 @@ export function Dialog() {
 
     const routes = useRoutes();
     const navigate = useNavigate();
+
+    useEffect(() => {
+        if (!valgtDialog) {
+            navigate(routes.baseRoute(), { replace: true });
+        }
+    }, [navigate, routes, valgtDialog]);
+
     if (!valgtDialog) {
-        navigate(routes.baseRoute(), { replace: true });
         return <Loader />;
     }
 
