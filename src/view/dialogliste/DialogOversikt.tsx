@@ -57,14 +57,22 @@ const DialogOversikt = () => {
     const ingenDialoger = dialoger.length === 0;
     const compactMode = useCompactMode();
 
+    const erSidebar = !!dialog || isNyRoute;
     return (
         <div
             className={classNames(
-                { hidden: !!dialog || isNyRoute } /* Hvis liten skjerm, bare vis dialog-liste på "Homepage"  */,
-                'flex h-full w-full flex-col border-r border-border-divider md:flex md:max-w-xs md:flex-col xl:w-[16.7vw] xl:min-w-[320px] xl:max-w-none'
+                /* Hvis liten skjerm, bare vis dialog-liste på "Homepage", ikke som sideBar  */
+                { 'hidden md:flex': erSidebar },
+                { flex: !erSidebar },
+                'w-full flex-col border-r border-border-divider ' +
+                    'md:max-w-xs ' +
+                    'xl:w-[16.7vw] xl:min-w-[320px] xl:max-w-none'
             )}
         >
             <DialogOversiktHeader erVeileder={erVeileder} />
+            <div className="relative flex flex-1 flex-col overflow-y-scroll border-r border-border-divider bg-gray-100 px-2 pb-2 pt-4">
+                <div className="p-2">{kanSendeMelding ? <NyDialogLink /> : null}</div>
+                {ingenDialoger ? <InfoVedIngenDialoger className="mt-4 md:hidden" /> : null}
             <div
                 className={classNames(
                     'flex h-full flex-col overflow-y-scroll border-r border-border-divider bg-gray-100 px-2 pb-8',
