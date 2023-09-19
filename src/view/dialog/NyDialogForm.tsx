@@ -114,7 +114,7 @@ const NyDialogForm = (props: Props) => {
     const compactMode = useCompactMode();
 
     return (
-        <div className="h-full w-full bg-gray-100 lg:max-w-lgContainer xl:max-w-none">
+        <div className="relative h-full w-full overflow-scroll bg-gray-100 lg:max-w-lgContainer xl:max-w-none">
             <form
                 className="space-y-8 p-8 xl:w-full xl:max-w-max-paragraph"
                 onSubmit={handleSubmit((data) => onSubmit(data))}

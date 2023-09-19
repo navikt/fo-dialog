@@ -91,19 +91,19 @@ const Routes = () => {
 const App = (props: Props) => {
     const { fnr } = props;
     return (
-        <div
-            className={cx('flex', {
-                'max-h-[calc(100vh-180px)] min-h-[calc(100vh-180px)]': erInternFlate,
-                'max-h-[calc(100vh-140px)] min-h-[calc(100vh-140px)]': !erInternFlate
-                // TODO 60 px skal fjernes fra !erinternflate
-            })}
-        >
-            <Provider fnr={fnr} erVeileder={!!fnr}>
-                <StatusAdvarsel />
-                <UppdateEventHandler />
+        <Provider fnr={fnr} erVeileder={!!fnr}>
+            <StatusAdvarsel />
+            <UppdateEventHandler />
+            <div
+                className={cx('flex', {
+                    'max-h-[calc(100vh-180px)] min-h-[calc(100vh-180px)]': erInternFlate,
+                    'max-h-[calc(100vh-140px)] min-h-[calc(100vh-140px)]': !erInternFlate
+                    // TODO 60 px skal fjernes fra !erinternflate
+                })}
+            >
                 <Routes />
-            </Provider>
-        </div>
+            </div>
+        </Provider>
     );
 };
 
