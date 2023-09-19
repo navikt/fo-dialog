@@ -137,7 +137,7 @@ const MeldingInputBox = (props: Props) => {
                     })}
                 >
                     <Textarea
-                        className="grow"
+                        className="h-full w-full grow"
                         {...register('melding')}
                         onChange={(event) => {
                             onChange(event);
@@ -147,10 +147,15 @@ const MeldingInputBox = (props: Props) => {
                         label={'Skriv om arbeid og oppfølging'}
                         hideLabel
                         placeholder={'Skriv om arbeid og oppfølging'}
-                        minRows={compactMode && !visAktivitet ? 10 : props.erBruker ? 2 : 3}
-                        maxRows={compactMode && !visAktivitet ? 15 : 10}
+                        // minRows={compactMode && !visAktivitet ? 10 : props.erBruker ? 2 : 3}
+                        // maxRows={compactMode && !visAktivitet ? 15 : 10}
                     />
-                    <Button className={classNames({ 'self-start': compactMode })} title="Send" loading={isSubmitting}>
+                    <Button
+                        size={compactMode ? 'small' : 'medium'}
+                        className={classNames({ 'self-start': compactMode })}
+                        title="Send"
+                        loading={isSubmitting}
+                    >
                         Send
                     </Button>
                 </div>

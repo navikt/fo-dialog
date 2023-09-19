@@ -46,6 +46,7 @@ export const useFeatureToggleProvider = (): FeatureData => {
 
     useEffect(() => {
         const listener = onStorageChange(setState);
+        listener({});
         window.addEventListener('storage', listener);
         return () => {
             console.log('Removing listener');
