@@ -133,7 +133,8 @@ const MeldingInputBox = (props: Props) => {
                 <div
                     className={classNames('flex', {
                         'grow flex-col items-stretch space-y-4': compactMode && !visAktivitet,
-                        'items-end space-x-4': !compactMode || visAktivitet
+                        'flex-col items-end space-y-2 sm:flex-row sm:space-x-4 sm:space-y-0':
+                            !compactMode || visAktivitet
                     })}
                 >
                     <Textarea

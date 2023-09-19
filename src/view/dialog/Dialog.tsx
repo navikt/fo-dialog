@@ -87,13 +87,17 @@ export function Dialog() {
 
     return (
         <section
-            className={classNames('relative flex w-full grow overflow-auto xl:max-w-none', {
+            className={classNames('flex w-full grow xl:max-w-none', {
                 'flex-col lg:flex-row': compactMode && !visAktivitet,
                 'flex-col': !compactMode || visAktivitet,
                 'lg:max-w-lgContainer xl:max-w-none': !compactMode
             })}
         >
-            <div className={classNames('flex grow flex-col', { 'flex-1': compactMode && !visAktivitet })}>
+            <div
+                className={classNames('relative flex flex-1 grow flex-col overflow-scroll', {
+                    'flex-1': compactMode && !visAktivitet
+                })}
+            >
                 <Meldinger dialogData={valgtDialog} viewState={viewState} fnr={fnr} />
                 <HistoriskInfo hidden={aktivDialog} kanSendeMelding={kanSendeMelding} />
             </div>
