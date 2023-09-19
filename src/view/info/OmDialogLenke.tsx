@@ -19,7 +19,7 @@ function OmDialogLenke() {
                     Om dialog
                 </Link>
             )}
-            <Modal open={open} onClose={() => setOpen(!open)} closeButton={true}>
+            <Modal open={open} onClose={() => setOpen(!open)} header={{ heading: 'Om dialogen', closeButton: true }}>
                 <InfoOmDialogSide />
             </Modal>
         </>

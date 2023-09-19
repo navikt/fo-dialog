@@ -54,9 +54,9 @@
     "dependencies": {
         "@hookform/resolvers": "^3.1.0",
         "@navikt/aksel-icons": "^3.2.2",
-        "@navikt/ds-css": "^3.2.2",
-        "@navikt/ds-react": "^3.2.2",
-        "@navikt/ds-tailwind": "^3.2.2",
+        "@navikt/ds-css": "^5.5.0",
+        "@navikt/ds-react": "^5.5.0",
+        "@navikt/ds-tailwind": "^5.5.0",
         "@vitejs/plugin-react-swc": "^3.3.1",
         "amplitude-js": "^8.21.9",
         "core-js": "^3.30.2",

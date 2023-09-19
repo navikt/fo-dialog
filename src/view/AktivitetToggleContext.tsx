@@ -12,7 +12,7 @@ export const useVisAktivitetContext = () => useContext(AktivitetToggleContext);
 export const useVisAktivitet = () => useContext(AktivitetToggleContext).visAktivitet;
 
 export const AktivitetToggleProvider = (props: { children: React.ReactNode }) => {
-    const [visAktivitet, setVisAktivitet] = useState(true);
+    const [visAktivitet, setVisAktivitet] = useState(false);
     return (
         <AktivitetToggleContext.Provider value={{ visAktivitet, setVisAktivitet }}>
             {props.children}

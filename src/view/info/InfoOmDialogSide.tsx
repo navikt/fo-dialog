@@ -15,13 +15,10 @@ export function InfoOmDialogSide() {
         <section
             aria-label="Om dialog"
             id="om-dialog"
-            className={classNames(dialogStyle.overflowAuto, dialogStyle.dialog, 'w-full max-w-2xl p-8')}
+            className={classNames(dialogStyle.overflowAuto, dialogStyle.dialog, 'w-full max-w-2xl p-8 pt-0')}
             tabIndex={-1}
         >
             <div>
-                <Heading size="large" spacing>
-                    Om dialog
-                </Heading>
                 <div className={'mb-8'}>
                     <BodyLong>
                         I dialogen kan du og veilederen din skrive til hverandre om arbeid og oppfølging. Dere kan blant

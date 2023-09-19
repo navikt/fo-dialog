@@ -8,6 +8,5 @@ import App from './App';
 
 export const renderAsReactRoot = (fnr?: string) => {
     const rootElement = document.getElementById('root');
-    Modal.setAppElement(rootElement);
     createRoot(rootElement!).render(<App fnr={fnr} key={'1'} />);
 };
