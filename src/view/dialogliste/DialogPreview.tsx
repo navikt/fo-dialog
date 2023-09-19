@@ -92,7 +92,6 @@ function DialogPreview(props: Props) {
         navigate(dialogRoute(id));
     };
 
-    console.log(styles);
     return (
         <LinkPanel
             className={classNames('my-1 max-w-full !gap-0 border p-2', styles.dialogPreview, {
