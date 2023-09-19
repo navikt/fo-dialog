@@ -27,7 +27,7 @@ export function DialogListe() {
 
     const compactMode = useCompactMode();
     return (
-        <div className={classNames( { 'pt-2': !compactMode })} role="navigation" aria-label="Dialoger">
+        <div className={classNames({ 'pt-2': !compactMode })} role="navigation" aria-label="Dialoger">
             <DialogPreviewListe dialoger={naaverende} valgDialog={dialogId} />
             <HistoriskeDialogerOversikt historiske={historiske} valgDialog={dialogId} />
         </div>
