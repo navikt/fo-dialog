@@ -88,7 +88,7 @@ export function Dialog() {
     return (
         <section
             className={classNames('flex w-full grow xl:max-w-none', {
-                'flex-row': compactMode && !visAktivitet,
+                'flex-col lg:flex-row': compactMode && !visAktivitet,
                 'flex-col': !compactMode || visAktivitet,
                 'lg:max-w-lgContainer xl:max-w-none': !compactMode
             })}
@@ -100,7 +100,7 @@ export function Dialog() {
             <section
                 aria-label="Ny melding"
                 className={classNames('border-t border-border-divider bg-white p-4 xl:flex xl:justify-center', {
-                    'flex-1 grow': compactMode && !visAktivitet
+                    'lg:flex-1 lg:grow': compactMode && !visAktivitet
                 })}
             >
                 <div
