@@ -30,7 +30,12 @@ export function DialogMedAktivitetHeader(props: Props) {
     const infotekst = getInfoText(aktivitet);
 
     return (
-        <div className="flex w-full flex-col md:flex-row">
+        <div
+            className={classNames('flex w-full md:flex-row', {
+                'flex-col': !compactMode,
+                'flex-row items-center': compactMode
+            })}
+        >
             <div className="flex flex-1 flex-row items-center gap-x-2 lg:max-w-lgContainer xl:max-w-none">
                 <TilbakeKnapp className="md:hidden" />
                 <div className={classNames('md:ml-4', { 'flex items-baseline gap-2': compactMode })}>
@@ -47,9 +52,9 @@ export function DialogMedAktivitetHeader(props: Props) {
             </div>
             <div className="flex-1 md:max-w-[320px] xl:max-w-screen-w-1/3">
                 <div
-                    className={classNames('mt-2 flex items-center justify-between px-2 md:mt-0 lg:pl-4', {
+                    className={classNames('flex items-center justify-between px-2 md:mt-0 lg:pl-4', {
                         'flex-row': compactMode,
-                        'flex-row md:flex-col md:items-end lg:items-start': !compactMode
+                        'mt-2 flex-row md:flex-col md:items-end lg:items-start': !compactMode
                     })}
                 >
                     {!compactMode && <Detail aria-hidden="true">{typeTekst.toUpperCase()}</Detail>}
