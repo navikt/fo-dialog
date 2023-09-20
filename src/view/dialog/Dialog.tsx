@@ -93,11 +93,7 @@ export function Dialog() {
                 'lg:max-w-lgContainer xl:max-w-none': !compactMode
             })}
         >
-            <div
-                className={classNames('relative flex flex-1 grow flex-col overflow-scroll', {
-                    'flex-1': compactMode && !visAktivitet
-                })}
-            >
+            <div className="relative flex flex-1 grow flex-col overflow-scroll">
                 <Meldinger dialogData={valgtDialog} viewState={viewState} fnr={fnr} />
                 <HistoriskInfo hidden={aktivDialog} kanSendeMelding={kanSendeMelding} />
             </div>

@@ -39,22 +39,33 @@ export function DialogMedAktivitetHeader(props: Props) {
             <div className="flex flex-1 flex-row items-center gap-x-2 lg:max-w-lgContainer xl:max-w-none">
                 <TilbakeKnapp className="md:hidden" />
                 <div className={classNames('md:ml-4', { 'flex items-baseline gap-2': compactMode })}>
-                    <Heading level="1" size="small" aria-label={`${typeTekst}: ${aktivitet?.tittel}`}>
+                    <Heading
+                        className="truncate"
+                        level="1"
+                        size="small"
+                        aria-label={`${typeTekst}: ${aktivitet?.tittel}`}
+                    >
                         {aktivitet?.tittel}
                     </Heading>
                     {infotekst &&
                         (compactMode ? (
                             <BodyShort className="text-text-subtle">{infotekst}</BodyShort>
                         ) : (
-                            <Detail>{infotekst}</Detail>
+                            <Detail className="">{infotekst}</Detail>
                         ))}
                 </div>
             </div>
-            <div className="flex-1 md:max-w-[320px] xl:max-w-screen-w-1/3">
+            <div
+                className={classNames('', {
+                    'md:max-w-[320px] xl:max-w-screen-w-1/3': !compactMode && visAktivitet,
+                    'lg:flex-1': compactMode && !visAktivitet,
+                    'lg:grow md:max-w-[320px] xl:max-w-screen-w-1/3 pl-4': compactMode && visAktivitet
+                })}
+            >
                 <div
-                    className={classNames('flex items-center justify-between px-2 md:mt-0 lg:pl-4', {
-                        'flex-row': compactMode,
-                        'mt-2 flex-row md:flex-col md:items-end lg:items-start': !compactMode
+                    className={classNames('flex items-center justify-between md:mt-0 ', {
+                        'flex-row pr-2 ': compactMode,
+                        'mt-2 flex-row md:flex-col md:items-end lg:items-start lg:pl-4 px-2': !compactMode
                     })}
                 >
                     {!compactMode && <Detail aria-hidden="true">{typeTekst.toUpperCase()}</Detail>}
@@ -63,7 +74,7 @@ export function DialogMedAktivitetHeader(props: Props) {
                     </Link>
                     {compactMode && (
                         <Switch
-                            className="hidden md:flex"
+                            className="hidden lg:flex"
                             checked={visAktivitet}
                             value={visAktivitet.toString()}
                             onChange={(_) => {
