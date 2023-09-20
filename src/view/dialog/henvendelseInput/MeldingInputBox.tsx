@@ -139,7 +139,7 @@ const MeldingInputBox = (props: Props) => {
                             !compactMode || visAktivitet
                     })}
                 >
-                    <div className="border border-gray-500 focus:border-gray-800 rounded-md overflow-scroll">
+                    <div className="border w-full border-gray-500 hover:border-blue-500 rounded-md overflow-scroll">
                         <Textarea
                             className="h-full w-full grow"
                             {...register('melding')}
@@ -151,8 +151,8 @@ const MeldingInputBox = (props: Props) => {
                             label={'Skriv om arbeid og oppfølging'}
                             hideLabel
                             placeholder={'Skriv om arbeid og oppfølging'}
-                            // minRows={compactMode && !visAktivitet ? 10 : props.erBruker ? 2 : 3}
-                            // maxRows={compactMode && !visAktivitet ? 15 : 10}
+                            minRows={compactMode && !visAktivitet ? 10 : props.erBruker ? 2 : 3}
+                            maxRows={!compactMode || visAktivitet ? 10 : 100}
                         />
                     </div>
                     <Button
