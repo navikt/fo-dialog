@@ -124,33 +124,37 @@ const MeldingInputBox = (props: Props) => {
 
     return (
         <form
-            className={classNames({ 'flex grow flex-col': compactMode && !visAktivitet })}
+            className={classNames({
+                'flex flex-1 flex-col overflow-hidden': compactMode && !visAktivitet
+            })}
             onSubmit={handleSubmit((data) => onSubmit(data))}
             noValidate
             autoComplete="off"
         >
             {kanSendeHenveldelse ? (
                 <div
-                    className={classNames('flex', {
-                        'grow flex-col items-stretch space-y-4': compactMode && !visAktivitet,
-                        'flex-col items-end space-y-2 sm:flex-row sm:space-x-4 sm:space-y-0':
+                    className={classNames('', {
+                        'flex flex-col items-stretch space-y-4 overflow-hidden': compactMode && !visAktivitet,
+                        'flex flex-col items-end space-y-2 sm:flex-row sm:space-x-4 sm:space-y-0':
                             !compactMode || visAktivitet
                     })}
                 >
-                    <Textarea
-                        className="h-full w-full grow"
-                        {...register('melding')}
-                        onChange={(event) => {
-                            onChange(event);
-                            register('melding').onChange(event);
-                        }}
-                        error={errors.melding && errors.melding.message}
-                        label={'Skriv om arbeid og oppfølging'}
-                        hideLabel
-                        placeholder={'Skriv om arbeid og oppfølging'}
-                        // minRows={compactMode && !visAktivitet ? 10 : props.erBruker ? 2 : 3}
-                        // maxRows={compactMode && !visAktivitet ? 15 : 10}
-                    />
+                    <div className="border border-gray-500 focus:border-gray-800 rounded-md overflow-scroll">
+                        <Textarea
+                            className="h-full w-full grow"
+                            {...register('melding')}
+                            onChange={(event) => {
+                                onChange(event);
+                                register('melding').onChange(event);
+                            }}
+                            error={errors.melding && errors.melding.message}
+                            label={'Skriv om arbeid og oppfølging'}
+                            hideLabel
+                            placeholder={'Skriv om arbeid og oppfølging'}
+                            // minRows={compactMode && !visAktivitet ? 10 : props.erBruker ? 2 : 3}
+                            // maxRows={compactMode && !visAktivitet ? 15 : 10}
+                        />
+                    </div>
                     <Button
                         size={compactMode ? 'small' : 'medium'}
                         className={classNames({ 'self-start': compactMode })}
@@ -162,7 +166,11 @@ const MeldingInputBox = (props: Props) => {
                 </div>
             ) : null}
 
-            {noeFeilet ? <Alert variant="error">Noe gikk dessverre galt med systemet. Prøv igjen senere.</Alert> : null}
+            {noeFeilet ? (
+                <Alert className="mt-4" variant="error">
+                    Noe gikk dessverre galt med systemet. Prøv igjen senere.
+                </Alert>
+            ) : null}
         </form>
     );
 };

@@ -19,7 +19,7 @@ const renderAsRootApp = (fnr?: string) => {
 };
 
 const renderApp = (fnr?: string) => {
-    if (['dev-intern', 'prod-intern', 'development'].includes(import.meta.env.MODE)) {
+    if (['dev-intern', 'prod-intern'].includes(import.meta.env.MODE)) {
         exportToNavSpa();
     } else {
         renderAsRootApp(fnr);
@@ -29,9 +29,9 @@ const renderApp = (fnr?: string) => {
 if (USE_MOCK) {
     const fnr = erEksternBruker() ? undefined : '12345678901';
     if (fnr) {
-        const webComponentTag = document.createElement('dab-dialog');
-        webComponentTag.setAttribute('data-fnr', fnr);
-        document.getElementById('root')?.appendChild(webComponentTag);
+        // const webComponentTag = document.createElement('dab-dialog');
+        // webComponentTag.setAttribute('data-fnr', fnr);
+        // document.getElementById('root')?.appendChild(webComponentTag);
     }
     gotoStartTestPage(fnr);
 
