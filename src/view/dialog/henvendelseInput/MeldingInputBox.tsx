@@ -152,7 +152,7 @@ const MeldingInputBox = (props: Props) => {
                             label={'Skriv om arbeid og oppfølging'}
                             hideLabel
                             placeholder={'Skriv om arbeid og oppfølging'}
-                            minRows={compactMode && !visAktivitet ? 10 : props.erBruker ? 2 : 3}
+                            minRows={compactMode && !visAktivitet ? 3 : props.erBruker ? 2 : 3}
                             maxRows={!compactMode || visAktivitet ? 10 : 100}
                         />
                     </div>
