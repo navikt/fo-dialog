@@ -134,8 +134,9 @@ const MeldingInputBox = (props: Props) => {
             {kanSendeHenveldelse ? (
                 <div
                     className={classNames('', {
-                        'flex flex-col items-stretch space-y-4 overflow-hidden': compactMode && !visAktivitet,
-                        'flex flex-col items-end space-y-2 sm:flex-row sm:space-x-4 sm:space-y-0':
+                        'flex lg:flex-col flex-row space-x-2 lg:space-x-0 items-stretch lg:space-y-2 overflow-hidden':
+                            compactMode && !visAktivitet,
+                        'flex flex-col items-end space-y-2 sm:flex-row sm:space-x-2 sm:space-y-0':
                             !compactMode || visAktivitet
                     })}
                 >
@@ -157,7 +158,10 @@ const MeldingInputBox = (props: Props) => {
                     </div>
                     <Button
                         size={compactMode ? 'small' : 'medium'}
-                        className={classNames({ 'self-start': compactMode })}
+                        className={classNames({
+                            'self-end': compactMode && visAktivitet,
+                            'lg:self-start self-end': compactMode && !visAktivitet
+                        })}
                         title="Send"
                         loading={isSubmitting}
                     >
