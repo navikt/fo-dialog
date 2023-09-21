@@ -99,13 +99,11 @@ export function Dialog() {
             </div>
             <section
                 aria-label="Ny melding"
-                className={classNames('flex border-t border-border-divider bg-white p-4 xl:flex xl:justify-center', {
+                className={classNames('flex border-t border-border-divider bg-white p-4 xl:justify-center', {
                     'lg:flex-1 lg:grow': compactMode && !visAktivitet
                 })}
             >
-                <div
-                    className={classNames('xl:w-full xl:max-w-248', { 'flex flex-col ': compactMode && !visAktivitet })}
-                >
+                <div className={classNames('w-full xl:max-w-248', { 'flex flex-col ': compactMode && !visAktivitet })}>
                     <ManagedDialogCheckboxes dialog={valgtDialog} visible={!!bruker?.erVeileder} />
                     {!oppfolging?.underOppfolging || valgtDialog.historisk ? null : (
                         <DialogInputBoxVisible
