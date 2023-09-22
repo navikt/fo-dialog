@@ -1,5 +1,5 @@
 import { zodResolver } from '@hookform/resolvers/zod';
-import { Alert, Button, Textarea } from '@navikt/ds-react';
+import { Alert, Button, ErrorMessage, Textarea } from '@navikt/ds-react';
 import classNames from 'classnames';
 import React, { ChangeEvent, useEffect, useLayoutEffect, useRef, useState } from 'react';
 import { useForm } from 'react-hook-form';
@@ -135,56 +135,37 @@ const MeldingInputBox = (props: Props) => {
             {kanSendeHenveldelse ? (
                 <div
                     className={classNames('', {
-                        'flex lg:flex-col flex-row space-x-2 lg:space-x-0 items-stretch lg:space-y-2 overflow-hidden':
+                        'flex lg:flex-col flex-row space-x-2 lg:space-x-0 items-stretch overflow-hidden':
                             compactMode && !visAktivitet,
-                        'flex flex-col items-end space-y-2 sm:flex-row sm:space-x-2 sm:space-y-0':
-                            !compactMode || visAktivitet
+                        'flex flex-col items-end space-y-2 sm:flex-row sm:space-y-0': !compactMode || visAktivitet
                     })}
                 >
-                    {/*<div*/}
-                    {/*    className={classNames({*/}
-                    {/*        'w-full': visAktivitet || !compactMode,*/}
-                    {/*        'overflow-y-scroll border-t border-b rounded-md border-gray-500 hover:border-blue-500':*/}
-                    {/*            compactMode || !visAktivitet*/}
-                    {/*    })}*/}
-                    {/*>*/}
-                    {/*    <div className="border-l border-r rounded-md border-gray-500 hover:border-blue-500">*/}
-                    {/*        <Textarea*/}
-                    {/*            className="h-full w-full grow"*/}
-                    {/*            {...register('melding')}*/}
-                    {/*            onChange={(event) => {*/}
-                    {/*                onChange(event);*/}
-                    {/*                register('melding').onChange(event);*/}
-                    {/*            }}*/}
-                    {/*            error={errors.melding && errors.melding.message}*/}
-                    {/*            label={'Skriv om arbeid og oppfølging'}*/}
-                    {/*            hideLabel*/}
-                    {/*            placeholder={'Skriv om arbeid og oppfølging'}*/}
-                    {/*            minRows={compactMode && !visAktivitet ? 3 : props.erBruker ? 2 : 3}*/}
-                    {/*            maxRows={!compactMode || visAktivitet ? 10 : 100}*/}
-                    {/*        />*/}
-                    {/*    </div>*/}
-                    {/*</div>*/}
-                    {/*<textarea className="border rounded-md border-gray-500 hover:border-blue-500 p-2" />*/}
+                    <label htmlFor="melding_input" className="hidden ">
+                        Skriv om arbeid og oppfølging
+                    </label>
                     <TextareaAutosize
-                        className=" w-full grow border-2 border-gray-500 focus:border-blue-500 rounded-md p-2 overflow-auto outline-0"
+                        id="melding_input"
+                        className={classNames(
+                            'w-full grow border-2 border-gray-500 focus:border-blue-500 rounded-md p-2 overflow-auto outline-0',
+                            { 'border-red-300': errors.melding }
+                        )}
                         style={{ overflow: 'auto' }}
                         {...register('melding')}
                         onChange={(event) => {
                             onChange(event);
                             register('melding').onChange(event);
                         }}
-                        error={errors.melding && errors.melding.message}
-                        label={'Skriv om arbeid og oppfølging'}
-                        hideLabel
+                        // error={errors.melding && errors.melding.message}
                         placeholder={'Skriv om arbeid og oppfølging'}
+                        minRows={compactMode && !visAktivitet ? 3 : props.erBruker ? 2 : 3}
                         maxRows={!compactMode || visAktivitet ? 10 : 100}
-                    ></TextareaAutosize>
+                    />
                     <Button
                         size={compactMode ? 'small' : 'medium'}
                         className={classNames({
-                            'self-end': compactMode && visAktivitet,
-                            'lg:self-start self-end': compactMode && !visAktivitet
+                            'ml-2': !compactMode,
+                            'self-end ml-2': compactMode && visAktivitet,
+                            'lg:mt-2 lg:self-start self-end': compactMode && !visAktivitet
                         })}
                         title="Send"
                         loading={isSubmitting}
@@ -193,7 +174,11 @@ const MeldingInputBox = (props: Props) => {
                     </Button>
                 </div>
             ) : null}
-
+            {errors.melding ? (
+                <ErrorMessage className="mt-2" size="small">
+                    {errors.melding.message}
+                </ErrorMessage>
+            ) : null}
             {noeFeilet ? (
                 <Alert className="mt-4" variant="error">
                     Noe gikk dessverre galt med systemet. Prøv igjen senere.
