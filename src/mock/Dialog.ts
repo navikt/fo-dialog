@@ -569,7 +569,6 @@ const dialoger: DialogData[] = [
                 viktig: false,
                 tekst: 'Sånn passe. '
             }
-
         ],
         egenskaper: []
     }

@@ -389,7 +389,7 @@ const varig_lonnstilsk = {
     endretAvType: 'NAV',
     transaksjonsType: 'STATUS_ENDRET',
     eksternAktivitet: {
-        type: EksternAktivitetTypes.VARIG_LONNSTILSKUDD,
+        type: EksternAktivitetTypes.VARIG_LONNSTILSKUDD
     }
 };
 const arena_tiltak = {
@@ -409,7 +409,7 @@ const arena_tiltak = {
     endretAvType: 'NAV',
     transaksjonsType: 'STATUS_ENDRET',
     eksternAktivitet: {
-        type: EksternAktivitetTypes.ARENA_TILTAK,
+        type: EksternAktivitetTypes.ARENA_TILTAK
     }
 };
 const avklaring = {
@@ -429,7 +429,7 @@ const avklaring = {
     endretAvType: 'NAV',
     transaksjonsType: 'STATUS_ENDRET',
     eksternAktivitet: {
-        type: EksternAktivitetTypes.AVKLARAG,
+        type: EksternAktivitetTypes.AVKLARAG
     }
 };
 
