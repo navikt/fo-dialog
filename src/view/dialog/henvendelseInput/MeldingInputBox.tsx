@@ -167,7 +167,7 @@ const MeldingInputBox = (props: Props) => {
                     {/*</div>*/}
                     {/*<textarea className="border rounded-md border-gray-500 hover:border-blue-500 p-2" />*/}
                     <TextareaAutosize
-                        className=" w-full grow border rounded-md p-2 overflow-auto hover:border-blue-500 "
+                        className=" w-full grow border-2 border-gray-500 focus:border-blue-500 rounded-md p-2 overflow-auto outline-0"
                         style={{ overflow: 'auto' }}
                         {...register('melding')}
                         onChange={(event) => {
