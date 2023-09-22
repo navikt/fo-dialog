@@ -74,7 +74,7 @@ export function DialogMedAktivitetHeader(props: Props) {
                     </Link>
                     {compactMode && (
                         <Switch
-                            className="hidden lg:flex"
+                            className="hidden 2xl:hidden lg:flex"
                             checked={visAktivitet}
                             value={visAktivitet.toString()}
                             onChange={(_) => {

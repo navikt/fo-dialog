@@ -9,12 +9,13 @@ import AktivitetIngress from './AktivitetIngress';
 import { AktivitetskortInfoBox } from './AktivitetskortInfoBox';
 import Brodsmulesti from './Brodsmulesti';
 import AvtaltMarkering from './etiketter/avtalt-markering';
+import classNames from 'classnames';
 
 export function Aktivitetskort() {
     const aktivitet = useSelectedAktivitet();
     const compactMode = useCompactMode();
     const visAktivitet = useVisAktivitet();
-    if (!aktivitet || !visAktivitet) {
+    if (!aktivitet) {
         if (compactMode) {
             return null;
         }
@@ -23,7 +24,14 @@ export function Aktivitetskort() {
 
     const { status, tittel, avtalt } = aktivitet;
     return (
-        <div className="hidden w-full border-l border-border-divider lg:flex lg:max-w-[320px] xl:max-w-screen-w-1/3">
+        <div
+            className={classNames(' w-full border-l border-border-divider lg:max-w-[320px] xl:max-w-screen-w-1/3', {
+                hidden: !visAktivitet,
+                ' lg:flex hidden': visAktivitet,
+                '2xl:flex 2xl:max-w-screen-w-1/4': compactMode,
+                'hidden lg:flex': !compactMode
+            })}
+        >
             <section
                 aria-label="Aktivitet knyttet til dialog"
                 className="m-4 mr-0 w-full overflow-y-auto overflow-x-visible xl:max-w-max-paragraph"
