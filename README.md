@@ -11,13 +11,14 @@ Dette prosjektet er satt opp med [Create React App](https://github.com/facebook/
 curl -fsSL https://bun.sh/install | bash
 
 # Installere avhengigheter
+npm install
 bun install
 
 # Bygge produksjonskode
-npm build
+npm run build
 
 # Lokal utvikling med mock
-npm start
+npm run dev
 
 ```
 
