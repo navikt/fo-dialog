@@ -390,12 +390,8 @@ const varig_lonnstilsk = {
     transaksjonsType: 'STATUS_ENDRET',
     eksternAktivitet: {
         type: EksternAktivitetTypes.VARIG_LONNSTILSKUDD,
-        a: 123,
-        b: true,
-        c: 'test'
     }
 };
-
 const arena_tiltak = {
     versjon: '5345436',
     id: 'EKSTERNAKTIVITET_3',
@@ -414,9 +410,26 @@ const arena_tiltak = {
     transaksjonsType: 'STATUS_ENDRET',
     eksternAktivitet: {
         type: EksternAktivitetTypes.ARENA_TILTAK,
-        a: 123,
-        b: true,
-        c: 'test'
+    }
+};
+const avklaring = {
+    versjon: '5345436',
+    id: 'EKSTERNAKTIVITET_4',
+    tittel: 'Avklaring',
+    type: AktivitetTypes.EKSTERN_AKTIVITET,
+    fraDato: '2023-08-14T00:00:00+02:00',
+    tilDato: '2025-08-14T00:00:00+02:00',
+    lenke: null,
+    beskrivelse: '',
+    status: 'GJENNOMFORES',
+    opprettetDato: '2023-05-31T10:46:51.622+01:00',
+    endretDato: '2023-09-30T10:46:51.622+01:00',
+    endretAv: 'z990207',
+    historisk: false,
+    endretAvType: 'NAV',
+    transaksjonsType: 'STATUS_ENDRET',
+    eksternAktivitet: {
+        type: EksternAktivitetTypes.AVKLARAG,
     }
 };
 
@@ -433,7 +446,8 @@ const aktiviteter = {
         stillingFraNav2,
         midl_lonnstilsk,
         varig_lonnstilsk,
-        arena_tiltak
+        arena_tiltak,
+        avklaring
     ]
 };
 
