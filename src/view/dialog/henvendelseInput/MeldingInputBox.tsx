@@ -15,6 +15,7 @@ import { useKladdContext } from '../../KladdProvider';
 import { useViewContext } from '../../Provider';
 import { HandlingsType, sendtNyMelding } from '../../ViewState';
 import useMeldingStartTekst from '../UseMeldingStartTekst';
+import TextareaAutosize from '@navikt/ds-react/esm/util/TextareaAutoSize';
 
 const maxMeldingsLengde = 5000;
 
@@ -140,30 +141,45 @@ const MeldingInputBox = (props: Props) => {
                             !compactMode || visAktivitet
                     })}
                 >
-                    <div
-                        className={classNames({
-                            'w-full': visAktivitet || !compactMode,
-                            'overflow-y-scroll border-t border-b rounded-md border-gray-500 hover:border-blue-500':
-                                compactMode || !visAktivitet
-                        })}
-                    >
-                        <div className="border-l border-r rounded-md border-gray-500 hover:border-blue-500">
-                            <Textarea
-                                className="h-full w-full grow"
-                                {...register('melding')}
-                                onChange={(event) => {
-                                    onChange(event);
-                                    register('melding').onChange(event);
-                                }}
-                                error={errors.melding && errors.melding.message}
-                                label={'Skriv om arbeid og oppfølging'}
-                                hideLabel
-                                placeholder={'Skriv om arbeid og oppfølging'}
-                                minRows={compactMode && !visAktivitet ? 3 : props.erBruker ? 2 : 3}
-                                maxRows={!compactMode || visAktivitet ? 10 : 100}
-                            />
-                        </div>
-                    </div>
+                    {/*<div*/}
+                    {/*    className={classNames({*/}
+                    {/*        'w-full': visAktivitet || !compactMode,*/}
+                    {/*        'overflow-y-scroll border-t border-b rounded-md border-gray-500 hover:border-blue-500':*/}
+                    {/*            compactMode || !visAktivitet*/}
+                    {/*    })}*/}
+                    {/*>*/}
+                    {/*    <div className="border-l border-r rounded-md border-gray-500 hover:border-blue-500">*/}
+                    {/*        <Textarea*/}
+                    {/*            className="h-full w-full grow"*/}
+                    {/*            {...register('melding')}*/}
+                    {/*            onChange={(event) => {*/}
+                    {/*                onChange(event);*/}
+                    {/*                register('melding').onChange(event);*/}
+                    {/*            }}*/}
+                    {/*            error={errors.melding && errors.melding.message}*/}
+                    {/*            label={'Skriv om arbeid og oppfølging'}*/}
+                    {/*            hideLabel*/}
+                    {/*            placeholder={'Skriv om arbeid og oppfølging'}*/}
+                    {/*            minRows={compactMode && !visAktivitet ? 3 : props.erBruker ? 2 : 3}*/}
+                    {/*            maxRows={!compactMode || visAktivitet ? 10 : 100}*/}
+                    {/*        />*/}
+                    {/*    </div>*/}
+                    {/*</div>*/}
+                    {/*<textarea className="border rounded-md border-gray-500 hover:border-blue-500 p-2" />*/}
+                    <TextareaAutosize
+                        className=" w-full grow border rounded-md p-2 overflow-auto hover:border-blue-500 "
+                        style={{ overflow: 'auto' }}
+                        {...register('melding')}
+                        onChange={(event) => {
+                            onChange(event);
+                            register('melding').onChange(event);
+                        }}
+                        error={errors.melding && errors.melding.message}
+                        label={'Skriv om arbeid og oppfølging'}
+                        hideLabel
+                        placeholder={'Skriv om arbeid og oppfølging'}
+                        maxRows={!compactMode || visAktivitet ? 10 : 100}
+                    ></TextareaAutosize>
                     <Button
                         size={compactMode ? 'small' : 'medium'}
                         className={classNames({
