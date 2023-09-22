@@ -140,21 +140,29 @@ const MeldingInputBox = (props: Props) => {
                             !compactMode || visAktivitet
                     })}
                 >
-                    <div className="border w-full border-gray-500 hover:border-blue-500 rounded-md overflow-scroll">
-                        <Textarea
-                            className="h-full w-full grow"
-                            {...register('melding')}
-                            onChange={(event) => {
-                                onChange(event);
-                                register('melding').onChange(event);
-                            }}
-                            error={errors.melding && errors.melding.message}
-                            label={'Skriv om arbeid og oppfølging'}
-                            hideLabel
-                            placeholder={'Skriv om arbeid og oppfølging'}
-                            minRows={compactMode && !visAktivitet ? 3 : props.erBruker ? 2 : 3}
-                            maxRows={!compactMode || visAktivitet ? 10 : 100}
-                        />
+                    <div
+                        className={classNames({
+                            'w-full': visAktivitet || !compactMode,
+                            'overflow-y-scroll border-t border-b rounded-md border-gray-500 hover:border-blue-500':
+                                compactMode || !visAktivitet
+                        })}
+                    >
+                        <div className="border-l border-r rounded-md border-gray-500 hover:border-blue-500">
+                            <Textarea
+                                className="h-full w-full grow"
+                                {...register('melding')}
+                                onChange={(event) => {
+                                    onChange(event);
+                                    register('melding').onChange(event);
+                                }}
+                                error={errors.melding && errors.melding.message}
+                                label={'Skriv om arbeid og oppfølging'}
+                                hideLabel
+                                placeholder={'Skriv om arbeid og oppfølging'}
+                                minRows={compactMode && !visAktivitet ? 3 : props.erBruker ? 2 : 3}
+                                maxRows={!compactMode || visAktivitet ? 10 : 100}
+                            />
+                        </div>
                     </div>
                     <Button
                         size={compactMode ? 'small' : 'medium'}
