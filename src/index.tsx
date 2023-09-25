@@ -29,9 +29,9 @@ const renderApp = (fnr?: string) => {
 if (USE_MOCK) {
     const fnr = erEksternBruker() ? undefined : '12345678901';
     if (fnr) {
-        // const webComponentTag = document.createElement('dab-dialog');
-        // webComponentTag.setAttribute('data-fnr', fnr);
-        // document.getElementById('root')?.appendChild(webComponentTag);
+        const webComponentTag = document.createElement('dab-dialog');
+        webComponentTag.setAttribute('data-fnr', fnr);
+        document.getElementById('root')?.appendChild(webComponentTag);
     }
     gotoStartTestPage(fnr);
 
