@@ -1,4 +1,4 @@
-import React, { useContext, useState } from 'react';
+import React, { useContext, useMemo, useState } from 'react';
 
 interface AktivitetToggleState {
     visAktivitet: boolean;
@@ -13,9 +13,8 @@ export const useVisAktivitet = () => useContext(AktivitetToggleContext).visAktiv
 
 export const AktivitetToggleProvider = (props: { children: React.ReactNode }) => {
     const [visAktivitet, setVisAktivitet] = useState(false);
-    return (
-        <AktivitetToggleContext.Provider value={{ visAktivitet, setVisAktivitet }}>
-            {props.children}
-        </AktivitetToggleContext.Provider>
-    );
+    const context = useMemo(() => {
+        return { visAktivitet, setVisAktivitet };
+    }, [visAktivitet]);
+    return <AktivitetToggleContext.Provider value={context}>{props.children}</AktivitetToggleContext.Provider>;
 };
