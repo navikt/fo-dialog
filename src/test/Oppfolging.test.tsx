@@ -156,7 +156,7 @@ describe('<DialogContainer/>', () => {
                 <DialogOversikt />
             </MemoryRouter>
         );
-        getByText('Start en ny dialog');
+        getByText('Ny dialog');
         getByText(dialoger[0].overskrift);
     });
 });

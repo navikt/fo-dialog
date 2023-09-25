@@ -12,7 +12,7 @@ exports[`<InformasjonElement /> > skal matche snapshot når EksternLenke er chil
         merkelappteksten
       </h2>
       <a
-        class="navds-link"
+        class="navds-link navds-link--action"
         href="http://nav.no"
       >
         nav.no

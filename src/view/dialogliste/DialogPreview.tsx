@@ -9,6 +9,7 @@ import { formaterDate } from '../../utils/Date';
 import { DialogData, StringOrNull } from '../../utils/Typer';
 import { getDialogTittel } from '../aktivitet/TextUtils';
 import { findAktivitet, useAktivitetContext } from '../AktivitetProvider';
+import { useCompactMode } from '../../featureToggle/FeatureToggleProvider';
 import { useEventListener } from '../utils/useEventListner';
 import styles from './DialogPreview.module.css';
 import { EtikettListe } from './EtikettListe';
@@ -61,6 +62,7 @@ export type TabChangeEvent = { tabId: string };
 function DialogPreview(props: Props) {
     const dialogref = useRef<HTMLDivElement | null>(null);
     const [skalScrolle, setSkalScrolle] = useState<boolean>(false);
+    const compactMode = useCompactMode();
 
     const { dialog, valgtDialogId } = props;
     const { id, sisteDato, aktivitetId, lest, overskrift, historisk } = dialog;
@@ -93,14 +95,17 @@ function DialogPreview(props: Props) {
     return (
         <LinkPanel
             className={classNames('my-1 max-w-full !gap-0 border p-2', styles.dialogPreview, {
-                'bg-[#e6f0ff]': detteErValgtDialog
+                'bg-[#e6f0ff]': detteErValgtDialog,
+                [styles.linkPanelCompactMode]: compactMode,
+                [styles.ulestDialogCompactMode]: !dialog.lest && compactMode
             })}
             href={dialogRoute(id)}
             aria-current={detteErValgtDialog && true}
             onClick={onGoTo}
         >
-            <div className="flex flex-row">
-                <Ikon dialog={dialog} />
+            {!dialog.lest && compactMode ? <div className="w-2 bg-surface-info"></div> : null}
+            <div className={classNames('flex flex-1 flex-row ', { 'py-2 pl-2 ': compactMode })}>
+                {compactMode ? null : <Ikon dialog={dialog} />}
                 <div className="min-w-0 flex-grow">
                     <BodyShort className="sr-only">{typeText(dialog)}</BodyShort>
                     <Tittel tittel={overskrift} aktivitet={aktivitet} />

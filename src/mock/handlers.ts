@@ -6,6 +6,7 @@ import bruker from './Bruker';
 import {
     harAktivitetFeilerSkruddPa,
     harArenaaktivitetFeilerSkruddPa,
+    harCompactModeSkruddPa,
     harDialogFeilerSkruddPa,
     harNivaa4Fieler,
     harNyDialogEllerSendMeldingFeilerSkruddPa
@@ -21,6 +22,7 @@ import { harNivaa4Data } from './HarNivaa4';
 import oppfolging from './Oppfolging';
 import { getSistOppdatert } from './SistOppdatert';
 import { veilederMe } from './Veileder';
+import { FeatureToggle } from '../featureToggle/const';
 
 const jsonResponse = (response: object | null | boolean | ((req: RestRequest) => object)) => {
     return async (req: RestRequest, res: ResponseComposition, ctx: RestContext) => {
@@ -31,9 +33,9 @@ const jsonResponse = (response: object | null | boolean | ((req: RestRequest) =>
     };
 };
 
-const failOrGetResponse = (failFn: () => boolean, successFn: (req: RestRequest) => object | undefined) => {
+const failOrGetResponse = (shouldFail: () => boolean, successFn: (req: RestRequest) => object | undefined) => {
     return async (req: RestRequest, res: ResponseComposition, ctx: RestContext) => {
-        if (failFn()) {
+        if (shouldFail()) {
             return res(...internalServerError(ctx));
         }
         return res(ctx.json(await successFn(req)));
@@ -85,6 +87,10 @@ export const handlers = [
     rest.get(
         '/veilarbaktivitet/api/arena/tiltak',
         failOrGetResponse(harArenaaktivitetFeilerSkruddPa, () => arenaAktiviteter)
+    ),
+    rest.get(
+        '/veilarbaktivitet/api/feature',
+        jsonResponse({ [FeatureToggle.VIS_SKJUL_AKTIVITET_KNAPP]: harCompactModeSkruddPa() })
     ),
 
     // veilarbveileder

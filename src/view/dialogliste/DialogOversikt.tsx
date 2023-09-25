@@ -7,6 +7,7 @@ import { AKTIVITETSPLAN_URL, MINSIDE_URL } from '../../constants';
 import useKansendeMelding from '../../utils/UseKanSendeMelding';
 import { useUserInfoContext } from '../BrukerProvider';
 import { useDialogContext } from '../DialogProvider';
+import { useCompactMode } from '../../featureToggle/FeatureToggleProvider';
 import InfoVedIngenDialoger from '../info/InfoVedIngenDialoger';
 import OmDialogLenke from '../info/OmDialogLenke';
 import { useSelectedDialog } from '../utils/useAktivitetId';
@@ -14,16 +15,27 @@ import DialogListe from './DialogListe';
 import NyDialogLink from './NyDialogLink';
 
 const DialogOversiktHeader = ({ erVeileder }: { erVeileder: boolean }) => {
+    const compactMode = useCompactMode();
+    if (compactMode && erVeileder) return null;
     return (
-        <div className="flex flex-col gap-y-2 border-b border-border-divider p-4">
-            <div className="flex gap-x-4 md:justify-between">
+        <div
+            className={classNames('flex flex-col gap-y-2 border-b border-border-divider  px-4', {
+                'py-4': !compactMode,
+                'py-1': compactMode
+            })}
+        >
+            <div
+                className={classNames('flex gap-x-4 ', {
+                    'md:justify-between': !compactMode
+                })}
+            >
                 {!erVeileder ? (
                     <>
                         <Link href={MINSIDE_URL}>Min side</Link>
                         <Link href={AKTIVITETSPLAN_URL}>Aktivitetsplan</Link>
                     </>
                 ) : null}
-                <OmDialogLenke />
+                {!compactMode && <OmDialogLenke />}
             </div>
             {!erVeileder ? (
                 <Heading level="1" size="medium">
@@ -43,6 +55,8 @@ const DialogOversikt = () => {
     const userInfoContext = useUserInfoContext();
     const erVeileder = !!userInfoContext?.erVeileder;
     const ingenDialoger = dialoger.length === 0;
+    const compactMode = useCompactMode();
+
     const erSidebar = !!dialog || isNyRoute;
     return (
         <div
@@ -56,9 +70,31 @@ const DialogOversikt = () => {
             )}
         >
             <DialogOversiktHeader erVeileder={erVeileder} />
-            <div className="relative flex flex-1 flex-col overflow-y-scroll border-r border-border-divider bg-gray-100 px-2 pb-2 pt-4">
-                <div className="p-2">{kanSendeMelding ? <NyDialogLink /> : null}</div>
-                {ingenDialoger ? <InfoVedIngenDialoger className="mt-4 md:hidden" /> : null}
+            <div
+                className={classNames(
+                    'relative flex h-full flex-1 flex-col overflow-y-scroll border-r border-border-divider bg-gray-100 px-2 pb-2',
+                    {
+                        'pt-4': !compactMode,
+                        'pt-2': compactMode
+                    }
+                )}
+            >
+                {!compactMode ? (
+                    <>
+                        <div className="p-2 pt-0.5">{kanSendeMelding ? <NyDialogLink /> : null}</div>
+                        {ingenDialoger ? <InfoVedIngenDialoger className="mt-4 md:hidden" /> : null}
+                    </>
+                ) : (
+                    <>
+                        {kanSendeMelding ? (
+                            <div className="flex gap-2 p-1 pb-2">
+                                <NyDialogLink />
+                                <OmDialogLenke />
+                            </div>
+                        ) : null}
+                        {ingenDialoger ? <InfoVedIngenDialoger className="mt-4 md:hidden" /> : null}
+                    </>
+                )}
                 <DialogListe />
             </div>
         </div>
