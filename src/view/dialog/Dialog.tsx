@@ -13,7 +13,7 @@ import { useCompactMode } from '../../featureToggle/FeatureToggleProvider';
 import { Meldinger } from '../melding/Meldinger';
 import { useOppfolgingContext } from '../OppfolgingProvider';
 import { dataOrUndefined, useFnrContext, useViewContext } from '../Provider';
-import { useSelectedDialog } from '../utils/useAktivitetId';
+import { useSelectedAktivitet, useSelectedDialog } from '../utils/useAktivitetId';
 import { useEventListener } from '../utils/useEventListner';
 import { endreDialogSomVises } from '../ViewState';
 import ManagedDialogCheckboxes from './DialogCheckboxes';
@@ -23,6 +23,7 @@ import HistoriskInfo from './HistoriskInfo';
 export function Dialog() {
     const oppfolgingContext = useOppfolgingContext();
     const oppfolging = dataOrUndefined(oppfolgingContext);
+    const aktivitet = useSelectedAktivitet();
     const compactMode = useCompactMode();
     const kanSendeMelding = useKansendeMelding();
     const { lesDialog } = useDialogContext();
@@ -88,10 +89,11 @@ export function Dialog() {
     return (
         <section
             className={classNames('flex w-full grow xl:max-w-none', {
-                'flex-col lg:flex-row 2xl:flex-row': compactMode && !visAktivitet,
-                'flex-col': !compactMode || visAktivitet,
+                'flex-col lg:flex-row 2xl:flex-row': aktivitet && compactMode && !visAktivitet,
+                'flex-col': aktivitet && (!compactMode || visAktivitet),
                 'lg:max-w-lgContainer xl:max-w-none': !compactMode,
-                '2xl:flex-row': compactMode && visAktivitet
+                '2xl:flex-row': aktivitet && compactMode && visAktivitet,
+                'flex-col xl:flex-row': compactMode && !aktivitet
             })}
         >
             <div className="relative flex flex-1 grow flex-col overflow-y-scroll">
