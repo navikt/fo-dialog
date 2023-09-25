@@ -1,20 +1,19 @@
-import amplitude from 'amplitude-js';
+import * as amplitude from '@amplitude/analytics-browser';
 
 import { APP_NAME, TEAM_NAME } from '../constants';
+import { track } from '@amplitude/analytics-browser';
 
 type EventDataValue = string | boolean | number | null | undefined;
 
-export const initAmplitude = (): void => {
-    const apiKey: string = import.meta.env.VITE_AMPLITUDE_KEY ?? 'default';
-
-    amplitude.getInstance().init(apiKey, '', {
-        apiEndpoint: import.meta.env.VITE_AMPLITUDE_API_URL,
-        saveEvents: false,
-        includeUtm: true,
-        includeReferrer: true,
-        platform: window.location.toString()
+export function initAmplitude() {
+    const apiKey = import.meta.env.VITE_AMPLITUDE_KEY ?? 'default';
+    amplitude.init(apiKey, undefined, {
+        serverUrl: import.meta.env.VITE_AMPLITUDE_API_URL,
+        ingestionMetadata: {
+            sourceName: window.location.toString()
+        }
     });
-};
+}
 
 export const logAmplitudeEvent = (eventName: string, data?: { [key: string]: EventDataValue }): void => {
     setTimeout(() => {
@@ -25,7 +24,7 @@ export const logAmplitudeEvent = (eventName: string, data?: { [key: string]: Eve
         };
 
         try {
-            amplitude.getInstance().logEvent(eventName, data);
+            track(eventName, data);
         } catch (error) {
             // eslint-disable-next-line no-console
             console.error(error);
