@@ -11,7 +11,7 @@ import { useCompactMode } from '../../featureToggle/FeatureToggleProvider';
 import { useSelectedAktivitet } from '../utils/useAktivitetId';
 import { aktivitetLenke, visAktivitetsplan } from './AktivitetskortLenke';
 import { getTypeTextByAktivitet } from './TextUtils';
-import { logAmplitudeEvent } from '../../metrics/amplitude-utils';
+import { logAmplitudeEvent, loggKlikkVisAktivitet } from '../../metrics/amplitude-utils';
 
 interface Props {
     aktivitetId?: StringOrNull;
@@ -79,8 +79,8 @@ export function DialogMedAktivitetHeader(props: Props) {
                             checked={visAktivitet}
                             value={visAktivitet.toString()}
                             onChange={(_) => {
-                                logAmplitudeEvent('');
                                 setVisAktivitet(!visAktivitet);
+                                loggKlikkVisAktivitet(!visAktivitet);
                             }}
                             size="small"
                         >

@@ -32,6 +32,10 @@ export const logAmplitudeEvent = (eventName: string, data?: { [key: string]: Eve
     });
 };
 
+export const loggKlikkVisAktivitet = (enabledAfterClick: boolean) => {
+    logAmplitudeEvent('toggle', { text: 'Vis aktivitet', enabledAfterClick });
+};
+
 export const loggKlikk = (eventType: string, verdi?: string, status?: string) => {
     logAmplitudeEvent('klikk', { eventType, verdi, status });
 };
