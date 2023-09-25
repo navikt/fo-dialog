@@ -16,6 +16,7 @@ import { useViewContext } from '../../Provider';
 import { HandlingsType, sendtNyMelding } from '../../ViewState';
 import useMeldingStartTekst from '../UseMeldingStartTekst';
 import TextareaAutosize from '@navikt/ds-react/esm/util/TextareaAutoSize';
+import { useSelectedAktivitet } from '../../utils/useAktivitetId';
 
 const maxMeldingsLengde = 5000;
 
@@ -40,6 +41,7 @@ const MeldingInputBox = (props: Props) => {
     const startTekst = useMeldingStartTekst();
     const compactMode = useCompactMode();
     const visAktivitet = useVisAktivitet();
+    const aktivitet = useSelectedAktivitet();
 
     const { kladder, oppdaterKladd, slettKladd } = useKladdContext();
     const kladd = kladder.find((k) => k.aktivitetId === props.dialog.aktivitetId && k.dialogId === props.dialog.id);
@@ -135,9 +137,12 @@ const MeldingInputBox = (props: Props) => {
             {kanSendeHenveldelse ? (
                 <div
                     className={classNames('', {
-                        'flex lg:flex-col flex-row  items-stretch overflow-hidden': compactMode && !visAktivitet,
-                        'flex flex-col items-end space-y-2 sm:flex-row sm:space-y-0': !compactMode || visAktivitet,
-                        'p-1': compactMode
+                        'overflow-hidden p-1': compactMode,
+                        'lg:flex-col': compactMode && !aktivitet,
+                        'flex lg:flex-col flex-row items-stretch ': aktivitet && compactMode && !visAktivitet,
+                        'flex flex-col items-end space-y-2 sm:flex-row sm:space-y-0':
+                            aktivitet && compactMode && visAktivitet,
+                        'flex flex-col items-end space-y-2 sm:flex-row sm:space-y-0 ': !compactMode
                     })}
                 >
                     <label htmlFor="melding_input" className="hidden ">
@@ -164,8 +169,9 @@ const MeldingInputBox = (props: Props) => {
                         size={compactMode ? 'small' : 'medium'}
                         className={classNames({
                             'ml-2': !compactMode,
-                            'self-end ml-2': compactMode && visAktivitet,
-                            'lg:mt-2 lg:self-start self-end ml-2 lg:ml-0': compactMode && !visAktivitet
+                            '': !aktivitet && compactMode,
+                            'self-end ml-2': aktivitet && compactMode && visAktivitet,
+                            'lg:mt-2 lg:self-start self-end ml-2 lg:ml-0': aktivitet && compactMode && !visAktivitet
                         })}
                         title="Send"
                         loading={isSubmitting}

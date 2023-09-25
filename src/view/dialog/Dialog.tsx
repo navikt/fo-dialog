@@ -102,7 +102,8 @@ export function Dialog() {
             <section
                 aria-label="Ny melding"
                 className={classNames('flex border-t border-border-divider bg-white p-4 xl:justify-center', {
-                    'lg:flex-1 lg:grow': compactMode && !visAktivitet && aktivitet
+                    'lg:flex-1': compactMode && !visAktivitet && aktivitet,
+                    'xl:flex-1': !aktivitet && compactMode
                 })}
             >
                 <div
