@@ -63,7 +63,7 @@ export function Provider(props: Props) {
 
     const veilederNavn = useFetchVeilederNavn(erVeileder);
 
-    const { data: feature, status: featureStatus } = useFeatureToggleProvider();
+    const { data: feature } = useFeatureToggleProvider();
     const { data: bruker, status: brukerstatus }: BrukerDataProviderType = useBrukerDataProvider(fnr);
     const oppfolgingDataProvider = useOppfolgingDataProvider(fnr);
     const { status: oppfolgingstatus, hentOppfolging } = oppfolgingDataProvider;

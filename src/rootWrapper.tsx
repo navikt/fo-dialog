@@ -1,6 +1,5 @@
 import './global.css';
 
-import { Modal } from '@navikt/ds-react';
 import React from 'react';
 import { createRoot } from 'react-dom/client';
 
