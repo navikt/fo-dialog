@@ -17,7 +17,9 @@ export function Aktivitetskort() {
     const visAktivitet = useVisAktivitet();
     if (!aktivitet) {
         if (compactMode) {
-            return null;
+            return (
+                <div className="hidden 2xl:flex 2xl:w-full 2xl:max-w-screen-w-1/4 border-l border-border-divider"></div>
+            );
         }
         return <div className="border-l border-border-divider xl:w-full xl:max-w-screen-w-1/3" />;
     }
@@ -37,7 +39,7 @@ export function Aktivitetskort() {
                 className="m-4 mr-0 w-full overflow-y-auto overflow-x-visible xl:max-w-max-paragraph"
             >
                 <Brodsmulesti status={status} type={getAktivitetType(aktivitet)} />
-                <Heading size="large" level="1">
+                <Heading size={compactMode ? 'small' : 'large'} level="1">
                     {tittel}
                 </Heading>
                 <AktivitetIngress aktivitetType={getAktivitetType(aktivitet)} />

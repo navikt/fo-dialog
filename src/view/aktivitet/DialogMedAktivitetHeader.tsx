@@ -59,13 +59,14 @@ export function DialogMedAktivitetHeader(props: Props) {
                 className={classNames('', {
                     'md:max-w-[320px] xl:max-w-screen-w-1/3': !compactMode && visAktivitet,
                     'lg:flex-1': compactMode && !visAktivitet,
-                    'lg:grow md:max-w-[320px] xl:max-w-screen-w-1/3 pl-4': compactMode && visAktivitet
+                    'lg:grow md:max-w-[320px] xl:max-w-screen-w-1/3 pl-4': compactMode && visAktivitet,
+                    '2xl:flex-none 2xl:mr-4': compactMode
                 })}
             >
                 <div
-                    className={classNames('flex items-center justify-between md:mt-0 ', {
-                        'flex-row pr-2 ': compactMode,
-                        'mt-2 flex-row md:flex-col md:items-end lg:items-start lg:pl-4 px-2': !compactMode
+                    className={classNames('flex  justify-between md:mt-0 ', {
+                        'flex-row pr-2 items-center 2xl:items-end': compactMode,
+                        'mt-2 flex-row md:flex-col md:items-end items-center lg:items-start lg:pl-4 px-2': !compactMode
                     })}
                 >
                     {!compactMode && <Detail aria-hidden="true">{typeTekst.toUpperCase()}</Detail>}

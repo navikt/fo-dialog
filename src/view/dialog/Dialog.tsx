@@ -104,7 +104,12 @@ export function Dialog() {
                     'lg:flex-1 lg:grow': compactMode && !visAktivitet
                 })}
             >
-                <div className={classNames('w-full xl:max-w-248', { 'flex flex-col ': compactMode && !visAktivitet })}>
+                <div
+                    className={classNames('w-full', {
+                        'flex flex-col ': compactMode && !visAktivitet,
+                        'xl:max-w-248': !compactMode
+                    })}
+                >
                     <ManagedDialogCheckboxes dialog={valgtDialog} visible={!!bruker?.erVeileder} />
                     {!oppfolging?.underOppfolging || valgtDialog.historisk ? null : (
                         <DialogInputBoxVisible
