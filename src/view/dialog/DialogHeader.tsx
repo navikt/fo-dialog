@@ -5,7 +5,7 @@ import { useLocation } from 'react-router';
 
 import { DialogMedAktivitetHeader } from '../aktivitet/DialogMedAktivitetHeader';
 import { harAktivitetDataFeil, useAktivitetContext } from '../AktivitetProvider';
-import { useCompactMode } from '../FeatureToggleProvider';
+import { useCompactMode } from '../../featureToggle/FeatureToggleProvider';
 import { useSelectedDialog } from '../utils/useAktivitetId';
 import { erArenaAktivitet } from '../utils/utils';
 import DialogHeaderFeil from './DialogHeaderFeil';

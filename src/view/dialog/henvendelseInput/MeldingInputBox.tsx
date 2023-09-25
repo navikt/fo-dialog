@@ -10,7 +10,7 @@ import { DialogData } from '../../../utils/Typer';
 import { UpdateTypes, dispatchUpdate } from '../../../utils/UpdateEvent';
 import { useVisAktivitet } from '../../AktivitetToggleContext';
 import { useDialogContext } from '../../DialogProvider';
-import { useCompactMode } from '../../FeatureToggleProvider';
+import { useCompactMode } from '../../../featureToggle/FeatureToggleProvider';
 import { useKladdContext } from '../../KladdProvider';
 import { useViewContext } from '../../Provider';
 import { HandlingsType, sendtNyMelding } from '../../ViewState';

@@ -1,7 +1,7 @@
 import { Button, Link, Modal } from '@navikt/ds-react';
 import React, { useState } from 'react';
 
-import { useCompactMode } from '../FeatureToggleProvider';
+import { useCompactMode } from '../../featureToggle/FeatureToggleProvider';
 import { InfoOmDialogSide } from './InfoOmDialogSide';
 
 function OmDialogLenke() {

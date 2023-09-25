@@ -5,7 +5,7 @@ import React from 'react';
 import { useNavigate } from 'react-router';
 
 import { useRoutes } from '../../routes';
-import { useCompactMode } from '../FeatureToggleProvider';
+import { useCompactMode } from '../../featureToggle/FeatureToggleProvider';
 
 const NyDialogLink = () => {
     const compactMode = useCompactMode();

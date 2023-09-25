@@ -9,7 +9,7 @@ import { formaterDate } from '../../utils/Date';
 import { DialogData, StringOrNull } from '../../utils/Typer';
 import { getDialogTittel } from '../aktivitet/TextUtils';
 import { findAktivitet, useAktivitetContext } from '../AktivitetProvider';
-import { useCompactMode } from '../FeatureToggleProvider';
+import { useCompactMode } from '../../featureToggle/FeatureToggleProvider';
 import { useEventListener } from '../utils/useEventListner';
 import styles from './DialogPreview.module.css';
 import { EtikettListe } from './EtikettListe';

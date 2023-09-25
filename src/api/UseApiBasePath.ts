@@ -1,5 +1,5 @@
 import { USE_HASH_ROUTER } from '../constants';
-import { FeatureToggle, featureToggleQuery } from '../view/FeatureToggleProvider';
+import { featureToggleQuery } from '../featureToggle/const';
 
 export const stripTrailingSlash = (str: string) => {
     return str.endsWith('/') ? str.substring(0, str.length - 1) : str;

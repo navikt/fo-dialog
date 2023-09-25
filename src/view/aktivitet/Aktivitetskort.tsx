@@ -2,7 +2,7 @@ import { Heading } from '@navikt/ds-react';
 import React from 'react';
 
 import { useVisAktivitet } from '../AktivitetToggleContext';
-import { useCompactMode } from '../FeatureToggleProvider';
+import { useCompactMode } from '../../featureToggle/FeatureToggleProvider';
 import { useSelectedAktivitet } from '../utils/useAktivitetId';
 import { getAktivitetType } from '../utils/utils';
 import AktivitetIngress from './AktivitetIngress';

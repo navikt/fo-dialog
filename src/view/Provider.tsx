@@ -8,7 +8,7 @@ import { AktivitetContext, useAktivitetDataProvider } from './AktivitetProvider'
 import { AktivitetToggleContext, AktivitetToggleProvider } from './AktivitetToggleContext';
 import { BrukerDataProviderType, UserInfoContext, useBrukerDataProvider } from './BrukerProvider';
 import { DialogContext, hasDialogError, isDialogOk, isDialogPending, useDialogDataProvider } from './DialogProvider';
-import { FeatureToggleContext, useFeatureToggleProvider } from './FeatureToggleProvider';
+import { FeatureToggleContext, useFeatureToggleProvider } from '../featureToggle/FeatureToggleProvider';
 import { KladdContext, useKladdDataProvider } from './KladdProvider';
 import { OppfolgingContext, useOppfolgingDataProvider } from './OppfolgingProvider';
 import styles from './Provider.module.less';

@@ -9,7 +9,7 @@ import useKansendeMelding from '../../utils/UseKanSendeMelding';
 import { useVisAktivitet } from '../AktivitetToggleContext';
 import { useUserInfoContext } from '../BrukerProvider';
 import { useDialogContext } from '../DialogProvider';
-import { useCompactMode, useFeatureToggleContext } from '../FeatureToggleProvider';
+import { useCompactMode } from '../../featureToggle/FeatureToggleProvider';
 import { Meldinger } from '../melding/Meldinger';
 import { useOppfolgingContext } from '../OppfolgingProvider';
 import { dataOrUndefined, useFnrContext, useViewContext } from '../Provider';

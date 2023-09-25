@@ -4,7 +4,7 @@ import { useParams } from 'react-router';
 
 import { DialogData } from '../../utils/Typer';
 import { useDialogContext } from '../DialogProvider';
-import { useCompactMode } from '../FeatureToggleProvider';
+import { useCompactMode } from '../../featureToggle/FeatureToggleProvider';
 import { DialogPreviewListe } from './DialogPreview';
 import HistoriskeDialogerOversikt from './HistoriskDialogListe';
 
