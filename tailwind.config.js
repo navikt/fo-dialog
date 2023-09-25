@@ -10,7 +10,7 @@ module.exports = {
                 'screen-w-1/3': '33vw',
                 'screen-w-1/4': '25vw',
                 'max-paragraph': '40rem',
-                248: '62rem',
+                248: '40.75rem',
                 lgContainer: '700px'
             }
         },
