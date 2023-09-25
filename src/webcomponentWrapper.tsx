@@ -1,4 +1,4 @@
-import { Modal, Provider as ModalProvider } from '@navikt/ds-react';
+import { Provider as ModalProvider } from '@navikt/ds-react';
 import React from 'react';
 import { createRoot } from 'react-dom/client';
 
