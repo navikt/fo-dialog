@@ -30,7 +30,7 @@ function DemoBanner() {
                     defaultValue={mode}
                     onChange={(event) => {
                         localStorage.setItem('compactMode', event);
-                        window.dispatchEvent(new Event('storage'));
+                        window.dispatchEvent(new Event('compactModeChange'));
                     }}
                 >
                     <ToggleGroup.Item value="vanlig">Vanlig</ToggleGroup.Item>

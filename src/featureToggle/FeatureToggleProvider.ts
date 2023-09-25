@@ -44,10 +44,9 @@ export const useFeatureToggleProvider = (): FeatureData => {
     useEffect(() => {
         const listener = onStorageChange(setState);
         listener({});
-        window.addEventListener('storage', listener);
+        window.addEventListener('compactModeChange', listener);
         return () => {
-            console.log('Removing listener');
-            removeEventListener('storage', listener);
+            removeEventListener('compactModeChange', listener);
         };
     }, []);
 
