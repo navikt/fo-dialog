@@ -11,6 +11,7 @@ import { StringOrNull } from '../../utils/Typer';
 import { UpdateTypes, dispatchUpdate } from '../../utils/UpdateEvent';
 import { useUserInfoContext } from '../BrukerProvider';
 import { useDialogContext } from '../DialogProvider';
+import { useCompactMode } from '../../featureToggle/FeatureToggleProvider';
 import { findKladd, useKladdContext } from '../KladdProvider';
 import { cutStringAtLength } from '../utils/stringUtils';
 import useMeldingStartTekst from './UseMeldingStartTekst';
@@ -109,8 +110,8 @@ const NyDialogForm = (props: Props) => {
     });
 
     const meldingValue = watch('melding');
-
     const bigScreen = window.innerWidth >= 768;
+    const compactMode = useCompactMode();
 
     return (
         <div className="relative h-full w-full overflow-scroll bg-gray-100 lg:max-w-lgContainer xl:max-w-none">
@@ -159,8 +160,11 @@ const NyDialogForm = (props: Props) => {
                 ) : null}
 
                 <div className="flex flex-row gap-x-4">
-                    <Button loading={isSubmitting}>Send</Button>
+                    <Button size={compactMode ? 'small' : 'medium'} loading={isSubmitting}>
+                        Send
+                    </Button>
                     <Button
+                        size={compactMode ? 'small' : 'medium'}
                         variant="tertiary"
                         onClick={(e) => {
                             e.preventDefault();

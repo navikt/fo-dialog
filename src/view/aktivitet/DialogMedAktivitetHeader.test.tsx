@@ -120,7 +120,7 @@ describe('<DialogMedAktivitetHeader />', () => {
 
         const wrapper = render(
             <MemoryRouter>
-                <DialogMedAktivitetHeader aktivitetId={'123'} />
+                <DialogMedAktivitetHeader />
             </MemoryRouter>
         );
 

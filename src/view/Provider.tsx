@@ -6,11 +6,12 @@ import { Status, hasData, hasError, isPending } from '../api/typer';
 import useFetchHarNivaa4, { HarNivaa4Response } from '../api/useFetchHarNivaa4';
 import useFetchVeilederNavn from '../api/useHentVeilederData';
 import { AktivitetContext, useAktivitetDataProvider } from './AktivitetProvider';
+import { AktivitetToggleProvider } from './AktivitetToggleContext';
 import { BrukerDataProviderType, UserInfoContext, useBrukerDataProvider } from './BrukerProvider';
 import { DialogContext, hasDialogError, isDialogOk, isDialogPending, useDialogDataProvider } from './DialogProvider';
+import { FeatureToggleContext, useFeatureToggleProvider } from '../featureToggle/FeatureToggleProvider';
 import { KladdContext, useKladdDataProvider } from './KladdProvider';
 import { OppfolgingContext, useOppfolgingDataProvider } from './OppfolgingProvider';
-import styles from './Provider.module.less';
 import { ViewState, initalState } from './ViewState';
 
 interface VeilederData {
@@ -63,6 +64,7 @@ export function Provider(props: Props) {
 
     const veilederNavn = useFetchVeilederNavn(erVeileder);
 
+    const { data: feature } = useFeatureToggleProvider();
     const { data: bruker, status: brukerstatus }: BrukerDataProviderType = useBrukerDataProvider(fnr);
     const oppfolgingDataProvider = useOppfolgingDataProvider(fnr);
     const { status: oppfolgingstatus, hentOppfolging } = oppfolgingDataProvider;
@@ -132,7 +134,9 @@ export function Provider(props: Props) {
                                 <KladdContext.Provider value={kladdDataProvider}>
                                     <FNRContext.Provider value={fnr}>
                                         <ViewContext.Provider value={{ viewState: viewState, setViewState: setState }}>
-                                            {children}
+                                            <FeatureToggleContext.Provider value={feature}>
+                                                <AktivitetToggleProvider>{children}</AktivitetToggleProvider>
+                                            </FeatureToggleContext.Provider>
                                         </ViewContext.Provider>
                                     </FNRContext.Provider>
                                 </KladdContext.Provider>

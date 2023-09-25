@@ -1,5 +1,3 @@
-import path from 'path';
-
 import cx from 'classnames';
 import React from 'react';
 import { Navigate, RouterProvider, useParams } from 'react-router';
@@ -97,7 +95,7 @@ const App = (props: Props) => {
             <div
                 className={cx('flex', {
                     'max-h-[calc(100vh-180px)] min-h-[calc(100vh-180px)]': erInternFlate,
-                    'max-h-[calc(100vh-140px)] min-h-[calc(100vh-140px)]': !erInternFlate
+                    'max-h-[calc(100vh-80px)] min-h-[calc(100vh-80px)]': !erInternFlate
                 })}
             >
                 <Routes />

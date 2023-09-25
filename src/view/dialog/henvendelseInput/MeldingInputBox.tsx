@@ -1,5 +1,6 @@
 import { zodResolver } from '@hookform/resolvers/zod';
-import { Alert, Button, Textarea } from '@navikt/ds-react';
+import { Alert, Button, ErrorMessage } from '@navikt/ds-react';
+import classNames from 'classnames';
 import React, { ChangeEvent, useEffect, useLayoutEffect, useRef, useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { z } from 'zod';
@@ -7,11 +8,15 @@ import { z } from 'zod';
 import loggEvent from '../../../felleskomponenter/logging';
 import { DialogData } from '../../../utils/Typer';
 import { UpdateTypes, dispatchUpdate } from '../../../utils/UpdateEvent';
+import { useVisAktivitet } from '../../AktivitetToggleContext';
 import { useDialogContext } from '../../DialogProvider';
+import { useCompactMode } from '../../../featureToggle/FeatureToggleProvider';
 import { useKladdContext } from '../../KladdProvider';
 import { useViewContext } from '../../Provider';
 import { HandlingsType, sendtNyMelding } from '../../ViewState';
 import useMeldingStartTekst from '../UseMeldingStartTekst';
+import TextareaAutosize from '@navikt/ds-react/esm/util/TextareaAutoSize';
+import { useSelectedAktivitet } from '../../utils/useAktivitetId';
 
 const maxMeldingsLengde = 5000;
 
@@ -34,6 +39,9 @@ const MeldingInputBox = (props: Props) => {
     const { hentDialoger, nyMelding } = useDialogContext();
     const [noeFeilet, setNoeFeilet] = useState(false);
     const startTekst = useMeldingStartTekst();
+    const compactMode = useCompactMode();
+    const visAktivitet = useVisAktivitet();
+    const aktivitet = useSelectedAktivitet();
 
     const { kladder, oppdaterKladd, slettKladd } = useKladdContext();
     const kladd = kladder.find((k) => k.aktivitetId === props.dialog.aktivitetId && k.dialogId === props.dialog.id);
@@ -118,30 +126,70 @@ const MeldingInputBox = (props: Props) => {
     };
 
     return (
-        <form onSubmit={handleSubmit((data) => onSubmit(data))} noValidate autoComplete="off">
+        <form
+            className={classNames({
+                'flex flex-1 flex-col overflow-hidden': compactMode && !visAktivitet
+            })}
+            onSubmit={handleSubmit((data) => onSubmit(data))}
+            noValidate
+            autoComplete="off"
+        >
             {kanSendeHenveldelse ? (
-                <div className="flex items-end space-x-4">
-                    <Textarea
-                        className="grow"
+                <div
+                    className={classNames('', {
+                        'overflow-hidden p-1': compactMode,
+                        'lg:flex-col': compactMode && !aktivitet,
+                        'flex lg:flex-col flex-row items-stretch ': aktivitet && compactMode && !visAktivitet,
+                        'flex flex-col items-end space-y-2 sm:flex-row sm:space-y-0':
+                            aktivitet && compactMode && visAktivitet,
+                        'flex flex-col items-end space-y-2 sm:flex-row sm:space-y-0 ': !compactMode
+                    })}
+                >
+                    <label htmlFor="melding_input" className="hidden ">
+                        Skriv om arbeid og oppfølging
+                    </label>
+                    <TextareaAutosize
+                        id="melding_input"
+                        className={classNames(
+                            'w-full grow border-2 border-gray-500 focus:border-blue-500 rounded-md p-2 overflow-auto outline-0',
+                            { 'border-red-300': errors.melding }
+                        )}
+                        style={{ overflow: 'auto' }}
                         {...register('melding')}
                         onChange={(event) => {
                             onChange(event);
                             register('melding').onChange(event);
                         }}
-                        error={errors.melding && errors.melding.message}
-                        label={'Skriv om arbeid og oppfølging'}
-                        hideLabel
+                        // error={errors.melding && errors.melding.message}
                         placeholder={'Skriv om arbeid og oppfølging'}
-                        minRows={props.erBruker ? 2 : 3}
-                        maxRows={10}
+                        minRows={compactMode && !visAktivitet ? 3 : props.erBruker ? 2 : 3}
+                        maxRows={!compactMode || visAktivitet ? 10 : 100}
                     />
-                    <Button title="Send" loading={isSubmitting}>
+                    <Button
+                        size={compactMode ? 'small' : 'medium'}
+                        className={classNames({
+                            'ml-2': !compactMode,
+                            '': !aktivitet && compactMode,
+                            'self-end ml-2': aktivitet && compactMode && visAktivitet,
+                            'lg:mt-2 lg:self-start self-end ml-2 lg:ml-0': aktivitet && compactMode && !visAktivitet
+                        })}
+                        title="Send"
+                        loading={isSubmitting}
+                    >
                         Send
                     </Button>
                 </div>
             ) : null}
-
-            {noeFeilet ? <Alert variant="error">Noe gikk dessverre galt med systemet. Prøv igjen senere.</Alert> : null}
+            {errors.melding ? (
+                <ErrorMessage className="mt-2" size="small">
+                    {errors.melding.message}
+                </ErrorMessage>
+            ) : null}
+            {noeFeilet ? (
+                <Alert className="mt-4" variant="error">
+                    Noe gikk dessverre galt med systemet. Prøv igjen senere.
+                </Alert>
+            ) : null}
         </form>
     );
 };

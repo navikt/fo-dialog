@@ -1,22 +1,23 @@
-import { Detail, Heading, Link } from '@navikt/ds-react';
+import { BodyShort, Detail, Heading, Link, Switch } from '@navikt/ds-react';
+import classNames from 'classnames';
 import React from 'react';
 
+import { useCompactMode } from '../../featureToggle/FeatureToggleProvider';
+import { loggKlikkVisAktivitet } from '../../metrics/amplitude-utils';
 import { Aktivitet, AktivitetTypes, ArenaAktivitet, ArenaAktivitetTypes } from '../../utils/aktivitetTypes';
 import { formaterDate, getKlokkeslett } from '../../utils/Date';
-import { StringOrNull } from '../../utils/Typer';
+import { useVisAktivitetContext } from '../AktivitetToggleContext';
 import { TilbakeKnapp } from '../dialog/TilbakeKnapp';
 import { useFnrContext } from '../Provider';
 import { useSelectedAktivitet } from '../utils/useAktivitetId';
 import { aktivitetLenke, visAktivitetsplan } from './AktivitetskortLenke';
 import { getTypeTextByAktivitet } from './TextUtils';
 
-interface Props {
-    aktivitetId?: StringOrNull;
-}
-
 const noOp = () => {};
-export function DialogMedAktivitetHeader(props: Props) {
+export function DialogMedAktivitetHeader() {
+    const compactMode = useCompactMode();
     const aktivitet = useSelectedAktivitet();
+    const { visAktivitet, setVisAktivitet } = useVisAktivitetContext();
     const fnr = useFnrContext();
     const erVeileder = !!fnr;
 
@@ -28,25 +29,67 @@ export function DialogMedAktivitetHeader(props: Props) {
     const infotekst = getInfoText(aktivitet);
 
     return (
-        <div className="flex w-full flex-col md:flex-row">
+        <div
+            className={classNames('flex w-full md:flex-row', {
+                'flex-col': !compactMode,
+                'flex-row items-center': compactMode
+            })}
+        >
             <div className="flex flex-1 flex-row items-center gap-x-2 lg:max-w-lgContainer xl:max-w-none">
                 <TilbakeKnapp className="md:hidden" />
-                <div className="md:ml-4">
-                    <Heading level="1" size="small" aria-label={`${typeTekst}: ${aktivitet?.tittel}`}>
+                <div className={classNames('md:ml-4', { 'flex items-baseline gap-2': compactMode })}>
+                    <Heading
+                        className="truncate"
+                        level="1"
+                        size="small"
+                        aria-label={`${typeTekst}: ${aktivitet?.tittel}`}
+                    >
                         {aktivitet?.tittel}
                     </Heading>
-                    {infotekst && <Detail>{infotekst}</Detail>}
+                    {infotekst &&
+                        (compactMode ? (
+                            <BodyShort className="text-text-subtle">{infotekst}</BodyShort>
+                        ) : (
+                            <Detail className="">{infotekst}</Detail>
+                        ))}
                 </div>
             </div>
-            <div className="flex-1 md:max-w-[320px] xl:max-w-screen-w-1/3">
-                <div className="mt-2 flex flex-row items-center justify-between px-2 md:mt-0 md:flex-col md:items-end lg:items-start lg:pl-4">
-                    <Detail aria-hidden="true">{typeTekst.toUpperCase()}</Detail>
+            <div
+                className={classNames('', {
+                    'md:max-w-[320px] xl:max-w-screen-w-1/3': !compactMode && visAktivitet,
+                    'lg:flex-1': compactMode && !visAktivitet,
+                    'pl-4 md:max-w-[320px] lg:grow xl:max-w-screen-w-1/3': compactMode && visAktivitet,
+                    '2xl:mr-4 2xl:flex-none': compactMode
+                })}
+            >
+                <div
+                    className={classNames('flex  justify-between md:mt-0 ', {
+                        'flex-row items-center pr-2 2xl:items-end': compactMode,
+                        'mt-2 flex-row items-center px-2 md:flex-col md:items-end lg:items-start lg:pl-4': !compactMode,
+                        'pl-1': compactMode && !visAktivitet
+                    })}
+                >
+                    {!compactMode && <Detail aria-hidden="true">{typeTekst.toUpperCase()}</Detail>}
                     <Link
                         href={aktivitetLenke(aktivitet.id)}
                         onClick={erVeileder ? visAktivitetsplan(aktivitet.id) : noOp}
                     >
                         Gå til aktiviteten
                     </Link>
+                    {compactMode && (
+                        <Switch
+                            className="hidden lg:flex 2xl:hidden"
+                            checked={visAktivitet}
+                            value={visAktivitet.toString()}
+                            onChange={(_) => {
+                                setVisAktivitet(!visAktivitet);
+                                loggKlikkVisAktivitet(!visAktivitet);
+                            }}
+                            size="small"
+                        >
+                            Vis aktiviteten
+                        </Switch>
+                    )}
                 </div>
             </div>
         </div>
