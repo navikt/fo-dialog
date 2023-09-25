@@ -136,7 +136,8 @@ const MeldingInputBox = (props: Props) => {
                 <div
                     className={classNames('', {
                         'flex lg:flex-col flex-row  items-stretch overflow-hidden': compactMode && !visAktivitet,
-                        'flex flex-col items-end space-y-2 sm:flex-row sm:space-y-0': !compactMode || visAktivitet
+                        'flex flex-col items-end space-y-2 sm:flex-row sm:space-y-0': !compactMode || visAktivitet,
+                        'p-1': compactMode
                     })}
                 >
                     <label htmlFor="melding_input" className="hidden ">

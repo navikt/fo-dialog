@@ -66,7 +66,8 @@ export function DialogMedAktivitetHeader(props: Props) {
                 <div
                     className={classNames('flex  justify-between md:mt-0 ', {
                         'flex-row pr-2 items-center 2xl:items-end': compactMode,
-                        'mt-2 flex-row md:flex-col md:items-end items-center lg:items-start lg:pl-4 px-2': !compactMode
+                        'mt-2 flex-row md:flex-col md:items-end items-center lg:items-start lg:pl-4 px-2': !compactMode,
+                        'pl-1': compactMode && !visAktivitet
                     })}
                 >
                     {!compactMode && <Detail aria-hidden="true">{typeTekst.toUpperCase()}</Detail>}

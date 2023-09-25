@@ -32,7 +32,7 @@ const DialogCheckboxes = ({
     const compactMode = useCompactMode();
 
     return (
-        <div className="mb-2">
+        <div className="mb-2 pl-1">
             <CheckboxGroup legend={'Filter'} hideLegend value={values}>
                 <div className="flex">
                     <Checkbox
