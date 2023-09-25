@@ -14,7 +14,7 @@ module.exports = {
                 lgContainer: '700px'
             }
         },
-        screen: {
+        screens: {
             sm: '480px',
             md: '768px',
             lg: '1024px',
