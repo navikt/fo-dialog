@@ -2,25 +2,24 @@ import { BodyShort, Detail, Heading, Link, Switch } from '@navikt/ds-react';
 import classNames from 'classnames';
 import React from 'react';
 
+import { useCompactMode } from '../../featureToggle/FeatureToggleProvider';
+import { loggKlikkVisAktivitet } from '../../metrics/amplitude-utils';
 import { Aktivitet, AktivitetTypes, ArenaAktivitet, ArenaAktivitetTypes } from '../../utils/aktivitetTypes';
 import { formaterDate, getKlokkeslett } from '../../utils/Date';
-import { StringOrNull } from '../../utils/Typer';
 import { useVisAktivitetContext } from '../AktivitetToggleContext';
 import { TilbakeKnapp } from '../dialog/TilbakeKnapp';
-import { useCompactMode } from '../../featureToggle/FeatureToggleProvider';
+import { useFnrContext } from '../Provider';
 import { useSelectedAktivitet } from '../utils/useAktivitetId';
 import { aktivitetLenke, visAktivitetsplan } from './AktivitetskortLenke';
 import { getTypeTextByAktivitet } from './TextUtils';
-import { logAmplitudeEvent, loggKlikkVisAktivitet } from '../../metrics/amplitude-utils';
 
-interface Props {
-    aktivitetId?: StringOrNull;
-}
-
-export function DialogMedAktivitetHeader(props: Props) {
+const noOp = () => {};
+export function DialogMedAktivitetHeader() {
     const compactMode = useCompactMode();
     const aktivitet = useSelectedAktivitet();
     const { visAktivitet, setVisAktivitet } = useVisAktivitetContext();
+    const fnr = useFnrContext();
+    const erVeileder = !!fnr;
 
     if (!aktivitet) {
         return null;
@@ -59,24 +58,27 @@ export function DialogMedAktivitetHeader(props: Props) {
                 className={classNames('', {
                     'md:max-w-[320px] xl:max-w-screen-w-1/3': !compactMode && visAktivitet,
                     'lg:flex-1': compactMode && !visAktivitet,
-                    'lg:grow md:max-w-[320px] xl:max-w-screen-w-1/3 pl-4': compactMode && visAktivitet,
-                    '2xl:flex-none 2xl:mr-4': compactMode
+                    'pl-4 md:max-w-[320px] lg:grow xl:max-w-screen-w-1/3': compactMode && visAktivitet,
+                    '2xl:mr-4 2xl:flex-none': compactMode
                 })}
             >
                 <div
                     className={classNames('flex  justify-between md:mt-0 ', {
-                        'flex-row pr-2 items-center 2xl:items-end': compactMode,
-                        'mt-2 flex-row md:flex-col md:items-end items-center lg:items-start lg:pl-4 px-2': !compactMode,
+                        'flex-row items-center pr-2 2xl:items-end': compactMode,
+                        'mt-2 flex-row items-center px-2 md:flex-col md:items-end lg:items-start lg:pl-4': !compactMode,
                         'pl-1': compactMode && !visAktivitet
                     })}
                 >
                     {!compactMode && <Detail aria-hidden="true">{typeTekst.toUpperCase()}</Detail>}
-                    <Link href={aktivitetLenke(aktivitet.id)} onClick={visAktivitetsplan(aktivitet.id)}>
+                    <Link
+                        href={aktivitetLenke(aktivitet.id)}
+                        onClick={erVeileder ? visAktivitetsplan(aktivitet.id) : noOp}
+                    >
                         Gå til aktiviteten
                     </Link>
                     {compactMode && (
                         <Switch
-                            className="hidden 2xl:hidden lg:flex"
+                            className="hidden lg:flex 2xl:hidden"
                             checked={visAktivitet}
                             value={visAktivitet.toString()}
                             onChange={(_) => {
