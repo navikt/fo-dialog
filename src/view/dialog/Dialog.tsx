@@ -90,9 +90,8 @@ export function Dialog() {
         <section
             className={classNames('flex w-full grow xl:max-w-none', {
                 'flex-col lg:flex-row 2xl:flex-row': aktivitet && compactMode && !visAktivitet,
-                'flex-col': aktivitet && (!compactMode || visAktivitet),
-                'lg:max-w-lgContainer xl:max-w-none': !compactMode,
-                '2xl:flex-row': aktivitet && compactMode && visAktivitet,
+                'flex-col lg:max-w-lgContainer xl:max-w-none': !compactMode,
+                'flex-col 2xl:flex-row': aktivitet && compactMode && visAktivitet,
                 'flex-col xl:flex-row': compactMode && !aktivitet
             })}
         >
@@ -103,7 +102,7 @@ export function Dialog() {
             <section
                 aria-label="Ny melding"
                 className={classNames('flex border-t border-border-divider bg-white p-4 xl:justify-center', {
-                    'lg:flex-1 lg:grow': compactMode && !visAktivitet
+                    'lg:flex-1 lg:grow': compactMode && !visAktivitet && aktivitet
                 })}
             >
                 <div
