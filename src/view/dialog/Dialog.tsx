@@ -17,7 +17,7 @@ import { useSelectedAktivitet, useSelectedDialog } from '../utils/useAktivitetId
 import { useEventListener } from '../utils/useEventListner';
 import { endreDialogSomVises } from '../ViewState';
 import ManagedDialogCheckboxes from './DialogCheckboxes';
-import DialogInputBoxVisible from './henvendelseInput/MeldingInputBox';
+import MeldingInputBox from './henvendelseInput/MeldingInputBox';
 import HistoriskInfo from './HistoriskInfo';
 
 export function Dialog() {
@@ -89,9 +89,9 @@ export function Dialog() {
     return (
         <section
             className={classNames('flex w-full grow xl:max-w-none', {
-                'flex-col lg:flex-row 2xl:flex-row': aktivitet && compactMode && !visAktivitet,
                 'flex-col lg:max-w-lgContainer xl:max-w-none': !compactMode,
-                'flex-col 2xl:flex-row': aktivitet && compactMode && visAktivitet,
+                'flex-col lg:flex-row 2xl:flex-row': compactMode && aktivitet && !visAktivitet,
+                'flex-col 2xl:flex-row': compactMode && aktivitet && visAktivitet,
                 'flex-col xl:flex-row': compactMode && !aktivitet
             })}
         >
@@ -102,8 +102,9 @@ export function Dialog() {
             <section
                 aria-label="Ny melding"
                 className={classNames('flex border-t border-border-divider bg-white p-4 xl:justify-center', {
-                    'lg:flex-1': compactMode && !visAktivitet && aktivitet,
-                    'xl:flex-1': !aktivitet && compactMode
+                    'lg:flex-1  ': compactMode && !visAktivitet && aktivitet,
+                    '2xl:flex-1 ': compactMode && visAktivitet && aktivitet,
+                    'xl:flex-1': compactMode && !aktivitet
                 })}
             >
                 <div
@@ -114,7 +115,7 @@ export function Dialog() {
                 >
                     <ManagedDialogCheckboxes dialog={valgtDialog} visible={!!bruker?.erVeileder} />
                     {!oppfolging?.underOppfolging || valgtDialog.historisk ? null : (
-                        <DialogInputBoxVisible
+                        <MeldingInputBox
                             key={valgtDialog.id}
                             dialog={valgtDialog}
                             kanSendeHenveldelse={kanSendeHenveldelse}
