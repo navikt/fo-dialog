@@ -17,6 +17,7 @@ import StatusAdvarsel from './view/statusAdvarsel/StatusAdvarsel';
 interface Props {
     fnr?: string;
     enhet?: string;
+    visAktivitetDefault?: boolean;
 }
 
 const RedirectToDialogWithoutFnr = () => {
@@ -87,9 +88,9 @@ const Routes = () => {
 };
 
 const App = (props: Props) => {
-    const { fnr } = props;
+    const { fnr, visAktivitetDefault } = props;
     return (
-        <Provider fnr={fnr} erVeileder={!!fnr}>
+        <Provider visAktivitetDefault={visAktivitetDefault} fnr={fnr} erVeileder={!!fnr}>
             <StatusAdvarsel />
             <UppdateEventHandler />
             <div

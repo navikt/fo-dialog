@@ -146,7 +146,7 @@ export function DialogPreviewListe({ dialoger, valgDialog }: ListeProps) {
             <ul aria-label="Dialogliste">
                 {dialoger.map((dialog, index) => (
                     <li
-                        key={dialog.id}
+                        key={index}
                         className={classNames('', {
                             [styles.fadeIn]: index === 0 && skalFadeIn
                         })}

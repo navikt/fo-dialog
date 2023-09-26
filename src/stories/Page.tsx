@@ -4,11 +4,11 @@ import '../global.css';
 
 import App from '../App';
 
-type User = {
-    name: string;
-};
-
 const fnr = '1234567890';
-export const Page: React.FC = () => {
-    return <App fnr={fnr} key={'1'} />;
+
+interface Props {
+    visAktivitet: boolean;
+}
+export const Page: React.FC<Props> = (props) => {
+    return <App visAktivitetDefault={props.visAktivitet} fnr={fnr} key={'1'} />;
 };
