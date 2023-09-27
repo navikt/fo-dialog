@@ -88,6 +88,7 @@ const Routes = () => {
 };
 
 const App = (props: Props) => {
+    console.log(props);
     const { fnr, visAktivitetDefault } = props;
     return (
         <Provider visAktivitetDefault={visAktivitetDefault} fnr={fnr} erVeileder={!!fnr}>
