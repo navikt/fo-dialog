@@ -99,7 +99,7 @@ export function Dialog() {
                 'flex-col lg:max-w-lgContainer xl:max-w-none': !compactMode,
                 'flex-col lg:flex-row 2xl:flex-row': compactMode && aktivitet && !visAktivitet,
                 'flex-col 2xl:flex-row': compactMode && aktivitet && visAktivitet,
-                'flex-col xl:flex-row': compactMode && !aktivitet
+                'flex-col lg:flex-row': compactMode && !aktivitet
             })}
         >
             <div ref={scrollContainerRef} className="relative flex flex-1 grow flex-col overflow-y-scroll">
@@ -111,7 +111,7 @@ export function Dialog() {
                 className={classNames('flex border-t border-border-divider bg-white p-4 xl:justify-center', {
                     'lg:flex-1  ': compactMode && !visAktivitet && aktivitet,
                     '2xl:flex-1 ': compactMode && visAktivitet && aktivitet,
-                    'xl:flex-1': compactMode && !aktivitet
+                    'lg:flex-1': compactMode && !aktivitet
                 })}
             >
                 <div
