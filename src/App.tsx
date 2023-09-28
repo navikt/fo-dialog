@@ -33,7 +33,7 @@ const RedirectToNyDialogWithoutFnr = () => {
     return <Navigate replace to={`/ny${queryPart}`} />;
 };
 
-const dialogRoutes = [
+export const dialogRoutes = [
     {
         path: '/',
         element: <AppBody />,
@@ -100,7 +100,7 @@ const App = (props: Props) => {
                     'max-h-[calc(100vh-80px)] min-h-[calc(100vh-80px)]': !erInternFlate
                 })}
             >
-                <Routes />
+                {/*<Routes />*/}
             </div>
         </Provider>
     );

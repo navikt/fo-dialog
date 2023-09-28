@@ -4,6 +4,7 @@ import { Page } from './Page';
 import { rest } from 'msw';
 import { FeatureToggle } from '../featureToggle/const';
 import { reactRouterParameters, withRouter } from 'storybook-addon-react-router-v6';
+import { dialogRoutes } from '../App';
 
 const meta = {
     title: 'Example/Page',
@@ -21,13 +22,7 @@ const meta = {
                 ]
             }
         }
-    }
-} satisfies Meta<typeof Page>;
-
-export default meta;
-type Story = StoryObj<typeof meta>;
-// More on interaction testing: https://storybook.js.org/docs/react/writing-tests/interaction-testing
-export const CompactMode: Story = {
+    },
     argTypes: {
         visAktivitet: {
             name: 'Vis aktivitet',
@@ -35,14 +30,17 @@ export const CompactMode: Story = {
             type: 'boolean'
         }
     }
-};
+} satisfies Meta<typeof Page>;
+
+export default meta;
+type Story = StoryObj<typeof meta>;
+// More on interaction testing: https://storybook.js.org/docs/react/writing-tests/interaction-testing
+// export const CompactMode: Story = {};
 
 export const Landing: Story = {
     parameters: {
         reactRouter: reactRouterParameters({
-            routing: {
-                path: '/'
-            }
+            routing: dialogRoutes
         })
     }
 };
@@ -50,9 +48,11 @@ export const Landing: Story = {
 export const DialogMedAktivitet: Story = {
     parameters: {
         reactRouter: reactRouterParameters({
-            routing: {
+            location: {
+                pathParams: { dialogId: '303' },
                 path: '/303'
-            }
+            },
+            routing: dialogRoutes
         })
     }
 };
@@ -60,9 +60,11 @@ export const DialogMedAktivitet: Story = {
 export const DialogUtenAktivitet: Story = {
     parameters: {
         reactRouter: reactRouterParameters({
-            routing: {
+            location: {
+                pathParams: { dialogId: '2' },
                 path: '/2'
-            }
+            },
+            routing: dialogRoutes
         })
     }
 };
