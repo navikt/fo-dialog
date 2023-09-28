@@ -21,6 +21,7 @@ export const Page: React.FC<PageProps> = (props) => {
         window.history.pushState(undefined, 'unused', props.path);
     }, []);
     const { visAktivitet, erVeileder } = props;
+    console.log({ erVeileder });
     return (
         <>
             <Provider visAktivitetDefault={visAktivitet} fnr={erVeileder ? fnr : undefined} erVeileder={erVeileder}>

@@ -1,13 +1,23 @@
 import type { Meta, StoryObj } from '@storybook/react';
 
 import { Page } from './Page';
+import { rest } from 'msw';
+import { FeatureToggle } from '../featureToggle/const';
+import bruker, { eksternbruker } from '../mock/Bruker';
 
 const meta = {
     title: 'App/Default',
     component: Page,
     parameters: {
         // More on how to position stories at: https://storybook.js.org/docs/react/configure/story-layout
-        layout: 'fullscreen'
+        layout: 'fullscreen',
+        msw: {
+            handlers: {
+                brukerMock: [
+                    rest.get('/veilarboppfolging/api/oppfolging/me', (_, res, ctx) => res(ctx.json(eksternbruker)))
+                ]
+            }
+        }
     }
 } satisfies Meta<typeof Page>;
 

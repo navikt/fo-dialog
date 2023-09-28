@@ -25,4 +25,5 @@ yarn-error.log*
 .idea/
 *.iml
 
+build-storybook.log
 mockServiceWorker.js

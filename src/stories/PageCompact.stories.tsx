@@ -3,6 +3,7 @@ import type { Meta, StoryObj } from '@storybook/react';
 import { Page } from './Page';
 import { rest } from 'msw';
 import { FeatureToggle } from '../featureToggle/const';
+import { eksternbruker, veileder } from '../mock/Bruker';
 
 const meta = {
     title: 'App/Compact',
@@ -12,6 +13,9 @@ const meta = {
         layout: 'fullscreen',
         msw: {
             handlers: {
+                brukerMock: [
+                    rest.get('/veilarboppfolging/api/oppfolging/me', (_, res, ctx) => res(ctx.json(veileder)))
+                ],
                 featureToggle: [
                     rest.get('/veilarbaktivitet/api/feature', (_, res, ctx) =>
                         res(ctx.json({ [FeatureToggle.VIS_SKJUL_AKTIVITET_KNAPP]: true }))

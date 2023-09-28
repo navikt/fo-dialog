@@ -3,6 +3,7 @@ import { initialize, mswLoader } from 'msw-storybook-addon';
 import { handlers } from '../src/mock/handlers';
 import { rest } from 'msw';
 import { FeatureToggle } from '../src/featureToggle/const';
+import bruker from '../src/mock/Bruker';
 
 // Initialize MSW
 initialize();
@@ -45,6 +46,8 @@ const viewports = {
     }
 };
 
+const configurableMocks = ['/veilarbaktivitet/api/feature', '/veilarboppfolging/api/oppfolging/me'];
+
 const preview: Preview = {
     parameters: {
         viewport: {
@@ -59,7 +62,8 @@ const preview: Preview = {
         },
         msw: {
             handlers: {
-                default: handlers.slice(1), // Skip featureToggle handler
+                default: handlers.filter((it) => !configurableMocks.includes(it.info.path)),
+                brukerMock: [rest.get('/veilarboppfolging/api/oppfolging/me', (_, res, ctx) => res(ctx.json(bruker)))],
                 featureToggle: [
                     rest.get('/veilarbaktivitet/api/feature', (_, res, ctx) =>
                         res(ctx.json({ [FeatureToggle.VIS_SKJUL_AKTIVITET_KNAPP]: false }))
