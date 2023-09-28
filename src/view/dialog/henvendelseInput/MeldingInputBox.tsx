@@ -2,7 +2,7 @@ import { zodResolver } from '@hookform/resolvers/zod';
 import { Alert, Button, ErrorMessage } from '@navikt/ds-react';
 import classNames from 'classnames';
 import React, { ChangeEvent, useEffect, useLayoutEffect, useRef, useState } from 'react';
-import { useForm } from 'react-hook-form';
+import { FieldError, useForm } from 'react-hook-form';
 import { z } from 'zod';
 
 import loggEvent from '../../../felleskomponenter/logging';
@@ -93,7 +93,8 @@ const MeldingInputBox = (props: Props) => {
         register,
         handleSubmit,
         reset,
-        formState: { errors, isSubmitting }
+        formState: { errors, isSubmitting },
+        getValues
     } = useForm<MeldingFormValues>({
         defaultValues,
         resolver: zodResolver(schema)
@@ -124,6 +125,8 @@ const MeldingInputBox = (props: Props) => {
                 setNoeFeilet(true);
             });
     };
+
+    console.log(errors);
 
     return (
         <form
@@ -182,7 +185,7 @@ const MeldingInputBox = (props: Props) => {
             ) : null}
             {errors.melding ? (
                 <ErrorMessage className="mt-2" size="small">
-                    {errors.melding.message}
+                    {betterErrorMessage(errors.melding, getValues('melding')).message}
                 </ErrorMessage>
             ) : null}
             {noeFeilet ? (
@@ -192,6 +195,16 @@ const MeldingInputBox = (props: Props) => {
             ) : null}
         </form>
     );
+};
+
+const betterErrorMessage = (error: FieldError, melding: string): FieldError => {
+    const tooBig = error.type === 'too_big';
+    return {
+        ...error,
+        message: tooBig
+            ? `Meldingen kan ikke være mer enn ${maxMeldingsLengde} tegn, men er ${melding.length}`
+            : error.message
+    };
 };
 
 export default MeldingInputBox;
