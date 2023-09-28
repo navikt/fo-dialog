@@ -4,8 +4,10 @@ import { createRoot } from 'react-dom/client';
 
 import DemoBanner from './demo/DemoBanner';
 import { handlers } from './handlers';
+import { opprettDialogEtterRender } from './Dialog';
 
 const worker = setupWorker(...handlers);
+opprettDialogEtterRender();
 
 export default () =>
     worker

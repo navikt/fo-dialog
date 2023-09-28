@@ -715,7 +715,6 @@ export const kladder: KladdData[] = [
 ];
 
 const dialog = () => {
-    opprettDialogEtterRender();
     return harIngenDialoger() ? [] : [...dialoger];
 };
 

@@ -4,7 +4,7 @@ import { within, userEvent } from '@storybook/testing-library';
 import { Page } from './Page';
 
 const meta = {
-    title: 'Example/Page',
+    title: 'App/Default',
     component: Page,
     parameters: {
         // More on how to position stories at: https://storybook.js.org/docs/react/configure/story-layout
@@ -16,4 +16,26 @@ export default meta;
 type Story = StoryObj<typeof meta>;
 
 // More on interaction testing: https://storybook.js.org/docs/react/writing-tests/interaction-testing
-export const DefaultMode: Story = {};
+export const Landing: Story = {
+    args: {
+        path: '/'
+    }
+};
+
+export const DialogMedAktivitet: Story = {
+    args: {
+        path: '/303'
+    }
+};
+
+export const DialogUtenAktivitet: Story = {
+    args: {
+        path: '/2'
+    }
+};
+
+export const NyDialog: Story = {
+    args: {
+        path: '/ny'
+    }
+};

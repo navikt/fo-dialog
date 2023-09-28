@@ -3,13 +3,11 @@ import type { Meta, StoryObj } from '@storybook/react';
 import { Page } from './Page';
 import { rest } from 'msw';
 import { FeatureToggle } from '../featureToggle/const';
-import { reactRouterParameters, withRouter } from 'storybook-addon-react-router-v6';
-import { dialogRoutes } from '../App';
+import { dialogRoutes } from '../routes';
 
 const meta = {
-    title: 'Example/Page',
+    title: 'App/Compact',
     component: Page,
-    decorators: [withRouter],
     parameters: {
         // More on how to position stories at: https://storybook.js.org/docs/react/configure/story-layout
         layout: 'fullscreen',
@@ -22,6 +20,9 @@ const meta = {
                 ]
             }
         }
+    },
+    args: {
+        path: '/'
     },
     argTypes: {
         visAktivitet: {
@@ -38,33 +39,33 @@ type Story = StoryObj<typeof meta>;
 // export const CompactMode: Story = {};
 
 export const Landing: Story = {
-    parameters: {
-        reactRouter: reactRouterParameters({
-            routing: dialogRoutes
-        })
+    args: {
+        path: '/'
     }
 };
 
-export const DialogMedAktivitet: Story = {
-    parameters: {
-        reactRouter: reactRouterParameters({
-            location: {
-                pathParams: { dialogId: '303' },
-                path: '/303'
-            },
-            routing: dialogRoutes
-        })
+export const MedAktivitetVisAktivitet: Story = {
+    args: {
+        visAktivitet: true,
+        path: '/303'
+    }
+};
+
+export const MedAktivitetIkkeVisAktivitet: Story = {
+    args: {
+        visAktivitet: false,
+        path: '/303'
     }
 };
 
 export const DialogUtenAktivitet: Story = {
-    parameters: {
-        reactRouter: reactRouterParameters({
-            location: {
-                pathParams: { dialogId: '2' },
-                path: '/2'
-            },
-            routing: dialogRoutes
-        })
+    args: {
+        path: '/2'
+    }
+};
+
+export const NyDialog: Story = {
+    args: {
+        path: '/ny'
     }
 };
