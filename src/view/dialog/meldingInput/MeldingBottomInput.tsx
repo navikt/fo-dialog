@@ -3,9 +3,7 @@ import TextareaAutosize from '@navikt/ds-react/esm/util/TextareaAutoSize';
 import { Alert, Button, ErrorMessage } from '@navikt/ds-react';
 import React, { ChangeEvent } from 'react';
 import { useCompactMode } from '../../../featureToggle/FeatureToggleProvider';
-import { useVisAktivitet } from '../../AktivitetToggleContext';
 import { useFormContext } from 'react-hook-form';
-import { useUserInfoContext } from '../../BrukerProvider';
 import { betterErrorMessage } from './inputUtils';
 import { MeldingFormValues } from './MeldingInputBox';
 import { PaperplaneIcon } from '@navikt/aksel-icons';
@@ -17,13 +15,11 @@ interface Props {
     noeFeilet: boolean;
 }
 export const MeldingBottomInput = ({ onSubmit, onChange, noeFeilet }: Props) => {
-    const erBruker = useUserInfoContext()?.erBruker;
     const {
         register,
         getValues,
         formState: { errors, isSubmitting }
     } = useFormContext<MeldingFormValues>();
-    const visAktivitet = useVisAktivitet();
     const compactMode = useCompactMode();
     const breakpoint = useBreakpoint();
 
@@ -46,7 +42,7 @@ export const MeldingBottomInput = ({ onSubmit, onChange, noeFeilet }: Props) => 
                         register('melding').onChange(event);
                     }}
                     placeholder={'Skriv om arbeid og oppfølging'}
-                    minRows={compactMode && !visAktivitet ? 3 : erBruker ? 2 : 3}
+                    minRows={3}
                     maxRows={12}
                 />
                 <Button
