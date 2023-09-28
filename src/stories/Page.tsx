@@ -7,7 +7,6 @@ import StatusAdvarsel from '../view/statusAdvarsel/StatusAdvarsel';
 import { UppdateEventHandler } from '../utils/UpdateEvent';
 import cx from 'classnames';
 import { Routes } from '../routes';
-import AppBody from '../view/AppBody';
 
 interface PageProps {
     visAktivitet?: boolean;

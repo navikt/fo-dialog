@@ -3,7 +3,6 @@ import type { Meta, StoryObj } from '@storybook/react';
 import { Page } from './Page';
 import { rest } from 'msw';
 import { FeatureToggle } from '../featureToggle/const';
-import { dialogRoutes } from '../routes';
 
 const meta = {
     title: 'App/Compact',
