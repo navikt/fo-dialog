@@ -9,6 +9,7 @@ const meta = {
     title: 'App/Compact',
     component: Page,
     parameters: {
+        chromatic: { delay: 200 },
         // More on how to position stories at: https://storybook.js.org/docs/react/configure/story-layout
         layout: 'fullscreen',
         msw: {
