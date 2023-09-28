@@ -138,7 +138,7 @@ const MeldingInputBox = (props: Props) => {
                 <div
                     className={classNames('', {
                         'overflow-hidden p-1': compactMode,
-                        'lg:flex-row xl:flex-col flex': compactMode && !aktivitet,
+                        'lg:flex-col flex': compactMode && !aktivitet,
                         'flex lg:flex-col flex-row items-stretch': compactMode && aktivitet && !visAktivitet,
                         'flex flex-col items-end sm:flex-row 2xl:flex-col': aktivitet && compactMode && visAktivitet,
                         'flex flex-col items-end space-y-2 sm:flex-row sm:space-y-0 ': !compactMode
@@ -168,7 +168,7 @@ const MeldingInputBox = (props: Props) => {
                         size={compactMode ? 'small' : 'medium'}
                         className={classNames({
                             'ml-2': !compactMode,
-                            'self-end ml-2 xl:self-start xl:ml-0 xl:mt-2': compactMode && !aktivitet,
+                            'self-end ml-2 lg:self-start lg:ml-0 lg:mt-2': compactMode && !aktivitet,
                             'self-end ml-2 2xl:mt-2 xl:self-end xl:ml-2 2xl:self-start 2xl:ml-0 2x:mt-2':
                                 compactMode && aktivitet && visAktivitet,
                             'lg:mt-2 lg:self-start self-end ml-2 lg:ml-0': compactMode && aktivitet && !visAktivitet

@@ -1,6 +1,6 @@
 import { Loader } from '@navikt/ds-react';
 import classNames from 'classnames';
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { useNavigate } from 'react-router';
 
 import { useRoutes } from '../../routes';
@@ -21,6 +21,7 @@ import MeldingInputBox from './henvendelseInput/MeldingInputBox';
 import HistoriskInfo from './HistoriskInfo';
 
 export function Dialog() {
+    const scrollContainerRef: React.MutableRefObject<null | HTMLDivElement> = useRef(null);
     const oppfolgingContext = useOppfolgingContext();
     const oppfolging = dataOrUndefined(oppfolgingContext);
     const aktivitet = useSelectedAktivitet();
@@ -79,6 +80,12 @@ export function Dialog() {
         }
     }, [navigate, routes, valgtDialog]);
 
+    useEffect(() => {
+        scrollContainerRef?.current?.scrollTo({
+            top: scrollContainerRef?.current?.scrollHeight
+        });
+    }, [scrollContainerRef, valgtDialog]);
+
     if (!valgtDialog) {
         return <Loader />;
     }
@@ -92,10 +99,10 @@ export function Dialog() {
                 'flex-col lg:max-w-lgContainer xl:max-w-none': !compactMode,
                 'flex-col lg:flex-row 2xl:flex-row': compactMode && aktivitet && !visAktivitet,
                 'flex-col 2xl:flex-row': compactMode && aktivitet && visAktivitet,
-                'flex-col xl:flex-row': compactMode && !aktivitet
+                'flex-col lg:flex-row': compactMode && !aktivitet
             })}
         >
-            <div className="relative flex flex-1 grow flex-col overflow-y-scroll">
+            <div ref={scrollContainerRef} className="relative flex flex-1 grow flex-col overflow-y-scroll">
                 <Meldinger dialogData={valgtDialog} viewState={viewState} fnr={fnr} />
                 <HistoriskInfo hidden={aktivDialog} kanSendeMelding={kanSendeMelding} />
             </div>
@@ -104,7 +111,7 @@ export function Dialog() {
                 className={classNames('flex border-t border-border-divider bg-white p-4 xl:justify-center', {
                     'lg:flex-1  ': compactMode && !visAktivitet && aktivitet,
                     '2xl:flex-1 ': compactMode && visAktivitet && aktivitet,
-                    'xl:flex-1': compactMode && !aktivitet
+                    'lg:flex-1': compactMode && !aktivitet
                 })}
             >
                 <div
