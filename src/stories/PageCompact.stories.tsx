@@ -46,20 +46,33 @@ export const Landing: Story = {
 export const MedAktivitetVisAktivitet: Story = {
     args: {
         visAktivitet: true,
-        path: '/303'
+        path: '/10'
     }
 };
 
 export const MedAktivitetIkkeVisAktivitet: Story = {
     args: {
         visAktivitet: false,
-        path: '/303'
+        path: '/10'
     }
 };
 
 export const DialogUtenAktivitet: Story = {
     args: {
         path: '/2'
+    }
+};
+
+export const HistoriskVisAktivitet: Story = {
+    args: {
+        visAktivitet: true,
+        path: '100'
+    }
+};
+export const HistoriskIkkeVisAktivitet: Story = {
+    args: {
+        visAktivitet: false,
+        path: '100'
     }
 };
 

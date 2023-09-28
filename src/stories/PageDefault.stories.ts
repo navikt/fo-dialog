@@ -33,6 +33,12 @@ export const DialogUtenAktivitet: Story = {
     }
 };
 
+export const Historisk: Story = {
+    args: {
+        path: '100'
+    }
+};
+
 export const NyDialog: Story = {
     args: {
         path: '/ny'
