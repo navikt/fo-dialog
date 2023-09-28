@@ -1,4 +1,5 @@
 interface ImportMetaEnv {
+    readonly STORYBOOK_USE_HASH_ROUTER: boolean;
     readonly MODE: string;
     readonly BASE_URL: string;
     readonly DEV: boolean;
