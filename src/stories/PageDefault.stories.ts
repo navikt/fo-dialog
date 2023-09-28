@@ -17,30 +17,35 @@ type Story = StoryObj<typeof meta>;
 // More on interaction testing: https://storybook.js.org/docs/react/writing-tests/interaction-testing
 export const Landing: Story = {
     args: {
-        path: '/'
+        path: '/',
+        erVeileder: false
     }
 };
 
 export const DialogMedAktivitet: Story = {
     args: {
-        path: '/303'
+        path: '/303',
+        erVeileder: false
     }
 };
 
 export const DialogUtenAktivitet: Story = {
     args: {
-        path: '/2'
+        path: '/2',
+        erVeileder: false
     }
 };
 
 export const Historisk: Story = {
     args: {
-        path: '100'
+        path: '100',
+        erVeileder: false
     }
 };
 
 export const NyDialog: Story = {
     args: {
-        path: '/ny'
+        path: '/ny',
+        erVeileder: false
     }
 };

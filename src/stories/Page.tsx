@@ -11,6 +11,7 @@ import { Routes } from '../routes';
 interface PageProps {
     visAktivitet?: boolean;
     path?: string;
+    erVeileder: boolean;
 }
 const fnr = '1234567890';
 
@@ -19,10 +20,10 @@ export const Page: React.FC<PageProps> = (props) => {
     useEffect(() => {
         window.history.pushState(undefined, 'unused', props.path);
     }, []);
-    const { visAktivitet } = props;
+    const { visAktivitet, erVeileder } = props;
     return (
         <>
-            <Provider visAktivitetDefault={visAktivitet} fnr={fnr} erVeileder={!!fnr}>
+            <Provider visAktivitetDefault={visAktivitet} fnr={erVeileder ? fnr : undefined} erVeileder={erVeileder}>
                 <StatusAdvarsel />
                 <UppdateEventHandler />
                 <div

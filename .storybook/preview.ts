@@ -19,7 +19,7 @@ const viewports = {
         name: 'Tablet',
         styles: {
             width: '900px',
-            height: '900px'
+            height: '700px'
         }
     },
     laptop: {
@@ -39,7 +39,7 @@ const viewports = {
     desktop: {
         name: 'Desktop (2xl)',
         styles: {
-            width: '1920',
+            width: '1920px',
             height: '1080px'
         }
     }

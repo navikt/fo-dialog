@@ -39,45 +39,52 @@ type Story = StoryObj<typeof meta>;
 
 export const Landing: Story = {
     args: {
-        path: '/'
+        path: '/',
+        erVeileder: true
     }
 };
 
 export const MedAktivitetVisAktivitet: Story = {
     args: {
         visAktivitet: true,
-        path: '/10'
+        path: '/10',
+        erVeileder: true
     }
 };
 
 export const MedAktivitetIkkeVisAktivitet: Story = {
     args: {
         visAktivitet: false,
-        path: '/10'
+        path: '/10',
+        erVeileder: true
     }
 };
 
 export const DialogUtenAktivitet: Story = {
     args: {
-        path: '/2'
+        path: '/2',
+        erVeileder: true
     }
 };
 
 export const HistoriskVisAktivitet: Story = {
     args: {
         visAktivitet: true,
-        path: '100'
+        path: '100',
+        erVeileder: true
     }
 };
 export const HistoriskIkkeVisAktivitet: Story = {
     args: {
         visAktivitet: false,
-        path: '100'
+        path: '100',
+        erVeileder: true
     }
 };
 
 export const NyDialog: Story = {
     args: {
-        path: '/ny'
+        path: '/ny',
+        erVeileder: true
     }
 };
