@@ -58,6 +58,10 @@ const internalServerError = (ctx: RestContext) => {
 };
 
 export const handlers = [
+    rest.get(
+        '/veilarbaktivitet/api/feature',
+        jsonResponse({ [FeatureToggle.VIS_SKJUL_AKTIVITET_KNAPP]: harCompactModeSkruddPa() })
+    ),
     rest.get('/auth/info', jsonResponse({ remainingSeconds: 60 * 60 })),
 
     // veilarbdialog
@@ -87,10 +91,6 @@ export const handlers = [
     rest.get(
         '/veilarbaktivitet/api/arena/tiltak',
         failOrGetResponse(harArenaaktivitetFeilerSkruddPa, () => arenaAktiviteter)
-    ),
-    rest.get(
-        '/veilarbaktivitet/api/feature',
-        jsonResponse({ [FeatureToggle.VIS_SKJUL_AKTIVITET_KNAPP]: harCompactModeSkruddPa() })
     ),
 
     // veilarbveileder

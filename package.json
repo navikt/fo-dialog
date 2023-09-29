@@ -3,7 +3,10 @@
   "version": "1.0.0",
   "homepage": "/arbeid/dialog",
   "license": "MIT",
-  "repository": "https://github.com/navikt/arbeidsrettet-dialog.git",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/navikt/arbeidsrettet-dialog.git"
+  },
   "engines": {
     "node": "18"
   },
@@ -22,8 +25,9 @@
     "prettier-check": "prettier --check 'src/'",
     "lint": "echo \"Not implemented\"",
     "lint-staged": "lint-staged",
-    "storybook": "storybook dev -p 6006",
-    "build-storybook": "storybook build"
+    "storybook": "STORYBOOK_USE_HASH_ROUTER=true storybook dev -p 6006",
+    "build-storybook": "STORYBOOK_USE_HASH_ROUTER=true storybook build",
+    "chromatic": "chromatic --exit-zero-on-changes"
   },
   "husky": {
     "hooks": {
@@ -97,6 +101,7 @@
     "@types/react-dom": "^18.2.4",
     "@types/uuid": "^9.0.4",
     "autoprefixer": "^10.4.16",
+    "chromatic": "^7.2.0",
     "classnames": "^2.3.2",
     "cross-env": "^7.0.3",
     "husky": "^8.0.3",
@@ -114,5 +119,8 @@
   },
   "msw": {
     "workerDirectory": "public"
+  },
+  "bugs": {
+    "url": "https://github.com/navikt/arbeidsrettet-dialog/issues"
   }
 }

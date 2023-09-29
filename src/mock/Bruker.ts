@@ -1,12 +1,12 @@
 import { erEksternBruker } from './demo/localstorage';
 
-const eksternbruker = {
+export const eksternbruker = {
     id: '1234567890',
     erVeileder: false,
     erBruker: true
 };
 
-const veileder = {
+export const veileder = {
     id: 'Z123456',
     erVeileder: true,
     erBruker: false
