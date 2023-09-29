@@ -7,23 +7,18 @@ import { useRoutes } from '../../routes';
 import { UpdateTypes, dispatchUpdate } from '../../utils/UpdateEvent';
 import useKansendeMelding from '../../utils/UseKanSendeMelding';
 import { useVisAktivitet } from '../AktivitetToggleContext';
-import { useUserInfoContext } from '../BrukerProvider';
 import { useDialogContext } from '../DialogProvider';
 import { useCompactMode } from '../../featureToggle/FeatureToggleProvider';
 import { Meldinger } from '../melding/Meldinger';
-import { useOppfolgingContext } from '../OppfolgingProvider';
-import { dataOrUndefined, useFnrContext, useViewContext } from '../Provider';
+import { useFnrContext, useViewContext } from '../Provider';
 import { useSelectedAktivitet, useSelectedDialog } from '../utils/useAktivitetId';
 import { useEventListener } from '../utils/useEventListner';
 import { endreDialogSomVises } from '../ViewState';
-import ManagedDialogCheckboxes from './DialogCheckboxes';
 import MeldingInputBox from './meldingInput/MeldingInputBox';
 import HistoriskInfo from './HistoriskInfo';
 
 export function Dialog() {
     const scrollContainerRef: React.MutableRefObject<null | HTMLDivElement> = useRef(null);
-    const oppfolgingContext = useOppfolgingContext();
-    const oppfolging = dataOrUndefined(oppfolgingContext);
     const aktivitet = useSelectedAktivitet();
     const compactMode = useCompactMode();
     const kanSendeMelding = useKansendeMelding();
@@ -32,7 +27,6 @@ export function Dialog() {
     const valgtDialog = useSelectedDialog();
     const dialogId = valgtDialog?.id;
     const fnr = useFnrContext();
-    const bruker = useUserInfoContext();
     const visAktivitet = useVisAktivitet();
 
     const { viewState, setViewState } = useViewContext();
@@ -106,32 +100,7 @@ export function Dialog() {
                 <Meldinger dialogData={valgtDialog} viewState={viewState} fnr={fnr} />
                 <HistoriskInfo hidden={aktivDialog} kanSendeMelding={kanSendeMelding} />
             </div>
-            <section
-                aria-label="Ny melding"
-                className={classNames('flex border-t border-border-divider bg-white p-4 xl:justify-center', {
-                    'lg:flex-1  ': compactMode && !visAktivitet && aktivitet,
-                    '2xl:flex-1 ': compactMode && visAktivitet && aktivitet,
-                    'lg:flex-1': compactMode && !aktivitet
-                })}
-            >
-                <div
-                    className={classNames('w-full', {
-                        'flex flex-col ': compactMode && !visAktivitet,
-                        'xl:max-w-248': !compactMode,
-                        '2xl:flex 2xl:flex-col': compactMode
-                    })}
-                >
-                    <ManagedDialogCheckboxes dialog={valgtDialog} visible={!!bruker?.erVeileder} />
-                    {!oppfolging?.underOppfolging || valgtDialog.historisk ? null : (
-                        <MeldingInputBox
-                            key={valgtDialog.id}
-                            dialog={valgtDialog}
-                            kanSendeHenveldelse={kanSendeHenveldelse}
-                            erBruker={!!bruker?.erBruker}
-                        />
-                    )}
-                </div>
-            </section>
+            <MeldingInputBox dialog={valgtDialog} kanSendeHenveldelse={kanSendeHenveldelse} />
         </section>
     );
 }
