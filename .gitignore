@@ -27,3 +27,4 @@ yarn-error.log*
 
 build-storybook.log
 mockServiceWorker.js
+/storybook-static/
