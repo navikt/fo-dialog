@@ -17,7 +17,7 @@ import { useSelectedAktivitet, useSelectedDialog } from '../utils/useAktivitetId
 import { useEventListener } from '../utils/useEventListner';
 import { endreDialogSomVises } from '../ViewState';
 import ManagedDialogCheckboxes from './DialogCheckboxes';
-import MeldingInputBox from './henvendelseInput/MeldingInputBox';
+import MeldingInputBox from './meldingInput/MeldingInputBox';
 import HistoriskInfo from './HistoriskInfo';
 
 export function Dialog() {

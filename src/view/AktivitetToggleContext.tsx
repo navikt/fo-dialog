@@ -1,4 +1,4 @@
-import React, { useContext, useMemo, useState } from 'react';
+import React, { useContext, useEffect, useMemo, useState } from 'react';
 
 interface AktivitetToggleState {
     visAktivitet: boolean;
@@ -11,10 +11,19 @@ export const AktivitetToggleContext = React.createContext<AktivitetToggleState>(
 export const useVisAktivitetContext = () => useContext(AktivitetToggleContext);
 export const useVisAktivitet = () => useContext(AktivitetToggleContext).visAktivitet;
 
-export const AktivitetToggleProvider = (props: { children: React.ReactNode }) => {
-    const [visAktivitet, setVisAktivitet] = useState(false);
+export const AktivitetToggleProvider = ({
+    children,
+    defaultValue
+}: {
+    children: React.ReactNode;
+    defaultValue: boolean;
+}) => {
+    const [visAktivitet, setVisAktivitet] = useState(defaultValue);
+    useEffect(() => {
+        if (defaultValue === false || defaultValue === true) setVisAktivitet(defaultValue);
+    }, [defaultValue]);
     const context = useMemo(() => {
         return { visAktivitet, setVisAktivitet };
-    }, [visAktivitet]);
-    return <AktivitetToggleContext.Provider value={context}>{props.children}</AktivitetToggleContext.Provider>;
+    }, [visAktivitet, defaultValue]);
+    return <AktivitetToggleContext.Provider value={context}>{children}</AktivitetToggleContext.Provider>;
 };

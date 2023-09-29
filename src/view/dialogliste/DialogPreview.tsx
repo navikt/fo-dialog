@@ -151,7 +151,7 @@ export function DialogPreviewListe({ dialoger, valgDialog }: ListeProps) {
                             [styles.fadeIn]: index === 0 && skalFadeIn
                         })}
                     >
-                        <DialogPreview dialog={dialog} key={dialog.id} valgtDialogId={valgDialog} />
+                        <DialogPreview dialog={dialog} valgtDialogId={valgDialog} />
                     </li>
                 ))}
             </ul>

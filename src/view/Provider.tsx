@@ -56,10 +56,11 @@ interface Props {
     enhet?: string;
     erVeileder: boolean;
     children: React.ReactNode;
+    visAktivitetDefault?: boolean;
 }
 
 export function Provider(props: Props) {
-    const { fnr, erVeileder, children } = props;
+    const { fnr, erVeileder, children, visAktivitetDefault } = props;
 
     const veilederNavn = useFetchVeilederNavn(erVeileder);
 
@@ -130,7 +131,9 @@ export function Provider(props: Props) {
                                     <FNRContext.Provider value={fnr}>
                                         <ViewContext.Provider value={{ viewState: viewState, setViewState: setState }}>
                                             <FeatureToggleContext.Provider value={feature}>
-                                                <AktivitetToggleProvider>{children}</AktivitetToggleProvider>
+                                                <AktivitetToggleProvider defaultValue={visAktivitetDefault || false}>
+                                                    {children}
+                                                </AktivitetToggleProvider>
                                             </FeatureToggleContext.Provider>
                                         </ViewContext.Provider>
                                     </FNRContext.Provider>
