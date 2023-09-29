@@ -9,6 +9,7 @@ interface FrontendEvent {
 }
 
 export default function loggEvent(eventNavn: string, feltObjekt?: object, tagObjekt?: object) {
+    if (import.meta.env.STORYBOOK_USE_HASH_ROUTER) return;
     const event: FrontendEvent = { name: eventNavn, fields: feltObjekt, tags: tagObjekt };
     const url = DialogApi.logg;
     const config = {
