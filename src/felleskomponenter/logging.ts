@@ -21,7 +21,6 @@ export default function loggEvent(eventNavn: string, feltObjekt?: object, tagObj
         body: JSON.stringify(event)
     };
     logAmplitudeEvent(eventNavn, { ...feltObjekt, ...tagObjekt });
-    if (import.meta.env.STORYBOOK_USE_HASH_ROUTER) return;
     return fetch(url, config);
 }
 
