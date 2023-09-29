@@ -4,11 +4,12 @@ import React from 'react';
 
 import { Status } from '../../api/typer';
 import { notEmpty } from '../../utils/TypeHelper';
-import { DialogData } from '../../utils/Typer';
 import { useDialogContext } from '../DialogProvider';
 import { useCompactMode } from '../../featureToggle/FeatureToggleProvider';
 import { useOppfolgingContext } from '../OppfolgingProvider';
 import { dataOrUndefined } from '../Provider';
+import { useSelectedDialog } from '../utils/useAktivitetId';
+import { useUserInfoContext } from '../BrukerProvider';
 
 interface Props {
     toggleFerdigBehandlet(ferdigBehandler: boolean): void;
@@ -59,19 +60,14 @@ const DialogCheckboxes = ({
     );
 };
 
-interface ManagedProps {
-    dialog: DialogData;
-    visible: boolean;
-}
-
-const ManagedDialogCheckboxes = (props: ManagedProps) => {
+const ManagedDialogCheckboxes = () => {
+    const visible = useUserInfoContext()?.erVeileder || false;
+    const dialog = useSelectedDialog();
     const dialogContext = useDialogContext();
     const oppfolgingContext = useOppfolgingContext();
     const oppfolgingData = dataOrUndefined(oppfolgingContext);
 
-    const { visible, dialog } = props;
-
-    if (!visible) {
+    if (!visible || !dialog) {
         return null;
     }
 
