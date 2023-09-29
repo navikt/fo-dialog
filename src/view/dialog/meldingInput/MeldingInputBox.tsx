@@ -1,5 +1,5 @@
 import { zodResolver } from '@hookform/resolvers/zod';
-import React, { ChangeEvent, useEffect, useLayoutEffect, useRef, useState } from 'react';
+import React, { ChangeEvent, useCallback, useEffect, useLayoutEffect, useMemo, useRef, useState } from 'react';
 import { FormProvider, useForm } from 'react-hook-form';
 import { z } from 'zod';
 
@@ -121,7 +121,9 @@ const MeldingInputBox = (props: Props) => {
     const args = { noeFeilet, onSubmit: handleSubmit((data) => onSubmit(data)), onChange };
 
     if (!kanSendeHenveldelse) return null;
-    const Input = () => {
+
+    // Important! Avoid re-render of textarea-input because it loses focus
+    const Input = useCallback(() => {
         if (!compactMode) {
             return <MeldingBottomInput {...args} />;
         } else if (visAktivitet && [Breakpoint.md, Breakpoint.lg, Breakpoint.xl].includes(breakpoint)) {
@@ -131,7 +133,7 @@ const MeldingInputBox = (props: Props) => {
         } else {
             return <MeldingSideInput {...args} />;
         }
-    };
+    }, [breakpoint, compactMode]);
 
     return (
         <FormProvider {...formHandlers}>
