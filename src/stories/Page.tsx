@@ -18,7 +18,7 @@ const fnr = '1234567890';
 // "Forked" from app to avoid add props only used for storybook dx
 export const Page: React.FC<PageProps> = (props) => {
     useEffect(() => {
-        window.history.pushState(undefined, 'unused', props.path);
+        window.location.hash = `#${props.path}`;
     }, []);
     const { visAktivitet, erVeileder } = props;
     console.log({ erVeileder });
