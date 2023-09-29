@@ -7,12 +7,10 @@ import { useRoutes } from '../../routes';
 import { UpdateTypes, dispatchUpdate } from '../../utils/UpdateEvent';
 import useKansendeMelding from '../../utils/UseKanSendeMelding';
 import { useVisAktivitet } from '../AktivitetToggleContext';
-import { useUserInfoContext } from '../BrukerProvider';
 import { useDialogContext } from '../DialogProvider';
 import { useCompactMode } from '../../featureToggle/FeatureToggleProvider';
 import { Meldinger } from '../melding/Meldinger';
-import { useOppfolgingContext } from '../OppfolgingProvider';
-import { dataOrUndefined, useFnrContext, useViewContext } from '../Provider';
+import { useFnrContext, useViewContext } from '../Provider';
 import { useSelectedAktivitet, useSelectedDialog } from '../utils/useAktivitetId';
 import { useEventListener } from '../utils/useEventListner';
 import { endreDialogSomVises } from '../ViewState';
@@ -21,7 +19,6 @@ import HistoriskInfo from './HistoriskInfo';
 
 export function Dialog() {
     const scrollContainerRef: React.MutableRefObject<null | HTMLDivElement> = useRef(null);
-    const oppfolgingContext = useOppfolgingContext();
     const aktivitet = useSelectedAktivitet();
     const compactMode = useCompactMode();
     const kanSendeMelding = useKansendeMelding();
@@ -30,7 +27,6 @@ export function Dialog() {
     const valgtDialog = useSelectedDialog();
     const dialogId = valgtDialog?.id;
     const fnr = useFnrContext();
-    const bruker = useUserInfoContext();
     const visAktivitet = useVisAktivitet();
 
     const { viewState, setViewState } = useViewContext();

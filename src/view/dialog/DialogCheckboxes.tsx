@@ -4,7 +4,6 @@ import React from 'react';
 
 import { Status } from '../../api/typer';
 import { notEmpty } from '../../utils/TypeHelper';
-import { DialogData } from '../../utils/Typer';
 import { useDialogContext } from '../DialogProvider';
 import { useCompactMode } from '../../featureToggle/FeatureToggleProvider';
 import { useOppfolgingContext } from '../OppfolgingProvider';
