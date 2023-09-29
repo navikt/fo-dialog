@@ -72,7 +72,7 @@ const MeldingInputBox = (props: Props) => {
     }, []);
 
     const defaultValues: MeldingFormValues = {
-        melding: !!kladd?.tekst ? kladd.tekst : startTekst
+        melding: kladd?.tekst || startTekst
     };
 
     const onChange = (e: ChangeEvent<HTMLTextAreaElement>) => {
@@ -90,6 +90,10 @@ const MeldingInputBox = (props: Props) => {
         resolver: zodResolver(schema)
     });
     const { handleSubmit, reset } = formHandlers;
+
+    useEffect(() => {
+        reset(defaultValues);
+    }, [valgtDialog]);
 
     const onSubmit = (data: MeldingFormValues) => {
         setNoeFeilet(false);

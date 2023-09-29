@@ -14,16 +14,16 @@ const getBreakpoint = (): Breakpoint => {
     if (Breakpoint.initial <= width && width < Breakpoint.sm) {
         return Breakpoint.initial;
     }
-    if (Breakpoint.sm < width && width < Breakpoint.md) {
+    if (Breakpoint.sm <= width && width < Breakpoint.md) {
         return Breakpoint.sm;
     }
-    if (Breakpoint.md < width && width < Breakpoint.lg) {
+    if (Breakpoint.md <= width && width < Breakpoint.lg) {
         return Breakpoint.md;
     }
-    if (Breakpoint.lg < width && width < Breakpoint.xl) {
+    if (Breakpoint.lg <= width && width < Breakpoint.xl) {
         return Breakpoint.lg;
     }
-    if (Breakpoint.xl < width && width < Breakpoint['2xl']) {
+    if (Breakpoint.xl <= width && width < Breakpoint['2xl']) {
         return Breakpoint.xl;
     }
     return Breakpoint['2xl'];
