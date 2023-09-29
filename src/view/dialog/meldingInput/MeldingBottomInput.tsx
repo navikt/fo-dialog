@@ -1,20 +1,16 @@
 import classNames from 'classnames';
 import TextareaAutosize from '@navikt/ds-react/esm/util/TextareaAutoSize';
 import { Alert, Button, ErrorMessage } from '@navikt/ds-react';
-import React, { ChangeEvent } from 'react';
+import React, { useContext } from 'react';
 import { useCompactMode } from '../../../featureToggle/FeatureToggleProvider';
 import { useFormContext } from 'react-hook-form';
-import { betterErrorMessage } from './inputUtils';
+import { betterErrorMessage, MeldingInputContext } from './inputUtils';
 import { MeldingFormValues } from './MeldingInputBox';
 import { PaperplaneIcon } from '@navikt/aksel-icons';
 import { Breakpoint, useBreakpoint } from '../../utils/useBreakpoint';
 
-interface Props {
-    onSubmit: (e?: React.BaseSyntheticEvent) => Promise<void>;
-    onChange: (e: ChangeEvent<HTMLTextAreaElement>) => void;
-    noeFeilet: boolean;
-}
-export const MeldingBottomInput = ({ onSubmit, onChange, noeFeilet }: Props) => {
+export const MeldingBottomInput = () => {
+    const { onSubmit, onChange, noeFeilet } = useContext(MeldingInputContext);
     const {
         register,
         getValues,
