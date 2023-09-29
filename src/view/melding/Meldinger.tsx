@@ -57,7 +57,7 @@ export function Meldinger(props: Props) {
             ref={meldingListRef}
             tabIndex={0}
         >
-            <div className="xl:w-full xl:max-w-248 ">
+            <div className="xl:w-full xl:max-w-248 flex flex-col justify-end">
                 <Heading level="3" size={'medium'} className="hidden">
                     Meldinger
                 </Heading>
