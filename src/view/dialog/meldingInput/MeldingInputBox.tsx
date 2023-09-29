@@ -120,8 +120,6 @@ const MeldingInputBox = (props: Props) => {
     const breakpoint = useBreakpoint();
     const args = { noeFeilet, onSubmit: handleSubmit((data) => onSubmit(data)), onChange };
 
-    if (!kanSendeHenveldelse) return null;
-
     // Important! Avoid re-render of textarea-input because it loses focus
     const Input = useCallback(() => {
         if (!compactMode) {
@@ -135,6 +133,7 @@ const MeldingInputBox = (props: Props) => {
         }
     }, [breakpoint, compactMode]);
 
+    if (!kanSendeHenveldelse) return null;
     return (
         <FormProvider {...formHandlers}>
             <Input />
