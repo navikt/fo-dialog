@@ -1,7 +1,7 @@
 {
   "name": "arbeidsrettet-dialog",
   "version": "1.0.0",
-  "homepage": "http:///arbeid/dialog",
+  "homepage": "/arbeid/dialog",
   "license": "MIT",
   "repository": {
     "type": "git",
@@ -122,7 +122,5 @@
   },
   "bugs": {
     "url": "https://github.com/navikt/arbeidsrettet-dialog/issues"
-  },
-  "readme": "ERROR: No README data found!",
-  "_id": "arbeidsrettet-dialog@1.0.0"
+  }
 }

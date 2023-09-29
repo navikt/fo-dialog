@@ -15,7 +15,6 @@ interface Props {
 
 const App = (props: Props) => {
     const { fnr, visAktivitetDefault } = props;
-    useEffect(() => {}, []);
     return (
         <Provider visAktivitetDefault={visAktivitetDefault} fnr={fnr} erVeileder={!!fnr}>
             <StatusAdvarsel />
