@@ -117,7 +117,8 @@ export function Dialog() {
                 <div
                     className={classNames('w-full', {
                         'flex flex-col ': compactMode && !visAktivitet,
-                        'xl:max-w-248': !compactMode
+                        'xl:max-w-248': !compactMode,
+                        '2xl:flex 2xl:flex-col': compactMode
                     })}
                 >
                     <ManagedDialogCheckboxes dialog={valgtDialog} visible={!!bruker?.erVeileder} />
