@@ -69,11 +69,8 @@ export const MeldingSideInput = ({ dialog }: { dialog: DialogData }) => {
     const oppfolgingContext = useOppfolgingContext();
     const oppfolging = dataOrUndefined(oppfolgingContext);
     return (
-        <section
-            aria-label="Ny melding"
-            className="flex flex-1 border-t border-border-divider bg-white p-4 xl:justify-center"
-        >
-            <div className="w-full">
+        <section aria-label="Ny melding" className="flex flex-1 bg-white p-4">
+            <div className="w-full flex flex-col">
                 <ManagedDialogCheckboxes />
                 {!oppfolging?.underOppfolging || dialog.historisk ? null : <MeldingSideInputInner />}
             </div>
