@@ -6,8 +6,12 @@ import { useCompactMode } from '../../../featureToggle/FeatureToggleProvider';
 import { useFormContext } from 'react-hook-form';
 import { betterErrorMessage, MeldingInputContext } from './inputUtils';
 import { MeldingFormValues } from './MeldingInputBox';
+import ManagedDialogCheckboxes from '../DialogCheckboxes';
+import { dataOrUndefined } from '../../Provider';
+import { useOppfolgingContext } from '../../OppfolgingProvider';
+import { DialogData } from '../../../utils/Typer';
 
-export const MeldingSideInput = () => {
+const MeldingSideInputInner = () => {
     const { onSubmit, onChange, noeFeilet } = useContext(MeldingInputContext);
     const {
         register,
@@ -58,5 +62,21 @@ export const MeldingSideInput = () => {
                 </Alert>
             ) : null}
         </form>
+    );
+};
+
+export const MeldingSideInput = ({ dialog }: { dialog: DialogData }) => {
+    const oppfolgingContext = useOppfolgingContext();
+    const oppfolging = dataOrUndefined(oppfolgingContext);
+    return (
+        <section
+            aria-label="Ny melding"
+            className="flex flex-1 border-t border-border-divider bg-white p-4 xl:justify-center"
+        >
+            <div className="w-full">
+                <ManagedDialogCheckboxes />
+                {!oppfolging?.underOppfolging || dialog.historisk ? null : <MeldingSideInputInner />}
+            </div>
+        </section>
     );
 };

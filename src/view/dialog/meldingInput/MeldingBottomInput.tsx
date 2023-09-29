@@ -8,8 +8,12 @@ import { betterErrorMessage, MeldingInputContext } from './inputUtils';
 import { MeldingFormValues } from './MeldingInputBox';
 import { PaperplaneIcon } from '@navikt/aksel-icons';
 import { Breakpoint, useBreakpoint } from '../../utils/useBreakpoint';
+import ManagedDialogCheckboxes from '../DialogCheckboxes';
+import { dataOrUndefined } from '../../Provider';
+import { useOppfolgingContext } from '../../OppfolgingProvider';
+import { DialogData } from '../../../utils/Typer';
 
-export const MeldingBottomInput = () => {
+const MeldingBottomInputInner = () => {
     const { onSubmit, onChange, noeFeilet } = useContext(MeldingInputContext);
     const {
         register,
@@ -62,5 +66,26 @@ export const MeldingBottomInput = () => {
                 </Alert>
             ) : null}
         </form>
+    );
+};
+
+export const MeldingBottomInput = ({ dialog }: { dialog: DialogData }) => {
+    const oppfolgingContext = useOppfolgingContext();
+    const oppfolging = dataOrUndefined(oppfolgingContext);
+    const compactMode = useCompactMode();
+    return (
+        <section
+            aria-label="Ny melding"
+            className="flex justify-center border-t border-border-divider bg-green-100 p-4"
+        >
+            <div
+                className={classNames('grow justify-self-center bg-red-100', {
+                    'xl:max-w-248': !compactMode
+                })}
+            >
+                <ManagedDialogCheckboxes />
+                {!oppfolging?.underOppfolging || dialog.historisk ? null : <MeldingBottomInputInner />}
+            </div>
+        </section>
     );
 };
