@@ -74,12 +74,9 @@ export const MeldingBottomInput = ({ dialog }: { dialog: DialogData }) => {
     const oppfolging = dataOrUndefined(oppfolgingContext);
     const compactMode = useCompactMode();
     return (
-        <section
-            aria-label="Ny melding"
-            className="flex justify-center border-t border-border-divider bg-green-100 p-4"
-        >
+        <section aria-label="Ny melding" className="flex justify-center border-t border-border-divider p-4">
             <div
-                className={classNames('grow justify-self-center bg-red-100', {
+                className={classNames('grow justify-self-center', {
                     'xl:max-w-248': !compactMode
                 })}
             >
