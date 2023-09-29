@@ -15,7 +15,7 @@ import useMeldingStartTekst from '../UseMeldingStartTekst';
 import { Breakpoint, useBreakpoint } from '../../utils/useBreakpoint';
 import { MeldingBottomInput } from './MeldingBottomInput';
 import { MeldingSideInput } from './MeldingSideInput';
-import { maxMeldingsLengde } from './inputUtils';
+import { maxMeldingsLengde, MeldingInputContext } from './inputUtils';
 import { useVisAktivitet } from '../../AktivitetToggleContext';
 
 const schema = z.object({
@@ -123,20 +123,22 @@ const MeldingInputBox = (props: Props) => {
     // Important! Avoid re-render of textarea-input because it loses focus
     const Input = useCallback(() => {
         if (!compactMode) {
-            return <MeldingBottomInput {...args} />;
+            return <MeldingBottomInput />;
         } else if (visAktivitet && [Breakpoint.md, Breakpoint.lg, Breakpoint.xl].includes(breakpoint)) {
-            return <MeldingBottomInput {...args} />;
+            return <MeldingBottomInput />;
         } else if ([Breakpoint.initial, Breakpoint.sm, Breakpoint.md].includes(breakpoint)) {
-            return <MeldingBottomInput {...args} />;
+            return <MeldingBottomInput />;
         } else {
-            return <MeldingSideInput {...args} />;
+            return <MeldingSideInput />;
         }
     }, [breakpoint, compactMode]);
 
     if (!kanSendeHenveldelse) return null;
     return (
         <FormProvider {...formHandlers}>
-            <Input />
+            <MeldingInputContext.Provider value={args}>
+                <Input />
+            </MeldingInputContext.Provider>
         </FormProvider>
     );
 };
