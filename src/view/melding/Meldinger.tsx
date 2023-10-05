@@ -6,7 +6,7 @@ import { DialogData, MeldingsData, StringOrNull } from '../../utils/Typer';
 import DialogSendtBekreftelse from '../dialog/DialogSendtBekreftelse';
 import LestAvTidspunkt from '../lest/LestTidspunkt';
 import { useSkjulHodefotForMobilVisning } from '../utils/useSkjulHodefotForMobilVisning';
-import { useViewContext, ViewState } from '../ViewState';
+import { useViewContext } from '../ViewState';
 import { Melding } from './Melding';
 
 interface Props {
