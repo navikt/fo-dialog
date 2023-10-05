@@ -17,7 +17,7 @@ import { endreDialogSomVises, useViewContext } from '../ViewState';
 import MeldingInputBox from './meldingInput/MeldingInputBox';
 import HistoriskInfo from './HistoriskInfo';
 
-export function DialogTrad() {
+function DialogTrad() {
     const scrollContainerRef: React.MutableRefObject<null | HTMLDivElement> = useRef(null);
     const aktivitet = useSelectedAktivitet();
     const compactMode = useCompactMode();
