@@ -1,5 +1,10 @@
-import { FieldError } from 'react-hook-form';
-import React from 'react';
+import { FieldError, useFormContext } from 'react-hook-form';
+import React, { MutableRefObject, useEffect, useLayoutEffect, useMemo } from 'react';
+import { HandlingsType, useViewContext } from '../../ViewState';
+import { MeldingFormValues } from './MeldingInputBox';
+import { useKladdContext } from '../../KladdProvider';
+import useMeldingStartTekst from '../UseMeldingStartTekst';
+import { useSelectedDialog } from '../../utils/useAktivitetId';
 
 export const maxMeldingsLengde = 5000;
 export const betterErrorMessage = (error: FieldError, melding: string): FieldError => {
@@ -36,3 +41,27 @@ export const MeldingInputContext = React.createContext<MeldingInputArgs>({
     noeFeilet: false,
     isSyncingKladd: false
 });
+
+export const useFocusBeforeHilsen = (ref: MutableRefObject<HTMLTextAreaElement | null>) => {
+    const { viewState } = useViewContext();
+    const startTekst = useMeldingStartTekst();
+    const {
+        formState: { defaultValues }
+    } = useFormContext<MeldingFormValues>();
+    const defaultValue = useMemo(() => {
+        return defaultValues?.melding;
+    }, [defaultValues?.melding]);
+    useEffect(() => {
+        const bigScreen = window?.matchMedia(`(min-width: 900px)`)?.matches || false;
+        const shouldAutoFocus = bigScreen && viewState.sistHandlingsType !== HandlingsType.nyDialog;
+        if (shouldAutoFocus) {
+            if (!ref.current) return;
+            const initialText = ref.current?.value;
+            if (!initialText || !initialText.endsWith(startTekst)) return;
+            const start = initialText.length - startTekst.length;
+            ref.current.selectionStart = start;
+            ref.current.selectionEnd = start;
+            ref.current?.focus();
+        }
+    }, [defaultValue]);
+};

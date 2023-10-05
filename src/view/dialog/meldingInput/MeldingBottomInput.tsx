@@ -1,10 +1,10 @@
 import classNames from 'classnames';
 import TextareaAutosize from '@navikt/ds-react/esm/util/TextareaAutoSize';
 import { Alert, Button, ErrorMessage } from '@navikt/ds-react';
-import React, { useContext } from 'react';
+import React, { MutableRefObject, useContext, useRef } from 'react';
 import { useCompactMode } from '../../../featureToggle/FeatureToggleProvider';
 import { useFormContext } from 'react-hook-form';
-import { betterErrorMessage, MeldingInputContext } from './inputUtils';
+import { betterErrorMessage, MeldingInputContext, useFocusBeforeHilsen } from './inputUtils';
 import { MeldingFormValues } from './MeldingInputBox';
 import { PaperplaneIcon } from '@navikt/aksel-icons';
 import { Breakpoint, useBreakpoint } from '../../utils/useBreakpoint';
@@ -22,7 +22,10 @@ const MeldingBottomInputInner = () => {
     } = useFormContext<MeldingFormValues>();
     const compactMode = useCompactMode();
     const breakpoint = useBreakpoint();
+    const textAreaRef: MutableRefObject<HTMLTextAreaElement | null> = useRef(null);
+    useFocusBeforeHilsen(textAreaRef);
 
+    const formHooks = register('melding');
     return (
         <form className="'flex flex-1 flex-col overflow-hidden'" onSubmit={onSubmit} noValidate autoComplete="off">
             <div className="flex">
@@ -36,7 +39,11 @@ const MeldingBottomInputInner = () => {
                         { 'border-red-300': errors.melding }
                     )}
                     style={{ overflow: 'auto' }}
-                    {...register('melding')}
+                    {...formHooks}
+                    ref={(ref) => {
+                        textAreaRef.current = ref;
+                        formHooks.ref(ref);
+                    }}
                     placeholder={'Skriv om arbeid og oppfølging'}
                     minRows={3}
                     maxRows={12}

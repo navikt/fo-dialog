@@ -42,30 +42,14 @@ const MeldingInputBox = ({ dialog: valgtDialog, kanSendeHenveldelse }: Props) =>
     const kladd = kladder.find((k) => k.aktivitetId === valgtDialog.aktivitetId && k.dialogId === valgtDialog.id);
     const { viewState, setViewState } = useViewContext();
 
-    useLayoutEffect(() => {
-        const bigScreen = window?.matchMedia(`(min-width: 900px)`)?.matches || false;
-        const shouldAutoFocus = bigScreen && viewState.sistHandlingsType !== HandlingsType.nyDialog;
-
-        if (shouldAutoFocus) {
-            const el = document.getElementsByClassName('autosizing-textarea')[0] as HTMLInputElement;
-            if (el) {
-                el.focus();
-                if (kladd?.tekst) {
-                    el.selectionStart = el.selectionEnd = el.value.length;
-                }
-            }
-        }
-    }, []);
-
     const defaultValues: MeldingFormValues = {
         melding: kladd?.tekst || startTekst
     };
-
     const formHandlers = useForm<MeldingFormValues>({
         defaultValues,
         resolver: zodResolver(schema)
     });
-    const { handleSubmit, reset, watch } = formHandlers;
+    const { handleSubmit, reset, watch, setFocus } = formHandlers;
 
     useEffect(() => {
         reset(defaultValues);

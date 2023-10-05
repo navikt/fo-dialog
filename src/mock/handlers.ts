@@ -57,13 +57,32 @@ const internalServerError = (ctx: RestContext) => {
     ];
 };
 
+const sessionPayload = {
+    session: {
+        created_at: '2023-10-05T13:33:44.039191001Z',
+        ends_at: '2023-10-05T19:33:44.039191001Z',
+        timeout_at: '2023-10-05T14:33:44.039191821Z',
+        ends_in_seconds: 21594,
+        active: true,
+        timeout_in_seconds: 3594
+    },
+    tokens: {
+        expire_at: '2023-10-05T14:33:44.038012928Z',
+        refreshed_at: '2023-10-05T13:33:44.039191001Z',
+        expire_in_seconds: 3594,
+        next_auto_refresh_in_seconds: -1,
+        refresh_cooldown: true,
+        refresh_cooldown_seconds: 54
+    }
+};
+
 export const handlers = [
     rest.get(
         '/veilarbaktivitet/api/feature',
         jsonResponse({ [FeatureToggle.VIS_SKJUL_AKTIVITET_KNAPP]: harCompactModeSkruddPa() })
     ),
     rest.get('/auth/info', jsonResponse({ remainingSeconds: 60 * 60 })),
-
+    rest.get('https://login.ekstern.dev.nav.no/oauth2/session', jsonResponse(sessionPayload)),
     // veilarbdialog
     rest.get('/veilarbdialog/api/kladd', jsonResponse(kladder)),
     rest.get('/veilarbdialog/api/dialog', failOrGetResponse(harDialogFeilerSkruddPa, dialoger)),
