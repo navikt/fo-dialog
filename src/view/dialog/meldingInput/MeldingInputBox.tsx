@@ -110,7 +110,9 @@ const MeldingInputBox = ({ dialog: valgtDialog, kanSendeHenveldelse }: Props) =>
     const memoedHandleSubmit = useMemo(() => {
         return handleSubmit((data) => onSubmit(data));
     }, [onSubmit]);
-    const args = { isSyncingKladd, noeFeilet, onSubmit: memoedHandleSubmit };
+    const args = useMemo(() => {
+        return { isSyncingKladd, noeFeilet, onSubmit: memoedHandleSubmit };
+    }, [isSyncingKladd, noeFeilet, memoedHandleSubmit]);
 
     // Important! Avoid re-render of textarea-input because it loses focus
     const Input = useCallback(() => {

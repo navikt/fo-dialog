@@ -29,12 +29,8 @@ export const ViewContext = React.createContext<ViewContextType>({
 
 export const ViewStateProvider = ({ children }: { children: React.ReactElement }) => {
     const [viewState, setState] = useState(initalState);
-    const memoedSetState = useCallback(setState, [viewState]);
-    return (
-        <ViewContext.Provider value={{ viewState: viewState, setViewState: memoedSetState }}>
-            {children}
-        </ViewContext.Provider>
-    );
+    const setViewState = useCallback(setState, [viewState]);
+    return <ViewContext.Provider value={{ viewState, setViewState }}>{children}</ViewContext.Provider>;
 };
 export const useViewContext = () => useContext(ViewContext);
 
