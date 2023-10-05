@@ -81,31 +81,36 @@ const MeldingInputBox = ({ dialog: valgtDialog, kanSendeHenveldelse }: Props) =>
         debouncedOppdaterKladd(valgtDialog.id, valgtDialog.aktivitetId, null, melding);
     }, [melding]);
 
-    const onSubmit = ({ melding }: MeldingFormValues) => {
-        setNoeFeilet(false);
-        stopKladdSyncing();
-        loggEvent('arbeidsrettet-dialog.ny.henvendelse', { paaAktivitet: !!valgtDialog.aktivitetId });
-        return nyMelding(melding, valgtDialog)
-            .then((dialog) => {
-                slettKladd(valgtDialog.id, valgtDialog.aktivitetId);
-                return dialog;
-            })
-            .then(hentDialoger)
-            .then(() => {
-                setNoeFeilet(false);
-                reset({ melding: startTekst });
-                setViewState(sendtNyMelding(viewState));
-                dispatchUpdate(UpdateTypes.Dialog);
-            })
-            .catch((e) => {
-                console.log({ e });
-                setNoeFeilet(true);
-            });
-    };
+    const onSubmit = useMemo(() => {
+        return ({ melding }: MeldingFormValues) => {
+            setNoeFeilet(false);
+            stopKladdSyncing();
+            loggEvent('arbeidsrettet-dialog.ny.henvendelse', { paaAktivitet: !!valgtDialog.aktivitetId });
+            return nyMelding(melding, valgtDialog)
+                .then((dialog) => {
+                    slettKladd(valgtDialog.id, valgtDialog.aktivitetId);
+                    return dialog;
+                })
+                .then(hentDialoger)
+                .then(() => {
+                    setNoeFeilet(false);
+                    reset({ melding: startTekst });
+                    setViewState(sendtNyMelding(viewState));
+                    dispatchUpdate(UpdateTypes.Dialog);
+                })
+                .catch((e) => {
+                    console.log({ e });
+                    setNoeFeilet(true);
+                });
+        };
+    }, [slettKladd, setNoeFeilet, setViewState, startTekst, stopKladdSyncing, valgtDialog.aktivitetId, valgtDialog.id]);
 
     const breakpoint = useBreakpoint();
     const isSyncingKladd = [Status.PENDING, Status.RELOADING].includes(oppdaterStatus);
-    const args = { isSyncingKladd, noeFeilet, onSubmit: handleSubmit((data) => onSubmit(data)) };
+    const memoedHandleSubmit = useMemo(() => {
+        return handleSubmit((data) => onSubmit(data));
+    }, [onSubmit]);
+    const args = { isSyncingKladd, noeFeilet, onSubmit: memoedHandleSubmit };
 
     // Important! Avoid re-render of textarea-input because it loses focus
     const Input = useCallback(() => {

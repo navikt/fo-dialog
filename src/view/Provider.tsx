@@ -1,5 +1,5 @@
 import { Alert, Loader } from '@navikt/ds-react';
-import React, { Dispatch, SetStateAction, useContext, useEffect, useState } from 'react';
+import React, { useContext, useEffect } from 'react';
 
 import { Status, hasData, hasError, isPending } from '../api/typer';
 import useFetchHarNivaa4, { HarNivaa4Response } from '../api/useFetchHarNivaa4';
@@ -11,7 +11,7 @@ import { DialogContext, hasDialogError, isDialogOk, isDialogPending, useDialogDa
 import { FeatureToggleContext, useFeatureToggleProvider } from '../featureToggle/FeatureToggleProvider';
 import { KladdContext, useKladdDataProvider } from './KladdProvider';
 import { OppfolgingContext, useOppfolgingDataProvider } from './OppfolgingProvider';
-import { ViewState, initalState, ViewStateProvider } from './ViewState';
+import { ViewStateProvider } from './ViewState';
 
 interface VeilederData {
     veilederNavn?: string;

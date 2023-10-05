@@ -1,4 +1,4 @@
-import React, { Dispatch, SetStateAction, useContext, useState } from 'react';
+import React, { Dispatch, SetStateAction, useCallback, useContext, useMemo, useState } from 'react';
 
 export interface ViewState {
     dialogSomVises?: string;
@@ -29,8 +29,11 @@ export const ViewContext = React.createContext<ViewContextType>({
 
 export const ViewStateProvider = ({ children }: { children: React.ReactElement }) => {
     const [viewState, setState] = useState(initalState);
+    const memoedSetState = useCallback(setState, [viewState]);
     return (
-        <ViewContext.Provider value={{ viewState: viewState, setViewState: setState }}>{children}</ViewContext.Provider>
+        <ViewContext.Provider value={{ viewState: viewState, setViewState: memoedSetState }}>
+            {children}
+        </ViewContext.Provider>
     );
 };
 export const useViewContext = () => useContext(ViewContext);

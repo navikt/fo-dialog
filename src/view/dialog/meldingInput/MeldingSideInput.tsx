@@ -1,6 +1,6 @@
 import classNames from 'classnames';
 import TextareaAutosize from '@navikt/ds-react/esm/util/TextareaAutoSize';
-import { Alert, BodyShort, Button, ErrorMessage } from '@navikt/ds-react';
+import { Alert, Button, ErrorMessage } from '@navikt/ds-react';
 import React, { useContext } from 'react';
 import { useCompactMode } from '../../../featureToggle/FeatureToggleProvider';
 import { useFormContext } from 'react-hook-form';
@@ -10,10 +10,9 @@ import ManagedDialogCheckboxes from '../DialogCheckboxes';
 import { dataOrUndefined } from '../../Provider';
 import { useOppfolgingContext } from '../../OppfolgingProvider';
 import { DialogData } from '../../../utils/Typer';
-import { ArrowsCirclepathIcon, CheckmarkCircleIcon } from '@navikt/aksel-icons';
 
 const MeldingSideInputInner = () => {
-    const { onSubmit, noeFeilet, isSyncingKladd } = useContext(MeldingInputContext);
+    const { onSubmit, noeFeilet } = useContext(MeldingInputContext);
     const {
         register,
         getValues,
@@ -43,19 +42,20 @@ const MeldingSideInputInner = () => {
                     <Button size={compactMode ? 'small' : 'medium'} title="Send" loading={isSubmitting}>
                         Send
                     </Button>
-                    <div className="self-center text-2xl text-text-subtle">
-                        {isSyncingKladd ? (
-                            <div className="flex space-x-2">
-                                <BodyShort>Lagrer...</BodyShort>
-                                <ArrowsCirclepathIcon />
-                            </div>
-                        ) : (
-                            <div className="flex space-x-2">
-                                <BodyShort>Lagret</BodyShort>
-                                <CheckmarkCircleIcon />
-                            </div>
-                        )}
-                    </div>
+                    {/* Venter på design */}
+                    {/*<div className="self-center text-2xl text-text-subtle">*/}
+                    {/*    {isSyncingKladd ? (*/}
+                    {/*        <div className="flex space-x-2">*/}
+                    {/*            <BodyShort>Lagrer...</BodyShort>*/}
+                    {/*            <ArrowsCirclepathIcon />*/}
+                    {/*        </div>*/}
+                    {/*    ) : (*/}
+                    {/*        <div className="flex space-x-2">*/}
+                    {/*            <BodyShort>Lagret</BodyShort>*/}
+                    {/*            <CheckmarkCircleIcon />*/}
+                    {/*        </div>*/}
+                    {/*    )}*/}
+                    {/*</div>*/}
                 </div>
             </div>
             {errors.melding ? (
