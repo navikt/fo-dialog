@@ -1,5 +1,5 @@
 import { FieldError } from 'react-hook-form';
-import React, { ChangeEvent } from 'react';
+import React from 'react';
 
 export const maxMeldingsLengde = 5000;
 export const betterErrorMessage = (error: FieldError, melding: string): FieldError => {
@@ -12,13 +12,27 @@ export const betterErrorMessage = (error: FieldError, melding: string): FieldErr
     };
 };
 
+export const debounced = <T extends (...args: any[]) => void>(fn: T): { cleanup: () => void; invoke: T } => {
+    let timer: any | undefined;
+    const invoke: T = (...args) => {
+        clearTimeout(timer);
+        timer = setTimeout(() => {
+            fn(...args);
+        }, 500);
+    };
+    const cleanup = () => {
+        clearTimeout(timer);
+    };
+    return { cleanup, invoke };
+};
+
 export interface MeldingInputArgs {
     onSubmit: (e?: React.BaseSyntheticEvent) => Promise<void>;
-    onChange: (e: ChangeEvent<HTMLTextAreaElement>) => void;
     noeFeilet: boolean;
+    isSyncingKladd: boolean;
 }
 export const MeldingInputContext = React.createContext<MeldingInputArgs>({
     onSubmit: (e) => Promise.resolve(),
-    onChange: () => {},
-    noeFeilet: false
+    noeFeilet: false,
+    isSyncingKladd: false
 });

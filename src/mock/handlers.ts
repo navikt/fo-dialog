@@ -71,7 +71,9 @@ export const handlers = [
     rest.put('/veilarbdialog/api/dialog/:dialogId/venter_pa_svar/:bool', jsonResponse(setVenterPaSvar)),
     rest.put('/veilarbdialog/api/dialog/:dialogId/ferdigbehandlet/:bool', jsonResponse(setFerdigBehandlet)),
     rest.get('/veilarbdialog/api/dialog/sistOppdatert', jsonResponse(getSistOppdatert)),
-    rest.post('/veilarbdialog/api/kladd', (_, res, ctx) => res(ctx.status(204))),
+    rest.post('/veilarbdialog/api/kladd', (_, res, ctx) => {
+        return res(ctx.delay(500), ctx.status(204));
+    }),
     rest.post(
         '/veilarbdialog/api/dialog',
         failOrGetResponse(harNyDialogEllerSendMeldingFeilerSkruddPa, opprettEllerOppdaterDialog)

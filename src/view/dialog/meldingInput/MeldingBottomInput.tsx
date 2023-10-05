@@ -14,7 +14,7 @@ import { useOppfolgingContext } from '../../OppfolgingProvider';
 import { DialogData } from '../../../utils/Typer';
 
 const MeldingBottomInputInner = () => {
-    const { onSubmit, onChange, noeFeilet } = useContext(MeldingInputContext);
+    const { onSubmit, noeFeilet } = useContext(MeldingInputContext);
     const {
         register,
         getValues,
@@ -37,10 +37,6 @@ const MeldingBottomInputInner = () => {
                     )}
                     style={{ overflow: 'auto' }}
                     {...register('melding')}
-                    onChange={(event) => {
-                        onChange(event);
-                        register('melding').onChange(event);
-                    }}
                     placeholder={'Skriv om arbeid og oppfølging'}
                     minRows={3}
                     maxRows={12}

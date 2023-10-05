@@ -6,12 +6,11 @@ import { DialogData, MeldingsData, StringOrNull } from '../../utils/Typer';
 import DialogSendtBekreftelse from '../dialog/DialogSendtBekreftelse';
 import LestAvTidspunkt from '../lest/LestTidspunkt';
 import { useSkjulHodefotForMobilVisning } from '../utils/useSkjulHodefotForMobilVisning';
-import { ViewState } from '../ViewState';
+import { useViewContext, ViewState } from '../ViewState';
 import { Melding } from './Melding';
 
 interface Props {
     dialogData: DialogData;
-    viewState: ViewState;
     fnr?: string;
 }
 
@@ -26,6 +25,7 @@ function sisteLesteHenvendelse(lest: StringOrNull, henvendelser: MeldingsData[])
 }
 
 export function Meldinger(props: Props) {
+    const { viewState } = useViewContext();
     const { lestAvBrukerTidspunkt, henvendelser } = props.dialogData;
 
     const meldingListRef = useRef<HTMLElement>(null);
@@ -74,7 +74,7 @@ export function Meldinger(props: Props) {
                         </React.Fragment>
                     ))}
                 </div>
-                <DialogSendtBekreftelse viewState={props.viewState} dialog={props.dialogData} fnr={props.fnr} />
+                <DialogSendtBekreftelse viewState={viewState} dialog={props.dialogData} fnr={props.fnr} />
             </div>
         </section>
     );

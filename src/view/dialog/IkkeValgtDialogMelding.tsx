@@ -4,7 +4,7 @@ import { useDialogContext } from '../DialogProvider';
 import DialogIkkeValgt from '../info/DialogIkkeValgt';
 import InfoVedIngenDialoger from '../info/InfoVedIngenDialoger';
 
-const DialogInfoMelding = () => {
+const IkkeValgtDialogMelding = () => {
     const { dialoger } = useDialogContext();
     const harDialoger = dialoger.length > 0;
 
@@ -15,4 +15,4 @@ const DialogInfoMelding = () => {
     );
 };
 
-export default DialogInfoMelding;
+export default IkkeValgtDialogMelding;

@@ -4,14 +4,13 @@ import { StringOrUndefined } from '../../utils/Typer';
 import useKansendeMelding from '../../utils/UseKanSendeMelding';
 import { getDialogTittel } from '../aktivitet/TextUtils';
 import { MaybeAktivitet, findAktivitet, useAktivitetContext } from '../AktivitetProvider';
-import { useViewContext } from '../Provider';
 import { useAktivitetId } from '../utils/useAktivitetId';
 import { useSkjulHodefotForMobilVisning } from '../utils/useSkjulHodefotForMobilVisning';
-import { endreDialogSomVises, sendtNyDialog } from '../ViewState';
+import { endreDialogSomVises, sendtNyDialog, useViewContext } from '../ViewState';
 import styles from './Dialog.module.less';
 import NyDialogForm from './NyDialogForm';
 
-export default function NyDialog() {
+export default function NyDialogTrad() {
     const kansendeMelding = useKansendeMelding();
     useSkjulHodefotForMobilVisning();
 
