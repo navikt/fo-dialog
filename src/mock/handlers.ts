@@ -23,7 +23,7 @@ import oppfolging from './Oppfolging';
 import { getSistOppdatert } from './SistOppdatert';
 import { veilederMe } from './Veileder';
 import { FeatureToggle } from '../featureToggle/const';
-import { addHours, addMinutes } from 'date-fns';
+import { addMinutes } from 'date-fns';
 
 const jsonResponse = (response: object | null | boolean | ((req: RestRequest) => object)) => {
     return async (req: RestRequest, res: ResponseComposition, ctx: RestContext) => {

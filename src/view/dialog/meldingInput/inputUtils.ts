@@ -4,7 +4,6 @@ import { HandlingsType, useViewContext } from '../../ViewState';
 import { MeldingFormValues } from './MeldingInputBox';
 import useMeldingStartTekst from '../UseMeldingStartTekst';
 import { useFnrContext } from '../../Provider';
-import { an } from 'vitest/dist/types-ad1c3f45';
 
 export const maxMeldingsLengde = 5000;
 export const betterErrorMessage = (error: FieldError, melding: string): FieldError => {

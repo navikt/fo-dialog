@@ -1,7 +1,7 @@
 import classNames from 'classnames';
 import TextareaAutosize from '@navikt/ds-react/esm/util/TextareaAutoSize';
 import { Alert, Button, ErrorMessage } from '@navikt/ds-react';
-import React, { MutableRefObject, useContext, useEffect, useRef } from 'react';
+import React, { MutableRefObject, useContext, useRef } from 'react';
 import { useCompactMode } from '../../../featureToggle/FeatureToggleProvider';
 import { useFormContext } from 'react-hook-form';
 import { betterErrorMessage, MeldingInputContext, useFocusBeforeHilsen } from './inputUtils';

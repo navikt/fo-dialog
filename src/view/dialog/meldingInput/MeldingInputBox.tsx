@@ -1,5 +1,5 @@
 import { zodResolver } from '@hookform/resolvers/zod';
-import React, { useCallback, useEffect, useLayoutEffect, useMemo, useState } from 'react';
+import React, { useCallback, useEffect, useMemo, useState } from 'react';
 import { FormProvider, useForm } from 'react-hook-form';
 import { z } from 'zod';
 
@@ -9,7 +9,7 @@ import { dispatchUpdate, UpdateTypes } from '../../../utils/UpdateEvent';
 import { useDialogContext } from '../../DialogProvider';
 import { useCompactMode } from '../../../featureToggle/FeatureToggleProvider';
 import { useKladdContext } from '../../KladdProvider';
-import { HandlingsType, sendtNyMelding, useViewContext } from '../../ViewState';
+import { sendtNyMelding, useViewContext } from '../../ViewState';
 import useMeldingStartTekst from '../UseMeldingStartTekst';
 import { Breakpoint, useBreakpoint } from '../../utils/useBreakpoint';
 import { MeldingBottomInput } from './MeldingBottomInput';
@@ -49,7 +49,7 @@ const MeldingInputBox = ({ dialog: valgtDialog, kanSendeHenveldelse }: Props) =>
         defaultValues,
         resolver: zodResolver(schema)
     });
-    const { handleSubmit, reset, watch, setFocus } = formHandlers;
+    const { handleSubmit, reset, watch } = formHandlers;
 
     useEffect(() => {
         reset(defaultValues);
