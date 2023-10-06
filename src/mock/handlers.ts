@@ -23,6 +23,7 @@ import oppfolging from './Oppfolging';
 import { getSistOppdatert } from './SistOppdatert';
 import { veilederMe } from './Veileder';
 import { FeatureToggle } from '../featureToggle/const';
+import { addHours, addMinutes } from 'date-fns';
 
 const jsonResponse = (response: object | null | boolean | ((req: RestRequest) => object)) => {
     return async (req: RestRequest, res: ResponseComposition, ctx: RestContext) => {
@@ -57,22 +58,23 @@ const internalServerError = (ctx: RestContext) => {
     ];
 };
 
+const now = new Date();
 const sessionPayload = {
     session: {
-        created_at: '2023-10-05T13:33:44.039191001Z',
-        ends_at: '2023-10-05T19:33:44.039191001Z',
-        timeout_at: '2023-10-05T14:33:44.039191821Z',
-        ends_in_seconds: 21594,
+        created_at: now.toISOString(),
+        ends_at: addMinutes(now, 15).toISOString(),
+        timeout_at: addMinutes(now, 15).toISOString(),
+        ends_in_seconds: 3600,
         active: true,
-        timeout_in_seconds: 3594
+        timeout_in_seconds: 3600
     },
     tokens: {
-        expire_at: '2023-10-05T14:33:44.038012928Z',
-        refreshed_at: '2023-10-05T13:33:44.039191001Z',
-        expire_in_seconds: 3594,
-        next_auto_refresh_in_seconds: -1,
+        expire_at: addMinutes(now, 15).toISOString(),
+        refreshed_at: now.toISOString(),
+        expire_in_seconds: 3600,
+        next_auto_refresh_in_seconds: 1000,
         refresh_cooldown: true,
-        refresh_cooldown_seconds: 54
+        refresh_cooldown_seconds: 1000
     }
 };
 
@@ -83,6 +85,7 @@ export const handlers = [
     ),
     rest.get('/auth/info', jsonResponse({ remainingSeconds: 60 * 60 })),
     rest.get('https://login.ekstern.dev.nav.no/oauth2/session', jsonResponse(sessionPayload)),
+    rest.post('https://amplitude.nav.no/collect-auto', (_, res, ctx) => res(ctx.status(200))),
     // veilarbdialog
     rest.get('/veilarbdialog/api/kladd', jsonResponse(kladder)),
     rest.get('/veilarbdialog/api/dialog', failOrGetResponse(harDialogFeilerSkruddPa, dialoger)),
