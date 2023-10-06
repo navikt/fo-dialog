@@ -1,5 +1,5 @@
 import { Alert, Loader } from '@navikt/ds-react';
-import React, { Dispatch, SetStateAction, useContext, useEffect, useMemo, useState } from 'react';
+import React, { useContext, useEffect } from 'react';
 
 import { listenForNyDialogEvents } from '../api/nyDialogWs';
 import { Status, hasData, hasError, isPending } from '../api/typer';
@@ -12,7 +12,7 @@ import { DialogContext, hasDialogError, isDialogOk, isDialogPending, useDialogDa
 import { FeatureToggleContext, useFeatureToggleProvider } from '../featureToggle/FeatureToggleProvider';
 import { KladdContext, useKladdDataProvider } from './KladdProvider';
 import { OppfolgingContext, useOppfolgingDataProvider } from './OppfolgingProvider';
-import { ViewState, initalState } from './ViewState';
+import { ViewStateProvider } from './ViewState';
 
 interface VeilederData {
     veilederNavn?: string;
@@ -26,20 +26,7 @@ export const HarNivaa4Context = React.createContext<HarNivaa4Response>({
     hasError: false
 });
 
-interface ViewContextType {
-    viewState: ViewState;
-    setViewState: Dispatch<SetStateAction<ViewState>>;
-}
-
-export const ViewContext = React.createContext<ViewContextType>({
-    viewState: initalState,
-    setViewState: () => {
-        /* do nothing */
-    }
-});
-
 export const useFnrContext = () => useContext(FNRContext);
-export const useViewContext = () => useContext(ViewContext);
 export const useVeilederDataContext = () => useContext(VeilederDataContext);
 export const useHarNivaa4Context = () => useContext(HarNivaa4Context);
 
@@ -71,8 +58,6 @@ export function Provider(props: Props) {
     const { status: oppfolgingstatus, hentOppfolging } = oppfolgingDataProvider;
 
     const harLoggetInnNiva4 = useFetchHarNivaa4(erVeileder, fnr);
-
-    const [viewState, setState] = useState(initalState);
 
     const dialogDataProvider = useDialogDataProvider(fnr);
     const aktivitetDataProvider = useAktivitetDataProvider(fnr);
@@ -134,13 +119,13 @@ export function Provider(props: Props) {
                             <VeilederDataContext.Provider value={{ veilederNavn }}>
                                 <KladdContext.Provider value={kladdDataProvider}>
                                     <FNRContext.Provider value={fnr}>
-                                        <ViewContext.Provider value={{ viewState: viewState, setViewState: setState }}>
+                                        <ViewStateProvider>
                                             <FeatureToggleContext.Provider value={feature}>
                                                 <AktivitetToggleProvider defaultValue={visAktivitetDefault || false}>
                                                     {children}
                                                 </AktivitetToggleProvider>
                                             </FeatureToggleContext.Provider>
-                                        </ViewContext.Provider>
+                                        </ViewStateProvider>
                                     </FNRContext.Provider>
                                 </KladdContext.Provider>
                             </VeilederDataContext.Provider>

@@ -1,10 +1,10 @@
 import classNames from 'classnames';
 import TextareaAutosize from '@navikt/ds-react/esm/util/TextareaAutoSize';
 import { Alert, Button, ErrorMessage } from '@navikt/ds-react';
-import React, { useContext } from 'react';
+import React, { MutableRefObject, useContext, useRef } from 'react';
 import { useCompactMode } from '../../../featureToggle/FeatureToggleProvider';
 import { useFormContext } from 'react-hook-form';
-import { betterErrorMessage, MeldingInputContext } from './inputUtils';
+import { betterErrorMessage, MeldingInputContext, useFocusBeforeHilsen } from './inputUtils';
 import { MeldingFormValues } from './MeldingInputBox';
 import ManagedDialogCheckboxes from '../DialogCheckboxes';
 import { dataOrUndefined } from '../../Provider';
@@ -12,14 +12,17 @@ import { useOppfolgingContext } from '../../OppfolgingProvider';
 import { DialogData } from '../../../utils/Typer';
 
 const MeldingSideInputInner = () => {
-    const { onSubmit, onChange, noeFeilet } = useContext(MeldingInputContext);
+    const { onSubmit, noeFeilet } = useContext(MeldingInputContext);
     const {
         register,
         getValues,
         formState: { errors, isSubmitting }
     } = useFormContext<MeldingFormValues>();
     const compactMode = useCompactMode();
+    const textAreaRef: MutableRefObject<HTMLTextAreaElement | null> = useRef(null);
+    useFocusBeforeHilsen(textAreaRef);
 
+    const formHooks = register('melding');
     return (
         <form className="flex flex-1 flex-col overflow-hidden" onSubmit={onSubmit} noValidate autoComplete="off">
             <div className={'overflow-hidden p-1 flex flex-col'}>
@@ -33,23 +36,34 @@ const MeldingSideInputInner = () => {
                         { 'border-red-300': errors.melding }
                     )}
                     style={{ overflow: 'auto' }}
-                    {...register('melding')}
-                    onChange={(event) => {
-                        onChange(event);
-                        register('melding').onChange(event);
+                    {...formHooks}
+                    ref={(ref) => {
+                        textAreaRef.current = ref;
+                        formHooks.ref(ref);
                     }}
                     placeholder={'Skriv om arbeid og oppfølging'}
                     minRows={3}
                     maxRows={100} // Will overflow before hitting max lines
                 />
-                <Button
-                    size={compactMode ? 'small' : 'medium'}
-                    className={'self-start mt-2'}
-                    title="Send"
-                    loading={isSubmitting}
-                >
-                    Send
-                </Button>
+                <div className="self-stretch mt-2 flex justify-between">
+                    <Button size={compactMode ? 'small' : 'medium'} title="Send" loading={isSubmitting}>
+                        Send
+                    </Button>
+                    {/* Venter på design */}
+                    {/*<div className="self-center text-2xl text-text-subtle">*/}
+                    {/*    {isSyncingKladd ? (*/}
+                    {/*        <div className="flex space-x-2">*/}
+                    {/*            <BodyShort>Lagrer...</BodyShort>*/}
+                    {/*            <ArrowsCirclepathIcon />*/}
+                    {/*        </div>*/}
+                    {/*    ) : (*/}
+                    {/*        <div className="flex space-x-2">*/}
+                    {/*            <BodyShort>Lagret</BodyShort>*/}
+                    {/*            <CheckmarkCircleIcon />*/}
+                    {/*        </div>*/}
+                    {/*    )}*/}
+                    {/*</div>*/}
+                </div>
             </div>
             {errors.melding ? (
                 <ErrorMessage className="mt-2" size="small">
