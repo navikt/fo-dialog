@@ -10,14 +10,14 @@ import { useVisAktivitet } from '../AktivitetToggleContext';
 import { useDialogContext } from '../DialogProvider';
 import { useCompactMode } from '../../featureToggle/FeatureToggleProvider';
 import { Meldinger } from '../melding/Meldinger';
-import { useFnrContext, useViewContext } from '../Provider';
+import { useFnrContext } from '../Provider';
 import { useSelectedAktivitet, useSelectedDialog } from '../utils/useAktivitetId';
 import { useEventListener } from '../utils/useEventListner';
-import { endreDialogSomVises } from '../ViewState';
+import { endreDialogSomVises, useViewContext } from '../ViewState';
 import MeldingInputBox from './meldingInput/MeldingInputBox';
 import HistoriskInfo from './HistoriskInfo';
 
-export function Dialog() {
+function DialogTrad() {
     const scrollContainerRef: React.MutableRefObject<null | HTMLDivElement> = useRef(null);
     const aktivitet = useSelectedAktivitet();
     const compactMode = useCompactMode();
@@ -97,7 +97,7 @@ export function Dialog() {
             })}
         >
             <div ref={scrollContainerRef} className="relative flex flex-1 grow flex-col overflow-y-scroll">
-                <Meldinger dialogData={valgtDialog} viewState={viewState} fnr={fnr} />
+                <Meldinger dialogData={valgtDialog} fnr={fnr} />
                 <HistoriskInfo hidden={aktivDialog} kanSendeMelding={kanSendeMelding} />
             </div>
             <MeldingInputBox dialog={valgtDialog} kanSendeHenveldelse={kanSendeHenveldelse} />
@@ -105,4 +105,4 @@ export function Dialog() {
     );
 }
 
-export default Dialog;
+export default DialogTrad;

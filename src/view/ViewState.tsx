@@ -1,3 +1,5 @@
+import React, { Dispatch, SetStateAction, useCallback, useContext, useState } from 'react';
+
 export interface ViewState {
     dialogSomVises?: string;
     sistHandlingsType: HandlingsType;
@@ -9,10 +11,28 @@ export enum HandlingsType {
     nyDialog
 }
 
+interface ViewContextType {
+    viewState: ViewState;
+    setViewState: Dispatch<SetStateAction<ViewState>>;
+}
+
 export const initalState: ViewState = {
     dialogSomVises: undefined,
     sistHandlingsType: HandlingsType.ingen
 };
+export const ViewContext = React.createContext<ViewContextType>({
+    viewState: initalState,
+    setViewState: () => {
+        /* do nothing */
+    }
+});
+
+export const ViewStateProvider = ({ children }: { children: React.ReactElement }) => {
+    const [viewState, setState] = useState(initalState);
+    const setViewState = useCallback(setState, [viewState]);
+    return <ViewContext.Provider value={{ viewState, setViewState }}>{children}</ViewContext.Provider>;
+};
+export const useViewContext = () => useContext(ViewContext);
 
 export function endreDialogSomVises(state?: ViewState, dialogId?: string): ViewState {
     if (state && !state.dialogSomVises) {

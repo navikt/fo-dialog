@@ -7,7 +7,7 @@ import { Status } from '../api/typer';
 import App from '../App';
 import { Bruker, DialogData, OppfolgingData, PeriodeData } from '../utils/Typer';
 import * as BrukerProvider from '../view/BrukerProvider';
-import Dialog from '../view/dialog/Dialog';
+import DialogTrad from '../view/dialog/DialogTrad';
 import DialogListe from '../view/dialogliste/DialogListe';
 import DialogOversikt from '../view/dialogliste/DialogOversikt';
 import * as DialogProvider from '../view/DialogProvider';
@@ -180,7 +180,7 @@ describe('<Dialog/>', () => {
         const { queryByLabelText, queryByText, queryByRole } = render(
             <MemoryRouter initialEntries={['/1']}>
                 <Routes>
-                    <Route path={'/:dialogId'} element={<Dialog />} />
+                    <Route path={'/:dialogId'} element={<DialogTrad />} />
                 </Routes>
             </MemoryRouter>
         );
@@ -213,7 +213,7 @@ describe('<Dialog/>', () => {
         const wrapper = render(
             <MemoryRouter initialEntries={['/1']}>
                 <Routes>
-                    <Route path={'/:dialogId'} element={<Dialog />} />
+                    <Route path={'/:dialogId'} element={<DialogTrad />} />
                 </Routes>
             </MemoryRouter>
         );

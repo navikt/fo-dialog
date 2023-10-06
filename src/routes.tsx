@@ -1,8 +1,8 @@
 import AppBody from './view/AppBody';
-import NyDialog from './view/dialog/NyDialog';
+import NyDialogTrad from './view/dialog/NyDialogTrad';
 import { Aktivitetskort } from './view/aktivitet/Aktivitetskort';
-import Dialog from './view/dialog/Dialog';
-import DialogInfoMelding from './view/dialog/DialogInfoMelding';
+import DialogTrad from './view/dialog/DialogTrad';
+import IkkeValgtDialogMelding from './view/dialog/IkkeValgtDialogMelding';
 import { Navigate, RouteObject, RouterProvider, useParams } from 'react-router';
 import React from 'react';
 import { erInternFlate, USE_HASH_ROUTER } from './constants';
@@ -47,7 +47,7 @@ export const dialogRoutes: RouteObject[] = [
                 path: 'ny',
                 element: (
                     <>
-                        <NyDialog />
+                        <NyDialogTrad />
                         <Aktivitetskort />
                     </>
                 )
@@ -56,14 +56,14 @@ export const dialogRoutes: RouteObject[] = [
                 path: ':dialogId',
                 element: (
                     <>
-                        <Dialog />
+                        <DialogTrad />
                         <Aktivitetskort />
                     </>
                 )
             },
             {
                 path: '',
-                element: <DialogInfoMelding />
+                element: <IkkeValgtDialogMelding />
             },
             {
                 path: ':fnr/ny',

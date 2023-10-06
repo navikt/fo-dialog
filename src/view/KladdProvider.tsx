@@ -13,8 +13,9 @@ enum Status {
     ERROR
 }
 
-export interface KladdDataProviderType {
+export interface KladdDataContext {
     status: Status;
+    oppdaterStatus: Status;
     kladder: KladdData[];
     hentKladder: () => Promise<KladdData[]>;
     oppdaterKladd: (
@@ -26,8 +27,9 @@ export interface KladdDataProviderType {
     slettKladd: (dialogId?: StringOrNull, aktivitetId?: StringOrNull) => void;
 }
 
-export const KladdContext = React.createContext<KladdDataProviderType>({
+export const KladdContext = React.createContext<KladdDataContext>({
     status: Status.INITIAL,
+    oppdaterStatus: Status.INITIAL,
     kladder: [],
     hentKladder: () => Promise.resolve([]),
     oppdaterKladd: (
@@ -47,15 +49,17 @@ export const useKladdContext = () => useContext(KladdContext);
 
 export interface KladdState {
     status: Status;
+    oppdaterStatus: Status;
     kladder: KladdData[];
 }
 
 const initKladdState: KladdState = {
     status: Status.INITIAL,
+    oppdaterStatus: Status.INITIAL,
     kladder: []
 };
 
-export function useKladdDataProvider(fnr?: string): KladdDataProviderType {
+export function useKladdDataProvider(fnr?: string): KladdDataContext {
     const [state, setState] = useState(initKladdState);
 
     const query = fnrQuery(fnr);
@@ -68,7 +72,7 @@ export function useKladdDataProvider(fnr?: string): KladdDataProviderType {
         }));
         return fetchData<KladdData[]>(kladdUrl)
             .then((kladder) => {
-                setState({ status: Status.OK, kladder: kladder });
+                setState((prevState) => ({ ...prevState, status: Status.OK, kladder: kladder }));
                 return kladder;
             })
             .catch(() => {
@@ -89,13 +93,19 @@ export function useKladdDataProvider(fnr?: string): KladdDataProviderType {
             setState((prevState) => {
                 const kladder = prevState.kladder;
                 const ny = [...kladder.filter((k) => !eqKladd(k, dialogId, aktivitetId)), kladdData];
-                return { ...prevState, kladder: ny };
+                return { ...prevState, kladder: ny, oppdaterStatus: Status.RELOADING };
             });
 
             fetchData<void>(kladdUrl, {
                 method: 'post',
                 body: JSON.stringify(kladdData)
-            });
+            })
+                .then(() => {
+                    setState((prevState) => ({ ...prevState, oppdaterStatus: Status.OK }));
+                })
+                .catch(() => {
+                    setState((prevState) => ({ ...prevState, oppdaterStatus: Status.OK }));
+                });
         },
         [setState, kladdUrl]
     );
@@ -114,6 +124,7 @@ export function useKladdDataProvider(fnr?: string): KladdDataProviderType {
     return useMemo(() => {
         return {
             status: state.status,
+            oppdaterStatus: state.oppdaterStatus,
             kladder: state.kladder,
             hentKladder,
             oppdaterKladd,
