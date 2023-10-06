@@ -4,6 +4,7 @@ import { HandlingsType, useViewContext } from '../../ViewState';
 import { MeldingFormValues } from './MeldingInputBox';
 import useMeldingStartTekst from '../UseMeldingStartTekst';
 import { useFnrContext } from '../../Provider';
+import { an } from 'vitest/dist/types-ad1c3f45';
 
 export const maxMeldingsLengde = 5000;
 export const betterErrorMessage = (error: FieldError, melding: string): FieldError => {
@@ -16,9 +17,9 @@ export const betterErrorMessage = (error: FieldError, melding: string): FieldErr
     };
 };
 
-export const debounced = <T extends (...args: any[]) => void>(fn: T): { cleanup: () => void; invoke: T } => {
+export const debounced = <T extends Function>(fn: T): { cleanup: () => void; invoke: T } => {
     let timer: any | undefined;
-    const invoke: T = (...args) => {
+    const invoke = (...args: any): void => {
         clearTimeout(timer);
         timer = setTimeout(() => {
             fn(...args);
@@ -27,7 +28,7 @@ export const debounced = <T extends (...args: any[]) => void>(fn: T): { cleanup:
     const cleanup = () => {
         clearTimeout(timer);
     };
-    return { cleanup, invoke };
+    return { cleanup, invoke: invoke as unknown as T };
 };
 
 export interface MeldingInputArgs {
@@ -56,7 +57,7 @@ export const useFocusBeforeHilsen = (ref: MutableRefObject<HTMLTextAreaElement |
     const { viewState } = useViewContext();
     const startTekst = useMeldingStartTekst();
     const {
-        formState: { defaultValues, isDirty, touchedFields }
+        formState: { defaultValues, isDirty }
     } = useFormContext<MeldingFormValues>();
 
     useEffect(() => {
