@@ -1,5 +1,5 @@
 import { FieldError, useFormContext } from 'react-hook-form';
-import React, { MutableRefObject, useEffect } from 'react';
+import React, { MutableRefObject, useEffect, useState } from 'react';
 import { HandlingsType, useViewContext } from '../../ViewState';
 import { MeldingFormValues } from './MeldingInputBox';
 import useMeldingStartTekst from '../UseMeldingStartTekst';
@@ -42,11 +42,21 @@ export const MeldingInputContext = React.createContext<MeldingInputArgs>({
 });
 
 export const useFocusBeforeHilsen = (ref: MutableRefObject<HTMLTextAreaElement | null>) => {
+    // Avoid setting focus twice, making the textarea "flash"
+    const [hasFocus, setHasFocus] = useState(false);
+    useEffect(() => {
+        if (ref.current === null) return;
+        const setHasFocusTrue = (ev: FocusEvent) => setHasFocus(true);
+        const setHasFocusFalse = (ev: FocusEvent) => setHasFocus(false);
+        ref.current?.addEventListener('blur', setHasFocusFalse);
+        ref.current?.addEventListener('focus', setHasFocusTrue);
+    }, [ref.current]);
+
     const fnr = useFnrContext();
     const { viewState } = useViewContext();
     const startTekst = useMeldingStartTekst();
     const {
-        formState: { defaultValues, isDirty }
+        formState: { defaultValues, isDirty, touchedFields }
     } = useFormContext<MeldingFormValues>();
 
     useEffect(() => {
@@ -61,7 +71,9 @@ export const useFocusBeforeHilsen = (ref: MutableRefObject<HTMLTextAreaElement |
             const start = initialText.length - startTekst.length;
             ref.current.selectionStart = start;
             ref.current.selectionEnd = start;
+            if (hasFocus) return;
             ref.current?.focus();
+            setHasFocus(true);
         }
-    }, [defaultValues?.melding, isDirty]);
+    }, [defaultValues?.melding, isDirty, hasFocus]);
 };
