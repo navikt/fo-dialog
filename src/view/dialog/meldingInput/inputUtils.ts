@@ -1,5 +1,5 @@
 import { FieldError, useFormContext } from 'react-hook-form';
-import React, { MutableRefObject, useEffect, useRef, useState } from 'react';
+import React, { MutableRefObject, useEffect, useRef } from 'react';
 import { HandlingsType, useViewContext } from '../../ViewState';
 import { MeldingFormValues } from './MeldingInputBox';
 import useMeldingStartTekst from '../UseMeldingStartTekst';
