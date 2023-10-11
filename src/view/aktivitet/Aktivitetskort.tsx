@@ -16,8 +16,6 @@ export function Aktivitetskort() {
     const compactMode = useCompactMode();
     const visAktivitet = useVisAktivitet();
     const harDialog = useSelectedDialog();
-    console.log('har dialog: ', harDialog);
-    console.log('aktivitet: ', aktivitet);
 
     if (!aktivitet) {
         if (compactMode) {
