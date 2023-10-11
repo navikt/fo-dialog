@@ -3,7 +3,7 @@ import React from 'react';
 
 import { useVisAktivitet } from '../AktivitetToggleContext';
 import { useCompactMode } from '../../featureToggle/FeatureToggleProvider';
-import { useSelectedAktivitet } from '../utils/useAktivitetId';
+import { useSelectedAktivitet, useSelectedDialog } from '../utils/useAktivitetId';
 import { getAktivitetType } from '../utils/utils';
 import AktivitetIngress from './AktivitetIngress';
 import { AktivitetskortInfoBox } from './AktivitetskortInfoBox';
@@ -15,6 +15,8 @@ export function Aktivitetskort() {
     const aktivitet = useSelectedAktivitet();
     const compactMode = useCompactMode();
     const visAktivitet = useVisAktivitet();
+    const harDialog = useSelectedDialog();
+
     if (!aktivitet) {
         if (compactMode) {
             return (
@@ -28,6 +30,7 @@ export function Aktivitetskort() {
     return (
         <div
             className={classNames(' w-full border-l border-border-divider lg:max-w-[320px] xl:max-w-screen-w-1/3', {
+                'lg:flex hidden': !harDialog && aktivitet,
                 hidden: !visAktivitet,
                 ' lg:flex hidden': visAktivitet,
                 '2xl:flex 2xl:max-w-screen-w-1/4': compactMode,
