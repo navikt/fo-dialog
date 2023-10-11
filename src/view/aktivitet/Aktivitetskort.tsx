@@ -32,7 +32,7 @@ export function Aktivitetskort() {
     return (
         <div
             className={classNames(' w-full border-l border-border-divider lg:max-w-[320px] xl:max-w-screen-w-1/3', {
-                'lg:flex': !harDialoger && aktivitet,
+                'lg:flex hidden': !harDialoger && !visAktivitet,
                 hidden: !visAktivitet,
                 ' lg:flex hidden': visAktivitet,
                 '2xl:flex 2xl:max-w-screen-w-1/4': compactMode,
