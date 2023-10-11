@@ -10,11 +10,15 @@ import { AktivitetskortInfoBox } from './AktivitetskortInfoBox';
 import Brodsmulesti from './Brodsmulesti';
 import AvtaltMarkering from './etiketter/avtalt-markering';
 import classNames from 'classnames';
+import { useDialogContext } from '../DialogProvider';
 
 export function Aktivitetskort() {
     const aktivitet = useSelectedAktivitet();
     const compactMode = useCompactMode();
     const visAktivitet = useVisAktivitet();
+    const { dialoger } = useDialogContext();
+    const harDialoger = dialoger.length > 0;
+
     if (!aktivitet) {
         if (compactMode) {
             return (
@@ -28,6 +32,7 @@ export function Aktivitetskort() {
     return (
         <div
             className={classNames(' w-full border-l border-border-divider lg:max-w-[320px] xl:max-w-screen-w-1/3', {
+                'lg:flex': !harDialoger && aktivitet,
                 hidden: !visAktivitet,
                 ' lg:flex hidden': visAktivitet,
                 '2xl:flex 2xl:max-w-screen-w-1/4': compactMode,
