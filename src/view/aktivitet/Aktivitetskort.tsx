@@ -3,21 +3,19 @@ import React from 'react';
 
 import { useVisAktivitet } from '../AktivitetToggleContext';
 import { useCompactMode } from '../../featureToggle/FeatureToggleProvider';
-import { useSelectedAktivitet } from '../utils/useAktivitetId';
+import { useSelectedAktivitet, useSelectedDialog } from '../utils/useAktivitetId';
 import { getAktivitetType } from '../utils/utils';
 import AktivitetIngress from './AktivitetIngress';
 import { AktivitetskortInfoBox } from './AktivitetskortInfoBox';
 import Brodsmulesti from './Brodsmulesti';
 import AvtaltMarkering from './etiketter/avtalt-markering';
 import classNames from 'classnames';
-import { useDialogContext } from '../DialogProvider';
 
 export function Aktivitetskort() {
     const aktivitet = useSelectedAktivitet();
     const compactMode = useCompactMode();
     const visAktivitet = useVisAktivitet();
-    const { dialoger } = useDialogContext();
-    const harDialoger = dialoger.length > 0;
+    const harDialog = useSelectedDialog();
 
     if (!aktivitet) {
         if (compactMode) {
@@ -32,7 +30,7 @@ export function Aktivitetskort() {
     return (
         <div
             className={classNames(' w-full border-l border-border-divider lg:max-w-[320px] xl:max-w-screen-w-1/3', {
-                'lg:flex hidden': !harDialoger && !visAktivitet,
+                'lg:flex hidden': !harDialog && !visAktivitet,
                 hidden: !visAktivitet,
                 ' lg:flex hidden': visAktivitet,
                 '2xl:flex 2xl:max-w-screen-w-1/4': compactMode,
