@@ -67,13 +67,13 @@ export function getTypeText(type: AlleAktivitetTypes): string {
         case EksternAktivitetTypes.DIGIOPPARB:
             return 'Digitalt oppfølgingstiltak';
         case EksternAktivitetTypes.GRUPPEAMO:
-            return 'Gruppe AMO';
+            return 'Arbeidsmarkedsopplæring (Gruppe)';
         case EksternAktivitetTypes.INDOPPFAG:
             return 'Oppfølging';
         case EksternAktivitetTypes.AVKLARAG:
             return 'Avklaring';
         case EksternAktivitetTypes.GRUFAGYRKE:
-            return 'Gruppe Fag- og yrkesopplæring';
+            return 'Fag- og yrkesopplæring (Gruppe)';
         case EksternAktivitetTypes.JOBBK:
             return 'Jobbklubb';
         case EksternAktivitetTypes.VASV:
