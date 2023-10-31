@@ -12,10 +12,13 @@ export default function EksternAktivitet({ aktivitet }: PropTypes) {
     const { fraDato, tilDato, beskrivelse, eksternAktivitet } = aktivitet;
     if (!eksternAktivitet) return null;
 
+    const formatertFraDato = fraDato ? formaterDate(fraDato) : 'Dato ikke satt';
+    const formatertTilDato = tilDato ? formaterDate(tilDato) : 'Dato ikke satt';
+
     return (
         <>
-            <InformasjonElement merkelapptekst="Fra dato" verdi={formaterDate(fraDato)} />
-            <InformasjonElement merkelapptekst="Til dato" verdi={formaterDate(tilDato)} />
+            <InformasjonElement merkelapptekst="Fra dato" verdi={formatertFraDato} />
+            <InformasjonElement merkelapptekst="Til dato" verdi={formatertTilDato} />
             <InformasjonElement merkelapptekst="Beskrivelse" verdi={beskrivelse} />
         </>
     );
