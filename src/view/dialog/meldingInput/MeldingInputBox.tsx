@@ -56,7 +56,11 @@ const MeldingInputBox = ({ dialog: valgtDialog, kanSendeHenveldelse }: Props) =>
     }, [valgtDialog]);
 
     const melding = watch('melding');
-    const { cleanup: stopKladdSyncing, invoke: debouncedOppdaterKladd } = useMemo(() => {
+    const {
+        cleanup: stopKladdSyncing,
+        invoke: debouncedOppdaterKladd,
+        isDirty: kladdSkalOppdateres
+    } = useMemo(() => {
         return debounced(oppdaterKladd);
     }, [oppdaterKladd]);
 
@@ -89,14 +93,15 @@ const MeldingInputBox = ({ dialog: valgtDialog, kanSendeHenveldelse }: Props) =>
         };
     }, [slettKladd, setNoeFeilet, setViewState, startTekst, stopKladdSyncing, valgtDialog.aktivitetId, valgtDialog.id]);
 
+    const kladdErLagret = melding !== startTekst && !kladdSkalOppdateres() && Status.OK === oppdaterStatus;
+
     const breakpoint = useBreakpoint();
-    const isSyncingKladd = [Status.PENDING, Status.RELOADING].includes(oppdaterStatus);
     const memoedHandleSubmit = useMemo(() => {
         return handleSubmit((data) => onSubmit(data));
     }, [onSubmit]);
     const args = useMemo(() => {
-        return { isSyncingKladd, noeFeilet, onSubmit: memoedHandleSubmit };
-    }, [isSyncingKladd, noeFeilet, memoedHandleSubmit]);
+        return { noeFeilet, onSubmit: memoedHandleSubmit, kladdErLagret };
+    }, [noeFeilet, memoedHandleSubmit, kladdErLagret]);
 
     // Important! Avoid re-render of textarea-input because it loses focus
     const Input = useCallback(() => {

@@ -16,29 +16,33 @@ export const betterErrorMessage = (error: FieldError, melding: string): FieldErr
     };
 };
 
-export const debounced = <T extends Function>(fn: T): { cleanup: () => void; invoke: T } => {
+export const debounced = <T extends Function>(fn: T): { isDirty: () => boolean; cleanup: () => void; invoke: T } => {
     let timer: any | undefined;
     const invoke = (...args: any): void => {
         clearTimeout(timer);
         timer = setTimeout(() => {
             fn(...args);
+            timer = undefined;
         }, 500);
     };
     const cleanup = () => {
         clearTimeout(timer);
     };
-    return { cleanup, invoke: invoke as unknown as T };
+    const isDirty = () => {
+        return timer !== undefined;
+    };
+    return { cleanup, invoke: invoke as unknown as T, isDirty };
 };
 
 export interface MeldingInputArgs {
     onSubmit: (e?: React.BaseSyntheticEvent) => Promise<void>;
     noeFeilet: boolean;
-    isSyncingKladd: boolean;
+    kladdErLagret: boolean;
 }
 export const MeldingInputContext = React.createContext<MeldingInputArgs>({
     onSubmit: (e) => Promise.resolve(),
     noeFeilet: false,
-    isSyncingKladd: false
+    kladdErLagret: false
 });
 
 export const useFocusBeforeHilsen = (ref: MutableRefObject<HTMLTextAreaElement | null>) => {
