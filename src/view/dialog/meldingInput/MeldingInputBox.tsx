@@ -59,7 +59,7 @@ const MeldingInputBox = ({ dialog: valgtDialog, kanSendeHenveldelse }: Props) =>
     const {
         cleanup: stopKladdSyncing,
         invoke: debouncedOppdaterKladd,
-        isDirty: kladdSkalOppdateres
+        hasPendingTask: kladdSkalOppdateres
     } = useMemo(() => {
         return debounced(oppdaterKladd);
     }, [oppdaterKladd]);

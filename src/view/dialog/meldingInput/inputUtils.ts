@@ -16,7 +16,9 @@ export const betterErrorMessage = (error: FieldError, melding: string): FieldErr
     };
 };
 
-export const debounced = <T extends Function>(fn: T): { isDirty: () => boolean; cleanup: () => void; invoke: T } => {
+export const debounced = <T extends Function>(
+    fn: T
+): { hasPendingTask: () => boolean; cleanup: () => void; invoke: T } => {
     let timer: any | undefined;
     const invoke = (...args: any): void => {
         clearTimeout(timer);
@@ -28,10 +30,10 @@ export const debounced = <T extends Function>(fn: T): { isDirty: () => boolean; 
     const cleanup = () => {
         clearTimeout(timer);
     };
-    const isDirty = () => {
+    const hasPendingTask = () => {
         return timer !== undefined;
     };
-    return { cleanup, invoke: invoke as unknown as T, isDirty };
+    return { cleanup, invoke: invoke as unknown as T, hasPendingTask };
 };
 
 export interface MeldingInputArgs {
