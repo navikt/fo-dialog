@@ -10,6 +10,7 @@ import ManagedDialogCheckboxes from '../DialogCheckboxes';
 import { dataOrUndefined } from '../../Provider';
 import { useOppfolgingContext } from '../../OppfolgingProvider';
 import { DialogData } from '../../../utils/Typer';
+import KladdLagret from './KladdLagret';
 
 const MeldingSideInputInner = () => {
     const { onSubmit, noeFeilet } = useContext(MeldingInputContext);
@@ -49,20 +50,7 @@ const MeldingSideInputInner = () => {
                     <Button size={compactMode ? 'small' : 'medium'} title="Send" loading={isSubmitting}>
                         Send
                     </Button>
-                    {/* Venter på design */}
-                    {/*<div className="self-center text-2xl text-text-subtle">*/}
-                    {/*    {isSyncingKladd ? (*/}
-                    {/*        <div className="flex space-x-2">*/}
-                    {/*            <BodyShort>Lagrer...</BodyShort>*/}
-                    {/*            <ArrowsCirclepathIcon />*/}
-                    {/*        </div>*/}
-                    {/*    ) : (*/}
-                    {/*        <div className="flex space-x-2">*/}
-                    {/*            <BodyShort>Lagret</BodyShort>*/}
-                    {/*            <CheckmarkCircleIcon />*/}
-                    {/*        </div>*/}
-                    {/*    )}*/}
-                    {/*</div>*/}
+                    <KladdLagret />
                 </div>
             </div>
             {errors.melding ? (
