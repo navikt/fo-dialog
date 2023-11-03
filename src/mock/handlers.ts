@@ -6,7 +6,6 @@ import bruker from './Bruker';
 import {
     harAktivitetFeilerSkruddPa,
     harArenaaktivitetFeilerSkruddPa,
-    harCompactModeSkruddPa,
     harDialogFeilerSkruddPa,
     harNivaa4Fieler,
     harNyDialogEllerSendMeldingFeilerSkruddPa
@@ -79,10 +78,6 @@ const sessionPayload = {
 };
 
 export const handlers = [
-    rest.get(
-        '/veilarbaktivitet/api/feature',
-        jsonResponse({ [FeatureToggle.VIS_SKJUL_AKTIVITET_KNAPP]: harCompactModeSkruddPa() })
-    ),
     rest.get('/auth/info', jsonResponse({ remainingSeconds: 60 * 60 })),
     rest.get('https://login.ekstern.dev.nav.no/oauth2/session', jsonResponse(sessionPayload)),
     rest.post('https://amplitude.nav.no/collect-auto', (_, res, ctx) => res(ctx.status(200))),

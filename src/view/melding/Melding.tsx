@@ -8,7 +8,6 @@ import { formaterDateAndTime } from '../../utils/Date';
 import { MeldingsData } from '../../utils/Typer';
 import { useUserInfoContext } from '../BrukerProvider';
 import { linkify } from './linkify';
-import { useCompactMode } from '../../featureToggle/FeatureToggleProvider';
 
 function accessibleText(erBruker: boolean, erMeldingFraBruker: boolean) {
     if (erMeldingFraBruker) {
@@ -24,7 +23,6 @@ interface Props {
 }
 
 export function Melding(props: Props) {
-    const compactMode = useCompactMode();
     const { viktigMarkering } = props;
     const { avsender, sendt, tekst, avsenderId } = props.henvendelseData;
     const brukerData = useUserInfoContext();
@@ -44,15 +42,12 @@ export function Melding(props: Props) {
             <BodyShort className="hidden">{accessibleText(erBruker, erMeldingFraBruker)}</BodyShort>
             <Chat
                 timestamp={toppTekst}
-                size={compactMode ? 'small' : 'medium'}
+                size="small"
                 avatar={erMeldingFraBruker ? <PersonIcon aria-hidden className={'!h-6 !w-6'} /> : 'NAV'}
                 position={erMeldingFraBruker ? 'right' : 'left'}
                 backgroundColor={backgroundColor}
                 avatarBgColor={avatarBgColor}
-                className={classNames('p-0', {
-                    'md:pl-16': erMeldingFraBruker && !compactMode,
-                    'md:pr-16': !erMeldingFraBruker && !compactMode
-                })}
+                className="p-0"
             >
                 <Chat.Bubble className="">
                     <div className="flex flex-col items-start">
