@@ -12,6 +12,7 @@ import ManagedDialogCheckboxes from '../DialogCheckboxes';
 import { dataOrUndefined } from '../../Provider';
 import { useOppfolgingContext } from '../../OppfolgingProvider';
 import { DialogData } from '../../../utils/Typer';
+import KladdLagret from './KladdLagret';
 
 const MeldingBottomInputInner = () => {
     const { onSubmit, noeFeilet } = useContext(MeldingInputContext);
@@ -28,7 +29,7 @@ const MeldingBottomInputInner = () => {
     const formHooks = register('melding');
     return (
         <form className="'flex flex-1 flex-col overflow-hidden'" onSubmit={onSubmit} noValidate autoComplete="off">
-            <div className="flex">
+            <div className="flex items-end">
                 <label htmlFor="melding_input" className="hidden ">
                     Skriv om arbeid og oppfølging
                 </label>
@@ -48,15 +49,18 @@ const MeldingBottomInputInner = () => {
                     minRows={3}
                     maxRows={12}
                 />
-                <Button
-                    size={compactMode ? 'small' : 'medium'}
-                    className="self-end ml-2"
-                    title="Send"
-                    icon={breakpoint === Breakpoint.initial ? <PaperplaneIcon /> : undefined}
-                    loading={isSubmitting}
-                >
-                    {breakpoint !== Breakpoint.initial ? 'Send' : ''}
-                </Button>
+                <div className="flex flex-col space-y-2">
+                    <KladdLagret />
+                    <Button
+                        size={compactMode ? 'small' : 'medium'}
+                        className="self-center mx-2"
+                        title="Send"
+                        icon={breakpoint === Breakpoint.initial ? <PaperplaneIcon /> : undefined}
+                        loading={isSubmitting}
+                    >
+                        {breakpoint !== Breakpoint.initial ? 'Send' : ''}
+                    </Button>
+                </div>
             </div>
             {errors.melding ? (
                 <ErrorMessage className="mt-2" size="small">
