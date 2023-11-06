@@ -11,7 +11,6 @@ import { findAktivitet, useAktivitetContext } from '../AktivitetProvider';
 import { useEventListener } from '../utils/useEventListner';
 import styles from './DialogPreview.module.css';
 import { EtikettListe } from './EtikettListe';
-import Ikon from './ikon/Ikon';
 import { HandlingsType } from '../ViewState';
 
 interface TittelProps {

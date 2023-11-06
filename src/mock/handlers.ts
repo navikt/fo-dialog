@@ -21,7 +21,6 @@ import { harNivaa4Data } from './HarNivaa4';
 import oppfolging from './Oppfolging';
 import { getSistOppdatert } from './SistOppdatert';
 import { veilederMe } from './Veileder';
-import { FeatureToggle } from '../featureToggle/const';
 import { addMinutes } from 'date-fns';
 
 const jsonResponse = (response: object | null | boolean | ((req: RestRequest) => object)) => {

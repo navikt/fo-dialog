@@ -1,4 +1,4 @@
-import { BodyShort, Detail, Heading, Link, Switch } from '@navikt/ds-react';
+import { BodyShort, Heading, Link, Switch } from '@navikt/ds-react';
 import classNames from 'classnames';
 import React from 'react';
 import { loggKlikkVisAktivitet } from '../../metrics/amplitude-utils';

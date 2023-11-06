@@ -1,4 +1,4 @@
-import { Modal, ToggleGroup } from '@navikt/ds-react';
+import { Modal } from '@navikt/ds-react';
 import React, { useState } from 'react';
 
 import DemoDashboard from './DemoDashboard';

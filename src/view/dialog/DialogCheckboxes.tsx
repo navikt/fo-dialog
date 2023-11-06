@@ -1,5 +1,4 @@
 import { Checkbox, CheckboxGroup } from '@navikt/ds-react';
-import classNames from 'classnames';
 import React from 'react';
 import { Status } from '../../api/typer';
 import { notEmpty } from '../../utils/TypeHelper';

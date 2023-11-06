@@ -1,6 +1,5 @@
 import { PersonIcon } from '@navikt/aksel-icons';
-import { BodyShort, Chat, Link } from '@navikt/ds-react';
-import classNames from 'classnames';
+import { BodyShort, Chat } from '@navikt/ds-react';
 import React from 'react';
 
 import { ViktigMelding } from '../../felleskomponenter/etiketer/Etikett';

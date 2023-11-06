@@ -1,6 +1,5 @@
 import { PlusIcon } from '@navikt/aksel-icons';
 import { Button } from '@navikt/ds-react';
-import classNames from 'classnames';
 import React from 'react';
 import { useNavigate } from 'react-router';
 import { useRoutes } from '../../routes';
