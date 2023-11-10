@@ -1,8 +1,8 @@
 import { fetchData } from '../utils/Fetch';
 
 const dialogvarslerUrl = 'dialogvarsler.ekstern.dev.nav.no';
-const ticketUrl = `/dialogvarsler/ws-auth-ticket`;
-const socketUrl = `ws://${dialogvarslerUrl}/ws`;
+const ticketUrl = `https://${dialogvarslerUrl}/ws-auth-ticket`;
+const socketUrl = `ws://${dialogvarslerUrl}/ws-auth-ticket`;
 
 enum EventTypes {
     NY_MELDING = 'NY_MELDING'
@@ -28,6 +28,7 @@ export const listenForNyDialogEvents = (callback: () => void, fnr?: string) => {
                 callback();
             });
         });
+
     return () => {
         socket.close();
     };
