@@ -17,6 +17,8 @@ import { MeldingSideInput } from './MeldingSideInput';
 import { debounced, maxMeldingsLengde, MeldingInputContext } from './inputUtils';
 import { useVisAktivitet } from '../../AktivitetToggleContext';
 import { Status } from '../../../api/typer';
+import ManagedDialogCheckboxes from "../DialogCheckboxes";
+import dialog from "../../../mock/Dialog";
 
 const schema = z.object({
     melding: z
@@ -115,6 +117,8 @@ const MeldingInputBox = ({ dialog: valgtDialog, kanSendeHenveldelse }: Props) =>
             return <MeldingSideInput dialog={valgtDialog} />;
         }
     }, [breakpoint, compactMode, valgtDialog, visAktivitet]);
+
+    if (!kanSendeHenveldelse && (valgtDialog.venterPaSvar || !valgtDialog.ferdigBehandlet)) return  <ManagedDialogCheckboxes />; //hvis bruker går inn uner krr eller manuel må veileder kunne fjerne venter på
 
     if (!kanSendeHenveldelse) return null;
     return (
