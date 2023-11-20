@@ -118,7 +118,8 @@ const MeldingInputBox = ({ dialog: valgtDialog, kanSendeHenveldelse }: Props) =>
         }
     }, [breakpoint, compactMode, valgtDialog, visAktivitet]);
 
-    if (!kanSendeHenveldelse && (valgtDialog.venterPaSvar || !valgtDialog.ferdigBehandlet)) return <ManagedDialogCheckboxes />; //hvis bruker går inn uner krr eller manuel må veileder kunne fjerne venter på
+    if (!kanSendeHenveldelse && (valgtDialog.venterPaSvar || !valgtDialog.ferdigBehandlet))
+        return <ManagedDialogCheckboxes />; //hvis bruker går inn uner krr eller manuel må veileder kunne fjerne venter på
 
     if (!kanSendeHenveldelse) return null;
     return (
