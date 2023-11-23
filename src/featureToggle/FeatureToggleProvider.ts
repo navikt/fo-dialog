@@ -5,7 +5,7 @@ import { AktivitetApi } from '../api/UseApiBasePath';
 import { fetchData } from '../utils/Fetch';
 import { FeatureToggle } from './const';
 
-const ALL_TOGGLES = [FeatureToggle.VIS_SKJUL_AKTIVITET_KNAPP] as const;
+const ALL_TOGGLES = [FeatureToggle.VIS_SKJUL_AKTIVITET_KNAPP, FeatureToggle.USE_WEBSOCKETS] as const;
 export type Feature = (typeof ALL_TOGGLES)[number];
 export type Features = Record<Feature, boolean>;
 
@@ -16,12 +16,13 @@ export interface FeatureData {
 }
 
 const initBrukerState: FeatureData = {
-    data: { [FeatureToggle.VIS_SKJUL_AKTIVITET_KNAPP]: false },
+    data: { [FeatureToggle.VIS_SKJUL_AKTIVITET_KNAPP]: false, [FeatureToggle.USE_WEBSOCKETS]: false },
     status: Status.INITIAL
 };
 
 export const FeatureToggleContext = React.createContext<Features>({
-    [FeatureToggle.VIS_SKJUL_AKTIVITET_KNAPP]: false
+    [FeatureToggle.VIS_SKJUL_AKTIVITET_KNAPP]: false,
+    [FeatureToggle.USE_WEBSOCKETS]: false
 });
 export const useFeatureToggleContext = () => useContext(FeatureToggleContext);
 
@@ -32,7 +33,10 @@ const onStorageChange = (setState: (value: (prevState: FeatureData) => FeatureDa
     setState((state: FeatureData) => {
         return {
             ...state,
-            data: { [FeatureToggle.VIS_SKJUL_AKTIVITET_KNAPP]: mode === 'compact' }
+            data: {
+                ...state.data,
+                [FeatureToggle.VIS_SKJUL_AKTIVITET_KNAPP]: mode === 'compact'
+            }
         };
     });
 };
