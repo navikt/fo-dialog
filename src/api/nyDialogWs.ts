@@ -36,7 +36,9 @@ export const listenForNyDialogEvents = (callback: () => void, fnr?: string) => {
                 });
             }
             socket.addEventListener('message', (event) => {
-                if (event.data !== EventTypes.NY_MELDING) return;
+                if (event.data === 'AUTHENTICATED') return;
+                const message = JSON.parse(event.data);
+                if (message !== EventTypes.NY_MELDING) return;
                 callback();
             });
         });
