@@ -11,6 +11,7 @@ export interface DialogDataProviderType {
     status: Status;
     dialoger: DialogData[];
     hentDialoger: () => Promise<DialogData[]>;
+    silentlyHentDialoger: () => Promise<DialogData[]>;
     pollForChanges: () => Promise<void>;
     nyDialog: (melding: string, tema: string, aktivitetId?: string) => Promise<DialogData>;
     nyMelding: (melding: string, dialog: DialogData) => Promise<DialogData>;
@@ -23,6 +24,7 @@ export const DialogContext = React.createContext<DialogDataProviderType>({
     status: Status.INITIAL,
     dialoger: [],
     hentDialoger: () => Promise.resolve([]),
+    silentlyHentDialoger: () => Promise.resolve([]),
     pollForChanges: () => Promise.resolve(),
     nyDialog: (_melding: string, _tema: string, _aktivitetId?: string) => Promise.resolve({} as any),
     nyMelding: (_melding: string, dialog: DialogData) => Promise.resolve(dialog),
@@ -189,9 +191,20 @@ export function useDialogDataProvider(fnr?: string): DialogDataProviderType {
             nyMelding,
             lesDialog,
             setFerdigBehandlet,
-            setVenterPaSvar
+            setVenterPaSvar,
+            silentlyHentDialoger
         };
-    }, [state, hentDialoger, pollForChanges, nyDialog, nyMelding, lesDialog, setFerdigBehandlet, setVenterPaSvar]);
+    }, [
+        state,
+        hentDialoger,
+        pollForChanges,
+        nyDialog,
+        nyMelding,
+        lesDialog,
+        setFerdigBehandlet,
+        setVenterPaSvar,
+        silentlyHentDialoger
+    ]);
 }
 
 function isDialogReloading(status: Status) {

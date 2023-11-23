@@ -63,7 +63,7 @@ export function Provider(props: Props) {
     const aktivitetDataProvider = useAktivitetDataProvider(fnr);
     const kladdDataProvider = useKladdDataProvider(fnr);
 
-    const { hentDialoger, pollForChanges, status: dialogstatus } = dialogDataProvider;
+    const { hentDialoger, pollForChanges, status: dialogstatus, silentlyHentDialoger } = dialogDataProvider;
     const { hentAktiviteter, hentArenaAktiviteter } = aktivitetDataProvider;
     const hentKladder = kladdDataProvider.hentKladder;
 
@@ -91,7 +91,7 @@ export function Provider(props: Props) {
                 interval = setInterval(() => pollForChanges().catch(() => clearInterval(interval)), 10000);
                 return () => clearInterval(interval);
             } else if (bruker?.erVeileder) {
-                return listenForNyDialogEvents(() => {}, fnr);
+                return listenForNyDialogEvents(silentlyHentDialoger, fnr);
             }
         }
     }, [dialogStatusOk, bruker, brukerStatusErLastet, pollForChanges]);
