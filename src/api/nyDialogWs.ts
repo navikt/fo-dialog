@@ -8,6 +8,13 @@ enum EventTypes {
     NY_MELDING = 'NY_MELDING'
 }
 
+enum ReadyState {
+    CONNECTING = 0,
+    OPEN = 1,
+    CLOSING = 2,
+    CLOSED = 3
+}
+
 export const listenForNyDialogEvents = (callback: () => void, fnr?: string) => {
     // Start with only internal
     if (!fnr) return;
@@ -20,9 +27,14 @@ export const listenForNyDialogEvents = (callback: () => void, fnr?: string) => {
             return response.text();
         })
         .then((ticket) => {
-            socket.addEventListener('open', () => {
+            // If ready state is OPEN (1)
+            if (socket.readyState == ReadyState.OPEN) {
                 socket.send(ticket);
-            });
+            } else {
+                socket.addEventListener('open', () => {
+                    socket.send(ticket);
+                });
+            }
             socket.addEventListener('message', (event) => {
                 if (event.data !== EventTypes.NY_MELDING) return;
                 callback();
