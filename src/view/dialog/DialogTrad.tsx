@@ -1,10 +1,10 @@
 import { Loader } from '@navikt/ds-react';
 import classNames from 'classnames';
 import React, { useEffect, useRef, useState } from 'react';
-import { useNavigate } from 'react-router';
+import { useLocation, useNavigate } from 'react-router';
 
 import { useRoutes } from '../../routes';
-import { UpdateTypes, dispatchUpdate } from '../../utils/UpdateEvent';
+import { dispatchUpdate, UpdateTypes } from '../../utils/UpdateEvent';
 import useKansendeMelding from '../../utils/UseKanSendeMelding';
 import { useVisAktivitet } from '../AktivitetToggleContext';
 import { useDialogContext } from '../DialogProvider';
@@ -13,7 +13,7 @@ import { Meldinger } from '../melding/Meldinger';
 import { useFnrContext } from '../Provider';
 import { useSelectedAktivitet, useSelectedDialog } from '../utils/useAktivitetId';
 import { useEventListener } from '../utils/useEventListner';
-import { endreDialogSomVises, useViewContext } from '../ViewState';
+import { HandlingsType, useSetViewContext, useViewContext } from '../ViewState';
 import MeldingInputBox from './meldingInput/MeldingInputBox';
 import HistoriskInfo from './HistoriskInfo';
 
@@ -29,16 +29,24 @@ function DialogTrad() {
     const fnr = useFnrContext();
     const visAktivitet = useVisAktivitet();
 
-    const { viewState, setViewState } = useViewContext();
+    const viewState = useViewContext();
+    const setViewState = useSetViewContext();
     const [activeTab, setActiveTab] = useState(!document.hidden);
     const [activePersonflateTab, setActivePersonflateTab] = useState(true);
 
     const lest = !valgtDialog ? true : valgtDialog.lest;
+    const { state: navigationState } = useLocation();
 
     useEffect(() => {
-        setViewState(endreDialogSomVises(viewState, dialogId));
+        // Hvis det navigeres til denne siden med en state (som arg i navigate) så puttes den i context
+        // Hvis ikke skal sistHandlingsType være INGEN (Ikke vis send bekreftelse)
+        if (!navigationState?.sistHandlingsType) {
+            setViewState({ sistHandlingsType: HandlingsType.ingen });
+        } else if (navigationState.sistHandlingsType !== viewState.sistHandlingsType) {
+            setViewState({ sistHandlingsType: navigationState.sistHandlingsType });
+        }
         // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [dialogId]);
+    }, [dialogId, setViewState, navigationState]);
 
     useEffect(() => {
         const listener = () => setActiveTab(!document.hidden);

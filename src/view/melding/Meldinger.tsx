@@ -6,7 +6,6 @@ import { DialogData, MeldingsData, StringOrNull } from '../../utils/Typer';
 import DialogSendtBekreftelse from '../dialog/DialogSendtBekreftelse';
 import LestAvTidspunkt from '../lest/LestTidspunkt';
 import { useSkjulHodefotForMobilVisning } from '../utils/useSkjulHodefotForMobilVisning';
-import { useViewContext } from '../ViewState';
 import { Melding } from './Melding';
 
 interface Props {
@@ -25,11 +24,8 @@ function sisteLesteHenvendelse(lest: StringOrNull, henvendelser: MeldingsData[])
 }
 
 export function Meldinger(props: Props) {
-    const { viewState } = useViewContext();
     const { lestAvBrukerTidspunkt, henvendelser } = props.dialogData;
-
     const meldingListRef = useRef<HTMLElement>(null);
-
     const sorterteHenvendelser = !!henvendelser ? henvendelser.sort((a, b) => compareDates(b.sendt, a.sendt)) : [];
 
     useSkjulHodefotForMobilVisning();
@@ -74,7 +70,7 @@ export function Meldinger(props: Props) {
                         </React.Fragment>
                     ))}
                 </div>
-                <DialogSendtBekreftelse viewState={viewState} dialog={props.dialogData} fnr={props.fnr} />
+                <DialogSendtBekreftelse />
             </div>
         </section>
     );

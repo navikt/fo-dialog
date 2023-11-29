@@ -59,7 +59,7 @@ export const useFocusBeforeHilsen = (ref: MutableRefObject<HTMLTextAreaElement |
     }, [ref.current]);
 
     const fnr = useFnrContext();
-    const { viewState } = useViewContext();
+    const viewState = useViewContext();
     const startTekst = useMeldingStartTekst();
     const {
         formState: { defaultValues, isDirty }

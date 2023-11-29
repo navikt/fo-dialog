@@ -4,6 +4,7 @@ import { useNavigate } from 'react-router';
 import loggEvent from '../felleskomponenter/logging';
 import { useRoutes } from '../routes';
 import { useEventListener } from './utils/useEventListner';
+import { HandlingsType } from './ViewState';
 
 interface EventDetails {
     dialogId?: string;
@@ -31,9 +32,9 @@ export function EventHandler() {
     useEventListener<EventDetails>('visDialog', (event) => {
         const { dialogId, aktivitetId } = event.detail;
         if (!!dialogId) {
-            navigate(dialogRoute(dialogId));
+            navigate(dialogRoute(dialogId), { state: { sistHandlingsType: HandlingsType.ingen } });
         } else if (!!aktivitetId) {
-            navigate(nyRoute(aktivitetId));
+            navigate(nyRoute(aktivitetId), { state: { sistHandlingsType: HandlingsType.ingen } });
         }
     });
 
