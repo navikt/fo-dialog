@@ -14,6 +14,7 @@ import { useEventListener } from '../utils/useEventListner';
 import styles from './DialogPreview.module.css';
 import { EtikettListe } from './EtikettListe';
 import Ikon from './ikon/Ikon';
+import { HandlingsType } from '../ViewState';
 
 interface TittelProps {
     aktivitet?: Aktivitet | ArenaAktivitet;
@@ -89,7 +90,7 @@ function DialogPreview(props: Props) {
     const { dialogRoute } = useRoutes();
     const onGoTo = (event: React.MouseEvent<HTMLElement>) => {
         event.preventDefault();
-        navigate(dialogRoute(id));
+        navigate(dialogRoute(id), { state: { sistHandlingsType: HandlingsType.ingen } });
     };
 
     return (

@@ -15,6 +15,7 @@ import { useCompactMode } from '../../featureToggle/FeatureToggleProvider';
 import { findKladd, useKladdContext } from '../KladdProvider';
 import { cutStringAtLength } from '../utils/stringUtils';
 import useMeldingStartTekst from './UseMeldingStartTekst';
+import { HandlingsType } from '../ViewState';
 
 const maxMeldingsLengde = 5000;
 
@@ -30,12 +31,11 @@ export type NyDialogFormValues = z.infer<typeof schema>;
 
 interface Props {
     defaultTema: string;
-    setViewState: () => void;
     aktivitetId?: string;
 }
 
 const NyDialogForm = (props: Props) => {
-    const { defaultTema, setViewState, aktivitetId } = props;
+    const { defaultTema, aktivitetId } = props;
     const { hentDialoger, nyDialog } = useDialogContext();
     const bruker = useUserInfoContext();
     const navigate = useNavigate();
@@ -90,8 +90,7 @@ const NyDialogForm = (props: Props) => {
         return nyDialog(melding, tema, aktivitetId)
             .then((dialog) => {
                 slettKladd(null, props.aktivitetId);
-                setViewState();
-                navigate(dialogRoute(dialog.id));
+                navigate(dialogRoute(dialog.id), { state: { sistHandlingsType: HandlingsType.nyDialog } });
                 dispatchUpdate(UpdateTypes.Dialog);
                 return dialog;
             })

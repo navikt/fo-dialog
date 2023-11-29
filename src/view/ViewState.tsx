@@ -1,14 +1,13 @@
 import React, { Dispatch, SetStateAction, useCallback, useContext, useState } from 'react';
 
 export interface ViewState {
-    dialogSomVises?: string;
     sistHandlingsType: HandlingsType;
 }
 
 export enum HandlingsType {
-    ingen,
-    nyMelding,
-    nyDialog
+    ingen = 'INGEN',
+    nyMelding = 'NY_MELDING',
+    nyDialog = 'NY_DIALOG'
 }
 
 interface ViewContextType {
@@ -17,7 +16,6 @@ interface ViewContextType {
 }
 
 export const initalState: ViewState = {
-    dialogSomVises: undefined,
     sistHandlingsType: HandlingsType.ingen
 };
 export const ViewContext = React.createContext<ViewContextType>({
@@ -32,20 +30,14 @@ export const ViewStateProvider = ({ children }: { children: React.ReactElement }
     const setViewState = useCallback(setState, [viewState]);
     return <ViewContext.Provider value={{ viewState, setViewState }}>{children}</ViewContext.Provider>;
 };
-export const useViewContext = () => useContext(ViewContext);
-
-export function endreDialogSomVises(state?: ViewState, dialogId?: string): ViewState {
-    if (state && !state.dialogSomVises) {
-        return { ...initalState, dialogSomVises: dialogId, sistHandlingsType: state.sistHandlingsType };
-    }
-
-    return { ...initalState, dialogSomVises: dialogId };
-}
+export const useViewContext = () => useContext(ViewContext).viewState;
+export const useSetViewContext = () => useContext(ViewContext).setViewState;
 
 export function sendtNyMelding(state: ViewState): ViewState {
-    return { ...state, sistHandlingsType: HandlingsType.nyMelding };
-}
-
-export function sendtNyDialog(state: ViewState): ViewState {
-    return { ...state, sistHandlingsType: HandlingsType.nyDialog };
+    // Trenger ikke skifte melding når man sender en ekstra melding i ny dialog, de er nesten like
+    if (state.sistHandlingsType === HandlingsType.nyDialog) {
+        return state;
+    } else {
+        return { sistHandlingsType: HandlingsType.nyMelding };
+    }
 }

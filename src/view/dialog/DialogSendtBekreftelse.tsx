@@ -1,9 +1,11 @@
 import { Alert, BodyShort, HelpText } from '@navikt/ds-react';
 import React, { useEffect, useState } from 'react';
 
-import { DialogData, StringOrNull } from '../../utils/Typer';
-import { HandlingsType, ViewState } from '../ViewState';
+import { StringOrNull } from '../../utils/Typer';
+import { HandlingsType, useViewContext } from '../ViewState';
 import styles from './DialogSendtBekreftelse.module.less';
+import { useFnrContext } from '../Provider';
+import { useSelectedDialog } from '../utils/useAktivitetId';
 
 function getTekst(handling: HandlingsType, erVeileder: boolean, overskrift: StringOrNull) {
     if (erVeileder && HandlingsType.ingen !== handling) {
@@ -16,12 +18,6 @@ function getTekst(handling: HandlingsType, erVeileder: boolean, overskrift: Stri
         }
         return `Meldingen om "${overskrift}" er sendt. Du får svar i løpet av noen dager.`;
     }
-}
-
-interface Props {
-    viewState: ViewState;
-    dialog: DialogData;
-    fnr?: string;
 }
 
 function Melding(props: { tekst?: string; erVeileder: boolean }) {
@@ -56,12 +52,14 @@ function Melding(props: { tekst?: string; erVeileder: boolean }) {
     );
 }
 
-function DialogSendtBekreftelse(props: Props) {
-    const { viewState, dialog, fnr } = props;
+function DialogSendtBekreftelse() {
+    const fnr = useFnrContext();
+    const dialog = useSelectedDialog();
+    const { sistHandlingsType } = useViewContext();
     const erVeileder = !!fnr;
+    const sistHandling = sistHandlingsType;
 
-    const tekst = getTekst(viewState.sistHandlingsType, erVeileder, dialog.overskrift);
-
+    const tekst = dialog ? getTekst(sistHandling, erVeileder, dialog.overskrift) : undefined;
     return (
         <div role="status" className="pb-4">
             <Melding erVeileder={erVeileder} tekst={tekst} />

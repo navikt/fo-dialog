@@ -9,7 +9,7 @@ import { dispatchUpdate, UpdateTypes } from '../../../utils/UpdateEvent';
 import { useDialogContext } from '../../DialogProvider';
 import { useCompactMode } from '../../../featureToggle/FeatureToggleProvider';
 import { useKladdContext } from '../../KladdProvider';
-import { sendtNyMelding, useViewContext } from '../../ViewState';
+import { sendtNyMelding, useSetViewContext, useViewContext } from '../../ViewState';
 import useMeldingStartTekst from '../UseMeldingStartTekst';
 import { Breakpoint, useBreakpoint } from '../../utils/useBreakpoint';
 import { MeldingBottomInput } from './MeldingBottomInput';
@@ -42,7 +42,8 @@ const MeldingInputBox = ({ dialog: valgtDialog, kanSendeHenveldelse }: Props) =>
     const compactMode = useCompactMode();
     const { kladder, oppdaterKladd, slettKladd, oppdaterStatus } = useKladdContext();
     const kladd = kladder.find((k) => k.aktivitetId === valgtDialog.aktivitetId && k.dialogId === valgtDialog.id);
-    const { viewState, setViewState } = useViewContext();
+    const viewState = useViewContext();
+    const setViewState = useSetViewContext();
 
     const defaultValues: MeldingFormValues = {
         melding: kladd?.tekst || startTekst
@@ -93,7 +94,16 @@ const MeldingInputBox = ({ dialog: valgtDialog, kanSendeHenveldelse }: Props) =>
                     setNoeFeilet(true);
                 });
         };
-    }, [slettKladd, setNoeFeilet, setViewState, startTekst, stopKladdSyncing, valgtDialog.aktivitetId, valgtDialog.id]);
+    }, [
+        slettKladd,
+        setNoeFeilet,
+        setViewState,
+        startTekst,
+        stopKladdSyncing,
+        valgtDialog.aktivitetId,
+        valgtDialog.id,
+        viewState
+    ]);
 
     const kladdErLagret = melding !== startTekst && !kladdSkalOppdateres() && Status.OK === oppdaterStatus;
 
