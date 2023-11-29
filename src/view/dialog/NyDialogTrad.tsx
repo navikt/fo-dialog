@@ -24,7 +24,7 @@ export default function NyDialogTrad() {
 
     useEffect(() => {
         setViewState({ sistHandlingsType: HandlingsType.ingen });
-    }, [setViewState]);
+    }, []);
 
     if (!kansendeMelding || (aktivitetId && !aktivitet)) {
         return <div className={styles.dialog} />;
