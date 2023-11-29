@@ -1,7 +1,7 @@
 import { Link } from '@navikt/ds-react';
 import React from 'react';
 
-import { ReactComponent as EksternLenkeIkon } from './ekstern-lenke.svg';
+import EksternLenkeIkon from './ekstern-lenke.svg?react';
 
 const httpRegex = /^(https?):\/\/.*$/;
 

@@ -1,7 +1,7 @@
 import { BodyShort } from '@navikt/ds-react';
 import React from 'react';
 
-import { ReactComponent as IngenValgteDialoger } from '../dialog/ingen-valgt.svg';
+import IngenValgteDialoger from '../dialog/ingen-valgt.svg?react';
 
 const DialogIkkeValgt = () => {
     return (
