@@ -4,6 +4,8 @@ import { Status, isReloading } from '../api/typer';
 import { OppfolgingsApi } from '../api/UseApiBasePath';
 import { fetchData, fnrQuery } from '../utils/Fetch';
 import { OppfolgingData } from '../utils/Typer';
+import useSWR, { mutate } from 'swr';
+import { getStatus } from '../utils/appStateUtil';
 
 export interface OppfolgingDataProviderType {
     data?: OppfolgingData;
@@ -29,39 +31,15 @@ export const OppfolgingContext = React.createContext<OppfolgingDataProviderType>
 export const useOppfolgingContext = () => useContext(OppfolgingContext);
 
 export const useOppfolgingDataProvider = (fnr?: string) => {
-    const [state, setState] = useState<OppfolgingState>(initOppfolgingState);
-
     const query = fnrQuery(fnr);
-
     const oppfolgingUrl = useMemo(() => OppfolgingsApi.oppfolgingUrl(query), [query]);
+    const { data, isLoading, error, isValidating } = useSWR(`oppfolging/${fnr || 'bruker'}`, () =>
+        fetchData<OppfolgingData>(oppfolgingUrl)
+    );
 
-    const hentOppfolging: () => Promise<OppfolgingData | undefined> = useCallback(() => {
-        setState((prevState) => ({
-            ...prevState,
-            status: isReloading(prevState.status) ? Status.RELOADING : Status.PENDING
-        }));
-        return fetchData<OppfolgingData>(oppfolgingUrl)
-            .then((response) => {
-                setState(() => ({
-                    data: response,
-                    status: Status.OK
-                }));
-                return response;
-            })
-            .catch(() => {
-                setState((prevState) => ({
-                    ...prevState,
-                    status: Status.ERROR
-                }));
-                return undefined;
-            });
-    }, [oppfolgingUrl]);
-
-    return useMemo(() => {
-        return {
-            data: state.data,
-            status: state.status,
-            hentOppfolging: hentOppfolging
-        };
-    }, [state, hentOppfolging]);
+    return {
+        data: data || initOppfolgingState.data,
+        status: getStatus(data, isLoading, isValidating, error),
+        hentOppfolging: () => mutate(`oppfolging/${fnr || 'bruker'}`)
+    };
 };

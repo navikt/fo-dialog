@@ -4,6 +4,8 @@ import { Status, isReloading } from '../api/typer';
 import { OppfolgingsApi } from '../api/UseApiBasePath';
 import { fetchData } from '../utils/Fetch';
 import { Bruker } from '../utils/Typer';
+import useSWR from 'swr';
+import { getStatus } from '../utils/appStateUtil';
 
 export interface BrukerDataProviderType {
     data: Bruker | null;
@@ -18,36 +20,14 @@ const initBrukerState: BrukerDataProviderType = {
 
 export const UserInfoContext = React.createContext<Bruker | null>(null);
 export const useUserInfoContext = () => useContext(UserInfoContext);
-
+const apiUrl = OppfolgingsApi.me;
 export const useBrukerDataProvider = (fnr?: string): BrukerDataProviderType => {
-    const [state, setState] = useState<BrukerDataProviderType>(initBrukerState);
-
-    const apiUrl = OppfolgingsApi.me;
-
-    useEffect(() => {
-        setState((prevState) => ({
-            ...prevState,
-            status: isReloading(prevState.status) ? Status.RELOADING : Status.PENDING
-        }));
+    const { data, error, isLoading, isValidating } = useSWR(`brukerData/${fnr || 'bruker'}`, () =>
         fetchData<Bruker>(apiUrl)
-            .then((bruker) => {
-                setState({
-                    data: bruker,
-                    status: Status.OK
-                });
-            })
-            .catch((e) => {
-                setState((prevState) => ({
-                    ...prevState,
-                    error: e,
-                    status: Status.ERROR
-                }));
-            });
-    }, [apiUrl]);
-
+    );
     return {
-        data: state.data,
-        status: state.status,
-        error: state.error
+        data: data || initBrukerState.data,
+        status: getStatus(data, isLoading, isValidating, error),
+        error: error
     };
 };

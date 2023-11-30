@@ -44,7 +44,10 @@ interface Props {
     erVeileder: boolean;
     children: React.ReactNode;
     visAktivitetDefault?: boolean;
+    initialState?: AppState;
 }
+
+export interface AppState {}
 
 export function Provider(props: Props) {
     const { fnr, erVeileder, children, visAktivitetDefault } = props;
@@ -54,8 +57,7 @@ export function Provider(props: Props) {
     const { data: feature } = useFeatureToggleProvider();
     const { data: bruker, status: brukerstatus }: BrukerDataProviderType = useBrukerDataProvider(fnr);
     const oppfolgingDataProvider = useOppfolgingDataProvider(fnr);
-    const { status: oppfolgingstatus, hentOppfolging } = oppfolgingDataProvider;
-
+    const { status: oppfolgingstatus } = oppfolgingDataProvider;
     const harLoggetInnNiva4 = useFetchHarNivaa4(erVeileder, fnr);
 
     const dialogDataProvider = useDialogDataProvider(fnr);
@@ -67,17 +69,13 @@ export function Provider(props: Props) {
     const hentKladder = kladdDataProvider.hentKladder;
 
     useEffect(() => {
-        hentOppfolging();
-    }, [hentOppfolging]);
-
-    useEffect(() => {
         hentAktiviteter();
         hentArenaAktiviteter();
     }, [hentAktiviteter, hentArenaAktiviteter]);
 
     useEffect(() => {
         hentDialoger();
-        hentKladder();
+        // hentKladder();
     }, [hentDialoger, hentKladder]);
 
     useEffect(() => {

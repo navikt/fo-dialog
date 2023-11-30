@@ -1,9 +1,11 @@
-import React, { useContext, useEffect, useState } from 'react';
+import React, { useEffect } from 'react';
 
 import { Status, isReloading } from '../api/typer';
-import { AktivitetApi } from '../api/UseApiBasePath';
 import { fetchData } from '../utils/Fetch';
 import { FeatureToggle } from './const';
+import useSWR from 'swr';
+import { getStatus } from '../utils/appStateUtil';
+import { AktivitetApi } from '../api/UseApiBasePath';
 
 const ALL_TOGGLES = [FeatureToggle.VIS_SKJUL_AKTIVITET_KNAPP] as const;
 export type Feature = (typeof ALL_TOGGLES)[number];
@@ -23,35 +25,12 @@ const initBrukerState: FeatureData = {
 export const FeatureToggleContext = React.createContext<Features>({
     [FeatureToggle.VIS_SKJUL_AKTIVITET_KNAPP]: false
 });
-export const useFeatureToggleContext = () => useContext(FeatureToggleContext);
+const apiUrl = AktivitetApi.hentFeatureToggles;
 export const useFeatureToggleProvider = (): FeatureData => {
-    const [state, setState] = useState<FeatureData>(initBrukerState);
-    const apiUrl = AktivitetApi.hentFeatureToggles;
-
-    useEffect(() => {
-        setState((prevState) => ({
-            ...prevState,
-            status: isReloading(prevState.status) ? Status.RELOADING : Status.PENDING
-        }));
-        fetchData<Features>(apiUrl)
-            .then((featureToggles) => {
-                setState({
-                    data: featureToggles,
-                    status: Status.OK
-                });
-            })
-            .catch((e) => {
-                setState((prevState) => ({
-                    ...prevState,
-                    error: e,
-                    status: Status.ERROR
-                }));
-            });
-    }, [apiUrl]);
-
+    const { data, isLoading, error, mutate, isValidating } = useSWR('features', () => fetchData<Features>(apiUrl));
     return {
-        data: state.data || initBrukerState.data,
-        status: state.status,
-        error: state.error
+        data: data || initBrukerState.data,
+        status: getStatus(data, isLoading, isValidating, error),
+        error: error
     };
 };

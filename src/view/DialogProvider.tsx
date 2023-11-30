@@ -6,6 +6,7 @@ import { DialogApi } from '../api/UseApiBasePath';
 import { loggChangeInDialog } from '../felleskomponenter/logging';
 import { fetchData, fnrQuery } from '../utils/Fetch';
 import { DialogData, NyDialogMeldingData, SistOppdatert } from '../utils/Typer';
+import useSWR from 'swr';
 
 export interface DialogDataProviderType {
     status: Status;
@@ -42,8 +43,8 @@ export interface DialogState {
 
 const initDialogState: DialogState = {
     status: Status.INITIAL,
-    sistOppdatert: new Date(),
-    dialoger: []
+    sistOppdatert: new Date()
+    // dialoger: []
 };
 
 export function useDialogDataProvider(fnr?: string): DialogDataProviderType {
@@ -64,21 +65,16 @@ export function useDialogDataProvider(fnr?: string): DialogDataProviderType {
         [query]
     );
 
-    const hentDialoger: () => Promise<DialogData[]> = useCallback(() => {
-        setState((prevState) => ({
-            ...prevState,
-            status: isDialogReloading(prevState.status) ? Status.RELOADING : Status.PENDING
-        }));
-        return fetchData<DialogData[]>(dialogUrl)
-            .then((dialoger) => {
-                setState({ status: Status.OK, dialoger: dialoger, sistOppdatert: new Date() });
-                return dialoger;
-            })
-            .catch((e) => {
-                setState((prevState) => ({ ...prevState, status: Status.ERROR, error: e }));
-                return [];
-            });
-    }, [dialogUrl, setState]);
+    const {
+        data: dialogData,
+        isValidating,
+        isLoading,
+        error,
+        mutate
+    } = useSWR(`dialogData/${fnr || 'bruker'}`, () => fetchData<DialogData[]>(dialogUrl));
+    const hentDialoger = () => {};
+
+    // Når dialoger er hentet, sett sistOppdatert til new Date()
 
     const pollForChanges = useCallback(() => {
         return fetchData<SistOppdatert>(sistOppdatertUrl).then((data) => {

@@ -5,6 +5,8 @@ import { createRoot, Root } from 'react-dom/client';
 import App from './App';
 import globalCss from './global.css?inline';
 import dialogOversiktStyles from './view/dialogliste/DialogPreview.module.css?inline';
+import { AppState } from './view/Provider';
+import { getPreloadedStateFromSessionStorage, settFnrILocalstorage } from './utils/appStateUtil';
 
 export class DabDialog extends HTMLElement {
     setFnr?: (fnr: string) => void;
@@ -29,11 +31,16 @@ export class DabDialog extends HTMLElement {
         shadowRoot.appendChild(styleElem);
 
         const fnr = this.getAttribute('data-fnr') ?? undefined;
+        let initialState: AppState | undefined = undefined;
+        if (fnr) {
+            settFnrILocalstorage(fnr);
+            initialState = getPreloadedStateFromSessionStorage(fnr);
+        }
         try {
             this.root = createRoot(appRoot);
             this.root.render(
                 <ModalProvider rootElement={shadowDomFirstChild}>
-                    <App key={'1'} fnr={fnr} />
+                    <App initialState={initialState} key={'1'} fnr={fnr} />
                 </ModalProvider>
             );
         } catch (e) {
