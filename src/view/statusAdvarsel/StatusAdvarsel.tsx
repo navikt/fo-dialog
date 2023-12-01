@@ -1,6 +1,5 @@
 import React from 'react';
 
-import { erProd } from '../../utils/FellesFunksjoner';
 import { useUserInfoContext } from '../BrukerProvider';
 import { useOppfolgingContext } from '../OppfolgingProvider';
 import { dataOrUndefined, useHarNivaa4Context } from '../Provider';
@@ -41,8 +40,7 @@ export default function StatusAdvarsel() {
     if (manuellBruker) {
         return <ManuellBruker erVeileder={erVeileder} />;
     }
-    if (!kanVarsles && erProd()) {
-        //erProd trengs da ingen av brukerne er registrert i krr i testmiljø
+    if (!kanVarsles) {
         return <KanIkkeVarsles erVeileder={erVeileder} />;
     }
 
