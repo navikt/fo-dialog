@@ -17,7 +17,12 @@ function DemoBanner() {
     return (
         <div>
             <DemoIkon onClick={() => setOpen(true)} />
-            <Modal open={open} onClose={() => setOpen(false)} header={{ heading: '', closeButton: true }}>
+            <Modal
+                closeOnBackdropClick={true}
+                open={open}
+                onClose={() => setOpen(false)}
+                header={{ heading: '', closeButton: true }}
+            >
                 <DemoDashboard
                     skul={() => {
                         setSkult(true);
