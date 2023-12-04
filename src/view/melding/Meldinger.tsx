@@ -52,6 +52,7 @@ export function Meldinger(props: Props) {
             className="grow bg-gray-100 px-4 flex xl:justify-center"
             ref={meldingListRef}
             tabIndex={0}
+            role="grid"
         >
             <div className="grow xl:w-full xl:max-w-248 flex flex-col justify-end">
                 <Heading level="3" size={'medium'} className="hidden">

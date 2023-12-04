@@ -40,7 +40,7 @@ export function Melding(props: Props) {
     const avatarBgColor = erFraSegSelv ? 'rgba(181, 241, 255, 1)' : 'rgba(255, 255, 255, 1)';
 
     return (
-        <div className="mt-4">
+        <div className="mt-4" role="row">
             <BodyShort className="hidden">{accessibleText(erBruker, erMeldingFraBruker)}</BodyShort>
             <Chat
                 timestamp={toppTekst}
