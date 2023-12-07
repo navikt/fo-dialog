@@ -43,7 +43,8 @@ export function Melding(props: Props) {
         <div className="mt-4" role="row">
             <BodyShort className="hidden">{accessibleText(erBruker, erMeldingFraBruker)}</BodyShort>
             <Chat
-                timestamp={toppTekst}
+                name={erMeldingFraBruker ? avsender : avsenderId}
+                timestamp={date}
                 size={compactMode ? 'small' : 'medium'}
                 avatar={erMeldingFraBruker ? <PersonIcon aria-hidden className={'!h-6 !w-6'} /> : 'NAV'}
                 position={erMeldingFraBruker ? 'right' : 'left'}

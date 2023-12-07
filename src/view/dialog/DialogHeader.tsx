@@ -53,7 +53,7 @@ export function DialogHeader() {
                     ) : (
                         <div className={classNames('flex flex-row gap-x-2 pl-4', { 'py-2': !compactMode })}>
                             <TilbakeKnapp className="md:hidden" />
-                            <Heading level="1" size="small">
+                            <Heading level="2" size="small">
                                 {dialog?.overskrift}
                             </Heading>
                         </div>

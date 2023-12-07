@@ -38,7 +38,7 @@ export function DialogMedAktivitetHeader() {
             <div className="flex flex-1 flex-row items-center gap-x-2 lg:max-w-lgContainer xl:max-w-none">
                 <TilbakeKnapp className="md:hidden" />
                 <div className={classNames('md:ml-4', { 'flex items-baseline gap-2': compactMode })}>
-                    <Heading className="" level="1" size="small" aria-label={`${typeTekst}: ${aktivitet?.tittel}`}>
+                    <Heading className="" level="2" size="small" aria-label={`${typeTekst}: ${aktivitet?.tittel}`}>
                         {aktivitet?.tittel}
                     </Heading>
                     {infotekst &&
