@@ -30,7 +30,7 @@ const MeldingBottomInputInner = () => {
     return (
         <form className="'flex flex-1 flex-col overflow-hidden'" onSubmit={onSubmit} noValidate autoComplete="off">
             <div className="flex items-end">
-                <label htmlFor="melding_input" className="hidden ">
+                <label htmlFor="melding_input" className="sr-only">
                     Skriv om arbeid og oppfølging
                 </label>
                 <TextareaAutosize
