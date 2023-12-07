@@ -59,13 +59,10 @@ export function Meldinger(props: Props) {
                     Meldinger
                 </Heading>
                 <div className="mb-4">
-                    {sorterteMeldinger.map((henvendelse, index) => (
-                        <React.Fragment key={henvendelse.id}>
-                            <Melding
-                                henvendelseData={henvendelse}
-                                viktigMarkering={(erViktig && index === 0) || henvendelse.viktig}
-                            />
-                            {henvendelse.id === sisteHenvendelseLestAvBruker ? (
+                    {sorterteMeldinger.map((melding, index) => (
+                        <React.Fragment key={melding.id}>
+                            <Melding melding={melding} viktigMarkering={(erViktig && index === 0) || melding.viktig} />
+                            {melding.id === sisteHenvendelseLestAvBruker ? (
                                 <LestAvTidspunkt tidspunkt={lestAvBrukerTidspunkt!} />
                             ) : null}
                         </React.Fragment>

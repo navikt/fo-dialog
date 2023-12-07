@@ -19,14 +19,14 @@ function accessibleText(erBruker: boolean, erMeldingFraBruker: boolean) {
 }
 
 interface Props {
-    henvendelseData: MeldingsData;
+    melding: MeldingsData;
     viktigMarkering: boolean;
 }
 
 export function Melding(props: Props) {
     const compactMode = useCompactMode();
     const { viktigMarkering } = props;
-    const { avsender, sendt, tekst, avsenderId } = props.henvendelseData;
+    const { avsender, sendt, tekst, avsenderId } = props.melding;
     const brukerData = useUserInfoContext();
     const erBruker = brukerData?.erBruker ?? false;
 
