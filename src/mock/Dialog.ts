@@ -19,7 +19,7 @@ const dialoger: DialogData[] = [
         lestAvBrukerTidspunkt: '2018-02-28T12:48:56.081+01:00',
         erLestAvBruker: false,
         aktivitetId: 'STILLING1',
-        henvendelser: [
+        meldinger: [
             {
                 id: '1',
                 dialogId: '1',
@@ -124,7 +124,7 @@ const dialoger: DialogData[] = [
         lestAvBrukerTidspunkt: '2018-02-02T11:50:20.615+01:00',
         erLestAvBruker: true,
         aktivitetId: null,
-        henvendelser: [
+        meldinger: [
             {
                 id: '3',
                 dialogId: '2',
@@ -154,7 +154,7 @@ const dialoger: DialogData[] = [
         lestAvBrukerTidspunkt: null,
         erLestAvBruker: false,
         aktivitetId: null,
-        henvendelser: [
+        meldinger: [
             {
                 id: '4',
                 dialogId: '4',
@@ -303,7 +303,7 @@ const dialoger: DialogData[] = [
         lestAvBrukerTidspunkt: null,
         erLestAvBruker: false,
         aktivitetId: null,
-        henvendelser: [
+        meldinger: [
             {
                 id: '3',
                 dialogId: '2',
@@ -330,7 +330,7 @@ const dialoger: DialogData[] = [
         lestAvBrukerTidspunkt: null,
         erLestAvBruker: false,
         aktivitetId: 'SAMTALEREFERAT1',
-        henvendelser: [
+        meldinger: [
             {
                 id: '3',
                 dialogId: '2',
@@ -357,7 +357,7 @@ const dialoger: DialogData[] = [
         lestAvBrukerTidspunkt: null,
         erLestAvBruker: false,
         aktivitetId: 'ARENATA11',
-        henvendelser: [
+        meldinger: [
             {
                 id: '3',
                 dialogId: '2',
@@ -385,7 +385,7 @@ const dialoger: DialogData[] = [
         lestAvBrukerTidspunkt: null,
         erLestAvBruker: false,
         aktivitetId: 'SOKEAVTALE2',
-        henvendelser: [
+        meldinger: [
             {
                 id: '3',
                 dialogId: '2',
@@ -413,7 +413,7 @@ const dialoger: DialogData[] = [
         lestAvBrukerTidspunkt: null,
         erLestAvBruker: false,
         aktivitetId: 'SOKEAVTALE2',
-        henvendelser: [
+        meldinger: [
             {
                 id: '1000',
                 dialogId: '100',
@@ -440,7 +440,7 @@ const dialoger: DialogData[] = [
         lestAvBrukerTidspunkt: null,
         erLestAvBruker: false,
         aktivitetId: 'STILLING_FRA_NAV_1',
-        henvendelser: [
+        meldinger: [
             {
                 id: '2000',
                 dialogId: '200',
@@ -467,7 +467,7 @@ const dialoger: DialogData[] = [
         lestAvBrukerTidspunkt: null,
         erLestAvBruker: false,
         aktivitetId: 'STILLING_FRA_NAV_2',
-        henvendelser: [
+        meldinger: [
             {
                 id: '2000',
                 dialogId: '200',
@@ -494,7 +494,7 @@ const dialoger: DialogData[] = [
         lestAvBrukerTidspunkt: null,
         erLestAvBruker: false,
         aktivitetId: 'EKSTERNAKTIVITET_1',
-        henvendelser: [
+        meldinger: [
             {
                 id: '3000',
                 dialogId: '301',
@@ -521,7 +521,7 @@ const dialoger: DialogData[] = [
         lestAvBrukerTidspunkt: null,
         erLestAvBruker: false,
         aktivitetId: 'EKSTERNAKTIVITET_2',
-        henvendelser: [
+        meldinger: [
             {
                 id: '3001',
                 dialogId: '302',
@@ -548,7 +548,7 @@ const dialoger: DialogData[] = [
         lestAvBrukerTidspunkt: null,
         erLestAvBruker: false,
         aktivitetId: 'EKSTERNAKTIVITET_4',
-        henvendelser: [
+        meldinger: [
             {
                 id: '3001',
                 dialogId: '302',
@@ -605,7 +605,7 @@ export const opprettEllerOppdaterDialog = async (req: RestRequest): Promise<Dial
         const oldDialog = eksisterendeDialog;
         oldDialog.sisteTekst = body.tekst;
         oldDialog.sisteDato = nyMelding.sendt;
-        oldDialog.henvendelser.push(nyMelding);
+        oldDialog.meldinger.push(nyMelding);
 
         if (!bruker().erVeileder) {
             oldDialog.ferdigBehandlet = false;
@@ -628,7 +628,7 @@ export const opprettEllerOppdaterDialog = async (req: RestRequest): Promise<Dial
             lestAvBrukerTidspunkt: null,
             erLestAvBruker: false,
             aktivitetId: body.aktivitetId || null,
-            henvendelser: [nyMelding],
+            meldinger: [nyMelding],
             egenskaper: []
         };
         dialoger.push(nyDialog);
@@ -668,7 +668,7 @@ export const opprettDialogEtterRender = () => {
             lestAvBrukerTidspunkt: null,
             erLestAvBruker: false,
             aktivitetId: null,
-            henvendelser: [
+            meldinger: [
                 {
                     id: '3666',
                     dialogId: `${dialogId}`,
@@ -694,7 +694,7 @@ export const opprettDialogEtterRender = () => {
             tekst: 'Hei, hvordan går det?'
         };
         const d = dialoger.find((d) => d.id === '2');
-        d!.henvendelser.push(meldingsData);
+        d!.meldinger.push(meldingsData);
         d!.lest = false;
     }, 2000);
 };

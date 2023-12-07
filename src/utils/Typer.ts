@@ -24,7 +24,7 @@ export interface DialogData {
     ferdigBehandlet: boolean;
     lestAvBrukerTidspunkt: StringOrNull;
     erLestAvBruker: boolean;
-    henvendelser: MeldingsData[];
+    meldinger: MeldingsData[];
     egenskaper: string[];
 }
 

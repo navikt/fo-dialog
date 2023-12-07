@@ -112,10 +112,10 @@ function DialogPreview(props: Props) {
                     <Tittel tittel={overskrift} aktivitet={aktivitet} />
                     <Detail>{datoString}</Detail>
                     <EtikettListe dialog={dialog} />
-                    <BodyShort className="hidden">{meldingerText(dialog.henvendelser.length)}</BodyShort>
+                    <BodyShort className="hidden">{meldingerText(dialog.meldinger.length)}</BodyShort>
                 </div>
                 <BodyShort aria-hidden="true" className="ml-2 flex items-center">
-                    {dialog.henvendelser.length}
+                    {dialog.meldinger.length}
                 </BodyShort>
                 <div ref={dialogref}></div>
             </div>

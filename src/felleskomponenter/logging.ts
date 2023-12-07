@@ -31,8 +31,8 @@ export function loggChangeInDialog(gamelDialoger: DialogData[], nyeDialoger: Dia
         return;
     }
 
-    const oldHenv = gamelDialoger.reduce((prevValue, currentValue) => prevValue + currentValue.henvendelser.length, 0);
-    const newHenv = nyeDialoger.reduce((prevValue, currentValue) => prevValue + currentValue.henvendelser.length, 0);
+    const oldHenv = gamelDialoger.reduce((prevValue, currentValue) => prevValue + currentValue.meldinger.length, 0);
+    const newHenv = nyeDialoger.reduce((prevValue, currentValue) => prevValue + currentValue.meldinger.length, 0);
 
     if (oldHenv !== newHenv) {
         loggEvent('arbeidsrettet-dialog.polling.ny-henvendelse');

@@ -24,9 +24,9 @@ function sisteLesteHenvendelse(lest: StringOrNull, henvendelser: MeldingsData[])
 }
 
 export function Meldinger(props: Props) {
-    const { lestAvBrukerTidspunkt, henvendelser } = props.dialogData;
+    const { lestAvBrukerTidspunkt, meldinger } = props.dialogData;
     const meldingListRef = useRef<HTMLElement>(null);
-    const sorterteHenvendelser = !!henvendelser ? henvendelser.sort((a, b) => compareDates(b.sendt, a.sendt)) : [];
+    const sorterteMeldinger = !!meldinger ? meldinger.sort((a, b) => compareDates(b.sendt, a.sendt)) : [];
 
     useSkjulHodefotForMobilVisning();
 
@@ -36,14 +36,14 @@ export function Meldinger(props: Props) {
                 meldingListRef.current?.scrollTo({ top: meldingListRef.current.scrollHeight, behavior: 'auto' });
             }
         });
-    }, [henvendelser]);
+    }, [meldinger]);
 
-    if (!henvendelser) {
+    if (!meldinger) {
         return null;
     }
 
     const erViktig = props.dialogData.egenskaper[0] === 'ESKALERINGSVARSEL';
-    const sisteHenvendelseLestAvBruker = sisteLesteHenvendelse(lestAvBrukerTidspunkt, sorterteHenvendelser);
+    const sisteHenvendelseLestAvBruker = sisteLesteHenvendelse(lestAvBrukerTidspunkt, sorterteMeldinger);
 
     return (
         <section
@@ -59,7 +59,7 @@ export function Meldinger(props: Props) {
                     Meldinger
                 </Heading>
                 <div className="mb-4">
-                    {sorterteHenvendelser.map((henvendelse, index) => (
+                    {sorterteMeldinger.map((henvendelse, index) => (
                         <React.Fragment key={henvendelse.id}>
                             <Melding
                                 henvendelseData={henvendelse}
