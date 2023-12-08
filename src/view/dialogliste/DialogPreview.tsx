@@ -1,7 +1,7 @@
 import { BodyShort, Detail, Heading, LinkPanel } from '@navikt/ds-react';
 import classNames from 'classnames';
-import React, { useEffect, useRef, useState } from 'react';
-import { useNavigate } from 'react-router';
+import React, { KeyboardEventHandler, useCallback, useEffect, useRef, useState } from 'react';
+import { useNavigate, useParams } from 'react-router';
 
 import { useRoutes } from '../../routes';
 import { Aktivitet, ArenaAktivitet } from '../../utils/aktivitetTypes';
@@ -48,6 +48,7 @@ function meldingerText(length: number) {
 
 interface Props {
     dialog: DialogData;
+    tabable: boolean;
     valgtDialogId?: string;
 }
 
@@ -65,7 +66,7 @@ function DialogPreview(props: Props) {
     const [skalScrolle, setSkalScrolle] = useState<boolean>(false);
     const compactMode = useCompactMode();
 
-    const { dialog, valgtDialogId } = props;
+    const { dialog, valgtDialogId, tabable } = props;
     const { id, sisteDato, aktivitetId, lest, overskrift, historisk } = dialog;
     const detteErValgtDialog = id === valgtDialogId;
 
@@ -100,8 +101,12 @@ function DialogPreview(props: Props) {
                 [styles.linkPanelCompactMode]: compactMode,
                 [styles.ulestDialogCompactMode]: !dialog.lest && compactMode
             })}
+            tabIndex={tabable ? 0 : -1}
             href={dialogRoute(id)}
-            aria-current={detteErValgtDialog && true}
+            id={`dialog-${id}`}
+            // aria-current={detteErValgtDialog && true}
+            aria-selected={detteErValgtDialog}
+            aria-activedescendant={detteErValgtDialog}
             onClick={onGoTo}
         >
             {!dialog.lest && compactMode ? <div className="w-2 bg-surface-info"></div> : null}
@@ -125,12 +130,80 @@ function DialogPreview(props: Props) {
 
 interface ListeProps {
     dialoger: DialogData[];
-    valgDialog?: string;
 }
 
 let skalFadeIn = false;
-export function DialogPreviewListe({ dialoger, valgDialog }: ListeProps) {
+
+export function DialogPreviewListe({ dialoger }: ListeProps) {
     const [antallDialoger, setAntallDialoger] = useState<number | undefined>(undefined);
+
+    const { dialogId: valgtDialog } = useParams();
+    // Event listeners don't update with props, must use mutable variables
+    // Keep focused element, fallback to valgtDialog
+    const focusedElementId = useRef(valgtDialog);
+
+    useEffect(() => {
+        focusedElementId.current = valgtDialog;
+        console.log('trigger valgtDialog');
+    }, [valgtDialog]);
+
+    const focusById = (id?: string) => {
+        if (!id) return;
+        console.log(`Focusing dialog dialog-${id}`);
+        focusedElementId.current = id;
+        document.getElementById(`dialog-${id}`)?.focus();
+    };
+    const selectPrevious = () => {
+        if (!dialoger.length) return;
+        if (dialoger.length === 1) return;
+        if (!focusedElementId.current) return focusById(dialoger[0]?.id);
+        const currentIndex = dialoger.findIndex((it) => it.id === focusedElementId.current);
+        console.log('Select previous', {
+            currentIndex,
+            valgtDialog: focusedElementId.current,
+            lastIndex: currentIndex === dialoger.length - 1,
+            nextId: dialoger[currentIndex + 1].id
+        });
+        if (currentIndex === 0) return;
+        const previousId = dialoger[currentIndex - 1]?.id;
+        focusById(previousId);
+    };
+    const selectNext = () => {
+        if (!dialoger.length) return;
+        if (dialoger.length === 1) return;
+        if (!focusedElementId.current) return focusById(dialoger[0]?.id);
+        const currentIndex = dialoger.findIndex((it) => it.id === focusedElementId.current);
+        console.log('Select next', {
+            currentIndex,
+            valgtDialog: focusedElementId.current,
+            lastIndex: currentIndex === dialoger.length - 1,
+            nextId: dialoger[currentIndex + 1].id
+        });
+        if (currentIndex === dialoger.length - 1) return;
+        const nextId = dialoger[currentIndex + 1]?.id;
+        focusById(nextId);
+    };
+    const handleKeydown: KeyboardEventHandler = (event) => {
+        switch (event.key) {
+            case 'ArrowDown':
+                selectNext();
+                break;
+            case 'ArrowUp':
+                selectPrevious();
+                break;
+            default:
+                break;
+        }
+    };
+
+    const onFocus = () => {
+        console.log('Add keyboard listener' + '');
+        window.addEventListener('keydown', handleKeydown);
+    };
+    const onBlur = () => {
+        console.log('Removing event listener');
+        window.removeEventListener('keydown', handleKeydown);
+    };
 
     useEffect(() => {
         if (antallDialoger === undefined) {
@@ -144,7 +217,7 @@ export function DialogPreviewListe({ dialoger, valgDialog }: ListeProps) {
     if (dialoger.length === 0) return null;
     return (
         <div role="region" aria-live="polite">
-            <ul aria-label="Dialogliste">
+            <ul aria-label="Dialogliste" tabIndex={0} onFocus={onFocus} onBlur={onBlur}>
                 {dialoger.map((dialog, index) => (
                     <li
                         key={dialog.id}
@@ -152,7 +225,11 @@ export function DialogPreviewListe({ dialoger, valgDialog }: ListeProps) {
                             [styles.fadeIn]: index === 0 && skalFadeIn
                         })}
                     >
-                        <DialogPreview dialog={dialog} valgtDialogId={valgDialog} />
+                        <DialogPreview
+                            // tabable={valgtDialog ? valgtDialog === dialog.id : index === 0}
+                            dialog={dialog}
+                            valgtDialogId={valgtDialog}
+                        />
                     </li>
                 ))}
             </ul>
