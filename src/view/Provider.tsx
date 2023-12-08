@@ -96,7 +96,13 @@ export function Provider(props: Props) {
                 pollWithHttp();
             } else if (bruker?.erVeileder) {
                 if (feature['arbeidsrettet-dialog.websockets']) {
-                    return listenForNyDialogEvents(silentlyHentDialoger, fnr);
+                    try {
+                        listenForNyDialogEvents(silentlyHentDialoger, fnr);
+                        return;
+                    } catch (e) {
+                        // Fallback to http-polling if anything fails
+                        pollWithHttp();
+                    }
                 } else {
                     pollWithHttp();
                 }
