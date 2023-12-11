@@ -1,5 +1,5 @@
 import { Alert, Loader } from '@navikt/ds-react';
-import React, { useContext, useEffect } from 'react';
+import React, { useCallback, useContext, useEffect } from 'react';
 
 import { listenForNyDialogEvents } from '../api/nyDialogWs';
 import { Status, hasData, hasError, isPending } from '../api/typer';
@@ -83,22 +83,24 @@ export function Provider(props: Props) {
 
     const brukerStatusErLastet = hasData(brukerstatus);
     const dialogStatusOk = hasData(dialogstatus);
+
+    const pollWithHttp = useCallback(() => {
+        let interval: NodeJS.Timeout;
+        interval = setInterval(() => pollForChanges().catch(() => clearInterval(interval)), 10000);
+        return () => clearInterval(interval);
+    }, [pollForChanges]);
+
     useEffect(() => {
         if (dialogStatusOk && brukerStatusErLastet) {
             //stop interval when encountering error
-            const pollWithHttp = () => {
-                let interval: NodeJS.Timeout;
-                interval = setInterval(() => pollForChanges().catch(() => clearInterval(interval)), 10000);
-                return () => clearInterval(interval);
-            };
 
             if (bruker?.erBruker) {
                 pollWithHttp();
             } else if (bruker?.erVeileder) {
                 if (feature['arbeidsrettet-dialog.websockets']) {
                     try {
-                        listenForNyDialogEvents(silentlyHentDialoger, fnr);
-                        return;
+                        // Return cleanup function
+                        return listenForNyDialogEvents(silentlyHentDialoger, fnr);
                     } catch (e) {
                         // Fallback to http-polling if anything fails
                         pollWithHttp();
@@ -108,7 +110,7 @@ export function Provider(props: Props) {
                 }
             }
         }
-    }, [dialogStatusOk, bruker, brukerStatusErLastet, pollForChanges]);
+    }, [dialogStatusOk, bruker, brukerStatusErLastet, pollWithHttp, silentlyHentDialoger]);
 
     if (
         isDialogPending(dialogstatus) ||
