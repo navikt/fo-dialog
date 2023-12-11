@@ -4,14 +4,12 @@ import React, { useEffect, useRef, useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { useNavigate } from 'react-router';
 import { z } from 'zod';
-
 import loggEvent from '../../felleskomponenter/logging';
 import { useRoutes } from '../../routes';
 import { StringOrNull } from '../../utils/Typer';
 import { UpdateTypes, dispatchUpdate } from '../../utils/UpdateEvent';
 import { useUserInfoContext } from '../BrukerProvider';
 import { useDialogContext } from '../DialogProvider';
-import { useCompactMode } from '../../featureToggle/FeatureToggleProvider';
 import { findKladd, useKladdContext } from '../KladdProvider';
 import { cutStringAtLength } from '../utils/stringUtils';
 import useMeldingStartTekst from './UseMeldingStartTekst';
@@ -110,7 +108,6 @@ const NyDialogForm = (props: Props) => {
 
     const meldingValue = watch('melding');
     const bigScreen = window.innerWidth >= 768;
-    const compactMode = useCompactMode();
 
     return (
         <div className="relative h-full w-full overflow-scroll bg-gray-100 lg:max-w-lgContainer xl:max-w-none">
@@ -158,11 +155,11 @@ const NyDialogForm = (props: Props) => {
                 ) : null}
 
                 <div className="flex flex-row gap-x-4">
-                    <Button size={compactMode ? 'small' : 'medium'} loading={isSubmitting}>
+                    <Button size="small" loading={isSubmitting}>
                         Send
                     </Button>
                     <Button
-                        size={compactMode ? 'small' : 'medium'}
+                        size="small"
                         variant="tertiary"
                         onClick={(e) => {
                             e.preventDefault();

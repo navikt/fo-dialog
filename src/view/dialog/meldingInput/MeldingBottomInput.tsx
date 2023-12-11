@@ -2,7 +2,6 @@ import classNames from 'classnames';
 import TextareaAutosize from '@navikt/ds-react/esm/util/TextareaAutoSize';
 import { Alert, Button, ErrorMessage } from '@navikt/ds-react';
 import React, { MutableRefObject, useContext, useRef } from 'react';
-import { useCompactMode } from '../../../featureToggle/FeatureToggleProvider';
 import { useFormContext } from 'react-hook-form';
 import { betterErrorMessage, MeldingInputContext, useFocusBeforeHilsen } from './inputUtils';
 import { MeldingFormValues } from './MeldingInputBox';
@@ -21,7 +20,6 @@ const MeldingBottomInputInner = () => {
         getValues,
         formState: { errors, isSubmitting }
     } = useFormContext<MeldingFormValues>();
-    const compactMode = useCompactMode();
     const breakpoint = useBreakpoint();
     const textAreaRef: MutableRefObject<HTMLTextAreaElement | null> = useRef(null);
     useFocusBeforeHilsen(textAreaRef);
@@ -52,7 +50,7 @@ const MeldingBottomInputInner = () => {
                 <div className="flex flex-col space-y-2">
                     <KladdLagret />
                     <Button
-                        size={compactMode ? 'small' : 'medium'}
+                        size="small"
                         className="self-center mx-2"
                         title="Send"
                         icon={breakpoint === Breakpoint.initial ? <PaperplaneIcon /> : undefined}
@@ -79,14 +77,9 @@ const MeldingBottomInputInner = () => {
 export const MeldingBottomInput = ({ dialog }: { dialog: DialogData }) => {
     const oppfolgingContext = useOppfolgingContext();
     const oppfolging = dataOrUndefined(oppfolgingContext);
-    const compactMode = useCompactMode();
     return (
         <section aria-label="Ny melding" className="flex justify-center border-t border-border-divider p-4">
-            <div
-                className={classNames('grow justify-self-center', {
-                    'xl:max-w-248': !compactMode
-                })}
-            >
+            <div className="grow justify-self-center">
                 <ManagedDialogCheckboxes />
                 {!oppfolging?.underOppfolging || dialog.historisk ? null : <MeldingBottomInputInner />}
             </div>

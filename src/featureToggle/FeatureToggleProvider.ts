@@ -24,31 +24,9 @@ export const FeatureToggleContext = React.createContext<Features>({
     [FeatureToggle.VIS_SKJUL_AKTIVITET_KNAPP]: false
 });
 export const useFeatureToggleContext = () => useContext(FeatureToggleContext);
-
-export const useCompactMode = () => useFeatureToggleContext()[FeatureToggle.VIS_SKJUL_AKTIVITET_KNAPP];
-
-const onStorageChange = (setState: (value: (prevState: FeatureData) => FeatureData) => void) => (event: any) => {
-    const mode = localStorage.getItem('compactMode');
-    setState((state: FeatureData) => {
-        return {
-            ...state,
-            data: { [FeatureToggle.VIS_SKJUL_AKTIVITET_KNAPP]: mode === 'compact' }
-        };
-    });
-};
-
 export const useFeatureToggleProvider = (): FeatureData => {
     const [state, setState] = useState<FeatureData>(initBrukerState);
     const apiUrl = AktivitetApi.hentFeatureToggles;
-
-    useEffect(() => {
-        const listener = onStorageChange(setState);
-        listener({});
-        window.addEventListener('compactModeChange', listener);
-        return () => {
-            removeEventListener('compactModeChange', listener);
-        };
-    }, []);
 
     useEffect(() => {
         setState((prevState) => ({

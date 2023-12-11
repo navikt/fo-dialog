@@ -2,12 +2,10 @@ import { zodResolver } from '@hookform/resolvers/zod';
 import React, { useCallback, useEffect, useMemo, useState } from 'react';
 import { FormProvider, useForm } from 'react-hook-form';
 import { z } from 'zod';
-
 import loggEvent from '../../../felleskomponenter/logging';
 import { DialogData } from '../../../utils/Typer';
 import { dispatchUpdate, UpdateTypes } from '../../../utils/UpdateEvent';
 import { useDialogContext } from '../../DialogProvider';
-import { useCompactMode } from '../../../featureToggle/FeatureToggleProvider';
 import { useKladdContext } from '../../KladdProvider';
 import { sendtNyMelding, useSetViewContext, useViewContext } from '../../ViewState';
 import useMeldingStartTekst from '../UseMeldingStartTekst';
@@ -39,7 +37,6 @@ const MeldingInputBox = ({ dialog: valgtDialog, kanSendeHenveldelse }: Props) =>
     const [noeFeilet, setNoeFeilet] = useState(false);
     const startTekst = useMeldingStartTekst();
     const visAktivitet = useVisAktivitet();
-    const compactMode = useCompactMode();
     const { kladder, oppdaterKladd, slettKladd, oppdaterStatus } = useKladdContext();
     const kladd = kladder.find((k) => k.aktivitetId === valgtDialog.aktivitetId && k.dialogId === valgtDialog.id);
     const viewState = useViewContext();
@@ -117,16 +114,14 @@ const MeldingInputBox = ({ dialog: valgtDialog, kanSendeHenveldelse }: Props) =>
 
     // Important! Avoid re-render of textarea-input because it loses focus
     const Input = useCallback(() => {
-        if (!compactMode) {
-            return <MeldingBottomInput dialog={valgtDialog} />;
-        } else if (visAktivitet && [Breakpoint.md, Breakpoint.lg, Breakpoint.xl].includes(breakpoint)) {
+        if (visAktivitet && [Breakpoint.md, Breakpoint.lg, Breakpoint.xl].includes(breakpoint)) {
             return <MeldingBottomInput dialog={valgtDialog} />;
         } else if ([Breakpoint.initial, Breakpoint.sm, Breakpoint.md].includes(breakpoint)) {
             return <MeldingBottomInput dialog={valgtDialog} />;
         } else {
             return <MeldingSideInput dialog={valgtDialog} />;
         }
-    }, [breakpoint, compactMode, valgtDialog, visAktivitet]);
+    }, [breakpoint, valgtDialog, visAktivitet]);
 
     if (!kanSendeHenveldelse && (valgtDialog.venterPaSvar || !valgtDialog.ferdigBehandlet))
         return <ManagedDialogCheckboxes />; //hvis bruker går inn uner krr eller manuel må veileder kunne fjerne venter på

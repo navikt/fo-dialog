@@ -1,6 +1,5 @@
 import { Alert, Button, Textarea } from '@navikt/ds-react';
 import React, { MutableRefObject, useContext, useRef } from 'react';
-import { useCompactMode } from '../../../featureToggle/FeatureToggleProvider';
 import { useFormContext } from 'react-hook-form';
 import { betterErrorMessage, MeldingInputContext, useFocusBeforeHilsen } from './inputUtils';
 import { MeldingFormValues } from './MeldingInputBox';
@@ -17,7 +16,6 @@ const MeldingSideInputInner = () => {
         getValues,
         formState: { errors, isSubmitting }
     } = useFormContext<MeldingFormValues>();
-    const compactMode = useCompactMode();
     const textAreaRef: MutableRefObject<HTMLTextAreaElement | null> = useRef(null);
     useFocusBeforeHilsen(textAreaRef);
 
@@ -45,7 +43,7 @@ const MeldingSideInputInner = () => {
                     maxRows={100} // Will overflow before hitting max lines
                 />
                 <div className="self-stretch mt-2 flex justify-between">
-                    <Button size={compactMode ? 'small' : 'medium'} title="Send" loading={isSubmitting}>
+                    <Button size="small" title="Send" loading={isSubmitting}>
                         Send
                     </Button>
                     <KladdLagret />
