@@ -4,6 +4,7 @@ import { useAktivitetContext } from '../view/AktivitetProvider';
 import { useDialogContext } from '../view/DialogProvider';
 import { useOppfolgingContext } from '../view/OppfolgingProvider';
 import { useEventListener } from '../view/utils/useEventListner';
+import { useSWRConfig } from 'swr';
 
 export enum UpdateTypes {
     Dialog = 'DIALOG',

@@ -66,6 +66,7 @@ export function useKladdDataProvider(fnr?: string): KladdDataContext {
     const kladdUrl = useMemo(() => DialogApi.kladd(query), [query]);
 
     const hentKladder = useCallback(() => {
+        debugger;
         setState((prevState) => ({
             ...prevState,
             status: isKladdReloading(prevState.status) ? Status.RELOADING : Status.PENDING

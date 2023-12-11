@@ -1,6 +1,5 @@
-import { useEffect, useState } from 'react';
-
 import { fetchData } from '../utils/Fetch';
+import useSWR from 'swr';
 
 interface VeilederInfo {
     ident: string;
@@ -10,17 +9,15 @@ interface VeilederInfo {
 }
 
 const useFetchVeilederNavn = (erVeileder: boolean) => {
-    const [veilederNavn, setVeilederNavn] = useState<string | undefined>();
-
-    useEffect(() => {
+    const { data } = useSWR('veileder/me', () => {
         if (erVeileder) {
-            fetchData<VeilederInfo>('/veilarbveileder/api/veileder/me')
-                .then((veilerder) => setVeilederNavn(`${veilerder.fornavn} ${veilerder.etternavn}`))
+            return fetchData<VeilederInfo>('/veilarbveileder/api/veileder/me')
+                .then((veilerder) => `${veilerder.fornavn} ${veilerder.etternavn}`)
                 .catch();
         }
-    }, [erVeileder]);
-
-    return veilederNavn;
+        return undefined;
+    });
+    return data;
 };
 
 export default useFetchVeilederNavn;
