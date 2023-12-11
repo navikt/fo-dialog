@@ -1,5 +1,5 @@
 import { Alert, Loader } from '@navikt/ds-react';
-import React, { useCallback, useContext, useEffect } from 'react';
+import React, { useCallback, useContext, useEffect, useRef } from 'react';
 
 import { listenForNyDialogEvents } from '../api/nyDialogWs';
 import { Status, hasData, hasError, isPending } from '../api/typer';
@@ -90,12 +90,15 @@ export function Provider(props: Props) {
         return () => clearInterval(interval);
     }, [pollForChanges]);
 
+    const isPolling = useRef(false);
+
     useEffect(() => {
         if (dialogStatusOk && brukerStatusErLastet) {
             //stop interval when encountering error
-
+            if (isPolling.current) return;
+            isPolling.current = true;
             if (bruker?.erBruker) {
-                pollWithHttp();
+                return pollWithHttp();
             } else if (bruker?.erVeileder) {
                 if (feature['arbeidsrettet-dialog.websockets']) {
                     try {
@@ -103,10 +106,10 @@ export function Provider(props: Props) {
                         return listenForNyDialogEvents(silentlyHentDialoger, fnr);
                     } catch (e) {
                         // Fallback to http-polling if anything fails
-                        pollWithHttp();
+                        return pollWithHttp();
                     }
                 } else {
-                    pollWithHttp();
+                    return pollWithHttp();
                 }
             }
         }
