@@ -21,6 +21,13 @@ export const listenForNyDialogEvents = (callback: () => void, fnr?: string) => {
     const body = { fnr };
     const socket = new WebSocket(socketUrl);
 
+    const handleMessage = (event: MessageEvent) => {
+        if (event.data === 'AUTHENTICATED') return;
+        const message = JSON.parse(event.data);
+        if (message !== EventTypes.NY_MELDING) return;
+        callback();
+    };
+
     fetch(ticketUrl, { body: JSON.stringify(body), method: 'POST', headers: { 'Content-Type': 'application/json' } })
         .then((response) => {
             if (!response.ok) throw Error('Failed to fetch ticket for websocket');
@@ -35,14 +42,10 @@ export const listenForNyDialogEvents = (callback: () => void, fnr?: string) => {
                     socket.send(ticket);
                 });
             }
-            socket.addEventListener('message', (event) => {
-                if (event.data === 'AUTHENTICATED') return;
-                const message = JSON.parse(event.data);
-                if (message !== EventTypes.NY_MELDING) return;
-                callback();
-            });
+            socket.addEventListener('message', handleMessage);
         });
     return () => {
+        socket.removeEventListener('message', handleMessage);
         socket.close();
     };
 };
