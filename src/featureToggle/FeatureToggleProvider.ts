@@ -1,11 +1,11 @@
-import React, { useContext, useEffect, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 
 import { Status, isReloading } from '../api/typer';
 import { AktivitetApi } from '../api/UseApiBasePath';
 import { fetchData } from '../utils/Fetch';
 import { FeatureToggle } from './const';
 
-const ALL_TOGGLES = [FeatureToggle.VIS_SKJUL_AKTIVITET_KNAPP] as const;
+const ALL_TOGGLES = [FeatureToggle.USE_WEBSOCKETS] as const;
 export type Feature = (typeof ALL_TOGGLES)[number];
 export type Features = Record<Feature, boolean>;
 
@@ -16,14 +16,14 @@ export interface FeatureData {
 }
 
 const initBrukerState: FeatureData = {
-    data: { [FeatureToggle.VIS_SKJUL_AKTIVITET_KNAPP]: false },
+    data: { [FeatureToggle.USE_WEBSOCKETS]: false },
     status: Status.INITIAL
 };
 
 export const FeatureToggleContext = React.createContext<Features>({
-    [FeatureToggle.VIS_SKJUL_AKTIVITET_KNAPP]: false
+    [FeatureToggle.USE_WEBSOCKETS]: false
 });
-export const useFeatureToggleContext = () => useContext(FeatureToggleContext);
+
 export const useFeatureToggleProvider = (): FeatureData => {
     const [state, setState] = useState<FeatureData>(initBrukerState);
     const apiUrl = AktivitetApi.hentFeatureToggles;

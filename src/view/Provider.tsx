@@ -8,7 +8,7 @@ import useFetchVeilederNavn from '../api/useHentVeilederData';
 import { AktivitetContext, useAktivitetDataProvider } from './AktivitetProvider';
 import { AktivitetToggleProvider } from './AktivitetToggleContext';
 import { BrukerDataProviderType, UserInfoContext, useBrukerDataProvider } from './BrukerProvider';
-import { DialogContext, hasDialogError, isDialogOk, isDialogPending, useDialogDataProvider } from './DialogProvider';
+import { DialogContext, hasDialogError, isDialogPending, useDialogDataProvider } from './DialogProvider';
 import { FeatureToggleContext, useFeatureToggleProvider } from '../featureToggle/FeatureToggleProvider';
 import { KladdContext, useKladdDataProvider } from './KladdProvider';
 import { OppfolgingContext, useOppfolgingDataProvider } from './OppfolgingProvider';
@@ -86,12 +86,20 @@ export function Provider(props: Props) {
     useEffect(() => {
         if (dialogStatusOk && brukerStatusErLastet) {
             //stop interval when encountering error
-            if (bruker?.erBruker) {
+            const pollWithHttp = () => {
                 let interval: NodeJS.Timeout;
                 interval = setInterval(() => pollForChanges().catch(() => clearInterval(interval)), 10000);
                 return () => clearInterval(interval);
+            };
+
+            if (bruker?.erBruker) {
+                pollWithHttp();
             } else if (bruker?.erVeileder) {
-                return listenForNyDialogEvents(silentlyHentDialoger, fnr);
+                if (feature['arbeidsrettet-dialog.websockets']) {
+                    return listenForNyDialogEvents(silentlyHentDialoger, fnr);
+                } else {
+                    pollWithHttp();
+                }
             }
         }
     }, [dialogStatusOk, bruker, brukerStatusErLastet, pollForChanges]);
