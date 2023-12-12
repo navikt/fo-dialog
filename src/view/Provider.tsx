@@ -84,7 +84,7 @@ export function Provider(props: Props) {
     const brukerStatusErLastet = hasData(brukerstatus);
     const dialogStatusOk = hasData(dialogstatus);
 
-    const klarTilAaPolle = dialogStatusOk && bruker && brukerStatusErLastet
+    const klarTilAaPolle = dialogStatusOk && bruker && brukerStatusErLastet;
 
     const pollWithHttp = useCallback(() => {
         let interval: NodeJS.Timeout;
