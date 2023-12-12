@@ -1,5 +1,5 @@
 import { Alert, Loader } from '@navikt/ds-react';
-import React, { useCallback, useContext, useEffect, useRef } from 'react';
+import React, { useCallback, useContext, useEffect, useRef, useState } from 'react';
 
 import { listenForNyDialogEvents } from '../api/nyDialogWs';
 import { Status, hasData, hasError, isPending } from '../api/typer';
@@ -52,7 +52,7 @@ export function Provider(props: Props) {
 
     const veilederNavn = useFetchVeilederNavn(erVeileder);
 
-    const { data: feature } = useFeatureToggleProvider();
+    const { data: feature, status: featureStatus } = useFeatureToggleProvider();
     const { data: bruker, status: brukerstatus }: BrukerDataProviderType = useBrukerDataProvider(fnr);
     const oppfolgingDataProvider = useOppfolgingDataProvider(fnr);
     const { status: oppfolgingstatus, hentOppfolging } = oppfolgingDataProvider;
@@ -83,8 +83,9 @@ export function Provider(props: Props) {
 
     const brukerStatusErLastet = hasData(brukerstatus);
     const dialogStatusOk = hasData(dialogstatus);
+    const featureStatusOk = hasData(dialogstatus);
 
-    const klarTilAaPolle = dialogStatusOk && bruker && brukerStatusErLastet;
+    const klarTilAaPolle = dialogStatusOk && bruker && brukerStatusErLastet && featureStatusOk;
 
     const pollWithHttp = useCallback(() => {
         let interval: NodeJS.Timeout;
@@ -94,27 +95,25 @@ export function Provider(props: Props) {
 
     const isPolling = useRef(false);
     useEffect(() => {
-        if (klarTilAaPolle) {
-            //stop interval when encountering error
-            if (isPolling.current) return;
-            if (bruker?.erBruker) {
-                return pollWithHttp();
-            } else if (bruker?.erVeileder) {
-                if (feature['arbeidsrettet-dialog.websockets']) {
-                    try {
-                        // Return cleanup function
-                        return listenForNyDialogEvents(silentlyHentDialoger, fnr);
-                    } catch (e) {
-                        // Fallback to http-polling if anything fails
-                        return pollWithHttp();
-                    }
-                } else {
+        if (!klarTilAaPolle) return;
+        if (isPolling.current) return;
+        isPolling.current = true;
+        if (bruker.erBruker) {
+            return pollWithHttp();
+        } else {
+            if (feature['arbeidsrettet-dialog.websockets']) {
+                try {
+                    // Return cleanup function
+                    return listenForNyDialogEvents(silentlyHentDialoger, fnr);
+                } catch (e) {
+                    // Fallback to http-polling if anything fails
                     return pollWithHttp();
                 }
+            } else {
+                return pollWithHttp();
             }
-            isPolling.current = true;
         }
-    }, [klarTilAaPolle, pollWithHttp, silentlyHentDialoger]);
+    }, [klarTilAaPolle, fnr]);
 
     if (
         isDialogPending(dialogstatus) ||
