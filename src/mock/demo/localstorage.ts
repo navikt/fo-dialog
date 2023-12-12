@@ -12,8 +12,7 @@ export const LocalStorageElement = {
     AKTIVITET_FEILER: 'aktivitet_feiler',
     ARENAAKTIVITET_FEILER: 'arenaaktivitet_feiler',
     NY_DIALOG_SEND_MELDING_FEILER: 'ny_dialog_eller_send_melding_feiler',
-    NIVA_4_FEILER: 'nivaa4Feiler',
-    COMPACT_MODE: 'compactMode'
+    NIVA_4_FEILER: 'nivaa4Feiler'
 };
 
 export const BRUKER_TYPE = {
@@ -54,8 +53,6 @@ export const harDialogFeilerSkruddPa = () => erSatt(LocalStorageElement.DIALOG_F
 export const harAktivitetFeilerSkruddPa = () => erSatt(LocalStorageElement.AKTIVITET_FEILER);
 
 export const harArenaaktivitetFeilerSkruddPa = () => erSatt(LocalStorageElement.ARENAAKTIVITET_FEILER);
-export const harCompactModeSkruddPa = () => localStorage.getItem(LocalStorageElement.COMPACT_MODE) === 'compact';
-
 export const harNivaa4Fieler = () => erSatt(LocalStorageElement.NIVA_4_FEILER);
 
 export const harNyDialogEllerSendMeldingFeilerSkruddPa = () =>

@@ -69,6 +69,7 @@ export function useDialogDataProvider(fnr?: string): DialogDataProviderType {
     const silentlyHentDialoger = () =>
         fetchData<DialogData[]>(dialogUrl)
             .then((dialoger) => {
+                loggChangeInDialog(state.dialoger, dialoger);
                 setState({ status: Status.OK, dialoger: dialoger, sistOppdatert: new Date() });
                 return dialoger;
             })

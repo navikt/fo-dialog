@@ -1,10 +1,7 @@
-import classNames from 'classnames';
 import React from 'react';
 import { useParams } from 'react-router';
-
 import { DialogData } from '../../utils/Typer';
 import { useDialogContext } from '../DialogProvider';
-import { useCompactMode } from '../../featureToggle/FeatureToggleProvider';
 import { DialogPreviewListe } from './DialogPreview';
 import HistoriskeDialogerOversikt from './HistoriskDialogListe';
 
@@ -25,9 +22,8 @@ export function DialogListe() {
     const sorterteDialoger = dialoger.sort((a, b) => sortDialoger(a, b));
     const { naaverende, historiske } = sorterteDialoger.reduce(splitHistoriske, { naaverende: [], historiske: [] });
 
-    const compactMode = useCompactMode();
     return (
-        <div className={classNames({ 'pt-2': !compactMode })} role="navigation" aria-label="Dialoger">
+        <div role="navigation" aria-label="Dialoger">
             <DialogPreviewListe dialoger={naaverende} valgDialog={dialogId} />
             <HistoriskeDialogerOversikt historiske={historiske} valgDialog={dialogId} />
         </div>

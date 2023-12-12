@@ -1,11 +1,8 @@
 import { Checkbox, CheckboxGroup } from '@navikt/ds-react';
-import classNames from 'classnames';
 import React from 'react';
-
 import { Status } from '../../api/typer';
 import { notEmpty } from '../../utils/TypeHelper';
 import { useDialogContext } from '../DialogProvider';
-import { useCompactMode } from '../../featureToggle/FeatureToggleProvider';
 import { useOppfolgingContext } from '../OppfolgingProvider';
 import { dataOrUndefined } from '../Provider';
 import { useSelectedDialog } from '../utils/useAktivitetId';
@@ -30,8 +27,6 @@ const DialogCheckboxes = ({
     venterPaSvar,
     disabled
 }: Props) => {
-    const compactMode = useCompactMode();
-
     return (
         <div className="mb-2 pl-1">
             <CheckboxGroup legend={'Filter'} hideLegend value={values}>
@@ -39,7 +34,7 @@ const DialogCheckboxes = ({
                     <Checkbox
                         value={'ferdigBehandlet'}
                         size="small"
-                        className={classNames({ 'pr-4': compactMode, 'pr-8': !compactMode })}
+                        className="pr-4"
                         disabled={disabled || loading}
                         onChange={() => toggleFerdigBehandlet(!ferdigBehandlet)}
                     >

@@ -1,6 +1,5 @@
 import { useOppfolgingContext } from '../view/OppfolgingProvider';
 import { dataOrUndefined, useHarNivaa4Context } from '../view/Provider';
-import { erProd } from './FellesFunksjoner';
 
 export default function useKansendeMelding(): boolean {
     const oppfolgingContext = useOppfolgingContext();
@@ -12,10 +11,7 @@ export default function useKansendeMelding(): boolean {
         return false;
     }
 
-    //TODO sjekk denne mot doly brukere
-
-    // erProd trengs da ingen av brukerne er registrert i krr i testmiljø
-    const kanVarsles = oppfolgingData.kanVarsles || !erProd();
+    const kanVarsles = oppfolgingData.kanVarsles;
 
     return (
         oppfolgingData.harSkriveTilgang &&

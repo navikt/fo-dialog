@@ -6,7 +6,6 @@ import { DialogData, MeldingsData, StringOrNull } from '../../utils/Typer';
 import DialogSendtBekreftelse from '../dialog/DialogSendtBekreftelse';
 import LestAvTidspunkt from '../lest/LestTidspunkt';
 import { useSkjulHodefotForMobilVisning } from '../utils/useSkjulHodefotForMobilVisning';
-import { useViewContext } from '../ViewState';
 import { Melding } from './Melding';
 
 interface Props {
@@ -25,11 +24,8 @@ function sisteLesteHenvendelse(lest: StringOrNull, henvendelser: MeldingsData[])
 }
 
 export function Meldinger(props: Props) {
-    const { viewState } = useViewContext();
     const { lestAvBrukerTidspunkt, henvendelser } = props.dialogData;
-
     const meldingListRef = useRef<HTMLElement>(null);
-
     const sorterteHenvendelser = !!henvendelser ? henvendelser.sort((a, b) => compareDates(b.sendt, a.sendt)) : [];
 
     useSkjulHodefotForMobilVisning();
@@ -56,8 +52,9 @@ export function Meldinger(props: Props) {
             className="grow bg-gray-100 px-4 flex xl:justify-center"
             ref={meldingListRef}
             tabIndex={0}
+            role="grid"
         >
-            <div className="xl:w-full xl:max-w-248 flex flex-col justify-end">
+            <div className="grow xl:w-full xl:max-w-248 flex flex-col justify-end">
                 <Heading level="3" size={'medium'} className="hidden">
                     Meldinger
                 </Heading>
@@ -74,7 +71,7 @@ export function Meldinger(props: Props) {
                         </React.Fragment>
                     ))}
                 </div>
-                <DialogSendtBekreftelse viewState={viewState} dialog={props.dialogData} fnr={props.fnr} />
+                <DialogSendtBekreftelse />
             </div>
         </section>
     );

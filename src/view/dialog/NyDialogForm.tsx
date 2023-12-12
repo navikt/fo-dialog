@@ -4,17 +4,16 @@ import React, { useEffect, useRef, useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { useNavigate } from 'react-router';
 import { z } from 'zod';
-
 import loggEvent from '../../felleskomponenter/logging';
 import { useRoutes } from '../../routes';
 import { StringOrNull } from '../../utils/Typer';
 import { UpdateTypes, dispatchUpdate } from '../../utils/UpdateEvent';
 import { useUserInfoContext } from '../BrukerProvider';
 import { useDialogContext } from '../DialogProvider';
-import { useCompactMode } from '../../featureToggle/FeatureToggleProvider';
 import { findKladd, useKladdContext } from '../KladdProvider';
 import { cutStringAtLength } from '../utils/stringUtils';
 import useMeldingStartTekst from './UseMeldingStartTekst';
+import { HandlingsType } from '../ViewState';
 
 const maxMeldingsLengde = 5000;
 
@@ -30,12 +29,11 @@ export type NyDialogFormValues = z.infer<typeof schema>;
 
 interface Props {
     defaultTema: string;
-    setViewState: () => void;
     aktivitetId?: string;
 }
 
 const NyDialogForm = (props: Props) => {
-    const { defaultTema, setViewState, aktivitetId } = props;
+    const { defaultTema, aktivitetId } = props;
     const { hentDialoger, nyDialog } = useDialogContext();
     const bruker = useUserInfoContext();
     const navigate = useNavigate();
@@ -90,8 +88,7 @@ const NyDialogForm = (props: Props) => {
         return nyDialog(melding, tema, aktivitetId)
             .then((dialog) => {
                 slettKladd(null, props.aktivitetId);
-                setViewState();
-                navigate(dialogRoute(dialog.id));
+                navigate(dialogRoute(dialog.id), { state: { sistHandlingsType: HandlingsType.nyDialog } });
                 dispatchUpdate(UpdateTypes.Dialog);
                 return dialog;
             })
@@ -111,7 +108,6 @@ const NyDialogForm = (props: Props) => {
 
     const meldingValue = watch('melding');
     const bigScreen = window.innerWidth >= 768;
-    const compactMode = useCompactMode();
 
     return (
         <div className="relative h-full w-full overflow-scroll bg-gray-100 lg:max-w-lgContainer xl:max-w-none">
@@ -159,11 +155,11 @@ const NyDialogForm = (props: Props) => {
                 ) : null}
 
                 <div className="flex flex-row gap-x-4">
-                    <Button size={compactMode ? 'small' : 'medium'} loading={isSubmitting}>
+                    <Button size="small" loading={isSubmitting}>
                         Send
                     </Button>
                     <Button
-                        size={compactMode ? 'small' : 'medium'}
+                        size="small"
                         variant="tertiary"
                         onClick={(e) => {
                             e.preventDefault();
