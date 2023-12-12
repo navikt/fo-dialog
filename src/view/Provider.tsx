@@ -1,13 +1,14 @@
 import { Alert, Loader } from '@navikt/ds-react';
-import React, { useContext, useEffect } from 'react';
+import React, { useCallback, useContext, useEffect, useRef } from 'react';
 
+import { listenForNyDialogEvents } from '../api/nyDialogWs';
 import { Status, hasData, hasError, isPending } from '../api/typer';
 import useFetchHarNivaa4, { HarNivaa4Response } from '../api/useFetchHarNivaa4';
 import useFetchVeilederNavn from '../api/useHentVeilederData';
 import { AktivitetContext, useAktivitetDataProvider } from './AktivitetProvider';
 import { AktivitetToggleProvider } from './AktivitetToggleContext';
 import { BrukerDataProviderType, UserInfoContext, useBrukerDataProvider } from './BrukerProvider';
-import { DialogContext, hasDialogError, isDialogOk, isDialogPending, useDialogDataProvider } from './DialogProvider';
+import { DialogContext, hasDialogError, isDialogPending, useDialogDataProvider } from './DialogProvider';
 import { FeatureToggleContext, useFeatureToggleProvider } from '../featureToggle/FeatureToggleProvider';
 import { KladdContext, useKladdDataProvider } from './KladdProvider';
 import { OppfolgingContext, useOppfolgingDataProvider } from './OppfolgingProvider';
@@ -51,7 +52,7 @@ export function Provider(props: Props) {
 
     const veilederNavn = useFetchVeilederNavn(erVeileder);
 
-    const { data: feature } = useFeatureToggleProvider();
+    const { data: feature, status: featureStatus } = useFeatureToggleProvider();
     const { data: bruker, status: brukerstatus }: BrukerDataProviderType = useBrukerDataProvider(fnr);
     const oppfolgingDataProvider = useOppfolgingDataProvider(fnr);
     const { status: oppfolgingstatus, hentOppfolging } = oppfolgingDataProvider;
@@ -62,7 +63,7 @@ export function Provider(props: Props) {
     const aktivitetDataProvider = useAktivitetDataProvider(fnr);
     const kladdDataProvider = useKladdDataProvider(fnr);
 
-    const { hentDialoger, pollForChanges, status: dialogstatus } = dialogDataProvider;
+    const { hentDialoger, pollForChanges, status: dialogstatus, silentlyHentDialoger } = dialogDataProvider;
     const { hentAktiviteter, hentArenaAktiviteter } = aktivitetDataProvider;
     const hentKladder = kladdDataProvider.hentKladder;
 
@@ -80,16 +81,39 @@ export function Provider(props: Props) {
         hentKladder();
     }, [hentDialoger, hentKladder]);
 
+    const brukerStatusErLastet = hasData(brukerstatus);
+    const dialogStatusOk = hasData(dialogstatus);
+    const featureStatusOk = hasData(featureStatus);
+
+    const klarTilAaPolle = dialogStatusOk && bruker && brukerStatusErLastet && featureStatusOk;
+
+    const pollWithHttp = useCallback(() => {
+        let interval: NodeJS.Timeout;
+        interval = setInterval(() => pollForChanges().catch(() => clearInterval(interval)), 10000);
+        return () => clearInterval(interval);
+    }, [pollForChanges]);
+
+    const isPolling = useRef(false);
     useEffect(() => {
-        if (isDialogOk(dialogstatus) && hasData(brukerstatus)) {
-            //stop interval when encountering error
-            if (bruker) {
-                let interval: NodeJS.Timeout;
-                interval = setInterval(() => pollForChanges().catch(() => clearInterval(interval)), 10000);
-                return () => clearInterval(interval);
+        if (!klarTilAaPolle) return;
+        if (isPolling.current) return;
+        isPolling.current = true;
+        if (bruker.erBruker) {
+            return pollWithHttp();
+        } else {
+            if (feature['arbeidsrettet-dialog.websockets']) {
+                try {
+                    // Return cleanup function
+                    return listenForNyDialogEvents(silentlyHentDialoger, fnr);
+                } catch (e) {
+                    // Fallback to http-polling if anything fails
+                    return pollWithHttp();
+                }
+            } else {
+                return pollWithHttp();
             }
         }
-    }, [dialogstatus, bruker, brukerstatus, pollForChanges]);
+    }, [klarTilAaPolle, fnr]);
 
     if (
         isDialogPending(dialogstatus) ||
