@@ -1,5 +1,5 @@
 import { Alert, Loader } from '@navikt/ds-react';
-import React, { useCallback, useContext, useEffect, useRef, useState } from 'react';
+import React, { useCallback, useContext, useEffect, useRef } from 'react';
 
 import { listenForNyDialogEvents } from '../api/nyDialogWs';
 import { Status, hasData, hasError, isPending } from '../api/typer';
@@ -83,7 +83,7 @@ export function Provider(props: Props) {
 
     const brukerStatusErLastet = hasData(brukerstatus);
     const dialogStatusOk = hasData(dialogstatus);
-    const featureStatusOk = hasData(dialogstatus);
+    const featureStatusOk = hasData(featureStatus);
 
     const klarTilAaPolle = dialogStatusOk && bruker && brukerStatusErLastet && featureStatusOk;
 
