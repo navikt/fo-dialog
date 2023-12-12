@@ -84,6 +84,8 @@ export function Provider(props: Props) {
     const brukerStatusErLastet = hasData(brukerstatus);
     const dialogStatusOk = hasData(dialogstatus);
 
+    const klarTilAaPolle = dialogStatusOk && bruker && brukerStatusErLastet
+
     const pollWithHttp = useCallback(() => {
         let interval: NodeJS.Timeout;
         interval = setInterval(() => pollForChanges().catch(() => clearInterval(interval)), 10000);
@@ -92,7 +94,7 @@ export function Provider(props: Props) {
 
     const isPolling = useRef(false);
     useEffect(() => {
-        if (dialogStatusOk && brukerStatusErLastet) {
+        if (klarTilAaPolle) {
             //stop interval when encountering error
             if (isPolling.current) return;
             if (bruker?.erBruker) {
@@ -112,7 +114,7 @@ export function Provider(props: Props) {
             }
             isPolling.current = true;
         }
-    }, [dialogStatusOk, bruker, brukerStatusErLastet, pollWithHttp, silentlyHentDialoger]);
+    }, [klarTilAaPolle, pollWithHttp, silentlyHentDialoger]);
 
     if (
         isDialogPending(dialogstatus) ||
