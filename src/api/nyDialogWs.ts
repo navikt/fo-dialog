@@ -34,15 +34,19 @@ export const listenForNyDialogEvents = (callback: () => void, fnr?: string) => {
         .then((ticket) => {
             // If ready state is OPEN (1)
             if (socket.readyState == ReadyState.OPEN) {
+                console.log('Websocket already open - sending auth');
                 socket.send(ticket);
             } else {
+                console.log('Waiting for Websocket to open');
                 socket.addEventListener('open', () => {
+                    console.log('Websocket was opened - sending auth');
                     socket.send(ticket);
                 });
             }
             socket.addEventListener('message', handleMessage);
         });
     return () => {
+        console.log('Closing websocket');
         socket.removeEventListener('message', handleMessage);
         socket.close();
     };
