@@ -17,6 +17,7 @@ const handleMessage = (callback: () => void) => (event: MessageEvent) => {
     if (event.data === 'AUTHENTICATED') return;
     const message = JSON.parse(event.data);
     if (message !== EventTypes.NY_MELDING) return;
+    console.log('Received event', message);
     callback();
 };
 
