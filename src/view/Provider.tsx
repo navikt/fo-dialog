@@ -91,12 +91,10 @@ export function Provider(props: Props) {
     }, [pollForChanges]);
 
     const isPolling = useRef(false);
-
     useEffect(() => {
         if (dialogStatusOk && brukerStatusErLastet) {
             //stop interval when encountering error
             if (isPolling.current) return;
-            isPolling.current = true;
             if (bruker?.erBruker) {
                 return pollWithHttp();
             } else if (bruker?.erVeileder) {
@@ -112,6 +110,7 @@ export function Provider(props: Props) {
                     return pollWithHttp();
                 }
             }
+            isPolling.current = true;
         }
     }, [dialogStatusOk, bruker, brukerStatusErLastet, pollWithHttp, silentlyHentDialoger]);
 
