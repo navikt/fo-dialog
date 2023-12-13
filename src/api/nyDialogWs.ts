@@ -1,4 +1,4 @@
-const PLEASE_URL = import.meta.env.VITE_PLEASE_API_URL.replace('https://', '');
+const PLEASE_URL = (import.meta.env.VITE_PLEASE_API_URL || '').replace('https://', '');
 const ticketUrl = `/please/ws-auth-ticket`;
 const socketUrl = `ws://${PLEASE_URL}/ws`;
 
