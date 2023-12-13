@@ -13,6 +13,7 @@ interface ImportMetaEnv {
     readonly VITE_ARBEIDSSOKERREGISTRERING_URL: string;
     readonly VITE_AKTIVITETSPLAN_URL: string;
     readonly VITE_DIALOG_API_URL: string;
+    readonly VITE_PLEASE_API_URL: string;
 }
 
 interface ImportMeta {
