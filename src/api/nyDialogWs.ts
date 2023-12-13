@@ -3,7 +3,7 @@ const ticketUrl = `/please/ws-auth-ticket`;
 const socketUrl = `ws://${PLEASE_URL}/ws`;
 
 enum EventTypes {
-    NY_MELDING = 'NY_MELDING'
+    NY_MELDING = 'NY_DIALOGMELDING_FRA_BRUKER_TIL_NAV'
 }
 
 enum ReadyState {
@@ -25,7 +25,7 @@ let socket: WebSocket | undefined = undefined;
 export const listenForNyDialogEvents = (callback: () => void, fnr?: string) => {
     // Start with only internal
     if (!fnr) return;
-    const body = { fnr };
+    const body = { subscriptionKey: fnr };
     if (socket === undefined || ![ReadyState.OPEN, ReadyState.CONNECTING].includes(socket.readyState)) {
         socket = new WebSocket(socketUrl);
     } else {
