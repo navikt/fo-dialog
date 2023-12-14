@@ -27,6 +27,7 @@ const handleClose = (body: SubscriptionPayload, callback: () => void) => (event:
     if (retries >= maxRetries) return;
     retries++;
     setTimeout(() => {
+        socket?.close();
         socket = new WebSocket(socketUrl);
         connectAndAuthorize(socket, body, callback);
     }, 1000);
