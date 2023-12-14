@@ -21,6 +21,14 @@ const handleMessage = (callback: () => void) => (event: MessageEvent) => {
     callback();
 };
 
+const maxRetries = 10;
+let retries = 0;
+const handleClose = (event: CloseEvent) => {
+    if (retries >= maxRetries) return;
+    retries++;
+    socket = new WebSocket(socketUrl);
+};
+
 let socket: WebSocket | undefined = undefined;
 export const listenForNyDialogEvents = (callback: () => void, fnr?: string) => {
     // Start with only internal
@@ -49,11 +57,15 @@ export const listenForNyDialogEvents = (callback: () => void, fnr?: string) => {
                     socket?.send(ticket);
                 });
             }
-            socket?.addEventListener('message', handleMessage(callback));
+            if (socket) {
+                socket.onmessage = handleMessage(callback);
+                socket.onclose = handleClose;
+            }
         });
     return () => {
         console.log('Closing websocket');
-        socket?.removeEventListener('message', handleMessage(callback));
-        socket?.close();
+        if (socket) {
+            socket.close();
+        }
     };
 };
