@@ -33,7 +33,9 @@ const handleClose = (socket: WebSocket, body: SubscriptionPayload, callback: () 
 
 let socket: WebSocket | undefined = undefined;
 
-interface SubscriptionPayload {}
+interface SubscriptionPayload {
+    subscriptionKey: string;
+}
 const connectAndAuthorize = (socket: WebSocket, body: SubscriptionPayload, callback: () => void) => {
     fetch(ticketUrl, { body: JSON.stringify(body), method: 'POST', headers: { 'Content-Type': 'application/json' } })
         .then((response) => {
@@ -72,6 +74,7 @@ export const listenForNyDialogEvents = (callback: () => void, fnr?: string) => {
     return () => {
         console.log('Closing websocket');
         if (socket) {
+            // Clear reconnect try on intentional close
             socket.onclose = () => {};
             socket.close();
         }
