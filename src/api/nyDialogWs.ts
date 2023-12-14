@@ -23,10 +23,11 @@ const handleMessage = (callback: () => void) => (event: MessageEvent) => {
 
 const maxRetries = 10;
 let retries = 0;
-const handleClose = (socket: WebSocket, body: SubscriptionPayload, callback: () => void) => (event: CloseEvent) => {
+const handleClose = (body: SubscriptionPayload, callback: () => void) => (event: CloseEvent) => {
     if (retries >= maxRetries) return;
     retries++;
     setTimeout(() => {
+        socket = new WebSocket(socketUrl);
         connectAndAuthorize(socket, body, callback);
     }, 1000);
 };
@@ -49,14 +50,14 @@ const connectAndAuthorize = (socket: WebSocket, body: SubscriptionPayload, callb
                 socket.send(ticket);
             } else {
                 console.log('Waiting for Websocket to open');
-                socket?.addEventListener('open', () => {
+                socket.onopen = () => {
                     console.log('Websocket was opened - sending auth');
                     socket?.send(ticket);
-                });
+                };
             }
             if (socket) {
                 socket.onmessage = handleMessage(callback);
-                socket.onclose = handleClose(socket, body, callback);
+                socket.onclose = handleClose(body, callback);
             }
         });
 };
