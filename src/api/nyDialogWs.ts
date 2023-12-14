@@ -26,7 +26,9 @@ let retries = 0;
 const handleClose = (event: CloseEvent) => {
     if (retries >= maxRetries) return;
     retries++;
-    socket = new WebSocket(socketUrl);
+    setTimeout(() => {
+        socket = new WebSocket(socketUrl);
+    }, 1000);
 };
 
 let socket: WebSocket | undefined = undefined;
