@@ -65,6 +65,7 @@ export const listenForNyDialogEvents = (callback: () => void, fnr?: string) => {
     return () => {
         console.log('Closing websocket');
         if (socket) {
+            socket.onclose = () => {};
             socket.close();
         }
     };
