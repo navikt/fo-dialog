@@ -67,10 +67,10 @@ export const listenForNyDialogEvents = (callback: () => void, fnr?: string) => {
     const body = { subscriptionKey: fnr };
     if (socket === undefined || ![ReadyState.OPEN, ReadyState.CONNECTING].includes(socket.readyState)) {
         socket = new WebSocket(socketUrl);
+        connectAndAuthorize(socket, body, callback);
     } else {
         console.log('Socket looks good, keep going');
     }
-    connectAndAuthorize(socket, body, callback);
     return () => {
         console.log('Closing websocket');
         if (socket) {
