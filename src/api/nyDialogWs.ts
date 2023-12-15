@@ -88,6 +88,7 @@ export const listenForNyDialogEvents = (callback: () => void, fnr?: string) => {
         ![ReadyState.OPEN, ReadyState.CONNECTING].includes(socketSingleton.readyState)
     ) {
         socketSingleton = new WebSocket(socketUrl);
+        ticketSingleton = undefined;
         authorize(socketSingleton, body, callback);
     } else {
         console.log('Socket looks good, keep going');
@@ -98,6 +99,7 @@ export const listenForNyDialogEvents = (callback: () => void, fnr?: string) => {
             // Clear reconnect try on intentional close
             socketSingleton.onclose = () => {};
             socketSingleton.close();
+            socketSingleton = undefined;
         }
     };
 };
