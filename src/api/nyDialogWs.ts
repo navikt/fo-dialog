@@ -26,7 +26,7 @@ const handleMessage = (callback: () => void, body: SubscriptionPayload) => (even
     if (event.data === 'AUTHENTICATED') return;
     if (event.data === 'INVALID_TOKEN' && socketSingleton) {
         ticketSingleton = undefined;
-        authorize(socketSingleton, body, callback);
+        getTicketAndAuthenticate(body);
         return;
     }
     const message = JSON.parse(event.data);
@@ -42,8 +42,8 @@ const handleClose = (body: SubscriptionPayload, callback: () => void) => (event:
     retries++;
     setTimeout(() => {
         socketSingleton?.close();
-        socketSingleton = new WebSocket(socketUrl);
-        authorize(socketSingleton, body, callback);
+        reconnectWebsocket(callback, body);
+        getTicketAndAuthenticate(body);
     }, 1000);
 };
 
@@ -58,11 +58,9 @@ const sendTicketWhenOpen = (socket: WebSocket, ticket: string) => {
     }
 };
 
-const authorize = (socket: WebSocket, body: SubscriptionPayload, callback: () => void) => {
-    if (ticketSingleton) {
-        sendTicketWhenOpen(socket, ticketSingleton);
-    }
-    fetch(ticketUrl, {
+const getTicket = (body: SubscriptionPayload) => {
+    if (ticketSingleton) return Promise.resolve(ticketSingleton);
+    return fetch(ticketUrl, {
         body: JSON.stringify(body),
         method: 'POST',
         headers: { 'Content-Type': 'application/json', 'Nav-Consumer-Id': 'aktivitetsplan', 'Nav-Call-Id': uuidv4() }
@@ -73,10 +71,27 @@ const authorize = (socket: WebSocket, body: SubscriptionPayload, callback: () =>
         })
         .then((ticket) => {
             ticketSingleton = ticket;
-            sendTicketWhenOpen(socket, ticket);
-            socket.onmessage = handleMessage(callback, body);
-            socket.onclose = handleClose(body, callback);
+            return ticket;
         });
+};
+
+const authenticate = (socket: WebSocket, ticket: string) => {
+    sendTicketWhenOpen(socket, ticket);
+};
+
+const getTicketAndAuthenticate = (body: SubscriptionPayload) => {
+    return getTicket(body).then((ticket) => {
+        if (!socketSingleton) return;
+        authenticate(socketSingleton, ticket);
+    });
+};
+
+const reconnectWebsocket = (callback: () => void, body: SubscriptionPayload) => {
+    const socket = new WebSocket(socketUrl);
+    socketSingleton = socket;
+    socketSingleton.onmessage = handleMessage(callback, body);
+    socketSingleton.onclose = handleClose(body, callback);
+    return socket;
 };
 
 export const listenForNyDialogEvents = (callback: () => void, fnr?: string) => {
@@ -87,9 +102,8 @@ export const listenForNyDialogEvents = (callback: () => void, fnr?: string) => {
         socketSingleton === undefined ||
         ![ReadyState.OPEN, ReadyState.CONNECTING].includes(socketSingleton.readyState)
     ) {
-        socketSingleton = new WebSocket(socketUrl);
-        ticketSingleton = undefined;
-        authorize(socketSingleton, body, callback);
+        reconnectWebsocket(callback, body);
+        getTicketAndAuthenticate(body);
     } else {
         console.log('Socket looks good, keep going');
     }
