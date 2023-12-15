@@ -1,3 +1,5 @@
+import { v4 as uuidv4 } from 'uuid';
+
 const PLEASE_URL = (import.meta.env.VITE_PLEASE_API_URL || '').replace('https://', '');
 const ticketUrl = `/please/ws-auth-ticket`;
 const socketUrl = `ws://${PLEASE_URL}/ws`;
@@ -60,7 +62,11 @@ const authorize = (socket: WebSocket, body: SubscriptionPayload, callback: () =>
     if (ticketSingleton) {
         sendTicketWhenOpen(socket, ticketSingleton);
     }
-    fetch(ticketUrl, { body: JSON.stringify(body), method: 'POST', headers: { 'Content-Type': 'application/json' } })
+    fetch(ticketUrl, {
+        body: JSON.stringify(body),
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json', 'Nav-Consumer-Id': 'aktivitetsplan', 'Nav-Call-Id': uuidv4() }
+    })
         .then((response) => {
             if (!response.ok) throw Error('Failed to fetch ticket for websocket');
             return response.text();
