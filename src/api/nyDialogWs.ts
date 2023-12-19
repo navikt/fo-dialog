@@ -65,7 +65,12 @@ const authorize = (socket: WebSocket, body: SubscriptionPayload, callback: () =>
     fetch(ticketUrl, {
         body: JSON.stringify(body),
         method: 'POST',
-        headers: { 'Content-Type': 'application/json', 'Accept': 'text/plain', 'Nav-Consumer-Id': 'aktivitetsplan', 'Nav-Call-Id': uuidv4() }
+        headers: {
+            'Content-Type': 'application/json',
+            Accept: 'text/plain',
+            'Nav-Consumer-Id': 'aktivitetsplan',
+            'Nav-Call-Id': uuidv4()
+        }
     })
         .then((response) => {
             if (!response.ok) throw Error('Failed to fetch ticket for websocket');
