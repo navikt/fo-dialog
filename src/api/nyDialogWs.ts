@@ -101,6 +101,7 @@ export const listenForNyDialogEvents = (callback: () => void, fnr?: string) => {
     // Start with only internal
     if (!fnr) return;
     const body = { subscriptionKey: fnr };
+    const currentReadyState = socketSingleton?.readyState;
     if (
         socketSingleton === undefined ||
         ![ReadyState.OPEN, ReadyState.CONNECTING].includes(socketSingleton.readyState)
@@ -112,11 +113,11 @@ export const listenForNyDialogEvents = (callback: () => void, fnr?: string) => {
     }
     return () => {
         console.log('Closing websocket');
+        if (currentReadyState === ReadyState.CLOSING) return;
         if (socketSingleton) {
             // Clear reconnect try on intentional close
             socketSingleton.onclose = () => {};
             socketSingleton.close();
-            socketSingleton = undefined;
         }
     };
 };
