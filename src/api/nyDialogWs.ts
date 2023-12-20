@@ -1,14 +1,14 @@
 import { v4 as uuidv4 } from 'uuid';
 
 const PLEASE_URL = (import.meta.env.VITE_PLEASE_API_URL || '').replace('https://', '');
-const ticketUrl = `http://please.dev.nav.no/please/ws-auth-ticket`;
+const ticketUrl = `/please/ws-auth-ticket`;
 const socketUrl = `ws://${PLEASE_URL}/ws`;
 
 enum EventTypes {
     NY_MELDING = 'NY_DIALOGMELDING_FRA_BRUKER_TIL_NAV'
 }
 
-export enum ReadyState {
+enum ReadyState {
     CONNECTING = 0,
     OPEN = 1,
     CLOSING = 2,
@@ -19,7 +19,7 @@ interface SubscriptionPayload {
     subscriptionKey: string;
 }
 
-export let socketSingleton: WebSocket | undefined = undefined;
+let socketSingleton: WebSocket | undefined = undefined;
 let ticketSingleton: { ticket: string; fnr: string } | undefined;
 
 const handleMessage = (callback: () => void, body: SubscriptionPayload) => (event: MessageEvent) => {
