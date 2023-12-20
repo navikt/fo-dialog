@@ -1,14 +1,14 @@
 import { v4 as uuidv4 } from 'uuid';
 
 const PLEASE_URL = (import.meta.env.VITE_PLEASE_API_URL || '').replace('https://', '');
-const ticketUrl = `/please/ws-auth-ticket`;
+const ticketUrl = `http://please.dev.nav.no/please/ws-auth-ticket`;
 const socketUrl = `ws://${PLEASE_URL}/ws`;
 
 enum EventTypes {
     NY_MELDING = 'NY_DIALOGMELDING_FRA_BRUKER_TIL_NAV'
 }
 
-enum ReadyState {
+export enum ReadyState {
     CONNECTING = 0,
     OPEN = 1,
     CLOSING = 2,
@@ -19,7 +19,7 @@ interface SubscriptionPayload {
     subscriptionKey: string;
 }
 
-let socketSingleton: WebSocket | undefined = undefined;
+export let socketSingleton: WebSocket | undefined = undefined;
 let ticketSingleton: { ticket: string; fnr: string } | undefined;
 
 const handleMessage = (callback: () => void, body: SubscriptionPayload) => (event: MessageEvent) => {
@@ -101,6 +101,7 @@ export const listenForNyDialogEvents = (callback: () => void, fnr?: string) => {
     // Start with only internal
     if (!fnr) return;
     const body = { subscriptionKey: fnr };
+    const currentReadyState = socketSingleton?.readyState;
     if (
         socketSingleton === undefined ||
         ![ReadyState.OPEN, ReadyState.CONNECTING].includes(socketSingleton.readyState)
@@ -112,6 +113,7 @@ export const listenForNyDialogEvents = (callback: () => void, fnr?: string) => {
     }
     return () => {
         console.log('Closing websocket');
+        if (currentReadyState === ReadyState.CLOSING) return;
         if (socketSingleton) {
             // Clear reconnect try on intentional close
             socketSingleton.onclose = () => {};
