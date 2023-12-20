@@ -20,13 +20,13 @@ interface SubscriptionPayload {
 }
 
 let socketSingleton: WebSocket | undefined = undefined;
-let ticketSingleton: string | undefined;
+let ticketSingleton: { ticket: string; fnr: string } | undefined;
 
 const handleMessage = (callback: () => void, body: SubscriptionPayload) => (event: MessageEvent) => {
     if (event.data === 'AUTHENTICATED') return;
     if (event.data === 'INVALID_TOKEN' && socketSingleton) {
         ticketSingleton = undefined;
-        authorize(socketSingleton, body, callback);
+        getTicketAndAuthenticate(body);
         return;
     }
     const message = JSON.parse(event.data);
@@ -37,13 +37,13 @@ const handleMessage = (callback: () => void, body: SubscriptionPayload) => (even
 
 const maxRetries = 10;
 let retries = 0;
-const handleClose = (body: SubscriptionPayload, callback: () => void) => (event: CloseEvent) => {
+const handleClose = (callback: () => void, body: SubscriptionPayload) => (event: CloseEvent) => {
     if (retries >= maxRetries) return;
     retries++;
     setTimeout(() => {
         socketSingleton?.close();
-        socketSingleton = new WebSocket(socketUrl);
-        authorize(socketSingleton, body, callback);
+        reconnectWebsocket(callback, body);
+        getTicketAndAuthenticate(body);
     }, 1000);
 };
 
@@ -58,25 +58,43 @@ const sendTicketWhenOpen = (socket: WebSocket, ticket: string) => {
     }
 };
 
-const authorize = (socket: WebSocket, body: SubscriptionPayload, callback: () => void) => {
-    if (ticketSingleton) {
-        sendTicketWhenOpen(socket, ticketSingleton);
-    }
-    fetch(ticketUrl, {
+const getTicket = (body: SubscriptionPayload): Promise<string> => {
+    if (ticketSingleton && ticketSingleton.fnr === body.subscriptionKey) return Promise.resolve(ticketSingleton.ticket);
+    return fetch(ticketUrl, {
         body: JSON.stringify(body),
         method: 'POST',
-        headers: { 'Content-Type': 'application/json', 'Nav-Consumer-Id': 'aktivitetsplan', 'Nav-Call-Id': uuidv4() }
+        headers: {
+            'Content-Type': 'application/json',
+            'Nav-Consumer-Id': 'arbeidsrettet-dialog',
+            'Nav-Call-Id': uuidv4()
+        }
     })
         .then((response) => {
             if (!response.ok) throw Error('Failed to fetch ticket for websocket');
             return response.text();
         })
         .then((ticket) => {
-            ticketSingleton = ticket;
-            sendTicketWhenOpen(socket, ticket);
-            socket.onmessage = handleMessage(callback, body);
-            socket.onclose = handleClose(body, callback);
+            ticketSingleton = { ticket, fnr: body.subscriptionKey };
+            return ticket;
         });
+};
+
+const authenticate = (socket: WebSocket, ticket: string) => {
+    sendTicketWhenOpen(socket, ticket);
+};
+
+const getTicketAndAuthenticate = async (body: SubscriptionPayload) => {
+    let ticket = await getTicket(body);
+    if (!socketSingleton) return;
+    authenticate(socketSingleton, ticket);
+};
+
+const reconnectWebsocket = (callback: () => void, body: SubscriptionPayload) => {
+    const socket = new WebSocket(socketUrl);
+    socketSingleton = socket;
+    socketSingleton.onmessage = handleMessage(callback, body);
+    socketSingleton.onclose = handleClose(callback, body);
+    return socket;
 };
 
 export const listenForNyDialogEvents = (callback: () => void, fnr?: string) => {
@@ -87,9 +105,8 @@ export const listenForNyDialogEvents = (callback: () => void, fnr?: string) => {
         socketSingleton === undefined ||
         ![ReadyState.OPEN, ReadyState.CONNECTING].includes(socketSingleton.readyState)
     ) {
-        socketSingleton = new WebSocket(socketUrl);
-        ticketSingleton = undefined;
-        authorize(socketSingleton, body, callback);
+        reconnectWebsocket(callback, body);
+        getTicketAndAuthenticate(body);
     } else {
         console.log('Socket looks good, keep going');
     }
