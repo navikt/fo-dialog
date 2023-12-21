@@ -86,14 +86,17 @@ export function Provider(props: Props) {
     const featureStatusOk = hasData(featureStatus);
 
     const klarTilAaPolle = dialogStatusOk && bruker && brukerStatusErLastet && featureStatusOk;
+    const isPolling = useRef(false);
 
     const pollWithHttp = useCallback(() => {
         let interval: NodeJS.Timeout;
         interval = setInterval(() => pollForChanges().catch(() => clearInterval(interval)), 10000);
-        return () => clearInterval(interval);
+        return () => {
+            clearInterval(interval);
+            isPolling.current = false;
+        };
     }, [pollForChanges]);
 
-    const isPolling = useRef(false);
     useEffect(() => {
         if (!klarTilAaPolle) return;
         if (isPolling.current) return;
