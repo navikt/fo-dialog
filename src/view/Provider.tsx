@@ -113,7 +113,7 @@ export function Provider(props: Props) {
                 return pollWithHttp();
             }
         }
-    }, [klarTilAaPolle, fnr]);
+    }, [klarTilAaPolle, fnr, pollWithHttp]);
 
     if (
         isDialogPending(dialogstatus) ||
