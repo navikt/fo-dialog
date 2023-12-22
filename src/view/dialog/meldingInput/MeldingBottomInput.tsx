@@ -10,8 +10,8 @@ import { Breakpoint, useBreakpoint } from '../../utils/useBreakpoint';
 import ManagedDialogCheckboxes from '../DialogCheckboxes';
 import { dataOrUndefined } from '../../Provider';
 import { useOppfolgingContext } from '../../OppfolgingProvider';
-import { DialogData } from '../../../utils/Typer';
 import KladdLagret from './KladdLagret';
+import { useSelectedDialog } from '../../utils/useAktivitetId';
 
 const MeldingBottomInputInner = () => {
     const { onSubmit, noeFeilet } = useContext(MeldingInputContext);
@@ -74,9 +74,11 @@ const MeldingBottomInputInner = () => {
     );
 };
 
-export const MeldingBottomInput = ({ dialog }: { dialog: DialogData }) => {
+export const MeldingBottomInput = () => {
     const oppfolgingContext = useOppfolgingContext();
     const oppfolging = dataOrUndefined(oppfolgingContext);
+    const dialog = useSelectedDialog();
+    if (!dialog) return null;
     return (
         <section aria-label="Ny melding" className="flex justify-center border-t border-border-divider p-4">
             <div className="grow justify-self-center">

@@ -22,6 +22,7 @@ import oppfolging from './Oppfolging';
 import { getSistOppdatert } from './SistOppdatert';
 import { veilederMe } from './Veileder';
 import { addMinutes } from 'date-fns';
+import { FeatureToggle } from '../featureToggle/const';
 
 const jsonResponse = (response: object | null | boolean | ((req: RestRequest) => object)) => {
     return async (req: RestRequest, res: ResponseComposition, ctx: RestContext) => {
@@ -86,7 +87,7 @@ export const handlers = [
     rest.put('/veilarbdialog/api/dialog/:dialogId/les', jsonResponse(lesDialog)),
     rest.put('/veilarbdialog/api/dialog/:dialogId/venter_pa_svar/:bool', jsonResponse(setVenterPaSvar)),
     rest.put('/veilarbdialog/api/dialog/:dialogId/ferdigbehandlet/:bool', jsonResponse(setFerdigBehandlet)),
-    rest.get('/veilarbdialog/api/dialog/sistOppdatert', jsonResponse(getSistOppdatert)),
+    rest.get('/veilarbdialog/api/dialog/sistOppdatert', jsonResponse(getSistOppdatert())),
     rest.post('/veilarbdialog/api/kladd', (_, res, ctx) => {
         return res(ctx.delay(500), ctx.status(204));
     }),
@@ -109,6 +110,9 @@ export const handlers = [
     rest.get(
         '/veilarbaktivitet/api/arena/tiltak',
         failOrGetResponse(harArenaaktivitetFeilerSkruddPa, () => arenaAktiviteter)
+    ),
+    rest.get('/veilarbaktivitet/api/feature', (_, res, ctx) =>
+        res(ctx.json({ [FeatureToggle.VIS_SKJUL_AKTIVITET_KNAPP]: false }))
     ),
 
     // veilarbveileder

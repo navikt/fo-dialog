@@ -6,8 +6,8 @@ import { MeldingFormValues } from './MeldingInputBox';
 import ManagedDialogCheckboxes from '../DialogCheckboxes';
 import { dataOrUndefined } from '../../Provider';
 import { useOppfolgingContext } from '../../OppfolgingProvider';
-import { DialogData } from '../../../utils/Typer';
 import KladdLagret from './KladdLagret';
+import { useSelectedDialog } from '../../utils/useAktivitetId';
 
 const MeldingSideInputInner = () => {
     const { onSubmit, noeFeilet } = useContext(MeldingInputContext);
@@ -59,9 +59,11 @@ const MeldingSideInputInner = () => {
     );
 };
 
-export const MeldingSideInput = ({ dialog }: { dialog: DialogData }) => {
+export const MeldingSideInput = () => {
     const oppfolgingContext = useOppfolgingContext();
     const oppfolging = dataOrUndefined(oppfolgingContext);
+    const dialog = useSelectedDialog();
+    if (!dialog) return null;
     return (
         <section aria-label="Ny melding" className="flex flex-1 bg-white p-4">
             <div className="w-full flex flex-col">
