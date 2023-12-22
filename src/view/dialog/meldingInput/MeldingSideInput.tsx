@@ -1,13 +1,13 @@
 import { Alert, Button, Textarea } from '@navikt/ds-react';
-import React, { MutableRefObject, useContext, useRef } from 'react';
+import React, { MutableRefObject, useContext, useEffect, useRef } from 'react';
 import { useFormContext } from 'react-hook-form';
 import { betterErrorMessage, MeldingInputContext, useFocusBeforeHilsen } from './inputUtils';
 import { MeldingFormValues } from './MeldingInputBox';
 import ManagedDialogCheckboxes from '../DialogCheckboxes';
 import { dataOrUndefined } from '../../Provider';
 import { useOppfolgingContext } from '../../OppfolgingProvider';
-import { DialogData } from '../../../utils/Typer';
 import KladdLagret from './KladdLagret';
+import { useSelectedDialog } from '../../utils/useAktivitetId';
 
 const MeldingSideInputInner = () => {
     const { onSubmit, noeFeilet } = useContext(MeldingInputContext);
@@ -59,9 +59,18 @@ const MeldingSideInputInner = () => {
     );
 };
 
-export const MeldingSideInput = ({ dialog }: { dialog: DialogData }) => {
+export const MeldingSideInput = () => {
+    const dialog = useSelectedDialog();
     const oppfolgingContext = useOppfolgingContext();
     const oppfolging = dataOrUndefined(oppfolgingContext);
+    useEffect(() => {
+        console.log('Mounting MeldingSideInput');
+        return () => {
+            console.log('Unmounting MeldingSideInput');
+        };
+    }, []);
+
+    if (!dialog) return null;
     return (
         <section aria-label="Ny melding" className="flex flex-1 bg-white p-4">
             <div className="w-full flex flex-col">

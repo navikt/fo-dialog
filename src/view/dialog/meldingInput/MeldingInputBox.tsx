@@ -51,9 +51,11 @@ const MeldingInputBox = ({ dialog: valgtDialog, kanSendeHenveldelse }: Props) =>
     });
     const { handleSubmit, reset, watch } = formHandlers;
 
+    const valgtDialogId = valgtDialog.id;
     useEffect(() => {
+        console.log('Render on valgtDialog', valgtDialogId);
         reset(defaultValues);
-    }, [valgtDialog]);
+    }, [valgtDialogId]);
 
     const melding = watch('melding');
     const {
@@ -115,18 +117,18 @@ const MeldingInputBox = ({ dialog: valgtDialog, kanSendeHenveldelse }: Props) =>
     // Important! Avoid re-render of textarea-input because it loses focus
     const Input = useCallback(() => {
         if (visAktivitet && [Breakpoint.md, Breakpoint.lg, Breakpoint.xl].includes(breakpoint)) {
-            return <MeldingBottomInput dialog={valgtDialog} />;
+            return <MeldingBottomInput />;
         } else if ([Breakpoint.initial, Breakpoint.sm, Breakpoint.md].includes(breakpoint)) {
-            return <MeldingBottomInput dialog={valgtDialog} />;
+            return <MeldingBottomInput />;
         } else {
-            return <MeldingSideInput dialog={valgtDialog} />;
+            return <MeldingSideInput />;
         }
-    }, [breakpoint, valgtDialog, visAktivitet]);
+    }, [breakpoint, visAktivitet]);
 
     if (!kanSendeHenveldelse && (valgtDialog.venterPaSvar || !valgtDialog.ferdigBehandlet))
         return <ManagedDialogCheckboxes />; //hvis bruker går inn uner krr eller manuel må veileder kunne fjerne venter på
 
-    if (!kanSendeHenveldelse) return null;
+    if (!kanSendeHenveldelse) null;
     return (
         <FormProvider {...formHandlers}>
             <MeldingInputContext.Provider value={args}>

@@ -7,30 +7,13 @@ import { handlers } from '../../mock/handlers';
 import { dialogRoutes } from '../../routes';
 import App from '../../App';
 
-const dialogId = '123';
+const dialogId = '303';
 
-const memoryRouter = createMemoryRouter(
-    dialogRoutes,
-    // [
-    //     {
-    //         path: '/:dialogId',
-    //         element: <DialogTrad />
-    //     },
-    //     {
-    //         path: '/',
-    //         element: <DefaultRoute />
-    //     }
-    // ],
-    {
-        initialEntries: [`/${dialogId}`]
-    }
-);
+const memoryRouter = createMemoryRouter(dialogRoutes, {
+    initialEntries: [`/${dialogId}`]
+});
 
 const server = setupServer(...handlers);
-
-const MockContext = () => {
-    return <RouterProvider router={memoryRouter} />;
-};
 
 describe('DialogTrad', () => {
     beforeAll(() => server.listen({ onUnhandledRequest: 'error' }));
@@ -42,11 +25,18 @@ describe('DialogTrad', () => {
     afterEach(() => server.resetHandlers());
 
     it('should display state from backend if no kladd', async () => {
-        const { getByRole } = await act(async () => render(<App />));
-        getByRole('textbox');
+        const { getByLabelText, getByText } = await act(() => render(<App />));
+        act(() => getByText('Avklaring: Avklaring').click());
+        getByLabelText('Skriv om arbeid og oppfølging');
+        getByText('Er du fornøyd med oppgfølgingen?');
+        getByText('Sånn passe.');
     });
 
-    it('should display kladd and not backend state if kladd exists', () => {});
+    it('should display kladd and not backend state if kladd exists', () => {
+        // TODO
+    });
 
-    it('should display kladd event when updating state from backend', () => {});
+    it('should display kladd event when updating state from backend', () => {
+        // TODO
+    });
 });

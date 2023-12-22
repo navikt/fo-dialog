@@ -18,12 +18,9 @@ const initBrukerState: BrukerDataProviderType = {
 
 export const UserInfoContext = React.createContext<Bruker | null>(null);
 export const useUserInfoContext = () => useContext(UserInfoContext);
-
+const apiUrl = OppfolgingsApi.me;
 export const useBrukerDataProvider = (fnr?: string): BrukerDataProviderType => {
     const [state, setState] = useState<BrukerDataProviderType>(initBrukerState);
-
-    const apiUrl = OppfolgingsApi.me;
-
     useEffect(() => {
         setState((prevState) => ({
             ...prevState,
@@ -44,7 +41,6 @@ export const useBrukerDataProvider = (fnr?: string): BrukerDataProviderType => {
                 }));
             });
     }, [apiUrl]);
-
     return {
         data: state.data,
         status: state.status,

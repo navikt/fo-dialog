@@ -13,6 +13,8 @@ import { FeatureToggleContext, useFeatureToggleProvider } from '../featureToggle
 import { KladdContext, useKladdDataProvider } from './KladdProvider';
 import { OppfolgingContext, useOppfolgingDataProvider } from './OppfolgingProvider';
 import { ViewStateProvider } from './ViewState';
+import { useDialogStore } from './dialogProvider/dialogStore';
+import { useShallow } from 'zustand/react/shallow';
 
 interface VeilederData {
     veilederNavn?: string;
@@ -60,10 +62,21 @@ export function Provider(props: Props) {
     const harLoggetInnNiva4 = useFetchHarNivaa4(erVeileder, fnr);
 
     const dialogDataProvider = useDialogDataProvider(fnr);
-    const aktivitetDataProvider = useAktivitetDataProvider(fnr);
-    const kladdDataProvider = useKladdDataProvider(fnr);
+    useEffect(() => {
+        console.log('Effect dialogDataProvider');
+    }, [dialogDataProvider]);
 
-    const { hentDialoger, pollForChanges, status: dialogstatus, silentlyHentDialoger } = dialogDataProvider;
+    const aktivitetDataProvider = useAktivitetDataProvider(fnr);
+    const kladdDataProvider = useKladdDataProvider();
+
+    const { status: dialogstatus } = dialogDataProvider;
+    const { hentDialoger, pollForChanges, silentlyHentDialoger } = useDialogStore(
+        useShallow((store) => ({
+            hentDialoger: store.hentDialoger,
+            pollForChanges: store.pollForChanges,
+            silentlyHentDialoger: store.silentlyHentDialoger
+        }))
+    );
     const { hentAktiviteter, hentArenaAktiviteter } = aktivitetDataProvider;
     const hentKladder = kladdDataProvider.hentKladder;
 
@@ -77,9 +90,9 @@ export function Provider(props: Props) {
     }, [hentAktiviteter, hentArenaAktiviteter]);
 
     useEffect(() => {
-        hentDialoger();
-        hentKladder();
-    }, [hentDialoger, hentKladder]);
+        hentDialoger(fnr);
+        hentKladder(fnr);
+    }, [fnr]);
 
     const brukerStatusErLastet = hasData(brukerstatus);
     const dialogStatusOk = hasData(dialogstatus);
@@ -87,13 +100,24 @@ export function Provider(props: Props) {
 
     const klarTilAaPolle = dialogStatusOk && bruker && brukerStatusErLastet && featureStatusOk;
 
-    const pollWithHttp = useCallback(() => {
-        let interval: NodeJS.Timeout;
-        interval = setInterval(() => pollForChanges().catch(() => clearInterval(interval)), 10000);
-        return () => clearInterval(interval);
-    }, [pollForChanges]);
-
     const isPolling = useRef(false);
+    const pollWithHttp = useCallback(() => {
+        return;
+        let interval: NodeJS.Timeout;
+        console.log('Setting up polling with http');
+        interval = setInterval(() => {
+            pollForChanges(fnr).catch((e) => {
+                console.error(e);
+                clearInterval(interval);
+            });
+        }, 2000);
+        return () => {
+            console.log('Stopping polling with http');
+            isPolling.current = false;
+            clearInterval(interval);
+        };
+    }, [pollForChanges, fnr]);
+
     useEffect(() => {
         if (!klarTilAaPolle) return;
         if (isPolling.current) return;
@@ -104,7 +128,7 @@ export function Provider(props: Props) {
             if (feature['arbeidsrettet-dialog.websockets']) {
                 try {
                     // Return cleanup function
-                    return listenForNyDialogEvents(silentlyHentDialoger, fnr);
+                    return listenForNyDialogEvents(() => silentlyHentDialoger(fnr), fnr);
                 } catch (e) {
                     // Fallback to http-polling if anything fails
                     return pollWithHttp();
@@ -113,7 +137,7 @@ export function Provider(props: Props) {
                 return pollWithHttp();
             }
         }
-    }, [klarTilAaPolle, fnr]);
+    }, [klarTilAaPolle, fnr, pollWithHttp]);
 
     if (
         isDialogPending(dialogstatus) ||
