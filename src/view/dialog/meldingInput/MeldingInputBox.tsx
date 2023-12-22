@@ -16,7 +16,6 @@ import { debounced, maxMeldingsLengde, MeldingInputContext } from './inputUtils'
 import { useVisAktivitet } from '../../AktivitetToggleContext';
 import { Status } from '../../../api/typer';
 import ManagedDialogCheckboxes from '../DialogCheckboxes';
-import dialog from '../../../mock/Dialog';
 
 const schema = z.object({
     melding: z
@@ -53,7 +52,6 @@ const MeldingInputBox = ({ dialog: valgtDialog, kanSendeHenveldelse }: Props) =>
 
     const valgtDialogId = valgtDialog.id;
     useEffect(() => {
-        console.log('valgtDialogId', valgtDialogId);
         reset(defaultValues);
     }, [valgtDialogId]);
 
