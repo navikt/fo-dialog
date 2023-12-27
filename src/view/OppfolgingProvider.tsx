@@ -8,7 +8,7 @@ import { OppfolgingData } from '../utils/Typer';
 export interface OppfolgingDataProviderType {
     data?: OppfolgingData;
     status: Status;
-    hentOppfolging: () => Promise<OppfolgingData | undefined>;
+    hentOppfolging: (fnr: string | undefined) => Promise<OppfolgingData | undefined>;
 }
 
 interface OppfolgingState {
@@ -28,19 +28,19 @@ export const OppfolgingContext = React.createContext<OppfolgingDataProviderType>
 });
 export const useOppfolgingContext = () => useContext(OppfolgingContext);
 
-export const useOppfolgingDataProvider = (fnr?: string) => {
+const oppfolgingUrl = (fnr: string | undefined) => OppfolgingsApi.oppfolgingUrl(fnrQuery(fnr));
+
+export const useOppfolgingDataProvider = () => {
     const [state, setState] = useState<OppfolgingState>(initOppfolgingState);
 
-    const query = fnrQuery(fnr);
-
-    const oppfolgingUrl = useMemo(() => OppfolgingsApi.oppfolgingUrl(query), [query]);
-
-    const hentOppfolging: () => Promise<OppfolgingData | undefined> = useCallback(() => {
+    const hentOppfolging: (fnr: string | undefined) => Promise<OppfolgingData | undefined> = (
+        fnr: string | undefined
+    ) => {
         setState((prevState) => ({
             ...prevState,
             status: isReloading(prevState.status) ? Status.RELOADING : Status.PENDING
         }));
-        return fetchData<OppfolgingData>(oppfolgingUrl)
+        return fetchData<OppfolgingData>(oppfolgingUrl(fnr))
             .then((response) => {
                 setState(() => ({
                     data: response,
@@ -55,7 +55,7 @@ export const useOppfolgingDataProvider = (fnr?: string) => {
                 }));
                 return undefined;
             });
-    }, [oppfolgingUrl]);
+    };
 
     return useMemo(() => {
         return {
@@ -63,5 +63,5 @@ export const useOppfolgingDataProvider = (fnr?: string) => {
             status: state.status,
             hentOppfolging: hentOppfolging
         };
-    }, [state, hentOppfolging]);
+    }, [state]);
 };

@@ -19,7 +19,7 @@ const initBrukerState: BrukerDataProviderType = {
 export const UserInfoContext = React.createContext<Bruker | null>(null);
 export const useUserInfoContext = () => useContext(UserInfoContext);
 const apiUrl = OppfolgingsApi.me;
-export const useBrukerDataProvider = (fnr?: string): BrukerDataProviderType => {
+export const useBrukerDataProvider = (): BrukerDataProviderType => {
     const [state, setState] = useState<BrukerDataProviderType>(initBrukerState);
     useEffect(() => {
         setState((prevState) => ({
@@ -40,7 +40,7 @@ export const useBrukerDataProvider = (fnr?: string): BrukerDataProviderType => {
                     status: Status.ERROR
                 }));
             });
-    }, [apiUrl]);
+    }, []);
     return {
         data: state.data,
         status: state.status,

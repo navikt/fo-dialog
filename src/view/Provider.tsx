@@ -55,43 +55,35 @@ export function Provider(props: Props) {
     const veilederNavn = useFetchVeilederNavn(erVeileder);
 
     const { data: feature, status: featureStatus } = useFeatureToggleProvider();
-    const { data: bruker, status: brukerstatus }: BrukerDataProviderType = useBrukerDataProvider(fnr);
-    const oppfolgingDataProvider = useOppfolgingDataProvider(fnr);
+    const { data: bruker, status: brukerstatus }: BrukerDataProviderType = useBrukerDataProvider();
+    const oppfolgingDataProvider = useOppfolgingDataProvider();
     const { status: oppfolgingstatus, hentOppfolging } = oppfolgingDataProvider;
 
     const harLoggetInnNiva4 = useFetchHarNivaa4(erVeileder, fnr);
-
     const dialogDataProvider = useDialogDataProvider(fnr);
-    useEffect(() => {
-        console.log('Effect dialogDataProvider');
-    }, [dialogDataProvider]);
 
-    const aktivitetDataProvider = useAktivitetDataProvider(fnr);
+    const aktivitetDataProvider = useAktivitetDataProvider();
     const kladdDataProvider = useKladdDataProvider();
 
-    const { status: dialogstatus } = dialogDataProvider;
-    const { hentDialoger, pollForChanges, silentlyHentDialoger } = useDialogStore(
+    // const { status: dialogstatus } = dialogDataProvider;
+    const { hentDialoger, configurePoll, stopPolling, dialogstatus } = useDialogStore(
         useShallow((store) => ({
             hentDialoger: store.hentDialoger,
-            pollForChanges: store.pollForChanges,
-            silentlyHentDialoger: store.silentlyHentDialoger
+            configurePoll: store.configurePoll,
+            stopPolling: store.stopPolling,
+            dialogstatus: store.status
         }))
     );
     const { hentAktiviteter, hentArenaAktiviteter } = aktivitetDataProvider;
     const hentKladder = kladdDataProvider.hentKladder;
 
     useEffect(() => {
-        hentOppfolging();
-    }, [hentOppfolging]);
-
-    useEffect(() => {
-        hentAktiviteter();
-        hentArenaAktiviteter();
-    }, [hentAktiviteter, hentArenaAktiviteter]);
-
-    useEffect(() => {
+        hentOppfolging(fnr);
+        hentAktiviteter(fnr);
+        hentArenaAktiviteter(fnr);
         hentDialoger(fnr);
         hentKladder(fnr);
+        return () => stopPolling();
     }, [fnr]);
 
     const brukerStatusErLastet = hasData(brukerstatus);
@@ -100,44 +92,14 @@ export function Provider(props: Props) {
 
     const klarTilAaPolle = dialogStatusOk && bruker && brukerStatusErLastet && featureStatusOk;
 
-    const isPolling = useRef(false);
-    const pollWithHttp = useCallback(() => {
-        return;
-        let interval: NodeJS.Timeout;
-        console.log('Setting up polling with http');
-        interval = setInterval(() => {
-            pollForChanges(fnr).catch((e) => {
-                console.error(e);
-                clearInterval(interval);
-            });
-        }, 2000);
-        return () => {
-            console.log('Stopping polling with http');
-            isPolling.current = false;
-            clearInterval(interval);
-        };
-    }, [pollForChanges, fnr]);
-
     useEffect(() => {
         if (!klarTilAaPolle) return;
-        if (isPolling.current) return;
-        isPolling.current = true;
-        if (bruker.erBruker) {
-            return pollWithHttp();
-        } else {
-            if (feature['arbeidsrettet-dialog.websockets']) {
-                try {
-                    // Return cleanup function
-                    return listenForNyDialogEvents(() => silentlyHentDialoger(fnr), fnr);
-                } catch (e) {
-                    // Fallback to http-polling if anything fails
-                    return pollWithHttp();
-                }
-            } else {
-                return pollWithHttp();
-            }
-        }
-    }, [klarTilAaPolle, fnr, pollWithHttp]);
+        configurePoll({
+            erBruker: bruker?.erBruker,
+            fnr,
+            useWebsockets: feature['arbeidsrettet-dialog.websockets']
+        });
+    }, [klarTilAaPolle, fnr]);
 
     if (
         isDialogPending(dialogstatus) ||

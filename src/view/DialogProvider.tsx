@@ -4,11 +4,10 @@ import { Status } from '../api/typer';
 import { DialogApi } from '../api/UseApiBasePath';
 import { fetchData, fnrQuery } from '../utils/Fetch';
 import { DialogData, NyDialogMeldingData } from '../utils/Typer';
-import { initDialogState } from './dialogProvider/dialogStore';
+import { initDialogState, useDialogStore } from './dialogProvider/dialogStore';
 
 export const DialogContext = React.createContext<DialogDataProviderType>({
     status: Status.INITIAL,
-    dialoger: [],
     nyDialog: (_melding: string, _tema: string, _aktivitetId?: string) => Promise.resolve({} as any),
     nyMelding: (_melding: string, dialog: DialogData) => Promise.resolve(dialog),
     lesDialog: (_dialogId: string) => Promise.resolve({} as any),
@@ -18,13 +17,12 @@ export const DialogContext = React.createContext<DialogDataProviderType>({
 
 export const useDialogContext = () => useContext(DialogContext);
 export const useDialoger = () => {
-    const { dialoger } = useContext(DialogContext);
+    const dialoger = useDialogStore((state) => state.dialoger);
     return dialoger;
 };
 
 export interface DialogDataProviderType {
     status: Status;
-    dialoger: DialogData[];
     nyDialog: (melding: string, tema: string, aktivitetId?: string) => Promise<DialogData>;
     nyMelding: (melding: string, dialog: DialogData) => Promise<DialogData>;
     lesDialog: (dialogId: string) => Promise<DialogData>;
@@ -42,6 +40,7 @@ export interface DialogState {
 export function useDialogDataProvider(fnr?: string): DialogDataProviderType {
     const [state, setState] = useState(initDialogState);
 
+    const updateDialogInDialoger = useDialogStore((state) => state.updateDialogInDialoger);
     const query = fnrQuery(fnr);
 
     const dialogUrl = useMemo(() => DialogApi.hentDialog(query), [query]);
@@ -53,23 +52,6 @@ export function useDialogDataProvider(fnr?: string): DialogDataProviderType {
     const venterPaSvarUrl = useCallback(
         (id: string, venterPaSvar: boolean) => DialogApi.venterPaSvar(id, venterPaSvar, query),
         [query]
-    );
-
-    const updateDialogInDialoger = useCallback(
-        (dialog: DialogData) => {
-            setState((prevState) => {
-                const dialoger = prevState.dialoger;
-                const index = dialoger.findIndex((d) => d.id === dialog.id);
-                const nyeDialoger = [
-                    ...dialoger.slice(0, index),
-                    dialog,
-                    ...dialoger.slice(index + 1, dialoger.length)
-                ];
-                return { ...prevState, status: Status.OK, dialoger: nyeDialoger };
-            });
-            return dialog;
-        },
-        [setState]
     );
 
     const sendMelding = useCallback(
@@ -99,7 +81,7 @@ export function useDialogDataProvider(fnr?: string): DialogDataProviderType {
                 return dialog;
             });
         },
-        [setState, dialogUrl, updateDialogInDialoger]
+        [dialogUrl, updateDialogInDialoger]
     );
 
     const nyDialog = useCallback(
@@ -121,7 +103,7 @@ export function useDialogDataProvider(fnr?: string): DialogDataProviderType {
             setState((prevState) => ({ ...prevState, status: Status.RELOADING }));
             return fetchData<DialogData>(lesUrl(dialogId), { method: 'put' }).then(updateDialogInDialoger);
         },
-        [setState, lesUrl, updateDialogInDialoger]
+        [lesUrl, updateDialogInDialoger]
     );
 
     const setFerdigBehandlet = useCallback(
@@ -131,7 +113,7 @@ export function useDialogDataProvider(fnr?: string): DialogDataProviderType {
                 updateDialogInDialoger
             );
         },
-        [setState, ferdigBehandletUrl, updateDialogInDialoger]
+        [ferdigBehandletUrl, updateDialogInDialoger]
     );
 
     const setVenterPaSvar = useCallback(
@@ -141,7 +123,7 @@ export function useDialogDataProvider(fnr?: string): DialogDataProviderType {
                 updateDialogInDialoger
             );
         },
-        [setState, venterPaSvarUrl, updateDialogInDialoger]
+        [venterPaSvarUrl, updateDialogInDialoger]
     );
 
     return useMemo(() => {

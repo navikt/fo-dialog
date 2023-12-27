@@ -28,18 +28,8 @@ export const useSelectedAktivitet = (): MaybeAktivitet => {
 };
 export const useSelectedDialog = (): DialogData | undefined => {
     const dialoger = useDialoger();
-    useEffect(() => {
-        console.log('effect useSelectedDialog ', dialoger.length);
-    }, [dialoger]);
-
     const params = useParams();
     const { dialogId } = params;
     const selectedDialog = dialoger.find((dialog) => dialog.id === dialogId);
-    const memoed = useMemo(() => {
-        return selectedDialog;
-    }, [selectedDialog]);
-    useEffect(() => {
-        console.log('effect memo');
-    }, [memoed]);
-    return memoed;
+    return selectedDialog;
 };

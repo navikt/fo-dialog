@@ -121,3 +121,13 @@ export const listenForNyDialogEvents = (callback: () => void, fnr?: string) => {
         }
     };
 };
+
+export const closeWebsocket = () => {
+    console.log('Closing websocket');
+    if (socketSingleton?.readyState === ReadyState.CLOSING) return;
+    if (socketSingleton) {
+        // Clear reconnect try on intentional close
+        socketSingleton.onclose = () => {};
+        socketSingleton.close();
+    }
+};
