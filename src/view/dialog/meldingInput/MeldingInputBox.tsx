@@ -57,7 +57,6 @@ const MeldingInputBox = ({ dialog: valgtDialog, kanSendeHenveldelse }: Props) =>
 
     const valgtDialogId = valgtDialog.id;
     useEffect(() => {
-        console.log('Render on valgtDialog', valgtDialogId);
         reset(defaultValues);
     }, [valgtDialogId]);
 
