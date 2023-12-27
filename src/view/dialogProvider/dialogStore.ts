@@ -110,6 +110,13 @@ export const useDialogStore = create(
                 console.log('Stopping polling with http');
                 if (pollInterval) {
                     clearInterval(pollInterval);
+                    set(
+                        () => ({
+                            pollInterval: undefined;
+                        }),
+                        false,
+                        'clearPollInterval'
+                    );
                 }
                 closeWebsocket();
             },
@@ -151,6 +158,6 @@ const onIntervalWithCleanup = (pollForChanges: () => Promise<void>) => {
             console.error(e);
             clearInterval(interval);
         });
-    }, 2000);
+    }, 10000);
     return interval;
 };
