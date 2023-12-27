@@ -58,8 +58,8 @@ export function Provider(props: Props) {
     const oppfolgingDataProvider = useOppfolgingDataProvider();
     const { status: oppfolgingstatus, hentOppfolging } = oppfolgingDataProvider;
 
-    const harLoggetInnNiva4 = useFetchHarNivaa4(erVeileder, fnr);
-    const dialogDataProvider = useDialogDataProvider(fnr);
+    const harLoggetInnNiva4 = useFetchHarNivaa4(erVeileder);
+    const dialogDataProvider = useDialogDataProvider();
 
     const aktivitetDataProvider = useAktivitetDataProvider();
     const kladdDataProvider = useKladdDataProvider();

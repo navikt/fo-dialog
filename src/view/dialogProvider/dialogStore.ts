@@ -112,7 +112,7 @@ export const useDialogStore = create(
                     clearInterval(pollInterval);
                     set(
                         () => ({
-                            pollInterval: undefined;
+                            pollInterval: undefined
                         }),
                         false,
                         'clearPollInterval'

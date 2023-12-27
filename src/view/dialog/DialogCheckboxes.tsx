@@ -4,9 +4,11 @@ import { Status } from '../../api/typer';
 import { notEmpty } from '../../utils/TypeHelper';
 import { useDialogContext } from '../DialogProvider';
 import { useOppfolgingContext } from '../OppfolgingProvider';
-import { dataOrUndefined } from '../Provider';
+import { dataOrUndefined, useFnrContext } from '../Provider';
 import { useSelectedDialog } from '../utils/useAktivitetId';
 import { useUserInfoContext } from '../BrukerProvider';
+import { useDialogStore } from '../dialogProvider/dialogStore';
+import { useShallow } from 'zustand/react/shallow';
 
 interface Props {
     toggleFerdigBehandlet(ferdigBehandler: boolean): void;
@@ -58,6 +60,8 @@ const DialogCheckboxes = ({
 const ManagedDialogCheckboxes = () => {
     const visible = useUserInfoContext()?.erVeileder || false;
     const dialog = useSelectedDialog();
+    const fnr = useFnrContext();
+    const hentDialoger = useDialogStore(useShallow((store) => store.hentDialoger));
     const dialogContext = useDialogContext();
     const oppfolgingContext = useOppfolgingContext();
     const oppfolgingData = dataOrUndefined(oppfolgingContext);
@@ -67,10 +71,10 @@ const ManagedDialogCheckboxes = () => {
     }
 
     const toggleFerdigBehandlet = (ferdigBehandlet: boolean) => {
-        dialogContext.setFerdigBehandlet(dialog, ferdigBehandlet).then(dialogContext.hentDialoger);
+        dialogContext.setFerdigBehandlet(dialog, ferdigBehandlet, fnr).then(() => hentDialoger(fnr));
     };
     const toggleVenterPaSvar = (venterPaSvar: boolean) => {
-        dialogContext.setVenterPaSvar(dialog, venterPaSvar).then(dialogContext.hentDialoger);
+        dialogContext.setVenterPaSvar(dialog, venterPaSvar, fnr).then(() => hentDialoger(fnr));
     };
     const disabled = dialog.historisk || !oppfolgingData?.underOppfolging;
 

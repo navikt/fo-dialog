@@ -63,12 +63,12 @@ function DialogTrad() {
     useEffect(() => {
         if (!lest && activeTab && activePersonflateTab) {
             if (!dialogId) return;
-            lesDialog(dialogId).then(() => {
+            lesDialog(dialogId, fnr).then(() => {
                 dispatchUpdate(UpdateTypes.Dialog);
                 window.dispatchEvent(new Event('aktivitetsplan.dialog.lest')); //lest teller i personflata
             });
         }
-    }, [dialogId, lest, activeTab, activePersonflateTab, lesDialog]);
+    }, [dialogId, lest, activeTab, activePersonflateTab, lesDialog, fnr]);
 
     const routes = useRoutes();
     const navigate = useNavigate();

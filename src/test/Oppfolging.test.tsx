@@ -85,8 +85,8 @@ const dialoger = [
 ];
 const useDialogContext: DialogDataProviderType = {
     status: 3,
-    nyDialog: (melding: string, tema: string, aktivitetId?: string) => Promise.resolve({} as any),
-    nyMelding: (melding: string, dialog: DialogData) => Promise.resolve(dialog),
+    nyDialog: (args) => Promise.resolve({} as any),
+    nyMelding: ({ dialog }) => Promise.resolve(dialog),
     lesDialog: (dialogId: string) => Promise.resolve(dialoger.find((dialog) => dialog.id === dialogId)!!),
     setFerdigBehandlet: (dialog: DialogData, ferdigBehandlet: boolean) => Promise.resolve(dialog),
     setVenterPaSvar: (dialog: DialogData, venterPaSvar: boolean) => Promise.resolve(dialog)

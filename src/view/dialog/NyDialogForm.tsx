@@ -94,14 +94,14 @@ const NyDialogForm = (props: Props) => {
         timer.current = undefined;
 
         loggEvent('arbeidsrettet-dialog.ny.dialog', { paaAktivitet: !!aktivitetId });
-        return nyDialog(melding, tema, aktivitetId)
+        return nyDialog({ melding, tema, aktivitetId, fnr })
             .then((dialog) => {
                 slettKladd(null, props.aktivitetId);
                 navigate(dialogRoute(dialog.id), { state: { sistHandlingsType: HandlingsType.nyDialog } });
                 dispatchUpdate(UpdateTypes.Dialog);
                 return dialog;
             })
-            .then(hentDialoger)
+            .then(() => hentDialoger(fnr))
             .catch(() => setNoeFeilet(true));
     };
 

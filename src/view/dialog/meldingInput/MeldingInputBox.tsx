@@ -16,6 +16,9 @@ import { debounced, maxMeldingsLengde, MeldingInputContext } from './inputUtils'
 import { useVisAktivitet } from '../../AktivitetToggleContext';
 import { Status } from '../../../api/typer';
 import ManagedDialogCheckboxes from '../DialogCheckboxes';
+import { useDialogStore } from '../../dialogProvider/dialogStore';
+import { useShallow } from 'zustand/react/shallow';
+import { useFnrContext } from '../../Provider';
 
 const schema = z.object({
     melding: z
@@ -32,7 +35,9 @@ interface Props {
 }
 
 const MeldingInputBox = ({ dialog: valgtDialog, kanSendeHenveldelse }: Props) => {
-    const { hentDialoger, nyMelding } = useDialogContext();
+    const { nyMelding } = useDialogContext();
+    const fnr = useFnrContext();
+    const hentDialoger = useDialogStore(useShallow((store) => store.hentDialoger));
     const [noeFeilet, setNoeFeilet] = useState(false);
     const startTekst = useMeldingStartTekst();
     const visAktivitet = useVisAktivitet();
@@ -67,7 +72,12 @@ const MeldingInputBox = ({ dialog: valgtDialog, kanSendeHenveldelse }: Props) =>
 
     useEffect(() => {
         if (melding === defaultValues.melding) return;
-        debouncedOppdaterKladd(valgtDialog.id, valgtDialog.aktivitetId, null, melding);
+        debouncedOppdaterKladd(fnr, {
+            dialogId: valgtDialog.id,
+            aktivitetId: valgtDialog.aktivitetId,
+            overskrift: null,
+            tekst: melding
+        });
     }, [melding]);
 
     const onSubmit = useMemo(() => {
@@ -75,12 +85,12 @@ const MeldingInputBox = ({ dialog: valgtDialog, kanSendeHenveldelse }: Props) =>
             setNoeFeilet(false);
             stopKladdSyncing();
             loggEvent('arbeidsrettet-dialog.ny.henvendelse', { paaAktivitet: !!valgtDialog.aktivitetId });
-            return nyMelding(melding, valgtDialog)
+            return nyMelding({ melding, dialog: valgtDialog, fnr })
                 .then((dialog) => {
                     slettKladd(valgtDialog.id, valgtDialog.aktivitetId);
                     return dialog;
                 })
-                .then(hentDialoger)
+                .then(() => hentDialoger(fnr))
                 .then(() => {
                     setNoeFeilet(false);
                     reset({ melding: startTekst });
@@ -92,16 +102,7 @@ const MeldingInputBox = ({ dialog: valgtDialog, kanSendeHenveldelse }: Props) =>
                     setNoeFeilet(true);
                 });
         };
-    }, [
-        slettKladd,
-        setNoeFeilet,
-        setViewState,
-        startTekst,
-        stopKladdSyncing,
-        valgtDialog.aktivitetId,
-        valgtDialog.id,
-        viewState
-    ]);
+    }, [slettKladd, setViewState, startTekst, stopKladdSyncing, valgtDialog.aktivitetId, valgtDialog.id, viewState]);
 
     const kladdErLagret = melding !== startTekst && !kladdSkalOppdateres() && Status.OK === oppdaterStatus;
 
