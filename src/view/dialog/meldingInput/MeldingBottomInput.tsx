@@ -75,9 +75,9 @@ const MeldingBottomInputInner = () => {
 };
 
 export const MeldingBottomInput = () => {
-    const dialog = useSelectedDialog();
     const oppfolgingContext = useOppfolgingContext();
     const oppfolging = dataOrUndefined(oppfolgingContext);
+    const dialog = useSelectedDialog();
     if (!dialog) return null;
     return (
         <section aria-label="Ny melding" className="flex justify-center border-t border-border-divider p-4">

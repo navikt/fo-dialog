@@ -60,16 +60,9 @@ const MeldingSideInputInner = () => {
 };
 
 export const MeldingSideInput = () => {
-    const dialog = useSelectedDialog();
     const oppfolgingContext = useOppfolgingContext();
     const oppfolging = dataOrUndefined(oppfolgingContext);
-    useEffect(() => {
-        console.log('Mounting MeldingSideInput');
-        return () => {
-            console.log('Unmounting MeldingSideInput');
-        };
-    }, []);
-
+    const dialog = useSelectedDialog();
     if (!dialog) return null;
     return (
         <section aria-label="Ny melding" className="flex flex-1 bg-white p-4">

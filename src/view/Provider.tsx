@@ -1,7 +1,6 @@
 import { Alert, Loader } from '@navikt/ds-react';
-import React, { useCallback, useContext, useEffect, useRef } from 'react';
+import React, { useContext, useEffect } from 'react';
 
-import { listenForNyDialogEvents } from '../api/nyDialogWs';
 import { Status, hasData, hasError, isPending } from '../api/typer';
 import useFetchHarNivaa4, { HarNivaa4Response } from '../api/useFetchHarNivaa4';
 import useFetchVeilederNavn from '../api/useHentVeilederData';
