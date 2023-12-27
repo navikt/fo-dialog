@@ -138,7 +138,6 @@ export const useDialogStore = create(
                 );
                 return dialog;
             }
-            // lesDialog: async (fnr: string | undefined) => {}
         }),
         { name: 'DialogStore' }
     )
