@@ -1,5 +1,5 @@
 import { Alert, Button, Textarea } from '@navikt/ds-react';
-import React, { MutableRefObject, useContext, useEffect, useRef } from 'react';
+import React, { MutableRefObject, useContext, useRef } from 'react';
 import { useFormContext } from 'react-hook-form';
 import { betterErrorMessage, MeldingInputContext, useFocusBeforeHilsen } from './inputUtils';
 import { MeldingFormValues } from './MeldingInputBox';
