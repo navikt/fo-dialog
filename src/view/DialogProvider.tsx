@@ -114,25 +114,30 @@ export function useDialogDataProvider(): DialogDataProviderType {
 
     const lesDialog = (dialogId: string, fnr: string | undefined) => {
         setState((prevState) => ({ ...prevState, status: Status.RELOADING }));
-        return fetchData<DialogData>(lesUrl({ id: dialogId, fnr }), { method: 'put' })
-            .then(updateDialogInDialoger)
-            .then(setOkStatus);
+        return fetchData<DialogData>(lesUrl({ id: dialogId, fnr }), { method: 'put' }).then((dialogData) => {
+            setOkStatus();
+            return updateDialogInDialoger(dialogData);
+        });
     };
 
     const setFerdigBehandlet = (dialog: DialogData, ferdigBehandlet: boolean, fnr: string | undefined) => {
         setState((prevState) => ({ ...prevState, status: Status.RELOADING }));
         return fetchData<DialogData>(ferdigBehandletUrl({ id: dialog.id, ferdigBehandlet, fnr }), {
             method: 'put'
-        })
-            .then(updateDialogInDialoger)
-            .then(setOkStatus);
+        }).then((dialogData) => {
+            setOkStatus();
+            return updateDialogInDialoger(dialogData);
+        });
     };
 
     const setVenterPaSvar = (dialog: DialogData, venterPaSvar: boolean, fnr: string | undefined) => {
         setState((prevState) => ({ ...prevState, status: Status.RELOADING }));
-        return fetchData<DialogData>(venterPaSvarUrl({ id: dialog.id, venterPaSvar, fnr }), { method: 'put' })
-            .then(updateDialogInDialoger)
-            .then(setOkStatus);
+        return fetchData<DialogData>(venterPaSvarUrl({ id: dialog.id, venterPaSvar, fnr }), { method: 'put' }).then(
+            (dialogData) => {
+                setOkStatus();
+                return updateDialogInDialoger(dialogData);
+            }
+        );
     };
 
     return {
