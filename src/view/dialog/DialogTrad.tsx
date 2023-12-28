@@ -68,7 +68,7 @@ function DialogTrad() {
                 window.dispatchEvent(new Event('aktivitetsplan.dialog.lest')); //lest teller i personflata
             });
         }
-    }, [dialogId, lest, activeTab, activePersonflateTab, lesDialog, fnr]);
+    }, [dialogId, lest, activeTab, activePersonflateTab, fnr]);
 
     const routes = useRoutes();
     const navigate = useNavigate();
