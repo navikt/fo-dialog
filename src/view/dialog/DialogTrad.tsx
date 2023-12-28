@@ -15,7 +15,7 @@ import { HandlingsType, useSetViewContext, useViewContext } from '../ViewState';
 import MeldingInputBox from './meldingInput/MeldingInputBox';
 import HistoriskInfo from './HistoriskInfo';
 
-function DialogTrad() {
+export const DialogTrad = () => {
     const scrollContainerRef: React.MutableRefObject<null | HTMLDivElement> = useRef(null);
     const aktivitet = useSelectedAktivitet();
     const kanSendeMelding = useKansendeMelding();
@@ -107,6 +107,4 @@ function DialogTrad() {
             <MeldingInputBox dialog={valgtDialog} kanSendeHenveldelse={kanSendeHenveldelse} />
         </section>
     );
-}
-
-export default DialogTrad;
+};

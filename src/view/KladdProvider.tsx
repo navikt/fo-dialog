@@ -51,7 +51,7 @@ const initKladdState: KladdState = {
 
 export function useKladdDataProvider(): KladdDataContext {
     const [state, setState] = useState(initKladdState);
-    const hentKladder = (fnr: string | undefined) => {
+    const hentKladder = useCallback((fnr: string | undefined) => {
         setState((prevState) => ({
             ...prevState,
             status: isKladdReloading(prevState.status) ? Status.RELOADING : Status.PENDING
@@ -65,9 +65,9 @@ export function useKladdDataProvider(): KladdDataContext {
                 setState((prevState) => ({ ...prevState, status: Status.ERROR }));
                 return [];
             });
-    };
+    }, []);
 
-    const oppdaterKladd = (fnr: string | undefined, kladdData: KladdData) => {
+    const oppdaterKladd = useCallback((fnr: string | undefined, kladdData: KladdData) => {
         const { dialogId, aktivitetId } = kladdData;
         setState((prevState) => {
             const kladder = prevState.kladder;
@@ -85,15 +85,15 @@ export function useKladdDataProvider(): KladdDataContext {
             .catch(() => {
                 setState((prevState) => ({ ...prevState, oppdaterStatus: Status.OK }));
             });
-    };
+    }, []);
 
-    const slettKladd = (dialogId?: StringOrNull, aktivitetId?: StringOrNull) => {
+    const slettKladd = useCallback((dialogId?: StringOrNull, aktivitetId?: StringOrNull) => {
         setState((prevState) => {
             const kladder = prevState.kladder;
             const ny = kladder.filter((k) => !eqKladd(k, dialogId, aktivitetId));
             return { ...prevState, kladder: ny };
         });
-    };
+    }, []);
 
     return useMemo(() => {
         return {

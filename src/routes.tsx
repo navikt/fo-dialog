@@ -1,9 +1,9 @@
 import AppBody from './view/AppBody';
 import NyDialogTrad from './view/dialog/NyDialogTrad';
 import { Aktivitetskort } from './view/aktivitet/Aktivitetskort';
-import DialogTrad from './view/dialog/DialogTrad';
+import { DialogTrad } from './view/dialog/DialogTrad';
 import IkkeValgtDialogMelding from './view/dialog/IkkeValgtDialogMelding';
-import { Navigate, RouteObject, RouterProvider, useParams } from 'react-router';
+import { Navigate, RouteObject, RouterProvider, createMemoryRouter, useParams } from 'react-router';
 import React from 'react';
 import { erInternFlate, USE_HASH_ROUTER } from './constants';
 import { createBrowserRouter, createHashRouter, useSearchParams } from 'react-router-dom';
@@ -85,6 +85,10 @@ export const Routes = () => {
     if (USE_HASH_ROUTER) {
         const hashRouter = createHashRouter(dialogRoutes);
         return <RouterProvider router={hashRouter} />;
+    }
+    if (process.env.NODE_ENV === 'test') {
+        const inMemoryRouter = createMemoryRouter(dialogRoutes);
+        return <RouterProvider router={inMemoryRouter} />;
     }
     let basename = stripTrailingSlash(import.meta.env.BASE_URL);
     if (erInternFlate) basename = `/`;

@@ -26,7 +26,8 @@ describe('DialogTrad', () => {
 
     it('should display state from backend if no kladd', async () => {
         const { getByLabelText, getByText } = await act(() => render(<App />));
-        act(() => getByText('Avklaring: Avklaring').click());
+        getByText('Avklaring: Avklaring');
+        await act(() => getByText('Avklaring: Avklaring').click());
         getByLabelText('Skriv om arbeid og oppfølging');
         getByText('Er du fornøyd med oppgfølgingen?');
         getByText('Sånn passe.');
