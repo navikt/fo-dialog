@@ -112,7 +112,7 @@ export const handlers = [
         failOrGetResponse(harArenaaktivitetFeilerSkruddPa, () => arenaAktiviteter)
     ),
     rest.get('/veilarbaktivitet/api/feature', (_, res, ctx) =>
-        res(ctx.json({ [FeatureToggle.VIS_SKJUL_AKTIVITET_KNAPP]: false }))
+        res(ctx.json({ [FeatureToggle.USE_WEBSOCKETS]: false }))
     ),
 
     // veilarbveileder

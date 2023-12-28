@@ -1,7 +1,7 @@
 import React from 'react';
 import { useParams } from 'react-router';
 import { DialogData } from '../../utils/Typer';
-import { useDialogContext } from '../DialogProvider';
+import { useDialoger } from '../DialogProvider';
 import { DialogPreviewListe } from './DialogPreview';
 import HistoriskeDialogerOversikt from './HistoriskDialogListe';
 
@@ -16,7 +16,7 @@ function splitHistoriske(acc: Res, cur: DialogData) {
 }
 
 export function DialogListe() {
-    const { dialoger } = useDialogContext();
+    const dialoger = useDialoger();
     const { dialogId } = useParams();
 
     const sorterteDialoger = dialoger.sort((a, b) => sortDialoger(a, b));

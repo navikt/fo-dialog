@@ -47,16 +47,16 @@ export const MeldingInputContext = React.createContext<MeldingInputArgs>({
     kladdErLagret: false
 });
 
-export const useFocusBeforeHilsen = (ref: MutableRefObject<HTMLTextAreaElement | null>) => {
+export const useFocusBeforeHilsen = (textAreaRef: MutableRefObject<HTMLTextAreaElement | null>) => {
     // Avoid setting focus twice, making the textarea "flash"
     const hasFocus = useRef(false);
     useEffect(() => {
-        if (ref.current === null) return;
+        if (textAreaRef.current === null) return;
         const setHasFocusTrue = (ev: FocusEvent) => (hasFocus.current = true);
         const setHasFocusFalse = (ev: FocusEvent) => (hasFocus.current = false);
-        ref.current?.addEventListener('blur', setHasFocusFalse);
-        ref.current?.addEventListener('focus', setHasFocusTrue);
-    }, [ref.current]);
+        textAreaRef.current?.addEventListener('blur', setHasFocusFalse);
+        textAreaRef.current?.addEventListener('focus', setHasFocusTrue);
+    }, [textAreaRef.current]);
 
     const fnr = useFnrContext();
     const viewState = useViewContext();
@@ -71,14 +71,14 @@ export const useFocusBeforeHilsen = (ref: MutableRefObject<HTMLTextAreaElement |
         const bigScreen = window?.matchMedia(`(min-width: 900px)`)?.matches || false;
         const shouldAutoFocus = bigScreen && viewState.sistHandlingsType !== HandlingsType.nyDialog;
         if (shouldAutoFocus) {
-            if (!ref.current) return;
-            const initialText = ref.current?.value;
+            if (!textAreaRef.current) return;
+            const initialText = textAreaRef.current?.value;
             if (!initialText || !initialText.endsWith(startTekst)) return;
             const start = initialText.length - startTekst.length;
-            ref.current.selectionStart = start;
-            ref.current.selectionEnd = start;
+            textAreaRef.current.selectionStart = start;
+            textAreaRef.current.selectionEnd = start;
             if (hasFocus?.current) return;
-            ref.current?.focus();
+            textAreaRef.current?.focus();
             hasFocus.current = true;
         }
     }, [defaultValues?.melding, isDirty, hasFocus]);

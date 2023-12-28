@@ -15,10 +15,9 @@ import { HandlingsType, useSetViewContext, useViewContext } from '../ViewState';
 import MeldingInputBox from './meldingInput/MeldingInputBox';
 import HistoriskInfo from './HistoriskInfo';
 
-function DialogTrad() {
+export const DialogTrad = () => {
     const scrollContainerRef: React.MutableRefObject<null | HTMLDivElement> = useRef(null);
     const aktivitet = useSelectedAktivitet();
-    const kanSendeMelding = useKansendeMelding();
     const { lesDialog } = useDialogContext();
 
     const valgtDialog = useSelectedDialog();
@@ -63,12 +62,12 @@ function DialogTrad() {
     useEffect(() => {
         if (!lest && activeTab && activePersonflateTab) {
             if (!dialogId) return;
-            lesDialog(dialogId).then(() => {
+            lesDialog(dialogId, fnr).then(() => {
                 dispatchUpdate(UpdateTypes.Dialog);
                 window.dispatchEvent(new Event('aktivitetsplan.dialog.lest')); //lest teller i personflata
             });
         }
-    }, [dialogId, lest, activeTab, activePersonflateTab, lesDialog]);
+    }, [dialogId, lest, activeTab, activePersonflateTab, fnr]);
 
     const routes = useRoutes();
     const navigate = useNavigate();
@@ -90,7 +89,6 @@ function DialogTrad() {
     }
 
     const aktivDialog = !valgtDialog.historisk;
-    const kanSendeHenveldelse = kanSendeMelding && aktivDialog;
 
     return (
         <section
@@ -102,11 +100,9 @@ function DialogTrad() {
         >
             <div ref={scrollContainerRef} className="relative flex flex-1 grow flex-col overflow-y-scroll">
                 <Meldinger dialogData={valgtDialog} fnr={fnr} />
-                <HistoriskInfo hidden={aktivDialog} kanSendeMelding={kanSendeMelding} />
+                <HistoriskInfo hidden={aktivDialog} />
             </div>
-            <MeldingInputBox dialog={valgtDialog} kanSendeHenveldelse={kanSendeHenveldelse} />
+            <MeldingInputBox dialog={valgtDialog} />
         </section>
     );
-}
-
-export default DialogTrad;
+};

@@ -2,14 +2,15 @@ import { BodyShort } from '@navikt/ds-react';
 import React from 'react';
 
 import NyDialogLink from '../dialogliste/NyDialogLink';
+import useKansendeMelding from '../../utils/UseKanSendeMelding';
 
 interface Props {
-    kanSendeMelding: boolean;
     hidden?: boolean;
 }
 
-function HistoriskInfo(props: Props) {
-    if (props.hidden) {
+function HistoriskInfo({ hidden }: Props) {
+    const kanSendeMelding = useKansendeMelding();
+    if (hidden) {
         return null;
     }
 
@@ -18,7 +19,7 @@ function HistoriskInfo(props: Props) {
             <BodyShort className="pb-4">
                 Dette er en dialog fra en tidligere periode, og du kan derfor ikke svare på den.
             </BodyShort>
-            <div className="self-start">{props.kanSendeMelding ? <NyDialogLink /> : null}</div>
+            <div className="self-start">{kanSendeMelding ? <NyDialogLink /> : null}</div>
         </div>
     );
 }

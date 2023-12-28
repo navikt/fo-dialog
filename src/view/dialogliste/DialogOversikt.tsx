@@ -5,7 +5,7 @@ import { useLocation } from 'react-router';
 import { AKTIVITETSPLAN_URL, MINSIDE_URL } from '../../constants';
 import useKansendeMelding from '../../utils/UseKanSendeMelding';
 import { useUserInfoContext } from '../BrukerProvider';
-import { useDialogContext } from '../DialogProvider';
+import { useDialoger } from '../DialogProvider';
 import InfoVedIngenDialoger from '../info/InfoVedIngenDialoger';
 import OmDialogLenke from '../info/OmDialogLenke';
 import { useSelectedDialog } from '../utils/useAktivitetId';
@@ -35,7 +35,7 @@ const DialogOversiktHeader = ({ erVeileder }: { erVeileder: boolean }) => {
 
 const DialogOversikt = () => {
     const kanSendeMelding = useKansendeMelding();
-    const { dialoger } = useDialogContext();
+    const dialoger = useDialoger();
     const dialog = useSelectedDialog();
     const location = useLocation();
     const isNyRoute = location.pathname.startsWith('/ny');

@@ -8,16 +8,16 @@
     "url": "git+https://github.com/navikt/arbeidsrettet-dialog.git"
   },
   "engines": {
-    "node": "18"
+    "node": "20"
   },
   "scripts": {
     "dev": "vite",
-    "build:dev-ekstern": "vite build --mode=dev-ekstern --base=/arbeid/dialog/",
-    "build:dev-intern": "vite build --mode=dev-intern --base=https://cdn.nav.no/dab/arbeidsrettet-dialog-dev-intern/build/",
-    "build:prod-ekstern": "vite build --mode=prod-ekstern --base=/arbeid/dialog/",
-    "build:prod-intern": "vite build --mode=prod-intern --base=https://cdn.nav.no/dab/arbeidsrettet-dialog-prod-intern/build/",
+    "build:dev-ekstern": "tsc --noEmit && vite build --mode=dev-ekstern --base=/arbeid/dialog/",
+    "build:dev-intern": "tsc --noEmit && vite build --mode=dev-intern --base=https://cdn.nav.no/dab/arbeidsrettet-dialog-dev-intern/build/",
+    "build:prod-ekstern": "tsc --noEmit && vite build --mode=prod-ekstern --base=/arbeid/dialog/",
+    "build:prod-intern": "tsc --noEmit && vite build --mode=prod-intern --base=https://cdn.nav.no/dab/arbeidsrettet-dialog-prod-intern/build/",
     "build:gh-pages": "VITE_USE_HASH_ROUTER=true vite build --mode=dev-ekstern --base=/arbeidsrettet-dialog/",
-    "build": "vite build",
+    "build": "tsc --noEmit && vite build",
     "test": "vitest",
     "coverage": "vitest run --coverage",
     "test:coverage": "npm test -- --coverage --watchAll=false",
@@ -83,7 +83,8 @@
     "vite-plugin-html": "^3.2.0",
     "vite-plugin-svgr": "^3.2.0",
     "whatwg-fetch": "^3.6.2",
-    "zod": "^3.22.3"
+    "zod": "^3.22.3",
+    "zustand": "^4.4.7"
   },
   "devDependencies": {
     "@storybook/addon-essentials": "^7.4.5",
@@ -95,7 +96,7 @@
     "@storybook/react-vite": "^7.4.5",
     "@storybook/testing-library": "^0.2.1",
     "@testing-library/react": "^14.0.0",
-    "@types/node": "^18.16.14",
+    "@types/node": "^20.10.5",
     "@types/react": "^18.2.6",
     "@types/react-collapse": "^5.0.1",
     "@types/react-dom": "^18.2.4",
@@ -115,7 +116,7 @@
     "storybook": "^7.4.5",
     "tailwindcss": "^3.3.3",
     "typescript": "^5.2.2",
-    "vitest": "^0.31.1"
+    "vitest": "^1.1.0"
   },
   "msw": {
     "workerDirectory": "public"

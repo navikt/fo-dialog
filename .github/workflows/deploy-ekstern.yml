@@ -1,48 +1,48 @@
 name: GCP root
 
 on:
-  workflow_call:
-    inputs:
-      kommando:
-        required: true
-        type: string
-      bucket:
-        required: true
-        type: string
-    secrets:
-      GCS_SA_KEY:
-        required: true
+    workflow_call:
+        inputs:
+            kommando:
+                required: true
+                type: string
+            bucket:
+                required: true
+                type: string
+        secrets:
+            GCS_SA_KEY:
+                required: true
 
 env:
-  PRINT_PAYLOAD: true
-  TZ: Europe/Amsterdam
-  CI: true
+    PRINT_PAYLOAD: true
+    TZ: Europe/Amsterdam
+    CI: true
 
 jobs:
-  deploy:
-    name: Deploy application to dev
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v3
-      - uses: actions/setup-node@v3
-        with:
-          node-version: 18
-          cache: 'npm'
-      - name: Install bun
-        uses: oven-sh/setup-bun@v1
-      - name: Install dependencies (bun)
-        run: bun install
-      - name: Run tests
-        run: npm run test
-      - name: Build application
-        run: ${{ inputs.kommando }}
-      - name: Gcloud auth
-        uses: google-github-actions/auth@v0
-        with:
-          credentials_json: ${{ secrets.GCS_SA_KEY }}
-      - name: Setup gcloud
-        uses: google-github-actions/setup-gcloud@v0
-      - name: Upload files to GCS
-        run: gsutil -m rsync -r build "$BUCKET"
-        env:
-          BUCKET: gs://${{ inputs.bucket }}
+    deploy:
+        name: Deploy application to dev
+        runs-on: ubuntu-latest
+        steps:
+            - uses: actions/checkout@v3
+            - uses: actions/setup-node@v3
+              with:
+                  node-version: 20
+                  cache: 'npm'
+            - name: Install bun
+              uses: oven-sh/setup-bun@v1
+            - name: Install dependencies (bun)
+              run: bun install
+            - name: Run tests
+              run: npm run test
+            - name: Build application
+              run: ${{ inputs.kommando }}
+            - name: Gcloud auth
+              uses: google-github-actions/auth@v0
+              with:
+                  credentials_json: ${{ secrets.GCS_SA_KEY }}
+            - name: Setup gcloud
+              uses: google-github-actions/setup-gcloud@v0
+            - name: Upload files to GCS
+              run: gsutil -m rsync -r build "$BUCKET"
+              env:
+                  BUCKET: gs://${{ inputs.bucket }}

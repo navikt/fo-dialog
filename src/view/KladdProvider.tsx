@@ -17,13 +17,8 @@ export interface KladdDataContext {
     status: Status;
     oppdaterStatus: Status;
     kladder: KladdData[];
-    hentKladder: () => Promise<KladdData[]>;
-    oppdaterKladd: (
-        _dialogId?: StringOrNull,
-        _aktivitetId?: StringOrNull,
-        _tema?: StringOrNull,
-        _melding?: StringOrNull
-    ) => void;
+    hentKladder: (fnr: string | undefined) => Promise<KladdData[]>;
+    oppdaterKladd: (fnr: string | undefined, kladdData: KladdData) => void;
     slettKladd: (dialogId?: StringOrNull, aktivitetId?: StringOrNull) => void;
 }
 
@@ -31,16 +26,11 @@ export const KladdContext = React.createContext<KladdDataContext>({
     status: Status.INITIAL,
     oppdaterStatus: Status.INITIAL,
     kladder: [],
-    hentKladder: () => Promise.resolve([]),
-    oppdaterKladd: (
-        _dialogId?: StringOrNull,
-        _aktivitetId?: StringOrNull,
-        _tema?: StringOrNull,
-        _melding?: StringOrNull
-    ) => {
+    hentKladder: (fnr) => Promise.resolve([]),
+    oppdaterKladd: (fnr, kladdData) => {
         /* do nothing */
     },
-    slettKladd: (_dialogId?: StringOrNull, _aktivitetId?: StringOrNull) => {
+    slettKladd: (_dialogId, _aktivitetId) => {
         /* do nothing */
     }
 });
@@ -59,18 +49,14 @@ const initKladdState: KladdState = {
     kladder: []
 };
 
-export function useKladdDataProvider(fnr?: string): KladdDataContext {
+export function useKladdDataProvider(): KladdDataContext {
     const [state, setState] = useState(initKladdState);
-
-    const query = fnrQuery(fnr);
-    const kladdUrl = useMemo(() => DialogApi.kladd(query), [query]);
-
-    const hentKladder = useCallback(() => {
+    const hentKladder = useCallback((fnr: string | undefined) => {
         setState((prevState) => ({
             ...prevState,
             status: isKladdReloading(prevState.status) ? Status.RELOADING : Status.PENDING
         }));
-        return fetchData<KladdData[]>(kladdUrl)
+        return fetchData<KladdData[]>(DialogApi.kladd(fnrQuery(fnr)))
             .then((kladder) => {
                 setState((prevState) => ({ ...prevState, status: Status.OK, kladder: kladder }));
                 return kladder;
@@ -79,47 +65,35 @@ export function useKladdDataProvider(fnr?: string): KladdDataContext {
                 setState((prevState) => ({ ...prevState, status: Status.ERROR }));
                 return [];
             });
-    }, [kladdUrl, setState]);
+    }, []);
 
-    const oppdaterKladd = useCallback(
-        (dialogId?: StringOrNull, aktivitetId?: StringOrNull, tema?: StringOrNull, melding?: StringOrNull) => {
-            const kladdData: KladdData = {
-                dialogId: valueOrNull(dialogId),
-                aktivitetId: valueOrNull(aktivitetId),
-                overskrift: valueOrNull(tema),
-                tekst: valueOrNull(melding)
-            };
+    const oppdaterKladd = useCallback((fnr: string | undefined, kladdData: KladdData) => {
+        const { dialogId, aktivitetId } = kladdData;
+        setState((prevState) => {
+            const kladder = prevState.kladder;
+            const ny = [...kladder.filter((k) => !eqKladd(k, dialogId, aktivitetId)), kladdData];
+            return { ...prevState, kladder: ny, oppdaterStatus: Status.RELOADING };
+        });
 
-            setState((prevState) => {
-                const kladder = prevState.kladder;
-                const ny = [...kladder.filter((k) => !eqKladd(k, dialogId, aktivitetId)), kladdData];
-                return { ...prevState, kladder: ny, oppdaterStatus: Status.RELOADING };
-            });
-
-            fetchData<void>(kladdUrl, {
-                method: 'post',
-                body: JSON.stringify(kladdData)
+        fetchData<void>(DialogApi.kladd(fnrQuery(fnr)), {
+            method: 'post',
+            body: JSON.stringify(kladdData)
+        })
+            .then(() => {
+                setState((prevState) => ({ ...prevState, oppdaterStatus: Status.OK }));
             })
-                .then(() => {
-                    setState((prevState) => ({ ...prevState, oppdaterStatus: Status.OK }));
-                })
-                .catch(() => {
-                    setState((prevState) => ({ ...prevState, oppdaterStatus: Status.OK }));
-                });
-        },
-        [setState, kladdUrl]
-    );
-
-    const slettKladd = useCallback(
-        (dialogId?: StringOrNull, aktivitetId?: StringOrNull) => {
-            setState((prevState) => {
-                const kladder = prevState.kladder;
-                const ny = kladder.filter((k) => !eqKladd(k, dialogId, aktivitetId));
-                return { ...prevState, kladder: ny };
+            .catch(() => {
+                setState((prevState) => ({ ...prevState, oppdaterStatus: Status.OK }));
             });
-        },
-        [setState]
-    );
+    }, []);
+
+    const slettKladd = useCallback((dialogId?: StringOrNull, aktivitetId?: StringOrNull) => {
+        setState((prevState) => {
+            const kladder = prevState.kladder;
+            const ny = kladder.filter((k) => !eqKladd(k, dialogId, aktivitetId));
+            return { ...prevState, kladder: ny };
+        });
+    }, []);
 
     return useMemo(() => {
         return {

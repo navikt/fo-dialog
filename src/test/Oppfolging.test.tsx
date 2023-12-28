@@ -1,13 +1,11 @@
-import { Checkbox } from '@navikt/ds-react';
 import { render } from '@testing-library/react';
 import React from 'react';
 import { MemoryRouter, Route, Routes } from 'react-router';
 
 import { Status } from '../api/typer';
-import App from '../App';
 import { Bruker, DialogData, OppfolgingData, PeriodeData } from '../utils/Typer';
 import * as BrukerProvider from '../view/BrukerProvider';
-import DialogTrad from '../view/dialog/DialogTrad';
+import { DialogTrad } from '../view/dialog/DialogTrad';
 import DialogListe from '../view/dialogliste/DialogListe';
 import DialogOversikt from '../view/dialogliste/DialogOversikt';
 import * as DialogProvider from '../view/DialogProvider';
@@ -23,7 +21,7 @@ const oppfolgingData: OppfolgingData = {
     veilederId: '101010',
     reservasjonKRR: false,
     manuell: false,
-    underOppfolging: true, //eller false
+    underOppfolging: true, // eller false
     underKvp: false,
     oppfolgingUtgang: null,
     gjeldendeEskaleringsvarsel: null,
@@ -87,14 +85,11 @@ const dialoger = [
 ];
 const useDialogContext: DialogDataProviderType = {
     status: 3,
-    dialoger: dialoger,
-    hentDialoger: () => Promise.resolve([]),
-    nyDialog: (melding: string, tema: string, aktivitetId?: string) => Promise.resolve({} as any),
-    nyMelding: (melding: string, dialog: DialogData) => Promise.resolve(dialog),
+    nyDialog: (args) => Promise.resolve({} as any),
+    nyMelding: ({ dialog }) => Promise.resolve(dialog),
     lesDialog: (dialogId: string) => Promise.resolve(dialoger.find((dialog) => dialog.id === dialogId)!!),
     setFerdigBehandlet: (dialog: DialogData, ferdigBehandlet: boolean) => Promise.resolve(dialog),
-    setVenterPaSvar: (dialog: DialogData, venterPaSvar: boolean) => Promise.resolve(dialog),
-    pollForChanges: () => Promise.resolve()
+    setVenterPaSvar: (dialog: DialogData, venterPaSvar: boolean) => Promise.resolve(dialog)
 };
 
 describe('<DialogContainer/>', () => {
@@ -123,7 +118,7 @@ describe('<DialogContainer/>', () => {
             }
         ];
         vi.spyOn(OppfolgingProvider, 'useOppfolgingContext').mockImplementation(() => useFetchOppfolging);
-        vi.spyOn(DialogProvider, 'useDialogContext').mockImplementation(() => useDialogContext);
+        vi.spyOn(DialogProvider, 'useDialoger').mockImplementation(() => dialoger);
         const { queryByText, getByRole } = render(
             <MemoryRouter>
                 <DialogListe />
@@ -150,7 +145,7 @@ describe('<DialogContainer/>', () => {
             hasError: false,
             isPending: false
         }));
-        vi.spyOn(DialogProvider, 'useDialogContext').mockImplementation(() => useDialogContext);
+        vi.spyOn(DialogProvider, 'useDialoger').mockImplementation(() => dialoger);
         const { getByText } = render(
             <MemoryRouter>
                 <DialogOversikt />
@@ -176,6 +171,7 @@ describe('<Dialog/>', () => {
         ];
         vi.spyOn(DialogProvider, 'useDialogContext').mockImplementation(() => useDialogContext);
         vi.spyOn(OppfolgingProvider, 'useOppfolgingContext').mockImplementation(() => useFetchOppfolging);
+        vi.spyOn(DialogProvider, 'useDialoger').mockImplementation(() => dialoger);
         Element.prototype.scrollIntoView = () => {};
         const { queryByLabelText, queryByText, queryByRole } = render(
             <MemoryRouter initialEntries={['/1']}>
@@ -204,24 +200,22 @@ describe('<Dialog/>', () => {
         vi.spyOn(DialogProvider, 'useDialogContext').mockImplementation(() => useDialogContext);
         vi.spyOn(OppfolgingProvider, 'useOppfolgingContext').mockImplementation(() => useFetchOppfolging);
         vi.spyOn(BrukerProvider, 'useUserInfoContext').mockImplementation(() => userInfo);
+        vi.spyOn(DialogProvider, 'useDialoger').mockImplementation(() => dialoger);
         vi.spyOn(AppContext, 'useHarNivaa4Context').mockImplementation(() => ({
             harNivaa4: true,
             hasError: false,
             isPending: false
         }));
         Element.prototype.scrollIntoView = () => {};
-        const wrapper = render(
+        const { getByRole, getByText, getByLabelText } = render(
             <MemoryRouter initialEntries={['/1']}>
                 <Routes>
                     <Route path={'/:dialogId'} element={<DialogTrad />} />
                 </Routes>
             </MemoryRouter>
         );
-        wrapper.queryByLabelText('Ny melding');
-        expect(wrapper.queryByLabelText('Meldinger')).toBeTruthy();
-        wrapper.getByText('Venter på svar fra NAV');
-        // expect(wrapper.find(DialogHeader).exists()).toBeTruthy();
-        // expect(wrapper.find(HenvendelseInputBox).exists()).toBeTruthy();
-        // expect(wrapper.find(MeldingList).exists()).toBeTruthy();
+        getByLabelText('Ny melding');
+        getByLabelText('Meldinger');
+        getByText('Venter på svar fra NAV');
     });
 });

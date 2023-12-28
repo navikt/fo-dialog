@@ -14,6 +14,8 @@ import { findKladd, useKladdContext } from '../KladdProvider';
 import { cutStringAtLength } from '../utils/stringUtils';
 import useMeldingStartTekst from './UseMeldingStartTekst';
 import { HandlingsType } from '../ViewState';
+import { useFnrContext } from '../Provider';
+import { useDialogStore } from '../dialogProvider/dialogStore';
 
 const maxMeldingsLengde = 5000;
 
@@ -34,13 +36,15 @@ interface Props {
 
 const NyDialogForm = (props: Props) => {
     const { defaultTema, aktivitetId } = props;
-    const { hentDialoger, nyDialog } = useDialogContext();
+    const hentDialoger = useDialogStore((store) => store.hentDialoger);
+    const { nyDialog } = useDialogContext();
     const bruker = useUserInfoContext();
     const navigate = useNavigate();
     const { dialogRoute, baseRoute } = useRoutes();
     const [noeFeilet, setNoeFeilet] = useState(false);
     const startTekst = useMeldingStartTekst();
 
+    const fnr = useFnrContext();
     const { kladder, oppdaterKladd, slettKladd } = useKladdContext();
     const kladd = findKladd(kladder, null, aktivitetId);
     const autoFocusTema = !aktivitetId;
@@ -68,7 +72,12 @@ const NyDialogForm = (props: Props) => {
         timer.current && clearInterval(timer.current);
         callback.current = () => {
             timer.current = undefined;
-            oppdaterKladd(null, props.aktivitetId, newTema, newMelding);
+            oppdaterKladd(fnr, {
+                dialogId: null,
+                aktivitetId: props.aktivitetId || null,
+                overskrift: newTema || null,
+                tekst: newMelding || null
+            });
         };
         timer.current = window.setTimeout(callback.current, 500);
     };
@@ -85,14 +94,14 @@ const NyDialogForm = (props: Props) => {
         timer.current = undefined;
 
         loggEvent('arbeidsrettet-dialog.ny.dialog', { paaAktivitet: !!aktivitetId });
-        return nyDialog(melding, tema, aktivitetId)
+        return nyDialog({ melding, tema, aktivitetId, fnr })
             .then((dialog) => {
                 slettKladd(null, props.aktivitetId);
                 navigate(dialogRoute(dialog.id), { state: { sistHandlingsType: HandlingsType.nyDialog } });
                 dispatchUpdate(UpdateTypes.Dialog);
                 return dialog;
             })
-            .then(hentDialoger)
+            .then(() => hentDialoger(fnr))
             .catch(() => setNoeFeilet(true));
     };
 

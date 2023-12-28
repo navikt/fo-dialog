@@ -1,7 +1,6 @@
 import { Alert, Loader } from '@navikt/ds-react';
-import React, { useCallback, useContext, useEffect, useRef } from 'react';
+import React, { useContext, useEffect } from 'react';
 
-import { listenForNyDialogEvents } from '../api/nyDialogWs';
 import { Status, hasData, hasError, isPending } from '../api/typer';
 import useFetchHarNivaa4, { HarNivaa4Response } from '../api/useFetchHarNivaa4';
 import useFetchVeilederNavn from '../api/useHentVeilederData';
@@ -13,6 +12,8 @@ import { FeatureToggleContext, useFeatureToggleProvider } from '../featureToggle
 import { KladdContext, useKladdDataProvider } from './KladdProvider';
 import { OppfolgingContext, useOppfolgingDataProvider } from './OppfolgingProvider';
 import { ViewStateProvider } from './ViewState';
+import { useDialogStore, useHentDialoger } from './dialogProvider/dialogStore';
+import { useShallow } from 'zustand/react/shallow';
 
 interface VeilederData {
     veilederNavn?: string;
@@ -53,70 +54,50 @@ export function Provider(props: Props) {
     const veilederNavn = useFetchVeilederNavn(erVeileder);
 
     const { data: feature, status: featureStatus } = useFeatureToggleProvider();
-    const { data: bruker, status: brukerstatus }: BrukerDataProviderType = useBrukerDataProvider(fnr);
-    const oppfolgingDataProvider = useOppfolgingDataProvider(fnr);
+    const { data: bruker, status: brukerstatus }: BrukerDataProviderType = useBrukerDataProvider();
+    const oppfolgingDataProvider = useOppfolgingDataProvider();
     const { status: oppfolgingstatus, hentOppfolging } = oppfolgingDataProvider;
 
-    const harLoggetInnNiva4 = useFetchHarNivaa4(erVeileder, fnr);
+    const harLoggetInnNiva4 = useFetchHarNivaa4(erVeileder);
+    const dialogDataProvider = useDialogDataProvider();
 
-    const dialogDataProvider = useDialogDataProvider(fnr);
-    const aktivitetDataProvider = useAktivitetDataProvider(fnr);
-    const kladdDataProvider = useKladdDataProvider(fnr);
+    const aktivitetDataProvider = useAktivitetDataProvider();
+    const kladdDataProvider = useKladdDataProvider();
 
-    const { hentDialoger, pollForChanges, status: dialogstatus, silentlyHentDialoger } = dialogDataProvider;
+    const hentDialoger = useHentDialoger();
+    const { configurePoll, stopPolling, dialogstatus } = useDialogStore(
+        useShallow((store) => ({
+            configurePoll: store.configurePoll,
+            stopPolling: store.stopPolling,
+            dialogstatus: store.status
+        }))
+    );
     const { hentAktiviteter, hentArenaAktiviteter } = aktivitetDataProvider;
     const hentKladder = kladdDataProvider.hentKladder;
 
     useEffect(() => {
-        hentOppfolging();
-    }, [hentOppfolging]);
-
-    useEffect(() => {
-        hentAktiviteter();
-        hentArenaAktiviteter();
-    }, [hentAktiviteter, hentArenaAktiviteter]);
-
-    useEffect(() => {
-        hentDialoger();
-        hentKladder();
-    }, [hentDialoger, hentKladder]);
+        hentOppfolging(fnr);
+        hentAktiviteter(fnr);
+        hentArenaAktiviteter(fnr);
+        hentDialoger(fnr);
+        hentKladder(fnr);
+        return () => stopPolling();
+    }, [fnr]);
 
     const brukerStatusErLastet = hasData(brukerstatus);
     const dialogStatusOk = hasData(dialogstatus);
     const featureStatusOk = hasData(featureStatus);
 
     const klarTilAaPolle = dialogStatusOk && bruker && brukerStatusErLastet && featureStatusOk;
-    const isPolling = useRef(false);
-
-    const pollWithHttp = useCallback(() => {
-        let interval: NodeJS.Timeout;
-        interval = setInterval(() => pollForChanges().catch(() => clearInterval(interval)), 10000);
-        return () => {
-            clearInterval(interval);
-            isPolling.current = false;
-        };
-    }, [pollForChanges]);
 
     useEffect(() => {
         if (!klarTilAaPolle) return;
-        if (isPolling.current) return;
-        isPolling.current = true;
-        if (bruker.erBruker) {
-            return pollWithHttp();
-        } else {
-            if (feature['arbeidsrettet-dialog.websockets']) {
-                try {
-                    // Return cleanup function
-                    return listenForNyDialogEvents(silentlyHentDialoger, fnr);
-                } catch (e) {
-                    // Fallback to http-polling if anything fails
-                    return pollWithHttp();
-                }
-            } else {
-                return pollWithHttp();
-            }
-        }
-    }, [klarTilAaPolle, fnr, pollWithHttp]);
+        configurePoll({
+            erBruker: bruker?.erBruker,
+            fnr,
+            useWebsockets: feature['arbeidsrettet-dialog.websockets']
+        });
+    }, [klarTilAaPolle, fnr]);
 
     if (
         isDialogPending(dialogstatus) ||
