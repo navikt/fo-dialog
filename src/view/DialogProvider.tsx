@@ -32,6 +32,13 @@ export interface NyMeldingArgs {
     dialog: DialogData;
     fnr: string | undefined;
 }
+interface SendMeldingArgs {
+    tekst: string;
+    overskrift?: string;
+    dialogId?: string;
+    aktivitetId?: string;
+    fnr?: string;
+}
 
 export interface DialogDataProviderType {
     status: Status;
@@ -68,14 +75,14 @@ export function useDialogDataProvider(): DialogDataProviderType {
 
     const updateDialogInDialoger = useDialogStore((state) => state.updateDialogInDialoger);
 
-    const sendMelding = (melding: string, tema?: string, dialogId?: string, aktivitetId?: string, fnr?: string) => {
+    const sendMelding = ({ dialogId, overskrift, tekst, aktivitetId, fnr }: SendMeldingArgs) => {
         setState((prevState) => ({ ...prevState, status: Status.RELOADING }));
 
         const nyDialogData: NyDialogMeldingData = {
-            dialogId: dialogId,
-            overskrift: tema,
-            tekst: melding,
-            aktivitetId: aktivitetId
+            dialogId,
+            overskrift,
+            tekst,
+            aktivitetId
         };
 
         return fetchData<DialogData>(dialogUrl(fnr), {
@@ -96,11 +103,11 @@ export function useDialogDataProvider(): DialogDataProviderType {
     };
 
     const nyDialog = ({ melding, tema, aktivitetId, fnr }: NyTradArgs) => {
-        return sendMelding(melding, tema, undefined, aktivitetId, fnr);
+        return sendMelding({ tekst: melding, overskrift: tema, dialogId: undefined, aktivitetId, fnr });
     };
 
     const nyMelding = ({ melding, fnr, dialog }: NyMeldingArgs) => {
-        return sendMelding(melding, undefined, dialog.id, fnr);
+        return sendMelding({ tekst: melding, dialogId: dialog.id, fnr });
     };
 
     const lesDialog = (dialogId: string, fnr: string | undefined) => {
