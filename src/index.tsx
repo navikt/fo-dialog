@@ -3,7 +3,6 @@ import './polyfill';
 import { USE_MOCK } from './constants';
 import { initAmplitude } from './metrics/amplitude-utils';
 import { erEksternBruker } from './mock/demo/localstorage';
-import { gotoStartTestPage } from './mock/Utils';
 
 const exportToNavSpa = () => {
     // Denne må lazy importeres fordi den laster inn all css selv inn under sin egen shadow-root
@@ -33,7 +32,6 @@ if (USE_MOCK) {
         webComponentTag.setAttribute('data-fnr', fnr);
         document.getElementById('root')?.appendChild(webComponentTag);
     }
-    gotoStartTestPage(fnr);
 
     import('./mock').then(({ default: startWorker }) => startWorker()).then(() => renderApp(fnr));
 } else {
