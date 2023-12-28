@@ -97,7 +97,7 @@ const reconnectWebsocket = (callback: () => void, body: SubscriptionPayload) => 
     return socket;
 };
 
-export const listenForNyDialogEvents = (callback: () => void, fnr?: string) => {
+export const listenForNyDialogEvents = (callback: () => void, fnr: string | undefined) => {
     // Start with only internal
     if (!fnr) return;
     const body = { subscriptionKey: fnr };

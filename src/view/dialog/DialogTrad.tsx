@@ -99,7 +99,7 @@ export const DialogTrad = () => {
             })}
         >
             <div ref={scrollContainerRef} className="relative flex flex-1 grow flex-col overflow-y-scroll">
-                <Meldinger dialogData={valgtDialog} fnr={fnr} />
+                <Meldinger dialogData={valgtDialog} />
                 <HistoriskInfo hidden={aktivDialog} />
             </div>
             <MeldingInputBox dialog={valgtDialog} />
