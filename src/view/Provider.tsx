@@ -111,7 +111,13 @@ export function Provider(props: Props) {
             </div>
         );
     } else if (hasError(brukerstatus) || hasError(oppfolgingstatus) || hasDialogError(dialogstatus)) {
-        return <Alert variant="error">Noe gikk dessverre galt med systemet. Prøv igjen senere.</Alert>;
+        if (hasError(brukerstatus)) {
+            return <Alert variant="error">Kunne ikke hente brukerinfo. Prøv igjen senere.</Alert>;
+        }
+        if (hasError(oppfolgingstatus)) {
+            return <Alert variant="error">Kunne ikke hente oppfølgingstatus. Prøv igjen senere.</Alert>;
+        }
+        return <Alert variant="error">Kunne ikke hente dialoger. Prøv igjen senere.</Alert>;
     }
     return (
         <DialogContext.Provider value={dialogDataProvider}>
