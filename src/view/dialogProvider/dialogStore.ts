@@ -48,7 +48,7 @@ export const useDialogStore = create(
                         // TODO: Find a way to get previous value
                         // loggChangeInDialog(state.dialoger, dialoger);
                         set(
-                            { status: Status.OK, dialoger: dialoger, sistOppdatert: new Date() },
+                            { status: Status.OK, dialoger: dialoger, sistOppdatert: new Date(), error: undefined },
                             false,
                             'hentDialoger/fulfilled'
                         );
@@ -65,7 +65,10 @@ export const useDialogStore = create(
             },
             hentDialoger: async (fnr) => {
                 set(
-                    (state) => ({ status: isDialogReloading(state.status) ? Status.RELOADING : Status.PENDING }),
+                    (state) => ({
+                        status: isDialogReloading(state.status) ? Status.RELOADING : Status.PENDING,
+                        error: undefined
+                    }),
                     false,
                     'hentDialoger/pending'
                 );
@@ -139,7 +142,7 @@ export const useDialogStore = create(
                             dialog,
                             ...dialoger.slice(index + 1, dialoger.length)
                         ];
-                        return { status: Status.OK, dialoger: nyeDialoger };
+                        return { status: Status.OK, dialoger: nyeDialoger, error: undefined };
                     },
                     false,
                     'updateDialogInDialoger'
