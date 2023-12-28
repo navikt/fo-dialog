@@ -1,7 +1,6 @@
 import React from 'react';
 
 import { useAktivitetContext } from '../view/AktivitetProvider';
-import { useDialogContext } from '../view/DialogProvider';
 import { useOppfolgingContext } from '../view/OppfolgingProvider';
 import { useEventListener } from '../view/utils/useEventListner';
 import { useFnrContext } from '../view/Provider';
@@ -53,11 +52,11 @@ export function UppdateEventHandler() {
 
         switch (updateType) {
             case UpdateTypes.Aktivitet:
-                return () => aktivitetContext.hentAktiviteter(fnr);
+                return aktivitetContext.hentAktiviteter(fnr);
             case UpdateTypes.Dialog:
-                return () => hentDialoger(fnr);
+                return hentDialoger(fnr);
             case UpdateTypes.Oppfolging:
-                return () => oppfolgingContext.hentOppfolging(fnr);
+                return oppfolgingContext.hentOppfolging(fnr);
         }
     });
 
