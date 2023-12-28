@@ -12,7 +12,7 @@ export interface HarNivaa4Response {
     isPending: boolean;
 }
 
-const useFetchHarNivaa4 = (erVeileder: boolean, fnr?: string): HarNivaa4Response => {
+const useFetchHarNivaa4 = (erVeileder: boolean, fnr: string | undefined): HarNivaa4Response => {
     const [harNivaa4, setHarNivaa4] = useState<boolean>(false);
     const [hasError, setHasError] = useState<boolean>(false);
     const [isPending, setIsPending] = useState<boolean>(true);
