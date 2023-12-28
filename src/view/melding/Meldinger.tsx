@@ -10,7 +10,6 @@ import { Melding } from './Melding';
 
 interface Props {
     dialogData: DialogData;
-    fnr?: string;
 }
 
 function sisteLesteHenvendelse(lest: StringOrNull, henvendelser: MeldingsData[]) {

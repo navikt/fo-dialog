@@ -3,7 +3,7 @@ import { Aktivitet, AktivitetTypes, AlleAktivitetTypes, ArenaAktivitet } from '.
 export const erArenaAktivitet = (aktivitetId: string | null | undefined): boolean =>
     !!aktivitetId && aktivitetId.startsWith('ARENA');
 
-export const getBasename = (fnr?: string): string => {
+export const getBasename = (fnr: string | undefined): string => {
     if (fnr) {
         return '/' + fnr;
     } else {

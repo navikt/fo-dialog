@@ -56,7 +56,7 @@ export interface DialogState {
     error?: string;
 }
 
-const dialogUrl = (fnr?: string) => DialogApi.hentDialog(fnrQuery(fnr));
+const dialogUrl = (fnr: string | undefined) => DialogApi.hentDialog(fnrQuery(fnr));
 const lesUrl = ({ id, fnr }: { id: string; fnr: string | undefined }) => DialogApi.settLest(id, fnrQuery(fnr));
 const ferdigBehandletUrl = ({
     fnr,

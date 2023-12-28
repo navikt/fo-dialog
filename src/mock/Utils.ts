@@ -9,7 +9,7 @@ export function rndId() {
 }
 
 const isNineDigits = (val: string) => /^\d{9}$/.test(val);
-export const toggleFnrInUrl = (hashPart: string, fnr?: string) => {
+export const toggleFnrInUrl = (hashPart: string, fnr: string | undefined) => {
     const parts = hashPart.split('/').slice(1);
     if (fnr && parts[0] === fnr) {
         return '#/' + parts.join('/');
