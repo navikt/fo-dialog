@@ -67,7 +67,7 @@ const MeldingInputBox = ({ dialog: valgtDialog, kanSendeHenveldelse }: Props) =>
         hasPendingTask: kladdSkalOppdateres
     } = useMemo(() => {
         return debounced(oppdaterKladd);
-    }, [oppdaterKladd]);
+    }, []);
 
     useEffect(() => {
         if (melding === defaultValues.melding) return;
