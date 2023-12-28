@@ -92,8 +92,6 @@ const useDialogContext: DialogDataProviderType = {
     setVenterPaSvar: (dialog: DialogData, venterPaSvar: boolean) => Promise.resolve(dialog)
 };
 
-DialogProvider.useDialoger;
-
 describe('<DialogContainer/>', () => {
     test('Bruker uten oppf.perioder og ikke under oppf skjuler store deler av appen', () => {
         useFetchOppfolging.data!.underOppfolging = false;

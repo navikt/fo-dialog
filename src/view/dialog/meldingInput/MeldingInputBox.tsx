@@ -19,6 +19,7 @@ import ManagedDialogCheckboxes from '../DialogCheckboxes';
 import { useDialogStore } from '../../dialogProvider/dialogStore';
 import { useShallow } from 'zustand/react/shallow';
 import { useFnrContext } from '../../Provider';
+import useKansendeMelding from '../../../utils/UseKanSendeMelding';
 
 const schema = z.object({
     melding: z
@@ -31,10 +32,13 @@ export type MeldingFormValues = z.infer<typeof schema>;
 
 interface Props {
     dialog: DialogData; // Bruker prop og ikke context siden komponent ikke skal rendrer uten en valgt dialog
-    kanSendeHenveldelse: boolean;
 }
 
-const MeldingInputBox = ({ dialog: valgtDialog, kanSendeHenveldelse }: Props) => {
+const MeldingInputBox = ({ dialog: valgtDialog }: Props) => {
+    const aktivDialog = !valgtDialog.historisk;
+    const kanSendeMelding = useKansendeMelding();
+    const kanSendeHenveldelse = kanSendeMelding && aktivDialog;
+
     const { nyMelding } = useDialogContext();
     const fnr = useFnrContext();
     const hentDialoger = useDialogStore(useShallow((store) => store.hentDialoger));
@@ -127,7 +131,7 @@ const MeldingInputBox = ({ dialog: valgtDialog, kanSendeHenveldelse }: Props) =>
     if (!kanSendeHenveldelse && (valgtDialog.venterPaSvar || !valgtDialog.ferdigBehandlet))
         return <ManagedDialogCheckboxes />; //hvis bruker går inn uner krr eller manuel må veileder kunne fjerne venter på
 
-    if (!kanSendeHenveldelse) null;
+    if (!kanSendeHenveldelse) return null;
     return (
         <FormProvider {...formHandlers}>
             <MeldingInputContext.Provider value={args}>
