@@ -1,10 +1,6 @@
 import { Alert, Loader } from '@navikt/ds-react';
 import React, { useContext, useEffect } from 'react';
 
-<<<<<<< HEAD
-=======
-import { EventType, listenForNyDialogEvents } from '../api/nyDialogWs';
->>>>>>> b928c64 (Subscribe to events)
 import { Status, hasData, hasError, isPending } from '../api/typer';
 import useFetchHarNivaa4, { HarNivaa4Response } from '../api/useFetchHarNivaa4';
 import useFetchVeilederNavn from '../api/useHentVeilederData';
