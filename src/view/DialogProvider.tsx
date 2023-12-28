@@ -74,6 +74,7 @@ export function useDialogDataProvider(): DialogDataProviderType {
     const [state, setState] = useState(initDialogState);
 
     const updateDialogInDialoger = useDialogStore((state) => state.updateDialogInDialoger);
+    const setOkStatus = () => setState((prevState) => ({ ...prevState, status: Status.OK }));
 
     const sendMelding = ({ dialogId, overskrift, tekst, aktivitetId, fnr }: SendMeldingArgs) => {
         setState((prevState) => ({ ...prevState, status: Status.RELOADING }));
@@ -91,6 +92,7 @@ export function useDialogDataProvider(): DialogDataProviderType {
         }).then((dialog) => {
             if (!!dialogId) {
                 updateDialogInDialoger(dialog);
+                setOkStatus();
             } else {
                 setState((prevState) => ({
                     ...prevState,
@@ -112,21 +114,25 @@ export function useDialogDataProvider(): DialogDataProviderType {
 
     const lesDialog = (dialogId: string, fnr: string | undefined) => {
         setState((prevState) => ({ ...prevState, status: Status.RELOADING }));
-        return fetchData<DialogData>(lesUrl({ id: dialogId, fnr }), { method: 'put' }).then(updateDialogInDialoger);
+        return fetchData<DialogData>(lesUrl({ id: dialogId, fnr }), { method: 'put' })
+            .then(updateDialogInDialoger)
+            .then(setOkStatus);
     };
 
     const setFerdigBehandlet = (dialog: DialogData, ferdigBehandlet: boolean, fnr: string | undefined) => {
         setState((prevState) => ({ ...prevState, status: Status.RELOADING }));
         return fetchData<DialogData>(ferdigBehandletUrl({ id: dialog.id, ferdigBehandlet, fnr }), {
             method: 'put'
-        }).then(updateDialogInDialoger);
+        })
+            .then(updateDialogInDialoger)
+            .then(setOkStatus);
     };
 
     const setVenterPaSvar = (dialog: DialogData, venterPaSvar: boolean, fnr: string | undefined) => {
         setState((prevState) => ({ ...prevState, status: Status.RELOADING }));
-        return fetchData<DialogData>(venterPaSvarUrl({ id: dialog.id, venterPaSvar, fnr }), { method: 'put' }).then(
-            updateDialogInDialoger
-        );
+        return fetchData<DialogData>(venterPaSvarUrl({ id: dialog.id, venterPaSvar, fnr }), { method: 'put' })
+            .then(updateDialogInDialoger)
+            .then(setOkStatus);
     };
 
     return {
