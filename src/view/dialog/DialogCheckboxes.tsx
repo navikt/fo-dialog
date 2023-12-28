@@ -1,15 +1,13 @@
 import { Checkbox, CheckboxGroup } from '@navikt/ds-react';
-import classNames from 'classnames';
 import React from 'react';
-
 import { Status } from '../../api/typer';
 import { notEmpty } from '../../utils/TypeHelper';
 import { useDialogContext } from '../DialogProvider';
-import { useCompactMode } from '../../featureToggle/FeatureToggleProvider';
 import { useOppfolgingContext } from '../OppfolgingProvider';
-import { dataOrUndefined } from '../Provider';
+import { dataOrUndefined, useFnrContext } from '../Provider';
 import { useSelectedDialog } from '../utils/useAktivitetId';
 import { useUserInfoContext } from '../BrukerProvider';
+import { useHentDialoger } from '../dialogProvider/dialogStore';
 
 interface Props {
     toggleFerdigBehandlet(ferdigBehandler: boolean): void;
@@ -30,8 +28,6 @@ const DialogCheckboxes = ({
     venterPaSvar,
     disabled
 }: Props) => {
-    const compactMode = useCompactMode();
-
     return (
         <div className="mb-2 pl-1">
             <CheckboxGroup legend={'Filter'} hideLegend value={values}>
@@ -39,7 +35,7 @@ const DialogCheckboxes = ({
                     <Checkbox
                         value={'ferdigBehandlet'}
                         size="small"
-                        className={classNames({ 'pr-4': compactMode, 'pr-8': !compactMode })}
+                        className="pr-4"
                         disabled={disabled || loading}
                         onChange={() => toggleFerdigBehandlet(!ferdigBehandlet)}
                     >
@@ -63,6 +59,8 @@ const DialogCheckboxes = ({
 const ManagedDialogCheckboxes = () => {
     const visible = useUserInfoContext()?.erVeileder || false;
     const dialog = useSelectedDialog();
+    const fnr = useFnrContext();
+    const hentDialoger = useHentDialoger();
     const dialogContext = useDialogContext();
     const oppfolgingContext = useOppfolgingContext();
     const oppfolgingData = dataOrUndefined(oppfolgingContext);
@@ -72,10 +70,10 @@ const ManagedDialogCheckboxes = () => {
     }
 
     const toggleFerdigBehandlet = (ferdigBehandlet: boolean) => {
-        dialogContext.setFerdigBehandlet(dialog, ferdigBehandlet).then(dialogContext.hentDialoger);
+        dialogContext.setFerdigBehandlet(dialog, ferdigBehandlet, fnr).then(() => hentDialoger(fnr));
     };
     const toggleVenterPaSvar = (venterPaSvar: boolean) => {
-        dialogContext.setVenterPaSvar(dialog, venterPaSvar).then(dialogContext.hentDialoger);
+        dialogContext.setVenterPaSvar(dialog, venterPaSvar, fnr).then(() => hentDialoger(fnr));
     };
     const disabled = dialog.historisk || !oppfolgingData?.underOppfolging;
 

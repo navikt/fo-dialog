@@ -1,9 +1,10 @@
 import React from 'react';
 
 import { useAktivitetContext } from '../view/AktivitetProvider';
-import { useDialogContext } from '../view/DialogProvider';
 import { useOppfolgingContext } from '../view/OppfolgingProvider';
 import { useEventListener } from '../view/utils/useEventListner';
+import { useFnrContext } from '../view/Provider';
+import { useHentDialoger } from '../view/dialogProvider/dialogStore';
 
 export enum UpdateTypes {
     Dialog = 'DIALOG',
@@ -32,8 +33,9 @@ function isUpdateEvent(toBeDetermined: CustomEvent): toBeDetermined is CustomEve
 }
 
 export function UppdateEventHandler() {
+    const fnr = useFnrContext();
     const aktivitetContext = useAktivitetContext();
-    const dialogContext = useDialogContext();
+    const hentDialoger = useHentDialoger();
     const oppfolgingContext = useOppfolgingContext();
     useEventListener(eventName, (event) => {
         if (!isUpdateEvent(event)) {
@@ -49,11 +51,11 @@ export function UppdateEventHandler() {
 
         switch (updateType) {
             case UpdateTypes.Aktivitet:
-                return aktivitetContext.hentAktiviteter();
+                return aktivitetContext.hentAktiviteter(fnr);
             case UpdateTypes.Dialog:
-                return dialogContext.hentDialoger();
+                return hentDialoger(fnr);
             case UpdateTypes.Oppfolging:
-                return oppfolgingContext.hentOppfolging();
+                return oppfolgingContext.hentOppfolging(fnr);
         }
     });
 

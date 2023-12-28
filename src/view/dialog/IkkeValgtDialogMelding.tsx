@@ -1,11 +1,11 @@
 import React from 'react';
 
-import { useDialogContext } from '../DialogProvider';
+import { useDialoger } from '../DialogProvider';
 import DialogIkkeValgt from '../info/DialogIkkeValgt';
 import InfoVedIngenDialoger from '../info/InfoVedIngenDialoger';
 
 const IkkeValgtDialogMelding = () => {
-    const { dialoger } = useDialogContext();
+    const dialoger = useDialoger();
     const harDialoger = dialoger.length > 0;
 
     return (

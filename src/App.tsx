@@ -1,5 +1,5 @@
 import cx from 'classnames';
-import React, { useEffect } from 'react';
+import React from 'react';
 
 import { erInternFlate } from './constants';
 import { UppdateEventHandler } from './utils/UpdateEvent';

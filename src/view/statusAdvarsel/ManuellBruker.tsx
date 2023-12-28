@@ -6,6 +6,7 @@ import { fetchData } from '../../utils/Fetch';
 import { UpdateTypes, dispatchUpdate } from '../../utils/UpdateEvent';
 import { useOppfolgingContext } from '../OppfolgingProvider';
 import StatusAdvarselWrapper, { KanIkkeKontakteElektroniskVeileder } from './StatusAdvarselWrapper';
+import { useFnrContext } from '../Provider';
 
 interface Props {
     erVeileder: boolean;
@@ -17,12 +18,13 @@ function ManuellBruker(props: Props) {
 
 function Bruker() {
     const oppfolgingData = useOppfolgingContext();
+    const fnr = useFnrContext();
 
     const fjernManuell = () => {
         fetchData(OppfolgingsApi.settDigigtal, {
             method: 'POST'
         })
-            .then(oppfolgingData.hentOppfolging)
+            .then(() => oppfolgingData.hentOppfolging(fnr))
             .then(() => dispatchUpdate(UpdateTypes.Oppfolging));
     };
 

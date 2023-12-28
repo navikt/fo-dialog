@@ -7,11 +7,13 @@ import useFetchVeilederNavn from '../api/useHentVeilederData';
 import { AktivitetContext, useAktivitetDataProvider } from './AktivitetProvider';
 import { AktivitetToggleProvider } from './AktivitetToggleContext';
 import { BrukerDataProviderType, UserInfoContext, useBrukerDataProvider } from './BrukerProvider';
-import { DialogContext, hasDialogError, isDialogOk, isDialogPending, useDialogDataProvider } from './DialogProvider';
+import { DialogContext, hasDialogError, isDialogPending, useDialogDataProvider } from './DialogProvider';
 import { FeatureToggleContext, useFeatureToggleProvider } from '../featureToggle/FeatureToggleProvider';
 import { KladdContext, useKladdDataProvider } from './KladdProvider';
 import { OppfolgingContext, useOppfolgingDataProvider } from './OppfolgingProvider';
 import { ViewStateProvider } from './ViewState';
+import { useDialogStore, useHentDialoger } from './dialogProvider/dialogStore';
+import { useShallow } from 'zustand/react/shallow';
 
 interface VeilederData {
     veilederNavn?: string;
@@ -51,45 +53,51 @@ export function Provider(props: Props) {
 
     const veilederNavn = useFetchVeilederNavn(erVeileder);
 
-    const { data: feature } = useFeatureToggleProvider();
-    const { data: bruker, status: brukerstatus }: BrukerDataProviderType = useBrukerDataProvider(fnr);
-    const oppfolgingDataProvider = useOppfolgingDataProvider(fnr);
+    const { data: feature, status: featureStatus } = useFeatureToggleProvider();
+    const { data: bruker, status: brukerstatus }: BrukerDataProviderType = useBrukerDataProvider();
+    const oppfolgingDataProvider = useOppfolgingDataProvider();
     const { status: oppfolgingstatus, hentOppfolging } = oppfolgingDataProvider;
 
-    const harLoggetInnNiva4 = useFetchHarNivaa4(erVeileder, fnr);
+    const harLoggetInnNiva4 = useFetchHarNivaa4(erVeileder);
+    const dialogDataProvider = useDialogDataProvider();
 
-    const dialogDataProvider = useDialogDataProvider(fnr);
-    const aktivitetDataProvider = useAktivitetDataProvider(fnr);
-    const kladdDataProvider = useKladdDataProvider(fnr);
+    const aktivitetDataProvider = useAktivitetDataProvider();
+    const kladdDataProvider = useKladdDataProvider();
 
-    const { hentDialoger, pollForChanges, status: dialogstatus } = dialogDataProvider;
+    const hentDialoger = useHentDialoger();
+    const { configurePoll, stopPolling, dialogstatus } = useDialogStore(
+        useShallow((store) => ({
+            configurePoll: store.configurePoll,
+            stopPolling: store.stopPolling,
+            dialogstatus: store.status
+        }))
+    );
     const { hentAktiviteter, hentArenaAktiviteter } = aktivitetDataProvider;
     const hentKladder = kladdDataProvider.hentKladder;
 
     useEffect(() => {
-        hentOppfolging();
-    }, [hentOppfolging]);
+        hentOppfolging(fnr);
+        hentAktiviteter(fnr);
+        hentArenaAktiviteter(fnr);
+        hentDialoger(fnr);
+        hentKladder(fnr);
+        return () => stopPolling();
+    }, [fnr]);
+
+    const brukerStatusErLastet = hasData(brukerstatus);
+    const dialogStatusOk = hasData(dialogstatus);
+    const featureStatusOk = hasData(featureStatus);
+
+    const klarTilAaPolle = dialogStatusOk && bruker && brukerStatusErLastet && featureStatusOk;
 
     useEffect(() => {
-        hentAktiviteter();
-        hentArenaAktiviteter();
-    }, [hentAktiviteter, hentArenaAktiviteter]);
-
-    useEffect(() => {
-        hentDialoger();
-        hentKladder();
-    }, [hentDialoger, hentKladder]);
-
-    useEffect(() => {
-        if (isDialogOk(dialogstatus) && hasData(brukerstatus)) {
-            //stop interval when encountering error
-            if (bruker) {
-                let interval: NodeJS.Timeout;
-                interval = setInterval(() => pollForChanges().catch(() => clearInterval(interval)), 10000);
-                return () => clearInterval(interval);
-            }
-        }
-    }, [dialogstatus, bruker, brukerstatus, pollForChanges]);
+        if (!klarTilAaPolle) return;
+        configurePoll({
+            erBruker: bruker?.erBruker,
+            fnr,
+            useWebsockets: feature['arbeidsrettet-dialog.websockets']
+        });
+    }, [klarTilAaPolle, fnr]);
 
     if (
         isDialogPending(dialogstatus) ||

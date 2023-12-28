@@ -11,8 +11,8 @@ export type MaybeAktivitet = Aktivitet | ArenaAktivitet | undefined;
 export interface AktivitetDataProviderType {
     aktiviteterStatus: Status;
     arenaAktiviteterStatus: Status;
-    hentAktiviteter: () => Promise<Aktivitet[]>;
-    hentArenaAktiviteter: () => Promise<ArenaAktivitet[]>;
+    hentAktiviteter: (fnr: string | undefined) => Promise<Aktivitet[]>;
+    hentArenaAktiviteter: (fnr: string | undefined) => Promise<ArenaAktivitet[]>;
     aktiviteter: Aktivitet[];
     arenaAktiviteter: ArenaAktivitet[];
 }
@@ -36,8 +36,8 @@ export const AktivitetContext = React.createContext<AktivitetDataProviderType>({
     arenaAktiviteterStatus: Status.INITIAL,
     aktiviteter: new Array<Aktivitet>(),
     arenaAktiviteter: new Array<ArenaAktivitet>(),
-    hentAktiviteter: () => Promise.resolve([]),
-    hentArenaAktiviteter: () => Promise.resolve([])
+    hentAktiviteter: (fnr) => Promise.resolve([]),
+    hentArenaAktiviteter: (fnr) => Promise.resolve([])
 });
 export const useAktivitetContext = () => useContext(AktivitetContext);
 
@@ -69,60 +69,63 @@ interface AktivitetResponse {
     aktiviteter: Aktivitet[];
 }
 
-export const useAktivitetDataProvider = (fnr?: string): AktivitetDataProviderType => {
+const aktivitetUrl = (fnr: string | undefined) => AktivitetApi.hentAktiviteter(fnrQuery(fnr));
+const arenaAktivitetUrl = (fnr: string | undefined) => AktivitetApi.hentArenaAktiviteter(fnrQuery(fnr));
+
+export const useAktivitetDataProvider = (): AktivitetDataProviderType => {
     const [state, setState] = useState<AktivitetState>(initAktivitetState);
+    const hentAktiviteter: (fnr: string | undefined) => Promise<Aktivitet[]> = useCallback(
+        (fnr: string | undefined) => {
+            setState((prevState) => ({
+                ...prevState,
+                status: isReloading(prevState.aktiviteterStatus) ? Status.RELOADING : Status.PENDING
+            }));
+            return fetchData<AktivitetResponse>(aktivitetUrl(fnr))
+                .then((response) => {
+                    setState((prevState) => ({
+                        ...prevState,
+                        aktiviteterStatus: Status.OK,
+                        aktiviteter: response.aktiviteter
+                    }));
+                    return response.aktiviteter;
+                })
+                .catch(() => {
+                    setState((prevState) => ({
+                        ...prevState,
+                        aktiviteterStatus: Status.ERROR
+                    }));
+                    return [];
+                });
+        },
+        []
+    );
 
-    const query = fnrQuery(fnr);
-
-    const aktivitetUrl = useMemo(() => AktivitetApi.hentAktiviteter(query), [query]);
-    const arenaAktivitetUrl = useMemo(() => AktivitetApi.hentArenaAktiviteter(query), [query]);
-
-    const hentAktiviteter: () => Promise<Aktivitet[]> = useCallback(() => {
-        setState((prevState) => ({
-            ...prevState,
-            status: isReloading(prevState.aktiviteterStatus) ? Status.RELOADING : Status.PENDING
-        }));
-        return fetchData<AktivitetResponse>(aktivitetUrl)
-            .then((response) => {
-                setState((prevState) => ({
-                    ...prevState,
-                    aktiviteterStatus: Status.OK,
-                    aktiviteter: response.aktiviteter
-                }));
-                return response.aktiviteter;
-            })
-            .catch(() => {
-                setState((prevState) => ({
-                    ...prevState,
-                    aktiviteterStatus: Status.ERROR
-                }));
-                return [];
-            });
-    }, [aktivitetUrl, setState]);
-
-    const hentArenaAktiviteter: () => Promise<ArenaAktivitet[]> = useCallback(() => {
-        setState((prevState) => ({
-            ...prevState,
-            status: isReloading(prevState.arenaAktiviteterStatus) ? Status.RELOADING : Status.PENDING
-        }));
-        return fetchData<ArenaAktivitet[]>(arenaAktivitetUrl)
-            .then((arenaAktiviteter) => {
-                setState((prevState) => ({
-                    aktiviteter: prevState.aktiviteter,
-                    aktiviteterStatus: prevState.aktiviteterStatus,
-                    arenaAktiviteterStatus: Status.OK,
-                    arenaAktiviteter: arenaAktiviteter
-                }));
-                return arenaAktiviteter;
-            })
-            .catch(() => {
-                setState((prevState) => ({
-                    ...prevState,
-                    arenaAktiviteterStatus: Status.ERROR
-                }));
-                return [];
-            });
-    }, [arenaAktivitetUrl, setState]);
+    const hentArenaAktiviteter: (fnr: string | undefined) => Promise<ArenaAktivitet[]> = useCallback(
+        (fnr: string | undefined) => {
+            setState((prevState) => ({
+                ...prevState,
+                status: isReloading(prevState.arenaAktiviteterStatus) ? Status.RELOADING : Status.PENDING
+            }));
+            return fetchData<ArenaAktivitet[]>(arenaAktivitetUrl(fnr))
+                .then((arenaAktiviteter) => {
+                    setState((prevState) => ({
+                        aktiviteter: prevState.aktiviteter,
+                        aktiviteterStatus: prevState.aktiviteterStatus,
+                        arenaAktiviteterStatus: Status.OK,
+                        arenaAktiviteter: arenaAktiviteter
+                    }));
+                    return arenaAktiviteter;
+                })
+                .catch(() => {
+                    setState((prevState) => ({
+                        ...prevState,
+                        arenaAktiviteterStatus: Status.ERROR
+                    }));
+                    return [];
+                });
+        },
+        []
+    );
 
     return useMemo(() => {
         return {
@@ -133,5 +136,5 @@ export const useAktivitetDataProvider = (fnr?: string): AktivitetDataProviderTyp
             hentAktiviteter: hentAktiviteter,
             hentArenaAktiviteter: hentArenaAktiviteter
         };
-    }, [state, hentAktiviteter, hentArenaAktiviteter]);
+    }, [state]);
 };

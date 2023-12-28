@@ -2,7 +2,7 @@ import { BodyShort } from '@navikt/ds-react';
 import React from 'react';
 
 import { formaterDateAndTime } from '../../utils/Date';
-import { ReactComponent as Pil } from './pil.svg';
+import Pil from './pil.svg?react';
 
 interface Props {
     tidspunkt: string;

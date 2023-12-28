@@ -7,10 +7,9 @@ interface FrontendEvent {
     fields?: {};
     tags?: {};
 }
-
+const url = DialogApi.logg;
 export default function loggEvent(eventNavn: string, feltObjekt?: object, tagObjekt?: object) {
     const event: FrontendEvent = { name: eventNavn, fields: feltObjekt, tags: tagObjekt };
-    const url = DialogApi.logg;
     const config = {
         headers: {
             'Nav-Consumer-Id': 'aktivitetsplan',

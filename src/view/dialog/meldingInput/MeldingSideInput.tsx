@@ -1,14 +1,13 @@
 import { Alert, Button, Textarea } from '@navikt/ds-react';
 import React, { MutableRefObject, useContext, useRef } from 'react';
-import { useCompactMode } from '../../../featureToggle/FeatureToggleProvider';
 import { useFormContext } from 'react-hook-form';
 import { betterErrorMessage, MeldingInputContext, useFocusBeforeHilsen } from './inputUtils';
 import { MeldingFormValues } from './MeldingInputBox';
 import ManagedDialogCheckboxes from '../DialogCheckboxes';
 import { dataOrUndefined } from '../../Provider';
 import { useOppfolgingContext } from '../../OppfolgingProvider';
-import { DialogData } from '../../../utils/Typer';
 import KladdLagret from './KladdLagret';
+import { useSelectedDialog } from '../../utils/useAktivitetId';
 
 const MeldingSideInputInner = () => {
     const { onSubmit, noeFeilet } = useContext(MeldingInputContext);
@@ -17,7 +16,6 @@ const MeldingSideInputInner = () => {
         getValues,
         formState: { errors, isSubmitting }
     } = useFormContext<MeldingFormValues>();
-    const compactMode = useCompactMode();
     const textAreaRef: MutableRefObject<HTMLTextAreaElement | null> = useRef(null);
     useFocusBeforeHilsen(textAreaRef);
 
@@ -45,7 +43,7 @@ const MeldingSideInputInner = () => {
                     maxRows={100} // Will overflow before hitting max lines
                 />
                 <div className="self-stretch mt-2 flex justify-between">
-                    <Button size={compactMode ? 'small' : 'medium'} title="Send" loading={isSubmitting}>
+                    <Button size="small" title="Send" loading={isSubmitting}>
                         Send
                     </Button>
                     <KladdLagret />
@@ -61,9 +59,11 @@ const MeldingSideInputInner = () => {
     );
 };
 
-export const MeldingSideInput = ({ dialog }: { dialog: DialogData }) => {
+export const MeldingSideInput = () => {
     const oppfolgingContext = useOppfolgingContext();
     const oppfolging = dataOrUndefined(oppfolgingContext);
+    const dialog = useSelectedDialog();
+    if (!dialog) return null;
     return (
         <section aria-label="Ny melding" className="flex flex-1 bg-white p-4">
             <div className="w-full flex flex-col">

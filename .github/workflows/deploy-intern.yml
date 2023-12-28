@@ -1,46 +1,46 @@
 name: GCP root
 
 on:
-  workflow_call:
-    inputs:
-      kommando:
-        required: true
-        type: string
-      bucket:
-        required: true
-        type: string
+    workflow_call:
+        inputs:
+            kommando:
+                required: true
+                type: string
+            bucket:
+                required: true
+                type: string
 
 env:
-  PRINT_PAYLOAD: true
-  TZ: Europe/Amsterdam
-  CI: true
+    PRINT_PAYLOAD: true
+    TZ: Europe/Amsterdam
+    CI: true
 
 jobs:
-  deploy:
-    name: Deploy application to dev
-    runs-on: ubuntu-latest
-    permissions:
-      contents: 'read'
-      id-token: 'write'
-      packages: 'write'
-    steps:
-      - uses: actions/checkout@v3
-      - uses: actions/setup-node@v3
-        with:
-          node-version: 18
-          cache: 'npm'
-      - name: Install bun
-        uses: oven-sh/setup-bun@v1
-      - name: Install dependencies (bun)
-        run: bun install
-      - name: Run tests
-        run: npm run test
-      - name: Build application
-        run: ${{ inputs.kommando }}
-      - name: Upload to CDN
-        uses: navikt/frontend/actions/cdn-upload/v1@main
-        with:
-          cdn-team-name: dab
-          source: ./build/
-          destination: /${{ inputs.bucket }}/
-          no-cache-paths: ${{ inputs.bucket }}/build/asset-manifest.json
+    deploy:
+        name: Deploy application to dev
+        runs-on: ubuntu-latest
+        permissions:
+            contents: 'read'
+            id-token: 'write'
+            packages: 'write'
+        steps:
+            - uses: actions/checkout@v3
+            - uses: actions/setup-node@v3
+              with:
+                  node-version: 20
+                  cache: 'npm'
+            - name: Install bun
+              uses: oven-sh/setup-bun@v1
+            - name: Install dependencies (bun)
+              run: bun install
+            - name: Run tests
+              run: npm run test
+            - name: Build application
+              run: ${{ inputs.kommando }}
+            - name: Upload to CDN
+              uses: navikt/frontend/actions/cdn-upload/v1@main
+              with:
+                  cdn-team-name: dab
+                  source: ./build/
+                  destination: /${{ inputs.bucket }}/
+                  no-cache-paths: ${{ inputs.bucket }}/build/asset-manifest.json
