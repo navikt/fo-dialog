@@ -7,8 +7,7 @@ import { useOppfolgingContext } from '../OppfolgingProvider';
 import { dataOrUndefined, useFnrContext } from '../Provider';
 import { useSelectedDialog } from '../utils/useAktivitetId';
 import { useUserInfoContext } from '../BrukerProvider';
-import { useDialogStore } from '../dialogProvider/dialogStore';
-import { useShallow } from 'zustand/react/shallow';
+import { useHentDialoger } from '../dialogProvider/dialogStore';
 
 interface Props {
     toggleFerdigBehandlet(ferdigBehandler: boolean): void;
@@ -61,7 +60,7 @@ const ManagedDialogCheckboxes = () => {
     const visible = useUserInfoContext()?.erVeileder || false;
     const dialog = useSelectedDialog();
     const fnr = useFnrContext();
-    const hentDialoger = useDialogStore(useShallow((store) => store.hentDialoger));
+    const hentDialoger = useHentDialoger();
     const dialogContext = useDialogContext();
     const oppfolgingContext = useOppfolgingContext();
     const oppfolgingData = dataOrUndefined(oppfolgingContext);

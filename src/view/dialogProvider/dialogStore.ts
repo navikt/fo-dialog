@@ -7,6 +7,7 @@ import { DialogApi } from '../../api/UseApiBasePath';
 import { isAfter } from 'date-fns';
 import { devtools } from 'zustand/middleware';
 import { closeWebsocket, listenForNyDialogEvents } from '../../api/nyDialogWs';
+import { useShallow } from 'zustand/react/shallow';
 
 export const initDialogState: DialogState = {
     status: Status.INITIAL,
@@ -149,6 +150,8 @@ export const useDialogStore = create(
         { name: 'DialogStore' }
     )
 );
+
+export const useHentDialoger = () => useDialogStore(useShallow((store) => store.hentDialoger));
 
 const onIntervalWithCleanup = (pollForChanges: () => Promise<void>) => {
     let interval: NodeJS.Timeout;

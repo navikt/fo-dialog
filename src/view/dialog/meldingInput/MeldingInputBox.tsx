@@ -16,8 +16,7 @@ import { debounced, maxMeldingsLengde, MeldingInputContext } from './inputUtils'
 import { useVisAktivitet } from '../../AktivitetToggleContext';
 import { Status } from '../../../api/typer';
 import ManagedDialogCheckboxes from '../DialogCheckboxes';
-import { useDialogStore } from '../../dialogProvider/dialogStore';
-import { useShallow } from 'zustand/react/shallow';
+import { useHentDialoger } from '../../dialogProvider/dialogStore';
 import { useFnrContext } from '../../Provider';
 import useKansendeMelding from '../../../utils/UseKanSendeMelding';
 
@@ -41,7 +40,7 @@ const MeldingInputBox = ({ dialog: valgtDialog }: Props) => {
 
     const { nyMelding } = useDialogContext();
     const fnr = useFnrContext();
-    const hentDialoger = useDialogStore(useShallow((store) => store.hentDialoger));
+    const hentDialoger = useHentDialoger();
     const [noeFeilet, setNoeFeilet] = useState(false);
     const startTekst = useMeldingStartTekst();
     const visAktivitet = useVisAktivitet();

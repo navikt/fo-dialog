@@ -4,8 +4,7 @@ import { useAktivitetContext } from '../view/AktivitetProvider';
 import { useOppfolgingContext } from '../view/OppfolgingProvider';
 import { useEventListener } from '../view/utils/useEventListner';
 import { useFnrContext } from '../view/Provider';
-import { useDialogStore } from '../view/dialogProvider/dialogStore';
-import { useShallow } from 'zustand/react/shallow';
+import { useHentDialoger } from '../view/dialogProvider/dialogStore';
 
 export enum UpdateTypes {
     Dialog = 'DIALOG',
@@ -36,7 +35,7 @@ function isUpdateEvent(toBeDetermined: CustomEvent): toBeDetermined is CustomEve
 export function UppdateEventHandler() {
     const fnr = useFnrContext();
     const aktivitetContext = useAktivitetContext();
-    const hentDialoger = useDialogStore(useShallow((store) => store.hentDialoger));
+    const hentDialoger = useHentDialoger();
     const oppfolgingContext = useOppfolgingContext();
     useEventListener(eventName, (event) => {
         if (!isUpdateEvent(event)) {

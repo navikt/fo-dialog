@@ -12,7 +12,7 @@ import { FeatureToggleContext, useFeatureToggleProvider } from '../featureToggle
 import { KladdContext, useKladdDataProvider } from './KladdProvider';
 import { OppfolgingContext, useOppfolgingDataProvider } from './OppfolgingProvider';
 import { ViewStateProvider } from './ViewState';
-import { useDialogStore } from './dialogProvider/dialogStore';
+import { useDialogStore, useHentDialoger } from './dialogProvider/dialogStore';
 import { useShallow } from 'zustand/react/shallow';
 
 interface VeilederData {
@@ -64,10 +64,9 @@ export function Provider(props: Props) {
     const aktivitetDataProvider = useAktivitetDataProvider();
     const kladdDataProvider = useKladdDataProvider();
 
-    // const { status: dialogstatus } = dialogDataProvider;
-    const { hentDialoger, configurePoll, stopPolling, dialogstatus } = useDialogStore(
+    const hentDialoger = useHentDialoger();
+    const { configurePoll, stopPolling, dialogstatus } = useDialogStore(
         useShallow((store) => ({
-            hentDialoger: store.hentDialoger,
             configurePoll: store.configurePoll,
             stopPolling: store.stopPolling,
             dialogstatus: store.status
