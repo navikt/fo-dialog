@@ -4,7 +4,8 @@ import { Status } from '../api/typer';
 import { DialogApi } from '../api/UseApiBasePath';
 import { fetchData, fnrQuery } from '../utils/Fetch';
 import { DialogData, NyDialogMeldingData } from '../utils/Typer';
-import { initDialogState, useDialogStore } from './dialogProvider/dialogStore';
+import { useDialogStore } from './dialogProvider/dialogStore';
+import { useShallow } from 'zustand/react/shallow';
 
 export const DialogContext = React.createContext<DialogDataProviderType>({
     status: Status.INITIAL,
@@ -17,8 +18,14 @@ export const DialogContext = React.createContext<DialogDataProviderType>({
 
 export const useDialogContext = () => useContext(DialogContext);
 export const useDialoger = () => {
-    const dialoger = useDialogStore((state) => state.dialoger);
+    const dialoger = useDialogStore(useShallow((state) => state.hentDialog.data.dialoger || []));
     return dialoger;
+};
+export const useAntallDialoger = (): number | undefined => {
+    return useDialogStore(useShallow((state) => state.hentDialog.data.dialoger.length || undefined));
+};
+export const useDialog = (id: string | undefined) => {
+    return useDialogStore(useShallow((state) => state.hentDialog.data.dialoger?.find((it) => it.id === id)));
 };
 
 export interface NyTradArgs {
@@ -51,8 +58,6 @@ export interface DialogDataProviderType {
 
 export interface DialogState {
     status: Status;
-    sistOppdatert: Date;
-    dialoger: DialogData[];
     error?: string;
 }
 
@@ -69,6 +74,11 @@ const ferdigBehandletUrl = ({
 }) => DialogApi.ferdigBehandlet(id, ferdigBehandlet, fnrQuery(fnr));
 const venterPaSvarUrl = ({ fnr, id, venterPaSvar }: { id: string; venterPaSvar: boolean; fnr: string | undefined }) =>
     DialogApi.venterPaSvar(id, venterPaSvar, fnrQuery(fnr));
+
+const initDialogState: DialogState = {
+    status: Status.INITIAL,
+    error: undefined
+};
 
 export function useDialogDataProvider(): DialogDataProviderType {
     const [state, setState] = useState(initDialogState);
@@ -96,8 +106,7 @@ export function useDialogDataProvider(): DialogDataProviderType {
             } else {
                 setState((prevState) => ({
                     ...prevState,
-                    status: Status.OK,
-                    dialoger: [...prevState.dialoger, dialog]
+                    status: Status.OK
                 }));
             }
             return dialog;

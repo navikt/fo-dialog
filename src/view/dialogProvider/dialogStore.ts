@@ -1,18 +1,19 @@
 import { create } from 'zustand';
 import { Status } from '../../api/typer';
-import { DialogData, SistOppdatert } from '../../utils/Typer';
-import { DialogState, isDialogReloading } from '../DialogProvider';
+import { DialogData } from '../../utils/Typer';
 import { fetchData, fnrQuery } from '../../utils/Fetch';
 import { DialogApi } from '../../api/UseApiBasePath';
-import { isAfter } from 'date-fns';
 import { devtools } from 'zustand/middleware';
-import { closeWebsocket, listenForNyDialogEvents } from '../../api/nyDialogWs';
 import { useShallow } from 'zustand/react/shallow';
+import { HentDialogRequestState, asyncThunk, sliceReducer } from './storeUtils';
+import { PollSlice, pollSlice } from './pollStore';
 
-export const initDialogState: DialogState = {
-    status: Status.INITIAL,
-    sistOppdatert: new Date(),
-    dialoger: []
+export const initDialogState: DialogRequestStore = {
+    hentDialog: {
+        status: Status.INITIAL,
+        data: { dialoger: [], sistOppdatert: new Date() },
+        error: undefined
+    }
 };
 
 // - Les
@@ -21,20 +22,26 @@ export const initDialogState: DialogState = {
 // - Send melding
 // - Ny dialog
 
-type DialogStore = DialogState & {
-    silentlyHentDialoger: (fnr: string | undefined) => Promise<void>;
-    hentDialoger: (fnr: string | undefined) => Promise<void>;
-    pollForChanges: (fnr: string | undefined) => Promise<void>;
-    configurePoll(config: { fnr: string | undefined; useWebsockets: boolean; erBruker: boolean }): void;
-    updateDialogInDialoger: (dialogData: DialogData) => DialogData;
-    stopPolling: () => void;
-    pollInterval: NodeJS.Timeout | undefined;
-    currentPollFnr: string | undefined;
-};
+// State as in not actions
+export interface DialogRequestStore {
+    hentDialog: HentDialogRequestState;
+}
+
+export type DialogStore = DialogRequestStore &
+    PollSlice & {
+        silentlyHentDialoger: (
+            fnr: string | undefined
+        ) => Promise<{ dialoger: DialogData[]; sistOppdatert: Date | undefined }>;
+        hentDialoger: (fnr: string | undefined) => Promise<void>;
+        updateDialogInDialoger: (dialogData: DialogData) => DialogData;
+        pollInterval: NodeJS.Timeout | undefined;
+        currentPollFnr: string | undefined;
+    };
 
 export const useDialogStore = create(
     devtools<DialogStore>(
         (set, get) => ({
+            ...pollSlice(set, get),
             // Data
             // Try to keeep flat datastructure, Zustand "automerges" state on first level only
             ...initDialogState,
@@ -43,106 +50,36 @@ export const useDialogStore = create(
             // Actions / functions / mutations
             silentlyHentDialoger: async (fnr) => {
                 const dialogUrl = DialogApi.hentDialog(fnrQuery(fnr));
-                fetchData<DialogData[]>(dialogUrl)
-                    .then((dialoger) => {
-                        // TODO: Find a way to get previous value
-                        // loggChangeInDialog(state.dialoger, dialoger);
-                        set(
-                            { status: Status.OK, dialoger: dialoger, sistOppdatert: new Date(), error: undefined },
-                            false,
-                            'hentDialoger/fulfilled'
-                        );
-                        return dialoger;
-                    })
-                    .catch((e) => {
-                        set(
-                            (prevState) => ({ ...prevState, status: Status.ERROR, error: e }),
-                            false,
-                            'hentDialoger/error'
-                        );
-                        return [];
-                    });
+                return fetchData<DialogData[]>(dialogUrl).then((dialoger) => {
+                    // TODO: Find a way to get previous value
+                    // loggChangeInDialog(state.dialoger, dialoger);
+                    return { dialoger, sistOppdatert: new Date() };
+                });
             },
             hentDialoger: async (fnr) => {
-                set(
-                    (state) => ({
-                        status: isDialogReloading(state.status) ? Status.RELOADING : Status.PENDING,
-                        error: undefined
-                    }),
-                    false,
-                    'hentDialoger/pending'
-                );
                 const { silentlyHentDialoger } = get();
-                silentlyHentDialoger(fnr);
-            },
-            configurePoll({ fnr, useWebsockets, erBruker }) {
-                console.log('Configuring poll');
-                const { pollForChanges, currentPollFnr } = get();
-                // If already polling, don't do anything
-                if (!erBruker && currentPollFnr == fnr) {
-                    console.log('Already polling');
-                    return;
-                }
-                const pollOnGivenFnr = () => {
-                    const interval = onIntervalWithCleanup(() => pollForChanges(fnr));
-                    set(
-                        () => ({
-                            pollInterval: interval
-                        }),
-                        false,
-                        'setPollInterval'
-                    );
-                };
-                if (erBruker) {
-                    return pollOnGivenFnr();
-                } else {
-                    if (useWebsockets) {
-                        try {
-                            const { silentlyHentDialoger } = get();
-                            return listenForNyDialogEvents(() => silentlyHentDialoger(fnr), fnr);
-                        } catch (e) {
-                            // Fallback to http-polling if anything fails
-                            return pollOnGivenFnr();
-                        }
-                    } else {
-                        return pollOnGivenFnr();
-                    }
-                }
-            },
-            stopPolling: () => {
-                const { pollInterval } = get();
-                console.log('Stopping polling with http');
-                if (pollInterval) {
-                    clearInterval(pollInterval);
-                    set(
-                        () => ({
-                            pollInterval: undefined
-                        }),
-                        false,
-                        'clearPollInterval'
-                    );
-                }
-                closeWebsocket();
-            },
-            pollForChanges: async (fnr) => {
-                let { sistOppdatert: remoteSistOppdatert } = await fetchData<SistOppdatert>(
-                    DialogApi.sistOppdatert(fnrQuery(fnr))
-                );
-                const { silentlyHentDialoger, sistOppdatert: localSistOppdatert } = get();
-                if (!!remoteSistOppdatert && isAfter(remoteSistOppdatert, localSistOppdatert)) {
-                    await silentlyHentDialoger(fnr);
-                }
+                const reducer = sliceReducer(set, 'hentDialog');
+                asyncThunk(reducer, () => silentlyHentDialoger(fnr), 'hentDialoger');
             },
             updateDialogInDialoger: (dialog: DialogData): DialogData => {
                 set(
-                    ({ dialoger }) => {
+                    (prevState: DialogStore) => {
+                        const dialoger = prevState.hentDialog.data.dialoger;
                         const index = dialoger.findIndex((d) => d.id === dialog.id);
                         const nyeDialoger = [
                             ...dialoger.slice(0, index),
                             dialog,
                             ...dialoger.slice(index + 1, dialoger.length)
                         ];
-                        return { status: Status.OK, dialoger: nyeDialoger, error: undefined };
+                        return {
+                            ...prevState,
+                            hentDialog: {
+                                ...prevState.hentDialog,
+                                status: Status.OK,
+                                data: { dialoger: nyeDialoger, sistOppdatert: new Date() },
+                                error: undefined
+                            }
+                        };
                     },
                     false,
                     'updateDialogInDialoger'
@@ -155,15 +92,3 @@ export const useDialogStore = create(
 );
 
 export const useHentDialoger = () => useDialogStore(useShallow((store) => store.hentDialoger));
-
-const onIntervalWithCleanup = (pollForChanges: () => Promise<void>) => {
-    let interval: NodeJS.Timeout;
-    console.log('Setting up polling with http');
-    interval = setInterval(() => {
-        pollForChanges().catch((e) => {
-            console.error(e);
-            clearInterval(interval);
-        });
-    }, 10000);
-    return interval;
-};

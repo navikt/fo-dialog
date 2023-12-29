@@ -69,7 +69,7 @@ export function Provider(props: Props) {
         useShallow((store) => ({
             configurePoll: store.configurePoll,
             stopPolling: store.stopPolling,
-            dialogstatus: store.status
+            dialogstatus: store.hentDialog.status
         }))
     );
     const { hentAktiviteter, hentArenaAktiviteter } = aktivitetDataProvider;
