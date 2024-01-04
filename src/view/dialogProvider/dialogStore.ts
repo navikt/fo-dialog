@@ -6,7 +6,7 @@ import { fetchData, fnrQuery } from '../../utils/Fetch';
 import { DialogApi } from '../../api/UseApiBasePath';
 import { isAfter } from 'date-fns';
 import { devtools } from 'zustand/middleware';
-import { closeWebsocket, listenForNyDialogEvents } from '../../api/nyDialogWs';
+import { EventType, closeWebsocket, listenForNyDialogEvents } from '../../api/nyDialogWs';
 import { useShallow } from 'zustand/react/shallow';
 
 export const initDialogState: DialogState = {
@@ -99,7 +99,9 @@ export const useDialogStore = create(
                     if (useWebsockets) {
                         try {
                             const { silentlyHentDialoger } = get();
-                            return listenForNyDialogEvents(() => silentlyHentDialoger(fnr), fnr);
+                            return listenForNyDialogEvents(() => silentlyHentDialoger(fnr), fnr, [
+                                EventType.NY_DIALOGMELDING_FRA_BRUKER_TIL_NAV
+                            ]);
                         } catch (e) {
                             // Fallback to http-polling if anything fails
                             return pollOnGivenFnr();

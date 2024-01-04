@@ -15,8 +15,14 @@ enum ReadyState {
     CLOSED = 3
 }
 
+export enum EventType {
+    NY_DIALOGMELDING_FRA_BRUKER_TIL_NAV = 'NY_DIALOGMELDING_FRA_BRUKER_TIL_NAV',
+    NY_DIALOGMELDING_FRA_NAV_TIL_BRUKER = 'NY_DIALOGMELDING_FRA_NAV_TIL_BRUKER'
+}
+
 interface SubscriptionPayload {
     subscriptionKey: string;
+    events: EventType[];
 }
 
 let socketSingleton: WebSocket | undefined = undefined;
@@ -97,10 +103,10 @@ const reconnectWebsocket = (callback: () => void, body: SubscriptionPayload) => 
     return socket;
 };
 
-export const listenForNyDialogEvents = (callback: () => void, fnr: string | undefined) => {
+export const listenForNyDialogEvents = (callback: () => void, fnr: string | undefined, events: EventType[]) => {
     // Start with only internal
-    if (!fnr) return;
-    const body = { subscriptionKey: fnr };
+    if (!fnr) return () => {};
+    const body = { subscriptionKey: fnr, events };
     const currentReadyState = socketSingleton?.readyState;
     if (
         socketSingleton === undefined ||
