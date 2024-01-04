@@ -20,7 +20,6 @@ export const pollSlice = (
         const { pollForChanges, currentPollFnr } = get();
         // If already polling, don't do anything
         if (!erBruker && currentPollFnr == fnr) {
-            console.log('Already polling');
             return;
         }
         const pollOnGivenFnr = () => {
@@ -28,7 +27,8 @@ export const pollSlice = (
             set(
                 (prev: DialogStore) => ({
                     ...prev,
-                    pollInterval: interval
+                    pollInterval: interval,
+                    currentPollFnr: fnr
                 }),
                 false,
                 'setPollInterval'
@@ -83,6 +83,7 @@ export const pollSlice = (
 });
 
 const onIntervalWithCleanup = (pollForChanges: () => Promise<void>) => {
+    return;
     let interval: NodeJS.Timeout;
     console.log('Setting up polling with http');
     interval = setInterval(() => {
@@ -90,6 +91,6 @@ const onIntervalWithCleanup = (pollForChanges: () => Promise<void>) => {
             console.error(e);
             clearInterval(interval);
         });
-    }, 10000);
+    }, 2000);
     return interval;
 };

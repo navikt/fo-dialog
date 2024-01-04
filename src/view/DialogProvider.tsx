@@ -1,4 +1,4 @@
-import React, { useCallback, useContext, useMemo, useState } from 'react';
+import React, { useContext, useState } from 'react';
 
 import { Status } from '../api/typer';
 import { DialogApi } from '../api/UseApiBasePath';
@@ -10,23 +10,10 @@ import { useShallow } from 'zustand/react/shallow';
 export const DialogContext = React.createContext<DialogDataProviderType>({
     status: Status.INITIAL,
     nyDialog: (args) => Promise.resolve({} as any),
-    nyMelding: ({ dialog }: NyMeldingArgs) => Promise.resolve(dialog),
-    lesDialog: (_dialogId: string) => Promise.resolve({} as any),
-    setFerdigBehandlet: (dialog: DialogData, _ferdigBehandlet: boolean) => Promise.resolve(dialog),
-    setVenterPaSvar: (dialog: DialogData, _venterPaSvar: boolean) => Promise.resolve(dialog)
+    nyMelding: ({ dialog }: NyMeldingArgs) => Promise.resolve(dialog)
 });
 
 export const useDialogContext = () => useContext(DialogContext);
-export const useDialoger = () => {
-    const dialoger = useDialogStore(useShallow((state) => state.hentDialog.data.dialoger || []));
-    return dialoger;
-};
-export const useAntallDialoger = (): number | undefined => {
-    return useDialogStore(useShallow((state) => state.hentDialog.data.dialoger.length || undefined));
-};
-export const useDialog = (id: string | undefined) => {
-    return useDialogStore(useShallow((state) => state.hentDialog.data.dialoger?.find((it) => it.id === id)));
-};
 
 export interface NyTradArgs {
     melding: string;
@@ -51,9 +38,6 @@ export interface DialogDataProviderType {
     status: Status;
     nyDialog: (args: NyTradArgs) => Promise<DialogData>;
     nyMelding: (args: NyMeldingArgs) => Promise<DialogData>;
-    lesDialog: (dialogId: string, fnr: string | undefined) => Promise<DialogData>;
-    setFerdigBehandlet: (dialog: DialogData, ferdigBehandlet: boolean, fnr: string | undefined) => Promise<DialogData>;
-    setVenterPaSvar: (dialog: DialogData, venterPaSvar: boolean, fnr: string | undefined) => Promise<DialogData>;
 }
 
 export interface DialogState {
@@ -61,9 +45,9 @@ export interface DialogState {
     error?: string;
 }
 
-const dialogUrl = (fnr: string | undefined) => DialogApi.hentDialog(fnrQuery(fnr));
-const lesUrl = ({ id, fnr }: { id: string; fnr: string | undefined }) => DialogApi.settLest(id, fnrQuery(fnr));
-const ferdigBehandletUrl = ({
+export const dialogUrl = (fnr: string | undefined) => DialogApi.hentDialog(fnrQuery(fnr));
+export const lesUrl = ({ id, fnr }: { id: string; fnr: string | undefined }) => DialogApi.settLest(id, fnrQuery(fnr));
+export const ferdigBehandletUrl = ({
     fnr,
     ferdigBehandlet,
     id
@@ -72,8 +56,15 @@ const ferdigBehandletUrl = ({
     ferdigBehandlet: boolean;
     fnr: string | undefined;
 }) => DialogApi.ferdigBehandlet(id, ferdigBehandlet, fnrQuery(fnr));
-const venterPaSvarUrl = ({ fnr, id, venterPaSvar }: { id: string; venterPaSvar: boolean; fnr: string | undefined }) =>
-    DialogApi.venterPaSvar(id, venterPaSvar, fnrQuery(fnr));
+export const venterPaSvarUrl = ({
+    fnr,
+    id,
+    venterPaSvar
+}: {
+    id: string;
+    venterPaSvar: boolean;
+    fnr: string | undefined;
+}) => DialogApi.venterPaSvar(id, venterPaSvar, fnrQuery(fnr));
 
 const initDialogState: DialogState = {
     status: Status.INITIAL,
@@ -121,41 +112,10 @@ export function useDialogDataProvider(): DialogDataProviderType {
         return sendMelding({ tekst: melding, dialogId: dialog.id, fnr });
     };
 
-    const lesDialog = (dialogId: string, fnr: string | undefined) => {
-        setState((prevState) => ({ ...prevState, status: Status.RELOADING }));
-        return fetchData<DialogData>(lesUrl({ id: dialogId, fnr }), { method: 'put' }).then((dialogData) => {
-            setOkStatus();
-            return updateDialogInDialoger(dialogData);
-        });
-    };
-
-    const setFerdigBehandlet = (dialog: DialogData, ferdigBehandlet: boolean, fnr: string | undefined) => {
-        setState((prevState) => ({ ...prevState, status: Status.RELOADING }));
-        return fetchData<DialogData>(ferdigBehandletUrl({ id: dialog.id, ferdigBehandlet, fnr }), {
-            method: 'put'
-        }).then((dialogData) => {
-            setOkStatus();
-            return updateDialogInDialoger(dialogData);
-        });
-    };
-
-    const setVenterPaSvar = (dialog: DialogData, venterPaSvar: boolean, fnr: string | undefined) => {
-        setState((prevState) => ({ ...prevState, status: Status.RELOADING }));
-        return fetchData<DialogData>(venterPaSvarUrl({ id: dialog.id, venterPaSvar, fnr }), { method: 'put' }).then(
-            (dialogData) => {
-                setOkStatus();
-                return updateDialogInDialoger(dialogData);
-            }
-        );
-    };
-
     return {
         status: state.status,
         nyDialog,
-        nyMelding,
-        lesDialog,
-        setFerdigBehandlet,
-        setVenterPaSvar
+        nyMelding
     };
 }
 

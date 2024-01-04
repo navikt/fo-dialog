@@ -1,8 +1,8 @@
 import React from 'react';
 
-import { useAntallDialoger } from '../DialogProvider';
 import DialogIkkeValgt from '../info/DialogIkkeValgt';
 import InfoVedIngenDialoger from '../info/InfoVedIngenDialoger';
+import { useAntallDialoger } from '../dialogProvider/storeHooks';
 
 const IkkeValgtDialogMelding = () => {
     const antallDialoger = useAntallDialoger();

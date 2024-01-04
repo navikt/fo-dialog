@@ -3,7 +3,7 @@ import { useLocation, useParams } from 'react-router';
 
 import { DialogData } from '../../utils/Typer';
 import { MaybeAktivitet, findAktivitet, useAktivitetContext } from '../AktivitetProvider';
-import { useDialog, useDialoger } from '../DialogProvider';
+import { useDialog } from '../dialogProvider/storeHooks';
 
 function getFirst(maybeArray: string | (string | null)[]): string | undefined {
     if (Array.isArray(maybeArray)) {
@@ -28,7 +28,7 @@ export const useSelectedAktivitet = (): MaybeAktivitet => {
 export const useSelectedDialog = (): DialogData | undefined => {
     const params = useParams();
     const { dialogId } = params;
-    if (!dialogId) return;
     const selectedDialog = useDialog(dialogId);
+    if (!dialogId) return;
     return selectedDialog;
 };

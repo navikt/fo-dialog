@@ -5,12 +5,12 @@ import { useLocation } from 'react-router';
 import { AKTIVITETSPLAN_URL, MINSIDE_URL } from '../../constants';
 import useKansendeMelding from '../../utils/UseKanSendeMelding';
 import { useUserInfoContext } from '../BrukerProvider';
-import { useAntallDialoger } from '../DialogProvider';
 import InfoVedIngenDialoger from '../info/InfoVedIngenDialoger';
 import OmDialogLenke from '../info/OmDialogLenke';
 import { useSelectedDialog } from '../utils/useAktivitetId';
 import DialogListe from './DialogListe';
 import NyDialogLink from './NyDialogLink';
+import { useAntallDialoger } from '../dialogProvider/storeHooks';
 
 const DialogOversiktHeader = () => {
     return (

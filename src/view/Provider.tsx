@@ -12,8 +12,9 @@ import { FeatureToggleContext, useFeatureToggleProvider } from '../featureToggle
 import { KladdContext, useKladdDataProvider } from './KladdProvider';
 import { OppfolgingContext, useOppfolgingDataProvider } from './OppfolgingProvider';
 import { ViewStateProvider } from './ViewState';
-import { useDialogStore, useHentDialoger } from './dialogProvider/dialogStore';
+import { useDialogStore } from './dialogProvider/dialogStore';
 import { useShallow } from 'zustand/react/shallow';
+import { useHentDialoger } from './dialogProvider/storeHooks';
 
 interface VeilederData {
     veilederNavn?: string;
@@ -119,6 +120,7 @@ export function Provider(props: Props) {
         }
         return <Alert variant="error">Kunne ikke hente dialoger. Prøv igjen senere.</Alert>;
     }
+
     return (
         <DialogContext.Provider value={dialogDataProvider}>
             <OppfolgingContext.Provider value={oppfolgingDataProvider}>
