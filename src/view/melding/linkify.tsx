@@ -13,7 +13,11 @@ const toNodes = (sections: TextSection[]) => {
         <>
             {sections.map((section, index) => {
                 if (section.type === 'text') {
-                    return <span key={index}>{section.value}</span>;
+                    return (
+                        <span key={index} className="[overflow-wrap:anywhere]">
+                            {section.value}
+                        </span>
+                    );
                 } else {
                     const href = section.value.toLowerCase().startsWith('www.')
                         ? `https://${section.value}`
