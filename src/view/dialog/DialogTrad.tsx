@@ -4,7 +4,6 @@ import React, { useEffect, useRef, useState } from 'react';
 import { useLocation, useNavigate } from 'react-router';
 import { useRoutes } from '../../routes';
 import { dispatchUpdate, UpdateTypes } from '../../utils/UpdateEvent';
-import useKansendeMelding from '../../utils/UseKanSendeMelding';
 import { useVisAktivitet } from '../AktivitetToggleContext';
 import { useDialogContext } from '../DialogProvider';
 import { Meldinger } from '../melding/Meldinger';
@@ -14,6 +13,8 @@ import { useEventListener } from '../utils/useEventListner';
 import { HandlingsType, useSetViewContext, useViewContext } from '../ViewState';
 import MeldingInputBox from './meldingInput/MeldingInputBox';
 import HistoriskInfo from './HistoriskInfo';
+import { useHentDialogStatus } from '../dialogProvider/dialogStore';
+import { Status } from '../../api/typer';
 
 export const DialogTrad = () => {
     const scrollContainerRef: React.MutableRefObject<null | HTMLDivElement> = useRef(null);
@@ -21,6 +22,7 @@ export const DialogTrad = () => {
     const { lesDialog } = useDialogContext();
 
     const valgtDialog = useSelectedDialog();
+    const lasterDialoger = [Status.PENDING, Status.RELOADING].includes(useHentDialogStatus());
     const dialogId = valgtDialog?.id;
     const fnr = useFnrContext();
     const visAktivitet = useVisAktivitet();
@@ -73,19 +75,17 @@ export const DialogTrad = () => {
     const navigate = useNavigate();
 
     useEffect(() => {
-        if (!valgtDialog) {
-            navigate(routes.baseRoute(), { replace: true });
-        }
-    }, [navigate, routes, valgtDialog]);
-
-    useEffect(() => {
         scrollContainerRef?.current?.scrollTo({
             top: scrollContainerRef?.current?.scrollHeight
         });
     }, [scrollContainerRef, valgtDialog]);
 
+    if (!valgtDialog && lasterDialoger) {
+        return <DialogLoader />;
+    }
     if (!valgtDialog) {
-        return <Loader />;
+        navigate(routes.baseRoute(), { replace: true });
+        return <DialogLoader />;
     }
 
     const aktivDialog = !valgtDialog.historisk;
@@ -106,3 +106,9 @@ export const DialogTrad = () => {
         </section>
     );
 };
+
+const DialogLoader = () => (
+    <div className="flex w-full bg-gray-100 items-center justify-center">
+        <Loader size="2xlarge" />
+    </div>
+);
