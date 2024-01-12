@@ -63,7 +63,7 @@ spec:
         {
           "fallbackStrategy": "SERVE_INDEX_HTML",
           "contextPath": "/arbeid/dialog",
-          "gcs": { "bucketName": "arbeidsrettet-dialog-dev" },
+          "gcs": { "bucketName": "arbeidsrettet-dialog-dev-ekstern" },
           "auth": { "loginProvider": "ID_PORTEN" },
           "header": {
             "csp": {
