@@ -40,7 +40,10 @@ export const useOppfolgingDataProvider = () => {
             ...prevState,
             status: isReloading(prevState.status) ? Status.RELOADING : Status.PENDING
         }));
-        return fetchData<OppfolgingData>(oppfolgingUrl, { method: 'POST', body: JSON.stringify({ fnr }) })
+        return fetchData<OppfolgingData>(oppfolgingUrl, {
+            method: 'POST',
+            body: fnr ? JSON.stringify({ fnr }) : undefined
+        })
             .then((response) => {
                 setState(() => ({
                     data: response,
