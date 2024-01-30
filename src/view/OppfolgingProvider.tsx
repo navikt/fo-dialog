@@ -28,7 +28,7 @@ export const OppfolgingContext = React.createContext<OppfolgingDataProviderType>
 });
 export const useOppfolgingContext = () => useContext(OppfolgingContext);
 
-const oppfolgingUrl = (fnr: string | undefined) => OppfolgingsApi.oppfolgingUrl(fnrQuery(fnr));
+const oppfolgingUrl = OppfolgingsApi.oppfolgingUrl;
 
 export const useOppfolgingDataProvider = () => {
     const [state, setState] = useState<OppfolgingState>(initOppfolgingState);
@@ -40,7 +40,7 @@ export const useOppfolgingDataProvider = () => {
             ...prevState,
             status: isReloading(prevState.status) ? Status.RELOADING : Status.PENDING
         }));
-        return fetchData<OppfolgingData>(oppfolgingUrl(fnr))
+        return fetchData<OppfolgingData>(oppfolgingUrl, { method: 'POST', body: JSON.stringify({ fnr }) })
             .then((response) => {
                 setState(() => ({
                     data: response,
