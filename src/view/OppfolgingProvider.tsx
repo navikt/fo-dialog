@@ -1,8 +1,8 @@
-import React, { useCallback, useContext, useMemo, useState } from 'react';
+import React, { useContext, useMemo, useState } from 'react';
 
 import { Status, isReloading } from '../api/typer';
 import { OppfolgingsApi } from '../api/UseApiBasePath';
-import { fetchData, fnrQuery } from '../utils/Fetch';
+import { fetchData } from '../utils/Fetch';
 import { OppfolgingData } from '../utils/Typer';
 
 export interface OppfolgingDataProviderType {
