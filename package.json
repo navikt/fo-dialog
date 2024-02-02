@@ -99,7 +99,7 @@
     "@types/react-collapse": "^5.0.4",
     "@types/react-dom": "^18.2.18",
     "@types/uuid": "^9.0.8",
-    "autoprefixer": "^10.4.16",
+    "autoprefixer": "^10.4.17",
     "chromatic": "^7.2.0",
     "classnames": "^2.5.1",
     "cross-env": "^7.0.3",
