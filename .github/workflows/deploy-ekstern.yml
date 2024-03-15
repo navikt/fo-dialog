@@ -20,7 +20,7 @@ env:
 
 jobs:
     deploy:
-        name: Deploy application to dev
+        name: Deploy application to GCP-bucket
         runs-on: ubuntu-latest
         steps:
             - uses: actions/checkout@v4
