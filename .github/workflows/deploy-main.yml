@@ -29,6 +29,9 @@ jobs:
     with:
       kommando: npm run build:dev-intern
       bucket: arbeidsrettet-dialog-dev-intern
+      NAIS_MANAGEMENT_PROJECT_ID: ${{ vars.NAIS_MANAGEMENT_PROJECT_ID }}
+    secrets:
+      NAIS_WORKLOAD_IDENTITY_PROVIDER: ${{ secrets.NAIS_WORKLOAD_IDENTITY_PROVIDER }}
 
   prod-ekstern:
     name: Deploy application to prod ekstern
@@ -49,3 +52,6 @@ jobs:
     with:
       kommando: npm run build:prod-intern
       bucket: arbeidsrettet-dialog-prod-intern
+      NAIS_MANAGEMENT_PROJECT_ID: ${{ vars.NAIS_MANAGEMENT_PROJECT_ID }}
+    secrets:
+      NAIS_WORKLOAD_IDENTITY_PROVIDER: ${{ secrets.NAIS_WORKLOAD_IDENTITY_PROVIDER }}
