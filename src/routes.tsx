@@ -91,7 +91,7 @@ export const Routes = () => {
         return <RouterProvider router={inMemoryRouter} />;
     }
     let basename = stripTrailingSlash(import.meta.env.BASE_URL);
-    if (erInternFlate) basename = `/`;
+    if (erInternFlate) basename = `/dialog`;
     const browserRouter = createBrowserRouter(dialogRoutes, { basename });
     return <RouterProvider router={browserRouter} />;
 };
