@@ -19,7 +19,7 @@ export default function InformasjonElement(props: TekstomradeProps) {
 
     return (
         <InformasjonElementRaw merkelapptekst={merkelapptekst}>
-            <span className="overflow-hidden text-ellipsis">{linkify(verdi)}</span>
+            <span className="overflow-hidden text-ellipsis whitespace-pre-wrap">{linkify(verdi)}</span>
         </InformasjonElementRaw>
     );
 }
