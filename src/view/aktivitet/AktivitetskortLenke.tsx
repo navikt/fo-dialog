@@ -8,6 +8,6 @@ export const aktivitetLenke = (aktivitetId: string) => {
 
 export const visAktivitetsplan = (aktivitetID: string) => (event: MouseEvent) => {
     event.preventDefault();
-    window.history.replaceState({}, 'aktivitetsplan', `/aktivitet/vis/${aktivitetID}`);
+    window.history.replaceState({}, 'aktivitetsplan', `/aktivitetsplan/aktivitet/vis/${aktivitetID}`);
     window.dispatchEvent(new CustomEvent('visAktivitetsplan', { detail: aktivitetID }));
 };
