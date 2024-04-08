@@ -1,6 +1,10 @@
-import { AktivitetTypes, EksternAktivitetTypes } from '../utils/aktivitetTypes';
+import { Aktivitet, AktivitetTypes, EksternAktivitetTypes } from '../utils/aktivitetTypes';
+import oppfolging from './Oppfolging';
+import { PeriodeData } from '../utils/Typer';
 
-const moteAktivitet = {
+const gjeldendeOppfolgingsPeriode = oppfolging.oppfolgingsPerioder.find((periode) => !periode.sluttDato) as PeriodeData;
+
+const moteAktivitet: Aktivitet = {
     adresse: 'Nordre strandvei 56',
     ansettelsesforhold: null,
     antallStillingerIUken: null,
@@ -40,9 +44,10 @@ const moteAktivitet = {
     tittel: 'Møte med nav med tittel som er så utrolig lang at den kan jo umulig få plass uansett hvor stor skjerm man har',
     transaksjonsType: 'REFERAT_PUBLISERT',
     type: 'MOTE',
-    versjon: '213019'
+    versjon: '213019',
+    oppfolgingsperiodeId: gjeldendeOppfolgingsPeriode.uuid
 };
-const stilingAktivitet = {
+const stilingAktivitet: Aktivitet = {
     adresse: null,
     ansettelsesforhold: null,
     antallStillingerIUken: null,
@@ -82,9 +87,10 @@ const stilingAktivitet = {
     transaksjonsType: null,
     type: 'STILLING',
     versjon: '1',
-    malid: null
+    malid: null,
+    oppfolgingsperiodeId: gjeldendeOppfolgingsPeriode.uuid
 };
-const samtalereferatAktivitet = {
+const samtalereferatAktivitet: Aktivitet = {
     adresse: null,
     ansettelsesforhold: null,
     antallStillingerIUken: null,
@@ -125,9 +131,10 @@ const samtalereferatAktivitet = {
     tittel: 'Samtale om søkekrav',
     transaksjonsType: 'REFERAT_ENDRET',
     type: 'SAMTALEREFERAT',
-    versjon: '213394'
+    versjon: '213394',
+    oppfolgingsperiodeId: gjeldendeOppfolgingsPeriode.uuid
 };
-const behandlingAktivitet = {
+const behandlingAktivitet: Aktivitet = {
     adresse: null,
     ansettelsesforhold: null,
     antallStillingerIUken: null,
@@ -167,9 +174,10 @@ const behandlingAktivitet = {
     tittel: 'Avtale hos kiropraktor',
     transaksjonsType: 'STATUS_ENDRET',
     type: 'BEHANDLING',
-    versjon: '213381'
+    versjon: '213381',
+    oppfolgingsperiodeId: gjeldendeOppfolgingsPeriode.uuid
 };
-const sokeavtaleAktivitet = {
+const sokeavtaleAktivitet: Aktivitet = {
     adresse: null,
     ansettelsesforhold: null,
     antallStillingerIUken: 0,
@@ -210,9 +218,10 @@ const sokeavtaleAktivitet = {
     tittel: 'Avtale om å søke jobber',
     transaksjonsType: 'STATUS_ENDRET',
     type: 'SOKEAVTALE',
-    versjon: '210092'
+    versjon: '210092',
+    oppfolgingsperiodeId: gjeldendeOppfolgingsPeriode.uuid
 };
-const sokeavtaleAktivitet2 = {
+const sokeavtaleAktivitet2: Aktivitet = {
     adresse: null,
     ansettelsesforhold: null,
     antallStillingerIUken: 5,
@@ -253,9 +262,10 @@ const sokeavtaleAktivitet2 = {
     tittel: 'Avtale om å søke jobber',
     transaksjonsType: 'STATUS_ENDRET',
     type: 'SOKEAVTALE',
-    versjon: '210092'
+    versjon: '210092',
+    oppfolgingsperiodeId: gjeldendeOppfolgingsPeriode.uuid
 };
-const ijobbAktivitet = {
+const ijobbAktivitet: Aktivitet = {
     adresse: null,
     ansettelsesforhold: null,
     antallStillingerIUken: null,
@@ -295,9 +305,10 @@ const ijobbAktivitet = {
     tittel: 'LALALA',
     transaksjonsType: 'STATUS_ENDRET',
     type: 'IJOBB',
-    versjon: '210077'
+    versjon: '210077',
+    oppfolgingsperiodeId: gjeldendeOppfolgingsPeriode.uuid
 };
-const stillingFraNav = {
+const stillingFraNav: Aktivitet = {
     versjon: '5345437',
     id: 'STILLING_FRA_NAV_1',
     tittel: 'Servitør',
@@ -322,9 +333,10 @@ const stillingFraNav = {
             tittel: 'NAV-ansatt',
             mobil: null
         }
-    }
+    },
+    oppfolgingsperiodeId: gjeldendeOppfolgingsPeriode.uuid
 };
-const stillingFraNav2 = {
+const stillingFraNav2: Aktivitet = {
     versjon: '5345436',
     id: 'STILLING_FRA_NAV_2',
     tittel: 'Hovmester',
@@ -349,9 +361,10 @@ const stillingFraNav2 = {
         arbeidssted: 'Kristiansand',
         lenke: 'www.nav.no',
         soknadsstatus: 'VENTER'
-    }
+    },
+    oppfolgingsperiodeId: gjeldendeOppfolgingsPeriode.uuid
 };
-const midl_lonnstilsk = {
+const midl_lonnstilsk: Aktivitet = {
     versjon: '5345436',
     id: 'EKSTERNAKTIVITET_1',
     tittel: 'Baker Jonson',
@@ -371,9 +384,10 @@ const midl_lonnstilsk = {
         a: 123,
         b: true,
         c: 'test'
-    }
+    },
+    oppfolgingsperiodeId: gjeldendeOppfolgingsPeriode.uuid
 };
-const varig_lonnstilsk = {
+const varig_lonnstilsk: Aktivitet = {
     versjon: '5345436',
     id: 'EKSTERNAKTIVITET_2',
     tittel: 'Maler Hansson',
@@ -390,9 +404,10 @@ const varig_lonnstilsk = {
     transaksjonsType: 'STATUS_ENDRET',
     eksternAktivitet: {
         type: EksternAktivitetTypes.VARIG_LONNSTILSKUDD
-    }
+    },
+    oppfolgingsperiodeId: gjeldendeOppfolgingsPeriode.uuid
 };
-const arena_tiltak = {
+const arena_tiltak: Aktivitet = {
     versjon: '5345436',
     id: 'EKSTERNAKTIVITET_3',
     tittel: 'Asd eksternaktivitet 123',
@@ -410,9 +425,10 @@ const arena_tiltak = {
     transaksjonsType: 'STATUS_ENDRET',
     eksternAktivitet: {
         type: EksternAktivitetTypes.ARENA_TILTAK
-    }
+    },
+    oppfolgingsperiodeId: gjeldendeOppfolgingsPeriode.uuid
 };
-const avklaring = {
+const avklaring: Aktivitet = {
     versjon: '5345436',
     id: 'EKSTERNAKTIVITET_4',
     tittel: 'Avklaring',
@@ -430,30 +446,24 @@ const avklaring = {
     transaksjonsType: 'STATUS_ENDRET',
     eksternAktivitet: {
         type: EksternAktivitetTypes.AVKLARAG
-    }
+    },
+    oppfolgingsperiodeId: gjeldendeOppfolgingsPeriode.uuid
 };
 
-const aktiviteter = {
-    aktiviteter: [
-        moteAktivitet,
-        stilingAktivitet,
-        samtalereferatAktivitet,
-        behandlingAktivitet,
-        sokeavtaleAktivitet,
-        sokeavtaleAktivitet2,
-        ijobbAktivitet,
-        stillingFraNav,
-        stillingFraNav2,
-        midl_lonnstilsk,
-        varig_lonnstilsk,
-        arena_tiltak,
-        avklaring
-    ]
-};
-
-export function getAktivitet(id: string) {
-    const aktivitet = aktiviteter.aktiviteter.find((akt) => akt.id === id);
-    return aktivitet ? aktivitet : {};
-}
+const aktiviteter: Aktivitet[] = [
+    moteAktivitet,
+    stilingAktivitet,
+    samtalereferatAktivitet,
+    behandlingAktivitet,
+    sokeavtaleAktivitet,
+    sokeavtaleAktivitet2,
+    ijobbAktivitet,
+    stillingFraNav,
+    stillingFraNav2,
+    midl_lonnstilsk,
+    varig_lonnstilsk,
+    arena_tiltak,
+    avklaring
+];
 
 export default aktiviteter;

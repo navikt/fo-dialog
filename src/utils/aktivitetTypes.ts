@@ -92,6 +92,7 @@ export interface Aktivitet {
     endretAvType: StringOrNull;
     transaksjonsType: StringOrNull;
     malid: StringOrNull;
+    oppfolgingsperiodeId: string;
 
     // stillingaktivitet
     etikett: StillingStatus;

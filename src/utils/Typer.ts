@@ -83,6 +83,7 @@ export interface PeriodeData {
     sluttDato: StringOrNull;
     begrunnelse: StringOrNull;
     kvpPerioder: KvpPerioder[];
+    uuid: string;
 }
 
 interface KvpPerioder {

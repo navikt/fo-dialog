@@ -12,7 +12,7 @@ export default function loggEvent(eventNavn: string, feltObjekt?: object, tagObj
     const event: FrontendEvent = { name: eventNavn, fields: feltObjekt, tags: tagObjekt };
     const config = {
         headers: {
-            'Nav-Consumer-Id': 'aktivitetsplan',
+            'Nav-Consumer-Id': 'arbeidsrettet-dialog',
             'Content-Type': 'application/json'
         },
         credentials: 'same-origin' as const,
