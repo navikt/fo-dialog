@@ -15,7 +15,6 @@ export function DialogHeader() {
 
     const aktivitetData = useAktivitetContext();
     const erFeil = harAktivitetDataFeil(aktivitetData, erArenaAktivitet(aktivitetId));
-    console.log({ erFeil });
     const viseAktivitet = !!aktivitetId && !erFeil;
 
     if (isNyRoute) {

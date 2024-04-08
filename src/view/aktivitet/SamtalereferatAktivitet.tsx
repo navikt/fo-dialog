@@ -16,7 +16,7 @@ export default function SamtalereferatAktivitet(props: PropTypes) {
     return (
         <>
             <InformasjonElement merkelapptekst="Dato" verdi={formaterDate(fraDato)} />
-            <InformasjonElement merkelapptekst="Kanal" verdi={getKanalTekst(kanal)} />
+            <InformasjonElement merkelapptekst="Kanal" verdi={getKanalTekst(kanal!!)} />
             <InformasjonElement merkelapptekst="Referat" verdi={referat} />
         </>
     );

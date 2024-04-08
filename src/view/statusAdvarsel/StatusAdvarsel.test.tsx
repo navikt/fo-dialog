@@ -9,10 +9,6 @@ import * as BrukerContext from '../BrukerProvider';
 import * as OppfolgingContext from '../OppfolgingProvider';
 import { OppfolgingDataProviderType } from '../OppfolgingProvider';
 import * as AppContext from '../Provider';
-import AldriUnderOppfolging from './AldriUnderOppfolging';
-import IkkeUnderOppfolging from './IkkeUnderOppfolging';
-import { ManglerNivaa4, Nivaa4Feiler } from './Nivaa4';
-import ReservertKrr from './ReservertKrr';
 import StatusAdvarsel from './StatusAdvarsel';
 
 const veileder: Bruker = { id: '010101', erVeileder: true, erBruker: false };
@@ -24,7 +20,8 @@ const oppfPerioder: PeriodeData[] = [
         startDato: '2017-01-30T10:46:10.971+01:00',
         sluttDato: '2017-12-31T10:46:10.971+01:00',
         begrunnelse: null,
-        kvpPerioder: []
+        kvpPerioder: [],
+        uuid: '1'
     }
 ];
 const ingenPerioder: PeriodeData[] = [];

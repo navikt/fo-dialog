@@ -1,8 +1,3 @@
-// import { DEFAULT_CONFIG, sjekkStatuskode, toJson } from './utils';
-// import { AKTIVITET_GRAPHQL_BASE_URL } from '../environment';
-// import { hentFraLocalStorage, hentFraSessionStorage, LocalStorageElement } from '../mocks/demo/localStorage';
-// import { VeilarbAktivitet } from '../datatypes/internAktivitetTypes';
-
 import { Aktivitet } from '../utils/aktivitetTypes';
 import { aktivitetBasePath } from './UseApiBasePath';
 import { sjekkStatuskode } from '../utils/Fetch';
@@ -154,7 +149,6 @@ export interface AktivitetsplanResponse {
 }
 
 const sjekkGraphqlFeil = (response: AktivitetsplanResponse): Promise<AktivitetsplanResponse> => {
-    console.log({ response });
     if (!response?.data?.perioder && response?.errors.length != 0) {
         return Promise.reject('Kunne ikke hente aktiviteter');
     }

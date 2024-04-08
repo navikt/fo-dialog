@@ -14,7 +14,7 @@ export default function MoteAktivitet(props: PropTypes) {
         <>
             <InformasjonElement merkelapptekst="Dato" verdi={formaterDate(fraDato)} />
             <InformasjonElement merkelapptekst="Klokkeslett" verdi={getKlokkeslett(fraDato)} />
-            <InformasjonElement merkelapptekst="Kanal" verdi={getKanalTekst(kanal)} />
+            <InformasjonElement merkelapptekst="Kanal" verdi={getKanalTekst(kanal!!)} />
             <InformasjonElement merkelapptekst="Varighet" verdi={getVarighet(fraDato, tilDato)} />
             <InformasjonElement merkelapptekst="Adresse" verdi={adresse} />
             <InformasjonElement merkelapptekst="Bakgrunn" verdi={beskrivelse} />

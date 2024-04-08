@@ -124,7 +124,7 @@ export interface Aktivitet {
     //møte
     adresse: StringOrNull;
     forberedelser: StringOrNull;
-    kanal: KanalTypes;
+    kanal?: KanalTypes;
     referat: StringOrNull;
     erReferatPublisert: boolean;
 

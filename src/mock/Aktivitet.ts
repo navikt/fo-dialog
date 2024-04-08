@@ -1,4 +1,11 @@
-import { Aktivitet, AktivitetTypes, EksternAktivitetTypes } from '../utils/aktivitetTypes';
+import {
+    Aktivitet,
+    AktivitetStatus,
+    AktivitetTypes,
+    EksternAktivitetTypes,
+    KanalTypes,
+    StillingFraNavSoknadsstatus
+} from '../utils/aktivitetTypes';
 import oppfolging from './Oppfolging';
 import { PeriodeData } from '../utils/Typer';
 
@@ -30,7 +37,7 @@ const moteAktivitet: Aktivitet = {
     historisk: false,
     id: 'MOTE1',
     jobbStatus: null,
-    kanal: 'OPPMOTE',
+    kanal: KanalTypes.OPPMOTE,
     kontaktperson: null,
     endretAvType: 'NAV',
     lenke: null,
@@ -38,12 +45,12 @@ const moteAktivitet: Aktivitet = {
     oppfolging: null,
     opprettetDato: '2019-10-11T10:14:54.777+02:00',
     referat: 'aasdasdas',
-    status: 'PLANLAGT',
+    status: AktivitetStatus.PLANLAGT,
     stillingsTittel: null,
     tilDato: '2019-10-10T07:45:00+02:00',
     tittel: 'Møte med nav med tittel som er så utrolig lang at den kan jo umulig få plass uansett hvor stor skjerm man har',
     transaksjonsType: 'REFERAT_PUBLISERT',
-    type: 'MOTE',
+    type: AktivitetTypes.MOTE,
     versjon: '213019',
     oppfolgingsperiodeId: gjeldendeOppfolgingsPeriode.uuid
 };
@@ -73,19 +80,19 @@ const stilingAktivitet: Aktivitet = {
     historisk: false,
     id: 'STILLING1',
     jobbStatus: null,
-    kanal: null,
+    kanal: undefined,
     kontaktperson: 'Ole Duck',
     endretAvType: 'BRUKER',
     lenke: 'www.nav.no',
     oppfolging: null,
     opprettetDato: '2019-10-18T12:06:14.040Z',
     referat: null,
-    status: 'PLANLAGT',
+    status: AktivitetStatus.PLANLAGT,
     stillingsTittel: null,
     tilDato: '2019-10-25T10:00:00.000Z',
     tittel: 'Utvikler',
     transaksjonsType: null,
-    type: 'STILLING',
+    type: AktivitetTypes.STILLING,
     versjon: '1',
     malid: null,
     oppfolgingsperiodeId: gjeldendeOppfolgingsPeriode.uuid
@@ -116,7 +123,7 @@ const samtalereferatAktivitet: Aktivitet = {
     historisk: false,
     id: 'SAMTALEREFERAT1',
     jobbStatus: null,
-    kanal: 'TELEFON',
+    kanal: KanalTypes.TELEFON,
     kontaktperson: null,
     endretAvType: 'NAV',
     lenke: null,
@@ -125,12 +132,12 @@ const samtalereferatAktivitet: Aktivitet = {
     opprettetDato: '2019-10-15T09:51:27.372+02:00',
     referat:
         'Vi ble enige om at det skal søkes https://www.nav.no/en/veldig/lang/url/som/skal/ende/opp/med/ellipse minst 5 stillinger i uken den første perioden',
-    status: 'BRUKER_ER_INTERESSERT',
+    status: AktivitetStatus.BRUKER_ER_INTERESSERT,
     stillingsTittel: null,
     tilDato: null,
     tittel: 'Samtale om søkekrav',
     transaksjonsType: 'REFERAT_ENDRET',
-    type: 'SAMTALEREFERAT',
+    type: AktivitetTypes.SAMTALEREFERAT,
     versjon: '213394',
     oppfolgingsperiodeId: gjeldendeOppfolgingsPeriode.uuid
 };
@@ -160,7 +167,7 @@ const behandlingAktivitet: Aktivitet = {
     historisk: false,
     id: 'BEHANDLING1',
     jobbStatus: null,
-    kanal: null,
+    kanal: undefined,
     kontaktperson: null,
     endretAvType: 'NAV',
     lenke: null,
@@ -168,12 +175,12 @@ const behandlingAktivitet: Aktivitet = {
     oppfolging: null,
     opprettetDato: '2019-10-15T10:06:48.82+02:00',
     referat: null,
-    status: 'BRUKER_ER_INTERESSERT',
+    status: AktivitetStatus.BRUKER_ER_INTERESSERT,
     stillingsTittel: null,
     tilDato: '2019-09-19T12:00:00+02:00',
     tittel: 'Avtale hos kiropraktor',
     transaksjonsType: 'STATUS_ENDRET',
-    type: 'BEHANDLING',
+    type: AktivitetTypes.BEHANDLING,
     versjon: '213381',
     oppfolgingsperiodeId: gjeldendeOppfolgingsPeriode.uuid
 };
@@ -204,7 +211,7 @@ const sokeavtaleAktivitet: Aktivitet = {
     historisk: false,
     id: 'SOKEAVTALE1',
     jobbStatus: null,
-    kanal: null,
+    kanal: undefined,
     kontaktperson: null,
     endretAvType: 'BRUKER',
     lenke: null,
@@ -212,12 +219,12 @@ const sokeavtaleAktivitet: Aktivitet = {
     oppfolging: null,
     opprettetDato: '2019-08-28T12:43:42.63+02:00',
     referat: null,
-    status: 'PLANLAGT',
+    status: AktivitetStatus.PLANLAGT,
     stillingsTittel: null,
     tilDato: '2019-11-28T11:43:32.241+01:00',
     tittel: 'Avtale om å søke jobber',
     transaksjonsType: 'STATUS_ENDRET',
-    type: 'SOKEAVTALE',
+    type: AktivitetTypes.SOKEAVTALE,
     versjon: '210092',
     oppfolgingsperiodeId: gjeldendeOppfolgingsPeriode.uuid
 };
@@ -248,7 +255,7 @@ const sokeavtaleAktivitet2: Aktivitet = {
     historisk: false,
     id: 'SOKEAVTALE2',
     jobbStatus: null,
-    kanal: null,
+    kanal: undefined,
     kontaktperson: null,
     endretAvType: 'BRUKER',
     lenke: null,
@@ -256,12 +263,12 @@ const sokeavtaleAktivitet2: Aktivitet = {
     oppfolging: null,
     opprettetDato: '2019-08-28T12:43:42.63+02:00',
     referat: null,
-    status: 'PLANLAGT',
+    status: AktivitetStatus.PLANLAGT,
     stillingsTittel: null,
     tilDato: '2019-11-28T11:43:32.241+01:00',
     tittel: 'Avtale om å søke jobber',
     transaksjonsType: 'STATUS_ENDRET',
-    type: 'SOKEAVTALE',
+    type: AktivitetTypes.SOKEAVTALE,
     versjon: '210092',
     oppfolgingsperiodeId: gjeldendeOppfolgingsPeriode.uuid
 };
@@ -291,7 +298,7 @@ const ijobbAktivitet: Aktivitet = {
     historisk: false,
     id: 'IJOBB1',
     jobbStatus: 'DELTID',
-    kanal: null,
+    kanal: undefined,
     kontaktperson: null,
     endretAvType: 'BRUKER',
     lenke: null,
@@ -299,12 +306,12 @@ const ijobbAktivitet: Aktivitet = {
     oppfolging: null,
     opprettetDato: '2019-08-15T15:31:01.874+02:00',
     referat: null,
-    status: 'PLANLAGT',
+    status: AktivitetStatus.PLANLAGT,
     stillingsTittel: null,
     tilDato: '2019-08-20T00:00:00+02:00',
     tittel: 'LALALA',
     transaksjonsType: 'STATUS_ENDRET',
-    type: 'IJOBB',
+    type: AktivitetTypes.IJOBB,
     versjon: '210077',
     oppfolgingsperiodeId: gjeldendeOppfolgingsPeriode.uuid
 };
@@ -312,9 +319,9 @@ const stillingFraNav: Aktivitet = {
     versjon: '5345437',
     id: 'STILLING_FRA_NAV_1',
     tittel: 'Servitør',
-    type: 'STILLING_FRA_NAV',
+    type: AktivitetTypes.STILLING_FRA_NAV,
     lenke: null,
-    status: 'PLANLAGT',
+    status: AktivitetStatus.PLANLAGT,
     opprettetDato: '2020-05-31T10:46:51.622+01:00',
     endretDato: '2018-09-30T10:46:51.622+01:00',
     endretAv: 'z990207',
@@ -323,26 +330,37 @@ const stillingFraNav: Aktivitet = {
     endretAvType: 'NAV',
     transaksjonsType: 'OPPRETTET',
     stillingFraNavData: {
-        cvKanDelesData: null,
+        cvKanDelesData: {
+            avtaltDato: null,
+            endretAv: 'Meg',
+            endretAvType: 'NAV',
+            endretTidspunkt: null,
+            kanDeles: true
+        },
         arbeidsgiver: 'Havsalt AS',
         arbeidssted: 'Kristiansand',
         lenke: 'www.nav.no',
         svarfrist: '2021-07-29T10:46:51.622+01:00',
-        kontaktpersonData: {
-            navn: 'Sykfest Strutle',
-            tittel: 'NAV-ansatt',
-            mobil: null
-        }
+        bestillingsId: '1',
+        soknadsfrist: 'adss',
+        soknadsstatus: StillingFraNavSoknadsstatus.VENTER,
+        stillingsId: '2',
+        varselId: '3'
+        // kontaktpersonData: {
+        //     navn: 'Sykfest Strutle',
+        //     tittel: 'NAV-ansatt',
+        //     mobil: null
+        // }
     },
     oppfolgingsperiodeId: gjeldendeOppfolgingsPeriode.uuid
-};
+} as Aktivitet;
 const stillingFraNav2: Aktivitet = {
     versjon: '5345436',
     id: 'STILLING_FRA_NAV_2',
     tittel: 'Hovmester',
-    type: 'STILLING_FRA_NAV',
+    type: AktivitetTypes.STILLING_FRA_NAV,
     lenke: null,
-    status: 'GJENNOMFORES',
+    status: AktivitetStatus.GJENNOMFORES,
     opprettetDato: '2020-05-31T10:46:51.622+01:00',
     endretDato: '2020-09-30T10:46:51.622+01:00',
     endretAv: 'z990207',
@@ -352,6 +370,7 @@ const stillingFraNav2: Aktivitet = {
     transaksjonsType: 'STATUS_ENDRET',
     stillingFraNavData: {
         cvKanDelesData: {
+            avtaltDato: '2020-09-30T10:46:51.622+01:00',
             kanDeles: true,
             endretTidspunkt: '2020-09-30T10:46:51.622+01:00',
             endretAv: 'V123',
@@ -360,11 +379,16 @@ const stillingFraNav2: Aktivitet = {
         arbeidsgiver: 'Havsalt AS',
         arbeidssted: 'Kristiansand',
         lenke: 'www.nav.no',
-        soknadsstatus: 'VENTER'
+        soknadsstatus: StillingFraNavSoknadsstatus.VENTER,
+        varselId: '1',
+        stillingsId: '2',
+        bestillingsId: '3',
+        soknadsfrist: '2020-09-30T10:46:51.622+01:00',
+        svarfrist: '2020-09-30T10:46:51.622+01:00'
     },
     oppfolgingsperiodeId: gjeldendeOppfolgingsPeriode.uuid
-};
-const midl_lonnstilsk: Aktivitet = {
+} as Aktivitet;
+const midl_lonnstilsk = {
     versjon: '5345436',
     id: 'EKSTERNAKTIVITET_1',
     tittel: 'Baker Jonson',
@@ -372,7 +396,7 @@ const midl_lonnstilsk: Aktivitet = {
     fraDato: '2019-08-14T00:00:00+02:00',
     lenke: null,
     beskrivelse: 'Ekstern aktivitet beskrivelse aaaaa aaaa aa.',
-    status: 'GJENNOMFORES',
+    status: AktivitetStatus.GJENNOMFORES,
     opprettetDato: '2020-05-31T10:46:51.622+01:00',
     endretDato: '2020-09-30T10:46:51.622+01:00',
     endretAv: 'z990207',
@@ -380,14 +404,11 @@ const midl_lonnstilsk: Aktivitet = {
     endretAvType: 'NAV',
     transaksjonsType: 'STATUS_ENDRET',
     eksternAktivitet: {
-        type: EksternAktivitetTypes.MIDLERTIDIG_LONNSTILSKUDD,
-        a: 123,
-        b: true,
-        c: 'test'
+        type: EksternAktivitetTypes.MIDLERTIDIG_LONNSTILSKUDD
     },
     oppfolgingsperiodeId: gjeldendeOppfolgingsPeriode.uuid
-};
-const varig_lonnstilsk: Aktivitet = {
+} as Aktivitet;
+const varig_lonnstilsk = {
     versjon: '5345436',
     id: 'EKSTERNAKTIVITET_2',
     tittel: 'Maler Hansson',
@@ -395,7 +416,7 @@ const varig_lonnstilsk: Aktivitet = {
     fraDato: '2019-08-14T00:00:00+02:00',
     lenke: null,
     beskrivelse: 'Ekstern aktivitet beskrivelse aaaaa aaaa aa.',
-    status: 'GJENNOMFORES',
+    status: AktivitetStatus.GJENNOMFORES,
     opprettetDato: '2020-05-31T10:46:51.622+01:00',
     endretDato: '2020-09-30T10:46:51.622+01:00',
     endretAv: 'z990207',
@@ -406,8 +427,8 @@ const varig_lonnstilsk: Aktivitet = {
         type: EksternAktivitetTypes.VARIG_LONNSTILSKUDD
     },
     oppfolgingsperiodeId: gjeldendeOppfolgingsPeriode.uuid
-};
-const arena_tiltak: Aktivitet = {
+} as Aktivitet;
+const arena_tiltak = {
     versjon: '5345436',
     id: 'EKSTERNAKTIVITET_3',
     tittel: 'Asd eksternaktivitet 123',
@@ -416,7 +437,7 @@ const arena_tiltak: Aktivitet = {
     tilDato: '2023-08-10T07:45:00+02:00',
     lenke: null,
     beskrivelse: 'Ekstern aktivitet beskrivelse aaaaa aaaa aa.',
-    status: 'GJENNOMFORES',
+    status: AktivitetStatus.GJENNOMFORES,
     opprettetDato: '2020-05-31T10:46:51.622+01:00',
     endretDato: '2020-09-30T10:46:51.622+01:00',
     endretAv: 'z990207',
@@ -427,8 +448,8 @@ const arena_tiltak: Aktivitet = {
         type: EksternAktivitetTypes.ARENA_TILTAK
     },
     oppfolgingsperiodeId: gjeldendeOppfolgingsPeriode.uuid
-};
-const avklaring: Aktivitet = {
+} as Aktivitet;
+const avklaring = {
     versjon: '5345436',
     id: 'EKSTERNAKTIVITET_4',
     tittel: 'Avklaring',
@@ -437,7 +458,7 @@ const avklaring: Aktivitet = {
     tilDato: '2025-08-14T00:00:00+02:00',
     lenke: null,
     beskrivelse: '',
-    status: 'GJENNOMFORES',
+    status: AktivitetStatus.GJENNOMFORES,
     opprettetDato: '2023-05-31T10:46:51.622+01:00',
     endretDato: '2023-09-30T10:46:51.622+01:00',
     endretAv: 'z990207',
@@ -448,7 +469,7 @@ const avklaring: Aktivitet = {
         type: EksternAktivitetTypes.AVKLARAG
     },
     oppfolgingsperiodeId: gjeldendeOppfolgingsPeriode.uuid
-};
+} as Aktivitet;
 
 const aktiviteter: Aktivitet[] = [
     moteAktivitet,
