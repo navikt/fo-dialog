@@ -114,7 +114,8 @@ describe('<DialogContainer/>', () => {
                 startDato: '2017-01-30T10:46:10.971+01:00',
                 sluttDato: '2017-12-31T10:46:10.971+01:00',
                 begrunnelse: null,
-                kvpPerioder: []
+                kvpPerioder: [],
+                uuid: '1'
             }
         ];
         vi.spyOn(OppfolgingProvider, 'useOppfolgingContext').mockImplementation(() => useFetchOppfolging);
@@ -136,7 +137,8 @@ describe('<DialogContainer/>', () => {
                 startDato: '2017-01-30T10:46:10.971+01:00',
                 sluttDato: '2017-12-31T10:46:10.971+01:00',
                 begrunnelse: null,
-                kvpPerioder: []
+                kvpPerioder: [],
+                uuid: '1'
             }
         ];
         vi.spyOn(OppfolgingProvider, 'useOppfolgingContext').mockImplementation(() => useFetchOppfolging);
@@ -166,7 +168,8 @@ describe('<Dialog/>', () => {
                 startDato: '2017-01-30T10:46:10.971+01:00',
                 sluttDato: '2017-12-31T10:46:10.971+01:00',
                 begrunnelse: null,
-                kvpPerioder: []
+                kvpPerioder: [],
+                uuid: '1'
             }
         ];
         vi.spyOn(DialogProvider, 'useDialogContext').mockImplementation(() => useDialogContext);
@@ -194,7 +197,8 @@ describe('<Dialog/>', () => {
                 startDato: '2017-01-30T10:46:10.971+01:00',
                 sluttDato: '2017-12-31T10:46:10.971+01:00',
                 begrunnelse: null,
-                kvpPerioder: []
+                kvpPerioder: [],
+                uuid: '1'
             }
         ];
         vi.spyOn(DialogProvider, 'useDialogContext').mockImplementation(() => useDialogContext);
@@ -207,7 +211,7 @@ describe('<Dialog/>', () => {
             isPending: false
         }));
         Element.prototype.scrollIntoView = () => {};
-        const { getByRole, getByText, getByLabelText } = render(
+        const { getByText, getByLabelText } = render(
             <MemoryRouter initialEntries={['/1']}>
                 <Routes>
                     <Route path={'/:dialogId'} element={<DialogTrad />} />

@@ -23,6 +23,8 @@ import { getSistOppdatert } from './SistOppdatert';
 import { veilederMe } from './Veileder';
 import { addMinutes } from 'date-fns';
 import { FeatureToggle } from '../featureToggle/const';
+import { Aktivitet } from '../utils/aktivitetTypes';
+import { AktivitetsplanResponse } from '../api/aktivitetsplanGraphql';
 
 const jsonResponse = (response: object | null | boolean | ((req: RestRequest) => object)) => {
     return async (req: RestRequest, res: ResponseComposition, ctx: RestContext) => {
@@ -103,11 +105,11 @@ export const handlers = [
     rest.post('/veilarboppfolging/api/oppfolging/settDigital', jsonResponse({})),
 
     // veilarbaktivitet
-    rest.get(
-        '/veilarbaktivitet/api/aktivitet',
-        failOrGetResponse(harAktivitetFeilerSkruddPa, () => aktiviteter)
+    rest.post(
+        '/veilarbaktivitet/graphql',
+        failOrGetResponse(harAktivitetFeilerSkruddPa, () => matchMedPerioder(aktiviteter))
     ),
-    rest.get(
+    rest.post(
         '/veilarbaktivitet/api/arena/tiltak',
         failOrGetResponse(harArenaaktivitetFeilerSkruddPa, () => arenaAktiviteter)
     ),
@@ -121,3 +123,26 @@ export const handlers = [
     // veilarbperson
     rest.get(`/veilarbperson/api/person/:fnr/harNivaa4`, failOrGetResponse(harNivaa4Fieler, harNivaa4Data))
 ];
+
+const matchMedPerioder = (aktiviteter: Aktivitet[]): AktivitetsplanResponse => {
+    const aktivteterOnPerioder = aktiviteter.reduce(
+        (acc, aktivitet) => {
+            const periodeAktiviteter = acc[aktivitet.oppfolgingsperiodeId] || [];
+            return {
+                ...acc,
+                [aktivitet.oppfolgingsperiodeId]: [...periodeAktiviteter, aktivitet]
+            };
+        },
+        {} as Record<string, Aktivitet[]>
+    );
+    const perioderMedAktivtieter = Object.keys(aktivteterOnPerioder).map((periode) => ({
+        id: periode,
+        aktiviteter: aktivteterOnPerioder[periode]
+    }));
+    return {
+        data: {
+            perioder: perioderMedAktivtieter
+        },
+        errors: []
+    };
+};

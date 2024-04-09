@@ -102,7 +102,8 @@ const aktivitet: Aktivitet = {
     id: '123',
     type: AktivitetTypes.STILLING,
     tilDato: '2019-10-24T15:44:21.993+02:00',
-    arbeidsgiver: 'Testesen'
+    arbeidsgiver: 'Testesen',
+    oppfolgingsperiodeId: '1'
 };
 
 const aktivitetRes: AktivitetDataProviderType = {

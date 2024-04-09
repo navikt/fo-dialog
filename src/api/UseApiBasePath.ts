@@ -19,11 +19,11 @@ export const DialogApi = {
     logg: `${dialogBasePath}/logger/event`
 };
 
-const aktivitetBasePath = `${apiBasePath}/veilarbaktivitet/api`;
+export const aktivitetBasePath = `${apiBasePath}/veilarbaktivitet`;
 export const AktivitetApi = {
-    hentAktiviteter: (query: string) => `${aktivitetBasePath}/aktivitet${query}`,
-    hentArenaAktiviteter: (query: string) => `${aktivitetBasePath}/arena/tiltak${query}`,
-    hentFeatureToggles: `${aktivitetBasePath}/feature?${featureToggleQuery}`
+    hentAktiviteter: `${aktivitetBasePath}/api/aktivitet`,
+    hentArenaAktiviteter: `${aktivitetBasePath}/api/arena/tiltak`,
+    hentFeatureToggles: `${aktivitetBasePath}/api/feature?${featureToggleQuery}`
 };
 
 const oppfolgingBasePath = `${apiBasePath}/veilarboppfolging/api`;

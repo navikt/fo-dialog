@@ -14,7 +14,8 @@ const oppfPerioder: PeriodeData[] = [
         startDato: '2017-01-30T10:46:10.971+01:00',
         sluttDato: '2017-12-31T10:46:10.971+01:00',
         begrunnelse: null,
-        kvpPerioder: []
+        kvpPerioder: [],
+        uuid: '1'
     },
     {
         aktorId: '1234567988888',
@@ -22,7 +23,8 @@ const oppfPerioder: PeriodeData[] = [
         startDato: '2018-01-31T10:46:10.971+01:00',
         sluttDato: null,
         begrunnelse: null,
-        kvpPerioder: []
+        kvpPerioder: [],
+        uuid: '2'
     }
 ];
 const oppfolgingData = {

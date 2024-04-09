@@ -3,8 +3,9 @@ import React, { useCallback, useContext, useMemo, useState } from 'react';
 import { Status, hasError, isReloading } from '../api/typer';
 import { AktivitetApi } from '../api/UseApiBasePath';
 import { Aktivitet, ArenaAktivitet } from '../utils/aktivitetTypes';
-import { fetchData, fnrQuery } from '../utils/Fetch';
+import { fetchData } from '../utils/Fetch';
 import { StringOrNull } from '../utils/Typer';
+import { hentAktiviteterGraphql } from '../api/aktivitetsplanGraphql';
 
 export type MaybeAktivitet = Aktivitet | ArenaAktivitet | undefined;
 
@@ -69,8 +70,7 @@ interface AktivitetResponse {
     aktiviteter: Aktivitet[];
 }
 
-const aktivitetUrl = (fnr: string | undefined) => AktivitetApi.hentAktiviteter(fnrQuery(fnr));
-const arenaAktivitetUrl = (fnr: string | undefined) => AktivitetApi.hentArenaAktiviteter(fnrQuery(fnr));
+const arenaAktivitetUrl = AktivitetApi.hentArenaAktiviteter;
 
 export const useAktivitetDataProvider = (): AktivitetDataProviderType => {
     const [state, setState] = useState<AktivitetState>(initAktivitetState);
@@ -80,16 +80,18 @@ export const useAktivitetDataProvider = (): AktivitetDataProviderType => {
                 ...prevState,
                 status: isReloading(prevState.aktiviteterStatus) ? Status.RELOADING : Status.PENDING
             }));
-            return fetchData<AktivitetResponse>(aktivitetUrl(fnr))
+            return hentAktiviteterGraphql(fnr)
                 .then((response) => {
+                    const aktiviteter = response.data.perioder.flatMap((periode) => periode.aktiviteter);
                     setState((prevState) => ({
                         ...prevState,
                         aktiviteterStatus: Status.OK,
-                        aktiviteter: response.aktiviteter
+                        aktiviteter
                     }));
-                    return response.aktiviteter;
+                    return aktiviteter;
                 })
-                .catch(() => {
+                .catch((err) => {
+                    console.log(err);
                     setState((prevState) => ({
                         ...prevState,
                         aktiviteterStatus: Status.ERROR
@@ -106,7 +108,10 @@ export const useAktivitetDataProvider = (): AktivitetDataProviderType => {
                 ...prevState,
                 status: isReloading(prevState.arenaAktiviteterStatus) ? Status.RELOADING : Status.PENDING
             }));
-            return fetchData<ArenaAktivitet[]>(arenaAktivitetUrl(fnr))
+            return fetchData<ArenaAktivitet[]>(arenaAktivitetUrl, {
+                method: 'POST',
+                body: JSON.stringify({ fnr })
+            })
                 .then((arenaAktiviteter) => {
                     setState((prevState) => ({
                         aktiviteter: prevState.aktiviteter,
