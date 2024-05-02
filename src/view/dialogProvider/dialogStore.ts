@@ -127,9 +127,9 @@ export const useDialogStore = create(
                 closeWebsocket();
             },
             pollForChanges: async (fnr) => {
-                let { sistOppdatert: remoteSistOppdatert } = await fetchData<SistOppdatert>(
-                    DialogApi.sistOppdatert(fnrQuery(fnr))
-                );
+                let { sistOppdatert: remoteSistOppdatert } = await fetchData<SistOppdatert>(DialogApi.sistOppdatert, {
+                    body: !fnr ? undefined : JSON.stringify({ fnr })
+                });
                 const { silentlyHentDialoger, sistOppdatert: localSistOppdatert } = get();
                 if (!!remoteSistOppdatert && isAfter(remoteSistOppdatert, localSistOppdatert)) {
                     await silentlyHentDialoger(fnr);

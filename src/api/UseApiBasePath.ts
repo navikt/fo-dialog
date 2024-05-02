@@ -14,7 +14,7 @@ export const DialogApi = {
         `${dialogBasePath}/dialog/${id}/venter_pa_svar/${venterPaSvar}${query}`,
     kladd: (query: string | undefined) => `${dialogBasePath}/kladd${query}`,
     hentDialog: (query: string | undefined) => `${dialogBasePath}/dialog${query}`,
-    sistOppdatert: (query: string | undefined) => `${dialogBasePath}/dialog/sistOppdatert${query}`,
+    sistOppdatert: `${dialogBasePath}/dialog/sistOppdatert`,
     settLest: (dialogId: string, query: string | undefined) => `${dialogBasePath}/dialog/${dialogId}/les${query}`,
     logg: `${dialogBasePath}/logger/event`
 };
