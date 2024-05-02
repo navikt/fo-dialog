@@ -60,8 +60,8 @@ const dialogUrl = DialogApi.opprettDialog;
 const lesUrl = ({ id }: { id: string }) => DialogApi.settLest(id);
 const ferdigBehandletUrl = ({ ferdigBehandlet, id }: { id: string; ferdigBehandlet: boolean }) =>
     DialogApi.ferdigBehandlet(id, ferdigBehandlet);
-const venterPaSvarUrl = ({ fnr, id, venterPaSvar }: { id: string; venterPaSvar: boolean; fnr: string | undefined }) =>
-    DialogApi.venterPaSvar(id, venterPaSvar, fnrQuery(fnr));
+const venterPaSvarUrl = ({ id, venterPaSvar }: { id: string; venterPaSvar: boolean }) =>
+    DialogApi.venterPaSvar(id, venterPaSvar);
 
 export function useDialogDataProvider(): DialogDataProviderType {
     const [state, setState] = useState(initDialogState);
@@ -126,7 +126,7 @@ export function useDialogDataProvider(): DialogDataProviderType {
 
     const setVenterPaSvar = (dialog: DialogData, venterPaSvar: boolean, fnr: string | undefined) => {
         setState((prevState) => ({ ...prevState, status: Status.RELOADING }));
-        return fetchData<DialogData>(venterPaSvarUrl({ id: dialog.id, venterPaSvar, fnr }), { method: 'put' }).then(
+        return fetchData<DialogData>(venterPaSvarUrl({ id: dialog.id, venterPaSvar }), { method: 'put' }).then(
             (dialogData) => {
                 setOkStatus();
                 return updateDialogInDialoger(dialogData);

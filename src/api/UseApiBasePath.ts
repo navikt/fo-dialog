@@ -10,8 +10,8 @@ const dialogBasePath = `${apiBasePath}/veilarbdialog/api`;
 export const DialogApi = {
     ferdigBehandlet: (dialogId: string, ferdigBehandlet: boolean) =>
         `${dialogBasePath}/dialog/${dialogId}/ferdigbehandlet/${ferdigBehandlet}`,
-    venterPaSvar: (id: string, venterPaSvar: boolean, query: string | undefined) =>
-        `${dialogBasePath}/dialog/${id}/venter_pa_svar/${venterPaSvar}${query}`,
+    venterPaSvar: (id: string, venterPaSvar: boolean) =>
+        `${dialogBasePath}/dialog/${id}/venter_pa_svar/${venterPaSvar}`,
     kladd: (query: string | undefined) => `${dialogBasePath}/kladd${query}`,
     opprettDialog: `${dialogBasePath}/dialog`,
     sistOppdatert: `${dialogBasePath}/dialog/sistOppdatert`,
