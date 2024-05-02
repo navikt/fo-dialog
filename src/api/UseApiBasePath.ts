@@ -15,7 +15,7 @@ export const DialogApi = {
     kladd: (query: string | undefined) => `${dialogBasePath}/kladd${query}`,
     hentDialog: (query: string | undefined) => `${dialogBasePath}/dialog${query}`,
     sistOppdatert: `${dialogBasePath}/dialog/sistOppdatert`,
-    settLest: (dialogId: string, query: string | undefined) => `${dialogBasePath}/dialog/${dialogId}/les${query}`,
+    settLest: (dialogId: string) => `${dialogBasePath}/dialog/${dialogId}/les`,
     logg: `${dialogBasePath}/logger/event`,
     graphql: `${apiBasePath}/veilarbdialog/graphql`
 };

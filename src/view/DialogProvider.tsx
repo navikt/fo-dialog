@@ -57,7 +57,7 @@ export interface DialogState {
 }
 
 const dialogUrl = (fnr: string | undefined) => DialogApi.hentDialog(fnrQuery(fnr));
-const lesUrl = ({ id, fnr }: { id: string; fnr: string | undefined }) => DialogApi.settLest(id, fnrQuery(fnr));
+const lesUrl = ({ id }: { id: string }) => DialogApi.settLest(id);
 const ferdigBehandletUrl = ({
     fnr,
     ferdigBehandlet,
@@ -112,9 +112,9 @@ export function useDialogDataProvider(): DialogDataProviderType {
         return sendMelding({ tekst: melding, dialogId: dialog.id, fnr });
     };
 
-    const lesDialog = (dialogId: string, fnr: string | undefined) => {
+    const lesDialog = (dialogId: string) => {
         setState((prevState) => ({ ...prevState, status: Status.RELOADING }));
-        return fetchData<DialogData>(lesUrl({ id: dialogId, fnr }), { method: 'put' }).then((dialogData) => {
+        return fetchData<DialogData>(lesUrl({ id: dialogId }), { method: 'put' }).then((dialogData) => {
             setOkStatus();
             return updateDialogInDialoger(dialogData);
         });
