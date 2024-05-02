@@ -56,7 +56,7 @@ export interface DialogState {
     error?: string;
 }
 
-const dialogUrl = (fnr: string | undefined) => DialogApi.hentDialog(fnrQuery(fnr));
+const dialogUrl = DialogApi.opprettDialog;
 const lesUrl = ({ id }: { id: string }) => DialogApi.settLest(id);
 const ferdigBehandletUrl = ({
     fnr,
@@ -83,10 +83,11 @@ export function useDialogDataProvider(): DialogDataProviderType {
             dialogId,
             overskrift,
             tekst,
-            aktivitetId
+            aktivitetId,
+            fnr
         };
 
-        return fetchData<DialogData>(dialogUrl(fnr), {
+        return fetchData<DialogData>(dialogUrl, {
             method: 'post',
             body: JSON.stringify(nyDialogData)
         }).then((dialog) => {
