@@ -8,8 +8,8 @@ export const apiBasePath = USE_HASH_ROUTER ? '' : stripTrailingSlash(import.meta
 
 const dialogBasePath = `${apiBasePath}/veilarbdialog/api`;
 export const DialogApi = {
-    ferdigBehandlet: (dialogId: string, ferdigBehandlet: boolean, query: string | undefined) =>
-        `${dialogBasePath}/dialog/${dialogId}/ferdigbehandlet/${ferdigBehandlet}${query}`,
+    ferdigBehandlet: (dialogId: string, ferdigBehandlet: boolean) =>
+        `${dialogBasePath}/dialog/${dialogId}/ferdigbehandlet/${ferdigBehandlet}`,
     venterPaSvar: (id: string, venterPaSvar: boolean, query: string | undefined) =>
         `${dialogBasePath}/dialog/${id}/venter_pa_svar/${venterPaSvar}${query}`,
     kladd: (query: string | undefined) => `${dialogBasePath}/kladd${query}`,

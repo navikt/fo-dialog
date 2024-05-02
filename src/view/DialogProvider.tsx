@@ -58,15 +58,8 @@ export interface DialogState {
 
 const dialogUrl = DialogApi.opprettDialog;
 const lesUrl = ({ id }: { id: string }) => DialogApi.settLest(id);
-const ferdigBehandletUrl = ({
-    fnr,
-    ferdigBehandlet,
-    id
-}: {
-    id: string;
-    ferdigBehandlet: boolean;
-    fnr: string | undefined;
-}) => DialogApi.ferdigBehandlet(id, ferdigBehandlet, fnrQuery(fnr));
+const ferdigBehandletUrl = ({ ferdigBehandlet, id }: { id: string; ferdigBehandlet: boolean }) =>
+    DialogApi.ferdigBehandlet(id, ferdigBehandlet);
 const venterPaSvarUrl = ({ fnr, id, venterPaSvar }: { id: string; venterPaSvar: boolean; fnr: string | undefined }) =>
     DialogApi.venterPaSvar(id, venterPaSvar, fnrQuery(fnr));
 
@@ -123,7 +116,7 @@ export function useDialogDataProvider(): DialogDataProviderType {
 
     const setFerdigBehandlet = (dialog: DialogData, ferdigBehandlet: boolean, fnr: string | undefined) => {
         setState((prevState) => ({ ...prevState, status: Status.RELOADING }));
-        return fetchData<DialogData>(ferdigBehandletUrl({ id: dialog.id, ferdigBehandlet, fnr }), {
+        return fetchData<DialogData>(ferdigBehandletUrl({ id: dialog.id, ferdigBehandlet }), {
             method: 'put'
         }).then((dialogData) => {
             setOkStatus();
