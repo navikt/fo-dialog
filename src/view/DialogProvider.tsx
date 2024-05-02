@@ -1,8 +1,8 @@
-import React, { useCallback, useContext, useMemo, useState } from 'react';
+import React, { useContext, useState } from 'react';
 
 import { Status } from '../api/typer';
 import { DialogApi } from '../api/UseApiBasePath';
-import { fetchData, fnrQuery } from '../utils/Fetch';
+import { fetchData } from '../utils/Fetch';
 import { DialogData, NyDialogMeldingData } from '../utils/Typer';
 import { initDialogState, useDialogStore } from './dialogProvider/dialogStore';
 
