@@ -2,12 +2,13 @@ import { create } from 'zustand';
 import { Status } from '../../api/typer';
 import { DialogData, SistOppdatert } from '../../utils/Typer';
 import { DialogState, isDialogReloading } from '../DialogProvider';
-import { fetchData, fnrQuery } from '../../utils/Fetch';
+import { fetchData } from '../../utils/Fetch';
 import { DialogApi } from '../../api/UseApiBasePath';
 import { isAfter } from 'date-fns';
 import { devtools } from 'zustand/middleware';
 import { EventType, closeWebsocket, listenForNyDialogEvents } from '../../api/nyDialogWs';
 import { useShallow } from 'zustand/react/shallow';
+import { hentDialogerGraphql } from './dialogGraphql';
 
 export const initDialogState: DialogState = {
     status: Status.INITIAL,
@@ -42,8 +43,7 @@ export const useDialogStore = create(
             currentPollFnr: undefined,
             // Actions / functions / mutations
             silentlyHentDialoger: async (fnr) => {
-                const dialogUrl = DialogApi.hentDialog(fnrQuery(fnr));
-                fetchData<DialogData[]>(dialogUrl)
+                hentDialogerGraphql(fnr)
                     .then((dialoger) => {
                         // TODO: Find a way to get previous value
                         // loggChangeInDialog(state.dialoger, dialoger);
@@ -127,9 +127,10 @@ export const useDialogStore = create(
                 closeWebsocket();
             },
             pollForChanges: async (fnr) => {
-                let { sistOppdatert: remoteSistOppdatert } = await fetchData<SistOppdatert>(
-                    DialogApi.sistOppdatert(fnrQuery(fnr))
-                );
+                let { sistOppdatert: remoteSistOppdatert } = await fetchData<SistOppdatert>(DialogApi.sistOppdatert, {
+                    method: 'POST',
+                    body: !fnr ? undefined : JSON.stringify({ fnr })
+                });
                 const { silentlyHentDialoger, sistOppdatert: localSistOppdatert } = get();
                 if (!!remoteSistOppdatert && isAfter(remoteSistOppdatert, localSistOppdatert)) {
                     await silentlyHentDialoger(fnr);

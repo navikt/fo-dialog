@@ -8,15 +8,16 @@ export const apiBasePath = USE_HASH_ROUTER ? '' : stripTrailingSlash(import.meta
 
 const dialogBasePath = `${apiBasePath}/veilarbdialog/api`;
 export const DialogApi = {
-    ferdigBehandlet: (dialogId: string, ferdigBehandlet: boolean, query: string | undefined) =>
-        `${dialogBasePath}/dialog/${dialogId}/ferdigbehandlet/${ferdigBehandlet}${query}`,
-    venterPaSvar: (id: string, venterPaSvar: boolean, query: string | undefined) =>
-        `${dialogBasePath}/dialog/${id}/venter_pa_svar/${venterPaSvar}${query}`,
+    ferdigBehandlet: (dialogId: string, ferdigBehandlet: boolean) =>
+        `${dialogBasePath}/dialog/${dialogId}/ferdigbehandlet/${ferdigBehandlet}`,
+    venterPaSvar: (id: string, venterPaSvar: boolean) =>
+        `${dialogBasePath}/dialog/${id}/venter_pa_svar/${venterPaSvar}`,
     kladd: (query: string | undefined) => `${dialogBasePath}/kladd${query}`,
-    hentDialog: (query: string | undefined) => `${dialogBasePath}/dialog${query}`,
-    sistOppdatert: (query: string | undefined) => `${dialogBasePath}/dialog/sistOppdatert${query}`,
-    settLest: (dialogId: string, query: string | undefined) => `${dialogBasePath}/dialog/${dialogId}/les${query}`,
-    logg: `${dialogBasePath}/logger/event`
+    opprettDialog: `${dialogBasePath}/dialog`,
+    sistOppdatert: `${dialogBasePath}/dialog/sistOppdatert`,
+    settLest: (dialogId: string) => `${dialogBasePath}/dialog/${dialogId}/les`,
+    logg: `${dialogBasePath}/logger/event`,
+    graphql: `${apiBasePath}/veilarbdialog/graphql`
 };
 
 export const aktivitetBasePath = `${apiBasePath}/veilarbaktivitet`;

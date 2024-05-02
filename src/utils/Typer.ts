@@ -9,6 +9,7 @@ export interface NyDialogMeldingData {
     dialogId?: string;
     overskrift?: string;
     aktivitetId?: string;
+    fnr?: string;
 }
 
 export interface DialogData {

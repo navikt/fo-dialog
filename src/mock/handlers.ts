@@ -85,7 +85,6 @@ export const handlers = [
     rest.post('https://amplitude.nav.no/collect-auto', (_, res, ctx) => res(ctx.status(200))),
     // veilarbdialog
     rest.get('/veilarbdialog/api/kladd', jsonResponse(kladder)),
-    rest.get('/veilarbdialog/api/dialog', failOrGetResponse(harDialogFeilerSkruddPa, dialoger)),
     rest.put('/veilarbdialog/api/dialog/:dialogId/les', jsonResponse(lesDialog)),
     rest.put('/veilarbdialog/api/dialog/:dialogId/venter_pa_svar/:bool', jsonResponse(setVenterPaSvar)),
     rest.put('/veilarbdialog/api/dialog/:dialogId/ferdigbehandlet/:bool', jsonResponse(setFerdigBehandlet)),
@@ -98,6 +97,12 @@ export const handlers = [
         failOrGetResponse(harNyDialogEllerSendMeldingFeilerSkruddPa, opprettEllerOppdaterDialog)
     ),
     rest.post('/veilarbdialog/api/logger/event', (_, res, ctx) => res(ctx.status(200))),
+    rest.post(
+        '/veilarbdialog/graphql',
+        failOrGetResponse(harDialogFeilerSkruddPa, () => {
+            return { data: { dialoger: dialoger() }, errors: [] };
+        })
+    ),
 
     // veilarboppfolging
     rest.get('/veilarboppfolging/api/oppfolging/me', jsonResponse(bruker)),
