@@ -10,12 +10,13 @@ import { StringOrNull } from '../../utils/Typer';
 import { UpdateTypes, dispatchUpdate } from '../../utils/UpdateEvent';
 import { useUserInfoContext } from '../BrukerProvider';
 import { useDialogContext } from '../DialogProvider';
-import { findKladd, useKladdContext } from '../KladdProvider';
+import { findKladd } from '../KladdProvider';
 import { cutStringAtLength } from '../utils/stringUtils';
 import useMeldingStartTekst from './UseMeldingStartTekst';
 import { HandlingsType } from '../ViewState';
 import { useFnrContext } from '../Provider';
 import { useDialogStore } from '../dialogProvider/dialogStore';
+import { useShallow } from 'zustand/react/shallow';
 
 const maxMeldingsLengde = 5000;
 
@@ -45,7 +46,13 @@ const NyDialogForm = (props: Props) => {
     const startTekst = useMeldingStartTekst();
 
     const fnr = useFnrContext();
-    const { kladder, oppdaterKladd, slettKladd } = useKladdContext();
+    const { kladder, oppdaterKladd, slettKladd } = useDialogStore(
+        useShallow((store) => ({
+            kladder: store.kladder,
+            oppdaterKladd: store.oppdaterKladd,
+            slettKladd: store.slettKladd
+        }))
+    );
     const kladd = findKladd(kladder, null, aktivitetId);
     const autoFocusTema = !aktivitetId;
 
@@ -72,7 +79,8 @@ const NyDialogForm = (props: Props) => {
         timer.current && clearInterval(timer.current);
         callback.current = () => {
             timer.current = undefined;
-            oppdaterKladd(fnr, {
+            oppdaterKladd({
+                fnr,
                 dialogId: null,
                 aktivitetId: props.aktivitetId || null,
                 overskrift: newTema || null,

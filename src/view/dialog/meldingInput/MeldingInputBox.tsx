@@ -6,7 +6,6 @@ import loggEvent from '../../../felleskomponenter/logging';
 import { DialogData } from '../../../utils/Typer';
 import { dispatchUpdate, UpdateTypes } from '../../../utils/UpdateEvent';
 import { useDialogContext } from '../../DialogProvider';
-import { useKladdContext } from '../../KladdProvider';
 import { sendtNyMelding, useSetViewContext, useViewContext } from '../../ViewState';
 import useMeldingStartTekst from '../UseMeldingStartTekst';
 import { Breakpoint, useBreakpoint } from '../../utils/useBreakpoint';
@@ -16,9 +15,10 @@ import { debounced, maxMeldingsLengde, MeldingInputContext } from './inputUtils'
 import { useVisAktivitet } from '../../AktivitetToggleContext';
 import { Status } from '../../../api/typer';
 import ManagedDialogCheckboxes from '../DialogCheckboxes';
-import { useHentDialoger } from '../../dialogProvider/dialogStore';
+import { useDialogStore, useHentDialoger } from '../../dialogProvider/dialogStore';
 import { useFnrContext } from '../../Provider';
 import useKansendeMelding from '../../../utils/UseKanSendeMelding';
+import { useShallow } from 'zustand/react/shallow';
 
 const schema = z.object({
     melding: z
@@ -44,7 +44,14 @@ const MeldingInputBox = ({ dialog: valgtDialog }: Props) => {
     const [noeFeilet, setNoeFeilet] = useState(false);
     const startTekst = useMeldingStartTekst();
     const visAktivitet = useVisAktivitet();
-    const { kladder, oppdaterKladd, slettKladd, oppdaterStatus } = useKladdContext();
+    const { kladder, oppdaterKladd, slettKladd, oppdaterStatus } = useDialogStore(
+        useShallow((store) => ({
+            kladder: store.kladder,
+            oppdaterKladd: store.oppdaterKladd,
+            slettKladd: store.slettKladd,
+            oppdaterStatus: store.kladdStatus
+        }))
+    );
     const kladd = kladder.find((k) => k.aktivitetId === valgtDialog.aktivitetId && k.dialogId === valgtDialog.id);
     const viewState = useViewContext();
     const setViewState = useSetViewContext();
@@ -74,7 +81,8 @@ const MeldingInputBox = ({ dialog: valgtDialog }: Props) => {
 
     useEffect(() => {
         if (melding === defaultValues.melding) return;
-        debouncedOppdaterKladd(fnr, {
+        debouncedOppdaterKladd({
+            fnr,
             dialogId: valgtDialog.id,
             aktivitetId: valgtDialog.aktivitetId,
             overskrift: null,
