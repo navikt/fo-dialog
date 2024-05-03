@@ -39,7 +39,7 @@ export function Melding(props: Props) {
             <Chat
                 timestamp={toppTekst}
                 size="small"
-                avatar={erMeldingFraBruker ? <PersonIcon aria-hidden className={'!h-6 !w-6 avatarBgColor'} /> : 'NAV'}
+                avatar={erMeldingFraBruker ? <PersonIcon aria-hidden className="!h-6 !w-6" /> : 'NAV'}
                 position={erMeldingFraBruker ? 'right' : 'left'}
                 className="p-0"
                 variant={erFraSegSelv ? 'info' : 'subtle'}
