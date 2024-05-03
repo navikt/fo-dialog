@@ -1,13 +1,10 @@
-import classNames from 'classnames';
-import TextareaAutosize from '@navikt/ds-react/esm/util/TextareaAutoSize';
-import { Alert, Button, ErrorMessage } from '@navikt/ds-react';
+import { Alert, Button, ErrorMessage, Textarea } from '@navikt/ds-react';
 import React, { MutableRefObject, useContext, useRef } from 'react';
 import { useFormContext } from 'react-hook-form';
 import { betterErrorMessage, MeldingInputContext, useFocusBeforeHilsen } from './inputUtils';
 import { MeldingFormValues } from './MeldingInputBox';
 import { PaperplaneIcon } from '@navikt/aksel-icons';
 import { Breakpoint, useBreakpoint } from '../../utils/useBreakpoint';
-import ManagedDialogCheckboxes from '../DialogCheckboxes';
 import { dataOrUndefined } from '../../Provider';
 import { useOppfolgingContext } from '../../OppfolgingProvider';
 import KladdLagret from './KladdLagret';
@@ -31,13 +28,9 @@ const MeldingBottomInputInner = () => {
                 <label htmlFor="melding_input" className="sr-only">
                     Skriv om arbeid og oppfølging
                 </label>
-                <TextareaAutosize
+                <Textarea
                     id="melding_input"
-                    className={classNames(
-                        'w-full grow border-2 border-gray-500 focus:border-blue-500 rounded-md p-2 overflow-auto outline-0',
-                        { 'border-red-300': errors.melding }
-                    )}
-                    style={{ overflow: 'auto' }}
+                    className="w-full"
                     {...formHooks}
                     ref={(ref) => {
                         textAreaRef.current = ref;
@@ -46,6 +39,8 @@ const MeldingBottomInputInner = () => {
                     placeholder={'Skriv om arbeid og oppfølging'}
                     minRows={3}
                     maxRows={12}
+                    label="Skriv om arbeid og oppfølging"
+                    hideLabel
                 />
                 <div className="flex flex-col space-y-2">
                     <KladdLagret />
@@ -82,7 +77,6 @@ export const MeldingBottomInput = () => {
     return (
         <section aria-label="Ny melding" className="flex justify-center border-t border-border-divider p-4">
             <div className="grow justify-self-center">
-                <ManagedDialogCheckboxes />
                 {!oppfolging?.underOppfolging || dialog.historisk ? null : <MeldingBottomInputInner />}
             </div>
         </section>
