@@ -109,8 +109,9 @@ const NyDialogForm = (props: Props) => {
 
     useEffect(() => {
         if (dirtyFields.melding || dirtyFields.tema) {
+            const dirtyFieldsList = Object.keys(dirtyFields) as ('melding' | 'tema')[];
             // Do not update kladd if any field is invalid
-            trigger(['tema', 'melding']).then((isValid) => {
+            trigger(dirtyFieldsList).then((isValid) => {
                 if (!isValid) {
                     timer.current = undefined;
                 } else {
