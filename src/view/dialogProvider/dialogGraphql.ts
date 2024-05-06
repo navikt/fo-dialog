@@ -1,6 +1,6 @@
 import { DialogApi } from '../../api/UseApiBasePath';
 import { sjekkStatuskode, toJson } from '../../utils/Fetch';
-import { DialogData } from '../../utils/Typer';
+import { DialogData, KladdData } from '../../utils/Typer';
 
 const query = `
     query($fnr: String!, $bareMedAktiviteter: Boolean) {
@@ -29,6 +29,12 @@ const query = `
                 sendt,
                 tekst
             }
+        },
+        kladder(fnr: $fnr) {
+            aktivitetId,
+            dialogId,
+            tekst,
+            overskrift
         }
     }
 `;
@@ -57,7 +63,9 @@ const sjekkGraphqlFeil = <T>(response: GraphqlResponse<T>): Promise<GraphqlRespo
     return Promise.resolve(response);
 };
 
-export const hentDialogerGraphql = async (fnr: string | undefined): Promise<DialogData[]> => {
+export const hentDialogerGraphql = async (
+    fnr: string | undefined
+): Promise<{ dialoger: DialogData[]; kladder: KladdData[] }> => {
     return fetch(DialogApi.graphql, {
         method: 'POST',
         headers: {
@@ -68,6 +76,6 @@ export const hentDialogerGraphql = async (fnr: string | undefined): Promise<Dial
     })
         .then(sjekkStatuskode)
         .then(toJson)
-        .then(sjekkGraphqlFeil<{ dialoger: DialogData[] }>)
-        .then((response) => response.data.dialoger);
+        .then(sjekkGraphqlFeil<{ dialoger: DialogData[]; kladder: KladdData[] }>)
+        .then((response) => response.data);
 };

@@ -100,7 +100,7 @@ export const handlers = [
     rest.post(
         '/veilarbdialog/graphql',
         failOrGetResponse(harDialogFeilerSkruddPa, () => {
-            return { data: { dialoger: dialoger() }, errors: [] };
+            return { data: { dialoger: dialoger(), kladder: [] }, errors: [] };
         })
     ),
 

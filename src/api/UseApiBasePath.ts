@@ -12,7 +12,7 @@ export const DialogApi = {
         `${dialogBasePath}/dialog/${dialogId}/ferdigbehandlet/${ferdigBehandlet}`,
     venterPaSvar: (id: string, venterPaSvar: boolean) =>
         `${dialogBasePath}/dialog/${id}/venter_pa_svar/${venterPaSvar}`,
-    kladd: (query: string | undefined) => `${dialogBasePath}/kladd${query}`,
+    kladd: `${dialogBasePath}/kladd`,
     opprettDialog: `${dialogBasePath}/dialog`,
     sistOppdatert: `${dialogBasePath}/dialog/sistOppdatert`,
     settLest: (dialogId: string) => `${dialogBasePath}/dialog/${dialogId}/les`,

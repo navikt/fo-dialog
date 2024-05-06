@@ -9,7 +9,6 @@ import { AktivitetToggleProvider } from './AktivitetToggleContext';
 import { BrukerDataProviderType, UserInfoContext, useBrukerDataProvider } from './BrukerProvider';
 import { DialogContext, hasDialogError, isDialogPending, useDialogDataProvider } from './DialogProvider';
 import { FeatureToggleContext, useFeatureToggleProvider } from '../featureToggle/FeatureToggleProvider';
-import { KladdContext, useKladdDataProvider } from './KladdProvider';
 import { OppfolgingContext, useOppfolgingDataProvider } from './OppfolgingProvider';
 import { ViewStateProvider } from './ViewState';
 import { useDialogStore, useHentDialoger } from './dialogProvider/dialogStore';
@@ -62,7 +61,6 @@ export function Provider(props: Props) {
     const dialogDataProvider = useDialogDataProvider();
 
     const aktivitetDataProvider = useAktivitetDataProvider();
-    const kladdDataProvider = useKladdDataProvider();
 
     const hentDialoger = useHentDialoger();
     const { configurePoll, stopPolling, dialogstatus } = useDialogStore(
@@ -73,14 +71,12 @@ export function Provider(props: Props) {
         }))
     );
     const { hentAktiviteter, hentArenaAktiviteter } = aktivitetDataProvider;
-    const hentKladder = kladdDataProvider.hentKladder;
 
     useEffect(() => {
         hentOppfolging(fnr);
         hentAktiviteter(fnr);
         hentArenaAktiviteter(fnr);
         hentDialoger(fnr);
-        hentKladder(fnr);
         return () => stopPolling();
     }, [fnr]);
 
@@ -126,17 +122,15 @@ export function Provider(props: Props) {
                     <UserInfoContext.Provider value={bruker}>
                         <AktivitetContext.Provider value={aktivitetDataProvider}>
                             <VeilederDataContext.Provider value={{ veilederNavn }}>
-                                <KladdContext.Provider value={kladdDataProvider}>
-                                    <FNRContext.Provider value={fnr}>
-                                        <ViewStateProvider>
-                                            <FeatureToggleContext.Provider value={feature}>
-                                                <AktivitetToggleProvider defaultValue={visAktivitetDefault || false}>
-                                                    {children}
-                                                </AktivitetToggleProvider>
-                                            </FeatureToggleContext.Provider>
-                                        </ViewStateProvider>
-                                    </FNRContext.Provider>
-                                </KladdContext.Provider>
+                                <FNRContext.Provider value={fnr}>
+                                    <ViewStateProvider>
+                                        <FeatureToggleContext.Provider value={feature}>
+                                            <AktivitetToggleProvider defaultValue={visAktivitetDefault || false}>
+                                                {children}
+                                            </AktivitetToggleProvider>
+                                        </FeatureToggleContext.Provider>
+                                    </ViewStateProvider>
+                                </FNRContext.Provider>
                             </VeilederDataContext.Provider>
                         </AktivitetContext.Provider>
                     </UserInfoContext.Provider>
