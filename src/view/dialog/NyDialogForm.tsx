@@ -20,7 +20,7 @@ import { useShallow } from 'zustand/react/shallow';
 const maxMeldingsLengde = 5000;
 
 const schema = z.object({
-    tema: z.string().min(1, 'Du må skrive et tema for dialogen').max(1, 'Tema kan ikke være mer enn 100 tegn'),
+    tema: z.string().min(1, 'Du må skrive et tema for dialogen').max(100, 'Tema kan ikke være mer enn 100 tegn'),
     melding: z
         .string()
         .min(1, 'Du må skrive en melding')
