@@ -6,7 +6,6 @@ import { useNavigate } from 'react-router';
 import { z } from 'zod';
 import loggEvent from '../../felleskomponenter/logging';
 import { useRoutes } from '../../routes';
-import { StringOrNull } from '../../utils/Typer';
 import { UpdateTypes, dispatchUpdate } from '../../utils/UpdateEvent';
 import { useUserInfoContext } from '../BrukerProvider';
 import { useDialogContext } from '../DialogProvider';
@@ -56,10 +55,25 @@ const NyDialogForm = (props: Props) => {
     const kladd = findKladd(kladder, null, aktivitetId);
     const autoFocusTema = !aktivitetId;
 
-    const [gjeldendeInput, setGjeldendeInput] = useState<{ tema?: StringOrNull; melding?: StringOrNull }>({
-        tema: kladd?.overskrift,
-        melding: kladd?.tekst
+    const defaultValues: NyDialogFormValues = {
+        tema: kladd?.overskrift ?? cutStringAtLength(defaultTema, 100, '...'),
+        melding: !!kladd?.tekst ? kladd.tekst : startTekst
+    };
+
+    const {
+        trigger,
+        register,
+        handleSubmit,
+        watch,
+        formState: { errors, isSubmitting, dirtyFields }
+    } = useForm<NyDialogFormValues>({
+        defaultValues,
+        resolver: zodResolver(schema)
     });
+
+    const melding = watch('melding');
+    const tema = watch('tema');
+
     const timer = useRef<number | undefined>();
     const callback = useRef<() => any>();
 
@@ -72,10 +86,13 @@ const NyDialogForm = (props: Props) => {
 
     const erVeileder = !!bruker && bruker.erVeileder;
 
-    const onChange = (tema?: string, melding?: string) => {
-        const newTema = tema !== undefined ? tema : gjeldendeInput.tema;
-        const newMelding = melding !== undefined ? melding : gjeldendeInput.melding;
-        setGjeldendeInput({ tema: newTema, melding: newMelding });
+    const setOppdaterKladdCallbackValues = ({
+        tema,
+        melding
+    }: {
+        tema: string | undefined;
+        melding: string | undefined;
+    }) => {
         timer.current && clearInterval(timer.current);
         callback.current = () => {
             timer.current = undefined;
@@ -83,17 +100,28 @@ const NyDialogForm = (props: Props) => {
                 fnr,
                 dialogId: null,
                 aktivitetId: props.aktivitetId || null,
-                overskrift: newTema || null,
-                tekst: newMelding || null
+                overskrift: tema || null,
+                tekst: melding || null
             });
         };
         timer.current = window.setTimeout(callback.current, 500);
     };
 
-    const defaultValues: NyDialogFormValues = {
-        tema: kladd?.overskrift ?? cutStringAtLength(defaultTema, 100, '...'),
-        melding: !!kladd?.tekst ? kladd.tekst : startTekst
-    };
+    useEffect(() => {
+        if (dirtyFields.melding || dirtyFields.tema) {
+            const dirtyFieldsList = Object.keys(dirtyFields) as ('melding' | 'tema')[];
+            // Do not update kladd if any field is invalid
+            trigger(dirtyFieldsList).then((isValid) => {
+                if (!isValid && !melding && !tema) {
+                    slettKladd(null, props.aktivitetId);
+                } else if (!isValid) {
+                    timer.current = undefined;
+                } else {
+                    setOppdaterKladdCallbackValues({ melding, tema });
+                }
+            });
+        }
+    }, [melding, tema, dirtyFields]);
 
     const onSubmit = (data: NyDialogFormValues) => {
         const { tema, melding } = data;
@@ -113,17 +141,6 @@ const NyDialogForm = (props: Props) => {
             .catch(() => setNoeFeilet(true));
     };
 
-    const {
-        register,
-        handleSubmit,
-        watch,
-        formState: { errors, isSubmitting }
-    } = useForm<NyDialogFormValues>({
-        defaultValues,
-        resolver: zodResolver(schema)
-    });
-
-    const meldingValue = watch('melding');
     const bigScreen = window.innerWidth >= 768;
 
     return (
@@ -148,10 +165,6 @@ const NyDialogForm = (props: Props) => {
                     autoFocus={autoFocusTema}
                     {...register('tema')}
                     error={errors.tema && errors.tema.message}
-                    onChange={(event) => {
-                        onChange(event.target.value, undefined);
-                        register('tema').onChange(event);
-                    }}
                 />
                 <Textarea
                     label="Melding (obligatorisk)"
@@ -160,11 +173,6 @@ const NyDialogForm = (props: Props) => {
                     {...register('melding')}
                     error={errors.melding && errors.melding.message}
                     autoFocus={!autoFocusTema}
-                    value={meldingValue}
-                    onChange={(event) => {
-                        onChange(undefined, event.target.value);
-                        register('melding').onChange(event);
-                    }}
                 />
 
                 {noeFeilet ? (
