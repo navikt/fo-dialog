@@ -33,22 +33,18 @@ export function Melding(props: Props) {
 
     const erFraSegSelv = (erBruker && erMeldingFraBruker) || (!erBruker && !erMeldingFraBruker);
 
-    const backgroundColor = erFraSegSelv ? 'rgba(235, 252, 255, 1)' : 'rgba(255, 255, 255, 1)';
-    const avatarBgColor = erFraSegSelv ? 'rgba(181, 241, 255, 1)' : 'rgba(255, 255, 255, 1)';
-
     return (
         <div className="mt-4" role="row">
             <BodyShort className="hidden">{accessibleText(erBruker, erMeldingFraBruker)}</BodyShort>
             <Chat
                 timestamp={toppTekst}
                 size="small"
-                avatar={erMeldingFraBruker ? <PersonIcon aria-hidden className={'!h-6 !w-6'} /> : 'NAV'}
+                avatar={erMeldingFraBruker ? <PersonIcon aria-hidden className="!h-6 !w-6" /> : 'NAV'}
                 position={erMeldingFraBruker ? 'right' : 'left'}
-                backgroundColor={backgroundColor}
-                avatarBgColor={avatarBgColor}
                 className="p-0"
+                variant={erFraSegSelv ? 'info' : 'subtle'}
             >
-                <Chat.Bubble className="">
+                <Chat.Bubble>
                     <div className="flex flex-col items-start">
                         <ViktigMelding visible={viktigMarkering} />
                         <span className="mt-2 whitespace-pre-wrap">{linkify(tekst)}</span>
