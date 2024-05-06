@@ -90,8 +90,8 @@ const NyDialogForm = (props: Props) => {
         tema,
         melding
     }: {
-        tema?: string | undefined;
-        melding?: string | undefined;
+        tema: string | undefined;
+        melding: string | undefined;
     }) => {
         timer.current && clearInterval(timer.current);
         callback.current = () => {
