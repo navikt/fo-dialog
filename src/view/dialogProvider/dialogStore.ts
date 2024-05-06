@@ -1,6 +1,6 @@
 import { create } from 'zustand';
 import { Status } from '../../api/typer';
-import { DialogData, SistOppdatert } from '../../utils/Typer';
+import { DialogData, KladdData, SistOppdatert } from '../../utils/Typer';
 import { DialogState, isDialogReloading } from '../DialogProvider';
 import { fetchData } from '../../utils/Fetch';
 import { DialogApi } from '../../api/UseApiBasePath';
@@ -9,6 +9,7 @@ import { devtools } from 'zustand/middleware';
 import { EventType, closeWebsocket, listenForNyDialogEvents } from '../../api/nyDialogWs';
 import { useShallow } from 'zustand/react/shallow';
 import { hentDialogerGraphql } from './dialogGraphql';
+import { eqKladd, KladdStore } from '../KladdProvider';
 
 export const initDialogState: DialogState = {
     status: Status.INITIAL,
@@ -22,16 +23,18 @@ export const initDialogState: DialogState = {
 // - Send melding
 // - Ny dialog
 
-type DialogStore = DialogState & {
-    silentlyHentDialoger: (fnr: string | undefined) => Promise<void>;
-    hentDialoger: (fnr: string | undefined) => Promise<void>;
-    pollForChanges: (fnr: string | undefined) => Promise<void>;
-    configurePoll(config: { fnr: string | undefined; useWebsockets: boolean; erBruker: boolean }): void;
-    updateDialogInDialoger: (dialogData: DialogData) => DialogData;
-    stopPolling: () => void;
-    pollInterval: NodeJS.Timeout | undefined;
-    currentPollFnr: string | undefined;
-};
+type DialogStore = DialogState &
+    KladdStore & {
+        kladder: KladdData[];
+        silentlyHentDialoger: (fnr: string | undefined) => Promise<void>;
+        hentDialoger: (fnr: string | undefined) => Promise<void>;
+        pollForChanges: (fnr: string | undefined) => Promise<void>;
+        configurePoll(config: { fnr: string | undefined; useWebsockets: boolean; erBruker: boolean }): void;
+        updateDialogInDialoger: (dialogData: DialogData) => DialogData;
+        stopPolling: () => void;
+        pollInterval: NodeJS.Timeout | undefined;
+        currentPollFnr: string | undefined;
+    };
 
 export const useDialogStore = create(
     devtools<DialogStore>(
@@ -41,14 +44,16 @@ export const useDialogStore = create(
             ...initDialogState,
             pollInterval: undefined,
             currentPollFnr: undefined,
+            kladder: [] as KladdData[],
+            kladdStatus: Status.INITIAL,
             // Actions / functions / mutations
             silentlyHentDialoger: async (fnr) => {
                 hentDialogerGraphql(fnr)
-                    .then((dialoger) => {
+                    .then(({ dialoger, kladder }) => {
                         // TODO: Find a way to get previous value
                         // loggChangeInDialog(state.dialoger, dialoger);
                         set(
-                            { status: Status.OK, dialoger: dialoger, sistOppdatert: new Date(), error: undefined },
+                            { status: Status.OK, dialoger, sistOppdatert: new Date(), error: undefined, kladder },
                             false,
                             'hentDialoger/fulfilled'
                         );
@@ -151,6 +156,25 @@ export const useDialogStore = create(
                     'updateDialogInDialoger'
                 );
                 return dialog;
+            },
+            oppdaterKladd: (kladd: KladdData & { fnr: string | undefined }) => {
+                set(({ kladder }) => {
+                    const { dialogId, aktivitetId } = kladd;
+                    const nyKladder = [...kladder.filter((k) => !eqKladd(k, dialogId, aktivitetId)), kladd];
+                    return { kladdStatus: Status.RELOADING, kladder: nyKladder };
+                });
+                fetchData<void>(DialogApi.kladd, {
+                    method: 'post',
+                    body: JSON.stringify({ ...kladd })
+                })
+                    .then(() => set({ kladdStatus: Status.OK }))
+                    .catch(() => set({ kladdStatus: Status.OK }));
+            },
+            slettKladd: (dialogId, aktivitetId) => {
+                set(({ kladder }) => {
+                    const ny = kladder.filter((k) => !eqKladd(k, dialogId, aktivitetId));
+                    return { kladder: ny };
+                });
             }
         }),
         { name: 'DialogStore' }
