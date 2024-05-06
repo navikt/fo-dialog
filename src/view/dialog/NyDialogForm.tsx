@@ -121,7 +121,7 @@ const NyDialogForm = (props: Props) => {
                 }
             });
         }
-    }, [melding, tema, dirtyFields, errors]);
+    }, [melding, tema, dirtyFields]);
 
     const onSubmit = (data: NyDialogFormValues) => {
         const { tema, melding } = data;
