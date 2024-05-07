@@ -12,7 +12,6 @@ import * as DialogProvider from '../view/DialogProvider';
 import { DialogDataProviderType } from '../view/DialogProvider';
 import * as OppfolgingProvider from '../view/OppfolgingProvider';
 import { OppfolgingDataProviderType } from '../view/OppfolgingProvider';
-import * as AppContext from '../view/Provider';
 
 const userInfo: Bruker = { id: '010101', erVeileder: true, erBruker: false };
 const oppfPerioder: PeriodeData[] = [];
@@ -142,11 +141,6 @@ describe('<DialogContainer/>', () => {
             }
         ];
         vi.spyOn(OppfolgingProvider, 'useOppfolgingContext').mockImplementation(() => useFetchOppfolging);
-        vi.spyOn(AppContext, 'useHarNivaa4Context').mockImplementation(() => ({
-            harNivaa4: true,
-            hasError: false,
-            isPending: false
-        }));
         vi.spyOn(DialogProvider, 'useDialoger').mockImplementation(() => dialoger);
         const { getByText } = render(
             <MemoryRouter>
@@ -205,11 +199,6 @@ describe('<Dialog/>', () => {
         vi.spyOn(OppfolgingProvider, 'useOppfolgingContext').mockImplementation(() => useFetchOppfolging);
         vi.spyOn(BrukerProvider, 'useUserInfoContext').mockImplementation(() => userInfo);
         vi.spyOn(DialogProvider, 'useDialoger').mockImplementation(() => dialoger);
-        vi.spyOn(AppContext, 'useHarNivaa4Context').mockImplementation(() => ({
-            harNivaa4: true,
-            hasError: false,
-            isPending: false
-        }));
         Element.prototype.scrollIntoView = () => {};
         const { getByText, getByLabelText } = render(
             <MemoryRouter initialEntries={['/1']}>
