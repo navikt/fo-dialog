@@ -7,7 +7,6 @@ import {
     harAktivitetFeilerSkruddPa,
     harArenaaktivitetFeilerSkruddPa,
     harDialogFeilerSkruddPa,
-    harNivaa4Fieler,
     harNyDialogEllerSendMeldingFeilerSkruddPa
 } from './demo/localstorage';
 import dialoger, {
@@ -17,7 +16,6 @@ import dialoger, {
     setFerdigBehandlet,
     setVenterPaSvar
 } from './Dialog';
-import { harNivaa4Data } from './HarNivaa4';
 import oppfolging from './Oppfolging';
 import { getSistOppdatert } from './SistOppdatert';
 import { veilederMe } from './Veileder';
@@ -123,10 +121,7 @@ export const handlers = [
     ),
 
     // veilarbveileder
-    rest.get(`/veilarbveileder/api/veileder/me`, jsonResponse(veilederMe)),
-
-    // veilarbperson
-    rest.get(`/veilarbperson/api/person/:fnr/harNivaa4`, failOrGetResponse(harNivaa4Fieler, harNivaa4Data))
+    rest.get(`/veilarbveileder/api/veileder/me`, jsonResponse(veilederMe))
 ];
 
 const matchMedPerioder = (aktiviteter: Aktivitet[]): AktivitetsplanResponse => {

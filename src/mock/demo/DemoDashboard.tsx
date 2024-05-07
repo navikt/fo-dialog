@@ -13,9 +13,7 @@ import {
     harAktivitetFeilerSkruddPa,
     harArenaaktivitetFeilerSkruddPa,
     harDialogFeilerSkruddPa,
-    harIkkeNivaa4,
     harIngenDialoger,
-    harNivaa4Fieler,
     harNyDialogEllerSendMeldingFeilerSkruddPa,
     ingenOppfPerioder,
     settLocalStorage
@@ -66,11 +64,6 @@ const brukerTilstandRadios = [
         label: 'Ingen dialoger',
         value: LocalStorageElement.INGEN_DIALOGER,
         checked: harIngenDialoger()
-    },
-    {
-        label: 'Ikke nivå 4',
-        value: LocalStorageElement.IKKE_NIVAA_4,
-        checked: harIkkeNivaa4()
     }
 ];
 
@@ -94,11 +87,6 @@ const tekniskTilstandRadios = [
         label: 'Ny dialog/send feiler',
         value: LocalStorageElement.NY_DIALOG_SEND_MELDING_FEILER,
         checked: harNyDialogEllerSendMeldingFeilerSkruddPa()
-    },
-    {
-        label: 'Har nivå4 feiler',
-        value: LocalStorageElement.NIVA_4_FEILER,
-        checked: harNivaa4Fieler()
     }
 ];
 

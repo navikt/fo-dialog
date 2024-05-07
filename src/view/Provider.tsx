@@ -2,7 +2,6 @@ import { Alert, Loader } from '@navikt/ds-react';
 import React, { useContext, useEffect } from 'react';
 
 import { Status, hasData, hasError, isPending } from '../api/typer';
-import useFetchHarNivaa4, { HarNivaa4Response } from '../api/useFetchHarNivaa4';
 import useFetchVeilederNavn from '../api/useHentVeilederData';
 import { AktivitetContext, useAktivitetDataProvider } from './AktivitetProvider';
 import { AktivitetToggleProvider } from './AktivitetToggleContext';
@@ -20,15 +19,9 @@ interface VeilederData {
 
 export const FNRContext = React.createContext<string | undefined>(undefined);
 export const VeilederDataContext = React.createContext<VeilederData>({});
-export const HarNivaa4Context = React.createContext<HarNivaa4Response>({
-    harNivaa4: false,
-    isPending: false,
-    hasError: false
-});
 
 export const useFnrContext = () => useContext(FNRContext);
 export const useVeilederDataContext = () => useContext(VeilederDataContext);
-export const useHarNivaa4Context = () => useContext(HarNivaa4Context);
 
 type ProviderType<T> = {
     data?: T;
@@ -57,7 +50,6 @@ export function Provider(props: Props) {
     const oppfolgingDataProvider = useOppfolgingDataProvider();
     const { status: oppfolgingstatus, hentOppfolging } = oppfolgingDataProvider;
 
-    const harLoggetInnNiva4 = useFetchHarNivaa4(erVeileder, fnr);
     const dialogDataProvider = useDialogDataProvider();
 
     const aktivitetDataProvider = useAktivitetDataProvider();
@@ -95,12 +87,7 @@ export function Provider(props: Props) {
         });
     }, [klarTilAaPolle, fnr]);
 
-    if (
-        isDialogPending(dialogstatus) ||
-        isPending(brukerstatus) ||
-        isPending(oppfolgingstatus) ||
-        harLoggetInnNiva4.isPending
-    ) {
+    if (isDialogPending(dialogstatus) || isPending(brukerstatus) || isPending(oppfolgingstatus)) {
         return (
             <div className="flex flex-1 justify-center self-center">
                 <Loader size="3xlarge" />
@@ -118,23 +105,21 @@ export function Provider(props: Props) {
     return (
         <DialogContext.Provider value={dialogDataProvider}>
             <OppfolgingContext.Provider value={oppfolgingDataProvider}>
-                <HarNivaa4Context.Provider value={harLoggetInnNiva4}>
-                    <UserInfoContext.Provider value={bruker}>
-                        <AktivitetContext.Provider value={aktivitetDataProvider}>
-                            <VeilederDataContext.Provider value={{ veilederNavn }}>
-                                <FNRContext.Provider value={fnr}>
-                                    <ViewStateProvider>
-                                        <FeatureToggleContext.Provider value={feature}>
-                                            <AktivitetToggleProvider defaultValue={visAktivitetDefault || false}>
-                                                {children}
-                                            </AktivitetToggleProvider>
-                                        </FeatureToggleContext.Provider>
-                                    </ViewStateProvider>
-                                </FNRContext.Provider>
-                            </VeilederDataContext.Provider>
-                        </AktivitetContext.Provider>
-                    </UserInfoContext.Provider>
-                </HarNivaa4Context.Provider>
+                <UserInfoContext.Provider value={bruker}>
+                    <AktivitetContext.Provider value={aktivitetDataProvider}>
+                        <VeilederDataContext.Provider value={{ veilederNavn }}>
+                            <FNRContext.Provider value={fnr}>
+                                <ViewStateProvider>
+                                    <FeatureToggleContext.Provider value={feature}>
+                                        <AktivitetToggleProvider defaultValue={visAktivitetDefault || false}>
+                                            {children}
+                                        </AktivitetToggleProvider>
+                                    </FeatureToggleContext.Provider>
+                                </ViewStateProvider>
+                            </FNRContext.Provider>
+                        </VeilederDataContext.Provider>
+                    </AktivitetContext.Provider>
+                </UserInfoContext.Provider>
             </OppfolgingContext.Provider>
         </DialogContext.Provider>
     );
