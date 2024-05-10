@@ -5,7 +5,7 @@ import { erInternFlate } from './constants';
 import { UppdateEventHandler } from './utils/UpdateEvent';
 import { Provider } from './view/Provider';
 import StatusAdvarsel from './view/statusAdvarsel/StatusAdvarsel';
-import { Routes } from './routes';
+import { Routes } from './routing/routes';
 
 interface Props {
     fnr?: string;

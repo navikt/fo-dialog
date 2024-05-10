@@ -1,4 +1,4 @@
-import { ResponseComposition, RestContext, RestRequest, rest } from 'msw';
+import { ResponseComposition, RestContext, RestRequest, rest, errors } from 'msw';
 
 import aktiviteter from './Aktivitet';
 import { arenaAktiviteter } from './Arena';
@@ -7,15 +7,10 @@ import {
     harAktivitetFeilerSkruddPa,
     harArenaaktivitetFeilerSkruddPa,
     harDialogFeilerSkruddPa,
-    harNyDialogEllerSendMeldingFeilerSkruddPa
+    harNyDialogEllerSendMeldingFeilerSkruddPa,
+    ingenOppfPerioder
 } from './demo/localstorage';
-import dialoger, {
-    kladder,
-    lesDialog,
-    opprettEllerOppdaterDialog,
-    setFerdigBehandlet,
-    setVenterPaSvar
-} from './Dialog';
+import dialoger, { lesDialog, opprettEllerOppdaterDialog, setFerdigBehandlet, setVenterPaSvar } from './Dialog';
 import oppfolging from './Oppfolging';
 import { getSistOppdatert } from './SistOppdatert';
 import { veilederMe } from './Veileder';
@@ -29,7 +24,7 @@ const jsonResponse = (response: object | null | boolean | ((req: RestRequest) =>
         if (typeof response === 'function') {
             return res(ctx.json(await response(req)));
         }
-        return res(ctx.json(response));
+        return res(ctx.delay(1000), ctx.json(response));
     };
 };
 
@@ -38,7 +33,7 @@ const failOrGetResponse = (shouldFail: () => boolean, successFn: (req: RestReque
         if (shouldFail()) {
             return res(...internalServerError(ctx));
         }
-        return res(ctx.json(await successFn(req)));
+        return res(ctx.delay(1000), ctx.json(await successFn(req)));
     };
 };
 
@@ -82,11 +77,10 @@ export const handlers = [
     rest.get('https://login.ekstern.dev.nav.no/oauth2/session', jsonResponse(sessionPayload)),
     rest.post('https://amplitude.nav.no/collect-auto', (_, res, ctx) => res(ctx.status(200))),
     // veilarbdialog
-    rest.get('/veilarbdialog/api/kladd', jsonResponse(kladder)),
     rest.put('/veilarbdialog/api/dialog/:dialogId/les', jsonResponse(lesDialog)),
     rest.put('/veilarbdialog/api/dialog/:dialogId/venter_pa_svar/:bool', jsonResponse(setVenterPaSvar)),
     rest.put('/veilarbdialog/api/dialog/:dialogId/ferdigbehandlet/:bool', jsonResponse(setFerdigBehandlet)),
-    rest.get('/veilarbdialog/api/dialog/sistOppdatert', jsonResponse(getSistOppdatert())),
+    rest.post('/veilarbdialog/api/dialog/sistOppdatert', jsonResponse(getSistOppdatert())),
     rest.post('/veilarbdialog/api/kladd', (_, res, ctx) => {
         return res(ctx.delay(500), ctx.status(204));
     }),
@@ -98,7 +92,8 @@ export const handlers = [
     rest.post(
         '/veilarbdialog/graphql',
         failOrGetResponse(harDialogFeilerSkruddPa, () => {
-            return { data: { dialoger: dialoger(), kladder: [] }, errors: [] };
+            const dialogerPayload = ingenOppfPerioder() ? [] : dialoger();
+            return { data: { dialoger: dialogerPayload, kladder: [] }, errors: [] };
         })
     ),
 

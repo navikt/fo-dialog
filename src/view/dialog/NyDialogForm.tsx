@@ -5,7 +5,7 @@ import { useForm } from 'react-hook-form';
 import { useNavigate } from 'react-router';
 import { z } from 'zod';
 import loggEvent from '../../felleskomponenter/logging';
-import { useRoutes } from '../../routes';
+import { useRoutes } from '../../routing/routes';
 import { UpdateTypes, dispatchUpdate } from '../../utils/UpdateEvent';
 import { useUserInfoContext } from '../BrukerProvider';
 import { useDialogContext } from '../DialogProvider';

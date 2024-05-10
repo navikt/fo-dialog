@@ -2,7 +2,7 @@ import { Loader } from '@navikt/ds-react';
 import classNames from 'classnames';
 import React, { useEffect, useRef, useState } from 'react';
 import { useLocation, useNavigate } from 'react-router';
-import { useRoutes } from '../../routes';
+import { useRoutes } from '../../routing/routes';
 import { dispatchUpdate, UpdateTypes } from '../../utils/UpdateEvent';
 import { useVisAktivitet } from '../AktivitetToggleContext';
 import { useDialogContext } from '../DialogProvider';

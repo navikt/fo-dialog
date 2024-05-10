@@ -4,7 +4,7 @@ import { createMemoryRouter, RouterProvider } from 'react-router';
 import React from 'react';
 import { setupServer } from 'msw/node';
 import { handlers } from '../../mock/handlers';
-import { dialogRoutes } from '../../routes';
+import { dialogRoutes } from '../../routing/routes';
 import App from '../../App';
 
 const dialogId = '303';

@@ -9,7 +9,7 @@ import { DialogHeader } from './dialog/DialogHeader';
 import DialogOversikt from './dialogliste/DialogOversikt';
 import { EventHandler } from './EventHandler';
 import { useOppfolgingContext } from './OppfolgingProvider';
-import { dataOrUndefined } from './Provider';
+import { dataOrUndefined, useErVeileder } from './Provider';
 
 function hash(val: string) {
     const utf8 = new TextEncoder().encode(val);
@@ -38,19 +38,15 @@ const AppBody = () => {
 
     useLogBruker(brukerdata, oppfolgingData);
 
-    if (!oppfolgingData || !brukerdata) {
-        return null;
-    }
+    // if (!oppfolgingData || !brukerdata) {
+    //     return <div>!oppfolgingData || !brukerdata</div>;
+    // }
 
-    const { underOppfolging, manuell, reservasjonKRR, oppfolgingsPerioder } = oppfolgingData;
-    const erBruker = brukerdata.erBruker;
+    const { underOppfolging, oppfolgingsPerioder } = oppfolgingData || {};
+    const aldriOppfolging = !underOppfolging && oppfolgingsPerioder?.length === 0;
 
-    const aldriOppfolging = !underOppfolging && oppfolgingsPerioder.length === 0;
-    const manuellBruker = erBruker && manuell;
-    const krrBruker = erBruker && reservasjonKRR;
-
-    if (aldriOppfolging || manuellBruker || krrBruker) {
-        return null;
+    if (false) {
+        return <div>BRUKER aldriOppfolging || krrBruker</div>;
     }
 
     return (

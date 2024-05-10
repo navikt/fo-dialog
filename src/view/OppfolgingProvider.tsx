@@ -4,6 +4,7 @@ import { Status, isReloading } from '../api/typer';
 import { OppfolgingsApi } from '../api/UseApiBasePath';
 import { fetchData } from '../utils/Fetch';
 import { OppfolgingData } from '../utils/Typer';
+import { createGenericStore } from '../utils/genericStore';
 
 export interface OppfolgingDataProviderType {
     data?: OppfolgingData;
@@ -29,6 +30,14 @@ export const OppfolgingContext = React.createContext<OppfolgingDataProviderType>
 export const useOppfolgingContext = () => useContext(OppfolgingContext);
 
 const oppfolgingUrl = OppfolgingsApi.oppfolgingUrl;
+
+const fetchOppfolging = (fnr: string | undefined) =>
+    fetchData<OppfolgingData>(oppfolgingUrl, {
+        method: 'POST',
+        body: fnr ? JSON.stringify({ fnr }) : undefined
+    });
+
+const useOppfolgingStore = createGenericStore(undefined as OppfolgingData | undefined, fetchOppfolging);
 
 export const useOppfolgingDataProvider = () => {
     const [state, setState] = useState<OppfolgingState>(initOppfolgingState);
