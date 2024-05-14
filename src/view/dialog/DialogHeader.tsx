@@ -11,8 +11,6 @@ import { useRootLoaderData } from '../../routing/loaders';
 import StatusAdvarsel from '../statusAdvarsel/StatusAdvarsel';
 import { RouteIds } from '../../routing/routes';
 
-const useErBaseRoute = () => {};
-
 export function DialogHeader() {
     const dialog = useSelectedDialog();
     const aktivitetId = dialog?.aktivitetId;

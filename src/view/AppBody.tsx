@@ -43,7 +43,7 @@ const AppBody = () => {
         <>
             <DialogOversikt />
             <WaitForAllData />
-            <div className="flex flex-1 flex-col">
+            <div className="flex md:flex-1 flex-col">
                 <DialogHeader />
                 <div className="flex min-h-0 flex-1">
                     <Outlet />

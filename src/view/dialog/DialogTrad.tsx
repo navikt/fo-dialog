@@ -87,10 +87,6 @@ export const DialogTrad = () => {
         });
     }, [scrollContainerRef, valgtDialog]);
 
-    useEffect(() => {
-        console.log('Required data changed', loaderData);
-    }, [requiredData]);
-
     return (
         <Suspense fallback={<DialogLoader />}>
             <Await resolve={requiredData}>
