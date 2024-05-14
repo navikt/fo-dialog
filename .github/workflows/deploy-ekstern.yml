@@ -12,6 +12,8 @@ on:
         secrets:
             GCS_SA_KEY:
                 required: true
+            SLACK_WEBHOOK:
+                required: false
 
 env:
     PRINT_PAYLOAD: true
@@ -46,3 +48,13 @@ jobs:
               run: gsutil -m rsync -r build "$BUCKET"
               env:
                   BUCKET: gs://${{ inputs.bucket }}
+            - name: Slack Notification (deploy failure)
+              if: failure() && inputs.bucket == 'arbeidsrettet-dialog-prod'
+              uses: rtCamp/action-slack-notify@v2
+              env:
+                SLACK_COLOR: danger
+                SLACK_USERNAME: Github Actions
+                SLACK_ICON: https://github.com/github.png?size=48
+                SLACK_TITLE: 'Arbeidsrettet-dialog: deploy til bucket for eksterne brukere feilet'
+                SLACK_WEBHOOK: ${{ secrets.SLACK_WEBHOOK }}
+                SLACK_MESSAGE: 'Commit-message til feilende deploy: ${{ github.event.head_commit.message }}'
