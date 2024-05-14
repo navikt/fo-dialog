@@ -1,27 +1,17 @@
 import React, { useContext, useEffect } from 'react';
 
 import { Status, hasData } from '../api/typer';
-import useFetchVeilederNavn from '../api/useHentVeilederData';
-import { AktivitetContext, useAktivitetDataProvider } from './AktivitetProvider';
 import { AktivitetToggleProvider } from './AktivitetToggleContext';
 import { BrukerDataProviderType, useBrukerDataProvider } from './BrukerProvider';
 import { DialogContext, useDialogDataProvider } from './DialogProvider';
 import { useFeatureToggleProvider } from '../featureToggle/FeatureToggleProvider';
-import { OppfolgingContext, useOppfolgingDataProvider } from './OppfolgingProvider';
 import { ViewStateProvider } from './ViewState';
-import { useDialogStore, useHentDialoger } from './dialogProvider/dialogStore';
+import { useDialogStore } from './dialogProvider/dialogStore';
 import { useShallow } from 'zustand/react/shallow';
 
-interface VeilederData {
-    veilederNavn?: string;
-}
-
 export const FNRContext = React.createContext<string | undefined>(undefined);
-export const VeilederDataContext = React.createContext<VeilederData>({});
-
 export const useFnrContext = () => useContext(FNRContext);
 export const useErVeileder = () => useContext(FNRContext) !== undefined;
-export const useVeilederDataContext = () => useContext(VeilederDataContext);
 
 type ProviderType<T> = {
     data?: T;
@@ -41,20 +31,11 @@ interface Props {
 }
 
 export function Provider(props: Props) {
-    const { fnr, erVeileder, children, visAktivitetDefault } = props;
-
-    const veilederNavn = useFetchVeilederNavn(erVeileder);
-
+    const { fnr, children, visAktivitetDefault } = props;
     const { data: feature, status: featureStatus } = useFeatureToggleProvider();
     const { data: bruker, status: brukerstatus }: BrukerDataProviderType = useBrukerDataProvider();
-    const oppfolgingDataProvider = useOppfolgingDataProvider();
-    const { hentOppfolging } = oppfolgingDataProvider;
-
     const dialogDataProvider = useDialogDataProvider();
 
-    const aktivitetDataProvider = useAktivitetDataProvider();
-
-    const hentDialoger = useHentDialoger();
     const { configurePoll, stopPolling, dialogstatus } = useDialogStore(
         useShallow((store) => ({
             configurePoll: store.configurePoll,
@@ -62,12 +43,8 @@ export function Provider(props: Props) {
             dialogstatus: store.status
         }))
     );
-    const { hentAktiviteter, hentArenaAktiviteter } = aktivitetDataProvider;
 
     useEffect(() => {
-        hentOppfolging(fnr);
-        hentAktiviteter(fnr);
-        hentArenaAktiviteter(fnr);
         return () => stopPolling();
     }, [fnr]);
 
@@ -104,19 +81,13 @@ export function Provider(props: Props) {
 
     return (
         <DialogContext.Provider value={dialogDataProvider}>
-            <OppfolgingContext.Provider value={oppfolgingDataProvider}>
-                <AktivitetContext.Provider value={aktivitetDataProvider}>
-                    <VeilederDataContext.Provider value={{ veilederNavn }}>
-                        <FNRContext.Provider value={fnr}>
-                            <ViewStateProvider>
-                                <AktivitetToggleProvider defaultValue={visAktivitetDefault || false}>
-                                    {children}
-                                </AktivitetToggleProvider>
-                            </ViewStateProvider>
-                        </FNRContext.Provider>
-                    </VeilederDataContext.Provider>
-                </AktivitetContext.Provider>
-            </OppfolgingContext.Provider>
+            <FNRContext.Provider value={fnr}>
+                <ViewStateProvider>
+                    <AktivitetToggleProvider defaultValue={visAktivitetDefault || false}>
+                        {children}
+                    </AktivitetToggleProvider>
+                </ViewStateProvider>
+            </FNRContext.Provider>
         </DialogContext.Provider>
     );
 }

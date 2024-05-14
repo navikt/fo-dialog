@@ -81,7 +81,6 @@ export const useDialogStore = create(
                 return silentlyHentDialoger(fnr);
             },
             configurePoll({ fnr, useWebsockets, erBruker }) {
-                console.log('Configuring poll');
                 const { pollForChanges, currentPollFnr } = get();
                 // If already polling, don't do anything
                 if (!erBruker && currentPollFnr == fnr) {
@@ -186,7 +185,6 @@ export const useHentDialogStatus = () => useDialogStore(useShallow((store) => st
 
 const onIntervalWithCleanup = (pollForChanges: () => Promise<void>) => {
     let interval: NodeJS.Timeout;
-    console.log('Setting up polling with http');
     interval = setInterval(() => {
         pollForChanges().catch((e) => {
             console.error(e);

@@ -15,8 +15,8 @@ function DialogHeaderFeil(props: Props) {
     }
 
     return (
-        <div className={styles.feil}>
-            <Alert variant="error">
+        <div className="">
+            <Alert fullWidth variant="error">
                 Noe gikk galt, og du får dessverre ikke sett informasjon fra aktivitetsplanen. Prøv igjen senere.
             </Alert>
         </div>

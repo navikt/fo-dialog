@@ -1,6 +1,6 @@
 import { BodyShort, Detail, Heading, LinkPanel } from '@navikt/ds-react';
 import classNames from 'classnames';
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useDeferredValue, useEffect, useRef, useState } from 'react';
 import { useNavigate } from 'react-router';
 import { useRoutes } from '../../routing/routes';
 import { Aktivitet, ArenaAktivitet } from '../../utils/aktivitetTypes';
@@ -86,6 +86,7 @@ function DialogPreview(props: Props) {
     const { dialogRoute } = useRoutes();
     const onGoTo = (event: React.MouseEvent<HTMLElement>) => {
         event.preventDefault();
+        console.log('navigating to ', dialogRoute(id));
         navigate(dialogRoute(id), { state: { sistHandlingsType: HandlingsType.ingen } });
     };
 

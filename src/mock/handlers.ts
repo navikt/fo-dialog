@@ -28,12 +28,16 @@ const jsonResponse = (response: object | null | boolean | ((req: RestRequest) =>
     };
 };
 
-const failOrGetResponse = (shouldFail: () => boolean, successFn: (req: RestRequest) => object | undefined) => {
+const failOrGetResponse = (
+    shouldFail: () => boolean,
+    successFn: (req: RestRequest) => object | undefined,
+    delay = 1000
+) => {
     return async (req: RestRequest, res: ResponseComposition, ctx: RestContext) => {
         if (shouldFail()) {
             return res(...internalServerError(ctx));
         }
-        return res(ctx.delay(1000), ctx.json(await successFn(req)));
+        return res(ctx.delay(delay), ctx.json(await successFn(req)));
     };
 };
 
@@ -91,10 +95,14 @@ export const handlers = [
     rest.post('/veilarbdialog/api/logger/event', (_, res, ctx) => res(ctx.status(200))),
     rest.post(
         '/veilarbdialog/graphql',
-        failOrGetResponse(harDialogFeilerSkruddPa, () => {
-            const dialogerPayload = ingenOppfPerioder() ? [] : dialoger();
-            return { data: { dialoger: dialogerPayload, kladder: [] }, errors: [] };
-        })
+        failOrGetResponse(
+            harDialogFeilerSkruddPa,
+            () => {
+                const dialogerPayload = ingenOppfPerioder() ? [] : dialoger();
+                return { data: { dialoger: dialogerPayload, kladder: [] }, errors: [] };
+            },
+            500
+        )
     ),
 
     // veilarboppfolging
@@ -105,7 +113,7 @@ export const handlers = [
     // veilarbaktivitet
     rest.post(
         '/veilarbaktivitet/graphql',
-        failOrGetResponse(harAktivitetFeilerSkruddPa, () => matchMedPerioder(aktiviteter))
+        failOrGetResponse(harAktivitetFeilerSkruddPa, () => matchMedPerioder(aktiviteter), 750)
     ),
     rest.post(
         '/veilarbaktivitet/api/arena/tiltak',

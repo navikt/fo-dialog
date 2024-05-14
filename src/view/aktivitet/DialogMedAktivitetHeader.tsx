@@ -18,6 +18,7 @@ export function DialogMedAktivitetHeader() {
     const erVeileder = useErVeileder();
 
     if (!aktivitet) {
+        console.log({ aktivitet });
         return null;
     }
 

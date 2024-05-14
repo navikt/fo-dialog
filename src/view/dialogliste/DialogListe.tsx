@@ -1,9 +1,10 @@
-import React from 'react';
-import { useParams } from 'react-router';
+import React, { Suspense, useCallback } from 'react';
+import { Await, useParams } from 'react-router';
 import { DialogData } from '../../utils/Typer';
 import { useDialoger } from '../DialogProvider';
 import { DialogPreviewListe } from './DialogPreview';
 import HistoriskeDialogerOversikt from './HistoriskDialogListe';
+import { useRootLoaderData } from '../../routing/loaders';
 
 interface Res {
     naaverende: DialogData[];
@@ -22,10 +23,19 @@ export function DialogListe() {
     const sorterteDialoger = dialoger.sort((a, b) => sortDialoger(a, b));
     const { naaverende, historiske } = sorterteDialoger.reduce(splitHistoriske, { naaverende: [], historiske: [] });
 
+    const loaderData = useRootLoaderData();
+    const requiredData = useCallback(() => {
+        return Promise.all([loaderData.dialoger, loaderData.arenaAktiviteter, loaderData.aktiviteter]);
+    }, []);
+
     return (
         <div role="navigation" aria-label="Dialoger">
-            <DialogPreviewListe dialoger={naaverende} valgDialog={dialogId} />
-            <HistoriskeDialogerOversikt historiske={historiske} valgDialog={dialogId} />
+            <Suspense>
+                <Await resolve={requiredData}>
+                    <DialogPreviewListe dialoger={naaverende} valgDialog={dialogId} />
+                    <HistoriskeDialogerOversikt historiske={historiske} valgDialog={dialogId} />
+                </Await>
+            </Suspense>
         </div>
     );
 }

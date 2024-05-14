@@ -17,10 +17,10 @@ const App = (props: Props) => {
     const { fnr, visAktivitetDefault } = props;
     return (
         <Provider visAktivitetDefault={visAktivitetDefault} fnr={fnr} erVeileder={!!fnr}>
-            <StatusAdvarsel />
+            {/*<StatusAdvarsel />*/}
             <UppdateEventHandler />
             <div
-                className={cx('flex', {
+                className={cx('flex flex-col md:flex-row', {
                     'max-h-[calc(100vh-180px)] min-h-[calc(100vh-180px)]': erInternFlate,
                     'max-h-[calc(100vh-80px)] min-h-[calc(100vh-80px)]': !erInternFlate
                 })}

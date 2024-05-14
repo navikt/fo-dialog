@@ -40,15 +40,23 @@ const RedirectToNyDialogWithoutFnr = () => {
     return <Navigate replace to={`/ny${queryPart}`} />;
 };
 
+export enum RouteIds {
+    NyDialog = 'ny-dialog',
+    Dialog = 'Dialog',
+    IkkeValgtDialog = 'ikke-valgt-dialog'
+}
+
 export const dialogRoutes = (fnr: string | undefined): RouteObject[] => [
     {
         path: '/',
         id: 'root',
         element: <AppBody />,
         loader: initialPageLoader(fnr),
+        shouldRevalidate: () => false,
         children: [
             {
                 path: 'ny',
+                id: RouteIds.NyDialog,
                 element: (
                     <>
                         <NyDialogTrad />
@@ -58,6 +66,7 @@ export const dialogRoutes = (fnr: string | undefined): RouteObject[] => [
             },
             {
                 path: ':dialogId',
+                id: RouteIds.Dialog,
                 element: (
                     <>
                         <DialogTrad />
@@ -67,6 +76,7 @@ export const dialogRoutes = (fnr: string | undefined): RouteObject[] => [
             },
             {
                 path: '',
+                id: RouteIds.IkkeValgtDialog,
                 element: <IkkeValgtDialogMelding />
             },
             {

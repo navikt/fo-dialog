@@ -7,13 +7,12 @@ import { z } from 'zod';
 import loggEvent from '../../felleskomponenter/logging';
 import { useRoutes } from '../../routing/routes';
 import { UpdateTypes, dispatchUpdate } from '../../utils/UpdateEvent';
-import { useUserInfoContext } from '../BrukerProvider';
 import { useDialogContext } from '../DialogProvider';
 import { findKladd } from '../KladdProvider';
 import { cutStringAtLength } from '../utils/stringUtils';
 import useMeldingStartTekst from './UseMeldingStartTekst';
 import { HandlingsType } from '../ViewState';
-import { useFnrContext } from '../Provider';
+import { useErVeileder, useFnrContext } from '../Provider';
 import { useDialogStore } from '../dialogProvider/dialogStore';
 import { useShallow } from 'zustand/react/shallow';
 
@@ -38,11 +37,14 @@ const NyDialogForm = (props: Props) => {
     const { defaultTema, aktivitetId } = props;
     const hentDialoger = useDialogStore((store) => store.hentDialoger);
     const { nyDialog } = useDialogContext();
-    const bruker = useUserInfoContext();
     const navigate = useNavigate();
     const { dialogRoute, baseRoute } = useRoutes();
     const [noeFeilet, setNoeFeilet] = useState(false);
     const startTekst = useMeldingStartTekst();
+
+    useEffect(() => {
+        console.log('Mount dialog form');
+    }, []);
 
     const fnr = useFnrContext();
     const { kladder, oppdaterKladd, slettKladd } = useDialogStore(
@@ -84,7 +86,7 @@ const NyDialogForm = (props: Props) => {
         };
     }, []);
 
-    const erVeileder = !!bruker && bruker.erVeileder;
+    const erVeileder = useErVeileder();
 
     const setOppdaterKladdCallbackValues = ({
         tema,

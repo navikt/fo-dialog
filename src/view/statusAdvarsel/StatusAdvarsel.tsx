@@ -26,8 +26,6 @@ export default function StatusAdvarsel() {
     const manuellBruker = oppfolgingData.manuell;
     const kanReaktiveres = oppfolgingData.kanReaktiveres;
 
-    console.log({ erUnderOppfolging });
-
     if (!erUnderOppfolging && !harOppfolgingsPerioder) {
         return <AldriUnderOppfolging erVeileder={erVeileder} />;
     }
