@@ -86,7 +86,6 @@ function DialogPreview(props: Props) {
     const { dialogRoute } = useRoutes();
     const onGoTo = (event: React.MouseEvent<HTMLElement>) => {
         event.preventDefault();
-        console.log('navigating to ', dialogRoute(id));
         navigate(dialogRoute(id), { state: { sistHandlingsType: HandlingsType.ingen } });
     };
 

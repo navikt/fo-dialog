@@ -10,6 +10,8 @@ import { createBrowserRouter, createHashRouter, useSearchParams } from 'react-ro
 import { stripTrailingSlash } from '../api/UseApiBasePath';
 import { initialPageLoader } from './loaders';
 import { useFnrContext } from '../view/Provider';
+import { NyDialogHeader } from '../view/dialog/DialogHeader/NyDialogHeader';
+import { DialogHeader } from '../view/dialog/DialogHeader';
 
 const aktivitetQuery = (aktivitetId?: string) => (aktivitetId ? `?aktivitetId=${aktivitetId}` : '');
 
@@ -43,7 +45,8 @@ const RedirectToNyDialogWithoutFnr = () => {
 export enum RouteIds {
     NyDialog = 'ny-dialog',
     Dialog = 'Dialog',
-    IkkeValgtDialog = 'ikke-valgt-dialog'
+    IkkeValgtDialog = 'ikke-valgt-dialog',
+    Root = 'root'
 }
 
 /* On small screens sidebar is hidden, use this hook for checking if sidebar should be hidden on mobile */
@@ -53,7 +56,7 @@ export const useIsDialogOrNyRoute = () =>
 export const dialogRoutes = (fnr: string | undefined): RouteObject[] => [
     {
         path: '/',
-        id: 'root',
+        id: RouteIds.Root,
         element: <AppBody />,
         loader: initialPageLoader(fnr),
         shouldRevalidate: () => false,
@@ -63,8 +66,11 @@ export const dialogRoutes = (fnr: string | undefined): RouteObject[] => [
                 id: RouteIds.NyDialog,
                 element: (
                     <>
-                        <NyDialogTrad />
-                        <Aktivitetskort />
+                        <NyDialogHeader />
+                        <div className="flex min-h-0 flex-1">
+                            <NyDialogTrad />
+                            <Aktivitetskort />
+                        </div>
                     </>
                 )
             },
@@ -73,15 +79,22 @@ export const dialogRoutes = (fnr: string | undefined): RouteObject[] => [
                 id: RouteIds.Dialog,
                 element: (
                     <>
-                        <DialogTrad />
-                        <Aktivitetskort />
+                        <DialogHeader />
+                        <div className="flex min-h-0 flex-1">
+                            <DialogTrad />
+                            <Aktivitetskort />
+                        </div>
                     </>
                 )
             },
             {
                 path: '',
                 id: RouteIds.IkkeValgtDialog,
-                element: <IkkeValgtDialogMelding />
+                element: (
+                    <div className="flex min-h-0 flex-1">
+                        <IkkeValgtDialogMelding />
+                    </div>
+                )
             },
             {
                 path: ':fnr/ny',

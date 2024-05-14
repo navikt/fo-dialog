@@ -15,6 +15,7 @@ import { HandlingsType } from '../ViewState';
 import { useErVeileder, useFnrContext } from '../Provider';
 import { useDialogStore } from '../dialogProvider/dialogStore';
 import { useShallow } from 'zustand/react/shallow';
+import useKansendeMelding from '../../utils/UseKanSendeMelding';
 
 const maxMeldingsLengde = 5000;
 
@@ -34,6 +35,7 @@ interface Props {
 }
 
 const NyDialogForm = (props: Props) => {
+    const kansendeMelding = useKansendeMelding();
     const { defaultTema, aktivitetId } = props;
     const hentDialoger = useDialogStore((store) => store.hentDialoger);
     const { nyDialog } = useDialogContext();
@@ -163,7 +165,7 @@ const NyDialogForm = (props: Props) => {
                 <TextField
                     label="Tema (obligatorisk)"
                     description="Skriv kort hva dialogen skal handle om"
-                    disabled={!!aktivitetId}
+                    disabled={!!aktivitetId || !kansendeMelding}
                     autoFocus={autoFocusTema}
                     {...register('tema')}
                     error={errors.tema && errors.tema.message}

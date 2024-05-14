@@ -5,7 +5,6 @@ import { v4 as uuidv4 } from 'uuid';
 import loggEvent from '../felleskomponenter/logging';
 import { Bruker, OppfolgingData } from '../utils/Typer';
 import { useUserInfoContext } from './BrukerProvider';
-import { DialogHeader } from './dialog/DialogHeader';
 import DialogOversikt from './dialogliste/DialogOversikt';
 import { EventHandler } from './EventHandler';
 import { useOppfolgingContext } from './OppfolgingProvider';
@@ -51,10 +50,7 @@ const AppBody = () => {
                     'flex-1': erDialogRoute // Når dialoger vises skal boks med meldinger fylle mest mulig
                 })}
             >
-                <DialogHeader />
-                <div className="flex min-h-0 flex-1">
-                    <Outlet />
-                </div>
+                <Outlet />
             </div>
             <EventHandler />
         </>

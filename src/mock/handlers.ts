@@ -1,4 +1,4 @@
-import { ResponseComposition, RestContext, RestRequest, rest, errors } from 'msw';
+import { ResponseComposition, RestContext, RestRequest, rest } from 'msw';
 
 import aktiviteter from './Aktivitet';
 import { arenaAktiviteter } from './Arena';

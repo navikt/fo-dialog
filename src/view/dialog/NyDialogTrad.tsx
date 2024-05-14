@@ -1,7 +1,6 @@
 import React, { Suspense, useEffect } from 'react';
 
 import { StringOrUndefined } from '../../utils/Typer';
-import useKansendeMelding from '../../utils/UseKanSendeMelding';
 import { getDialogTittel } from '../aktivitet/TextUtils';
 import { findAktivitet, MaybeAktivitet, useAktivitetContext } from '../AktivitetProvider';
 import { useAktivitetId } from '../utils/useAktivitetId';
@@ -10,11 +9,10 @@ import { HandlingsType, useSetViewContext } from '../ViewState';
 import NyDialogForm from './NyDialogForm';
 import { Await } from 'react-router';
 import { useRootLoaderData } from '../../routing/loaders';
-import { Alert, Button, GuidePanel, Skeleton, Textarea, TextField } from '@navikt/ds-react';
+import { Button, GuidePanel, Textarea, TextField } from '@navikt/ds-react';
 import { useErVeileder } from '../Provider';
 
 export default function NyDialogTrad() {
-    const kansendeMelding = useKansendeMelding();
     useSkjulHodefotForMobilVisning();
 
     const aktivitetId: StringOrUndefined = useAktivitetId();

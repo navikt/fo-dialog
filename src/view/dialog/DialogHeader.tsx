@@ -1,6 +1,6 @@
 import { Heading, Skeleton } from '@navikt/ds-react';
 import React, { Suspense, useMemo } from 'react';
-import { Await, useLocation, useMatches, useResolvedPath } from 'react-router';
+import { Await, useMatches } from 'react-router';
 import { DialogMedAktivitetHeader } from '../aktivitet/DialogMedAktivitetHeader';
 import { harAktivitetDataFeil, useAktivitetContext } from '../AktivitetProvider';
 import { useSelectedDialog } from '../utils/useAktivitetId';
@@ -14,7 +14,6 @@ import { RouteIds } from '../../routing/routes';
 export function DialogHeader() {
     const dialog = useSelectedDialog();
     const aktivitetId = dialog?.aktivitetId;
-    const isNyRoute = useLocation().pathname === '/ny';
 
     const aktivitetData = useAktivitetContext();
     const erFeil = harAktivitetDataFeil(aktivitetData, erArenaAktivitet(aktivitetId));
@@ -24,26 +23,6 @@ export function DialogHeader() {
     const requiredData = useMemo(() => {
         return Promise.all([loaderData.aktiviteter, loaderData.arenaAktiviteter, loaderData.dialoger]);
     }, []);
-
-    const ikkeValgtDialogRoute = useMatches().some((match) => match.id == RouteIds.IkkeValgtDialog);
-
-    if (ikkeValgtDialogRoute) {
-        return null;
-    }
-
-    if (isNyRoute) {
-        return (
-            <div>
-                <div className="flex items-center gap-x-4 border-b border-border-divider bg-white p-1.5 pl-4">
-                    <TilbakeKnapp className="md:hidden" />
-                    <Heading level="1" size="small">
-                        Start en ny dialog
-                    </Heading>
-                </div>
-                <StatusAdvarsel />
-            </div>
-        );
-    }
 
     return (
         <Suspense fallback={<HeaderFallback />}>

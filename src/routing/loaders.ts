@@ -5,6 +5,7 @@ import { useBrukerDataStore } from '../view/BrukerProvider';
 import { useOppfolgingStore } from '../view/OppfolgingProvider';
 import { useVeilederNavnStore } from '../api/useHentVeilederData';
 import { useAktivitetStore, useTiltaksAktivitetStore } from '../view/AktivitetProvider';
+import { RouteIds } from './routes';
 
 export const initialPageLoader = (fnr: string | undefined) => async () => {
     return defer({
@@ -19,7 +20,7 @@ export const initialPageLoader = (fnr: string | undefined) => async () => {
 };
 
 export const useRootLoaderData = () =>
-    useRouteLoaderData('root') as {
+    useRouteLoaderData(RouteIds.Root) as {
         features: Promise<void>;
         dialoger: Promise<void>;
         me: Promise<void>;

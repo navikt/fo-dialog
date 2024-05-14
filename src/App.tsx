@@ -4,7 +4,6 @@ import React from 'react';
 import { erInternFlate } from './constants';
 import { UppdateEventHandler } from './utils/UpdateEvent';
 import { Provider } from './view/Provider';
-import StatusAdvarsel from './view/statusAdvarsel/StatusAdvarsel';
 import { Routes } from './routing/routes';
 
 interface Props {
@@ -17,7 +16,6 @@ const App = (props: Props) => {
     const { fnr, visAktivitetDefault } = props;
     return (
         <Provider visAktivitetDefault={visAktivitetDefault} fnr={fnr} erVeileder={!!fnr}>
-            {/*<StatusAdvarsel />*/}
             <UppdateEventHandler />
             <div
                 className={cx('flex flex-col md:flex-row', {
