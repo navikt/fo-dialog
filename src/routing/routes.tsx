@@ -3,7 +3,7 @@ import NyDialogTrad from '../view/dialog/NyDialogTrad';
 import { Aktivitetskort } from '../view/aktivitet/Aktivitetskort';
 import { DialogTrad } from '../view/dialog/DialogTrad';
 import IkkeValgtDialogMelding from '../view/dialog/IkkeValgtDialogMelding';
-import { Navigate, RouteObject, RouterProvider, createMemoryRouter, useParams } from 'react-router';
+import { Navigate, RouteObject, RouterProvider, createMemoryRouter, useParams, useMatches } from 'react-router';
 import React from 'react';
 import { erInternFlate, USE_HASH_ROUTER } from '../constants';
 import { createBrowserRouter, createHashRouter, useSearchParams } from 'react-router-dom';
@@ -45,6 +45,10 @@ export enum RouteIds {
     Dialog = 'Dialog',
     IkkeValgtDialog = 'ikke-valgt-dialog'
 }
+
+/* On small screens sidebar is hidden, use this hook for checking if sidebar should be hidden on mobile */
+export const useIsDialogOrNyRoute = () =>
+    useMatches().some((match) => match.id === RouteIds.Dialog || match.id === RouteIds.NyDialog);
 
 export const dialogRoutes = (fnr: string | undefined): RouteObject[] => [
     {

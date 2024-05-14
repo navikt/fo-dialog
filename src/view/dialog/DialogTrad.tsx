@@ -124,9 +124,7 @@ const ValgtDialog = ({
     const aktivitet = useSelectedAktivitet();
     const visAktivitet = useVisAktivitet();
     const routes = useRoutes();
-    console.log('Render valgt dialog', valgtDialog?.id);
     if (!valgtDialog) {
-        console.log('Navigating to base');
         return <Navigate to={routes.baseRoute()} />;
     }
     return children({ dialog: valgtDialog, aktivitet: aktivitet, visAktivitet });

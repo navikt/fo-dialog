@@ -5,6 +5,7 @@ import { useDialoger } from '../DialogProvider';
 import { DialogPreviewListe } from './DialogPreview';
 import HistoriskeDialogerOversikt from './HistoriskDialogListe';
 import { useRootLoaderData } from '../../routing/loaders';
+import { Loader } from '@navikt/ds-react';
 
 interface Res {
     naaverende: DialogData[];
@@ -30,7 +31,7 @@ export function DialogListe() {
 
     return (
         <div role="navigation" aria-label="Dialoger">
-            <Suspense>
+            <Suspense fallback={<DialogListeFallback />}>
                 <Await resolve={requiredData}>
                     <DialogPreviewListe dialoger={naaverende} valgDialog={dialogId} />
                     <HistoriskeDialogerOversikt historiske={historiske} valgDialog={dialogId} />
@@ -45,5 +46,14 @@ function sortDialoger(a: DialogData, b: DialogData): number {
     const bdato = b.sisteDato === null ? '' : '' + b.sisteDato;
     return adato > bdato ? -1 : adato === bdato ? 0 : 1;
 }
+
+const DialogListeFallback = () => {
+    return (
+        <div className="bg-green-300">
+            <div>QWERQWKJASDKJASKJ</div>
+            <Loader />
+        </div>
+    );
+};
 
 export default DialogListe;

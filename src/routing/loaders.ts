@@ -7,7 +7,6 @@ import { useVeilederNavnStore } from '../api/useHentVeilederData';
 import { useAktivitetStore, useTiltaksAktivitetStore } from '../view/AktivitetProvider';
 
 export const initialPageLoader = (fnr: string | undefined) => async () => {
-    console.log('INITIAL PAGE LOAD');
     return defer({
         features: useFeatureToggleStore.getState().fetch(),
         dialoger: useDialogStore.getState().hentDialoger(fnr),

@@ -1,5 +1,5 @@
 import React, { ReactElement, Suspense, useEffect, useMemo } from 'react';
-import { Await, Outlet } from 'react-router';
+import { Await, Outlet, useMatches } from 'react-router';
 import { v4 as uuidv4 } from 'uuid';
 
 import loggEvent from '../felleskomponenter/logging';
@@ -11,6 +11,8 @@ import { EventHandler } from './EventHandler';
 import { useOppfolgingContext } from './OppfolgingProvider';
 import { dataOrUndefined, useErVeileder } from './Provider';
 import { useRootLoaderData } from '../routing/loaders';
+import { RouteIds } from '../routing/routes';
+import classNames from 'classnames';
 
 function hash(val: string) {
     const utf8 = new TextEncoder().encode(val);
@@ -38,12 +40,17 @@ const AppBody = () => {
     const oppfolgingData = dataOrUndefined(oppfolgingContext);
 
     useLogBruker(brukerdata, oppfolgingData);
+    const erDialogRoute = useMatches().some((match) => match.id === RouteIds.Dialog);
 
     return (
         <>
             <DialogOversikt />
             <WaitForAllData />
-            <div className="flex md:flex-1 flex-col">
+            <div
+                className={classNames('flex md:flex-1 flex-col', {
+                    'flex-1': erDialogRoute // Når dialoger vises skal boks med meldinger fylle mest mulig
+                })}
+            >
                 <DialogHeader />
                 <div className="flex min-h-0 flex-1">
                     <Outlet />

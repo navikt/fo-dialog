@@ -11,7 +11,7 @@ import DialogListe from './DialogListe';
 import NyDialogLink from './NyDialogLink';
 import { useErVeileder } from '../Provider';
 import { useRootLoaderData } from '../../routing/loaders';
-import { RouteIds } from '../../routing/routes';
+import { RouteIds, useIsDialogOrNyRoute } from '../../routing/routes';
 
 const DialogOversiktHeader = ({ erVeileder }: { erVeileder: boolean }) => {
     if (erVeileder) return null;
@@ -37,9 +37,7 @@ const DialogOversiktHeader = ({ erVeileder }: { erVeileder: boolean }) => {
 const DialogOversikt = () => {
     const kanSendeMelding = useKansendeMelding();
     const dialoger = useDialoger();
-    const isDialogOrNyRoute = useMatches().some(
-        (match) => match.id === RouteIds.Dialog || match.id === RouteIds.NyDialog
-    );
+    const isDialogOrNyRoute = useIsDialogOrNyRoute();
     const erVeileder = useErVeileder();
     const ingenDialoger = dialoger.length === 0;
     const erSidebar = isDialogOrNyRoute;
@@ -51,13 +49,11 @@ const DialogOversikt = () => {
                 /* Hvis liten skjerm, bare vis dialog-liste på "Homepage", ikke som sideBar  */
                 { 'hidden md:flex': erSidebar },
                 { flex: !erSidebar },
-                'w-full grow flex-col md:border-r border-border-divider ' +
-                    'md:max-w-xs ' +
-                    'xl:w-[16.7vw] xl:min-w-[320px] xl:max-w-none'
+                'w-full grow flex-col md:border-r border-border-divider md:max-w-xs xl:min-w-[320px] xl:max-w-[320px]'
             )}
         >
             <DialogOversiktHeader erVeileder={erVeileder} />
-            <div className="relative flex h-full flex-1 flex-col overflow-y-scroll border-r border-border-divider bg-gray-100 p-2">
+            <div className="relative flex flex-1 flex-col overflow-y-scroll border-r border-border-divider bg-gray-100 p-2">
                 <>
                     <div className="flex gap-2 p-1 pb-2">
                         <NyDialogLink disabled={!kanSendeMelding} />
