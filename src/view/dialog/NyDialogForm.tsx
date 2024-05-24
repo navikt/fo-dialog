@@ -44,10 +44,6 @@ const NyDialogForm = (props: Props) => {
     const [noeFeilet, setNoeFeilet] = useState(false);
     const startTekst = useMeldingStartTekst();
 
-    useEffect(() => {
-        console.log('Mount dialog form');
-    }, []);
-
     const fnr = useFnrContext();
     const { kladder, oppdaterKladd, slettKladd } = useDialogStore(
         useShallow((store) => ({

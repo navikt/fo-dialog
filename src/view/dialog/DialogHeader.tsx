@@ -5,7 +5,6 @@ import { DialogMedAktivitetHeader } from '../aktivitet/DialogMedAktivitetHeader'
 import { harAktivitetDataFeil, useAktivitetContext } from '../AktivitetProvider';
 import { useSelectedDialog } from '../utils/useAktivitetId';
 import { erArenaAktivitet } from '../utils/utils';
-import DialogHeaderFeil from './DialogHeaderFeil';
 import { TilbakeKnapp } from './TilbakeKnapp';
 import { useRootLoaderData } from '../../routing/loaders';
 import { RouteIds } from '../../routing/routes';

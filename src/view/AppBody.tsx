@@ -53,7 +53,7 @@ const AppBody = () => {
                 })}
             >
                 <StatusAdvarsel />
-                <DialogHeaderFeil visible={true} />
+                <DialogHeaderFeil />
                 <Outlet />
             </div>
             <EventHandler />
