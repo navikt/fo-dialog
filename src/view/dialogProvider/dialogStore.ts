@@ -60,6 +60,7 @@ export const useDialogStore = create(
                         return dialoger;
                     })
                     .catch((e) => {
+                        console.error(e);
                         set(
                             (prevState) => ({ ...prevState, status: Status.ERROR, error: e }),
                             false,

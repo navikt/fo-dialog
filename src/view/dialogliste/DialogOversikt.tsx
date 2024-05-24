@@ -1,7 +1,7 @@
 import { Heading, Link } from '@navikt/ds-react';
 import classNames from 'classnames';
 import React, { Suspense } from 'react';
-import { Await, useMatches } from 'react-router';
+import { Await } from 'react-router';
 import { AKTIVITETSPLAN_URL, MINSIDE_URL } from '../../constants';
 import useKansendeMelding from '../../utils/UseKanSendeMelding';
 import { useDialoger } from '../DialogProvider';
@@ -11,7 +11,7 @@ import DialogListe from './DialogListe';
 import NyDialogLink from './NyDialogLink';
 import { useErVeileder } from '../Provider';
 import { useRootLoaderData } from '../../routing/loaders';
-import { RouteIds, useIsDialogOrNyRoute } from '../../routing/routes';
+import { useIsDialogOrNyRoute } from '../../routing/routes';
 
 const DialogOversiktHeader = ({ erVeileder }: { erVeileder: boolean }) => {
     if (erVeileder) return null;

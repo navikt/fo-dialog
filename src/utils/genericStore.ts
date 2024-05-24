@@ -32,6 +32,7 @@ export const createGenericStore = <StoredDataType, ArgType, ResultType extends S
                     error: e?.toString(),
                     status: Status.ERROR
                 });
+                return null;
             }
         },
         status: Status.INITIAL

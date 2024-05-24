@@ -1,16 +1,14 @@
 import { Alert } from '@navikt/ds-react';
 import React from 'react';
+import { useAktivitetStore, useTiltaksAktivitetStore } from '../AktivitetProvider';
+import { Status } from '../../api/typer';
 
-import styles from './DialogHeader.module.less';
+function DialogHeaderFeil() {
+    const aktiviteterStatus = useAktivitetStore((state) => state.status);
+    const tiltaksAktiviteterAktiviteterStatus = useTiltaksAktivitetStore((state) => state.status);
+    const erFeil = aktiviteterStatus == Status.ERROR || tiltaksAktiviteterAktiviteterStatus == Status.ERROR;
 
-interface Props {
-    visible: boolean;
-}
-
-function DialogHeaderFeil(props: Props) {
-    const { visible } = props;
-
-    if (!visible) {
+    if (!erFeil) {
         return null;
     }
 

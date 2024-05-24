@@ -1,6 +1,5 @@
 import { TilbakeKnapp } from '../TilbakeKnapp';
 import { Heading } from '@navikt/ds-react';
-import StatusAdvarsel from '../../statusAdvarsel/StatusAdvarsel';
 import React from 'react';
 
 export const NyDialogHeader = () => {
@@ -12,7 +11,6 @@ export const NyDialogHeader = () => {
                     Start en ny dialog
                 </Heading>
             </div>
-            <StatusAdvarsel />
         </div>
     );
 };

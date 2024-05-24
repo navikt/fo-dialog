@@ -8,7 +8,6 @@ import { erArenaAktivitet } from '../utils/utils';
 import DialogHeaderFeil from './DialogHeaderFeil';
 import { TilbakeKnapp } from './TilbakeKnapp';
 import { useRootLoaderData } from '../../routing/loaders';
-import StatusAdvarsel from '../statusAdvarsel/StatusAdvarsel';
 import { RouteIds } from '../../routing/routes';
 
 export function DialogHeader() {
@@ -27,7 +26,6 @@ export function DialogHeader() {
     return (
         <Suspense fallback={<HeaderFallback />}>
             <Await resolve={requiredData}>
-                <StatusAdvarsel />
                 <div className="flex flex-col gap-x-4 border-b border-border-divider bg-white py-1">
                     <section aria-label="Dialog header">
                         {viseAktivitet ? (
@@ -42,7 +40,6 @@ export function DialogHeader() {
                         )}
                     </section>
                 </div>
-                <DialogHeaderFeil visible={erFeil} />
             </Await>
         </Suspense>
     );

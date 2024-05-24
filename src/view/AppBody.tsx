@@ -12,6 +12,8 @@ import { dataOrUndefined, useErVeileder } from './Provider';
 import { useRootLoaderData } from '../routing/loaders';
 import { RouteIds } from '../routing/routes';
 import classNames from 'classnames';
+import StatusAdvarsel from './statusAdvarsel/StatusAdvarsel';
+import DialogHeaderFeil from './dialog/DialogHeaderFeil';
 
 function hash(val: string) {
     const utf8 = new TextEncoder().encode(val);
@@ -50,6 +52,8 @@ const AppBody = () => {
                     'flex-1': erDialogRoute // Når dialoger vises skal boks med meldinger fylle mest mulig
                 })}
             >
+                <StatusAdvarsel />
+                <DialogHeaderFeil visible={true} />
                 <Outlet />
             </div>
             <EventHandler />
