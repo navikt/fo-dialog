@@ -1,14 +1,18 @@
 import { Alert } from '@navikt/ds-react';
 import React from 'react';
 
-export default function StatusAdvarselWrapper(props: { children: React.ReactNode }) {
+interface Props {
+    readonly children: React.ReactNode;
+}
+
+export default function StatusAdvarselWrapper({ children }: Props) {
     return (
         <div className="flex justify-center border-b border-border-divider p-4">
-            <Alert variant="warning">{props.children}</Alert>
+            <Alert variant="warning">{children}</Alert>
         </div>
     );
 }
 
 export function KanIkkeKontakteElektroniskVeileder() {
-    return <StatusAdvarselWrapper>Du kan ikke kontakte denne brukeren elektronisk.</StatusAdvarselWrapper>;
+    return <StatusAdvarselWrapper>Du kan ikke kontakte denne brukeren digitalt.</StatusAdvarselWrapper>;
 }
