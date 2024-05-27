@@ -10,5 +10,5 @@ export default function StatusAdvarselWrapper(props: { children: React.ReactNode
 }
 
 export function KanIkkeKontakteElektroniskVeileder() {
-    return <StatusAdvarselWrapper>Du kan ikke kontakte denne brukeren elektronisk.</StatusAdvarselWrapper>;
+    return <StatusAdvarselWrapper>Du kan ikke kontakte denne brukeren digitalt.</StatusAdvarselWrapper>;
 }
