@@ -20,15 +20,6 @@ import { useFnrContext } from '../../Provider';
 import useKansendeMelding from '../../../utils/UseKanSendeMelding';
 import { useShallow } from 'zustand/react/shallow';
 
-const schema = z.object({
-    melding: z
-        .string()
-        .min(1, 'Du må fylle ut en melding')
-        .max(maxMeldingsLengde, `Meldingen kan ikke være mer enn ${maxMeldingsLengde}`)
-});
-
-export type MeldingFormValues = z.infer<typeof schema>;
-
 interface Props {
     dialog: DialogData; // Bruker prop og ikke context siden komponent ikke skal rendrer uten en valgt dialog
 }
@@ -52,6 +43,19 @@ const MeldingInputBox = ({ dialog: valgtDialog }: Props) => {
             oppdaterStatus: store.kladdStatus
         }))
     );
+
+    const schema = z.object({
+        melding: z
+            .string()
+            .min(1, 'Du må fylle ut en melding')
+            .max(maxMeldingsLengde, `Meldingen kan ikke være mer enn ${maxMeldingsLengde}`)
+            .refine((melding) => melding !== startTekst, {
+                message: 'Du må fylle ut en melding'
+            })
+    });
+
+    type MeldingFormValues = z.infer<typeof schema>;
+
     const kladd = kladder.find((k) => k.aktivitetId === valgtDialog.aktivitetId && k.dialogId === valgtDialog.id);
     const viewState = useViewContext();
     const setViewState = useSetViewContext();
