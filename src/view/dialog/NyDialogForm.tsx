@@ -17,18 +17,6 @@ import { useFnrContext } from '../Provider';
 import { useDialogStore } from '../dialogProvider/dialogStore';
 import { useShallow } from 'zustand/react/shallow';
 
-const maxMeldingsLengde = 5000;
-
-const schema = z.object({
-    tema: z.string().min(1, 'Du må skrive et tema for dialogen').max(100, 'Tema kan ikke være mer enn 100 tegn'),
-    melding: z
-        .string()
-        .min(1, 'Du må skrive en melding')
-        .max(maxMeldingsLengde, `Meldingen kan ikke være mer enn ${maxMeldingsLengde}`)
-});
-
-export type NyDialogFormValues = z.infer<typeof schema>;
-
 interface Props {
     defaultTema: string;
     aktivitetId?: string;
@@ -43,7 +31,6 @@ const NyDialogForm = (props: Props) => {
     const { dialogRoute, baseRoute } = useRoutes();
     const [noeFeilet, setNoeFeilet] = useState(false);
     const startTekst = useMeldingStartTekst();
-
     const fnr = useFnrContext();
     const { kladder, oppdaterKladd, slettKladd } = useDialogStore(
         useShallow((store) => ({
@@ -59,6 +46,21 @@ const NyDialogForm = (props: Props) => {
         tema: kladd?.overskrift ?? cutStringAtLength(defaultTema, 100, '...'),
         melding: !!kladd?.tekst ? kladd.tekst : startTekst
     };
+
+    const maxMeldingsLengde = 5000;
+
+    const schema = z.object({
+        tema: z.string().min(1, 'Du må skrive et tema for dialogen').max(100, 'Tema kan ikke være mer enn 100 tegn'),
+        melding: z
+            .string()
+            .min(1, 'Du må skrive en melding')
+            .max(maxMeldingsLengde, `Meldingen kan ikke være mer enn ${maxMeldingsLengde}`)
+            .refine((melding) => melding !== startTekst, {
+                message: 'Du må fylle ut en melding'
+            })
+    });
+
+    type NyDialogFormValues = z.infer<typeof schema>;
 
     const {
         trigger,
