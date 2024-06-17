@@ -1,6 +1,6 @@
 import { zodResolver } from '@hookform/resolvers/zod';
 import { Alert, Button, GuidePanel, TextField, Textarea } from '@navikt/ds-react';
-import React, { useEffect, useRef, useState } from 'react';
+import React, { FocusEventHandler, useEffect, useRef, useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { useNavigate } from 'react-router';
 import { z } from 'zod';
@@ -145,6 +145,13 @@ const NyDialogForm = (props: Props) => {
 
     const bigScreen = window.innerWidth >= 768;
 
+    const onfocusMeldingInput: FocusEventHandler<HTMLTextAreaElement> = (event) => {
+        if (!erVeileder) return;
+        if (melding !== startTekst) return;
+        event.target.selectionStart = 0;
+        event.target.selectionEnd = 0;
+    };
+
     return (
         <div className="relative h-full w-full overflow-scroll bg-gray-100 lg:max-w-lgContainer xl:max-w-none">
             <form
@@ -175,6 +182,7 @@ const NyDialogForm = (props: Props) => {
                     {...register('melding')}
                     error={errors.melding && errors.melding.message}
                     autoFocus={!autoFocusTema}
+                    onFocus={onfocusMeldingInput}
                 />
 
                 {noeFeilet ? (
