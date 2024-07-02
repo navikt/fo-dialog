@@ -1,5 +1,5 @@
-import { PersonIcon } from '@navikt/aksel-icons';
-import { BodyShort, Chat } from '@navikt/ds-react';
+import { ExternalLinkIcon, PersonIcon } from '@navikt/aksel-icons';
+import { BodyShort, Chat, HStack, VStack } from '@navikt/ds-react';
 import React from 'react';
 
 import { ViktigMelding } from '../../felleskomponenter/etiketer/Etikett';
@@ -49,7 +49,18 @@ export function Melding(props: Props) {
                     <div className="flex flex-col items-start">
                         <ViktigMelding visible={viktigMarkering} />
                         <span className="mt-2 whitespace-pre-wrap">
-                            <Markdown disallowedElements={['script']} remarkPlugins={[remarkGfm]}>
+                            <Markdown
+                                components={{
+                                    a: ({ node, ...props }) => (
+                                        <HStack gap="1" align={'center'}>
+                                            <a {...props} target="_blank" rel="noopener noreferrer" />
+                                            <ExternalLinkIcon />
+                                        </HStack>
+                                    )
+                                }}
+                                disallowedElements={['script']}
+                                remarkPlugins={[remarkGfm]}
+                            >
                                 {tekst}
                             </Markdown>
                         </span>
