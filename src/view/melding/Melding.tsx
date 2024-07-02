@@ -54,7 +54,7 @@ export function Melding(props: Props) {
                                     a: ({ node, ...props }) => (
                                         <HStack gap="1" align={'center'}>
                                             <a {...props} target="_blank" rel="noopener noreferrer" />
-                                            <ExternalLinkIcon />
+                                            <ExternalLinkIcon aria-label="Lenke åpnes i ny fane" />
                                         </HStack>
                                     )
                                 }}
