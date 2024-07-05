@@ -2,3 +2,15 @@
 @import '@navikt/ds-css';
 @import 'tailwindcss/components';
 @import 'tailwindcss/utilities';
+
+.navds-chat__bubble ol {
+    list-style: decimal;
+    padding-left: 16px;
+    white-space: normal;
+}
+
+.navds-chat__bubble ul {
+    list-style: disc;
+    padding-left: 16px;
+    white-space: normal;
+}
