@@ -14,3 +14,8 @@
     padding-left: 16px;
     white-space: normal;
 }
+
+.navds-chat__bubble pre:has(> code) {
+    text-wrap: wrap;
+    overflow-wrap: anywhere;
+}
