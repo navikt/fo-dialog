@@ -134,7 +134,7 @@ const NyDialogForm = (props: Props) => {
                 textarea.selectionEnd = 0;
             }
         }
-    }, [autoFocusTema]);
+    }, []);
 
     const onSubmit = (data: NyDialogFormValues) => {
         const { tema, melding } = data;
