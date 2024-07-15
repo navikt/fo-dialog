@@ -41,8 +41,9 @@ const MeldingSideInputInner = () => {
                     placeholder={'Skriv om arbeid og oppfølging'}
                     minRows={3}
                     maxRows={100} // Will overflow before hitting max lines
+                    maxLength={5000}
                 />
-                <div className="self-stretch mt-2 flex justify-between">
+                <div className="self-stretch mt-2 flex justify-between items-end">
                     <Button size="small" title="Send" loading={isSubmitting}>
                         Send
                     </Button>
