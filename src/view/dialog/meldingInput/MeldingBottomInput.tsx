@@ -40,10 +40,11 @@ const MeldingBottomInputInner = () => {
                     placeholder={'Skriv om arbeid og oppfølging'}
                     minRows={3}
                     maxRows={12}
+                    maxLength={5000}
                     label="Skriv om arbeid og oppfølging"
                     hideLabel
                 />
-                <div className="flex flex-col space-y-2">
+                <div className="flex flex-col space-y-2 pb-6">
                     <KladdLagret />
                     <Button
                         size="small"
