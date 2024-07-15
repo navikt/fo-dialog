@@ -125,6 +125,17 @@ const NyDialogForm = (props: Props) => {
         }
     }, [melding, tema, dirtyFields]);
 
+    useEffect(() => {
+        if (!autoFocusTema) {
+            const textarea = document.querySelector('textarea[name="melding"]') as HTMLTextAreaElement;
+            if (textarea) {
+                textarea.focus();
+                textarea.selectionStart = 0;
+                textarea.selectionEnd = 0;
+            }
+        }
+    }, []);
+
     const onSubmit = (data: NyDialogFormValues) => {
         const { tema, melding } = data;
 
