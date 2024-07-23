@@ -101,8 +101,8 @@ export function InfoOmDialogSide() {
                                 NAV henter informasjon om deg fra Folkeregisteret og sjekker mot Kontakt- og
                                 reservasjonsregisteret. Hvis du ikke ønsker å bruke den digitale dialogen, så kan du
                                 reservere deg mot digital kommunikasjon med det offentlige hos{' '}
-                                <Link href="https://www.norge.no/nn/reservasjon">Norge.no</Link>. Hvis du reserverer deg
-                                mot digital kommunikasjon, vil NAV følge deg opp manuelt.
+                                <Link href="https://www.norge.no/nb/digital-borger/reservasjon">Norge.no</Link>. Hvis du
+                                reserverer deg mot digital kommunikasjon, vil NAV følge deg opp manuelt.
                             </BodyLong>
                         </div>
 
