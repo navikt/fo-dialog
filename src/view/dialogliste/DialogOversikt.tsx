@@ -57,12 +57,10 @@ const DialogOversikt = () => {
             <DialogOversiktHeader erVeileder={erVeileder} />
             <div className="relative flex h-full flex-1 flex-col overflow-y-scroll border-r border-border-divider bg-gray-100 p-2">
                 <>
-                    {kanSendeMelding ? (
-                        <div className="flex gap-2 p-1 pb-2">
-                            <NyDialogLink />
-                            <OmDialogLenke />
-                        </div>
-                    ) : null}
+                    <div className="flex gap-2 p-1 pb-2">
+                        {kanSendeMelding && <NyDialogLink />}
+                        <OmDialogLenke />
+                    </div>
                     {ingenDialoger ? <InfoVedIngenDialoger className="mt-4 md:hidden" /> : null}
                 </>
                 <DialogListe />
