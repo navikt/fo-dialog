@@ -41,6 +41,8 @@ spec:
       rules:
         - application: veilarbaktivitet
           namespace: dab
+        - application: veilarbdialog
+          namespace: dab
   idporten:
     enabled: true
     sidecar:
