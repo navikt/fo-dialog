@@ -57,7 +57,7 @@ describe('<AlertStripeContainer/>', () => {
         vi.spyOn(OppfolgingContext, 'useOppfolgingContext').mockImplementation(() => useFetchOppfolging);
 
         const { getByText } = render(<StatusAdvarsel />);
-        getByText('Denne brukeren har ikke tidligere dialoger i Modia.');
+        getByText('Denne brukeren har ikke vært og er ikke under arbeidrettet oppfølging.');
     });
     it('Bruker uten oppf.perioder og ikke under oppf. viser en advarsel - bruker. ', () => {
         vi.spyOn(BrukerContext, 'useUserInfoContext').mockImplementation(() => bruker);
@@ -78,14 +78,17 @@ describe('<AlertStripeContainer/>', () => {
         );
         expect(getByRole('link').textContent).toBe('Registrer deg hos NAV');
     });
-    it('Bruker med oppf.perioder, ikke under oppf. gir ingen feilmelding - veileder', () => {
+    it('Bruker med oppf.perioder, ikke under oppf. viser advarsel - veileder', () => {
         useFetchOppfolging.data!.oppfolgingsPerioder = oppfPerioder;
 
         vi.spyOn(BrukerContext, 'useUserInfoContext').mockImplementation(() => veileder);
         vi.spyOn(OppfolgingContext, 'useOppfolgingContext').mockImplementation(() => useFetchOppfolging);
 
         const wrapper = render(<StatusAdvarsel />);
-        expect(wrapper.baseElement.textContent).toBeFalsy();
+        expect(wrapper.baseElement.textContent).toBe(
+            // Alert + testing-librarry = prefix med 'Advarsel'
+            'Advarsel' + 'Bruker er ikke under oppfølging og kan ikke sende meldinger'
+        );
     });
 
     it('Bruker registret KRR viser en advarsel - veileder.', () => {
