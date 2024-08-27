@@ -3,6 +3,7 @@
   "version": "1.0.0",
   "homepage": "/arbeid/dialog",
   "license": "MIT",
+  "type": "module",
   "repository": {
     "type": "git",
     "url": "git+https://github.com/navikt/arbeidsrettet-dialog.git"
@@ -106,7 +107,7 @@
     "import-sort-style-module": "^6.0.0",
     "jsdom": "^24.0.0",
     "lint-staged": "^15.2.2",
-    "msw": "^2.3.0",
+    "msw": "^2.3.5",
     "postcss": "^8.4.33",
     "prettier": "^3.2.5",
     "prettier-plugin-import-sort": "0.0.7",
@@ -117,7 +118,9 @@
     "vitest": "^1.5.3"
   },
   "msw": {
-    "workerDirectory": "public"
+    "workerDirectory": [
+      "public"
+    ]
   },
   "bugs": {
     "url": "https://github.com/navikt/arbeidsrettet-dialog/issues"
