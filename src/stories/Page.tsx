@@ -21,7 +21,6 @@ export const Page: React.FC<PageProps> = (props) => {
         window.location.hash = `#${props.path}`;
     }, []);
     const { visAktivitet, erVeileder } = props;
-    console.log({ erVeileder });
     return (
         <>
             <Provider visAktivitetDefault={visAktivitet} fnr={erVeileder ? fnr : undefined} erVeileder={erVeileder}>
