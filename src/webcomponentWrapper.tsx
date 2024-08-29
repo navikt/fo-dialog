@@ -30,7 +30,7 @@ export class DabDialog extends HTMLElement {
             const root = createRoot(appRoot);
             root.render(
                 <ModalProvider rootElement={shadowDomFirstChild}>
-                    <App key={'1'} />
+                    <App />
                 </ModalProvider>
             );
         } catch (e) {
