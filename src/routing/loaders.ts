@@ -14,8 +14,8 @@ export const initialPageLoader = (fnr: string | undefined) => async () => {
         me: useBrukerDataStore.getState().fetch(),
         oppfolging: useOppfolgingStore.getState().fetch(),
         veilederNavn: fnr ? useVeilederNavnStore.getState().fetch() : Promise.resolve(null),
-        aktiviteter: useAktivitetStore.getState().fetch(fnr),
-        arenaAktiviteter: useTiltaksAktivitetStore.getState().fetch(fnr)
+        aktiviteter: useAktivitetStore.getState().fetch(),
+        arenaAktiviteter: useTiltaksAktivitetStore.getState().fetch()
     });
 };
 

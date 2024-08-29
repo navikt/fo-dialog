@@ -28,7 +28,7 @@ describe('DialogTrad', () => {
     afterEach(() => server.resetHandlers());
 
     it('should display dialog-state from backend', async () => {
-        const { getByLabelText, getByText, getByRole, getAllByDisplayValue } = await act(() =>
+        const { getByLabelText, getByText } = await act(() =>
             render(
                 <Provider visAktivitetDefault={false} fnr={fnr} erVeileder={!!fnr}>
                     <RouterProvider router={memoryRouter()} />
@@ -40,13 +40,5 @@ describe('DialogTrad', () => {
         await waitFor(async () => getByLabelText('Skriv om arbeid og oppfølging', { selector: 'textarea' }));
         getByText('Er du fornøyd med oppgfølgingen?');
         getByText('Sånn passe.');
-    });
-
-    it('should display kladd and not backend state if kladd exists', () => {
-        // TODO
-    });
-
-    it('should display kladd event when updating state from backend', () => {
-        // TODO
     });
 });

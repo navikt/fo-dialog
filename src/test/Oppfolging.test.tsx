@@ -1,4 +1,4 @@
-import { act, render } from '@testing-library/react';
+import { act, render, waitFor } from '@testing-library/react';
 import React, { ReactElement } from 'react';
 import { createMemoryRouter, RouterProvider } from 'react-router';
 
@@ -11,7 +11,6 @@ import DialogOversikt from '../view/dialogliste/DialogOversikt';
 import * as DialogProvider from '../view/DialogProvider';
 import { DialogDataProviderType } from '../view/DialogProvider';
 import * as OppfolgingProvider from '../view/OppfolgingProvider';
-import { OppfolgingDataProviderType } from '../view/OppfolgingProvider';
 import { RouteIds } from '../routing/routes';
 import { initialPageLoader } from '../routing/loaders';
 import { afterAll, beforeAll } from 'vitest';
@@ -21,7 +20,7 @@ import { handlers } from '../mock/handlers';
 const userInfo: Bruker = { id: '010101', erVeileder: true, erBruker: false };
 const oppfPerioder: PeriodeData[] = [];
 const oppfolgingData: OppfolgingData = {
-    fnr: 'null',
+    fnr: '01234567890',
     veilederId: '101010',
     reservasjonKRR: false,
     manuell: false,
@@ -42,7 +41,7 @@ const oppfolgingData: OppfolgingData = {
     servicegruppe: null
 };
 
-const useFetchOppfolging: OppfolgingDataProviderType = {
+const baseUseFetchOppfolging = {
     data: oppfolgingData,
     status: Status.OK,
     hentOppfolging: () => Promise.resolve(undefined)
@@ -100,16 +99,18 @@ const singleComponentRouter = (component: ReactElement, initialEntries: string[]
     createMemoryRouter(
         [
             {
-                id: RouteIds.Dialog,
-                path: '/:dialogId',
-                element: component,
-                loader: initialPageLoader(undefined)
-            },
-            {
-                id: 'root',
+                id: RouteIds.Root,
                 path: '*',
                 element: component,
-                loader: initialPageLoader(undefined)
+                loader: initialPageLoader(undefined),
+                children: [
+                    {
+                        id: RouteIds.Dialog,
+                        path: ':dialogId',
+                        element: component,
+                        loader: initialPageLoader(undefined)
+                    }
+                ]
             }
         ],
         { initialEntries }
@@ -123,26 +124,38 @@ const MemoryRouterMedBareDialogOversikt = () => <RouterProvider router={memoryRo
 
 describe('<DialogContainer/>', () => {
     test('Bruker uten oppf.perioder og ikke under oppf skjuler store deler av appen', async () => {
-        useFetchOppfolging.data!.underOppfolging = false;
-        useFetchOppfolging.data!.oppfolgingsPerioder = [];
+        const useFetchOppfolging = {
+            ...baseUseFetchOppfolging,
+            data: {
+                ...baseUseFetchOppfolging.data,
+                underOppfolging: false,
+                oppfolgingsPerioder: []
+            }
+        };
         vi.spyOn(OppfolgingProvider, 'useOppfolgingContext').mockImplementation(() => useFetchOppfolging);
         const { queryByText, getByRole } = render(<MemoryRouterMedBareDialogListe />);
         expect(queryByText('Ny dialog')).toBeNull();
         expect(getByRole('navigation').children.length).toBe(0);
     });
     test('Bruker ikke under oppf. skjuler knapper/checkbox', () => {
-        useFetchOppfolging.data!.underOppfolging = false;
-        useFetchOppfolging.data!.oppfolgingsPerioder = [
-            {
-                aktorId: '1234567988888',
-                veileder: false,
-                startDato: '2017-01-30T10:46:10.971+01:00',
-                sluttDato: '2017-12-31T10:46:10.971+01:00',
-                begrunnelse: null,
-                kvpPerioder: [],
-                uuid: '1'
+        const useFetchOppfolging = {
+            ...baseUseFetchOppfolging,
+            data: {
+                ...baseUseFetchOppfolging.data,
+                underOppfolging: false,
+                oppfolgingsPerioder: [
+                    {
+                        aktorId: '1234567988888',
+                        veileder: false,
+                        startDato: '2017-01-30T10:46:10.971+01:00',
+                        sluttDato: '2017-12-31T10:46:10.971+01:00',
+                        begrunnelse: null,
+                        kvpPerioder: [],
+                        uuid: '1'
+                    }
+                ]
             }
-        ];
+        };
         vi.spyOn(OppfolgingProvider, 'useOppfolgingContext').mockImplementation(() => useFetchOppfolging);
         vi.spyOn(DialogProvider, 'useDialoger').mockImplementation(() => dialoger);
         const { queryByText, getByRole } = render(<MemoryRouterMedBareDialogListe />);
@@ -150,18 +163,24 @@ describe('<DialogContainer/>', () => {
         expect(getByRole('navigation').children.length).toBeGreaterThan(0);
     });
     test('Bruker under oppf, elementer synes', () => {
-        useFetchOppfolging.data!.underOppfolging = true;
-        useFetchOppfolging.data!.oppfolgingsPerioder = [
-            {
-                aktorId: '1234567988888',
-                veileder: false,
-                startDato: '2017-01-30T10:46:10.971+01:00',
-                sluttDato: '2017-12-31T10:46:10.971+01:00',
-                begrunnelse: null,
-                kvpPerioder: [],
-                uuid: '1'
+        const useFetchOppfolging = {
+            ...baseUseFetchOppfolging,
+            data: {
+                ...baseUseFetchOppfolging.data,
+                underOppfolging: true,
+                oppfolgingsPerioder: [
+                    {
+                        aktorId: '1234567988888',
+                        veileder: false,
+                        startDato: '2017-01-30T10:46:10.971+01:00',
+                        sluttDato: '2017-12-31T10:46:10.971+01:00',
+                        begrunnelse: null,
+                        kvpPerioder: [],
+                        uuid: '1'
+                    }
+                ]
             }
-        ];
+        };
         vi.spyOn(OppfolgingProvider, 'useOppfolgingContext').mockImplementation(() => useFetchOppfolging);
         vi.spyOn(DialogProvider, 'useDialoger').mockImplementation(() => dialoger);
         const { getByText } = render(<MemoryRouterMedBareDialogOversikt />);
@@ -183,42 +202,41 @@ describe('<Dialog/>', () => {
 
     test('Bruker ikke under oppf. skjuler dialogcontroller og viser fortsatt henvendelser', async () => {
         Element.prototype.scrollIntoView = () => {};
-        const { queryByLabelText, queryByText, queryByRole } = await act(() => {
+        const { getByLabelText, queryByText, queryByRole } = await act(() => {
             return render(<MemoryRouterMedBareDialogTrad />);
         });
 
         expect(queryByRole('form')).toBeNull();
-        expect(queryByLabelText('Meldinger')).toBeTruthy();
+        await waitFor(() => getByLabelText('Meldinger'));
         expect(queryByText('Venter på svar fra NAV')).toBeNull();
     });
-    test.skip('Bruker under oppf. viser komponenter i Dialog', async () => {
-        useFetchOppfolging.data!.underOppfolging = true;
-        useFetchOppfolging.data!.oppfolgingsPerioder = [
-            {
-                aktorId: '1234567988888',
-                veileder: false,
-                startDato: '2017-01-30T10:46:10.971+01:00',
-                sluttDato: '2017-12-31T10:46:10.971+01:00',
-                begrunnelse: null,
-                kvpPerioder: [],
-                uuid: '1'
+    test('Bruker under oppf. viser komponenter i Dialog', async () => {
+        const useFetchOppfolging = {
+            ...baseUseFetchOppfolging,
+            data: {
+                ...baseUseFetchOppfolging.data,
+                underOppfolging: true,
+                oppfolgingsPerioder: [
+                    {
+                        aktorId: '1234567988888',
+                        veileder: false,
+                        startDato: '2017-01-30T10:46:10.971+01:00',
+                        sluttDato: '2017-12-31T10:46:10.971+01:00',
+                        begrunnelse: null,
+                        kvpPerioder: [],
+                        uuid: '1'
+                    }
+                ]
             }
-        ];
+        };
         vi.spyOn(DialogProvider, 'useDialogContext').mockImplementation(() => useDialogContext);
         vi.spyOn(OppfolgingProvider, 'useOppfolgingContext').mockImplementation(() => useFetchOppfolging);
         vi.spyOn(BrukerProvider, 'useUserInfoContext').mockImplementation(() => userInfo);
         vi.spyOn(DialogProvider, 'useDialoger').mockImplementation(() => dialoger);
         Element.prototype.scrollIntoView = () => {};
-        const { getByText, getByLabelText } = render(
-            <MemoryRouterMedBareDialogTrad />
-            // <MemoryRouter initialEntries={['/1']}>
-            //     <Routes>
-            //         <Route path={'/:dialogId'} element={<DialogTrad />} />
-            //     </Routes>
-            // </MemoryRouter>
-        );
-        getByLabelText('Ny melding');
-        getByLabelText('Meldinger');
-        getByText('Venter på svar fra NAV');
+        const { getByText, getByLabelText } = render(<MemoryRouterMedBareDialogTrad />);
+        waitFor(() => getByLabelText('Ny melding'));
+        waitFor(() => getByLabelText('Meldinger'));
+        waitFor(() => getByText('Venter på svar fra NAV'));
     });
 });
