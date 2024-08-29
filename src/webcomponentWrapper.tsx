@@ -5,6 +5,7 @@ import { createRoot } from 'react-dom/client';
 import App from './App';
 import globalCss from './global.css?inline';
 import dialogOversiktStyles from './view/dialogliste/DialogPreview.module.css?inline';
+import { useFnrStore } from './fnrStore';
 
 export class DabDialog extends HTMLElement {
     setFnr?: (fnr: string) => void;
@@ -25,10 +26,11 @@ export class DabDialog extends HTMLElement {
 
         const fnr = this.getAttribute('data-fnr') ?? undefined;
         try {
+            useFnrStore.getState().setFnr(fnr);
             const root = createRoot(appRoot);
             root.render(
                 <ModalProvider rootElement={shadowDomFirstChild}>
-                    <App key={'1'} fnr={fnr} />
+                    <App key={'1'} />
                 </ModalProvider>
             );
         } catch (e) {
@@ -37,8 +39,8 @@ export class DabDialog extends HTMLElement {
     }
 
     attributeChangedCallback(name: string, oldValue: string, newValue: string) {
-        if (name === 'data-fnr' && this.setFnr) {
-            this.setFnr(newValue);
+        if (name === 'data-fnr') {
+            useFnrStore.getState().setFnr(newValue);
         }
     }
     static get observedAttributes() {

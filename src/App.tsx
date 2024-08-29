@@ -6,15 +6,17 @@ import { UppdateEventHandler } from './utils/UpdateEvent';
 import { Provider } from './view/Provider';
 import StatusAdvarsel from './view/statusAdvarsel/StatusAdvarsel';
 import { Routes } from './routes';
+import { useShallow } from 'zustand/react/shallow';
+import { useFnrStore } from './fnrStore';
 
 interface Props {
-    fnr?: string;
     enhet?: string;
     visAktivitetDefault?: boolean;
 }
 
 const App = (props: Props) => {
-    const { fnr, visAktivitetDefault } = props;
+    const { visAktivitetDefault } = props;
+    const fnr = useFnrStore(useShallow((state) => state.fnr));
     return (
         <Provider visAktivitetDefault={visAktivitetDefault} fnr={fnr} erVeileder={!!fnr}>
             <StatusAdvarsel />
