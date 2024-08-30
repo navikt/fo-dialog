@@ -8,7 +8,7 @@ import { useSelectedDialog } from '../utils/useAktivitetId';
 function HistoriskInfo() {
     const valgtDialog = useSelectedDialog();
     const kanSendeMelding = useKansendeMelding();
-    if (!valgtDialog?.historisk || true) {
+    if (!valgtDialog?.historisk) {
         return null;
     }
 
@@ -17,7 +17,7 @@ function HistoriskInfo() {
             <BodyShort className="pb-4">
                 Dette er en dialog fra en tidligere periode, og du kan derfor ikke svare på den.
             </BodyShort>
-            <div className="self-start">{kanSendeMelding ? <NyDialogLink /> : null}</div>
+            <div className="self-start">{kanSendeMelding ? <NyDialogLink disabled={false} /> : null}</div>
         </div>
     );
 }

@@ -19,7 +19,7 @@ import { FeatureToggle } from '../featureToggle/const';
 import { Aktivitet } from '../utils/aktivitetTypes';
 import { AktivitetsplanResponse } from '../api/aktivitetsplanGraphql';
 
-const jsonResponse = (
+export const jsonResponse = (
     response: object | null | boolean | ((req: StrictRequest<DefaultBodyType>, params: PathParams) => object)
 ): HttpResponseResolver => {
     return async ({ request, params }) => {

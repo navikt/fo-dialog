@@ -1,21 +1,21 @@
 import { create } from 'zustand';
 import { isReloading, Status } from '../api/typer';
 
-type GenericStore<StoredDataType, ResultType extends StoredDataType, ArgType = undefined> = {
+type GenericStore<StoredDataType, ResultType extends StoredDataType, ArgType> = {
     status: Status;
     data: StoredDataType;
     error?: string;
-    fetch: ArgType extends undefined ? () => Promise<ResultType> : (arg: ArgType) => Promise<ResultType>;
+    fetch: (arg: ArgType) => Promise<ResultType>;
 };
 
 export const createGenericStore = <StoredDataType, ArgType, ResultType extends StoredDataType>(
     initialData: StoredDataType,
-    fetcher: ArgType extends undefined ? () => Promise<ResultType> : (arg: ArgType) => Promise<ResultType>
+    fetcher: (arg: ArgType) => Promise<ResultType>
 ) => {
-    return create<GenericStore<StoredDataType, ResultType>>((set) => ({
+    return create<GenericStore<StoredDataType, ResultType, ArgType>>((set) => ({
         data: initialData,
         error: undefined,
-        fetch: async (arg) => {
+        fetch: async (arg: ArgType) => {
             set((prevState) => ({
                 ...prevState,
                 status: isReloading(prevState.status) ? Status.RELOADING : Status.PENDING
@@ -32,7 +32,7 @@ export const createGenericStore = <StoredDataType, ArgType, ResultType extends S
                     error: e?.toString(),
                     status: Status.ERROR
                 });
-                return null;
+                return null as any;
             }
         },
         status: Status.INITIAL

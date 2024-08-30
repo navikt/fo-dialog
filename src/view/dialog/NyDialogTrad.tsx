@@ -37,7 +37,7 @@ export default function NyDialogTrad() {
     return (
         <Suspense fallback={<DialogFormFallback />}>
             <Await resolve={requiredData}>
-                <NyDialogForm defaultTema={defaultTema} aktivitetId={aktivitet?.id} loading={false} />
+                <NyDialogForm defaultTema={defaultTema} aktivitetId={aktivitet?.id} />
             </Await>
         </Suspense>
     );

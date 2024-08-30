@@ -1,9 +1,9 @@
 import type { Meta, StoryObj } from '@storybook/react';
 
 import { Page } from './Page';
-import { rest } from 'msw';
-import { FeatureToggle } from '../featureToggle/const';
-import bruker, { eksternbruker } from '../mock/Bruker';
+import { http } from 'msw';
+import { eksternbruker } from '../mock/Bruker';
+import { jsonResponse } from '../mock/handlers';
 
 const meta = {
     title: 'App/Default',
@@ -14,9 +14,7 @@ const meta = {
         layout: 'fullscreen',
         msw: {
             handlers: {
-                brukerMock: [
-                    rest.get('/veilarboppfolging/api/oppfolging/me', (_, res, ctx) => res(ctx.json(eksternbruker)))
-                ]
+                brukerMock: [http.get('/veilarboppfolging/api/oppfolging/me', jsonResponse(eksternbruker))]
             }
         }
     }

@@ -1,6 +1,6 @@
-import React, { useCallback, useContext, useMemo, useState } from 'react';
+import React from 'react';
 
-import { Status, hasError, isReloading } from '../api/typer';
+import { Status, hasError } from '../api/typer';
 import { AktivitetApi } from '../api/UseApiBasePath';
 import { Aktivitet, ArenaAktivitet } from '../utils/aktivitetTypes';
 import { fetchData } from '../utils/Fetch';

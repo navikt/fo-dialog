@@ -93,6 +93,7 @@
     "@storybook/react": "^8.0.9",
     "@storybook/react-vite": "^8.0.9",
     "@storybook/testing-library": "^0.2.2",
+    "@testing-library/jest-dom": "^6.5.0",
     "@testing-library/react": "^15.0.6",
     "@types/node": "^20.12.8",
     "@types/react": "^18.3.1",
@@ -103,6 +104,7 @@
     "chromatic": "^7.2.0",
     "classnames": "^2.5.1",
     "cross-env": "^7.0.3",
+    "graphql": "^16.9.0",
     "husky": "^9.0.11",
     "import-sort-style-module": "^6.0.0",
     "jsdom": "^24.0.0",
@@ -114,7 +116,7 @@
     "prettier-plugin-tailwindcss": "^0.5.14",
     "storybook": "^7.6.12",
     "tailwindcss": "^3.4.3",
-    "typescript": "^5.2.2",
+    "typescript": "^5.5.4",
     "vitest": "^1.5.3"
   },
   "msw": {

@@ -1,9 +1,10 @@
 import type { Meta, StoryObj } from '@storybook/react';
 
 import { Page } from './Page';
-import { rest } from 'msw';
+import { http } from 'msw';
 import { FeatureToggle } from '../featureToggle/const';
-import { eksternbruker, veileder } from '../mock/Bruker';
+import { veileder } from '../mock/Bruker';
+import { jsonResponse } from '../mock/handlers';
 
 const meta = {
     title: 'App/Compact',
@@ -14,12 +15,11 @@ const meta = {
         layout: 'fullscreen',
         msw: {
             handlers: {
-                brukerMock: [
-                    rest.get('/veilarboppfolging/api/oppfolging/me', (_, res, ctx) => res(ctx.json(veileder)))
-                ],
+                brukerMock: [http.get('/veilarboppfolging/api/oppfolging/me', jsonResponse(veileder))],
                 featureToggle: [
-                    rest.get('/veilarbaktivitet/api/feature', (_, res, ctx) =>
-                        res(ctx.json({ [FeatureToggle.VIS_SKJUL_AKTIVITET_KNAPP]: true }))
+                    http.get(
+                        '/veilarbaktivitet/api/feature',
+                        jsonResponse({ [FeatureToggle.VIS_SKJUL_AKTIVITET_KNAPP]: true })
                     )
                 ]
             }

@@ -8,13 +8,15 @@ import { dataOrUndefined, useFnrContext } from '../Provider';
 import { useSelectedDialog } from '../utils/useAktivitetId';
 import { useUserInfoContext } from '../BrukerProvider';
 import { useHentDialoger } from '../dialogProvider/dialogStore';
+import useKansendeMelding from '../../utils/UseKanSendeMelding';
 
 interface Props {
     toggleFerdigBehandlet(ferdigBehandler: boolean): void;
     toggleVenterPaSvar(venterPaSvar: boolean): void;
     ferdigBehandlet: boolean;
     venterPaSvar: boolean;
-    disabled: boolean;
+    ferdigBehandletDisabled: boolean;
+    venterPaSvarDisabled: boolean;
     values: ('ferdigBehandlet' | 'venterPaSvar')[];
     loading: boolean;
 }
@@ -26,7 +28,8 @@ const DialogCheckboxes = ({
     toggleVenterPaSvar,
     loading,
     venterPaSvar,
-    disabled
+    venterPaSvarDisabled,
+    ferdigBehandletDisabled
 }: Props) => {
     return (
         <div className="mb-2 pl-1">
@@ -36,7 +39,7 @@ const DialogCheckboxes = ({
                         value={'ferdigBehandlet'}
                         size="small"
                         className="pr-4"
-                        disabled={disabled || loading}
+                        disabled={venterPaSvarDisabled || loading}
                         onChange={() => toggleFerdigBehandlet(!ferdigBehandlet)}
                     >
                         Venter på svar fra NAV
@@ -45,7 +48,7 @@ const DialogCheckboxes = ({
                         value={'venterPaSvar'}
                         size="small"
                         className="pr-8"
-                        disabled={disabled || loading}
+                        disabled={ferdigBehandletDisabled || loading}
                         onChange={() => toggleVenterPaSvar(!venterPaSvar)}
                     >
                         Venter på svar fra bruker
@@ -75,7 +78,13 @@ const ManagedDialogCheckboxes = () => {
     const toggleVenterPaSvar = (venterPaSvar: boolean) => {
         dialogContext.setVenterPaSvar(dialog, venterPaSvar, fnr).then(() => hentDialoger(fnr));
     };
-    const disabled = dialog.historisk || !oppfolgingData?.underOppfolging;
+
+    const kansendeMelding = useKansendeMelding();
+    const burdeKunneSetteFerdigBehandlet = !dialog.ferdigBehandlet && !kansendeMelding;
+    const burdeKunneFjerneVenterPaSvar = dialog.venterPaSvar && !kansendeMelding;
+    const ikkeUnderOppfolging = !oppfolgingData?.underOppfolging;
+    const venterPaSvarDisabled = dialog.historisk || (!kansendeMelding && !burdeKunneFjerneVenterPaSvar);
+    const ferdigBehandletDisabled = dialog.historisk || (!kansendeMelding && !burdeKunneSetteFerdigBehandlet);
 
     const values = [
         !dialog.ferdigBehandlet ? ('ferdigBehandlet' as const) : undefined,
@@ -87,7 +96,8 @@ const ManagedDialogCheckboxes = () => {
     return (
         <DialogCheckboxes
             values={values}
-            disabled={disabled}
+            ferdigBehandletDisabled={ferdigBehandletDisabled}
+            venterPaSvarDisabled={venterPaSvarDisabled}
             loading={laster}
             toggleFerdigBehandlet={toggleFerdigBehandlet}
             toggleVenterPaSvar={toggleVenterPaSvar}

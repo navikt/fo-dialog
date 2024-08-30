@@ -9,13 +9,13 @@ import { RouteIds } from './routes';
 
 export const initialPageLoader = (fnr: string | undefined) => async () => {
     return defer({
-        features: useFeatureToggleStore.getState().fetch(),
+        features: useFeatureToggleStore.getState().fetch(undefined),
         dialoger: useDialogStore.getState().hentDialoger(fnr),
-        me: useBrukerDataStore.getState().fetch(),
-        oppfolging: useOppfolgingStore.getState().fetch(),
-        veilederNavn: fnr ? useVeilederNavnStore.getState().fetch() : Promise.resolve(null),
-        aktiviteter: useAktivitetStore.getState().fetch(),
-        arenaAktiviteter: useTiltaksAktivitetStore.getState().fetch()
+        me: useBrukerDataStore.getState().fetch(undefined),
+        oppfolging: useOppfolgingStore.getState().fetch(fnr),
+        veilederNavn: fnr ? useVeilederNavnStore.getState().fetch(fnr) : Promise.resolve(null),
+        aktiviteter: useAktivitetStore.getState().fetch(fnr),
+        arenaAktiviteter: useTiltaksAktivitetStore.getState().fetch(fnr)
     });
 };
 

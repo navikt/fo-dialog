@@ -110,9 +110,7 @@ const aktivitetRes: AktivitetDataProviderType = {
     aktiviteterStatus: Status.OK,
     arenaAktiviteterStatus: Status.OK,
     aktiviteter: [aktivitet],
-    arenaAktiviteter: [],
-    hentAktiviteter: () => Promise.resolve([aktivitet]),
-    hentArenaAktiviteter: () => Promise.resolve([])
+    arenaAktiviteter: []
 };
 
 describe('<DialogMedAktivitetHeader />', () => {
