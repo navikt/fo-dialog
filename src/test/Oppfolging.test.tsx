@@ -46,13 +46,13 @@ describe('<DialogContainer/>', () => {
     });
 
     test('Bruker uten oppf.perioder og ikke under oppf skjuler store deler av appen', async () => {
-        gitt.veileder().som.harIngenDialog().som.harBrukerIkkeUnderOppfolging();
+        gitt.veileder().som.harIngenDialog().som.harBrukerSomAldriHarVærtUnderOppfolging();
         const { queryByText, getByRole } = render(<MemoryRouterMedBareDialogListe />);
         expect(queryByText('Ny dialog')).toBeNull();
         expect(getByRole('navigation').children.length).toBe(0);
     });
     test('Bruker ikke under oppf. skjuler knapper/checkbox', () => {
-        gitt.veileder().som.harDialog().som.harBrukerIkkeUnderOppfolging();
+        gitt.veileder().som.harDialog().som.harBrukerIkkeLengerErUnderOppfolging();
         const { queryByText, getByRole } = render(<MemoryRouterMedBareDialogListe />);
         expect(queryByText('Ny dialog')).toBeNull();
         expect(getByRole('navigation').children.length).toBeGreaterThan(0);
@@ -81,7 +81,7 @@ describe('<Dialog/>', () => {
     });
 
     test('Bruker ikke under oppf. skjuler dialogcontroller og viser fortsatt henvendelser', async () => {
-        gitt.veileder().som.harDialog().som.harBrukerIkkeUnderOppfolging();
+        gitt.veileder().som.harDialog().som.harBrukerIkkeLengerErUnderOppfolging();
         const { queryByRole, getByLabelText, queryByLabelText } = render(<MemoryRouterMedBareDialogTrad />);
         expect(queryByRole('form')).toBeNull();
         await waitFor(() => getByLabelText('Meldinger'));

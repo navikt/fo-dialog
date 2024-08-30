@@ -47,12 +47,20 @@ const baseOppfolgingsData = {
     status: Status.OK,
     hentOppfolging: () => Promise.resolve(undefined)
 };
-const ikkeUnderOppfølgingsData = {
+const aldriVærtUnderOppfølgingData = {
     ...baseOppfolgingsData,
     data: {
         ...baseOppfolgingsData.data,
         underOppfolging: false,
         oppfolgingsPerioder: []
+    }
+};
+const ikkeLengerUnderOppfølgingData = {
+    ...baseOppfolgingsData,
+    data: {
+        ...baseOppfolgingsData.data,
+        underOppfolging: false,
+        oppfolgingsPerioder: enLukketOppfølgingsPeriode
     }
 };
 const underOppfølgingsData = {
@@ -68,6 +76,20 @@ const underOppfølgingMenReservertIKRRData = {
     data: {
         ...underOppfølgingsData.data,
         reservasjonKRR: true
+    }
+};
+const underOppfølgingMenManuell = {
+    ...underOppfølgingsData,
+    data: {
+        ...underOppfølgingsData.data,
+        manuell: true
+    }
+};
+const underOppfølgingMenKanIkkeVarsles = {
+    ...underOppfølgingsData,
+    data: {
+        ...underOppfølgingsData.data,
+        kanVarsles: false
     }
 };
 
@@ -116,12 +138,24 @@ const harBrukerUnderOppfolging = () => {
     vi.spyOn(OppfolgingProvider, 'useOppfolgingContext').mockImplementation(() => underOppfølgingsData);
     return { som: gitt };
 };
-const harBrukerIkkeUnderOppfolging = () => {
-    vi.spyOn(OppfolgingProvider, 'useOppfolgingContext').mockImplementation(() => ikkeUnderOppfølgingsData);
+const harBrukerSomAldriHarVærtUnderOppfolging = () => {
+    vi.spyOn(OppfolgingProvider, 'useOppfolgingContext').mockImplementation(() => aldriVærtUnderOppfølgingData);
+    return { som: gitt };
+};
+const harBrukerIkkeLengerErUnderOppfolging = () => {
+    vi.spyOn(OppfolgingProvider, 'useOppfolgingContext').mockImplementation(() => ikkeLengerUnderOppfølgingData);
     return { som: gitt };
 };
 const harBrukerUnderOppfølgingMenReservertIKRR = () => {
     vi.spyOn(OppfolgingProvider, 'useOppfolgingContext').mockImplementation(() => underOppfølgingMenReservertIKRRData);
+    return { som: gitt };
+};
+const harBrukerUnderOppfølgingMenManuell = () => {
+    vi.spyOn(OppfolgingProvider, 'useOppfolgingContext').mockImplementation(() => underOppfølgingMenManuell);
+    return { som: gitt };
+};
+const harBrukerUnderOppfølgingMenKanIkkeVarsles = () => {
+    vi.spyOn(OppfolgingProvider, 'useOppfolgingContext').mockImplementation(() => underOppfølgingMenKanIkkeVarsles);
     return { som: gitt };
 };
 const veileder = () => {
@@ -180,8 +214,11 @@ const dialogerConfig = {
 };
 const oppfolgingConfig = {
     harBrukerUnderOppfolging,
-    harBrukerIkkeUnderOppfolging,
-    harBrukerUnderOppfølgingMenReservertIKRR
+    harBrukerSomAldriHarVærtUnderOppfolging,
+    harBrukerIkkeLengerErUnderOppfolging,
+    harBrukerUnderOppfølgingMenReservertIKRR,
+    harBrukerUnderOppfølgingMenManuell,
+    harBrukerUnderOppfølgingMenKanIkkeVarsles
 };
 
 export const gitt = brukerTypeConfig;
