@@ -2,25 +2,14 @@ import { act, render, waitFor } from '@testing-library/react';
 import React, { ReactElement } from 'react';
 import { createMemoryRouter, RouterProvider } from 'react-router';
 
-import { DialogData } from '../utils/Typer';
 import { DialogTrad } from '../view/dialog/DialogTrad';
 import DialogListe from '../view/dialogliste/DialogListe';
 import DialogOversikt from '../view/dialogliste/DialogOversikt';
-import { DialogDataProviderType } from '../view/DialogProvider';
 import { RouteIds } from '../routing/routes';
 import { afterAll, beforeAll } from 'vitest';
 import { setupServer } from 'msw/node';
 import { handlers } from '../mock/handlers';
 import { dialoger, gitt } from './mockUtils';
-
-const useDialogContext: DialogDataProviderType = {
-    status: 3,
-    nyDialog: (args) => Promise.resolve({} as any),
-    nyMelding: ({ dialog }) => Promise.resolve(dialog),
-    lesDialog: (dialogId: string) => Promise.resolve(dialoger.find((dialog) => dialog.id === dialogId)!!),
-    setFerdigBehandlet: (dialog: DialogData, ferdigBehandlet: boolean) => Promise.resolve(dialog),
-    setVenterPaSvar: (dialog: DialogData, venterPaSvar: boolean) => Promise.resolve(dialog)
-};
 
 const singleComponentRouter = (component: ReactElement, initialEntries: string[] | undefined = undefined) =>
     createMemoryRouter(
