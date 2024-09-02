@@ -1,40 +1,32 @@
 import { act, render, waitFor } from '@testing-library/react';
-import React, { ReactElement } from 'react';
-import { createMemoryRouter, RouterProvider } from 'react-router';
+import React from 'react';
 
 import { DialogTrad } from '../view/dialog/DialogTrad';
 import DialogListe from '../view/dialogliste/DialogListe';
 import DialogOversikt from '../view/dialogliste/DialogOversikt';
-import { RouteIds } from '../routing/routes';
 import { afterAll, beforeAll } from 'vitest';
 import { setupServer } from 'msw/node';
 import { handlers } from '../mock/handlers';
 import { dialoger, gitt } from './mockUtils';
+import { SimpleRouterWithoutProvider } from './integrationTestSetup';
 
-const singleComponentRouter = (component: ReactElement, initialEntries: string[] | undefined = undefined) =>
-    createMemoryRouter(
-        [
-            {
-                id: RouteIds.Root,
-                path: '*',
-                element: component,
-                children: [
-                    {
-                        id: RouteIds.Dialog,
-                        path: ':dialogId',
-                        element: component
-                    }
-                ]
-            }
-        ],
-        { initialEntries }
+const MemoryRouterMedBareDialogTrad = () => {
+    return (
+        <SimpleRouterWithoutProvider initialEntries={['/2']}>
+            <DialogTrad />
+        </SimpleRouterWithoutProvider>
     );
-const memoryRouterMedDialogListe = singleComponentRouter(<DialogListe />);
-const memoryRouterMedDialogTrad = singleComponentRouter(<DialogTrad />, ['/1']);
-const memoryRouterMedDialogOversikt = singleComponentRouter(<DialogOversikt />);
-const MemoryRouterMedBareDialogListe = () => <RouterProvider router={memoryRouterMedDialogListe} />;
-const MemoryRouterMedBareDialogTrad = () => <RouterProvider router={memoryRouterMedDialogTrad} />;
-const MemoryRouterMedBareDialogOversikt = () => <RouterProvider router={memoryRouterMedDialogOversikt} />;
+};
+const MemoryRouterMedBareDialogListe = () => (
+    <SimpleRouterWithoutProvider initialEntries={['/2']}>
+        <DialogListe />
+    </SimpleRouterWithoutProvider>
+);
+const MemoryRouterMedBareDialogOversikt = () => (
+    <SimpleRouterWithoutProvider initialEntries={['/2']}>
+        <DialogOversikt />
+    </SimpleRouterWithoutProvider>
+);
 
 const rootLoaderData = {
     dialoger: Promise.resolve([])

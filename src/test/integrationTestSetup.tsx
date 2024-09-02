@@ -1,6 +1,6 @@
-import { createMemoryRouter, RouterProvider } from 'react-router';
-import { dialogRoutes } from '../routing/routes';
-import React from 'react';
+import { createMemoryRouter, Outlet, RouterProvider } from 'react-router';
+import { dialogRoutes, RouteIds } from '../routing/routes';
+import React, { ReactElement } from 'react';
 import { Provider } from '../view/Provider';
 import { setupServer } from 'msw/node';
 import { handlers } from '../mock/handlers';
@@ -29,5 +29,36 @@ const AllRoutesInMemory = ({
     initialEntries: string[] | undefined;
 }) => {
     const router = createMemoryRouter(dialogRoutes(fnr), { initialEntries });
+    return <RouterProvider router={router} />;
+};
+
+export const SimpleRouterWithoutProvider = ({
+    initialEntries,
+    children
+}: {
+    children: ReactElement;
+    initialEntries: string[] | undefined;
+}) => {
+    const router = createMemoryRouter(
+        [
+            {
+                id: RouteIds.Root,
+                path: '*',
+                element: (
+                    <div>
+                        <Outlet />
+                    </div>
+                ),
+                children: [
+                    {
+                        id: RouteIds.Dialog,
+                        path: ':dialogId',
+                        element: children
+                    }
+                ]
+            }
+        ],
+        { initialEntries }
+    );
     return <RouterProvider router={router} />;
 };
