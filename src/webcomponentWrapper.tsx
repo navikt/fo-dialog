@@ -6,6 +6,7 @@ import App from './App';
 import globalCss from './global.css?inline';
 import dialogOversiktStyles from './view/dialogliste/DialogPreview.module.css?inline';
 import { useFnrStore } from './fnrStore';
+import { createBrowserRouter } from 'react-router-dom';
 
 export class DabDialog extends HTMLElement {
     setFnr?: (fnr: string) => void;
@@ -30,7 +31,7 @@ export class DabDialog extends HTMLElement {
             const root = createRoot(appRoot);
             root.render(
                 <ModalProvider rootElement={shadowDomFirstChild}>
-                    <App />
+                    <App createRouter={createBrowserRouter} />
                 </ModalProvider>
             );
         } catch (e) {

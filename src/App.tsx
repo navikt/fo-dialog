@@ -8,10 +8,12 @@ import StatusAdvarsel from './view/statusAdvarsel/StatusAdvarsel';
 import { Routes } from './routes';
 import { useShallow } from 'zustand/react/shallow';
 import { useFnrStore } from './fnrStore';
+import { createBrowserRouter } from 'react-router-dom';
 
 interface Props {
     enhet?: string;
     visAktivitetDefault?: boolean;
+    createRouter: typeof createBrowserRouter;
 }
 
 const App = (props: Props) => {
@@ -27,7 +29,7 @@ const App = (props: Props) => {
                     'max-h-[calc(100vh-80px)] min-h-[calc(100vh-80px)]': !erInternFlate
                 })}
             >
-                <Routes />
+                <Routes createRouter={props.createRouter} />
             </div>
         </Provider>
     );
