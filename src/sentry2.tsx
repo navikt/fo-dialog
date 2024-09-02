@@ -7,7 +7,7 @@ import {
     useLocation,
     useNavigationType
 } from 'react-router-dom';
-import { browserTracingIntegration } from '@sentry/react';
+import { browserTracingIntegration, captureConsoleIntegration } from '@sentry/react';
 
 export enum Env {
     Local = 'local',
@@ -42,12 +42,12 @@ Sentry.init({
             // /(\.dev)?nav.no\/veilarbaktivitet/,
             // /(\.dev)?nav.no\/veilarblest/,
             // ]
+        }),
+        captureConsoleIntegration({
+            // array of methods that should be captured
+            // defaults to ['log', 'info', 'warn', 'error', 'debug', 'assert']
+            levels: ['warn', 'error']
         })
-        // captureConsoleIntegration({
-        // array of methods that should be captured
-        // defaults to ['log', 'info', 'warn', 'error', 'debug', 'assert']
-        // levels: ['warn', 'error']
-        // })
     ],
     allowUrls: [/https?:\/\/(cdn\.)?(ekstern\.)?(dev\.)?nav\.no/],
     environment: getEnv(),
