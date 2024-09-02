@@ -6,7 +6,7 @@ metadata:
   labels:
     team: pto
 spec:
-  image: ghcr.io/navikt/poao-frontend/poao-frontend:2023.04.14_11.14-66f2c0b9e68b
+  image: europe-north1-docker.pkg.dev/nais-management-233d/poao/poao-frontend:2024.05.07_13.29-a2e3b56408a1
   port: 8080
   liveness:
     path: /internal/alive
@@ -25,16 +25,24 @@ spec:
     requests:
       cpu: 500m
       memory: 512Mi
+  observability:
+    autoInstrumentation:
+      enabled: true
+      runtime: nodejs
   ingresses:
     - https://www.nav.no/arbeid/dialog
   accessPolicy:
     outbound:
       external:
-        - host: veilarbdialog.prod-fss-pub.nais.io
         - host: veilarboppfolging.prod-fss-pub.nais.io
         - host: veilarbaktivitet.prod-fss-pub.nais.io
         - host: veilarbperson.prod-fss-pub.nais.io
         - host: veilarbveileder.prod-fss-pub.nais.io
+      rules:
+        - application: veilarbaktivitet
+          namespace: dab
+        - application: veilarbdialog
+          namespace: dab
   idporten:
     enabled: true
     sidecar:
@@ -73,8 +81,8 @@ spec:
             }
           },
           "proxies": [
-            { "fromPath": "/veilarbaktivitet", "toUrl": "https://veilarbaktivitet.prod-fss-pub.nais.io/veilarbaktivitet", "toApp": {"name": "veilarbaktivitet", "namespace": "pto", "cluster": "prod-fss" } },
-            { "fromPath": "/veilarbdialog", "toUrl": "https://veilarbdialog.prod-fss-pub.nais.io/veilarbdialog", "toApp": {"name": "veilarbdialog", "namespace": "pto", "cluster": "prod-fss" } },
+            { "fromPath": "/veilarbaktivitet", "toUrl": "http://veilarbaktivitet.dab/veilarbaktivitet", "toApp": {"name": "veilarbaktivitet", "namespace": "dab", "cluster": "prod-gcp" } },
+            { "fromPath": "/veilarbdialog", "toUrl": "http://veilarbdialog.dab/veilarbdialog", "toApp": {"name": "veilarbdialog", "namespace": "dab", "cluster": "prod-gcp" } },
             { "fromPath": "/veilarboppfolging", "toUrl": "https://veilarboppfolging.prod-fss-pub.nais.io/veilarboppfolging", "toApp": {"name": "veilarboppfolging", "namespace": "pto", "cluster": "prod-fss" } }
           ]
         }

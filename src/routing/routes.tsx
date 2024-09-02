@@ -112,7 +112,7 @@ export const dialogRoutes = (fnr: string | undefined): RouteObject[] => [
     }
 ];
 
-export const Routes = () => {
+export const Routes = ({ createRouter }: { createRouter: typeof createBrowserRouter }) => {
     const fnr = useFnrContext();
     if (USE_HASH_ROUTER) {
         const hashRouter = createHashRouter(dialogRoutes(fnr));
@@ -124,6 +124,6 @@ export const Routes = () => {
     }
     let basename = stripTrailingSlash(import.meta.env.BASE_URL);
     if (erInternFlate) basename = `/dialog`;
-    const browserRouter = createBrowserRouter(dialogRoutes(fnr), { basename });
+    const browserRouter = createRouter(dialogRoutes(fnr), { basename });
     return <RouterProvider router={browserRouter} />;
 };

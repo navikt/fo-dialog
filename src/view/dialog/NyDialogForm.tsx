@@ -1,6 +1,6 @@
 import { zodResolver } from '@hookform/resolvers/zod';
 import { Alert, Button, GuidePanel, TextField, Textarea } from '@navikt/ds-react';
-import React, { useEffect, useRef, useState } from 'react';
+import React, { FocusEventHandler, useEffect, useRef, useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { useNavigate } from 'react-router';
 import { z } from 'zod';
@@ -17,18 +17,6 @@ import { useDialogStore } from '../dialogProvider/dialogStore';
 import { useShallow } from 'zustand/react/shallow';
 import useKansendeMelding from '../../utils/UseKanSendeMelding';
 
-const maxMeldingsLengde = 5000;
-
-const schema = z.object({
-    tema: z.string().min(1, 'Du må skrive et tema for dialogen').max(100, 'Tema kan ikke være mer enn 100 tegn'),
-    melding: z
-        .string()
-        .min(1, 'Du må skrive en melding')
-        .max(maxMeldingsLengde, `Meldingen kan ikke være mer enn ${maxMeldingsLengde}`)
-});
-
-export type NyDialogFormValues = z.infer<typeof schema>;
-
 interface Props {
     defaultTema: string;
     aktivitetId?: string;
@@ -43,7 +31,6 @@ const NyDialogForm = (props: Props) => {
     const { dialogRoute, baseRoute } = useRoutes();
     const [noeFeilet, setNoeFeilet] = useState(false);
     const startTekst = useMeldingStartTekst();
-
     const fnr = useFnrContext();
     const { kladder, oppdaterKladd, slettKladd } = useDialogStore(
         useShallow((store) => ({
@@ -59,6 +46,21 @@ const NyDialogForm = (props: Props) => {
         tema: kladd?.overskrift ?? cutStringAtLength(defaultTema, 100, '...'),
         melding: !!kladd?.tekst ? kladd.tekst : startTekst
     };
+
+    const maxMeldingsLengde = 5000;
+
+    const schema = z.object({
+        tema: z.string().min(1, 'Du må skrive et tema for dialogen').max(100, 'Tema kan ikke være mer enn 100 tegn'),
+        melding: z
+            .string()
+            .min(1, 'Du må skrive en melding')
+            .max(maxMeldingsLengde, `Meldingen kan ikke være mer enn ${maxMeldingsLengde}`)
+            .refine((melding) => melding !== startTekst, {
+                message: 'Du må fylle ut en melding'
+            })
+    });
+
+    type NyDialogFormValues = z.infer<typeof schema>;
 
     const {
         trigger,
@@ -123,6 +125,17 @@ const NyDialogForm = (props: Props) => {
         }
     }, [melding, tema, dirtyFields]);
 
+    useEffect(() => {
+        if (!autoFocusTema) {
+            const textarea = document.querySelector('textarea[name="melding"]') as HTMLTextAreaElement;
+            if (textarea) {
+                textarea.focus();
+                textarea.selectionStart = 0;
+                textarea.selectionEnd = 0;
+            }
+        }
+    }, []);
+
     const onSubmit = (data: NyDialogFormValues) => {
         const { tema, melding } = data;
 
@@ -142,6 +155,13 @@ const NyDialogForm = (props: Props) => {
     };
 
     const bigScreen = window.innerWidth >= 768;
+
+    const onfocusMeldingInput: FocusEventHandler<HTMLTextAreaElement> = (event) => {
+        if (!erVeileder) return;
+        if (melding !== startTekst) return;
+        event.target.selectionStart = 0;
+        event.target.selectionEnd = 0;
+    };
 
     return (
         <div className="relative h-full w-full overflow-scroll bg-gray-100 lg:max-w-lgContainer xl:max-w-none">
@@ -173,6 +193,7 @@ const NyDialogForm = (props: Props) => {
                     {...register('melding')}
                     error={errors.melding && errors.melding.message}
                     autoFocus={!autoFocusTema}
+                    onFocus={onfocusMeldingInput}
                 />
 
                 {noeFeilet ? (

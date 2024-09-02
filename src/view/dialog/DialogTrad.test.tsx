@@ -41,19 +41,4 @@ describe('DialogTrad', () => {
         getByText('Er du fornøyd med oppgfølgingen?');
         getByText('Sånn passe.');
     });
-
-    it('should display dialog-state from backend', async () => {
-        const { getByLabelText, getByText } = await act(() =>
-            render(
-                <Provider visAktivitetDefault={false} fnr={fnr} erVeileder={!!fnr}>
-                    <RouterProvider router={memoryRouter()} />
-                </Provider>
-            )
-        );
-        await waitFor(() => getByText('Avklaring: Avklaring'));
-        await act(async () => getByText('Avklaring: Avklaring').click());
-        await waitFor(async () => getByLabelText('Skriv om arbeid og oppfølging', { selector: 'textarea' }));
-        getByText('Er du fornøyd med oppgfølgingen?');
-        getByText('Sånn passe.');
-    });
 });

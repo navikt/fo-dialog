@@ -5,15 +5,19 @@ import { erInternFlate } from './constants';
 import { UppdateEventHandler } from './utils/UpdateEvent';
 import { Provider } from './view/Provider';
 import { Routes } from './routing/routes';
+import { useShallow } from 'zustand/react/shallow';
+import { useFnrStore } from './fnrStore';
+import { createBrowserRouter } from 'react-router-dom';
 
 interface Props {
-    fnr?: string;
     enhet?: string;
     visAktivitetDefault?: boolean;
+    createRouter: typeof createBrowserRouter;
 }
 
 const App = (props: Props) => {
-    const { fnr, visAktivitetDefault } = props;
+    const { visAktivitetDefault } = props;
+    const fnr = useFnrStore(useShallow((state) => state.fnr));
     return (
         <Provider visAktivitetDefault={visAktivitetDefault} fnr={fnr} erVeileder={!!fnr}>
             <UppdateEventHandler />
@@ -23,7 +27,7 @@ const App = (props: Props) => {
                     'max-h-[calc(100vh-80px)] min-h-[calc(100vh-80px)]': !erInternFlate
                 })}
             >
-                <Routes />
+                <Routes createRouter={props.createRouter} />
             </div>
         </Provider>
     );
