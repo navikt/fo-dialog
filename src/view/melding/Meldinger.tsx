@@ -5,7 +5,6 @@ import { compareDates } from '../../utils/Date';
 import { DialogData, MeldingsData, StringOrNull } from '../../utils/Typer';
 import DialogSendtBekreftelse from '../dialog/DialogSendtBekreftelse';
 import LestAvTidspunkt from '../lest/LestTidspunkt';
-import { useSkjulHodefotForMobilVisning } from '../utils/useSkjulHodefotForMobilVisning';
 import { Melding } from './Melding';
 
 interface Props {
@@ -26,8 +25,6 @@ export function Meldinger(props: Props) {
     const { lestAvBrukerTidspunkt, henvendelser } = props.dialogData;
     const meldingListRef = useRef<HTMLElement>(null);
     const sorterteHenvendelser = !!henvendelser ? henvendelser.sort((a, b) => compareDates(b.sendt, a.sendt)) : [];
-
-    useSkjulHodefotForMobilVisning();
 
     useEffect(() => {
         requestAnimationFrame(() => {

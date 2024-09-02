@@ -3,10 +3,8 @@ import classNames from 'classnames';
 import React, { useLayoutEffect } from 'react';
 
 import dialogStyle from '../dialog/Dialog.module.less';
-import { useSkjulHodefotForMobilVisning } from '../utils/useSkjulHodefotForMobilVisning';
 
 export function InfoOmDialogSide() {
-    useSkjulHodefotForMobilVisning();
     useLayoutEffect(() => {
         document.getElementById('om-dialog')?.focus();
     });

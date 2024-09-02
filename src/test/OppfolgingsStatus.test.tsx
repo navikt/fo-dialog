@@ -1,10 +1,12 @@
 import { createMemoryRouter, RouterProvider } from 'react-router';
 import { RouteIds } from '../routing/routes';
 import AppBody from '../view/AppBody';
-import { describe } from 'vitest';
+import { describe, expect } from 'vitest';
 import React from 'react';
 import { gitt } from './mockUtils';
 import { act, render } from '@testing-library/react';
+import { fetchData } from '../utils/Fetch';
+import { OppfolgingsApi } from '../api/UseApiBasePath';
 
 const singleComponentRouter = (initialEntries: string[] | undefined = undefined) =>
     createMemoryRouter(
@@ -85,6 +87,17 @@ describe('Statusadvarsler', () => {
             gitt.bruker().som.harIngenDialog().som.harBrukerUnderOppfølgingMenManuell();
             const { getByText } = await act(() => render(<MemoryRouterMedBareDialogOversikt />));
             getByText('Du har ikke digital oppfølging fra NAV. Du kan derfor ikke ha digital dialog med veileder');
+        });
+
+        it('bruker under oppf. men manuell kan endre til digital oppfølging', async () => {
+            vi.mock('../utils/Fetch', () => ({
+                fetchData: vi.fn(() => new Promise((resolve) => resolve(undefined)))
+            }));
+            gitt.bruker().som.harIngenDialog().som.harBrukerUnderOppfølgingMenManuell();
+            const { getByText } = await act(() => render(<MemoryRouterMedBareDialogOversikt />));
+            const button = getByText('Endre til digital oppfølging');
+            button.click();
+            expect(fetchData).toHaveBeenCalledWith(OppfolgingsApi.settDigigtal, { method: 'POST' });
         });
     });
 

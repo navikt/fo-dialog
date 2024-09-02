@@ -3,8 +3,7 @@ import { useLocation, useParams } from 'react-router';
 
 import { DialogData } from '../../utils/Typer';
 import { MaybeAktivitet, findAktivitet, useAktivitetContext } from '../AktivitetProvider';
-import { useDialogContext, useDialoger } from '../DialogProvider';
-import { useEffect, useMemo } from 'react';
+import { useDialoger } from '../DialogProvider';
 
 function getFirst(maybeArray: string | (string | null)[]): string | undefined {
     if (Array.isArray(maybeArray)) {

@@ -13,8 +13,6 @@ import { Button, GuidePanel, Textarea, TextField } from '@navikt/ds-react';
 import { useErVeileder } from '../Provider';
 
 export default function NyDialogTrad() {
-    useSkjulHodefotForMobilVisning();
-
     const aktivitetId: StringOrUndefined = useAktivitetId();
     const aktivitetData = useAktivitetContext();
     const aktivitet: MaybeAktivitet = findAktivitet(aktivitetData, aktivitetId);
