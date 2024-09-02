@@ -38,7 +38,11 @@ export default defineConfig(({ mode }) => {
             environment: 'jsdom',
             include: ['**/*.test.ts', '**/*.test.tsx'],
             globals: true,
-            setupFiles: ['./src/test/setup.tsx']
+            setupFiles: ['./src/test/setup.tsx'],
+            coverage: {
+                provider: 'v8',
+                include: ['src']
+            }
         }
     };
 });
