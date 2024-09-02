@@ -7,6 +7,7 @@ import StatusAdvarsel from '../view/statusAdvarsel/StatusAdvarsel';
 import { UppdateEventHandler } from '../utils/UpdateEvent';
 import cx from 'classnames';
 import { Routes } from '../routes';
+import { createMemoryRouter } from 'react-router';
 
 interface PageProps {
     visAktivitet?: boolean;
@@ -33,7 +34,7 @@ export const Page: React.FC<PageProps> = (props) => {
                         // 'max-h-[calc(100vh-80px)] min-h-[calc(100vh-80px)]': !erInternFlate
                     })}
                 >
-                    <Routes />
+                    <Routes createRouter={createMemoryRouter} />
                 </div>
             </Provider>
         </>

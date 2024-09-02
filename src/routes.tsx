@@ -8,7 +8,6 @@ import React from 'react';
 import { erInternFlate, USE_HASH_ROUTER } from './constants';
 import { createBrowserRouter, createHashRouter, useSearchParams } from 'react-router-dom';
 import { stripTrailingSlash } from './api/UseApiBasePath';
-import { Router } from '@sentry/react/build/types/types';
 
 const aktivitetQuery = (aktivitetId?: string) => (aktivitetId ? `?aktivitetId=${aktivitetId}` : '');
 
