@@ -15,8 +15,8 @@ export const getEnv = (): Env => {
 };
 
 const endpoint = {
-    [Env.Dev]: 'https://telemetry.nav.no/collect',
-    [Env.Prod]: 'https://telemetry.ekstern.dev.nav.no/collect',
+    [Env.Prod]: 'https://telemetry.nav.no/collect',
+    [Env.Dev]: 'https://telemetry.ekstern.dev.nav.no/collect',
     [Env.Local]: 'http://localhost:12347/collect'
 };
 
