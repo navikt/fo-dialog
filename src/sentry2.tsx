@@ -49,7 +49,14 @@ Sentry.init({
             levels: ['warn', 'error']
         })
     ],
-    allowUrls: [/https?:\/\/(cdn\.)?(ekstern\.)?(dev\.)?nav\.no/],
+    // tracePropagationTargets: [
+    //     'nav.no',
+    //     /(\.dev)?nav.no\/veilarbdialog/,
+    //     /(\.dev)?nav.no\/veilarboppfolging/,
+    //     /(\.dev)?nav.no\/veilarbaktivitet/,
+    //     /(\.dev)?nav.no\/veilarblest/
+    // ],
+    // allowUrls: [/https?:\/\/(cdn\.)?(ekstern\.)?(dev\.)?nav\.no/],
     environment: getEnv(),
     enabled: getEnv() !== Env.Local,
     ignoreErrors: [
