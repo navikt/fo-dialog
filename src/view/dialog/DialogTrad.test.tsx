@@ -25,7 +25,7 @@ describe('DialogTrad', () => {
     afterEach(() => server.resetHandlers());
 
     it('should display state from backend if no kladd', async () => {
-        const { getByLabelText, getByText } = await act(() => render(<App />));
+        const { getByLabelText, getByText } = await act(() => render(<App createRouter={createMemoryRouter} />));
         getByText('Avklaring: Avklaring');
         await act(() => getByText('Avklaring: Avklaring').click());
         getByLabelText('Skriv om arbeid og oppfølging');
