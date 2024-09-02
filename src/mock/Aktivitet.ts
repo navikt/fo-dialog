@@ -396,7 +396,7 @@ const midl_lonnstilsk = {
     type: AktivitetTypes.EKSTERN_AKTIVITET,
     fraDato: '2019-08-14T00:00:00+02:00',
     lenke: null,
-    beskrivelse: 'Ekstern aktivitet beskrivelse aaaaa aaaa aa.',
+    beskrivelse: 'Ekstern aktivitet https://www.lol.no/?redirect=https://lol.no beskrivelse aaaaa aaaa aa.',
     status: AktivitetStatus.GJENNOMFORES,
     opprettetDato: '2020-05-31T10:46:51.622+01:00',
     endretDato: '2020-09-30T10:46:51.622+01:00',

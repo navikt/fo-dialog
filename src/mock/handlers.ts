@@ -26,7 +26,7 @@ export const jsonResponse = (
         if (typeof response === 'function') {
             return HttpResponse.json(await response(request, params));
         }
-        await delay(1000);
+        // await delay(1000);
         return HttpResponse.json(response);
     };
 };
@@ -40,7 +40,7 @@ const failOrGetResponse = (
         if (shouldFail()) {
             return internalServerError;
         }
-        await delay(delayMs);
+        // await delay(delayMs);
         return HttpResponse.json(await successFn(request));
     };
 };

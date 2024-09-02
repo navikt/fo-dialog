@@ -96,7 +96,7 @@ const underOppfølgingMenKanIkkeVarsles = {
 const ingenDialoger = [] as DialogData[];
 export const dialoger = [
     {
-        id: '1',
+        id: '2',
         aktivitetId: '1',
         overskrift: 'Memes',
         sisteTekst: 'Hei. Hva er status her? Har du finnet Kaptain Sabeltann?',
