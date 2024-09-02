@@ -3,7 +3,6 @@ import { RouteIds } from '../routing/routes';
 import AppBody from '../view/AppBody';
 import { describe } from 'vitest';
 import React from 'react';
-import IkkeValgtDialogMelding from '../view/dialog/IkkeValgtDialogMelding';
 import { gitt } from './mockUtils';
 import { act, render } from '@testing-library/react';
 
@@ -13,18 +12,7 @@ const singleComponentRouter = (initialEntries: string[] | undefined = undefined)
             {
                 id: RouteIds.Root,
                 path: '*',
-                element: <AppBody />,
-                children: [
-                    {
-                        id: RouteIds.Dialog,
-                        path: ':dialogId',
-                        element: (
-                            <div className="flex min-h-0 flex-1">
-                                <IkkeValgtDialogMelding />
-                            </div>
-                        )
-                    }
-                ]
+                element: <AppBody />
             }
         ],
         { initialEntries }
