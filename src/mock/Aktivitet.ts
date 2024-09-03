@@ -98,7 +98,7 @@ export const stilingAktivitet: Aktivitet = {
     malid: null,
     oppfolgingsperiodeId: gjeldendeOppfolgingsPeriode.uuid
 };
-const samtalereferatAktivitet: Aktivitet = {
+export const samtalereferatAktivitet: Aktivitet = {
     adresse: null,
     ansettelsesforhold: null,
     antallStillingerIUken: null,
