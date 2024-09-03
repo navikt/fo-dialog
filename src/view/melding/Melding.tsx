@@ -1,5 +1,5 @@
 import { ExternalLinkIcon, PersonIcon } from '@navikt/aksel-icons';
-import { BodyShort, Chat } from '@navikt/ds-react';
+import { BodyShort, Chat, HStack } from '@navikt/ds-react';
 import React from 'react';
 
 import { ViktigMelding } from '../../felleskomponenter/etiketer/Etikett';
