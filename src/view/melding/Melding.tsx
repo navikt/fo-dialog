@@ -1,5 +1,5 @@
 import { ExternalLinkIcon, PersonIcon } from '@navikt/aksel-icons';
-import { BodyShort, Chat, HStack, VStack } from '@navikt/ds-react';
+import { BodyShort, Chat } from '@navikt/ds-react';
 import React from 'react';
 
 import { ViktigMelding } from '../../felleskomponenter/etiketer/Etikett';
@@ -7,7 +7,6 @@ import { formaterDateAndTime } from '../../utils/Date';
 import { MeldingsData } from '../../utils/Typer';
 import { useUserInfoContext } from '../BrukerProvider';
 import Markdown from 'react-markdown';
-import remarkGfm from 'remark-gfm';
 
 function accessibleText(erBruker: boolean, erMeldingFraBruker: boolean) {
     if (erMeldingFraBruker) {
@@ -59,7 +58,6 @@ export function Melding(props: Props) {
                                     )
                                 }}
                                 disallowedElements={['script']}
-                                remarkPlugins={[remarkGfm]}
                             >
                                 {tekst}
                             </Markdown>
