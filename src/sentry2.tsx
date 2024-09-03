@@ -60,10 +60,8 @@ Sentry.init({
     environment: getEnv(),
     enabled: getEnv() !== Env.Local,
     ignoreErrors: [
-        /^Failed to execute 'removeChild' on 'Node': The node to be removed is not a child of this node.$/,
-        /^Uventet feil fra dekoratøren: NotFoundError: Failed to execute 'removeChild' on 'Node': The node to be removed is not a child of this node. \[object Object]$/,
-        /^Uventet feil fra dekoratøren: NotFoundError: The object can not be found here. \[object Object]$/,
-        /^The object can not be found here.$/
+        /Ampltidude/
+        // /^Failed to execute 'removeChild' on 'Node': The node to be removed is not a child of this node.$/,
     ],
     // Set tracesSampleRate to 1.0 to capture 100%
     // of transactions for performance monitoring.
