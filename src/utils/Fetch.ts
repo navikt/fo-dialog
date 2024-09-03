@@ -28,9 +28,19 @@ export function fnrQuery(fnr?: string): string {
     return fnr ? `?fnr=${fnr}` : '';
 }
 
+export class UnautorizedError extends Error {
+    response: Response;
+    constructor(response: Response) {
+        super('Unauthorized request, session expired?');
+        this.response = response;
+    }
+}
 export function sjekkStatuskode(response: Response) {
     if (response.status >= 200 && response.status < 300 && response.ok) {
         return response;
+    }
+    if (response.status === 401) {
+        throw new UnautorizedError(response);
     }
     throw new Error(response.statusText || response.type);
 }

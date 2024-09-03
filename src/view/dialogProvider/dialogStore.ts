@@ -2,7 +2,7 @@ import { create } from 'zustand';
 import { Status } from '../../api/typer';
 import { DialogData, KladdData, SistOppdatert } from '../../utils/Typer';
 import { DialogState, isDialogReloading } from '../DialogProvider';
-import { fetchData } from '../../utils/Fetch';
+import { fetchData, UnautorizedError } from '../../utils/Fetch';
 import { DialogApi } from '../../api/UseApiBasePath';
 import { isAfter } from 'date-fns';
 import { devtools } from 'zustand/middleware';
@@ -132,13 +132,23 @@ export const useDialogStore = create(
                 closeWebsocket();
             },
             pollForChanges: async (fnr) => {
-                let { sistOppdatert: remoteSistOppdatert } = await fetchData<SistOppdatert>(DialogApi.sistOppdatert, {
-                    method: 'POST',
-                    body: !fnr ? undefined : JSON.stringify({ fnr })
-                });
-                const { silentlyHentDialoger, sistOppdatert: localSistOppdatert } = get();
-                if (!!remoteSistOppdatert && isAfter(remoteSistOppdatert, localSistOppdatert)) {
-                    await silentlyHentDialoger(fnr);
+                try {
+                    let { sistOppdatert: remoteSistOppdatert } = await fetchData<SistOppdatert>(
+                        DialogApi.sistOppdatert,
+                        {
+                            method: 'POST',
+                            body: !fnr ? undefined : JSON.stringify({ fnr })
+                        }
+                    );
+                    const { silentlyHentDialoger, sistOppdatert: localSistOppdatert } = get();
+                    if (!!remoteSistOppdatert && isAfter(remoteSistOppdatert, localSistOppdatert)) {
+                        await silentlyHentDialoger(fnr);
+                    }
+                } catch (e) {
+                    if (e instanceof UnautorizedError) {
+                    } else {
+                        console.error(e);
+                    }
                 }
             },
             updateDialogInDialoger: (dialog: DialogData): DialogData => {
