@@ -44,7 +44,8 @@ export default defineConfig(({ mode }) => {
             setupFiles: ['./src/test/setup.tsx'],
             coverage: {
                 provider: 'v8',
-                include: ['src']
+                include: ['src'],
+                exclude: ['src/mock', 'src/stories', 'src/**.test.ts', 'src/**/**.test.tsx']
             }
         }
     };
