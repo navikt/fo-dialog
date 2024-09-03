@@ -4,6 +4,9 @@ import * as DialogProvider from '../view/DialogProvider';
 import { Bruker, DialogData, OppfolgingData, PeriodeData } from '../utils/Typer';
 import { Status } from '../api/typer';
 import * as Provider from '../view/Provider';
+import { Aktivitet } from '../utils/aktivitetTypes';
+import * as AktivitetProvider from '../view/AktivitetProvider';
+import { AktivitetDataProviderType, useAktivitetContext } from '../view/AktivitetProvider';
 
 const testFnr = '01234567890';
 const veilederUserInfo: Bruker = { id: '010101', erVeileder: true, erBruker: false };
@@ -179,6 +182,24 @@ const harDialog = () => {
     vi.spyOn(DialogProvider, 'useDialoger').mockImplementation(() => dialoger);
     return { som: oppfolgingConfig };
 };
+const harDialogMedAktivitet = (aktivitet: Aktivitet) => {
+    const dialogWithAktivitet: DialogData[] = [
+        {
+            ...dialoger[0],
+            aktivitetId: aktivitet.id
+        }
+    ];
+    const aktivitetProvider: AktivitetDataProviderType = {
+        aktiviteterStatus: Status.OK,
+        aktiviteter: [aktivitet],
+        arenaAktiviteter: [],
+        arenaAktiviteterStatus: Status.OK
+    };
+    vi.spyOn(AktivitetProvider, 'useAktivitetDataProvider').mockImplementation(() => aktivitetProvider);
+    vi.spyOn(AktivitetProvider, 'useAktivitetContext').mockImplementation(() => aktivitetProvider);
+    vi.spyOn(DialogProvider, 'useDialoger').mockImplementation(() => dialogWithAktivitet);
+    return { som: oppfolgingConfig };
+};
 const harDialogSomVenterPåNav = () => {
     const dialogSomVenterPåNAV: DialogData[] = [
         {
@@ -209,6 +230,7 @@ const brukerTypeConfig = {
 const dialogerConfig = {
     harIngenDialog,
     harDialog,
+    harDialogMedAktivitet,
     harDialogSomVenterPåNav,
     harDialogSomIkkeErFerdigBehandlet
 };
