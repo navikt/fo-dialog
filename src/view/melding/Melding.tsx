@@ -59,7 +59,6 @@ export function Melding(props: Props) {
                                     )
                                 }}
                                 disallowedElements={['script']}
-                                remarkPlugins={[remarkGfm]}
                             >
                                 {tekst}
                             </Markdown>
