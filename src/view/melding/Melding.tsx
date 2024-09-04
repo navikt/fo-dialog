@@ -8,6 +8,7 @@ import { MeldingsData } from '../../utils/Typer';
 import { useUserInfoContext } from '../BrukerProvider';
 import Markdown from 'react-markdown';
 import remarkGfm from 'remark-gfm';
+import { linkifyToText } from './linkify';
 
 function accessibleText(erBruker: boolean, erMeldingFraBruker: boolean) {
     if (erMeldingFraBruker) {
@@ -60,7 +61,7 @@ export function Melding(props: Props) {
                                 }}
                                 disallowedElements={['script']}
                             >
-                                {tekst}
+                                {linkifyToText(tekst)}
                             </Markdown>
                         </span>
                     </div>
