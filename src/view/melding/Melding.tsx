@@ -7,6 +7,7 @@ import { formaterDateAndTime } from '../../utils/Date';
 import { MeldingsData } from '../../utils/Typer';
 import { useUserInfoContext } from '../BrukerProvider';
 import Markdown from 'react-markdown';
+import remarkGfm from 'remark-gfm';
 
 function accessibleText(erBruker: boolean, erMeldingFraBruker: boolean) {
     if (erMeldingFraBruker) {
@@ -58,6 +59,7 @@ export function Melding(props: Props) {
                                     )
                                 }}
                                 disallowedElements={['script']}
+                                remarkPlugins={[remarkGfm]}
                             >
                                 {tekst}
                             </Markdown>

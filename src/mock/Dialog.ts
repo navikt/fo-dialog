@@ -628,9 +628,9 @@ const dialoger: DialogData[] = [
                 lest: true,
                 viktig: false,
                 tekst: `Lenkene skal være klikkbare:
-                vg.no
-                https://www.vg.no
-                nwww.vg.no
+                nav.no
+                https://www.nav.no
+                www.nav.no
                 Hilsen F_994201 E_994201`
             }
         ],
