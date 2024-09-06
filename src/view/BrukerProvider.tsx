@@ -13,7 +13,6 @@ export interface BrukerDataProviderType {
     error?: string;
 }
 
-export const UserInfoContext = React.createContext<Bruker | null>(null);
 const apiUrl = OppfolgingsApi.me;
 
 export const useBrukerDataStore = createGenericStore(null as Bruker | null, () => fetchData<Bruker>(apiUrl));

@@ -537,7 +537,7 @@ const dialoger: DialogData[] = [
     },
     {
         id: '303',
-        overskrift: 'Avklaring',
+        overskrift: 'Ijobb',
         sisteTekst: 'Er du fornøyd med oppfølgingen?',
         sisteDato: '2023-09-01T11:52:20.615+01:00',
         opprettetDato: '2023-09-01T11:52:20.535+01:00',
@@ -547,7 +547,7 @@ const dialoger: DialogData[] = [
         ferdigBehandlet: true,
         lestAvBrukerTidspunkt: null,
         erLestAvBruker: false,
-        aktivitetId: 'EKSTERNAKTIVITET_4',
+        aktivitetId: 'IJOBB1',
         henvendelser: [
             {
                 id: '3001',

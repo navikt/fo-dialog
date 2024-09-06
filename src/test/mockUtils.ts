@@ -200,7 +200,7 @@ const harDialogMedAktivitet = (aktivitet: Aktivitet) => {
     vi.spyOn(DialogProvider, 'useDialoger').mockImplementation(() => dialogWithAktivitet);
     return { som: oppfolgingConfig };
 };
-const harDialogSomVenterPåNav = () => {
+const harDialogSomVenterPåBruker = () => {
     const dialogSomVenterPåNAV: DialogData[] = [
         {
             ...dialoger[0],
@@ -231,7 +231,7 @@ const dialogerConfig = {
     harIngenDialog,
     harDialog,
     harDialogMedAktivitet,
-    harDialogSomVenterPåNav,
+    harDialogSomVenterPåBruker,
     harDialogSomIkkeErFerdigBehandlet
 };
 const oppfolgingConfig = {

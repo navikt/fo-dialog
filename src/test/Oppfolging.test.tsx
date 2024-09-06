@@ -88,7 +88,7 @@ describe('<Dialog/>', () => {
         await waitFor(() => getByText('Venter på svar fra NAV'));
     });
     test('Veileder skal kunne fjerne "Venter på svar fra NAV" på brukere som er under oppf. men reservert i KRR og dialog venter på svar', async () => {
-        gitt.veileder().som.harDialogSomVenterPåNav().som.harBrukerUnderOppfølgingMenReservertIKRR();
+        gitt.veileder().som.harDialogSomVenterPåBruker().som.harBrukerUnderOppfølgingMenReservertIKRR();
         const { queryByRole, getByLabelText, queryByLabelText } = render(<MemoryRouterMedBareDialogTrad />);
         expect(queryByRole('form')).toBeNull();
         await waitFor(() => getByLabelText('Meldinger'));

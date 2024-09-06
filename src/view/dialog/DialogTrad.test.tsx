@@ -6,6 +6,7 @@ import { setupServer } from 'msw/node';
 import { handlers } from '../../mock/handlers';
 import { dialogRoutes } from '../../routing/routes';
 import { Provider } from '../Provider';
+import { ijobbAktivitet } from '../../mock/Aktivitet';
 
 const dialogId = '303';
 const fnr = undefined; // Brukerkontekst
@@ -35,8 +36,9 @@ describe('DialogTrad', () => {
                 </Provider>
             )
         );
-        await waitFor(() => getByText('Avklaring: Avklaring'));
-        await act(async () => getByText('Avklaring: Avklaring').click());
+        const dialogTittel = 'Jobb jeg har nå: LALALA';
+        await waitFor(() => getByText(dialogTittel));
+        await act(async () => getByText(dialogTittel).click());
         await waitFor(async () => getByLabelText('Skriv om arbeid og oppfølging', { selector: 'textarea' }));
         getByText('Er du fornøyd med oppgfølgingen?');
         getByText('Sånn passe.');
