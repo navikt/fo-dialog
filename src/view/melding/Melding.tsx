@@ -52,10 +52,13 @@ export function Melding(props: Props) {
                             <Markdown
                                 components={{
                                     a: ({ node, ...props }) => (
-                                        <HStack gap="1" align={'center'}>
+                                        <span className="inline-flex items-center">
                                             <a {...props} target="_blank" rel="noopener noreferrer" />
-                                            <ExternalLinkIcon aria-label="Lenke åpnes i ny fane" />
-                                        </HStack>
+                                            <ExternalLinkIcon
+                                                className="ml-1 inline-block"
+                                                aria-label="Lenke åpnes i ny fane"
+                                            />
+                                        </span>
                                     )
                                 }}
                                 disallowedElements={['script']}
