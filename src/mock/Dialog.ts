@@ -686,7 +686,7 @@ export function setFerdigBehandlet(req: StrictRequest<DefaultBodyType>, params: 
 
 export const opprettDialogEtterRender = () => {
     setTimeout(() => {
-        const dialogId = Math.floor(Math.random() * 100);
+        const dialogId = '909';
         const nyDialog: DialogData = {
             id: `${dialogId}`,
             overskrift: 'Sender denne mens du ser på :)',
