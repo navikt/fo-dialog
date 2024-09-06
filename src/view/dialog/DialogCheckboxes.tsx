@@ -39,7 +39,7 @@ const DialogCheckboxes = ({
                         value={'ferdigBehandlet'}
                         size="small"
                         className="pr-4"
-                        disabled={venterPaSvarDisabled || loading}
+                        disabled={ferdigBehandletDisabled || loading}
                         onChange={() => toggleFerdigBehandlet(!ferdigBehandlet)}
                     >
                         Venter på svar fra NAV
@@ -48,7 +48,7 @@ const DialogCheckboxes = ({
                         value={'venterPaSvar'}
                         size="small"
                         className="pr-8"
-                        disabled={ferdigBehandletDisabled || loading}
+                        disabled={venterPaSvarDisabled || loading}
                         onChange={() => toggleVenterPaSvar(!venterPaSvar)}
                     >
                         Venter på svar fra bruker
@@ -83,8 +83,8 @@ const ManagedDialogCheckboxes = () => {
     const burdeKunneSetteFerdigBehandlet = !dialog.ferdigBehandlet && !kansendeMelding;
     const burdeKunneFjerneVenterPaSvar = dialog.venterPaSvar && !kansendeMelding;
     const ikkeUnderOppfolging = !oppfolgingData?.underOppfolging;
-    const venterPaSvarDisabled = dialog.historisk || (!kansendeMelding && !burdeKunneFjerneVenterPaSvar);
-    const ferdigBehandletDisabled = dialog.historisk || (!kansendeMelding && !burdeKunneSetteFerdigBehandlet);
+    const venterPaSvarDisabled = (!kansendeMelding || dialog.historisk) && !burdeKunneFjerneVenterPaSvar;
+    const ferdigBehandletDisabled = (!kansendeMelding || dialog.historisk) && !burdeKunneSetteFerdigBehandlet;
 
     const values = [
         !dialog.ferdigBehandlet ? ('ferdigBehandlet' as const) : undefined,

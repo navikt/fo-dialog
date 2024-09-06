@@ -92,16 +92,16 @@ describe('<Dialog/>', () => {
         const { queryByRole, getByLabelText, queryByLabelText } = render(<MemoryRouterMedBareDialogTrad />);
         expect(queryByRole('form')).toBeNull();
         await waitFor(() => getByLabelText('Meldinger'));
-        expect(queryByLabelText('Venter på svar fra NAV')).not.toBeDisabled();
-        expect(queryByLabelText('Venter på svar fra bruker')).toBeDisabled();
+        expect(queryByLabelText('Venter på svar fra NAV')).toBeDisabled();
+        expect(queryByLabelText('Venter på svar fra bruker')).not.toBeDisabled();
     });
     test('Veileder skal kunne endre "Venter på svar fra Bruker" på bruker under oppf. men reservet i KRR og dialog ikke er ferdig behandlet', async () => {
         gitt.veileder().som.harDialogSomIkkeErFerdigBehandlet().som.harBrukerUnderOppfølgingMenReservertIKRR();
         const { queryByRole, getByLabelText, queryByLabelText } = render(<MemoryRouterMedBareDialogTrad />);
         expect(queryByRole('form')).toBeNull();
         await waitFor(() => getByLabelText('Meldinger'));
-        expect(queryByLabelText('Venter på svar fra NAV')).toBeDisabled();
-        expect(queryByLabelText('Venter på svar fra bruker')).not.toBeDisabled();
+        expect(queryByLabelText('Venter på svar fra NAV')).not.toBeDisabled();
+        expect(queryByLabelText('Venter på svar fra bruker')).toBeDisabled();
     });
     test('Veileder skal ikke kunne endre "Venter på svar fra Bruker" eller "Venter på svar fra NAV" på bruker under oppf. reservet i KRR hvis ferdigBehandlet og ikke venter på svar', async () => {
         gitt.veileder().som.harDialog().som.harBrukerUnderOppfølgingMenReservertIKRR();

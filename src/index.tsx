@@ -33,7 +33,15 @@ if (USE_MOCK) {
         document.getElementById('root')?.appendChild(webComponentTag);
     }
 
-    import('./mock').then(({ default: startWorker }) => startWorker()).then(() => renderApp(fnr));
+    import('./mock')
+        .then(({ default: startWorker }) => startWorker())
+        .then(() => {
+            if (fnr) {
+                exportToNavSpa();
+            } else {
+                renderAsRootApp(fnr);
+            }
+        });
 } else {
     initAmplitude();
     renderApp();

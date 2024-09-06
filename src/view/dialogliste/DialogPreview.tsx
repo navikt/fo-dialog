@@ -131,6 +131,8 @@ export function DialogPreviewListe({ dialoger, valgDialog }: ListeProps) {
             skalFadeIn = false;
         } else if (dialoger.length === antallDialoger + 1) {
             skalFadeIn = true;
+        } else {
+            skalFadeIn = false;
         }
         setAntallDialoger(dialoger.length);
     }, [dialoger]);
