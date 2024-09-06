@@ -4,7 +4,6 @@ import { StringOrUndefined } from '../../utils/Typer';
 import { getDialogTittel } from '../aktivitet/TextUtils';
 import { findAktivitet, MaybeAktivitet, useAktivitetContext } from '../AktivitetProvider';
 import { useAktivitetId } from '../utils/useAktivitetId';
-import { useSkjulHodefotForMobilVisning } from '../utils/useSkjulHodefotForMobilVisning';
 import { HandlingsType, useSetViewContext } from '../ViewState';
 import NyDialogForm from './NyDialogForm';
 import { Await } from 'react-router';
