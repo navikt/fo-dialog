@@ -6,7 +6,7 @@ import { fetchData, UnautorizedError } from '../../utils/Fetch';
 import { DialogApi } from '../../api/UseApiBasePath';
 import { isAfter } from 'date-fns';
 import { devtools } from 'zustand/middleware';
-import { EventType, closeWebsocket, listenForNyDialogEvents } from '../../api/nyDialogWs';
+import { closeWebsocket, EventType, listenForNyDialogEvents } from '../../api/nyDialogWs';
 import { useShallow } from 'zustand/react/shallow';
 import { hentDialogerGraphql } from './dialogGraphql';
 import { eqKladd, KladdStore } from '../KladdProvider';
@@ -107,7 +107,7 @@ export const useDialogStore = create(
                             return listenForNyDialogEvents(() => silentlyHentDialoger(fnr), fnr, [
                                 EventType.NY_DIALOGMELDING_FRA_BRUKER_TIL_NAV
                             ]);
-                        } catch (e) {
+                        } catch {
                             // Fallback to http-polling if anything fails
                             return pollOnGivenFnr();
                         }
@@ -145,8 +145,7 @@ export const useDialogStore = create(
                         await silentlyHentDialoger(fnr);
                     }
                 } catch (e) {
-                    if (e instanceof UnautorizedError) {
-                    } else {
+                    if (e! instanceof UnautorizedError) {
                         console.error(e);
                     }
                 }
@@ -194,8 +193,7 @@ export const useDialogStore = create(
 export const useHentDialoger = () => useDialogStore(useShallow((store) => store.hentDialoger));
 
 const onIntervalWithCleanup = (pollForChanges: () => Promise<void>) => {
-    let interval: NodeJS.Timeout;
-    interval = setInterval(() => {
+    const interval = setInterval(() => {
         pollForChanges().catch((e) => {
             console.error(e);
             clearInterval(interval);

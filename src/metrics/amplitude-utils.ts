@@ -1,7 +1,7 @@
 import * as amplitude from '@amplitude/analytics-browser';
+import { track } from '@amplitude/analytics-browser';
 
 import { APP_NAME, TEAM_NAME } from '../constants';
-import { track } from '@amplitude/analytics-browser';
 
 type EventDataValue = string | boolean | number | null | undefined;
 
@@ -26,7 +26,6 @@ export const logAmplitudeEvent = (eventName: string, data?: { [key: string]: Eve
         try {
             track(eventName, data);
         } catch (error) {
-             
             console.error(error);
         }
     });

@@ -4,6 +4,7 @@ import { HandlingsType, useViewContext } from '../../ViewState';
 import { MeldingFormValues } from './MeldingInputBox';
 import useMeldingStartTekst from '../UseMeldingStartTekst';
 import { useFnrContext } from '../../Provider';
+import { KladdData } from '../../../utils/Typer';
 
 export const maxMeldingsLengde = 5000;
 export const betterErrorMessage = (error: FieldError, melding: string): FieldError => {
@@ -16,14 +17,16 @@ export const betterErrorMessage = (error: FieldError, melding: string): FieldErr
     };
 };
 
+type KladdOppdateringData = KladdData & { fnr: string | undefined };
+
 export const debounced = <T extends Function>(
-    fn: T
+    fn: (data: KladdOppdateringData) => void
 ): { hasPendingTask: () => boolean; cleanup: () => void; invoke: T } => {
-    let timer: any | undefined;
-    const invoke = (...args: any): void => {
+    let timer: number | undefined;
+    const invoke = (data: KladdOppdateringData) => {
         clearTimeout(timer);
         timer = setTimeout(() => {
-            fn(...args);
+            fn(data);
             timer = undefined;
         }, 500);
     };

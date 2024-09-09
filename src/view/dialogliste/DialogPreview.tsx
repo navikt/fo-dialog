@@ -1,6 +1,6 @@
 import { BodyShort, Detail, Heading, LinkPanel } from '@navikt/ds-react';
 import classNames from 'classnames';
-import React, { useDeferredValue, useEffect, useRef, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { useNavigate } from 'react-router';
 import { useRoutes } from '../../routing/routes';
 import { Aktivitet, ArenaAktivitet } from '../../utils/aktivitetTypes';
@@ -62,7 +62,7 @@ function DialogPreview(props: Props) {
     const [skalScrolle, setSkalScrolle] = useState<boolean>(false);
 
     const { dialog, valgtDialogId } = props;
-    const { id, sisteDato, aktivitetId, lest, overskrift, historisk } = dialog;
+    const { id, sisteDato, aktivitetId, overskrift } = dialog;
     const detteErValgtDialog = id === valgtDialogId;
 
     useEventListener<TabChangeEvent>('veilarbpersonflatefs.tab-clicked', ({ detail: { tabId } }) => {

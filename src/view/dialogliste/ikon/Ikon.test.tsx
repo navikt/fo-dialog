@@ -23,7 +23,7 @@ const dialogUtenAktivitet: DialogData = {
 
 describe('Ikon (DialogPreviewIkon)', () => {
     it('dialog med aktivitet', () => {
-        const { getByLabelText } = render(<Ikon dialog={dialogUtenAktivitet} />);
+        render(<Ikon dialog={dialogUtenAktivitet} />);
     });
 
     it('dialog uten aktivitet', () => {
