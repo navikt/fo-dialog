@@ -63,22 +63,6 @@ export function Provider(props: Props) {
         });
     }, [klarTilAaPolle, fnr]);
 
-    // if (isDialogPending(dialogstatus) || isPending(brukerstatus) || isPending(oppfolgingstatus)) {
-    //     return (
-    //         <div className="flex flex-1 justify-center self-center">
-    //             <Loader size="3xlarge" />
-    //         </div>
-    //     );
-    // } else if (hasError(brukerstatus) || hasError(oppfolgingstatus) || hasDialogError(dialogstatus)) {
-    //     if (hasError(brukerstatus)) {
-    //         return <Alert variant="error">Kunne ikke hente brukerinfo. Prøv igjen senere.</Alert>;
-    //     }
-    //     if (hasError(oppfolgingstatus)) {
-    //         return <Alert variant="error">Kunne ikke hente oppfølgingstatus. Prøv igjen senere.</Alert>;
-    //     }
-    //     return <Alert variant="error">Kunne ikke hente dialoger. Prøv igjen senere.</Alert>;
-    // }
-
     return (
         <DialogContext.Provider value={dialogDataProvider}>
             <FNRContext.Provider value={fnr}>

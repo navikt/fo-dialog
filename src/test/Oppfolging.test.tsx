@@ -68,7 +68,7 @@ describe('<Dialog/>', () => {
         });
     });
     afterAll(() => {
-        vi.clearAllMocks;
+        vi.clearAllMocks();
         worker.close();
     });
 

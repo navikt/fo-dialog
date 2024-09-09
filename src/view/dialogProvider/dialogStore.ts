@@ -182,7 +182,6 @@ export const useDialogStore = create(
 );
 
 export const useHentDialoger = () => useDialogStore(useShallow((store) => store.hentDialoger));
-export const useHentDialogStatus = () => useDialogStore(useShallow((store) => store.status));
 
 const onIntervalWithCleanup = (pollForChanges: () => Promise<void>) => {
     let interval: NodeJS.Timeout;

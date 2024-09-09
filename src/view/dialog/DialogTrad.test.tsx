@@ -6,9 +6,7 @@ import { setupServer } from 'msw/node';
 import { handlers } from '../../mock/handlers';
 import { dialogRoutes } from '../../routing/routes';
 import { Provider } from '../Provider';
-import { ijobbAktivitet } from '../../mock/Aktivitet';
 
-const dialogId = '303';
 const fnr = undefined; // Brukerkontekst
 // Be careful to not create router before mockserver is running,
 // calling createMemoryRouter will create the component and fire the loaders

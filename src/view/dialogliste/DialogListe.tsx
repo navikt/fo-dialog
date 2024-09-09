@@ -50,7 +50,6 @@ function sortDialoger(a: DialogData, b: DialogData): number {
 const DialogListeFallback = () => {
     return (
         <div className="bg-green-300">
-            <div>QWERQWKJASDKJASKJ</div>
             <Loader />
         </div>
     );
