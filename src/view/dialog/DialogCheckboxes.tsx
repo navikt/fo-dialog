@@ -1,5 +1,5 @@
 import { Checkbox, CheckboxGroup } from '@navikt/ds-react';
-import React from 'react';
+import React, { useEffect } from 'react';
 import { Status } from '../../api/typer';
 import { notEmpty } from '../../utils/TypeHelper';
 import { useDialogContext } from '../DialogProvider';
@@ -9,6 +9,7 @@ import { useSelectedDialog } from '../utils/useAktivitetId';
 import { useUserInfoContext } from '../BrukerProvider';
 import { useHentDialoger } from '../dialogProvider/dialogStore';
 import useKansendeMelding from '../../utils/UseKanSendeMelding';
+import { DialogData } from '../../utils/Typer';
 
 interface Props {
     toggleFerdigBehandlet(ferdigBehandler: boolean): void;
@@ -59,18 +60,11 @@ const DialogCheckboxes = ({
     );
 };
 
-const ManagedDialogCheckboxes = () => {
+const ManagedDialogCheckboxes = ({ dialog }: { dialog: DialogData }) => {
     const visible = useUserInfoContext()?.erVeileder || false;
-    const dialog = useSelectedDialog();
     const fnr = useFnrContext();
     const hentDialoger = useHentDialoger();
     const dialogContext = useDialogContext();
-    const oppfolgingContext = useOppfolgingContext();
-    const oppfolgingData = dataOrUndefined(oppfolgingContext);
-
-    if (!visible || !dialog) {
-        return null;
-    }
 
     const toggleFerdigBehandlet = (ferdigBehandlet: boolean) => {
         dialogContext.setFerdigBehandlet(dialog, ferdigBehandlet).then(() => hentDialoger(fnr));
@@ -82,7 +76,6 @@ const ManagedDialogCheckboxes = () => {
     const kansendeMelding = useKansendeMelding();
     const burdeKunneSetteFerdigBehandlet = !dialog.ferdigBehandlet && !kansendeMelding;
     const burdeKunneFjerneVenterPaSvar = dialog.venterPaSvar && !kansendeMelding;
-    const ikkeUnderOppfolging = !oppfolgingData?.underOppfolging;
     const venterPaSvarDisabled = (!kansendeMelding || dialog.historisk) && !burdeKunneFjerneVenterPaSvar;
     const ferdigBehandletDisabled = (!kansendeMelding || dialog.historisk) && !burdeKunneSetteFerdigBehandlet;
 
@@ -92,6 +85,15 @@ const ManagedDialogCheckboxes = () => {
     ].filter(notEmpty);
 
     const laster = dialogContext.status === Status.PENDING || dialogContext.status === Status.RELOADING;
+
+    if (!visible || !dialog) {
+        console.log('Invisible');
+        return null;
+    }
+
+    if (ferdigBehandletDisabled || venterPaSvarDisabled) {
+        console.log('Disabled');
+    }
 
     return (
         <DialogCheckboxes

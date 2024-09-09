@@ -141,9 +141,11 @@ const MeldingInputBox = ({ dialog: valgtDialog }: Props) => {
         }
     }, [breakpoint, visAktivitet]);
 
-    if (!kanSendeHenveldelse && erVeileder) return <ManagedDialogCheckboxes />; //hvis bruker går inn uner krr eller manuel må veileder kunne fjerne venter på
+    if (!kanSendeHenveldelse && erVeileder) return <ManagedDialogCheckboxes dialog={valgtDialog} />; //hvis bruker går inn uner krr eller manuel må veileder kunne fjerne venter på
 
-    if (!kanSendeHenveldelse) return null;
+    if (!kanSendeHenveldelse) {
+        return null;
+    }
     return (
         <FormProvider {...formHandlers}>
             <MeldingInputContext.Provider value={args}>
