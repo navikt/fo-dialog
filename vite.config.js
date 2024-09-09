@@ -45,7 +45,14 @@ export default defineConfig(({ mode }) => {
             coverage: {
                 provider: 'v8',
                 include: ['src'],
-                exclude: ['src/mock', 'src/stories', 'src/**.test.ts', 'src/**/**.test.tsx']
+                exclude: [
+                    'src/mock',
+                    'src/stories',
+                    'src/**.test.ts',
+                    'src/**/**.test.tsx',
+                    'src/global.d.ts',
+                    'src/polyfill.ts'
+                ]
             }
         }
     };
