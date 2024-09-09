@@ -86,15 +86,6 @@ const ManagedDialogCheckboxes = ({ dialog }: { dialog: DialogData }) => {
 
     const laster = dialogContext.status === Status.PENDING || dialogContext.status === Status.RELOADING;
 
-    if (!visible || !dialog) {
-        console.log('Invisible');
-        return null;
-    }
-
-    if (ferdigBehandletDisabled || venterPaSvarDisabled) {
-        console.log('Disabled');
-    }
-
     return (
         <DialogCheckboxes
             values={values}
