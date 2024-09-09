@@ -84,7 +84,7 @@ export function useDialogDataProvider(): DialogDataProviderType {
             method: 'post',
             body: JSON.stringify(nyDialogData)
         }).then((dialog) => {
-            if (!!dialogId) {
+            if (dialogId) {
                 updateDialogInDialoger(dialog);
                 setOkStatus();
             } else {

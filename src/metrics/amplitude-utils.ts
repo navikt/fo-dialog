@@ -26,7 +26,7 @@ export const logAmplitudeEvent = (eventName: string, data?: { [key: string]: Eve
         try {
             track(eventName, data);
         } catch (error) {
-            // eslint-disable-next-line no-console
+             
             console.error(error);
         }
     });

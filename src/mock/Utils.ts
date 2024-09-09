@@ -2,7 +2,7 @@ import { USE_HASH_ROUTER } from '../constants';
 
 export function rndId() {
     const crypto: Crypto = window.crypto;
-    let array = new Uint32Array(1);
+    const array = new Uint32Array(1);
     crypto.getRandomValues(array);
 
     return `${Math.floor(array[0] % 100_000_000)}`;

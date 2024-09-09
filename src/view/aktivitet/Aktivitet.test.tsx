@@ -55,14 +55,14 @@ describe('aktivteter', () => {
     it('skal vise møteaktivitet', async () => {
         gitt.bruker().som.harDialogMedAktivitet(moteAktivitet);
         const { getAllByText } = await act(() => render(<MemoryRouterMedBareDialogTråd />));
-        getAllByText(moteAktivitet.beskrivelse!!);
-        getAllByText(moteAktivitet.tittel!!);
+        getAllByText(moteAktivitet.beskrivelse!);
+        getAllByText(moteAktivitet.tittel!);
     });
 
     it('skal vise samtalereferatAktivitet', async () => {
         gitt.bruker().som.harDialogMedAktivitet(samtalereferatAktivitet);
         const { getAllByText } = await act(() => render(<MemoryRouterMedBareDialogTråd />));
-        getAllByText(getKanalTekst(samtalereferatAktivitet.kanal!!));
+        getAllByText(getKanalTekst(samtalereferatAktivitet.kanal!));
         getAllByText('Vi ble enige om at det skal søkes'); // Tekst er splittet opp
         getAllByText('minst 5 stillinger i uken den første perioden');
         getAllByText(formaterDate(samtalereferatAktivitet.fraDato));
@@ -71,9 +71,9 @@ describe('aktivteter', () => {
     it('skal vise stilling fra nav aktivitet', async () => {
         gitt.bruker().som.harDialogMedAktivitet(stillingFraNav);
         const { getAllByText } = await act(() => render(<MemoryRouterMedBareDialogTråd />));
-        getAllByText(stillingFraNav.stillingFraNavData!!.arbeidsgiver!!);
-        getAllByText(stillingFraNav.stillingFraNavData!!.arbeidssted!!);
-        getAllByText(formaterDate(stillingFraNav.stillingFraNavData!!.svarfrist));
+        getAllByText(stillingFraNav.stillingFraNavData!.arbeidsgiver!);
+        getAllByText(stillingFraNav.stillingFraNavData!.arbeidssted!);
+        getAllByText(formaterDate(stillingFraNav.stillingFraNavData!.svarfrist));
         getAllByText('Venter på å bli kontaktet');
     });
 });

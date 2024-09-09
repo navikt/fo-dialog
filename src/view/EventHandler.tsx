@@ -31,9 +31,9 @@ export function EventHandler() {
     const { dialogRoute, nyRoute } = useRoutes();
     useEventListener<EventDetails>('visDialog', (event) => {
         const { dialogId, aktivitetId } = event.detail;
-        if (!!dialogId) {
+        if (dialogId) {
             navigate(dialogRoute(dialogId), { state: { sistHandlingsType: HandlingsType.ingen } });
-        } else if (!!aktivitetId) {
+        } else if (aktivitetId) {
             navigate(nyRoute(aktivitetId), { state: { sistHandlingsType: HandlingsType.ingen } });
         }
     });

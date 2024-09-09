@@ -44,7 +44,7 @@ const NyDialogForm = (props: Props) => {
 
     const defaultValues: NyDialogFormValues = {
         tema: kladd?.overskrift ?? cutStringAtLength(defaultTema, 100, '...'),
-        melding: !!kladd?.tekst ? kladd.tekst : startTekst
+        melding: kladd?.tekst ? kladd.tekst : startTekst
     };
 
     const maxMeldingsLengde = 5000;

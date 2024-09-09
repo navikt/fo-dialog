@@ -133,7 +133,7 @@ export const useDialogStore = create(
             },
             pollForChanges: async (fnr) => {
                 try {
-                    let { sistOppdatert: remoteSistOppdatert } = await fetchData<SistOppdatert>(
+                    const { sistOppdatert: remoteSistOppdatert } = await fetchData<SistOppdatert>(
                         DialogApi.sistOppdatert,
                         {
                             method: 'POST',

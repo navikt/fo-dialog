@@ -79,7 +79,7 @@ function DialogPreview(props: Props) {
 
     const aktivitetData = useAktivitetContext();
 
-    const datoString = !!sisteDato ? formaterDate(sisteDato) : '';
+    const datoString = sisteDato ? formaterDate(sisteDato) : '';
     const aktivitet = findAktivitet(aktivitetData, aktivitetId);
 
     const navigate = useNavigate();
