@@ -8,7 +8,7 @@ import { useUserInfoContext } from './BrukerProvider';
 import DialogOversikt from './dialogliste/DialogOversikt';
 import { EventHandler } from './EventHandler';
 import { useOppfolgingContext } from './OppfolgingProvider';
-import { dataOrUndefined, useErVeileder } from './Provider';
+import { dataOrUndefined } from './Provider';
 import { useRootLoaderData } from '../routing/loaders';
 import { RouteIds } from '../routing/routes';
 import classNames from 'classnames';

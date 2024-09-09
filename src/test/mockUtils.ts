@@ -6,7 +6,7 @@ import { Status } from '../api/typer';
 import * as Provider from '../view/Provider';
 import { Aktivitet } from '../utils/aktivitetTypes';
 import * as AktivitetProvider from '../view/AktivitetProvider';
-import { AktivitetDataProviderType, useAktivitetContext } from '../view/AktivitetProvider';
+import { AktivitetDataProviderType } from '../view/AktivitetProvider';
 
 const testFnr = '01234567890';
 const veilederUserInfo: Bruker = { id: '010101', erVeileder: true, erBruker: false };

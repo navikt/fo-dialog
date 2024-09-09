@@ -5,7 +5,6 @@ import {
     ijobbAktivitet,
     moteAktivitet,
     samtalereferatAktivitet,
-    stilingAktivitet,
     stillingFraNav
 } from '../../mock/Aktivitet';
 import { SimpleRouterWithoutProvider } from '../../test/integrationTestSetup';

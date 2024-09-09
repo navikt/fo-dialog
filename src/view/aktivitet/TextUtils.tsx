@@ -25,7 +25,7 @@ export function getStatusText(status: AktivitetStatus): string {
 
 export function getTypeTextByAktivitet(aktivitet: Aktivitet | ArenaAktivitet): string {
     if (aktivitet.type === AktivitetTypes.EKSTERN_AKTIVITET) {
-        return getTypeText(aktivitet.eksternAktivitet?.type!);
+        return aktivitet.eksternAktivitet?.type ? getTypeText(aktivitet.eksternAktivitet?.type) : 'Tiltak fra NAV';
     }
     return getTypeText(aktivitet.type);
 }

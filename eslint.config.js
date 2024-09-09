@@ -9,5 +9,5 @@ export default [
     pluginJs.configs.recommended,
     ...tseslint.configs.recommended,
     pluginReact.configs.flat.recommended,
-    { ignores: ['src/fellesikoner/'] }
+    { ignores: ['src/fellesikoner/', 'src/**/**.test.*'] }
 ];

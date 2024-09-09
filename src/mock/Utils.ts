@@ -1,5 +1,3 @@
-import { USE_HASH_ROUTER } from '../constants';
-
 export function rndId() {
     const crypto: Crypto = window.crypto;
     const array = new Uint32Array(1);

@@ -19,10 +19,10 @@ export const betterErrorMessage = (error: FieldError, melding: string): FieldErr
 
 type KladdOppdateringData = KladdData & { fnr: string | undefined };
 
-export const debounced = <T extends Function>(
+export const debounced = (
     fn: (data: KladdOppdateringData) => void
 ): { hasPendingTask: () => boolean; cleanup: () => void; invoke: T } => {
-    let timer: number | undefined;
+    let timer: NodeJS.Timeout | undefined;
     const invoke = (data: KladdOppdateringData) => {
         clearTimeout(timer);
         timer = setTimeout(() => {
@@ -45,7 +45,7 @@ export interface MeldingInputArgs {
     kladdErLagret: boolean;
 }
 export const MeldingInputContext = React.createContext<MeldingInputArgs>({
-    onSubmit: (e) => Promise.resolve(),
+    onSubmit: () => Promise.resolve(),
     noeFeilet: false,
     kladdErLagret: false
 });
@@ -55,8 +55,8 @@ export const useFocusBeforeHilsen = (textAreaRef: MutableRefObject<HTMLTextAreaE
     const hasFocus = useRef(false);
     useEffect(() => {
         if (textAreaRef.current === null) return;
-        const setHasFocusTrue = (ev: FocusEvent) => (hasFocus.current = true);
-        const setHasFocusFalse = (ev: FocusEvent) => (hasFocus.current = false);
+        const setHasFocusTrue = () => (hasFocus.current = true);
+        const setHasFocusFalse = () => (hasFocus.current = false);
         textAreaRef.current?.addEventListener('blur', setHasFocusFalse);
         textAreaRef.current?.addEventListener('focus', setHasFocusTrue);
     }, [textAreaRef.current]);
