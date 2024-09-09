@@ -11,17 +11,17 @@ const exportToNavSpa = () => {
     });
 };
 
-const renderAsRootApp = (fnr?: string) => {
+const renderAsRootApp = () => {
     import('./rootWrapper').then(({ renderAsReactRoot }) => {
-        renderAsReactRoot(fnr);
+        renderAsReactRoot();
     });
 };
 
-const renderApp = (fnr?: string) => {
+const renderApp = () => {
     if (['dev-intern', 'prod-intern'].includes(import.meta.env.MODE)) {
         exportToNavSpa();
     } else {
-        renderAsRootApp(fnr);
+        renderAsRootApp();
     }
 };
 
@@ -39,7 +39,7 @@ if (USE_MOCK) {
             if (fnr) {
                 exportToNavSpa();
             } else {
-                renderAsRootApp(fnr);
+                renderAsRootApp();
             }
         });
 } else {
