@@ -75,11 +75,14 @@ export const MeldingBottomInput = () => {
     const oppfolgingContext = useOppfolgingContext();
     const oppfolging = dataOrUndefined(oppfolgingContext);
     const dialog = useSelectedDialog();
-    if (!dialog) return null;
+    if (!dialog) {
+        console.log('Invisble');
+        return null;
+    }
     return (
         <section aria-label="Ny melding" className="flex justify-center border-t border-border-divider p-4">
             <div className="grow justify-self-center">
-                <ManagedDialogCheckboxes />
+                <ManagedDialogCheckboxes dialog={dialog} />
                 {!oppfolging?.underOppfolging || dialog.historisk ? null : <MeldingBottomInputInner />}
             </div>
         </section>

@@ -1,10 +1,9 @@
-import React, { useContext } from 'react';
+import React from 'react';
 
 import { VenterSvarFraBruker, VenterSvarFraNAV, ViktigMelding } from '../../felleskomponenter/etiketer/Etikett';
 import { DialogData, OppfolgingData } from '../../utils/Typer';
-import { UserInfoContext } from '../BrukerProvider';
 import { useOppfolgingContext } from '../OppfolgingProvider';
-import { dataOrUndefined } from '../Provider';
+import { dataOrUndefined, useErVeileder } from '../Provider';
 
 interface Props {
     dialog: DialogData;
@@ -22,20 +21,17 @@ function erViktig(dialog: DialogData, oppfolging?: OppfolgingData): boolean {
     return false;
 }
 
-export function EtikettListe(props: Props) {
-    const userInfo = useContext(UserInfoContext);
+export function EtikettListe({ dialog }: Props) {
+    const { historisk, ferdigBehandlet, venterPaSvar } = dialog;
+    const erVeileder = useErVeileder();
     const oppfolging = useOppfolgingContext();
 
-    if (props.dialog.historisk) {
+    if (historisk) {
         return null;
     }
 
-    const erVeileder = !!userInfo && userInfo.erVeileder;
-
-    const dialogErViktig = erViktig(props.dialog, dataOrUndefined(oppfolging));
-
-    const venterPaSvar = props.dialog.venterPaSvar;
-    const visVenterPaaNav = !!userInfo && !props.dialog.ferdigBehandlet && erVeileder;
+    const dialogErViktig = erViktig(dialog, dataOrUndefined(oppfolging));
+    const visVenterPaaNav = !ferdigBehandlet && erVeileder;
 
     return (
         <>

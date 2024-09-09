@@ -11,17 +11,17 @@ const exportToNavSpa = () => {
     });
 };
 
-const renderAsRootApp = (fnr?: string) => {
+const renderAsRootApp = () => {
     import('./rootWrapper').then(({ renderAsReactRoot }) => {
-        renderAsReactRoot(fnr);
+        renderAsReactRoot();
     });
 };
 
-const renderApp = (fnr?: string) => {
+const renderApp = () => {
     if (['dev-intern', 'prod-intern'].includes(import.meta.env.MODE)) {
         exportToNavSpa();
     } else {
-        renderAsRootApp(fnr);
+        renderAsRootApp();
     }
 };
 
@@ -33,7 +33,15 @@ if (USE_MOCK) {
         document.getElementById('root')?.appendChild(webComponentTag);
     }
 
-    import('./mock').then(({ default: startWorker }) => startWorker()).then(() => renderApp(fnr));
+    import('./mock')
+        .then(({ default: startWorker }) => startWorker())
+        .then(() => {
+            if (fnr) {
+                exportToNavSpa();
+            } else {
+                renderAsRootApp();
+            }
+        });
 } else {
     initAmplitude();
     renderApp();

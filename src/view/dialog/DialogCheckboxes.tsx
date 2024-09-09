@@ -1,5 +1,5 @@
 import { Checkbox, CheckboxGroup } from '@navikt/ds-react';
-import React from 'react';
+import React, { useEffect } from 'react';
 import { Status } from '../../api/typer';
 import { notEmpty } from '../../utils/TypeHelper';
 import { useDialogContext } from '../DialogProvider';
@@ -8,13 +8,16 @@ import { dataOrUndefined, useFnrContext } from '../Provider';
 import { useSelectedDialog } from '../utils/useAktivitetId';
 import { useUserInfoContext } from '../BrukerProvider';
 import { useHentDialoger } from '../dialogProvider/dialogStore';
+import useKansendeMelding from '../../utils/UseKanSendeMelding';
+import { DialogData } from '../../utils/Typer';
 
 interface Props {
     toggleFerdigBehandlet(ferdigBehandler: boolean): void;
     toggleVenterPaSvar(venterPaSvar: boolean): void;
     ferdigBehandlet: boolean;
     venterPaSvar: boolean;
-    disabled: boolean;
+    ferdigBehandletDisabled: boolean;
+    venterPaSvarDisabled: boolean;
     values: ('ferdigBehandlet' | 'venterPaSvar')[];
     loading: boolean;
 }
@@ -26,7 +29,8 @@ const DialogCheckboxes = ({
     toggleVenterPaSvar,
     loading,
     venterPaSvar,
-    disabled
+    venterPaSvarDisabled,
+    ferdigBehandletDisabled
 }: Props) => {
     return (
         <div className="mb-2 pl-1">
@@ -36,7 +40,7 @@ const DialogCheckboxes = ({
                         value={'ferdigBehandlet'}
                         size="small"
                         className="pr-4"
-                        disabled={disabled || loading}
+                        disabled={ferdigBehandletDisabled || loading}
                         onChange={() => toggleFerdigBehandlet(!ferdigBehandlet)}
                     >
                         Venter på svar fra NAV
@@ -45,7 +49,7 @@ const DialogCheckboxes = ({
                         value={'venterPaSvar'}
                         size="small"
                         className="pr-8"
-                        disabled={disabled || loading}
+                        disabled={venterPaSvarDisabled || loading}
                         onChange={() => toggleVenterPaSvar(!venterPaSvar)}
                     >
                         Venter på svar fra bruker
@@ -56,26 +60,24 @@ const DialogCheckboxes = ({
     );
 };
 
-const ManagedDialogCheckboxes = () => {
+const ManagedDialogCheckboxes = ({ dialog }: { dialog: DialogData }) => {
     const visible = useUserInfoContext()?.erVeileder || false;
-    const dialog = useSelectedDialog();
     const fnr = useFnrContext();
     const hentDialoger = useHentDialoger();
     const dialogContext = useDialogContext();
-    const oppfolgingContext = useOppfolgingContext();
-    const oppfolgingData = dataOrUndefined(oppfolgingContext);
-
-    if (!visible || !dialog) {
-        return null;
-    }
 
     const toggleFerdigBehandlet = (ferdigBehandlet: boolean) => {
-        dialogContext.setFerdigBehandlet(dialog, ferdigBehandlet, fnr).then(() => hentDialoger(fnr));
+        dialogContext.setFerdigBehandlet(dialog, ferdigBehandlet).then(() => hentDialoger(fnr));
     };
     const toggleVenterPaSvar = (venterPaSvar: boolean) => {
-        dialogContext.setVenterPaSvar(dialog, venterPaSvar, fnr).then(() => hentDialoger(fnr));
+        dialogContext.setVenterPaSvar(dialog, venterPaSvar).then(() => hentDialoger(fnr));
     };
-    const disabled = dialog.historisk || !oppfolgingData?.underOppfolging;
+
+    const kansendeMelding = useKansendeMelding();
+    const burdeKunneSetteFerdigBehandlet = !dialog.ferdigBehandlet && !kansendeMelding;
+    const burdeKunneFjerneVenterPaSvar = dialog.venterPaSvar && !kansendeMelding;
+    const venterPaSvarDisabled = (!kansendeMelding || dialog.historisk) && !burdeKunneFjerneVenterPaSvar;
+    const ferdigBehandletDisabled = (!kansendeMelding || dialog.historisk) && !burdeKunneSetteFerdigBehandlet;
 
     const values = [
         !dialog.ferdigBehandlet ? ('ferdigBehandlet' as const) : undefined,
@@ -87,7 +89,8 @@ const ManagedDialogCheckboxes = () => {
     return (
         <DialogCheckboxes
             values={values}
-            disabled={disabled}
+            ferdigBehandletDisabled={ferdigBehandletDisabled}
+            venterPaSvarDisabled={venterPaSvarDisabled}
             loading={laster}
             toggleFerdigBehandlet={toggleFerdigBehandlet}
             toggleVenterPaSvar={toggleVenterPaSvar}

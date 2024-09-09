@@ -1,4 +1,4 @@
-import { ResponseComposition, RestContext, RestRequest } from 'msw';
+import { DefaultBodyType, HttpResponse, HttpResponseResolver, PathParams, StrictRequest, StrictResponse } from 'msw';
 
 import { DialogData, KladdData, MeldingsData, NyDialogMeldingData } from '../utils/Typer';
 import bruker from './Bruker';
@@ -537,7 +537,7 @@ const dialoger: DialogData[] = [
     },
     {
         id: '303',
-        overskrift: 'Avklaring',
+        overskrift: 'Ijobb',
         sisteTekst: 'Er du fornøyd med oppfølgingen?',
         sisteDato: '2023-09-01T11:52:20.615+01:00',
         opprettetDato: '2023-09-01T11:52:20.535+01:00',
@@ -547,7 +547,7 @@ const dialoger: DialogData[] = [
         ferdigBehandlet: true,
         lestAvBrukerTidspunkt: null,
         erLestAvBruker: false,
-        aktivitetId: 'EKSTERNAKTIVITET_4',
+        aktivitetId: 'IJOBB1',
         henvendelser: [
             {
                 id: '3001',
@@ -584,7 +584,7 @@ const dialoger: DialogData[] = [
         ferdigBehandlet: true,
         lestAvBrukerTidspunkt: null,
         erLestAvBruker: false,
-        aktivitetId: 'EKSTERNAKTIVITET_5',
+        aktivitetId: 'EKSTERNAKTIVITET_4',
         henvendelser: [
             {
                 id: '3001',
@@ -637,18 +637,17 @@ const dialoger: DialogData[] = [
     }
 ];
 
-export const lesDialog = (req: RestRequest, res: ResponseComposition, ctx: RestContext) => {
-    const dialogId = req.params.dialogId;
+export const lesDialog: HttpResponseResolver<{ dialogId: string }, never, DialogData> = ({ params }) => {
+    const dialogId = params.dialogId;
     const dialog: any = dialoger.find((dlg) => dlg.id === dialogId);
     if (dialog) {
         dialog.lest = true;
-        return dialog;
+        return HttpResponse.json(dialog);
     }
-
-    return res(ctx.status(404));
+    return new HttpResponse(null, { status: 404 }) as StrictResponse<never>;
 };
 
-export const opprettEllerOppdaterDialog = async (req: RestRequest): Promise<DialogData> => {
+export const opprettEllerOppdaterDialog = async (req: StrictRequest<DefaultBodyType>): Promise<DialogData> => {
     const body = (await req.json()) as NyDialogMeldingData;
     const dialogId = !body.dialogId || body.dialogId === '' ? rndId() : `${body.dialogId}`;
     const nyMelding: MeldingsData = {
@@ -699,25 +698,25 @@ export const opprettEllerOppdaterDialog = async (req: RestRequest): Promise<Dial
     }
 };
 
-export function setVenterPaSvar(req: RestRequest) {
-    const dialog = dialoger.find((dlg) => dlg.id === req.params.dialogId);
+export function setVenterPaSvar(req: StrictRequest<DefaultBodyType>, params: PathParams) {
+    const dialog = dialoger.find((dlg) => dlg.id === params.dialogId);
     if (dialog) {
-        dialog.venterPaSvar = req.params.bool === 'true';
+        dialog.venterPaSvar = params.bool === 'true';
     }
     return dialog as DialogData;
 }
 
-export function setFerdigBehandlet(req: RestRequest) {
-    const dialog = dialoger.find((dlg) => dlg.id === req.params.dialogId);
+export function setFerdigBehandlet(req: StrictRequest<DefaultBodyType>, params: PathParams) {
+    const dialog = dialoger.find((dlg) => dlg.id === params.dialogId);
     if (dialog) {
-        dialog.ferdigBehandlet = req.params.bool === 'true';
+        dialog.ferdigBehandlet = params.bool === 'true';
     }
     return dialog as DialogData;
 }
 
 export const opprettDialogEtterRender = () => {
     setTimeout(() => {
-        const dialogId = Math.floor(Math.random() * 100);
+        const dialogId = '909';
         const nyDialog: DialogData = {
             id: `${dialogId}`,
             overskrift: 'Sender denne mens du ser på :)',

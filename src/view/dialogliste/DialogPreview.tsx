@@ -1,8 +1,8 @@
 import { BodyShort, Detail, Heading, LinkPanel } from '@navikt/ds-react';
 import classNames from 'classnames';
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useDeferredValue, useEffect, useRef, useState } from 'react';
 import { useNavigate } from 'react-router';
-import { useRoutes } from '../../routes';
+import { useRoutes } from '../../routing/routes';
 import { Aktivitet, ArenaAktivitet } from '../../utils/aktivitetTypes';
 import { formaterDate } from '../../utils/Date';
 import { DialogData, StringOrNull } from '../../utils/Typer';
@@ -131,6 +131,8 @@ export function DialogPreviewListe({ dialoger, valgDialog }: ListeProps) {
             skalFadeIn = false;
         } else if (dialoger.length === antallDialoger + 1) {
             skalFadeIn = true;
+        } else {
+            skalFadeIn = false;
         }
         setAntallDialoger(dialoger.length);
     }, [dialoger]);

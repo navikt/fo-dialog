@@ -7,9 +7,9 @@ interface Props {
 
 export default function StatusAdvarselWrapper({ children }: Props) {
     return (
-        <div className="flex justify-center border-b border-border-divider p-4">
-            <Alert variant="warning">{children}</Alert>
-        </div>
+        <Alert fullWidth variant="warning">
+            {children}
+        </Alert>
     );
 }
 

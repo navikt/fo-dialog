@@ -45,7 +45,19 @@ export default defineConfig(({ mode }) => {
             environment: 'jsdom',
             include: ['**/*.test.ts', '**/*.test.tsx'],
             globals: true,
-            setupFiles: ['./src/test/setup.tsx']
+            setupFiles: ['./src/test/setup.tsx'],
+            coverage: {
+                provider: 'v8',
+                include: ['src'],
+                exclude: [
+                    'src/mock',
+                    'src/stories',
+                    'src/**.test.ts',
+                    'src/**/**.test.tsx',
+                    'src/global.d.ts',
+                    'src/polyfill.ts'
+                ]
+            }
         }
     };
 });

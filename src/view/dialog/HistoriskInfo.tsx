@@ -3,14 +3,12 @@ import React from 'react';
 
 import NyDialogLink from '../dialogliste/NyDialogLink';
 import useKansendeMelding from '../../utils/UseKanSendeMelding';
+import { useSelectedDialog } from '../utils/useAktivitetId';
 
-interface Props {
-    hidden?: boolean;
-}
-
-function HistoriskInfo({ hidden }: Props) {
+function HistoriskInfo() {
+    const valgtDialog = useSelectedDialog();
     const kanSendeMelding = useKansendeMelding();
-    if (hidden) {
+    if (!valgtDialog?.historisk) {
         return null;
     }
 
@@ -19,7 +17,7 @@ function HistoriskInfo({ hidden }: Props) {
             <BodyShort className="pb-4">
                 Dette er en dialog fra en tidligere periode, og du kan derfor ikke svare på den.
             </BodyShort>
-            <div className="self-start">{kanSendeMelding ? <NyDialogLink /> : null}</div>
+            <div className="self-start">{kanSendeMelding ? <NyDialogLink disabled={false} /> : null}</div>
         </div>
     );
 }

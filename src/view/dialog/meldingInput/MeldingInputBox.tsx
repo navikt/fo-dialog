@@ -16,7 +16,7 @@ import { useVisAktivitet } from '../../AktivitetToggleContext';
 import { Status } from '../../../api/typer';
 import ManagedDialogCheckboxes from '../DialogCheckboxes';
 import { useDialogStore, useHentDialoger } from '../../dialogProvider/dialogStore';
-import { useFnrContext } from '../../Provider';
+import { useErVeileder, useFnrContext } from '../../Provider';
 import useKansendeMelding from '../../../utils/UseKanSendeMelding';
 import { useShallow } from 'zustand/react/shallow';
 
@@ -38,6 +38,7 @@ const schema = (startTekst: string) =>
 export type MeldingFormValues = z.infer<ReturnType<typeof schema>>;
 
 const MeldingInputBox = ({ dialog: valgtDialog }: Props) => {
+    const erVeileder = useErVeileder();
     const aktivDialog = !valgtDialog.historisk;
     const kanSendeMelding = useKansendeMelding();
     const kanSendeHenveldelse = kanSendeMelding && aktivDialog;
@@ -140,10 +141,11 @@ const MeldingInputBox = ({ dialog: valgtDialog }: Props) => {
         }
     }, [breakpoint, visAktivitet]);
 
-    if (!kanSendeHenveldelse && (valgtDialog.venterPaSvar || !valgtDialog.ferdigBehandlet))
-        return <ManagedDialogCheckboxes />; //hvis bruker går inn uner krr eller manuel må veileder kunne fjerne venter på
+    if (!kanSendeHenveldelse && erVeileder) return <ManagedDialogCheckboxes dialog={valgtDialog} />; //hvis bruker går inn uner krr eller manuel må veileder kunne fjerne venter på
 
-    if (!kanSendeHenveldelse) return null;
+    if (!kanSendeHenveldelse) {
+        return null;
+    }
     return (
         <FormProvider {...formHandlers}>
             <MeldingInputContext.Provider value={args}>

@@ -3,14 +3,6 @@ import { Aktivitet, AktivitetTypes, AlleAktivitetTypes, ArenaAktivitet } from '.
 export const erArenaAktivitet = (aktivitetId: string | null | undefined): boolean =>
     !!aktivitetId && aktivitetId.startsWith('ARENA');
 
-export const getBasename = (fnr: string | undefined): string => {
-    if (fnr) {
-        return '/' + fnr;
-    } else {
-        return settSammenmedSlasher(import.meta.env.VITE_DIALOG_API_URL, fnr);
-    }
-};
-
 export const settSammenmedSlasher = (...ss: Array<string | undefined>): string => {
     const slasherImellom = ss
         .filter((s: string | undefined): s is string => !!s)

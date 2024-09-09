@@ -1,214 +1,122 @@
-import { render } from '@testing-library/react';
+import { act, render, waitFor } from '@testing-library/react';
 import React from 'react';
-import { MemoryRouter, Route, Routes } from 'react-router';
 
-import { Status } from '../api/typer';
-import { Bruker, DialogData, OppfolgingData, PeriodeData } from '../utils/Typer';
-import * as BrukerProvider from '../view/BrukerProvider';
 import { DialogTrad } from '../view/dialog/DialogTrad';
 import DialogListe from '../view/dialogliste/DialogListe';
 import DialogOversikt from '../view/dialogliste/DialogOversikt';
-import * as DialogProvider from '../view/DialogProvider';
-import { DialogDataProviderType } from '../view/DialogProvider';
-import * as OppfolgingProvider from '../view/OppfolgingProvider';
-import { OppfolgingDataProviderType } from '../view/OppfolgingProvider';
+import { afterAll, beforeAll } from 'vitest';
+import { setupServer } from 'msw/node';
+import { handlers } from '../mock/handlers';
+import { dialoger, gitt } from './mockUtils';
+import { SimpleRouterWithoutProvider } from './integrationTestSetup';
 
-const userInfo: Bruker = { id: '010101', erVeileder: true, erBruker: false };
-const oppfPerioder: PeriodeData[] = [];
-const oppfolgingData: OppfolgingData = {
-    fnr: 'null',
-    veilederId: '101010',
-    reservasjonKRR: false,
-    manuell: false,
-    underOppfolging: true, // eller false
-    underKvp: false,
-    oppfolgingUtgang: null,
-    gjeldendeEskaleringsvarsel: null,
-    kanStarteOppfolging: false,
-    avslutningStatus: null,
-    oppfolgingsPerioder: oppfPerioder,
-    harSkriveTilgang: true,
-    kanReaktiveres: false,
-    inaktiveringsdato: '2018-08-31T10:46:10.971+01:00',
-    aktorId: 'null',
-    erSykmeldtMedArbeidsgiver: false,
-    formidlingsgruppe: null,
-    kanVarsles: true,
-    servicegruppe: null
+const MemoryRouterMedBareDialogTrad = () => {
+    return (
+        <SimpleRouterWithoutProvider initialEntries={['/2']}>
+            <DialogTrad />
+        </SimpleRouterWithoutProvider>
+    );
 };
+const MemoryRouterMedBareDialogListe = () => (
+    <SimpleRouterWithoutProvider initialEntries={['/2']}>
+        <DialogListe />
+    </SimpleRouterWithoutProvider>
+);
+const MemoryRouterMedBareDialogOversikt = () => (
+    <SimpleRouterWithoutProvider initialEntries={['/2']}>
+        <DialogOversikt />
+    </SimpleRouterWithoutProvider>
+);
 
-const useFetchOppfolging: OppfolgingDataProviderType = {
-    data: oppfolgingData,
-    status: Status.OK,
-    hentOppfolging: () => Promise.resolve(undefined)
-};
-
-const dialoger = [
-    {
-        id: '1',
-        aktivitetId: '1',
-        overskrift: 'Memes',
-        sisteTekst: 'Hei. Hva er status her? Har du finnet Kaptain Sabeltann?',
-        sisteDato: '2018-01-28T12:48:56.097+01:00',
-        opprettetDato: '2018-02-27T12:48:56.081+01:00',
-        historisk: false,
-        lest: true,
-        venterPaSvar: false,
-        ferdigBehandlet: false,
-        lestAvBrukerTidspunkt: null,
-        erLestAvBruker: false,
-        henvendelser: [
-            {
-                id: '1',
-                dialogId: '1',
-                avsender: 'VEILEDER',
-                avsenderId: 'Z123456',
-                sendt: '2018-02-27T12:48:56.097+01:00',
-                lest: true,
-                tekst: 'Hei. Hva er status her? Har du finnet Kaptain Sabeltann?',
-                viktig: false
-            },
-            {
-                id: '2',
-                dialogId: '1',
-                avsender: 'BRUKER',
-                avsenderId: '0102030405',
-                sendt: '2018-02-28T12:48:56.097+01:00',
-                lest: true,
-                tekst: 'Hei. Leter enda på sjøen :)',
-                viktig: false
-            }
-        ],
-        egenskaper: []
-    }
-];
-const useDialogContext: DialogDataProviderType = {
-    status: 3,
-    nyDialog: (args) => Promise.resolve({} as any),
-    nyMelding: ({ dialog }) => Promise.resolve(dialog),
-    lesDialog: (dialogId: string) => Promise.resolve(dialoger.find((dialog) => dialog.id === dialogId)!!),
-    setFerdigBehandlet: (dialog: DialogData, ferdigBehandlet: boolean) => Promise.resolve(dialog),
-    setVenterPaSvar: (dialog: DialogData, venterPaSvar: boolean) => Promise.resolve(dialog)
+const rootLoaderData = {
+    dialoger: Promise.resolve([])
 };
 
 describe('<DialogContainer/>', () => {
-    test('Bruker uten oppf.perioder og ikke under oppf skjuler store deler av appen', () => {
-        useFetchOppfolging.data!.underOppfolging = false;
-        useFetchOppfolging.data!.oppfolgingsPerioder = [];
-        vi.spyOn(OppfolgingProvider, 'useOppfolgingContext').mockImplementation(() => useFetchOppfolging);
-        const { queryByText, getByRole } = render(
-            <MemoryRouter>
-                <DialogListe />
-            </MemoryRouter>
-        );
+    afterAll(() => {
+        vi.clearAllMocks();
+    });
+
+    test('Bruker uten oppf.perioder og ikke under oppf skjuler store deler av appen', async () => {
+        gitt.veileder().som.harIngenDialog().som.harBrukerSomAldriHarVærtUnderOppfolging();
+        const { queryByText, getByRole } = render(<MemoryRouterMedBareDialogListe />);
         expect(queryByText('Ny dialog')).toBeNull();
         expect(getByRole('navigation').children.length).toBe(0);
     });
     test('Bruker ikke under oppf. skjuler knapper/checkbox', () => {
-        useFetchOppfolging.data!.underOppfolging = false;
-        useFetchOppfolging.data!.oppfolgingsPerioder = [
-            {
-                aktorId: '1234567988888',
-                veileder: false,
-                startDato: '2017-01-30T10:46:10.971+01:00',
-                sluttDato: '2017-12-31T10:46:10.971+01:00',
-                begrunnelse: null,
-                kvpPerioder: [],
-                uuid: '1'
-            }
-        ];
-        vi.spyOn(OppfolgingProvider, 'useOppfolgingContext').mockImplementation(() => useFetchOppfolging);
-        vi.spyOn(DialogProvider, 'useDialoger').mockImplementation(() => dialoger);
-        const { queryByText, getByRole } = render(
-            <MemoryRouter>
-                <DialogListe />
-            </MemoryRouter>
-        );
+        gitt.veileder().som.harDialog().som.harBrukerIkkeLengerErUnderOppfolging();
+        const { queryByText, getByRole } = render(<MemoryRouterMedBareDialogListe />);
         expect(queryByText('Ny dialog')).toBeNull();
         expect(getByRole('navigation').children.length).toBeGreaterThan(0);
     });
-    test('Bruker under oppf, elementer synes', () => {
-        useFetchOppfolging.data!.underOppfolging = true;
-        useFetchOppfolging.data!.oppfolgingsPerioder = [
-            {
-                aktorId: '1234567988888',
-                veileder: false,
-                startDato: '2017-01-30T10:46:10.971+01:00',
-                sluttDato: '2017-12-31T10:46:10.971+01:00',
-                begrunnelse: null,
-                kvpPerioder: [],
-                uuid: '1'
-            }
-        ];
-        vi.spyOn(OppfolgingProvider, 'useOppfolgingContext').mockImplementation(() => useFetchOppfolging);
-        vi.spyOn(DialogProvider, 'useDialoger').mockImplementation(() => dialoger);
-        const { getByText } = render(
-            <MemoryRouter>
-                <DialogOversikt />
-            </MemoryRouter>
-        );
+    test('Bruker under oppf, elementer synes', async () => {
+        vi.mock('../routing/loaders', () => ({ useRootLoaderData: () => rootLoaderData }));
+        gitt.veileder().som.harDialog().som.harBrukerUnderOppfolging();
+        const { getByText } = await act(() => render(<MemoryRouterMedBareDialogOversikt />));
         getByText('Ny dialog');
         getByText(dialoger[0].overskrift);
     });
 });
 
 describe('<Dialog/>', () => {
-    test('Bruker ikke under oppf. skjuler dialogcontroller og viser fortsatt henvendelser', () => {
-        useFetchOppfolging.data!.underOppfolging = false;
-        useFetchOppfolging.data!.oppfolgingsPerioder = [
-            {
-                aktorId: '1234567988888',
-                veileder: false,
-                startDato: '2017-01-30T10:46:10.971+01:00',
-                sluttDato: '2017-12-31T10:46:10.971+01:00',
-                begrunnelse: null,
-                kvpPerioder: [],
-                uuid: '1'
+    const worker = setupServer(...handlers);
+    beforeAll(() => {
+        worker.listen({
+            onUnhandledRequest: (request, er) => {
+                console.error(request, er);
             }
-        ];
-        vi.spyOn(DialogProvider, 'useDialogContext').mockImplementation(() => useDialogContext);
-        vi.spyOn(OppfolgingProvider, 'useOppfolgingContext').mockImplementation(() => useFetchOppfolging);
-        vi.spyOn(DialogProvider, 'useDialoger').mockImplementation(() => dialoger);
-        Element.prototype.scrollIntoView = () => {};
-        const { queryByLabelText, queryByText, queryByRole } = render(
-            <MemoryRouter initialEntries={['/1']}>
-                <Routes>
-                    <Route path={'/:dialogId'} element={<DialogTrad />} />
-                </Routes>
-            </MemoryRouter>
-        );
-
-        expect(queryByRole('form')).toBeNull();
-        expect(queryByLabelText('Meldinger')).toBeTruthy();
-        expect(queryByText('Venter på svar fra NAV')).toBeNull();
+        });
     });
-    test('Bruker under oppf. viser komponenter i Dialog', () => {
-        useFetchOppfolging.data!.underOppfolging = true;
-        useFetchOppfolging.data!.oppfolgingsPerioder = [
-            {
-                aktorId: '1234567988888',
-                veileder: false,
-                startDato: '2017-01-30T10:46:10.971+01:00',
-                sluttDato: '2017-12-31T10:46:10.971+01:00',
-                begrunnelse: null,
-                kvpPerioder: [],
-                uuid: '1'
-            }
-        ];
-        vi.spyOn(DialogProvider, 'useDialogContext').mockImplementation(() => useDialogContext);
-        vi.spyOn(OppfolgingProvider, 'useOppfolgingContext').mockImplementation(() => useFetchOppfolging);
-        vi.spyOn(BrukerProvider, 'useUserInfoContext').mockImplementation(() => userInfo);
-        vi.spyOn(DialogProvider, 'useDialoger').mockImplementation(() => dialoger);
-        Element.prototype.scrollIntoView = () => {};
-        const { getByText, getByLabelText } = render(
-            <MemoryRouter initialEntries={['/1']}>
-                <Routes>
-                    <Route path={'/:dialogId'} element={<DialogTrad />} />
-                </Routes>
-            </MemoryRouter>
-        );
-        getByLabelText('Ny melding');
-        getByLabelText('Meldinger');
-        getByText('Venter på svar fra NAV');
+    afterAll(() => {
+        vi.clearAllMocks();
+        worker.close();
+    });
+
+    test('Bruker ikke under oppf. skjuler dialogcontroller og viser fortsatt henvendelser', async () => {
+        gitt.veileder().som.harDialog().som.harBrukerIkkeLengerErUnderOppfolging();
+        const { queryByRole, getByLabelText, queryByLabelText } = render(<MemoryRouterMedBareDialogTrad />);
+        expect(queryByRole('form')).toBeNull();
+        await waitFor(() => getByLabelText('Meldinger'));
+        expect(queryByLabelText('Venter på svar fra NAV')).toBeDisabled();
+        expect(queryByLabelText('Venter på svar fra bruker')).toBeDisabled();
+    });
+    test('Bruker under oppf. viser komponenter i Dialog', async () => {
+        gitt.veileder().som.harDialog().som.harBrukerUnderOppfolging();
+        const { getByText, getByLabelText } = render(<MemoryRouterMedBareDialogTrad />);
+        await waitFor(() => getByLabelText('Ny melding'));
+        await waitFor(() => getByLabelText('Meldinger'));
+        await waitFor(() => getByText('Venter på svar fra NAV'));
+    });
+    test('Veileder skal kunne fjerne "Venter på svar fra NAV" på brukere som er under oppf. men reservert i KRR og dialog venter på svar', async () => {
+        gitt.veileder().som.harDialogSomVenterPåBruker().som.harBrukerUnderOppfølgingMenReservertIKRR();
+        const { queryByRole, getByLabelText, queryByLabelText } = render(<MemoryRouterMedBareDialogTrad />);
+        expect(queryByRole('form')).toBeNull();
+        await waitFor(() => getByLabelText('Meldinger'));
+        expect(queryByLabelText('Venter på svar fra NAV')).toBeDisabled();
+        expect(queryByLabelText('Venter på svar fra bruker')).not.toBeDisabled();
+    });
+    test('Veileder skal kunne endre "Venter på svar fra Bruker" på bruker under oppf. men reservet i KRR og dialog ikke er ferdig behandlet', async () => {
+        gitt.veileder().som.harDialogSomIkkeErFerdigBehandlet().som.harBrukerUnderOppfølgingMenReservertIKRR();
+        const { queryByRole, getByLabelText, queryByLabelText } = render(<MemoryRouterMedBareDialogTrad />);
+        expect(queryByRole('form')).toBeNull();
+        await waitFor(() => getByLabelText('Meldinger'));
+        expect(queryByLabelText('Venter på svar fra NAV')).not.toBeDisabled();
+        expect(queryByLabelText('Venter på svar fra bruker')).toBeDisabled();
+    });
+    test('Veileder skal ikke kunne endre "Venter på svar fra Bruker" eller "Venter på svar fra NAV" på bruker under oppf. reservet i KRR hvis ferdigBehandlet og ikke venter på svar', async () => {
+        gitt.veileder().som.harDialog().som.harBrukerUnderOppfølgingMenReservertIKRR();
+        const { queryByRole, getByLabelText, queryByLabelText } = render(<MemoryRouterMedBareDialogTrad />);
+        expect(queryByRole('form')).toBeNull();
+        await waitFor(() => getByLabelText('Meldinger'));
+        expect(queryByLabelText('Venter på svar fra NAV')).toBeDisabled();
+        expect(queryByLabelText('Venter på svar fra bruker')).toBeDisabled();
+    });
+    test('Brukere skal ikke kunne se "Venter på svar fra Bruker" eller "Venter på svar fra NAV"', async () => {
+        gitt.bruker().som.harDialog();
+        const { queryByRole, getByLabelText, queryByLabelText } = render(<MemoryRouterMedBareDialogTrad />);
+        expect(queryByRole('form')).toBeNull();
+        await waitFor(() => getByLabelText('Meldinger'));
+        expect(queryByLabelText('Venter på svar fra NAV')).not.toBeInTheDocument();
+        expect(queryByLabelText('Venter på svar fra bruker')).not.toBeInTheDocument();
     });
 });

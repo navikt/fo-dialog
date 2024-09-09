@@ -6,7 +6,7 @@ import { Provider } from '../view/Provider';
 import StatusAdvarsel from '../view/statusAdvarsel/StatusAdvarsel';
 import { UppdateEventHandler } from '../utils/UpdateEvent';
 import cx from 'classnames';
-import { Routes } from '../routes';
+import { Routes } from '../routing/routes';
 import { createMemoryRouter } from 'react-router';
 
 interface PageProps {
@@ -22,7 +22,6 @@ export const Page: React.FC<PageProps> = (props) => {
         window.location.hash = `#${props.path}`;
     }, []);
     const { visAktivitet, erVeileder } = props;
-    console.log({ erVeileder });
     return (
         <>
             <Provider visAktivitetDefault={visAktivitet} fnr={erVeileder ? fnr : undefined} erVeileder={erVeileder}>

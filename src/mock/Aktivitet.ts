@@ -7,11 +7,12 @@ import {
     StillingFraNavSoknadsstatus
 } from '../utils/aktivitetTypes';
 import oppfolging from './Oppfolging';
-import { PeriodeData } from '../utils/Typer';
 
-const gjeldendeOppfolgingsPeriode = oppfolging.oppfolgingsPerioder.find((periode) => !periode.sluttDato) as PeriodeData;
+const gjeldendeOppfolgingsPeriode = oppfolging.oppfolgingsPerioder.find((periode) => !periode.sluttDato) || {
+    uuid: '1'
+};
 
-const moteAktivitet: Aktivitet = {
+export const moteAktivitet: Aktivitet = {
     adresse: 'Nordre strandvei 56',
     ansettelsesforhold: null,
     antallStillingerIUken: null,
@@ -54,7 +55,7 @@ const moteAktivitet: Aktivitet = {
     versjon: '213019',
     oppfolgingsperiodeId: gjeldendeOppfolgingsPeriode.uuid
 };
-const stilingAktivitet: Aktivitet = {
+export const stilingAktivitet: Aktivitet = {
     adresse: null,
     ansettelsesforhold: null,
     antallStillingerIUken: null,
@@ -97,7 +98,7 @@ const stilingAktivitet: Aktivitet = {
     malid: null,
     oppfolgingsperiodeId: gjeldendeOppfolgingsPeriode.uuid
 };
-const samtalereferatAktivitet: Aktivitet = {
+export const samtalereferatAktivitet: Aktivitet = {
     adresse: null,
     ansettelsesforhold: null,
     antallStillingerIUken: null,
@@ -141,7 +142,7 @@ const samtalereferatAktivitet: Aktivitet = {
     versjon: '213394',
     oppfolgingsperiodeId: gjeldendeOppfolgingsPeriode.uuid
 };
-const behandlingAktivitet: Aktivitet = {
+export const behandlingAktivitet: Aktivitet = {
     adresse: null,
     ansettelsesforhold: null,
     antallStillingerIUken: null,
@@ -184,7 +185,7 @@ const behandlingAktivitet: Aktivitet = {
     versjon: '213381',
     oppfolgingsperiodeId: gjeldendeOppfolgingsPeriode.uuid
 };
-const sokeavtaleAktivitet: Aktivitet = {
+export const sokeavtaleAktivitet: Aktivitet = {
     adresse: null,
     ansettelsesforhold: null,
     antallStillingerIUken: 0,
@@ -272,14 +273,14 @@ const sokeavtaleAktivitet2: Aktivitet = {
     versjon: '210092',
     oppfolgingsperiodeId: gjeldendeOppfolgingsPeriode.uuid
 };
-const ijobbAktivitet: Aktivitet = {
+export const ijobbAktivitet: Aktivitet = {
     adresse: null,
-    ansettelsesforhold: null,
+    ansettelsesforhold: 'Gode arbeidsforhold',
     antallStillingerIUken: null,
     antallStillingerSokes: null,
     arbeidsgiver: null,
     arbeidssted: null,
-    arbeidstid: null,
+    arbeidstid: 'arbeidstid midt på dagen',
     avsluttetKommentar: null,
     avtaleOppfolging: null,
     avtalt: false,
@@ -315,7 +316,7 @@ const ijobbAktivitet: Aktivitet = {
     versjon: '210077',
     oppfolgingsperiodeId: gjeldendeOppfolgingsPeriode.uuid
 };
-const stillingFraNav: Aktivitet = {
+export const stillingFraNav: Aktivitet = {
     versjon: '5345437',
     id: 'STILLING_FRA_NAV_1',
     tittel: 'Servitør',
@@ -388,14 +389,14 @@ const stillingFraNav2: Aktivitet = {
     },
     oppfolgingsperiodeId: gjeldendeOppfolgingsPeriode.uuid
 } as Aktivitet;
-const midl_lonnstilsk = {
+export const midl_lonnstilsk = {
     versjon: '5345436',
     id: 'EKSTERNAKTIVITET_1',
     tittel: 'Baker Jonson',
     type: AktivitetTypes.EKSTERN_AKTIVITET,
     fraDato: '2019-08-14T00:00:00+02:00',
     lenke: null,
-    beskrivelse: 'Ekstern aktivitet beskrivelse aaaaa aaaa aa.',
+    beskrivelse: 'Ekstern aktivitet https://www.lol.no/?redirect=https://lol.no beskrivelse aaaaa aaaa aa.',
     status: AktivitetStatus.GJENNOMFORES,
     opprettetDato: '2020-05-31T10:46:51.622+01:00',
     endretDato: '2020-09-30T10:46:51.622+01:00',
@@ -428,7 +429,7 @@ const varig_lonnstilsk = {
     },
     oppfolgingsperiodeId: gjeldendeOppfolgingsPeriode.uuid
 } as Aktivitet;
-const arena_tiltak = {
+export const arena_tiltak = {
     versjon: '5345436',
     id: 'EKSTERNAKTIVITET_3',
     tittel: 'Asd eksternaktivitet 123',

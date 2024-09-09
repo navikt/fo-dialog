@@ -1,13 +1,17 @@
-import AppBody from './view/AppBody';
-import NyDialogTrad from './view/dialog/NyDialogTrad';
-import { Aktivitetskort } from './view/aktivitet/Aktivitetskort';
-import { DialogTrad } from './view/dialog/DialogTrad';
-import IkkeValgtDialogMelding from './view/dialog/IkkeValgtDialogMelding';
-import { Navigate, RouteObject, RouterProvider, createMemoryRouter, useParams } from 'react-router';
+import AppBody from '../view/AppBody';
+import NyDialogTrad from '../view/dialog/NyDialogTrad';
+import { Aktivitetskort } from '../view/aktivitet/Aktivitetskort';
+import { DialogTrad } from '../view/dialog/DialogTrad';
+import IkkeValgtDialogMelding from '../view/dialog/IkkeValgtDialogMelding';
+import { Navigate, RouteObject, RouterProvider, createMemoryRouter, useParams, useMatches } from 'react-router';
 import React from 'react';
-import { erInternFlate, USE_HASH_ROUTER } from './constants';
+import { erInternFlate, USE_HASH_ROUTER } from '../constants';
 import { createBrowserRouter, createHashRouter, useSearchParams } from 'react-router-dom';
-import { stripTrailingSlash } from './api/UseApiBasePath';
+import { stripTrailingSlash } from '../api/UseApiBasePath';
+import { initialPageLoader } from './loaders';
+import { useFnrContext } from '../view/Provider';
+import { NyDialogHeader } from '../view/dialog/DialogHeader/NyDialogHeader';
+import { DialogHeader } from '../view/dialog/DialogHeader';
 
 const aktivitetQuery = (aktivitetId?: string) => (aktivitetId ? `?aktivitetId=${aktivitetId}` : '');
 
@@ -38,32 +42,59 @@ const RedirectToNyDialogWithoutFnr = () => {
     return <Navigate replace to={`/ny${queryPart}`} />;
 };
 
-export const dialogRoutes: RouteObject[] = [
+export enum RouteIds {
+    NyDialog = 'ny-dialog',
+    Dialog = 'Dialog',
+    IkkeValgtDialog = 'ikke-valgt-dialog',
+    Root = 'root'
+}
+
+/* On small screens sidebar is hidden, use this hook for checking if sidebar should be hidden on mobile */
+export const useIsDialogOrNyRoute = () =>
+    useMatches().some((match) => match.id === RouteIds.Dialog || match.id === RouteIds.NyDialog);
+
+export const dialogRoutes = (fnr: string | undefined): RouteObject[] => [
     {
         path: '/',
+        id: RouteIds.Root,
         element: <AppBody />,
+        loader: initialPageLoader(fnr),
+        shouldRevalidate: () => false,
         children: [
             {
                 path: 'ny',
+                id: RouteIds.NyDialog,
                 element: (
                     <>
-                        <NyDialogTrad />
-                        <Aktivitetskort />
+                        <NyDialogHeader />
+                        <div className="flex min-h-0 flex-1">
+                            <NyDialogTrad />
+                            <Aktivitetskort />
+                        </div>
                     </>
                 )
             },
             {
                 path: ':dialogId',
+                id: RouteIds.Dialog,
                 element: (
                     <>
-                        <DialogTrad />
-                        <Aktivitetskort />
+                        <DialogHeader />
+                        <div className="flex min-h-0 flex-1">
+                            <DialogTrad />
+                            <Aktivitetskort />
+                        </div>
                     </>
                 )
             },
             {
                 path: '',
-                element: <IkkeValgtDialogMelding />
+                id: RouteIds.IkkeValgtDialog,
+                element: (
+                    <div className="flex min-h-0 flex-1">
+                        <IkkeValgtDialogMelding />
+                    </div>
+                )
             },
             {
                 path: ':fnr/ny',
@@ -82,16 +113,17 @@ export const dialogRoutes: RouteObject[] = [
 ];
 
 export const Routes = ({ createRouter }: { createRouter: typeof createBrowserRouter }) => {
+    const fnr = useFnrContext();
     if (USE_HASH_ROUTER) {
-        const hashRouter = createHashRouter(dialogRoutes);
+        const hashRouter = createHashRouter(dialogRoutes(fnr));
         return <RouterProvider router={hashRouter} />;
     }
     if (process.env.NODE_ENV === 'test') {
-        const inMemoryRouter = createMemoryRouter(dialogRoutes);
+        const inMemoryRouter = createMemoryRouter(dialogRoutes(fnr));
         return <RouterProvider router={inMemoryRouter} />;
     }
     let basename = stripTrailingSlash(import.meta.env.BASE_URL);
     if (erInternFlate) basename = `/dialog`;
-    const browserRouter = createRouter(dialogRoutes, { basename });
+    const browserRouter = createRouter(dialogRoutes(fnr), { basename });
     return <RouterProvider router={browserRouter} />;
 };

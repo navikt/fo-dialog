@@ -68,7 +68,7 @@ export const MeldingSideInput = () => {
     return (
         <section aria-label="Ny melding" className="flex flex-1 bg-white p-4">
             <div className="w-full flex flex-col">
-                <ManagedDialogCheckboxes />
+                <ManagedDialogCheckboxes dialog={dialog} />
                 {!oppfolging?.underOppfolging || dialog.historisk ? null : <MeldingSideInputInner />}
             </div>
         </section>
