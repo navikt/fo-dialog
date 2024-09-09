@@ -26,7 +26,6 @@ export const jsonResponse = (
         if (typeof response === 'function') {
             return HttpResponse.json(await response(request, params));
         }
-        // await delay(1000);
         return HttpResponse.json(response);
     };
 };
@@ -34,13 +33,13 @@ export const jsonResponse = (
 const failOrGetResponse = (
     shouldFail: () => boolean,
     successFn: (req: StrictRequest<DefaultBodyType>) => Promise<Record<any, any>>,
-    delayMs = 1000
+    delayMs = 0
 ): HttpResponseResolver => {
     return async ({ request }) => {
         if (shouldFail()) {
             return internalServerError;
         }
-        // await delay(delayMs);
+        await delay(delayMs);
         return HttpResponse.json(await successFn(request));
     };
 };
