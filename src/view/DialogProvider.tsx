@@ -45,8 +45,8 @@ export interface DialogDataProviderType {
     nyDialog: (args: NyTradArgs) => Promise<DialogData>;
     nyMelding: (args: NyMeldingArgs) => Promise<DialogData>;
     lesDialog: (dialogId: string, fnr: string | undefined) => Promise<DialogData>;
-    setFerdigBehandlet: (dialog: DialogData, ferdigBehandlet: boolean, fnr: string | undefined) => Promise<DialogData>;
-    setVenterPaSvar: (dialog: DialogData, venterPaSvar: boolean, fnr: string | undefined) => Promise<DialogData>;
+    setFerdigBehandlet: (dialog: DialogData, ferdigBehandlet: boolean) => Promise<DialogData>;
+    setVenterPaSvar: (dialog: DialogData, venterPaSvar: boolean) => Promise<DialogData>;
 }
 
 export interface DialogState {
@@ -114,7 +114,7 @@ export function useDialogDataProvider(): DialogDataProviderType {
         });
     };
 
-    const setFerdigBehandlet = (dialog: DialogData, ferdigBehandlet: boolean, fnr: string | undefined) => {
+    const setFerdigBehandlet = (dialog: DialogData, ferdigBehandlet: boolean) => {
         setState((prevState) => ({ ...prevState, status: Status.RELOADING }));
         return fetchData<DialogData>(ferdigBehandletUrl({ id: dialog.id, ferdigBehandlet }), {
             method: 'put'
@@ -124,7 +124,7 @@ export function useDialogDataProvider(): DialogDataProviderType {
         });
     };
 
-    const setVenterPaSvar = (dialog: DialogData, venterPaSvar: boolean, fnr: string | undefined) => {
+    const setVenterPaSvar = (dialog: DialogData, venterPaSvar: boolean) => {
         setState((prevState) => ({ ...prevState, status: Status.RELOADING }));
         return fetchData<DialogData>(venterPaSvarUrl({ id: dialog.id, venterPaSvar }), { method: 'put' }).then(
             (dialogData) => {

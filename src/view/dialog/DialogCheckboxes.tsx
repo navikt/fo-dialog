@@ -73,10 +73,10 @@ const ManagedDialogCheckboxes = () => {
     }
 
     const toggleFerdigBehandlet = (ferdigBehandlet: boolean) => {
-        dialogContext.setFerdigBehandlet(dialog, ferdigBehandlet, fnr).then(() => hentDialoger(fnr));
+        dialogContext.setFerdigBehandlet(dialog, ferdigBehandlet).then(() => hentDialoger(fnr));
     };
     const toggleVenterPaSvar = (venterPaSvar: boolean) => {
-        dialogContext.setVenterPaSvar(dialog, venterPaSvar, fnr).then(() => hentDialoger(fnr));
+        dialogContext.setVenterPaSvar(dialog, venterPaSvar).then(() => hentDialoger(fnr));
     };
 
     const kansendeMelding = useKansendeMelding();
