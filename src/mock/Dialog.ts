@@ -604,6 +604,36 @@ const dialoger: DialogData[] = [
             }
         ],
         egenskaper: []
+    },
+    {
+        id: '305',
+        overskrift: 'Lenker her!',
+        sisteTekst: 'Kan du se lenkene?',
+        sisteDato: '2023-09-02T11:52:20.615+01:00',
+        opprettetDato: '2023-09-02T11:52:20.535+01:00',
+        historisk: false,
+        lest: false,
+        venterPaSvar: true,
+        ferdigBehandlet: true,
+        lestAvBrukerTidspunkt: null,
+        erLestAvBruker: false,
+        aktivitetId: 'EKSTERNAKTIVITET_5',
+        henvendelser: [
+            {
+                id: '3001',
+                dialogId: '304',
+                avsender: 'VEILEDER',
+                avsenderId: 'Z123456',
+                sendt: '2023-02-01T11:52:20.615+01:00',
+                lest: true,
+                viktig: false,
+                tekst: `Lenkene skal være klikkbare:
+                https://www.nav.no
+                www.nav.no
+                Hilsen F_994201 E_994201`
+            }
+        ],
+        egenskaper: []
     }
 ];
 
