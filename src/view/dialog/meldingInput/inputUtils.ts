@@ -19,9 +19,10 @@ export const betterErrorMessage = (error: FieldError, melding: string): FieldErr
 
 type KladdOppdateringData = KladdData & { fnr: string | undefined };
 
+type OppdaterKladd = (data: KladdOppdateringData) => void;
 export const debounced = (
-    fn: (data: KladdOppdateringData) => void
-): { hasPendingTask: () => boolean; cleanup: () => void; invoke: T } => {
+    fn: OppdaterKladd
+): { hasPendingTask: () => boolean; cleanup: () => void; invoke: OppdaterKladd } => {
     let timer: NodeJS.Timeout | undefined;
     const invoke = (data: KladdOppdateringData) => {
         clearTimeout(timer);
@@ -36,7 +37,7 @@ export const debounced = (
     const hasPendingTask = () => {
         return timer !== undefined;
     };
-    return { cleanup, invoke: invoke as unknown as T, hasPendingTask };
+    return { cleanup, invoke: invoke, hasPendingTask };
 };
 
 export interface MeldingInputArgs {

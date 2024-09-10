@@ -30,9 +30,9 @@ export const jsonResponse = (
     };
 };
 
-const failOrGetResponse = (
+const failOrGetResponse = <T extends DefaultBodyType>(
     shouldFail: () => boolean,
-    successFn: (req: StrictRequest<DefaultBodyType>) => Promise<Record<string, unknown>>,
+    successFn: (req: StrictRequest<DefaultBodyType>) => Promise<T>,
     delayMs = 0
 ): HttpResponseResolver => {
     return async ({ request }) => {
