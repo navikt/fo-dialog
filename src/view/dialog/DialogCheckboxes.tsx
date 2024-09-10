@@ -86,6 +86,7 @@ const ManagedDialogCheckboxes = ({ dialog }: { dialog: DialogData }) => {
 
     const laster = dialogContext.status === Status.PENDING || dialogContext.status === Status.RELOADING;
 
+    if (!visible) return null;
     return (
         <DialogCheckboxes
             values={values}

@@ -112,7 +112,7 @@ describe('<Dialog/>', () => {
         expect(queryByLabelText('Venter på svar fra bruker')).toBeDisabled();
     });
     test('Brukere skal ikke kunne se "Venter på svar fra Bruker" eller "Venter på svar fra NAV"', async () => {
-        gitt.bruker().som.harDialog();
+        gitt.bruker().som.harDialog().som.harBrukerUnderOppfolging();
         const { queryByRole, getByLabelText, queryByLabelText } = render(<MemoryRouterMedBareDialogTrad />);
         expect(queryByRole('form')).toBeNull();
         await waitFor(() => getByLabelText('Meldinger'));
