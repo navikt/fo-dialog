@@ -98,7 +98,7 @@ const DemoDashboard = (props: Props) => {
     const [failureRange, setFailureRange] = useState(getFailureRate());
 
     const endreFeilureRate = (value: number) => {
-        settLocalStorage(LocalStorageElement.FAILURE_RATE, value);
+        settLocalStorage(LocalStorageElement.FAILURE_RATE, value.toString());
         window.location.reload();
     };
 
@@ -106,7 +106,7 @@ const DemoDashboard = (props: Props) => {
         const checkbox = e.currentTarget;
         const saveInSessionStorage = Object.values(LocalStorageElement).indexOf(checkbox.id) > -1;
         if (saveInSessionStorage) {
-            settLocalStorage(checkbox.id, checkbox.checked);
+            settLocalStorage(checkbox.id, checkbox.checked.toString());
             window.location.reload();
         }
     };

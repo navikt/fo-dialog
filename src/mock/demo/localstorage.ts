@@ -18,7 +18,7 @@ export const BRUKER_TYPE = {
     EKSTERN: 'ekstern'
 };
 
-export const settLocalStorage = (key: string, value: any) => {
+export const settLocalStorage = (key: string, value: string) => {
     window.localStorage.setItem(key, value);
 };
 

@@ -6,5 +6,14 @@ vi.mock('../felleskomponenter/logging', () => ({
     loggChangeInDialog: vi.fn()
 }));
 Element.prototype.scrollTo = () => {};
-// @ts-ignore
-window.matchMedia = (): boolean => true;
+
+window.matchMedia = (): MediaQueryList => ({
+    matches: false,
+    addListener: () => {},
+    removeListener: () => {},
+    addEventListener: () => {},
+    removeEventListener: () => {},
+    dispatchEvent: () => false,
+    onchange: null,
+    media: ''
+});
