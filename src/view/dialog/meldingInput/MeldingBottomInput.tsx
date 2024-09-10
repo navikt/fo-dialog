@@ -76,7 +76,6 @@ export const MeldingBottomInput = () => {
     const oppfolging = dataOrUndefined(oppfolgingContext);
     const dialog = useSelectedDialog();
     if (!dialog) {
-        console.log('Invisble');
         return null;
     }
     return (
