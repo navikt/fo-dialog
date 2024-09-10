@@ -9,5 +9,10 @@ export default [
     pluginJs.configs.recommended,
     ...tseslint.configs.recommended,
     pluginReact.configs.flat.recommended,
-    { ignores: ['src/fellesikoner/', 'src/**/**.test.*'] }
+    {
+        // ignores: ['src/fellesikoner/', 'src/**/**.test.*'],
+        rules: {
+            '@typescript-eslint/no-unused-vars': ['error', { argsIgnorePattern: '^_' }]
+        }
+    }
 ];
