@@ -12,6 +12,7 @@ import { initialPageLoader } from './loaders';
 import { useFnrContext } from '../view/Provider';
 import { NyDialogHeader } from '../view/dialog/DialogHeader/NyDialogHeader';
 import { DialogHeader } from '../view/dialog/DialogHeader';
+import { sentryCreateBrowserRouter } from '../sentry2';
 
 const aktivitetQuery = (aktivitetId?: string) => (aktivitetId ? `?aktivitetId=${aktivitetId}` : '');
 
