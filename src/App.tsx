@@ -22,7 +22,7 @@ const App = (props: Props) => {
         <Provider visAktivitetDefault={visAktivitetDefault} fnr={fnr} erVeileder={!!fnr}>
             <UppdateEventHandler />
             <div
-                className={cx('flex flex-col md:flex-row', {
+                className={cx('flex flex-row', {
                     'max-h-[calc(100vh-180px)] min-h-[calc(100vh-180px)]': erInternFlate,
                     'max-h-[calc(100vh-80px)] min-h-[calc(100vh-80px)]': !erInternFlate
                 })}
