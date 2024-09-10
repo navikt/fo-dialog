@@ -43,7 +43,7 @@ const handleMessage = (callback: () => void, body: SubscriptionPayload) => (even
 
 const maxRetries = 10;
 let retries = 0;
-const handleClose = (callback: () => void, body: SubscriptionPayload) => (event: CloseEvent) => {
+const handleClose = (callback: () => void, body: SubscriptionPayload) => () => {
     if (retries >= maxRetries) return;
     retries++;
     setTimeout(() => {

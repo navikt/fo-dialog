@@ -10,9 +10,9 @@ export const DialogContext = React.createContext<DialogDataProviderType>({
     status: Status.INITIAL,
     nyDialog: () => Promise.resolve({} as DialogData),
     nyMelding: ({ dialog }: NyMeldingArgs) => Promise.resolve(dialog),
-    lesDialog: (_dialogId: string) => Promise.resolve({} as DialogData),
-    setFerdigBehandlet: (dialog: DialogData, _ferdigBehandlet: boolean) => Promise.resolve(dialog),
-    setVenterPaSvar: (dialog: DialogData, _venterPaSvar: boolean) => Promise.resolve(dialog)
+    lesDialog: () => Promise.resolve({} as DialogData),
+    setFerdigBehandlet: (dialog: DialogData) => Promise.resolve(dialog),
+    setVenterPaSvar: (dialog: DialogData) => Promise.resolve(dialog)
 });
 
 export const useDialogContext = () => useContext(DialogContext);

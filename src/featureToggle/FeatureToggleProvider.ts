@@ -1,5 +1,3 @@
-import React from 'react';
-
 import { Status } from '../api/typer';
 import { AktivitetApi } from '../api/UseApiBasePath';
 import { fetchData } from '../utils/Fetch';
@@ -7,9 +5,7 @@ import { FeatureToggle } from './const';
 import { createGenericStore } from '../utils/genericStore';
 import { useShallow } from 'zustand/react/shallow';
 
-const ALL_TOGGLES = [FeatureToggle.USE_WEBSOCKETS] as const;
-export type Feature = (typeof ALL_TOGGLES)[number];
-export type Features = Record<Feature, boolean>;
+export type Features = Record<FeatureToggle.USE_WEBSOCKETS, boolean>;
 
 export interface FeatureData {
     data: Features;

@@ -2,13 +2,15 @@ import { DialogApi } from '../api/UseApiBasePath';
 import { logAmplitudeEvent } from '../metrics/amplitude-utils';
 import { DialogData } from '../utils/Typer';
 
+type UnknownRecord = Record<string, string | number | boolean>;
+
 interface FrontendEvent {
     name: string;
-    fields?: {};
-    tags?: {};
+    fields?: UnknownRecord;
+    tags?: UnknownRecord;
 }
 const url = DialogApi.logg;
-export default function loggEvent(eventNavn: string, feltObjekt?: object, tagObjekt?: object) {
+export default function loggEvent(eventNavn: string, feltObjekt?: UnknownRecord, tagObjekt?: UnknownRecord) {
     const event: FrontendEvent = { name: eventNavn, fields: feltObjekt, tags: tagObjekt };
     const config = {
         headers: {
