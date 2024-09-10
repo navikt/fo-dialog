@@ -4,6 +4,7 @@ import { HandlingsType, useViewContext } from '../../ViewState';
 import { MeldingFormValues } from './MeldingInputBox';
 import useMeldingStartTekst from '../UseMeldingStartTekst';
 import { useFnrContext } from '../../Provider';
+import { KladdData } from '../../../utils/Typer';
 
 export const maxMeldingsLengde = 5000;
 export const betterErrorMessage = (error: FieldError, melding: string): FieldError => {
@@ -16,14 +17,17 @@ export const betterErrorMessage = (error: FieldError, melding: string): FieldErr
     };
 };
 
-export const debounced = <T extends Function>(
-    fn: T
-): { hasPendingTask: () => boolean; cleanup: () => void; invoke: T } => {
-    let timer: any | undefined;
-    const invoke = (...args: any): void => {
+type KladdOppdateringData = KladdData & { fnr: string | undefined };
+
+type OppdaterKladd = (data: KladdOppdateringData) => void;
+export const debounced = (
+    fn: OppdaterKladd
+): { hasPendingTask: () => boolean; cleanup: () => void; invoke: OppdaterKladd } => {
+    let timer: NodeJS.Timeout | undefined;
+    const invoke = (data: KladdOppdateringData) => {
         clearTimeout(timer);
         timer = setTimeout(() => {
-            fn(...args);
+            fn(data);
             timer = undefined;
         }, 500);
     };
@@ -33,7 +37,7 @@ export const debounced = <T extends Function>(
     const hasPendingTask = () => {
         return timer !== undefined;
     };
-    return { cleanup, invoke: invoke as unknown as T, hasPendingTask };
+    return { cleanup, invoke: invoke, hasPendingTask };
 };
 
 export interface MeldingInputArgs {
@@ -42,7 +46,7 @@ export interface MeldingInputArgs {
     kladdErLagret: boolean;
 }
 export const MeldingInputContext = React.createContext<MeldingInputArgs>({
-    onSubmit: (e) => Promise.resolve(),
+    onSubmit: () => Promise.resolve(),
     noeFeilet: false,
     kladdErLagret: false
 });
@@ -52,8 +56,8 @@ export const useFocusBeforeHilsen = (textAreaRef: MutableRefObject<HTMLTextAreaE
     const hasFocus = useRef(false);
     useEffect(() => {
         if (textAreaRef.current === null) return;
-        const setHasFocusTrue = (ev: FocusEvent) => (hasFocus.current = true);
-        const setHasFocusFalse = (ev: FocusEvent) => (hasFocus.current = false);
+        const setHasFocusTrue = () => (hasFocus.current = true);
+        const setHasFocusFalse = () => (hasFocus.current = false);
         textAreaRef.current?.addEventListener('blur', setHasFocusFalse);
         textAreaRef.current?.addEventListener('focus', setHasFocusTrue);
     }, [textAreaRef.current]);

@@ -43,7 +43,7 @@ const handleMessage = (callback: () => void, body: SubscriptionPayload) => (even
 
 const maxRetries = 10;
 let retries = 0;
-const handleClose = (callback: () => void, body: SubscriptionPayload) => (event: CloseEvent) => {
+const handleClose = (callback: () => void, body: SubscriptionPayload) => () => {
     if (retries >= maxRetries) return;
     retries++;
     setTimeout(() => {
@@ -90,7 +90,7 @@ const authenticate = (socket: WebSocket, ticket: string) => {
 };
 
 const getTicketAndAuthenticate = async (body: SubscriptionPayload) => {
-    let ticket = await getTicket(body);
+    const ticket = await getTicket(body);
     if (!socketSingleton) return;
     authenticate(socketSingleton, ticket);
 };

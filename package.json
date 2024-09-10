@@ -9,7 +9,7 @@
     "url": "git+https://github.com/navikt/arbeidsrettet-dialog.git"
   },
   "engines": {
-    "node": "20"
+    "node": "21"
   },
   "scripts": {
     "dev": "vite",
@@ -24,7 +24,7 @@
     "test:coverage": "npm test -- --coverage --watchAll=false",
     "format-all": "prettier --write 'src/'",
     "prettier-check": "prettier --check 'src/'",
-    "lint": "echo \"Not implemented\"",
+    "lint": "eslint src/",
     "lint-staged": "lint-staged",
     "storybook": "STORYBOOK_USE_HASH_ROUTER=true storybook dev -p 6006",
     "build-storybook": "STORYBOOK_USE_HASH_ROUTER=true storybook build",
@@ -93,6 +93,7 @@
   "devDependencies": {
     "@babel/cli": "^7.25.6",
     "@babel/core": "^7.25.2",
+    "@eslint/js": "^9.10.0",
     "@storybook/addon-essentials": "^8.0.9",
     "@storybook/addon-interactions": "^8.0.9",
     "@storybook/addon-links": "^8.0.9",
@@ -115,10 +116,13 @@
     "chromatic": "^7.2.0",
     "classnames": "^2.5.1",
     "cross-env": "^7.0.3",
+    "eslint": "^9.10.0",
+    "eslint-plugin-react": "^7.35.2",
+    "globals": "^15.9.0",
     "graphql": "^16.9.0",
     "husky": "^9.0.11",
     "import-sort-style-module": "^6.0.0",
-    "jsdom": "^24.0.0",
+    "jsdom": "^25.0.0",
     "lint-staged": "^15.2.2",
     "msw": "^2.3.5",
     "postcss": "^8.4.33",
@@ -128,6 +132,7 @@
     "storybook": "^7.6.12",
     "tailwindcss": "^3.4.3",
     "typescript": "^5.5.4",
+    "typescript-eslint": "^8.4.0",
     "vitest": "^2.0.5"
   },
   "msw": {

@@ -9,7 +9,7 @@ function getHeaders() {
     return {
         'Content-Type': 'application/json',
         'Nav-Consumer-Id': 'arbeidsrettet-dialog',
-        NAV_CSRF_PROTECTION: getCookie('NAV_CSRF_PROTECTION') // eslint-disable-line quote-props
+        NAV_CSRF_PROTECTION: getCookie('NAV_CSRF_PROTECTION')
     };
 }
 

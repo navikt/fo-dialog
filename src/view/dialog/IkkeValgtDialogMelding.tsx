@@ -3,7 +3,7 @@ import React, { Suspense } from 'react';
 import { useDialoger } from '../DialogProvider';
 import DialogIkkeValgt from '../info/DialogIkkeValgt';
 import InfoVedIngenDialoger from '../info/InfoVedIngenDialoger';
-import { Await, useLoaderData, useRouteLoaderData } from 'react-router';
+import { Await } from 'react-router';
 import { Loader } from '@navikt/ds-react';
 import { useRootLoaderData } from '../../routing/loaders';
 

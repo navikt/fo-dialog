@@ -6,7 +6,7 @@ export const getSistOppdatert = (): ((req: StrictRequest<DefaultBodyType>) => { 
     let timestamp = getTime(now);
     let oppdaterTimestamp = true;
 
-    return (req) => {
+    return () => {
         const respons = { sistOppdatert: timestamp };
 
         if (oppdaterTimestamp) timestamp = getTime(new Date());

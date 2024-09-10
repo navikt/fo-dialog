@@ -14,11 +14,13 @@ export const setupIntegrationTest = (fnr: string | undefined) => {
 };
 
 export const fullRouterAndProvider = (fnr: string | undefined, initialEntries: string[] | undefined = undefined) => {
-    return () => (
-        <Provider erVeileder={fnr !== undefined}>
-            <AllRoutesInMemory initialEntries={initialEntries} fnr={fnr} />
-        </Provider>
-    );
+    return function RouterAndProvider() {
+        return (
+            <Provider erVeileder={fnr !== undefined}>
+                <AllRoutesInMemory initialEntries={initialEntries} fnr={fnr} />
+            </Provider>
+        );
+    };
 };
 
 const AllRoutesInMemory = ({

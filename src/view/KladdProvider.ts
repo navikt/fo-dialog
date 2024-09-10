@@ -13,7 +13,7 @@ export function eqKladd(kladd: KladdData, dialogId?: StringOrNull, aktivitetId?:
     const dId = valueOrNull(dialogId);
     const aId = valueOrNull(aktivitetId);
 
-    if (!!dialogId) {
+    if (dialogId) {
         return kladd.dialogId === dId;
     }
 

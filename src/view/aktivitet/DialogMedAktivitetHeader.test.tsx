@@ -10,52 +10,52 @@ import { DialogMedAktivitetHeader, getInfoText } from './DialogMedAktivitetHeade
 
 describe('getInfoText', () => {
     it('skal returnere korrekt tekst for stillingsaktivitet', () => {
-        const aktivitet: any = {
+        const aktivitet = {
             type: AktivitetTypes.STILLING,
             tilDato: '2019-10-24T15:44:21.993+02:00',
             arbeidsgiver: 'Testesen'
-        };
+        } as Aktivitet;
 
         const text = getInfoText(aktivitet);
         expect(text).toEqual('Testesen');
     });
 
     it('skal returnere korrekt tekst for møteaktivitet', () => {
-        const aktivitet: any = {
+        const aktivitet = {
             type: AktivitetTypes.MOTE,
             fraDato: '2019-10-24T15:44:21.993+02:00'
-        };
+        } as Aktivitet;
 
         const text = getInfoText(aktivitet);
         expect(text).toEqual('24.10.2019 / 15:44');
     });
 
     it('skal returnere korrekt tekst for søkeavtale', () => {
-        const aktivitet: any = {
+        const aktivitet = {
             type: AktivitetTypes.SOKEAVTALE,
             tilDato: '2019-10-25T15:44:21.993+02:00',
             fraDato: '2019-10-24T15:44:21.993+02:00'
-        };
+        } as Aktivitet;
 
         const text = getInfoText(aktivitet);
         expect(text).toEqual('24.10.2019 - 25.10.2019');
     });
 
     it('skal returnere korrekt tekst for medisinsk behandling', () => {
-        const aktivitet: any = {
+        const aktivitet = {
             type: AktivitetTypes.BEHANDLING,
             behandlingType: 'Kiropraktor'
-        };
+        } as Aktivitet;
 
         const text = getInfoText(aktivitet);
         expect(text).toEqual('Kiropraktor');
     });
 
     it('skal returnere korrekt tekst for møteaktivitet', () => {
-        const aktivitet: any = {
+        const aktivitet = {
             type: AktivitetTypes.SAMTALEREFERAT,
             fraDato: '2019-10-24T15:44:21.993+02:00'
-        };
+        } as Aktivitet;
 
         const text = getInfoText(aktivitet);
         expect(text).toEqual('24.10.2019');

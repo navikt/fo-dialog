@@ -1,6 +1,6 @@
 import React from 'react';
 
-import { useAktivitetContext, useHentAktiviteter } from '../view/AktivitetProvider';
+import { useHentAktiviteter } from '../view/AktivitetProvider';
 import { useOppfolgingContext } from '../view/OppfolgingProvider';
 import { useEventListener } from '../view/utils/useEventListner';
 import { useFnrContext } from '../view/Provider';

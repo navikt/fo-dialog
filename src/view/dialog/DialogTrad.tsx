@@ -42,7 +42,6 @@ export const DialogTrad = () => {
         } else if (navigationState.sistHandlingsType !== viewState.sistHandlingsType) {
             setViewState({ sistHandlingsType: navigationState.sistHandlingsType });
         }
-        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [dialogId, setViewState, navigationState]);
 
     useEffect(() => {

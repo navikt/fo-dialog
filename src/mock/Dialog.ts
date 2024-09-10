@@ -639,7 +639,7 @@ const dialoger: DialogData[] = [
 
 export const lesDialog: HttpResponseResolver<{ dialogId: string }, never, DialogData> = ({ params }) => {
     const dialogId = params.dialogId;
-    const dialog: any = dialoger.find((dlg) => dlg.id === dialogId);
+    const dialog = dialoger.find((dlg) => dlg.id === dialogId);
     if (dialog) {
         dialog.lest = true;
         return HttpResponse.json(dialog);

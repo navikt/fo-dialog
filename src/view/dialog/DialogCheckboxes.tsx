@@ -1,12 +1,9 @@
 import { Checkbox, CheckboxGroup } from '@navikt/ds-react';
-import React, { useEffect } from 'react';
+import React from 'react';
 import { Status } from '../../api/typer';
 import { notEmpty } from '../../utils/TypeHelper';
 import { useDialogContext } from '../DialogProvider';
-import { useOppfolgingContext } from '../OppfolgingProvider';
-import { dataOrUndefined, useFnrContext } from '../Provider';
-import { useSelectedDialog } from '../utils/useAktivitetId';
-import { useUserInfoContext } from '../BrukerProvider';
+import { useFnrContext } from '../Provider';
 import { useHentDialoger } from '../dialogProvider/dialogStore';
 import useKansendeMelding from '../../utils/UseKanSendeMelding';
 import { DialogData } from '../../utils/Typer';
@@ -61,7 +58,6 @@ const DialogCheckboxes = ({
 };
 
 const ManagedDialogCheckboxes = ({ dialog }: { dialog: DialogData }) => {
-    const visible = useUserInfoContext()?.erVeileder || false;
     const fnr = useFnrContext();
     const hentDialoger = useHentDialoger();
     const dialogContext = useDialogContext();

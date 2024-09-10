@@ -30,9 +30,9 @@ export const jsonResponse = (
     };
 };
 
-const failOrGetResponse = (
+const failOrGetResponse = <T extends DefaultBodyType>(
     shouldFail: () => boolean,
-    successFn: (req: StrictRequest<DefaultBodyType>) => Promise<Record<any, any>>,
+    successFn: (req: StrictRequest<DefaultBodyType>) => Promise<T>,
     delayMs = 0
 ): HttpResponseResolver => {
     return async ({ request }) => {
@@ -99,7 +99,7 @@ export const handlers = [
         '/veilarbdialog/graphql',
         failOrGetResponse(
             harDialogFeilerSkruddPa,
-            async (request) => {
+            async () => {
                 const dialogerPayload = ingenOppfPerioder() ? [] : dialoger();
                 return { data: { dialoger: dialogerPayload, kladder: [] }, errors: [] };
             },

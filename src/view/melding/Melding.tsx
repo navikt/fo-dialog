@@ -1,5 +1,5 @@
 import { ExternalLinkIcon, PersonIcon } from '@navikt/aksel-icons';
-import { BodyShort, Chat, HStack } from '@navikt/ds-react';
+import { BodyShort, Chat } from '@navikt/ds-react';
 import React from 'react';
 
 import { ViktigMelding } from '../../felleskomponenter/etiketer/Etikett';
@@ -51,7 +51,7 @@ export function Melding(props: Props) {
                         <span className="mt-2 whitespace-pre-wrap">
                             <Markdown
                                 components={{
-                                    a: ({ node, ...props }) => (
+                                    a: ({ node: _, ...props }) => (
                                         <span className="inline-flex items-center">
                                             <a {...props} target="_blank" rel="noopener noreferrer" />
                                             <ExternalLinkIcon

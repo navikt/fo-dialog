@@ -1,6 +1,4 @@
-import React, { useContext, useEffect, useState } from 'react';
-
-import { Status, isReloading } from '../api/typer';
+import { Status } from '../api/typer';
 import { OppfolgingsApi } from '../api/UseApiBasePath';
 import { fetchData } from '../utils/Fetch';
 import { Bruker } from '../utils/Typer';

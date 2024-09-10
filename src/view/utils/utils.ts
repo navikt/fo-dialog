@@ -15,7 +15,7 @@ export const settSammenmedSlasher = (...ss: Array<string | undefined>): string =
 
 export const getAktivitetType = (aktivitet: Aktivitet | ArenaAktivitet): AlleAktivitetTypes => {
     if (aktivitet.type === AktivitetTypes.EKSTERN_AKTIVITET) {
-        return aktivitet.eksternAktivitet!!.type;
+        return aktivitet.eksternAktivitet!.type;
     }
     return aktivitet.type;
 };

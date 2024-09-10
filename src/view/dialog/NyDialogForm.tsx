@@ -44,7 +44,7 @@ const NyDialogForm = (props: Props) => {
 
     const defaultValues: NyDialogFormValues = {
         tema: kladd?.overskrift ?? cutStringAtLength(defaultTema, 100, '...'),
-        melding: !!kladd?.tekst ? kladd.tekst : startTekst
+        melding: kladd?.tekst ? kladd.tekst : startTekst
     };
 
     const maxMeldingsLengde = 5000;
@@ -77,12 +77,16 @@ const NyDialogForm = (props: Props) => {
     const tema = watch('tema');
 
     const timer = useRef<number | undefined>();
-    const callback = useRef<() => any>();
+    const callback = useRef<() => void>();
 
     useEffect(() => {
         return () => {
-            timer.current && clearInterval(timer.current);
-            timer.current && callback.current && callback.current();
+            if (timer.current) {
+                clearInterval(timer.current);
+                if (callback.current) {
+                    callback.current();
+                }
+            }
         };
     }, []);
 
@@ -95,7 +99,7 @@ const NyDialogForm = (props: Props) => {
         tema: string | undefined;
         melding: string | undefined;
     }) => {
-        timer.current && clearInterval(timer.current);
+        if (timer.current) clearInterval(timer.current);
         callback.current = () => {
             timer.current = undefined;
             oppdaterKladd({
@@ -139,7 +143,7 @@ const NyDialogForm = (props: Props) => {
     const onSubmit = (data: NyDialogFormValues) => {
         const { tema, melding } = data;
 
-        timer.current && clearInterval(timer.current);
+        if (timer.current) clearInterval(timer.current);
         timer.current = undefined;
 
         loggEvent('arbeidsrettet-dialog.ny.dialog', { paaAktivitet: !!aktivitetId });

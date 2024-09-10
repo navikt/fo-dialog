@@ -25,7 +25,7 @@ export function getStatusText(status: AktivitetStatus): string {
 
 export function getTypeTextByAktivitet(aktivitet: Aktivitet | ArenaAktivitet): string {
     if (aktivitet.type === AktivitetTypes.EKSTERN_AKTIVITET) {
-        return getTypeText(aktivitet.eksternAktivitet?.type!!);
+        return aktivitet.eksternAktivitet?.type ? getTypeText(aktivitet.eksternAktivitet?.type) : 'Tiltak fra NAV';
     }
     return getTypeText(aktivitet.type);
 }
@@ -96,7 +96,7 @@ export function getDialogTittel(aktivitet: Aktivitet | ArenaAktivitet | undefine
         case AktivitetTypes.MOTE:
             return `Møte: ${tittel}`;
         case AktivitetTypes.EKSTERN_AKTIVITET:
-            return `${getTypeText((aktivitet as Aktivitet).eksternAktivitet!!.type)}: ${tittel}`;
+            return `${getTypeText((aktivitet as Aktivitet).eksternAktivitet!.type)}: ${tittel}`;
         default:
             return `${getTypeText(type)}: ${tittel}`;
     }

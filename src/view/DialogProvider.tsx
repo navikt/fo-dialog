@@ -8,17 +8,16 @@ import { initDialogState, useDialogStore } from './dialogProvider/dialogStore';
 
 export const DialogContext = React.createContext<DialogDataProviderType>({
     status: Status.INITIAL,
-    nyDialog: (args) => Promise.resolve({} as any),
+    nyDialog: () => Promise.resolve({} as DialogData),
     nyMelding: ({ dialog }: NyMeldingArgs) => Promise.resolve(dialog),
-    lesDialog: (_dialogId: string) => Promise.resolve({} as any),
-    setFerdigBehandlet: (dialog: DialogData, _ferdigBehandlet: boolean) => Promise.resolve(dialog),
-    setVenterPaSvar: (dialog: DialogData, _venterPaSvar: boolean) => Promise.resolve(dialog)
+    lesDialog: () => Promise.resolve({} as DialogData),
+    setFerdigBehandlet: (dialog: DialogData) => Promise.resolve(dialog),
+    setVenterPaSvar: (dialog: DialogData) => Promise.resolve(dialog)
 });
 
 export const useDialogContext = () => useContext(DialogContext);
 export const useDialoger = () => {
-    const dialoger = useDialogStore((state) => state.dialoger);
-    return dialoger;
+    return useDialogStore((state) => state.dialoger);
 };
 
 export interface NyTradArgs {
@@ -84,7 +83,7 @@ export function useDialogDataProvider(): DialogDataProviderType {
             method: 'post',
             body: JSON.stringify(nyDialogData)
         }).then((dialog) => {
-            if (!!dialogId) {
+            if (dialogId) {
                 updateDialogInDialoger(dialog);
                 setOkStatus();
             } else {
@@ -146,12 +145,4 @@ export function useDialogDataProvider(): DialogDataProviderType {
 
 export function isDialogReloading(status: Status) {
     return status === Status.OK || status === Status.RELOADING;
-}
-
-export function isDialogPending(status: Status) {
-    return status === Status.PENDING;
-}
-
-export function hasDialogError(status: Status) {
-    return status === Status.ERROR;
 }

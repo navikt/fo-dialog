@@ -24,7 +24,7 @@ function sisteLesteHenvendelse(lest: StringOrNull, henvendelser: MeldingsData[])
 export function Meldinger(props: Props) {
     const { lestAvBrukerTidspunkt, henvendelser } = props.dialogData;
     const meldingListRef = useRef<HTMLElement>(null);
-    const sorterteHenvendelser = !!henvendelser ? henvendelser.sort((a, b) => compareDates(b.sendt, a.sendt)) : [];
+    const sorterteHenvendelser = henvendelser ? henvendelser.sort((a, b) => compareDates(b.sendt, a.sendt)) : [];
 
     useEffect(() => {
         requestAnimationFrame(() => {

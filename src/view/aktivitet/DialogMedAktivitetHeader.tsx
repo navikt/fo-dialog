@@ -6,7 +6,7 @@ import { Aktivitet, AktivitetTypes, ArenaAktivitet, ArenaAktivitetTypes } from '
 import { formaterDate, getKlokkeslett } from '../../utils/Date';
 import { useVisAktivitetContext } from '../AktivitetToggleContext';
 import { TilbakeKnapp } from '../dialog/TilbakeKnapp';
-import { useErVeileder, useFnrContext } from '../Provider';
+import { useErVeileder } from '../Provider';
 import { useSelectedAktivitet } from '../utils/useAktivitetId';
 import { aktivitetLenke, visAktivitetsplan } from './AktivitetskortLenke';
 import { getTypeTextByAktivitet } from './TextUtils';
@@ -18,7 +18,6 @@ export function DialogMedAktivitetHeader() {
     const erVeileder = useErVeileder();
 
     if (!aktivitet) {
-        console.log({ aktivitet });
         return null;
     }
 
