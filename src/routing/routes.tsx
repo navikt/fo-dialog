@@ -36,7 +36,7 @@ const RedirectToDialogWithoutFnr = () => {
 };
 const RedirectToNyDialogWithoutFnr = () => {
     // Handle route /:fnr/ny?aktivitetId=<id> -> /ny?aktivitetId=<id>
-    const [queryParams, _] = useSearchParams();
+    const [queryParams] = useSearchParams();
     const aktivitetId = queryParams.get('aktivitetId');
     const queryPart = aktivitetId ? '?aktivitetId=' + aktivitetId : '';
     return <Navigate replace to={`/ny${queryPart}`} />;
