@@ -19,7 +19,6 @@ import { DialogData } from '../../utils/Typer';
 import { MaybeAktivitet } from '../AktivitetProvider';
 
 export const DialogTrad = () => {
-    const scrollContainerRef: React.MutableRefObject<null | HTMLDivElement> = useRef(null);
     const { lesDialog } = useDialogContext();
 
     const valgtDialog = useSelectedDialog();
@@ -81,12 +80,6 @@ export const DialogTrad = () => {
         ]);
     }, []);
 
-    useEffect(() => {
-        scrollContainerRef?.current?.scrollTo({
-            top: scrollContainerRef?.current?.scrollHeight
-        });
-    }, [scrollContainerRef, valgtDialog]);
-
     return (
         <Suspense fallback={<DialogLoader />}>
             <Await resolve={requiredData}>
@@ -99,10 +92,7 @@ export const DialogTrad = () => {
                                 'flex-col lg:flex-row': !aktivitet
                             })}
                         >
-                            <div
-                                ref={scrollContainerRef}
-                                className="relative flex flex-1 grow flex-col overflow-y-scroll"
-                            >
+                            <div className="flex overflow-hidden flex-1 grow flex-col">
                                 <Meldinger dialogData={dialog} />
                                 <HistoriskInfo />
                             </div>
