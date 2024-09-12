@@ -1,5 +1,5 @@
 import React, { ReactElement, Suspense, useEffect, useMemo } from 'react';
-import { Await, Outlet, useMatches } from 'react-router';
+import { Await, Outlet } from 'react-router';
 import { v4 as uuidv4 } from 'uuid';
 
 import loggEvent from '../felleskomponenter/logging';
@@ -8,9 +8,8 @@ import { useUserInfoContext } from './BrukerProvider';
 import DialogOversikt from './dialogliste/DialogOversikt';
 import { EventHandler } from './EventHandler';
 import { useOppfolgingContext } from './OppfolgingProvider';
-import { dataOrUndefined, useErVeileder } from './Provider';
+import { dataOrUndefined } from './Provider';
 import { useRootLoaderData } from '../routing/loaders';
-import { RouteIds } from '../routing/routes';
 import classNames from 'classnames';
 import StatusAdvarsel from './statusAdvarsel/StatusAdvarsel';
 import DialogHeaderFeil from './dialog/DialogHeaderFeil';
@@ -41,17 +40,12 @@ const AppBody = () => {
     const oppfolgingData = dataOrUndefined(oppfolgingContext);
 
     useLogBruker(brukerdata, oppfolgingData);
-    const erDialogRoute = useMatches().some((match) => match.id === RouteIds.Dialog);
 
     return (
         <>
             <DialogOversikt />
             <WaitForAllData />
-            <div
-                className={classNames('flex md:flex-1 flex-col', {
-                    'flex-1': erDialogRoute // Når dialoger vises skal boks med meldinger fylle mest mulig
-                })}
-            >
+            <div className={classNames('flex flex-1 flex-col')}>
                 <StatusAdvarsel />
                 <DialogHeaderFeil />
                 <Outlet />
