@@ -3,7 +3,7 @@ import React, { useEffect, useState } from 'react';
 
 import { StringOrNull } from '../../utils/Typer';
 import { HandlingsType, useViewContext } from '../ViewState';
-import styles from './DialogSendtBekreftelse.module.less';
+import styles from './DialogSendtBekreftelse.module.css';
 import { useFnrContext } from '../Provider';
 import { useSelectedDialog } from '../utils/useAktivitetId';
 

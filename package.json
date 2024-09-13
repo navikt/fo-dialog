@@ -12,7 +12,8 @@
     "node": "20"
   },
   "scripts": {
-    "dev": "vite",
+    "dev-vite": "vite",
+    "dev": "remix dev",
     "build:dev-ekstern": "tsc --noEmit && vite build --mode=dev-ekstern --base=/arbeid/dialog/",
     "build:dev-intern": "tsc --noEmit && vite build --mode=dev-intern --base=https://cdn.nav.no/dab/arbeidsrettet-dialog-dev-intern/build/",
     "build:prod-ekstern": "tsc --noEmit && vite build --mode=prod-ekstern --base=/arbeid/dialog/",
@@ -66,6 +67,9 @@
     "@navikt/ds-css": "^6.7.0",
     "@navikt/ds-react": "^6.7.0",
     "@navikt/ds-tailwind": "^6.7.0",
+    "@remix-run/node": "^2.12.0",
+    "@remix-run/react": "^2.12.0",
+    "@remix-run/serve": "^2.12.0",
     "@sentry/react": "^8.27.0",
     "@sentry/tracing": "^7.114.0",
     "@vitejs/plugin-react": "^4.3.1",
@@ -93,6 +97,7 @@
   "devDependencies": {
     "@babel/cli": "^7.25.6",
     "@babel/core": "^7.25.2",
+    "@remix-run/dev": "^2.12.0",
     "@storybook/addon-essentials": "^8.0.9",
     "@storybook/addon-interactions": "^8.0.9",
     "@storybook/addon-links": "^8.0.9",

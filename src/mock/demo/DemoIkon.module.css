@@ -6,16 +6,15 @@
     font-family: 'Source Sans Pro', Arial, sans-serif;
     font-weight: bold;
     cursor: pointer;
-
-    polygon {
-        fill: #ffa500;
-    }
-
     :hover {
         text-decoration: underline;
     }
+}
 
-    polygon:hover {
-        fill: #ffb30f;
-    }
+.demoIkon.polygon {
+    fill: #ffa500;
+}
+
+.demoIkon.polygon:hover {
+    fill: #ffb30f;
 }

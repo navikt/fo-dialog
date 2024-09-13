@@ -2,7 +2,7 @@ import { BodyShort } from '@navikt/ds-react';
 import React from 'react';
 
 import { AktivitetTypes, AlleAktivitetTypes, ArenaAktivitetTypes } from '../../utils/aktivitetTypes';
-import styles from './Aktivitetskort.module.less';
+import styles from './Aktivitetskort.module.css';
 
 interface Props {
     aktivitetType: AlleAktivitetTypes;

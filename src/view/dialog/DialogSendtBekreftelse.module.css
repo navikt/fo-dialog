@@ -1,0 +1,7 @@
+.hjelpeTekstInnhold {
+    max-width: 20rem;
+}
+
+.hjelpeTekstInnhold > p:last-child {
+    padding-top: 10px;
+}

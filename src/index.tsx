@@ -33,16 +33,18 @@ if (USE_MOCK) {
         document.getElementById('root')?.appendChild(webComponentTag);
     }
 
-    import('./mock')
-        .then(({ default: startWorker }) => startWorker())
-        .then(() => {
-            if (fnr) {
-                exportToNavSpa();
-            } else {
-                renderAsRootApp();
-            }
-        });
+    // import('./mock/serverMock')
+    //     .then(({ default: startWorker }) => startWorker())
+    //     .then(() => {
+    //         if (fnr) {
+    //             exportToNavSpa();
+    //         } else {
+    //             renderAsRootApp();
+    //         }
+    //     });
 } else {
     initAmplitude();
     renderApp();
 }
+
+export default {};

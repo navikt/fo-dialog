@@ -1,9 +1,11 @@
 import { ReadMore } from '@navikt/ds-react';
 import classNames from 'classnames';
 import React, { useState } from 'react';
-import { Collapse } from 'react-collapse';
 
-import style from './InvertedLesMer.module.less';
+import pkg from 'react-collapse';
+const { Collapse } = pkg;
+
+import style from './InvertedLesMer.module.css';
 
 interface Props {
     apneTekst: string;

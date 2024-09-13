@@ -1,6 +1,6 @@
 import React from 'react';
 
-import styles from './DemoIkon.module.less';
+import styles from './DemoIkon.module.css';
 
 interface Props {
     onClick: () => void;

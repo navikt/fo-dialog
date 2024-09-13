@@ -2,7 +2,7 @@ import { BodyLong, BodyShort, ExpansionCard, Heading, Link } from '@navikt/ds-re
 import classNames from 'classnames';
 import React, { useLayoutEffect } from 'react';
 
-import dialogStyle from '../dialog/Dialog.module.less';
+import dialogStyle from '../dialog/Dialog.module.css';
 
 export function InfoOmDialogSide() {
     useLayoutEffect(() => {
