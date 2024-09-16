@@ -1,6 +1,7 @@
 import { Aktivitet } from '../utils/aktivitetTypes';
 import { aktivitetBasePath } from './UseApiBasePath';
 import { sjekkStatuskode } from '../utils/Fetch';
+import { Result, Failure, Ok, fail, ok } from '../utils/fetchResult';
 
 const query: string = `
     query($fnr: String!) {
@@ -138,21 +139,60 @@ interface OppfolgingsPerioder {
     aktiviteter: Aktivitet[];
 }
 
-interface GraphqlError {
+interface GraphqlErrorMessage {
     message: string;
 }
 export interface AktivitetsplanResponse {
     data: {
         perioder: OppfolgingsPerioder[];
     };
-    errors: GraphqlError[];
+    errors: GraphqlErrorMessage[];
 }
 
-const sjekkGraphqlFeil = (response: AktivitetsplanResponse): Promise<AktivitetsplanResponse> => {
-    if (!response?.data?.perioder && response?.errors.length != 0) {
-        return Promise.reject('Kunne ikke hente aktiviteter');
+export class GraphqlError extends Error {
+    constructor(errors: GraphqlErrorMessage[]) {
+        super(`GraphqlError: ${errors.join(',')}`);
     }
-    return Promise.resolve(response);
+}
+
+const sjekkGraphqlFeil = async (
+    result: Result<AktivitetsplanResponse, Error>
+): Promise<Result<number, GraphqlError | Error>> => {
+    const lal = result.flatMap((result) => {
+        if (!result?.data?.perioder && result?.errors.length != 0) {
+            return new Failure(new GraphqlError(result.errors));
+        }
+        return new Ok(result.data);
+    });
+
+    // result.flatMap((response) => {
+    //     httpSuccess(true);
+    // });
+    //
+    // result.flatMap((test) => {
+    //     httpFailure(true);
+    // });
+
+    const lol = result.flatMap((response) => {
+        if (!response?.data?.perioder && response?.errors.length != 0) {
+            const failure2 = fail(new GraphqlError(response.errors));
+            const failure = new Failure(new GraphqlError(response.errors));
+            return failure;
+        }
+        const success2 = ok(2);
+        const success = new Ok(2);
+        return success;
+    });
+    return lol;
+    // if (isOk(result)) {
+    //     const response = result.response;
+    //     if (!response?.data?.perioder && response?.errors.length != 0) {
+    //         return httpFailure(new GraphqlError(response.errors));
+    //     }
+    //     return httpSuccess(response);
+    // } else {
+    //     return result;
+    // }
 };
 
 export const hentAktiviteterGraphql = async (fnr: string | undefined): Promise<AktivitetsplanResponse> => {
@@ -165,6 +205,6 @@ export const hentAktiviteterGraphql = async (fnr: string | undefined): Promise<A
         body: JSON.stringify(queryBody(fnr || ''))
     })
         .then(sjekkStatuskode)
-        .then((it) => it.json())
+        .then((it) => it.mapSuccess((res) => res.json()))
         .then(sjekkGraphqlFeil);
 };

@@ -1,5 +1,6 @@
 import { create } from 'zustand';
 import { isReloading, Status } from '../api/typer';
+import { Result, isOk } from './Fetch';
 
 type GenericStore<StoredDataType, ResultType extends StoredDataType, ArgType> = {
     status: Status;
@@ -10,7 +11,7 @@ type GenericStore<StoredDataType, ResultType extends StoredDataType, ArgType> = 
 
 export const createGenericStore = <StoredDataType, ArgType, ResultType extends StoredDataType>(
     initialData: StoredDataType,
-    fetcher: (arg: ArgType) => Promise<ResultType>
+    fetcher: (arg: ArgType) => Promise<HttpResult<ResultType, any>>
 ) => {
     return create<GenericStore<StoredDataType, ResultType, ArgType>>((set) => ({
         data: initialData,
@@ -21,12 +22,20 @@ export const createGenericStore = <StoredDataType, ArgType, ResultType extends S
                 status: isReloading(prevState.status) ? Status.RELOADING : Status.PENDING
             }));
             try {
-                const data = await fetcher(arg);
-                set({
-                    data,
-                    status: Status.OK
-                });
-                return data;
+                const result = await fetcher(arg);
+                if (isOk(result)) {
+                    set({
+                        data: result.response,
+                        status: Status.OK
+                    });
+                    return result.response;
+                } else {
+                    set({
+                        data: result.error,
+                        status: Status.OK
+                    });
+                    return result.error;
+                }
             } catch (e) {
                 set({
                     error: e?.toString(),
