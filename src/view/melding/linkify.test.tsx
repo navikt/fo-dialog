@@ -95,6 +95,6 @@ describe('isNotMarkdownLink', () => {
             index: 1,
             '0': 'nav.no'
         } as RegExpExecArray;
-        expect(isNotMarkdownLink(match, '(nav.no')).toBeFalsy();
+        expect(isNotMarkdownLink(match, '[nav.no')).toBeFalsy();
     });
 });
