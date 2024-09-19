@@ -1,6 +1,6 @@
 import { describe, expect } from 'vitest';
 
-import { splitOnLinks } from './linkify';
+import { linkifyToMarkdown, splitOnLinks } from './linkify';
 
 describe('linkify.tsx', () => {
     it('should not skip last part', () => {
@@ -30,5 +30,45 @@ describe('linkify.tsx', () => {
     });
     it('should handle text with only url', () => {
         expect(splitOnLinks('www.nav.no')).toStrictEqual([{ value: 'www.nav.no', type: 'link' }]);
+    });
+});
+
+describe('linkifyToMarkdown', () => {
+    it('should handle text starting with url', () => {
+        const input = `
+            trykk her www.nav.no med tekst etterpå
+        `;
+        const output = `
+            trykk her [www.nav.no](https://www.nav.no) med tekst etterpå
+        `;
+        expect(linkifyToMarkdown(input.trim())).toStrictEqual(output.trim());
+    });
+
+    it('should handle text ending with url', () => {
+        const input = `
+            trykk her www.nav.no`;
+        const output = `
+            trykk her [www.nav.no](https://www.nav.no)`;
+        expect(linkifyToMarkdown(input.trim())).toStrictEqual(output.trim());
+    });
+
+    it('should handle link where url and text is equal', () => {
+        const input = `
+            trykk her www.nav.no med tekst etterpå
+        `;
+        const output = `
+            trykk her [www.nav.no](https://www.nav.no) med tekst etterpå
+        `;
+        expect(linkifyToMarkdown(input.trim())).toStrictEqual(output.trim());
+    });
+
+    it('should not change valid markdown links', () => {
+        const input = `
+            trykk her [ikke trykk her](https://www.nav.no) [www.vg.no](https://www.vg.no)
+        `;
+        const output = `
+            trykk her [ikke trykk her](https://www.nav.no) [www.vg.no](https://www.vg.no)
+        `;
+        expect(linkifyToMarkdown(input.trim())).toStrictEqual(output.trim());
     });
 });
