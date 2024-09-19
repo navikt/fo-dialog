@@ -617,7 +617,7 @@ const dialoger: DialogData[] = [
         ferdigBehandlet: true,
         lestAvBrukerTidspunkt: null,
         erLestAvBruker: false,
-        aktivitetId: 'EKSTERNAKTIVITET_5',
+        aktivitetId: 'EKSTERNAKTIVITET_4',
         henvendelser: [
             {
                 id: '3001',
