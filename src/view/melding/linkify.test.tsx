@@ -31,70 +31,70 @@ describe('linkify.tsx', () => {
     it('should handle text with only url', () => {
         expect(splitOnLinks('www.nav.no')).toStrictEqual([{ value: 'www.nav.no', type: 'link' }]);
     });
-});
 
-describe('linkifyToMarkdown', () => {
-    it('should handle text starting with url', () => {
-        const input = `
+    describe('linkifyToMarkdown', () => {
+        it('should handle text starting with url', () => {
+            const input = `
             trykk her www.nav.no med tekst etterpå
         `;
-        const output = `
+            const output = `
             trykk her [www.nav.no](https://www.nav.no) med tekst etterpå
         `;
-        expect(linkifyToMarkdown(input.trim())).toStrictEqual(output.trim());
-    });
+            expect(linkifyToMarkdown(input.trim())).toStrictEqual(output.trim());
+        });
 
-    it('should handle text ending with url', () => {
-        const input = `
+        it('should handle text ending with url', () => {
+            const input = `
             trykk her www.nav.no`;
-        const output = `
+            const output = `
             trykk her [www.nav.no](https://www.nav.no)`;
-        expect(linkifyToMarkdown(input.trim())).toStrictEqual(output.trim());
-    });
+            expect(linkifyToMarkdown(input.trim())).toStrictEqual(output.trim());
+        });
 
-    it('should handle link where url and text is equal', () => {
-        const input = `
+        it('should handle link where url and text is equal', () => {
+            const input = `
             trykk her www.nav.no med tekst etterpå
         `;
-        const output = `
+            const output = `
             trykk her [www.nav.no](https://www.nav.no) med tekst etterpå
         `;
-        expect(linkifyToMarkdown(input.trim())).toStrictEqual(output.trim());
-    });
+            expect(linkifyToMarkdown(input.trim())).toStrictEqual(output.trim());
+        });
 
-    it('should not change valid markdown links', () => {
-        const input = `
+        it('should not change valid markdown links', () => {
+            const input = `
             trykk her [ikke trykk her](https://www.nav.no) [www.vg.no](https://www.vg.no)
         `;
-        const output = `
+            const output = `
             trykk her [ikke trykk her](https://www.nav.no) [www.vg.no](https://www.vg.no)
         `;
-        expect(linkifyToMarkdown(input.trim())).toStrictEqual(output.trim());
-    });
-});
-
-describe('isNotMarkdownLink', () => {
-    it('should handle starting with match', () => {
-        const match = {
-            index: 0,
-            '0': 'nav.no'
-        } as RegExpExecArray;
-        expect(isNotMarkdownLink(match, 'nav.no')).toBeTruthy();
+            expect(linkifyToMarkdown(input.trim())).toStrictEqual(output.trim());
+        });
     });
 
-    it('starting with ( is markdown link', () => {
-        const match = {
-            index: 1,
-            '0': 'nav.no'
-        } as RegExpExecArray;
-        expect(isNotMarkdownLink(match, '(nav.no')).toBeFalsy();
-    });
+    describe('isNotMarkdownLink', () => {
+        it('should handle starting with match', () => {
+            const match = {
+                index: 0,
+                '0': 'nav.no'
+            } as RegExpExecArray;
+            expect(isNotMarkdownLink(match, 'nav.no')).toBeTruthy();
+        });
 
-    it('starting with [ is markdown link', () => {
-        const match = {
-            index: 1,
-            '0': 'nav.no'
-        } as RegExpExecArray;
-        expect(isNotMarkdownLink(match, '[nav.no')).toBeFalsy();
+        it('starting with ( is markdown link', () => {
+            const match = {
+                index: 1,
+                '0': 'nav.no'
+            } as RegExpExecArray;
+            expect(isNotMarkdownLink(match, '(nav.no')).toBeFalsy();
+        });
+
+        it('starting with [ is markdown link', () => {
+            const match = {
+                index: 1,
+                '0': 'nav.no'
+            } as RegExpExecArray;
+            expect(isNotMarkdownLink(match, '[nav.no')).toBeFalsy();
+        });
     });
 });
