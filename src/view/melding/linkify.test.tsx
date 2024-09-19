@@ -1,6 +1,6 @@
 import { describe, expect } from 'vitest';
 
-import { linkifyToMarkdown, splitOnLinks } from './linkify';
+import { isNotMarkdownLink, linkifyToMarkdown, splitOnLinks } from './linkify';
 
 describe('linkify.tsx', () => {
     it('should not skip last part', () => {
@@ -70,5 +70,31 @@ describe('linkifyToMarkdown', () => {
             trykk her [ikke trykk her](https://www.nav.no) [www.vg.no](https://www.vg.no)
         `;
         expect(linkifyToMarkdown(input.trim())).toStrictEqual(output.trim());
+    });
+});
+
+describe('isNotMarkdownLink', () => {
+    it('should handle starting with match', () => {
+        const match = {
+            index: 0,
+            '0': 'nav.no'
+        } as RegExpExecArray;
+        expect(isNotMarkdownLink(match, 'nav.no')).toBeTruthy();
+    });
+
+    it('starting with ( is markdown link', () => {
+        const match = {
+            index: 1,
+            '0': 'nav.no'
+        } as RegExpExecArray;
+        expect(isNotMarkdownLink(match, '(nav.no')).toBeFalsy();
+    });
+
+    it('starting with [ is markdown link', () => {
+        const match = {
+            index: 1,
+            '0': 'nav.no'
+        } as RegExpExecArray;
+        expect(isNotMarkdownLink(match, '(nav.no')).toBeFalsy();
     });
 });

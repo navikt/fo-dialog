@@ -33,7 +33,7 @@ const toNodes = (sections: TextSection[]) => {
     );
 };
 
-const isNotMarkdownLink = (match: RegExpExecArray, text: string) => {
+export const isNotMarkdownLink = (match: RegExpExecArray, text: string) => {
     const prefix = match.index !== 0 ? text[match.index - 1] : null;
     return !(prefix === '(' || prefix === '[');
 };
