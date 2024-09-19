@@ -94,7 +94,6 @@ export const linkify = (text: string) => toNodes(splitOnLinks(text));
 export const linkifyToMarkdown = (text: string) => {
     return splitOnLinks(text).reduce((result: string, current: TextSection) => {
         if (current.type === 'link') {
-            console.log(current);
             const href = current.value.toLowerCase().startsWith('www.') ? `https://${current.value}` : current.value;
             return result + `[${current.value}](${href})`;
         } else {
