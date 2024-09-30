@@ -82,8 +82,8 @@ export function InfoOmDialogSide() {
                     </ul>
                 </div>
                 <Accordion>
-                    <RettigheterPanel/>
                     <InnsynsrettPanel/>
+                    <RettigheterPanel/>
                 </Accordion>
             </div>
         </section>

@@ -16,6 +16,7 @@ import { useErVeileder, useFnrContext } from '../Provider';
 import { useDialogStore } from '../dialogProvider/dialogStore';
 import { useShallow } from 'zustand/react/shallow';
 import useKansendeMelding from '../../utils/UseKanSendeMelding';
+import { InnsynsrettInfo } from '../../moduler/Innsynsrett/Innsynsrett-under-18-GuidePanal';
 
 interface Props {
     defaultTema: string;
@@ -178,6 +179,7 @@ const NyDialogForm = (props: Props) => {
                         </GuidePanel>
                     </>
                 ) : null}
+                <InnsynsrettInfo/>
                 <TextField
                     label="Tema (obligatorisk)"
                     description="Skriv kort hva dialogen skal handle om"
