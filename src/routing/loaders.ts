@@ -6,6 +6,7 @@ import { useOppfolgingStore } from '../view/OppfolgingProvider';
 import { useVeilederNavnStore } from '../api/useHentVeilederData';
 import { useAktivitetStore, useTiltaksAktivitetStore } from '../view/AktivitetProvider';
 import { RouteIds } from './routes';
+import { useInnsynsrettStore } from '../api/useInnsynsrett';
 
 export const initialPageLoader = (fnr: string | undefined) => async () => {
     return defer({
@@ -15,7 +16,8 @@ export const initialPageLoader = (fnr: string | undefined) => async () => {
         oppfolging: useOppfolgingStore.getState().fetch(fnr),
         veilederNavn: fnr ? useVeilederNavnStore.getState().fetch(fnr) : Promise.resolve(null),
         aktiviteter: useAktivitetStore.getState().fetch(fnr),
-        arenaAktiviteter: useTiltaksAktivitetStore.getState().fetch(fnr)
+        arenaAktiviteter: useTiltaksAktivitetStore.getState().fetch(fnr),
+        innsynsrett: useInnsynsrettStore.getState().fetch(undefined)
     });
 };
 
