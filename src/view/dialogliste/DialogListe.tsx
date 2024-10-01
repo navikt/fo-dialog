@@ -6,7 +6,7 @@ import { DialogPreviewListe } from './DialogPreview';
 import HistoriskeDialogerOversikt from './HistoriskDialogListe';
 import { useRootLoaderData } from '../../routing/loaders';
 import { Loader } from '@navikt/ds-react';
-import { isAfter, isBefore } from 'date-fns';
+import { isAfter } from 'date-fns';
 
 interface Res {
     naaverende: DialogData[];
