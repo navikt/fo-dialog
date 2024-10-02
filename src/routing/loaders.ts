@@ -19,7 +19,7 @@ export const initialPageLoader = (fnr: string | undefined) => async () => {
         veilederNavn: erVeileder ? useVeilederNavnStore.getState().fetch(fnr) : Promise.resolve(null),
         aktiviteter: useAktivitetStore.getState().fetch(fnr),
         arenaAktiviteter: useTiltaksAktivitetStore.getState().fetch(fnr),
-        innsynsrett:  erVeileder ?  Promise.resolve(null) : useInnsynsrettStore.getState().fetch(undefined)
+        innsynsrett: useInnsynsrettStore.getState().fetch(fnr)
     });
 };
 

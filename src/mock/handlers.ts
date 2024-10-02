@@ -125,7 +125,7 @@ export const handlers = [
         return HttpResponse.json({ [FeatureToggle.USE_WEBSOCKETS]: false });
     }),
 
-    http.get('/veilarbaktivitet/api/ekstern/innsynsrett', jsonResponse({ foresatteHarInnsynsrett: false })),
+    http.post('/veilarbaktivitet/api/innsynsrett', jsonResponse({ foresatteHarInnsynsrett: true})),
 
     // veilarbveileder
     http.get(`/veilarbveileder/api/veileder/me`, jsonResponse(veilederMe))
