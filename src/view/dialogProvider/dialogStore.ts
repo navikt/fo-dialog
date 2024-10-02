@@ -31,7 +31,9 @@ type DialogStore = DialogState &
         pollForChanges: (fnr: string | undefined) => Promise<void>;
         configurePoll(config: { fnr: string | undefined; useWebsockets: boolean; erBruker: boolean }): void;
         updateDialogInDialoger: (dialogData: DialogData) => DialogData;
+        updateDialogWithNewDialog: (dialogData: DialogData) => DialogData;
         stopPolling: () => void;
+        setStatus: (status: Status) => void;
         pollInterval: NodeJS.Timeout | undefined;
         currentPollFnr: string | undefined;
     };
@@ -54,7 +56,7 @@ export const useDialogStore = create(
                         // loggChangeInDialog(state.dialoger, dialoger);
                         set(
                             { status: Status.OK, dialoger, sistOppdatert: new Date(), error: undefined, kladder },
-                            false,
+                            false, // flag for overwriting state, default false but needs to be provided when naming actions
                             'hentDialoger/fulfilled'
                         );
                         return dialoger;
@@ -151,6 +153,9 @@ export const useDialogStore = create(
                     }
                 }
             },
+            setStatus: (status: Status) => {
+                set({ status });
+            },
             updateDialogInDialoger: (dialog: DialogData): DialogData => {
                 set(
                     ({ dialoger }) => {
@@ -166,6 +171,15 @@ export const useDialogStore = create(
                     'updateDialogInDialoger'
                 );
                 return dialog;
+            },
+            updateDialogWithNewDialog: (dialogData: DialogData) => {
+                set(({ dialoger }) => {
+                    return {
+                        dialoger: [...dialoger, dialogData],
+                        status: Status.OK,
+                        error: undefined
+                    };
+                });
             },
             oppdaterKladd: (kladd: KladdData & { fnr: string | undefined }) => {
                 set(({ kladder }) => {

@@ -1,10 +1,11 @@
-import React, { useContext, useState } from 'react';
+import React, { useContext } from 'react';
 
 import { Status } from '../api/typer';
 import { DialogApi } from '../api/UseApiBasePath';
 import { fetchData } from '../utils/Fetch';
 import { DialogData, NyDialogMeldingData } from '../utils/Typer';
-import { initDialogState, useDialogStore } from './dialogProvider/dialogStore';
+import { useDialogStore } from './dialogProvider/dialogStore';
+import { useShallow } from 'zustand/react/shallow';
 
 export const DialogContext = React.createContext<DialogDataProviderType>({
     status: Status.INITIAL,
@@ -64,13 +65,18 @@ const venterPaSvarUrl = ({ id, venterPaSvar }: { id: string; venterPaSvar: boole
     DialogApi.venterPaSvar(id, venterPaSvar);
 
 export function useDialogDataProvider(): DialogDataProviderType {
-    const [state, setState] = useState(initDialogState);
-
-    const updateDialogInDialoger = useDialogStore((state) => state.updateDialogInDialoger);
-    const setOkStatus = () => setState((prevState) => ({ ...prevState, status: Status.OK }));
+    const { updateDialogInDialoger, updateDialogWithNewDialog, setStatus } = useDialogStore(
+        useShallow((state) => ({
+            updateDialogInDialoger: state.updateDialogInDialoger,
+            updateDialogWithNewDialog: state.updateDialogWithNewDialog,
+            setStatus: state.setStatus
+        }))
+    );
+    const status = useDialogStore(useShallow((store) => store.status));
 
     const sendMelding = ({ dialogId, overskrift, tekst, aktivitetId, fnr }: SendMeldingArgs) => {
-        setState((prevState) => ({ ...prevState, status: Status.RELOADING }));
+        // setState((prevState) => ({ ...prevState, status: Status.RELOADING }));
+        setStatus(Status.RELOADING);
 
         const nyDialogData: NyDialogMeldingData = {
             dialogId,
@@ -86,13 +92,8 @@ export function useDialogDataProvider(): DialogDataProviderType {
         }).then((dialog) => {
             if (!!dialogId) {
                 updateDialogInDialoger(dialog);
-                setOkStatus();
             } else {
-                setState((prevState) => ({
-                    ...prevState,
-                    status: Status.OK,
-                    dialoger: [...prevState.dialoger, dialog]
-                }));
+                updateDialogWithNewDialog(dialog);
             }
             return dialog;
         });
@@ -107,35 +108,35 @@ export function useDialogDataProvider(): DialogDataProviderType {
     };
 
     const lesDialog = (dialogId: string) => {
-        setState((prevState) => ({ ...prevState, status: Status.RELOADING }));
+        setStatus(Status.RELOADING);
         return fetchData<DialogData>(lesUrl({ id: dialogId }), { method: 'put' }).then((dialogData) => {
-            setOkStatus();
+            setStatus(Status.OK);
             return updateDialogInDialoger(dialogData);
         });
     };
 
     const setFerdigBehandlet = (dialog: DialogData, ferdigBehandlet: boolean) => {
-        setState((prevState) => ({ ...prevState, status: Status.RELOADING }));
+        setStatus(Status.RELOADING);
         return fetchData<DialogData>(ferdigBehandletUrl({ id: dialog.id, ferdigBehandlet }), {
             method: 'put'
         }).then((dialogData) => {
-            setOkStatus();
+            setStatus(Status.OK);
             return updateDialogInDialoger(dialogData);
         });
     };
 
     const setVenterPaSvar = (dialog: DialogData, venterPaSvar: boolean) => {
-        setState((prevState) => ({ ...prevState, status: Status.RELOADING }));
+        setStatus(Status.RELOADING);
         return fetchData<DialogData>(venterPaSvarUrl({ id: dialog.id, venterPaSvar }), { method: 'put' }).then(
             (dialogData) => {
-                setOkStatus();
+                setStatus(Status.OK);
                 return updateDialogInDialoger(dialogData);
             }
         );
     };
 
     return {
-        status: state.status,
+        status,
         nyDialog,
         nyMelding,
         lesDialog,
