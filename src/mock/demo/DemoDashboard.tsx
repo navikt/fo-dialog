@@ -16,7 +16,7 @@ import {
     harIngenDialoger,
     harNyDialogEllerSendMeldingFeilerSkruddPa,
     ingenOppfPerioder,
-    settLocalStorage
+    settLocalStorage, erUnder18
 } from './localstorage';
 
 interface Props {
@@ -64,6 +64,11 @@ const brukerTilstandRadios = [
         label: 'Ingen dialoger',
         value: LocalStorageElement.INGEN_DIALOGER,
         checked: harIngenDialoger()
+    },
+    {
+        label: "Under 18",
+        value: LocalStorageElement.UNDER_18,
+        checked: erUnder18()
     }
 ];
 
