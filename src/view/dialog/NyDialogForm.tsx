@@ -183,13 +183,9 @@ const NyDialogForm = (props: Props) => {
                 onSubmit={handleSubmit((data) => onSubmit(data))}
                 autoComplete="off"
             >
-                {!erVeileder ? (
-                    <>
-                        <GuidePanel poster={!bigScreen}>
-                            {guidePanelText()}
-                        </GuidePanel>
-                    </>
-                ) : null}
+                <GuidePanel poster={!bigScreen}>
+                    {guidePanelText()}
+                </GuidePanel>
                 <TextField
                     label="Tema (obligatorisk)"
                     description="Skriv kort hva dialogen skal handle om"
