@@ -3,7 +3,7 @@ import { createGenericStore } from '../utils/genericStore';
 import { aktivitetBasePath } from './UseApiBasePath';
 
 export const fetchInnsynsrett = (fnr : string | undefined) =>
-     fetchData<Innsynsrett>(`${aktivitetBasePath}/innsynsrett`, {
+     fetchData<Innsynsrett>(`${aktivitetBasePath}/api/innsynsrett`, {
          method : 'POST',
          body: JSON.stringify({fnr})
      });
