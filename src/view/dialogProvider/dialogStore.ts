@@ -180,6 +180,7 @@ export const useDialogStore = create(
                         error: undefined
                     };
                 });
+                return dialogData;
             },
             oppdaterKladd: (kladd: KladdData & { fnr: string | undefined }) => {
                 set(({ kladder }) => {
