@@ -3,7 +3,15 @@ import NyDialogTrad from '../view/dialog/NyDialogTrad';
 import { Aktivitetskort } from '../view/aktivitet/Aktivitetskort';
 import { DialogTrad } from '../view/dialog/DialogTrad';
 import IkkeValgtDialogMelding from '../view/dialog/IkkeValgtDialogMelding';
-import { Navigate, RouteObject, RouterProvider, createMemoryRouter, useParams, useMatches } from 'react-router';
+import {
+    Navigate,
+    RouteObject,
+    RouterProvider,
+    createMemoryRouter,
+    useParams,
+    useMatches,
+    redirect
+} from 'react-router';
 import React from 'react';
 import { erInternFlate, USE_HASH_ROUTER } from '../constants';
 import { createBrowserRouter, createHashRouter, useSearchParams } from 'react-router-dom';
@@ -13,6 +21,10 @@ import { useFnrContext } from '../view/Provider';
 import { NyDialogHeader } from '../view/dialog/DialogHeader/NyDialogHeader';
 import { DialogHeader } from '../view/dialog/DialogHeader';
 import { sentryCreateBrowserRouter } from '../sentry2';
+import { HandlingsType } from '../view/ViewState';
+import { dispatchUpdate, UpdateTypes } from '../utils/UpdateEvent';
+import { useDialogStore } from '../view/dialogProvider/dialogStore';
+import { NyTradArgs } from '../view/DialogProvider';
 
 const aktivitetQuery = (aktivitetId?: string) => (aktivitetId ? `?aktivitetId=${aktivitetId}` : '');
 
@@ -65,6 +77,29 @@ export const dialogRoutes = (fnr: string | undefined): RouteObject[] => [
             {
                 path: 'ny',
                 id: RouteIds.NyDialog,
+                action: async ({ request }) => {
+                    try {
+                        const { slettKladd, nyDialog, silentlyHentDialoger } = useDialogStore.getState();
+                        if (request.bodyUsed) {
+                            throw Error('Body used');
+                        }
+                        const data: NyTradArgs = await request.json();
+                        const dialog = await nyDialog(data);
+                        if (dialog) {
+                            slettKladd(null, dialog.aktivitetId);
+                            dispatchUpdate(UpdateTypes.Dialog);
+                            silentlyHentDialoger(fnr);
+                            return redirect(`/${dialog.id}`);
+                        } else {
+                            console.log('FEIL I NY DIALOG');
+                            throw new Error('LOL');
+                            // return { error: 'FEIL I NY DIALOG' };
+                        }
+                    } catch (error) {
+                        console.error(error);
+                        return null;
+                    }
+                },
                 element: (
                     <>
                         <NyDialogHeader />

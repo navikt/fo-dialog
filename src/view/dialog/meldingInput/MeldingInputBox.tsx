@@ -15,7 +15,7 @@ import { debounced, maxMeldingsLengde, MeldingInputContext } from './inputUtils'
 import { useVisAktivitet } from '../../AktivitetToggleContext';
 import { Status } from '../../../api/typer';
 import ManagedDialogCheckboxes from '../DialogCheckboxes';
-import { useDialogStore, useHentDialoger } from '../../dialogProvider/dialogStore';
+import { useDialogStore, useHentDialoger, useSilentlyHentDialoger } from '../../dialogProvider/dialogStore';
 import { useErVeileder, useFnrContext } from '../../Provider';
 import useKansendeMelding from '../../../utils/UseKanSendeMelding';
 import { useShallow } from 'zustand/react/shallow';
@@ -45,7 +45,7 @@ const MeldingInputBox = ({ dialog: valgtDialog }: Props) => {
 
     const { nyMelding } = useDialogContext();
     const fnr = useFnrContext();
-    const hentDialoger = useHentDialoger();
+    const silentlyHentDialoger = useSilentlyHentDialoger();
     const [noeFeilet, setNoeFeilet] = useState(false);
     const startTekst = useMeldingStartTekst();
     const visAktivitet = useVisAktivitet();
@@ -104,12 +104,12 @@ const MeldingInputBox = ({ dialog: valgtDialog }: Props) => {
             return nyMelding({ melding, dialog: valgtDialog, fnr })
                 .then((dialog) => {
                     slettKladd(valgtDialog.id, valgtDialog.aktivitetId);
+                    reset({ melding: startTekst });
                     return dialog;
                 })
-                .then(() => hentDialoger(fnr))
+                .then(() => silentlyHentDialoger(fnr))
                 .then(() => {
                     setNoeFeilet(false);
-                    reset({ melding: startTekst });
                     setViewState(sendtNyMelding(viewState));
                     dispatchUpdate(UpdateTypes.Dialog);
                 })

@@ -1,21 +1,20 @@
 import { zodResolver } from '@hookform/resolvers/zod';
 import { Alert, Button, GuidePanel, TextField, Textarea } from '@navikt/ds-react';
-import React, { FocusEventHandler, useEffect, useRef, useState } from 'react';
+import React, { FocusEventHandler, useEffect, useRef } from 'react';
 import { useForm } from 'react-hook-form';
-import { useNavigate } from 'react-router';
+import { useNavigate, useNavigation } from 'react-router';
 import { z } from 'zod';
 import loggEvent from '../../felleskomponenter/logging';
 import { useRoutes } from '../../routing/routes';
-import { UpdateTypes, dispatchUpdate } from '../../utils/UpdateEvent';
-import { useDialogContext } from '../DialogProvider';
 import { findKladd } from '../KladdProvider';
 import { cutStringAtLength } from '../utils/stringUtils';
 import useMeldingStartTekst from './UseMeldingStartTekst';
-import { HandlingsType } from '../ViewState';
 import { useErVeileder, useFnrContext } from '../Provider';
 import { useDialogStore } from '../dialogProvider/dialogStore';
 import { useShallow } from 'zustand/react/shallow';
 import useKansendeMelding from '../../utils/UseKanSendeMelding';
+import { useFetcher } from 'react-router-dom';
+import { Status } from '../../api/typer';
 
 interface Props {
     defaultTema: string;
@@ -25,20 +24,19 @@ interface Props {
 const NyDialogForm = (props: Props) => {
     const kansendeMelding = useKansendeMelding();
     const { defaultTema, aktivitetId } = props;
-    const hentDialoger = useDialogStore((store) => store.hentDialoger);
-    const { nyDialog } = useDialogContext();
     const navigate = useNavigate();
-    const { dialogRoute, baseRoute } = useRoutes();
-    const [noeFeilet, setNoeFeilet] = useState(false);
+    const { baseRoute } = useRoutes();
     const startTekst = useMeldingStartTekst();
     const fnr = useFnrContext();
-    const { kladder, oppdaterKladd, slettKladd } = useDialogStore(
+    const { kladder, oppdaterKladd, slettKladd, noeFeilet } = useDialogStore(
         useShallow((store) => ({
             kladder: store.kladder,
             oppdaterKladd: store.oppdaterKladd,
-            slettKladd: store.slettKladd
+            slettKladd: store.slettKladd,
+            noeFeilet: store.status === Status.ERROR
         }))
     );
+
     const kladd = findKladd(kladder, null, aktivitetId);
     const autoFocusTema = !aktivitetId;
 
@@ -67,11 +65,14 @@ const NyDialogForm = (props: Props) => {
         register,
         handleSubmit,
         watch,
-        formState: { errors, isSubmitting, dirtyFields }
+        formState: { errors, dirtyFields }
     } = useForm<NyDialogFormValues>({
         defaultValues,
         resolver: zodResolver(schema)
     });
+
+    const fetcher = useFetcher();
+    const isSubmitting = fetcher.state === 'submitting';
 
     const melding = watch('melding');
     const tema = watch('tema');
@@ -126,9 +127,11 @@ const NyDialogForm = (props: Props) => {
     }, [melding, tema, dirtyFields]);
 
     useEffect(() => {
+        console.log('MOunting NyDialogForm');
         if (!autoFocusTema) {
             const textarea = document.querySelector('textarea[name="melding"]') as HTMLTextAreaElement;
             if (textarea) {
+                console.log('DOING AUTOFOCUS');
                 textarea.focus();
                 textarea.selectionStart = 0;
                 textarea.selectionEnd = 0;
@@ -136,22 +139,17 @@ const NyDialogForm = (props: Props) => {
         }
     }, []);
 
-    const onSubmit = (data: NyDialogFormValues) => {
+    const onSubmit = async (data: NyDialogFormValues) => {
         const { tema, melding } = data;
 
         timer.current && clearInterval(timer.current);
         timer.current = undefined;
 
         loggEvent('arbeidsrettet-dialog.ny.dialog', { paaAktivitet: !!aktivitetId });
-        return nyDialog({ melding, tema, aktivitetId, fnr })
-            .then((dialog) => {
-                slettKladd(null, props.aktivitetId);
-                navigate(dialogRoute(dialog.id), { state: { sistHandlingsType: HandlingsType.nyDialog } });
-                dispatchUpdate(UpdateTypes.Dialog);
-                return dialog;
-            })
-            .then(() => hentDialoger(fnr))
-            .catch(() => setNoeFeilet(true));
+        fetcher.submit(
+            { melding, tema, aktivitetId, fnr },
+            { method: 'POST', action: '/ny', encType: 'application/json' }
+        );
     };
 
     const bigScreen = window.innerWidth >= 768;

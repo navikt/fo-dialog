@@ -80,6 +80,12 @@ export const DialogTrad = () => {
         ]);
     }, []);
 
+    useEffect(() => {
+        console.log('Mounting DialogTrad');
+    }, []);
+
+    console.log('requiredData', requiredData);
+
     return (
         <Suspense fallback={<DialogLoader />}>
             <Await resolve={requiredData}>
@@ -121,6 +127,7 @@ const ValgtDialog = ({
 };
 
 const DialogLoader = () => {
+    console.log('DialogLoader fallback');
     return (
         <div className="flex w-full bg-gray-100 items-center justify-center">
             <Loader size="2xlarge" />
