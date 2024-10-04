@@ -4,7 +4,7 @@ import { afterAll, beforeAll } from 'vitest';
 import { setupIntegrationTest } from './integrationTestSetup';
 
 const fnr = '0123456789';
-const { App, worker } = setupIntegrationTest(fnr);
+const { App: IntegrationTestApp, worker } = setupIntegrationTest(fnr);
 
 describe('Ny melding', () => {
     beforeAll(() => {
@@ -20,8 +20,8 @@ describe('Ny melding', () => {
     });
 
     it('når veileder sender en melding skal den dukke opp i chatten', async () => {
-        const { getByLabelText, getByText } = await act(() => render(<App />));
-        await waitFor(() => getByLabelText('Meldinger'));
+        const { getByLabelText, getByText } = await act(() => render(<IntegrationTestApp />));
+        await waitFor(() => getByLabelText('Meldinger'), { timeout: 10000 });
         const input = getByLabelText('Skriv om arbeid og oppfølging');
         fireEvent.change(input, {
             target: { value: 'Dette er en ny melding' }

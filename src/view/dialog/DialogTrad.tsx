@@ -80,12 +80,6 @@ export const DialogTrad = () => {
         ]);
     }, []);
 
-    useEffect(() => {
-        console.log('Mounting DialogTrad');
-    }, []);
-
-    console.log('requiredData', requiredData);
-
     return (
         <Suspense fallback={<DialogLoader />}>
             <Await resolve={requiredData}>

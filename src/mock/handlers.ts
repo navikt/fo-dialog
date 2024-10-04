@@ -19,16 +19,23 @@ import { FeatureToggle } from '../featureToggle/const';
 import { Aktivitet } from '../utils/aktivitetTypes';
 import { AktivitetsplanResponse } from '../api/aktivitetsplanGraphql';
 
+const delayIfNotTest = async (ms: number) => {
+    if (process.env.NODE_ENV === 'test') {
+        return;
+    }
+    await delay(ms);
+};
+
 export const jsonResponse = (
     response: object | null | boolean | ((req: StrictRequest<DefaultBodyType>, params: PathParams) => object),
     delayMs = 200
 ): HttpResponseResolver => {
     return async ({ request, params }) => {
         if (typeof response === 'function') {
-            await delay(delayMs);
+            await delayIfNotTest(delayMs);
             return HttpResponse.json(await response(request, params));
         }
-        await delay(delayMs);
+        await delayIfNotTest(delayMs);
         return HttpResponse.json(response);
     };
 };
@@ -40,10 +47,10 @@ const failOrGetResponse = (
 ): HttpResponseResolver => {
     return async ({ request }) => {
         if (shouldFail()) {
-            await delay(200);
+            await delayIfNotTest(200);
             return internalServerError;
         }
-        await delay(delayMs);
+        await delayIfNotTest(delayMs);
         return HttpResponse.json(await successFn(request));
     };
 };
