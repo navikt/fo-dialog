@@ -4,6 +4,7 @@ import aktiviteter from './Aktivitet';
 import { arenaAktiviteter } from './Arena';
 import bruker from './Bruker';
 import {
+    erUnder18,
     harAktivitetFeilerSkruddPa,
     harArenaaktivitetFeilerSkruddPa,
     harDialogFeilerSkruddPa,
@@ -135,6 +136,8 @@ export const handlers = [
     http.get('/veilarbaktivitet/api/feature', () => {
         return HttpResponse.json({ [FeatureToggle.USE_WEBSOCKETS]: false });
     }),
+
+    http.post('/veilarbaktivitet/api/innsynsrett', jsonResponse({ foresatteHarInnsynsrett: erUnder18() })),
 
     // veilarbveileder
     http.get(`/veilarbveileder/api/veileder/me`, jsonResponse(veilederMe))

@@ -1,6 +1,6 @@
 import { zodResolver } from '@hookform/resolvers/zod';
-import { Alert, Button, GuidePanel, TextField, Textarea } from '@navikt/ds-react';
-import React, { FocusEventHandler, useEffect, useRef } from 'react';
+import { Alert, Button, GuidePanel, TextField, Textarea, BodyShort } from '@navikt/ds-react';
+import React, { FocusEventHandler, useEffect, useRef, useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { redirect, useNavigate } from 'react-router';
 import { z } from 'zod';
@@ -18,6 +18,7 @@ import { Status } from '../../api/typer';
 import { SubmitTarget } from 'react-router-dom/dist/dom';
 import { NyTradArgs } from '../DialogProvider';
 import { dispatchUpdate, UpdateTypes } from '../../utils/UpdateEvent';
+import { useInnsynsrett } from '../../api/useInnsynsrett';
 
 interface Props {
     defaultTema: string;
@@ -27,6 +28,9 @@ interface Props {
 const NyDialogForm = (props: Props) => {
     const kansendeMelding = useKansendeMelding();
     const { defaultTema, aktivitetId } = props;
+    const hentDialoger = useDialogStore((store) => store.hentDialoger);
+    const { nyDialog } = useDialogContext();
+    const innsynsrett = useInnsynsrett();
     const navigate = useNavigate();
     const { baseRoute } = useRoutes();
     const startTekst = useMeldingStartTekst();
@@ -171,14 +175,15 @@ const NyDialogForm = (props: Props) => {
                 onSubmit={handleSubmit((data) => onSubmit(data))}
                 autoComplete="off"
             >
-                {!erVeileder ? (
-                    <>
-                        <GuidePanel poster={!bigScreen}>
-                            Her kan du skrive til din veileder om arbeid og oppfølging. Du vil få svar i løpet av noen
-                            dager.
-                        </GuidePanel>
-                    </>
-                ) : null}
+                <GuidePanel poster={!bigScreen}>
+                    <BodyShort>
+                        Her kan du skrive til din veileder om arbeid og oppfølging. Du vil få svar i løpet av noen
+                        dager.
+                    </BodyShort>
+                    {innsynsrett && (
+                        <BodyShort>Husk at dine foresatte kan be om å få lese det du skriver her.</BodyShort>
+                    )}
+                </GuidePanel>
                 <TextField
                     label="Tema (obligatorisk)"
                     description="Skriv kort hva dialogen skal handle om"

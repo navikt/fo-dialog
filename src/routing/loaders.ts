@@ -8,6 +8,7 @@ import { useAktivitetStore, useTiltaksAktivitetStore } from '../view/AktivitetPr
 import { RouteIds } from './routes';
 import { Bruker, DialogData, OppfolgingData } from '../utils/Typer';
 import { Aktivitet, ArenaAktivitet } from '../utils/aktivitetTypes';
+import { useInnsynsrettStore } from '../api/useInnsynsrett';
 
 interface InitialLoaderData {
     features: Promise<Features>;
@@ -27,7 +28,8 @@ export const initialPageLoader = (fnr: string | undefined) => async () => {
         oppfolging: useOppfolgingStore.getState().fetch(fnr),
         veilederNavn: fnr ? useVeilederNavnStore.getState().fetch(fnr) : Promise.resolve(null),
         aktiviteter: useAktivitetStore.getState().fetch(fnr),
-        arenaAktiviteter: useTiltaksAktivitetStore.getState().fetch(fnr)
+        arenaAktiviteter: useTiltaksAktivitetStore.getState().fetch(fnr),
+        innsynsrett: useInnsynsrettStore.getState().fetch(fnr)
     });
 };
 
