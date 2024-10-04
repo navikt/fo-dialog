@@ -2,7 +2,7 @@ import { zodResolver } from '@hookform/resolvers/zod';
 import { Alert, Button, GuidePanel, TextField, Textarea } from '@navikt/ds-react';
 import React, { FocusEventHandler, useEffect, useRef } from 'react';
 import { useForm } from 'react-hook-form';
-import { useNavigate } from 'react-router';
+import { redirect, useNavigate } from 'react-router';
 import { z } from 'zod';
 import loggEvent from '../../felleskomponenter/logging';
 import { useRoutes } from '../../routing/routes';
@@ -13,9 +13,11 @@ import { useErVeileder, useFnrContext } from '../Provider';
 import { useDialogStore } from '../dialogProvider/dialogStore';
 import { useShallow } from 'zustand/react/shallow';
 import useKansendeMelding from '../../utils/UseKanSendeMelding';
-import { useFetcher } from 'react-router-dom';
+import { ActionFunction, useFetcher } from 'react-router-dom';
 import { Status } from '../../api/typer';
 import { SubmitTarget } from 'react-router-dom/dist/dom';
+import { NyTradArgs } from '../DialogProvider';
+import { dispatchUpdate, UpdateTypes } from '../../utils/UpdateEvent';
 
 interface Props {
     defaultTema: string;
@@ -218,5 +220,29 @@ const NyDialogForm = (props: Props) => {
         </div>
     );
 };
+
+export const nyDialogAction: (fnr: string | undefined) => ActionFunction =
+    (fnr) =>
+    async ({ request }) => {
+        try {
+            const { slettKladd, nyDialog, silentlyHentDialoger } = useDialogStore.getState();
+            if (request.bodyUsed) {
+                throw Error('Body used');
+            }
+            const data: NyTradArgs = await request.json();
+            const dialog = await nyDialog(data);
+            if (dialog) {
+                slettKladd(null, dialog.aktivitetId);
+                dispatchUpdate(UpdateTypes.Dialog);
+                silentlyHentDialoger(fnr);
+                return redirect(`/${dialog.id}`);
+            } else {
+                return null;
+            }
+        } catch (error) {
+            console.error(error);
+            return null;
+        }
+    };
 
 export default NyDialogForm;
