@@ -1,6 +1,6 @@
 import { zodResolver } from '@hookform/resolvers/zod';
 import { Alert, Button, GuidePanel, TextField, Textarea, BodyShort } from '@navikt/ds-react';
-import React, { FocusEventHandler, useEffect, useRef, useState } from 'react';
+import React, { FocusEventHandler, useEffect, useRef } from 'react';
 import { useForm } from 'react-hook-form';
 import { redirect, useNavigate } from 'react-router';
 import { z } from 'zod';
@@ -28,8 +28,6 @@ interface Props {
 const NyDialogForm = (props: Props) => {
     const kansendeMelding = useKansendeMelding();
     const { defaultTema, aktivitetId } = props;
-    const hentDialoger = useDialogStore((store) => store.hentDialoger);
-    const { nyDialog } = useDialogContext();
     const innsynsrett = useInnsynsrett();
     const navigate = useNavigate();
     const { baseRoute } = useRoutes();
