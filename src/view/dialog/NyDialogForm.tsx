@@ -1,5 +1,5 @@
 import { zodResolver } from '@hookform/resolvers/zod';
-import { Alert, Button, GuidePanel, TextField, Textarea } from '@navikt/ds-react';
+import { Alert, Button, GuidePanel, TextField, Textarea, BodyShort } from '@navikt/ds-react';
 import React, { FocusEventHandler, useEffect, useRef, useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { useNavigate } from 'react-router';
@@ -165,17 +165,6 @@ const NyDialogForm = (props: Props) => {
         event.target.selectionEnd = 0;
     };
 
-    const guidePanelText = (): string => {
-        const text = "Her kan du skrive til din veileder om arbeid og oppfølging. Du vil få svar i løpet av noen dager.";
-        if (innsynsrett){
-            return text + " Husk at dine foresatte kan be om å få lese det du skriver her."
-        }
-        else {
-            return text;
-        }
-
-    }
-
     return (
         <div className="relative h-full w-full overflow-scroll bg-gray-100 lg:max-w-lgContainer xl:max-w-none">
             <form
@@ -184,7 +173,13 @@ const NyDialogForm = (props: Props) => {
                 autoComplete="off"
             >
                 <GuidePanel poster={!bigScreen}>
-                    {guidePanelText()}
+                    <BodyShort>
+                    Her kan du skrive til din veileder om arbeid og oppfølging. Du vil få svar i løpet av noen dager.
+                    </BodyShort>
+                    {innsynsrett &&
+                        <BodyShort>
+                            Husk at dine foresatte kan be om å få lese det du skriver her.
+                        </BodyShort>}
                 </GuidePanel>
                 <TextField
                     label="Tema (obligatorisk)"
