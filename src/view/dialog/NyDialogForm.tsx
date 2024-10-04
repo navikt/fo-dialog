@@ -2,7 +2,7 @@ import { zodResolver } from '@hookform/resolvers/zod';
 import { Alert, Button, GuidePanel, TextField, Textarea } from '@navikt/ds-react';
 import React, { FocusEventHandler, useEffect, useRef } from 'react';
 import { useForm } from 'react-hook-form';
-import { useNavigate, useNavigation } from 'react-router';
+import { useNavigate } from 'react-router';
 import { z } from 'zod';
 import loggEvent from '../../felleskomponenter/logging';
 import { useRoutes } from '../../routing/routes';
@@ -15,6 +15,7 @@ import { useShallow } from 'zustand/react/shallow';
 import useKansendeMelding from '../../utils/UseKanSendeMelding';
 import { useFetcher } from 'react-router-dom';
 import { Status } from '../../api/typer';
+import { SubmitTarget } from 'react-router-dom/dist/dom';
 
 interface Props {
     defaultTema: string;
@@ -127,11 +128,9 @@ const NyDialogForm = (props: Props) => {
     }, [melding, tema, dirtyFields]);
 
     useEffect(() => {
-        console.log('MOunting NyDialogForm');
         if (!autoFocusTema) {
             const textarea = document.querySelector('textarea[name="melding"]') as HTMLTextAreaElement;
             if (textarea) {
-                console.log('DOING AUTOFOCUS');
                 textarea.focus();
                 textarea.selectionStart = 0;
                 textarea.selectionEnd = 0;
@@ -146,10 +145,12 @@ const NyDialogForm = (props: Props) => {
         timer.current = undefined;
 
         loggEvent('arbeidsrettet-dialog.ny.dialog', { paaAktivitet: !!aktivitetId });
-        fetcher.submit(
-            { melding, tema, aktivitetId, fnr },
-            { method: 'POST', action: '/ny', encType: 'application/json' }
-        );
+        // This will submit to route action
+        fetcher.submit({ melding, tema, aktivitetId, fnr } as SubmitTarget, {
+            method: 'POST',
+            action: '/ny',
+            encType: 'application/json'
+        });
     };
 
     const bigScreen = window.innerWidth >= 768;
