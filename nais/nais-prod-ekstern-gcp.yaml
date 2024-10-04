@@ -34,8 +34,6 @@ spec:
   accessPolicy:
     outbound:
       external:
-        - host: veilarbaktivitet.prod-fss-pub.nais.io
-        - host: veilarbperson.prod-fss-pub.nais.io
         - host: veilarbveileder.prod-fss-pub.nais.io
       rules:
         - application: veilarboppfolging
