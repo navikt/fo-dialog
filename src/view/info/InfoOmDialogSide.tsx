@@ -3,8 +3,8 @@ import classNames from 'classnames';
 import React, { useLayoutEffect } from 'react';
 
 import dialogStyle from '../dialog/Dialog.module.less';
-import { InnsynsrettPanel } from '../../moduler/Om-dialogen-accordians/innsynsrett-under-18-info';
-import { RettigheterPanel } from '../../moduler/Om-dialogen-accordians/RettigheterOgPersonvernPanel';
+import { InnsynsrettPanel } from '../../moduler/om-dialogen/innsynsrett-under-18-info';
+import { RettigheterPanel } from '../../moduler/om-dialogen/RettigheterOgPersonvernPanel';
 
 export function InfoOmDialogSide() {
     useLayoutEffect(() => {

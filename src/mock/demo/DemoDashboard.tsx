@@ -66,7 +66,7 @@ const brukerTilstandRadios = [
         checked: harIngenDialoger()
     },
     {
-        label: "Under 18",
+        label: 'Under 18',
         value: LocalStorageElement.UNDER_18,
         checked: erUnder18()
     }

@@ -9,14 +9,13 @@ import { RouteIds } from './routes';
 import { useInnsynsrettStore } from '../api/useInnsynsrett';
 
 export const initialPageLoader = (fnr: string | undefined) => async () => {
-    const erVeileder = !!fnr;
 
     return defer({
         features: useFeatureToggleStore.getState().fetch(undefined),
         dialoger: useDialogStore.getState().hentDialoger(fnr),
         me: useBrukerDataStore.getState().fetch(undefined),
         oppfolging: useOppfolgingStore.getState().fetch(fnr),
-        veilederNavn: erVeileder ? useVeilederNavnStore.getState().fetch(fnr) : Promise.resolve(null),
+        veilederNavn: fnr ? useVeilederNavnStore.getState().fetch(fnr) : Promise.resolve(null),
         aktiviteter: useAktivitetStore.getState().fetch(fnr),
         arenaAktiviteter: useTiltaksAktivitetStore.getState().fetch(fnr),
         innsynsrett: useInnsynsrettStore.getState().fetch(fnr)

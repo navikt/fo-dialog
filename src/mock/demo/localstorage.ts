@@ -6,7 +6,7 @@ export const LocalStorageElement = {
     INGEN_OPPF_PERIODER: 'ingen_oppf_perioder',
     KAN_IKKE_VARSLES: 'bruker_kan_ikke_varsles',
     INGEN_DIALOGER: 'ingen_dialoger',
-    UNDER_18: "under_18",
+    UNDER_18: 'under_18',
     FAILURE_RATE: 'failure_rate',
     DIALOG_FEILER: 'dialog_feiler',
     AKTIVITET_FEILER: 'aktivitet_feiler',
