@@ -1,8 +1,10 @@
-import { BodyLong, BodyShort, ExpansionCard, Heading, Link } from '@navikt/ds-react';
+import { Accordion, BodyLong, BodyShort, Heading, Link } from '@navikt/ds-react';
 import classNames from 'classnames';
 import React, { useLayoutEffect } from 'react';
 
 import dialogStyle from '../dialog/Dialog.module.less';
+import { InnsynsrettAccordionItem } from '../../moduler/om-dialogen/InnsynsrettAccordionItem';
+import { RettigheterAccordionItem } from '../../moduler/om-dialogen/RettigheterAccordionItem';
 
 export function InfoOmDialogSide() {
     useLayoutEffect(() => {
@@ -79,51 +81,10 @@ export function InfoOmDialogSide() {
                         </li>
                     </ul>
                 </div>
-
-                <ExpansionCard aria-label="Rettigheter og personvern">
-                    <ExpansionCard.Header>
-                        <ExpansionCard.Title>Rettigheter og personvern</ExpansionCard.Title>
-                    </ExpansionCard.Header>
-                    <ExpansionCard.Content>
-                        <div className={'mb-8'}>
-                            <BodyLong>
-                                Informasjon du gir i meldinger til veilederen din brukes til å vurdere behovet ditt for
-                                hjelp fra NAV.
-                            </BodyLong>
-                        </div>
-                        <div className={'mb-8'}>
-                            <Heading size="medium" level="2">
-                                Manuell oppfølging
-                            </Heading>
-                            <BodyLong>
-                                NAV henter informasjon om deg fra Folkeregisteret og sjekker mot Kontakt- og
-                                reservasjonsregisteret. Hvis du ikke ønsker å bruke den digitale dialogen, så kan du
-                                reservere deg mot digital kommunikasjon med det offentlige hos{' '}
-                                <Link href="https://www.norge.no/nb/digital-borger/reservasjon">Norge.no</Link>. Hvis du
-                                reserverer deg mot digital kommunikasjon, vil NAV følge deg opp manuelt.
-                            </BodyLong>
-                        </div>
-
-                        <Heading size="medium" level="2">
-                            Deling og lagring
-                        </Heading>
-                        <BodyLong>
-                            Opplysningene i dialogen og aktivitetsplanen blir ikke delt med andre offentlige etater, med
-                            mindre de har rett til å hente slike opplysninger.
-                        </BodyLong>
-                        <BodyLong>
-                            Opplysningene i dialogen og aktivitetsplanen blir lagret og oppbevart etter arkivloven.
-                            Meldinger i dialogen kan ikke slettes når de først er opprettet.
-                        </BodyLong>
-                        <BodyLong>
-                            Les mer om{' '}
-                            <Link href="https://www.nav.no/no/nav-og-samfunn/om-nav/personvern-i-arbeids-og-velferdsetaten">
-                                hvordan NAV behandler personopplysninger
-                            </Link>
-                            .
-                        </BodyLong>
-                    </ExpansionCard.Content>
-                </ExpansionCard>
+                <Accordion>
+                    <InnsynsrettAccordionItem />
+                    <RettigheterAccordionItem />
+                </Accordion>
             </div>
         </section>
     );

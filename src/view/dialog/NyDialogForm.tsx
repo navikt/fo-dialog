@@ -1,5 +1,5 @@
 import { zodResolver } from '@hookform/resolvers/zod';
-import { Alert, Button, GuidePanel, TextField, Textarea } from '@navikt/ds-react';
+import { Alert, Button, GuidePanel, TextField, Textarea, BodyShort } from '@navikt/ds-react';
 import React, { FocusEventHandler, useEffect, useRef, useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { useNavigate } from 'react-router';
@@ -16,6 +16,7 @@ import { useErVeileder, useFnrContext } from '../Provider';
 import { useDialogStore } from '../dialogProvider/dialogStore';
 import { useShallow } from 'zustand/react/shallow';
 import useKansendeMelding from '../../utils/UseKanSendeMelding';
+import { useInnsynsrett } from '../../api/useInnsynsrett';
 
 interface Props {
     defaultTema: string;
@@ -27,6 +28,7 @@ const NyDialogForm = (props: Props) => {
     const { defaultTema, aktivitetId } = props;
     const hentDialoger = useDialogStore((store) => store.hentDialoger);
     const { nyDialog } = useDialogContext();
+    const innsynsrett = useInnsynsrett();
     const navigate = useNavigate();
     const { dialogRoute, baseRoute } = useRoutes();
     const [noeFeilet, setNoeFeilet] = useState(false);
@@ -170,14 +172,15 @@ const NyDialogForm = (props: Props) => {
                 onSubmit={handleSubmit((data) => onSubmit(data))}
                 autoComplete="off"
             >
-                {!erVeileder ? (
-                    <>
-                        <GuidePanel poster={!bigScreen}>
-                            Her kan du skrive til din veileder om arbeid og oppfølging. Du vil få svar i løpet av noen
-                            dager.
-                        </GuidePanel>
-                    </>
-                ) : null}
+                <GuidePanel poster={!bigScreen}>
+                    <BodyShort>
+                        Her kan du skrive til din veileder om arbeid og oppfølging. Du vil få svar i løpet av noen
+                        dager.
+                    </BodyShort>
+                    {innsynsrett && (
+                        <BodyShort>Husk at dine foresatte kan be om å få lese det du skriver her.</BodyShort>
+                    )}
+                </GuidePanel>
                 <TextField
                     label="Tema (obligatorisk)"
                     description="Skriv kort hva dialogen skal handle om"
