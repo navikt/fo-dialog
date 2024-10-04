@@ -1,21 +1,23 @@
 import { zodResolver } from '@hookform/resolvers/zod';
 import { Alert, Button, GuidePanel, TextField, Textarea, BodyShort } from '@navikt/ds-react';
-import React, { FocusEventHandler, useEffect, useRef, useState } from 'react';
+import React, { FocusEventHandler, useEffect, useRef } from 'react';
 import { useForm } from 'react-hook-form';
-import { useNavigate } from 'react-router';
+import { redirect, useNavigate } from 'react-router';
 import { z } from 'zod';
 import loggEvent from '../../felleskomponenter/logging';
 import { useRoutes } from '../../routing/routes';
-import { UpdateTypes, dispatchUpdate } from '../../utils/UpdateEvent';
-import { useDialogContext } from '../DialogProvider';
 import { findKladd } from '../KladdProvider';
 import { cutStringAtLength } from '../utils/stringUtils';
 import useMeldingStartTekst from './UseMeldingStartTekst';
-import { HandlingsType } from '../ViewState';
 import { useErVeileder, useFnrContext } from '../Provider';
 import { useDialogStore } from '../dialogProvider/dialogStore';
 import { useShallow } from 'zustand/react/shallow';
 import useKansendeMelding from '../../utils/UseKanSendeMelding';
+import { ActionFunction, useFetcher } from 'react-router-dom';
+import { Status } from '../../api/typer';
+import { SubmitTarget } from 'react-router-dom/dist/dom';
+import { NyTradArgs } from '../DialogProvider';
+import { dispatchUpdate, UpdateTypes } from '../../utils/UpdateEvent';
 import { useInnsynsrett } from '../../api/useInnsynsrett';
 
 interface Props {
@@ -26,21 +28,20 @@ interface Props {
 const NyDialogForm = (props: Props) => {
     const kansendeMelding = useKansendeMelding();
     const { defaultTema, aktivitetId } = props;
-    const hentDialoger = useDialogStore((store) => store.hentDialoger);
-    const { nyDialog } = useDialogContext();
     const innsynsrett = useInnsynsrett();
     const navigate = useNavigate();
-    const { dialogRoute, baseRoute } = useRoutes();
-    const [noeFeilet, setNoeFeilet] = useState(false);
+    const { baseRoute } = useRoutes();
     const startTekst = useMeldingStartTekst();
     const fnr = useFnrContext();
-    const { kladder, oppdaterKladd, slettKladd } = useDialogStore(
+    const { kladder, oppdaterKladd, slettKladd, noeFeilet } = useDialogStore(
         useShallow((store) => ({
             kladder: store.kladder,
             oppdaterKladd: store.oppdaterKladd,
-            slettKladd: store.slettKladd
+            slettKladd: store.slettKladd,
+            noeFeilet: store.status === Status.ERROR
         }))
     );
+
     const kladd = findKladd(kladder, null, aktivitetId);
     const autoFocusTema = !aktivitetId;
 
@@ -69,11 +70,14 @@ const NyDialogForm = (props: Props) => {
         register,
         handleSubmit,
         watch,
-        formState: { errors, isSubmitting, dirtyFields }
+        formState: { errors, dirtyFields }
     } = useForm<NyDialogFormValues>({
         defaultValues,
         resolver: zodResolver(schema)
     });
+
+    const fetcher = useFetcher();
+    const isSubmitting = fetcher.state === 'submitting';
 
     const melding = watch('melding');
     const tema = watch('tema');
@@ -138,22 +142,19 @@ const NyDialogForm = (props: Props) => {
         }
     }, []);
 
-    const onSubmit = (data: NyDialogFormValues) => {
+    const onSubmit = async (data: NyDialogFormValues) => {
         const { tema, melding } = data;
 
         timer.current && clearInterval(timer.current);
         timer.current = undefined;
 
         loggEvent('arbeidsrettet-dialog.ny.dialog', { paaAktivitet: !!aktivitetId });
-        return nyDialog({ melding, tema, aktivitetId, fnr })
-            .then((dialog) => {
-                slettKladd(null, props.aktivitetId);
-                navigate(dialogRoute(dialog.id), { state: { sistHandlingsType: HandlingsType.nyDialog } });
-                dispatchUpdate(UpdateTypes.Dialog);
-                return dialog;
-            })
-            .then(() => hentDialoger(fnr))
-            .catch(() => setNoeFeilet(true));
+        // This will submit to route action
+        fetcher.submit({ melding, tema, aktivitetId, fnr } as SubmitTarget, {
+            method: 'POST',
+            action: '/ny',
+            encType: 'application/json'
+        });
     };
 
     const bigScreen = window.innerWidth >= 768;
@@ -222,5 +223,29 @@ const NyDialogForm = (props: Props) => {
         </div>
     );
 };
+
+export const nyDialogAction: (fnr: string | undefined) => ActionFunction =
+    (fnr) =>
+    async ({ request }) => {
+        try {
+            const { slettKladd, nyDialog, silentlyHentDialoger } = useDialogStore.getState();
+            if (request.bodyUsed) {
+                throw Error('Body used');
+            }
+            const data: NyTradArgs = await request.json();
+            const dialog = await nyDialog(data);
+            if (dialog) {
+                slettKladd(null, dialog.aktivitetId);
+                dispatchUpdate(UpdateTypes.Dialog);
+                silentlyHentDialoger(fnr);
+                return redirect(`/${dialog.id}`);
+            } else {
+                return null;
+            }
+        } catch (error) {
+            console.error(error);
+            return null;
+        }
+    };
 
 export default NyDialogForm;

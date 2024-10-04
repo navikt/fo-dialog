@@ -1,4 +1,4 @@
-import React, { Suspense, useEffect } from 'react';
+import React, { Suspense, useEffect, useMemo } from 'react';
 
 import { StringOrUndefined } from '../../utils/Typer';
 import { getDialogTittel } from '../aktivitet/TextUtils';
@@ -29,7 +29,9 @@ export default function NyDialogTrad() {
     // }
 
     const loaderData = useRootLoaderData();
-    const requiredData = Promise.all([loaderData.oppfolging, loaderData.veilederNavn, loaderData.me]);
+    const requiredData = useMemo(() => {
+        return Promise.all([loaderData.oppfolging, loaderData.veilederNavn, loaderData.me]);
+    }, []);
 
     return (
         <Suspense fallback={<DialogFormFallback />}>
@@ -41,6 +43,7 @@ export default function NyDialogTrad() {
 }
 
 export const DialogFormFallback = () => {
+    console.log('Rendering DialogFormFallback');
     const bigScreen = window.innerWidth >= 768;
     const erVeileder = useErVeileder();
     return (

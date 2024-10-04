@@ -20,13 +20,23 @@ import { FeatureToggle } from '../featureToggle/const';
 import { Aktivitet } from '../utils/aktivitetTypes';
 import { AktivitetsplanResponse } from '../api/aktivitetsplanGraphql';
 
+const delayIfNotTest = async (ms: number) => {
+    if (process.env.NODE_ENV === 'test') {
+        return;
+    }
+    await delay(ms);
+};
+
 export const jsonResponse = (
-    response: object | null | boolean | ((req: StrictRequest<DefaultBodyType>, params: PathParams) => object)
+    response: object | null | boolean | ((req: StrictRequest<DefaultBodyType>, params: PathParams) => object),
+    delayMs = 200
 ): HttpResponseResolver => {
     return async ({ request, params }) => {
         if (typeof response === 'function') {
+            await delayIfNotTest(delayMs);
             return HttpResponse.json(await response(request, params));
         }
+        await delayIfNotTest(delayMs);
         return HttpResponse.json(response);
     };
 };
@@ -34,13 +44,14 @@ export const jsonResponse = (
 const failOrGetResponse = (
     shouldFail: () => boolean,
     successFn: (req: StrictRequest<DefaultBodyType>) => Promise<Record<any, any>>,
-    delayMs = 0
+    delayMs = 500
 ): HttpResponseResolver => {
     return async ({ request }) => {
         if (shouldFail()) {
+            await delayIfNotTest(200);
             return internalServerError;
         }
-        await delay(delayMs);
+        await delayIfNotTest(delayMs);
         return HttpResponse.json(await successFn(request));
     };
 };
@@ -104,12 +115,12 @@ export const handlers = [
                 const dialogerPayload = ingenOppfPerioder() ? [] : dialoger();
                 return { data: { dialoger: dialogerPayload, kladder: [] }, errors: [] };
             },
-            500
+            1500
         )
     ),
 
     // veilarboppfolging
-    http.get('/veilarboppfolging/api/oppfolging/me', jsonResponse(bruker)),
+    http.get('/veilarboppfolging/api/oppfolging/me', jsonResponse(bruker, 1000)),
     http.post('/veilarboppfolging/api/v3/oppfolging/hent-status', jsonResponse(oppfolging)),
     http.post('/veilarboppfolging/api/oppfolging/settDigital', jsonResponse({})),
 

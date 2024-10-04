@@ -1,7 +1,7 @@
 import { fetchData } from '../utils/Fetch';
 import { createGenericStore } from '../utils/genericStore';
 
-interface VeilederInfo {
+export interface VeilederInfo {
     ident: string;
     navn: string; //etternanvn, fornavn
     fornavn: string;

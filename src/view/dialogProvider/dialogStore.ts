@@ -1,7 +1,7 @@
 import { create } from 'zustand';
 import { Status } from '../../api/typer';
-import { DialogData, KladdData, SistOppdatert } from '../../utils/Typer';
-import { DialogState, isDialogReloading } from '../DialogProvider';
+import { DialogData, KladdData, NyDialogMeldingData, SistOppdatert } from '../../utils/Typer';
+import { DialogState, isDialogReloading, NyMeldingArgs, NyTradArgs, SendMeldingArgs } from '../DialogProvider';
 import { fetchData, UnautorizedError } from '../../utils/Fetch';
 import { DialogApi } from '../../api/UseApiBasePath';
 import { isAfter } from 'date-fns';
@@ -17,12 +17,6 @@ export const initDialogState: DialogState = {
     dialoger: []
 };
 
-// - Les
-// - Set ferdig
-// - Hent dialoger
-// - Send melding
-// - Ny dialog
-
 type DialogStore = DialogState &
     KladdStore & {
         kladder: KladdData[];
@@ -31,9 +25,14 @@ type DialogStore = DialogState &
         pollForChanges: (fnr: string | undefined) => Promise<void>;
         configurePoll(config: { fnr: string | undefined; useWebsockets: boolean; erBruker: boolean }): void;
         updateDialogInDialoger: (dialogData: DialogData) => DialogData;
+        updateDialogWithNewDialog: (dialogData: DialogData) => DialogData;
         stopPolling: () => void;
+        setStatus: (status: Status, actionName?: string) => void;
         pollInterval: NodeJS.Timeout | undefined;
         currentPollFnr: string | undefined;
+        nyDialog: (melding: NyTradArgs) => Promise<DialogData | undefined>;
+        nyMelding: (melding: NyMeldingArgs) => Promise<DialogData | undefined>;
+        sendMelding: (melding: NyDialogMeldingData) => Promise<DialogData | undefined>;
     };
 
 export const useDialogStore = create(
@@ -54,7 +53,7 @@ export const useDialogStore = create(
                         // loggChangeInDialog(state.dialoger, dialoger);
                         set(
                             { status: Status.OK, dialoger, sistOppdatert: new Date(), error: undefined, kladder },
-                            false,
+                            false, // flag for overwriting state, default false but needs to be provided when naming actions
                             'hentDialoger/fulfilled'
                         );
                         return dialoger;
@@ -151,6 +150,9 @@ export const useDialogStore = create(
                     }
                 }
             },
+            setStatus: (status: Status, actionName: string = 'dialogStore/setStatus') => {
+                set({ status }, false, actionName);
+            },
             updateDialogInDialoger: (dialog: DialogData): DialogData => {
                 set(
                     ({ dialoger }) => {
@@ -167,24 +169,76 @@ export const useDialogStore = create(
                 );
                 return dialog;
             },
+            nyDialog: ({ melding, aktivitetId, fnr, tema }: NyTradArgs) => {
+                const { sendMelding } = get();
+                return sendMelding({ tekst: melding, overskrift: tema, dialogId: undefined, aktivitetId, fnr });
+            },
+            nyMelding: ({ melding, dialog, fnr }: NyMeldingArgs) => {
+                const { sendMelding } = get();
+                return sendMelding({ tekst: melding, dialogId: dialog.id, fnr });
+            },
+            sendMelding: async (nyDialogData: SendMeldingArgs) => {
+                set({ status: Status.RELOADING }, false, 'sendMelding/pending');
+                return fetchData<DialogData>(DialogApi.opprettDialog, {
+                    method: 'POST',
+                    body: JSON.stringify(nyDialogData)
+                })
+                    .then((dialog) => {
+                        const { updateDialogInDialoger, updateDialogWithNewDialog } = get();
+                        if (!nyDialogData.dialogId) {
+                            updateDialogInDialoger(dialog);
+                        } else {
+                            updateDialogWithNewDialog(dialog);
+                        }
+                        set({ status: Status.OK }, false, 'sendMelding/fulfilled');
+                        return dialog;
+                    })
+                    .catch((err) => {
+                        console.error(err);
+                        set({ status: Status.ERROR }, false, 'sendMelding/rejected');
+                        return undefined;
+                    });
+            },
+            updateDialogWithNewDialog: (dialogData: DialogData) => {
+                set(
+                    ({ dialoger }) => {
+                        return {
+                            dialoger: [...dialoger, dialogData],
+                            status: Status.OK,
+                            error: undefined
+                        };
+                    },
+                    false,
+                    'dialogStore/newDialogThread'
+                );
+                return dialogData;
+            },
             oppdaterKladd: (kladd: KladdData & { fnr: string | undefined }) => {
-                set(({ kladder }) => {
-                    const { dialogId, aktivitetId } = kladd;
-                    const nyKladder = [...kladder.filter((k) => !eqKladd(k, dialogId, aktivitetId)), kladd];
-                    return { kladdStatus: Status.RELOADING, kladder: nyKladder };
-                });
+                set(
+                    ({ kladder }) => {
+                        const { dialogId, aktivitetId } = kladd;
+                        const nyKladder = [...kladder.filter((k) => !eqKladd(k, dialogId, aktivitetId)), kladd];
+                        return { kladdStatus: Status.RELOADING, kladder: nyKladder };
+                    },
+                    false,
+                    'oppdaterKladd/pending'
+                );
                 fetchData<void>(DialogApi.kladd, {
                     method: 'post',
                     body: JSON.stringify({ ...kladd })
                 })
-                    .then(() => set({ kladdStatus: Status.OK }))
-                    .catch(() => set({ kladdStatus: Status.OK }));
+                    .then(() => set({ kladdStatus: Status.OK }, false, 'oppdaterKladd/fulfilled'))
+                    .catch(() => set({ kladdStatus: Status.OK }, false, 'oppdaterKladd/rejected'));
             },
             slettKladd: (dialogId, aktivitetId) => {
-                set(({ kladder }) => {
-                    const ny = kladder.filter((k) => !eqKladd(k, dialogId, aktivitetId));
-                    return { kladder: ny };
-                });
+                set(
+                    ({ kladder }) => {
+                        const ny = kladder.filter((k) => !eqKladd(k, dialogId, aktivitetId));
+                        return { kladder: ny };
+                    },
+                    false,
+                    'oppdaterKladd/delete'
+                );
             }
         }),
         { name: 'DialogStore' }
@@ -192,6 +246,7 @@ export const useDialogStore = create(
 );
 
 export const useHentDialoger = () => useDialogStore(useShallow((store) => store.hentDialoger));
+export const useSilentlyHentDialoger = () => useDialogStore(useShallow((store) => store.silentlyHentDialoger));
 
 const onIntervalWithCleanup = (pollForChanges: () => Promise<void>) => {
     let interval: NodeJS.Timeout;
