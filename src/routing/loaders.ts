@@ -9,7 +9,6 @@ import { RouteIds } from './routes';
 import { useInnsynsrettStore } from '../api/useInnsynsrett';
 
 export const initialPageLoader = (fnr: string | undefined) => async () => {
-
     return defer({
         features: useFeatureToggleStore.getState().fetch(undefined),
         dialoger: useDialogStore.getState().hentDialoger(fnr),

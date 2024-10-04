@@ -16,7 +16,8 @@ import {
     harIngenDialoger,
     harNyDialogEllerSendMeldingFeilerSkruddPa,
     ingenOppfPerioder,
-    settLocalStorage, erUnder18
+    settLocalStorage,
+    erUnder18
 } from './localstorage';
 
 interface Props {

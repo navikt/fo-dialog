@@ -17,32 +17,31 @@ export function RettigheterAccordionItem() {
             </Accordion.Header>
             <Accordion.Content>
                 <BodyShort>
-                    Informasjon du gir i meldinger til veilederen
-                    din brukes til å vurdere behovet ditt for hjelp fra NAV.
+                    Informasjon du gir i meldinger til veilederen din brukes til å vurdere behovet ditt for hjelp fra
+                    NAV.
                 </BodyShort>
                 <Heading level="3" size="xsmall" className="pt-4">
                     Manuell oppfølging
                 </Heading>
                 <BodyShort className="pb-4">
-                    NAV henter informasjon om deg fra Folkeregisteret og
-                    sjekker mot Kontakt- og reservasjonsregisteret.
+                    NAV henter informasjon om deg fra Folkeregisteret og sjekker mot Kontakt- og reservasjonsregisteret.
                 </BodyShort>
                 <BodyShort>
-                    Hvis du ikke ønsker å bruke den digitale dialogen,
-                    så kan du reservere deg mot digital kommunikasjon med det offentlige hos Norge.
-                    no Hvis du reserverer deg mot digital kommunikasjon, vil NAV følge deg opp manuelt.
+                    Hvis du ikke ønsker å bruke den digitale dialogen, så kan du reservere deg mot digital kommunikasjon
+                    med det offentlige hos Norge. no Hvis du reserverer deg mot digital kommunikasjon, vil NAV følge deg
+                    opp manuelt.
                 </BodyShort>
 
                 <Heading level="3" size="xsmall" className="pt-4">
                     Deling og lagring
                 </Heading>
                 <BodyShort className="pb-4">
-                    Opplysningene i dialogen og aktivitetsplanen blir ikke delt med andre offentlige etater,
-                    med mindre de har rett til å hente slike opplysninger.
+                    Opplysningene i dialogen og aktivitetsplanen blir ikke delt med andre offentlige etater, med mindre
+                    de har rett til å hente slike opplysninger.
                 </BodyShort>
                 <BodyShort className="pb-4">
-                    Opplysningene i dialogen og aktivitetsplanen blir lagret og oppbevart etter arkivloven.
-                    Meldinger i dialogen kan ikke slettes når de først er opprettet.
+                    Opplysningene i dialogen og aktivitetsplanen blir lagret og oppbevart etter arkivloven. Meldinger i
+                    dialogen kan ikke slettes når de først er opprettet.
                 </BodyShort>
                 <BodyShort>
                     Les mer om{' '}

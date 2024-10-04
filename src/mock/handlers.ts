@@ -126,7 +126,7 @@ export const handlers = [
         return HttpResponse.json({ [FeatureToggle.USE_WEBSOCKETS]: false });
     }),
 
-    http.post('/veilarbaktivitet/api/innsynsrett', jsonResponse({ foresatteHarInnsynsrett: erUnder18()})),
+    http.post('/veilarbaktivitet/api/innsynsrett', jsonResponse({ foresatteHarInnsynsrett: erUnder18() })),
 
     // veilarbveileder
     http.get(`/veilarbveileder/api/veileder/me`, jsonResponse(veilederMe))

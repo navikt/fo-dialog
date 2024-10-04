@@ -174,12 +174,12 @@ const NyDialogForm = (props: Props) => {
             >
                 <GuidePanel poster={!bigScreen}>
                     <BodyShort>
-                    Her kan du skrive til din veileder om arbeid og oppfølging. Du vil få svar i løpet av noen dager.
+                        Her kan du skrive til din veileder om arbeid og oppfølging. Du vil få svar i løpet av noen
+                        dager.
                     </BodyShort>
-                    {innsynsrett &&
-                        <BodyShort>
-                            Husk at dine foresatte kan be om å få lese det du skriver her.
-                        </BodyShort>}
+                    {innsynsrett && (
+                        <BodyShort>Husk at dine foresatte kan be om å få lese det du skriver her.</BodyShort>
+                    )}
                 </GuidePanel>
                 <TextField
                     label="Tema (obligatorisk)"
