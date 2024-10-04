@@ -1,7 +1,7 @@
 import { Accordion, BodyShort, Heading, Link } from '@navikt/ds-react';
 import React, { useState } from 'react';
 
-export function RettigheterPanel() {
+export function RettigheterAccordionItem() {
     const [open, setOpen] = useState(false);
 
     function handleClick() {

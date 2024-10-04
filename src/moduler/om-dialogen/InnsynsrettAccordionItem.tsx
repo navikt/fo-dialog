@@ -2,7 +2,7 @@ import { Accordion, BodyShort, Heading } from '@navikt/ds-react';
 import React, { useState } from 'react';
 
 
-export const InnsynsrettPanel = () => {
+export const InnsynsrettAccordionItem = () => {
     const [open, setOpen] = useState(false);
 
     function handleClick() {
