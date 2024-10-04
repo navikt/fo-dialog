@@ -17,12 +17,6 @@ export const initDialogState: DialogState = {
     dialoger: []
 };
 
-// - Les
-// - Set ferdig
-// - Hent dialoger
-// - Send melding
-// - Ny dialog
-
 type DialogStore = DialogState &
     KladdStore & {
         kladder: KladdData[];
@@ -191,7 +185,7 @@ export const useDialogStore = create(
                 })
                     .then((dialog) => {
                         const { updateDialogInDialoger, updateDialogWithNewDialog } = get();
-                        if (!!nyDialogData.dialogId) {
+                        if (!nyDialogData.dialogId) {
                             updateDialogInDialoger(dialog);
                         } else {
                             updateDialogWithNewDialog(dialog);

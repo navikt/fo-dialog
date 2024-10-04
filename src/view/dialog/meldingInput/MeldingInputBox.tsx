@@ -15,7 +15,7 @@ import { debounced, maxMeldingsLengde, MeldingInputContext } from './inputUtils'
 import { useVisAktivitet } from '../../AktivitetToggleContext';
 import { Status } from '../../../api/typer';
 import ManagedDialogCheckboxes from '../DialogCheckboxes';
-import { useDialogStore, useHentDialoger, useSilentlyHentDialoger } from '../../dialogProvider/dialogStore';
+import { useDialogStore, useSilentlyHentDialoger } from '../../dialogProvider/dialogStore';
 import { useErVeileder, useFnrContext } from '../../Provider';
 import useKansendeMelding from '../../../utils/UseKanSendeMelding';
 import { useShallow } from 'zustand/react/shallow';
