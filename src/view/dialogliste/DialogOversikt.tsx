@@ -27,7 +27,7 @@ const DialogOversiktHeader = ({ erVeileder }: { erVeileder: boolean }) => {
             </div>
             {!erVeileder ? (
                 <Heading level="1" size="medium">
-                    Dialog med veilederen din
+                    Dialog med veilederen din (NY)
                 </Heading>
             ) : null}
         </div>
