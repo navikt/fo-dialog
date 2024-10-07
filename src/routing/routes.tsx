@@ -5,7 +5,7 @@ import { DialogTrad } from '../view/dialog/DialogTrad';
 import IkkeValgtDialogMelding from '../view/dialog/IkkeValgtDialogMelding';
 import { createMemoryRouter, Navigate, RouteObject, RouterProvider, useMatches, useParams } from 'react-router';
 import React from 'react';
-import { erInternFlate, USE_HASH_ROUTER } from '../constants';
+import { erEksternFlate, erInternFlate, USE_HASH_ROUTER } from '../constants';
 import { createBrowserRouter, createHashRouter, useSearchParams } from 'react-router-dom';
 import { stripTrailingSlash } from '../api/UseApiBasePath';
 import { initialPageLoader } from './loaders';
@@ -124,8 +124,10 @@ export const Routes = ({ createRouter }: { createRouter: typeof createBrowserRou
         const inMemoryRouter = createMemoryRouter(dialogRoutes(fnr));
         return <RouterProvider router={inMemoryRouter} />;
     }
+    // Denne er kun for github app eller lokalt (?)
     let basename = stripTrailingSlash(import.meta.env.BASE_URL);
     if (erInternFlate) basename = `/dialog`;
+    else if (erEksternFlate) basename = '/arbeid/dialog';
     const browserRouter = createRouter(dialogRoutes(fnr), { basename });
     return <RouterProvider router={browserRouter} />;
 };
