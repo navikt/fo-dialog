@@ -9,9 +9,12 @@ on:
             bucket:
                 required: true
                 type: string
+            NAIS_MANAGEMENT_PROJECT_ID:
+              required: true
+              type: string
         secrets:
-            GCS_SA_KEY:
-                required: true
+            NAIS_WORKLOAD_IDENTITY_PROVIDER:
+              required: true
             SLACK_WEBHOOK:
                 required: false
 
