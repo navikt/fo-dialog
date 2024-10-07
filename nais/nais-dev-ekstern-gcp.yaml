@@ -50,6 +50,7 @@ spec:
       # Chrome does not send cookie with the site.webmanifest request, dont require login for that file
       autoLoginIgnorePaths:
         - /arbeid/dialog/site.webmanifest
+        - /arbeid/dialog/*.png
         - /arbeid/dialog/assets/*
   tokenx:
     enabled:
