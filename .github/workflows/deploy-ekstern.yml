@@ -1,4 +1,4 @@
-name: GCP root
+name: Deploy ekstern til CDN
 
 on:
     workflow_call:
