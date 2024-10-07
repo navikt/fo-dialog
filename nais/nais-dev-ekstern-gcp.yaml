@@ -6,7 +6,7 @@ metadata:
   labels:
     team: pto
 spec:
-  image: europe-north1-docker.pkg.dev/nais-management-233d/poao/poao-frontend:2024.05.07_13.29-a2e3b56408a1
+  image: europe-north1-docker.pkg.dev/nais-management-233d/poao/poao-frontend:2024.10.04_13.21-c31f6e652a0c
   port: 8080
   liveness:
     path: /internal/alive
@@ -50,6 +50,7 @@ spec:
       # Chrome does not send cookie with the site.webmanifest request, dont require login for that file
       autoLoginIgnorePaths:
         - /arbeid/dialog/site.webmanifest
+        - /arbeid/dialog/*.png
         - /arbeid/dialog/assets/*
   tokenx:
     enabled:
@@ -63,7 +64,7 @@ spec:
         {
           "fallbackStrategy": "SERVE_INDEX_HTML",
           "contextPath": "/arbeid/dialog",
-          "gcs": { "bucketName": "arbeidsrettet-dialog-dev" },
+          "gcs": { "bucketName": "nais-cdn-nav-dab-42cc", "bucketContextPath": "dab/arbeidsrettet-dialog-dev-ekstern/build/" },
           "auth": { "loginProvider": "ID_PORTEN" },
           "header": {
             "csp": {

@@ -1,4 +1,4 @@
-name: GCP root
+name: Deploy ekstern til CDN
 
 on:
     workflow_call:
@@ -9,9 +9,12 @@ on:
             bucket:
                 required: true
                 type: string
+            NAIS_MANAGEMENT_PROJECT_ID:
+              required: true
+              type: string
         secrets:
-            GCS_SA_KEY:
-                required: true
+            NAIS_WORKLOAD_IDENTITY_PROVIDER:
+              required: true
             SLACK_WEBHOOK:
                 required: false
 
@@ -22,7 +25,7 @@ env:
 
 jobs:
     deploy:
-        name: Deploy application to GCP-bucket
+        name: Deploy application to dev
         runs-on: ubuntu-latest
         steps:
             - uses: actions/checkout@v4
@@ -38,16 +41,15 @@ jobs:
               run: npm run test
             - name: Build application
               run: ${{ inputs.kommando }}
-            - name: Gcloud auth
-              uses: google-github-actions/auth@v2
+            - name: Upload to CDN
+              uses: nais/deploy/actions/cdn-upload/v2@master
               with:
-                  credentials_json: ${{ secrets.GCS_SA_KEY }}
-            - name: Setup gcloud
-              uses: google-github-actions/setup-gcloud@v2
-            - name: Upload files to GCS
-              run: gsutil -m rsync -r build "$BUCKET"
-              env:
-                  BUCKET: gs://${{ inputs.bucket }}
+                team: dab
+                source: ./build/
+                destination: /${{ inputs.bucket }}/
+                no_cache_paths: ${{ inputs.bucket }}/build/index.html
+                project_id: ${{ inputs.NAIS_MANAGEMENT_PROJECT_ID }}
+                identity_provider: ${{ secrets.NAIS_WORKLOAD_IDENTITY_PROVIDER }}
             - name: Slack Notification (deploy failure)
               if: failure() && inputs.bucket == 'arbeidsrettet-dialog-prod'
               uses: rtCamp/action-slack-notify@v2
