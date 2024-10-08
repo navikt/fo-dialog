@@ -67,7 +67,6 @@
     "@navikt/ds-react": "^7.0.0",
     "@navikt/ds-tailwind": "^7.0.0",
     "@sentry/react": "^8.32.0",
-    "@sentry/tracing": "^7.114.0",
     "@vitejs/plugin-react": "^4.3.2",
     "@vitejs/plugin-react-swc": "^3.7.1",
     "core-js": "^3.38.1",
