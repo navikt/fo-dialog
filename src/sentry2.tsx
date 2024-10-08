@@ -53,7 +53,7 @@ Sentry.init({
     environment: getEnv(),
     enabled: getEnv() !== Env.Local,
     ignoreErrors: [
-        /Ampltidude/
+        /Amplitude/
         // /^Failed to execute 'removeChild' on 'Node': The node to be removed is not a child of this node.$/,
     ],
     // Set tracesSampleRate to 1.0 to capture 100%
