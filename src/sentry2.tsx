@@ -36,7 +36,7 @@ Sentry.init({
         Sentry.httpClientIntegration({
             failedRequestTargets: [
                 /https:\/\/pto\.ekstern\.dev\.nav\.no\/arbeid\/dialog\/(veilarbdialog|veilarboppfolging|veilarbaktivitet|veilarblest)\/*/,
-                /https:\/\/nav\.no\/(veilarbdialog|veilarboppfolging|veilarbaktivitet|veilarblest)\/*/
+                /https:\/\/nav\.no\/arbeid\/dialog\/(veilarbdialog|veilarboppfolging|veilarbaktivitet|veilarblest)\/*/
             ]
         }),
         captureConsoleIntegration({
