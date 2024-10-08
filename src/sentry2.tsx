@@ -7,7 +7,7 @@ import {
     useLocation,
     useNavigationType
 } from 'react-router-dom';
-import { browserTracingIntegration, captureConsoleIntegration } from '@sentry/react';
+import { captureConsoleIntegration } from '@sentry/react';
 
 export enum Env {
     Local = 'local',
@@ -33,30 +33,18 @@ Sentry.init({
             createRoutesFromChildren,
             matchRoutes
         }),
-        browserTracingIntegration({
-            // tracePropagationTargets: [
-            //     'nav.no',
-            //     'pto.dev.nav.no'
-            // /(\.dev)?nav.no\/veilarbdialog/,
-            // /(\.dev)?nav.no\/veilarboppfolging/,
-            // /(\.dev)?nav.no\/veilarbaktivitet/,
-            // /(\.dev)?nav.no\/veilarblest/,
-            // ]
-        }),
+        Sentry.httpClientIntegration(),
         captureConsoleIntegration({
             // array of methods that should be captured
             // defaults to ['log', 'info', 'warn', 'error', 'debug', 'assert']
             levels: ['warn', 'error']
         })
     ],
-    // tracePropagationTargets: [
-    //     'nav.no',
-    //     /(\.dev)?nav.no\/veilarbdialog/,
-    //     /(\.dev)?nav.no\/veilarboppfolging/,
-    //     /(\.dev)?nav.no\/veilarbaktivitet/,
-    //     /(\.dev)?nav.no\/veilarblest/
-    // ],
-    // allowUrls: [/https?:\/\/(cdn\.)?(ekstern\.)?(dev\.)?nav\.no/],
+    tracePropagationTargets: [
+        'localhost',
+        /https:\/\/nav\.no\/(veilarbdialog|veilarboppfolging|veilarbaktivitet|veilarblest)/,
+        /https:\/\/pto\.ekstern\.dev\.nav\.no\/arbeid\/dialog\/(veilarbdialog|veilarboppfolging|veilarbaktivitet|veilarblest)/
+    ],
     environment: getEnv(),
     enabled: getEnv() !== Env.Local,
     ignoreErrors: [
