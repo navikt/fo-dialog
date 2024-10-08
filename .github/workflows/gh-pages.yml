@@ -28,7 +28,7 @@ jobs:
                   restore-keys: |
                       ${{ runner.os }}-node-
             - name: Install bun
-              uses: oven-sh/setup-bun@v1
+              uses: oven-sh/setup-bun@v2
             - name: Install dependencies (bun)
               run: bun install
             - name: Initalize MSW
