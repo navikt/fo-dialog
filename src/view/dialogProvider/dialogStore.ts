@@ -146,7 +146,7 @@ export const useDialogStore = create(
                 } catch (e) {
                     if (e instanceof UnautorizedError) {
                     } else {
-                        console.error(e);
+                        console.warn('Kunne ikke hent sist oppdatert', e);
                     }
                 }
             },
