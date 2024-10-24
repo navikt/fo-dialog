@@ -327,7 +327,7 @@ export const stillingFraNav: Aktivitet = {
     endretDato: '2018-09-30T10:46:51.622+01:00',
     endretAv: 'z990207',
     historisk: false,
-    kontaktperson: 'Vidar Vidarsen,\n NAV-ansatt, 99 99 99 99,vidar.vidarsen@nav.no',
+    kontaktperson: 'Vidar Vidarsen,\n Nav-ansatt, 99 99 99 99,vidar.vidarsen@nav.no',
     endretAvType: 'NAV',
     transaksjonsType: 'OPPRETTET',
     stillingFraNavData: {

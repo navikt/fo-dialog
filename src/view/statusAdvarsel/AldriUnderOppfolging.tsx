@@ -23,7 +23,7 @@ function Veileder() {
 function Bruker() {
     return (
         <StatusAdvarselWrapper>
-            Du må være registrert hos NAV for å ha digital dialog med veileder. <br />
+            Du må være registrert hos Nav for å ha digital dialog med veileder. <br />
             <Link href={`${ARBEIDSSOKERREGISTRERING_URL}`}>Registrer deg hos Nav</Link>
         </StatusAdvarselWrapper>
     );

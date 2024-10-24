@@ -14,7 +14,7 @@ function accessibleText(erBruker: boolean, erMeldingFraBruker: boolean) {
         return erBruker ? 'Deg' : 'Bruker';
     }
 
-    return 'NAV';
+    return 'Nav';
 }
 
 interface Props {
