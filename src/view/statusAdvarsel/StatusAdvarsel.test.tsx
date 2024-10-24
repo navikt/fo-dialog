@@ -64,7 +64,7 @@ describe('<AlertStripeContainer/>', () => {
         vi.spyOn(OppfolgingContext, 'useOppfolgingContext').mockImplementation(() => useFetchOppfolging);
 
         const { getByText } = render(<StatusAdvarsel />);
-        getByText('Du må være registrert hos NAV for å ha digital dialog med veileder.');
+        getByText('Du må være registrert hos Nav for å ha digital dialog med veileder.');
     });
     it('Bruker med oppf.perioder og ikke under oppf. viser en advarsel - bruker. ', () => {
         useFetchOppfolging.data!.oppfolgingsPerioder = oppfPerioder;
@@ -74,9 +74,9 @@ describe('<AlertStripeContainer/>', () => {
 
         const { getByText, getByRole } = render(<StatusAdvarsel />);
         getByText(
-            'Du er ikke lenger registrert hos NAV. Hvis du fortsatt skal få oppfølging fra NAV og ha dialog med veileder må du være registrert.'
+            'Du er ikke lenger registrert hos Nav. Hvis du fortsatt skal få oppfølging fra Nav og ha dialog med veileder må du være registrert.'
         );
-        expect(getByRole('link').textContent).toBe('Registrer deg hos NAV');
+        expect(getByRole('link').textContent).toBe('Registrer deg hos Nav');
     });
     it('Bruker med oppf.perioder, ikke under oppf. viser advarsel - veileder', () => {
         useFetchOppfolging.data!.oppfolgingsPerioder = oppfPerioder;

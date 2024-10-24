@@ -61,7 +61,7 @@ export const arenaAktiviteter = [
             {
                 startDato: '2018-02-22T13:00:00+01:00',
                 sluttDato: '2018-02-22T00:00:00+01:00',
-                sted: 'NAV Frogner, Sommerrogata 1 (v/Solli Plass), 0255 Oslo'
+                sted: 'Nav Frogner, Sommerrogata 1 (v/Solli Plass), 0255 Oslo'
             }
         ]
     }

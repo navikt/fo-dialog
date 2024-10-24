@@ -38,7 +38,7 @@ describe('Statusadvarsler', () => {
                 gitt.bruker().som.harIngenDialog().som.harBrukerSomAldriHarVærtUnderOppfolging();
                 vi.mock('../routing/loaders', () => ({ useRootLoaderData: () => rootLoaderData }));
                 const { getByText } = await act(() => render(<MemoryRouterMedBareDialogOversikt />));
-                getByText('Du må være registrert hos NAV for å ha digital dialog med veileder.');
+                getByText('Du må være registrert hos Nav for å ha digital dialog med veileder.');
             });
         });
 
@@ -54,7 +54,7 @@ describe('Statusadvarsler', () => {
                 vi.mock('../routing/loaders', () => ({ useRootLoaderData: () => rootLoaderData }));
                 const { getByText } = await act(() => render(<MemoryRouterMedBareDialogOversikt />));
                 getByText(
-                    'Du er ikke lenger registrert hos NAV. Hvis du fortsatt skal få oppfølging fra NAV og ha dialog med veileder må du være registrert.'
+                    'Du er ikke lenger registrert hos Nav. Hvis du fortsatt skal få oppfølging fra Nav og ha dialog med veileder må du være registrert.'
                 );
             });
         });
@@ -86,7 +86,7 @@ describe('Statusadvarsler', () => {
         it('bruker ser advarsel når bruker er under oppf. men manuell', async () => {
             gitt.bruker().som.harIngenDialog().som.harBrukerUnderOppfølgingMenManuell();
             const { getByText } = await act(() => render(<MemoryRouterMedBareDialogOversikt />));
-            getByText('Du har ikke digital oppfølging fra NAV. Du kan derfor ikke ha digital dialog med veileder');
+            getByText('Du har ikke digital oppfølging fra Nav. Du kan derfor ikke ha digital dialog med veileder');
         });
 
         it('bruker under oppf. men manuell kan endre til digital oppfølging', async () => {
