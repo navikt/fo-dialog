@@ -1,5 +1,5 @@
 import { Heading, Skeleton } from '@navikt/ds-react';
-import React, { Suspense, useMemo } from 'react';
+import React, { Suspense, useEffect, useMemo, useRef } from 'react';
 import { Await, useMatches } from 'react-router';
 import { DialogMedAktivitetHeader } from '../aktivitet/DialogMedAktivitetHeader';
 import { harAktivitetDataFeil, useAktivitetContext } from '../AktivitetProvider';
@@ -22,6 +22,15 @@ export function DialogHeader() {
         return Promise.all([loaderData.aktiviteter, loaderData.arenaAktiviteter, loaderData.dialoger]);
     }, []);
 
+   const headerRef = useRef<HTMLHeadingElement>(null);
+
+    useEffect(() => {
+        if (headerRef.current) {
+            headerRef.current.focus();
+            console.log('Fokusert på header');
+        }
+    }, [headerRef.current, viseAktivitet]); // eslint-disable-line react-hooks/exhaustive-deps
+
     return (
         <Suspense fallback={<HeaderFallback />}>
             <Await resolve={requiredData}>
@@ -32,7 +41,7 @@ export function DialogHeader() {
                         ) : (
                             <div className="flex flex-row gap-x-2 pl-4">
                                 <TilbakeKnapp className="md:hidden" />
-                                <Heading level="1" size="small">
+                                <Heading ref={headerRef}  id="mt_main_heading" level="1" size="small" tabIndex={-1}>
                                     {dialog?.overskrift}
                                 </Heading>
                             </div>

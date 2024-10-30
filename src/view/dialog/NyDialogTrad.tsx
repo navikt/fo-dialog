@@ -23,10 +23,6 @@ export default function NyDialogTrad() {
         setViewState({ sistHandlingsType: HandlingsType.ingen });
     }, []);
 
-    // if (!kansendeMelding || (aktivitetId && !aktivitet)) {
-    //     return <div className={styles.dialog} />;
-    // }
-
     const loaderData = useRootLoaderData();
     const requiredData = useMemo(() => {
         return Promise.all([loaderData.oppfolging, loaderData.veilederNavn, loaderData.me]);
