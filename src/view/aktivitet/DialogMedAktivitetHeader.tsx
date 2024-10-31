@@ -24,6 +24,7 @@ export function DialogMedAktivitetHeader() {
     const headerRef = useRef<HTMLHeadingElement>(null);
 
     useEffect(() => {
+        console.log('Fokusert på header11111');
         if (headerRef.current) {
             headerRef.current.focus();
             console.log('Fokusert på header');

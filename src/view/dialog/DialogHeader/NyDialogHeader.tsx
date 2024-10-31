@@ -7,6 +7,7 @@ export const NyDialogHeader = () => {
     const headerRef = useRef<HTMLHeadingElement>(null);
 
     useEffect(() => {
+        console.log('Fokusert på 2222222');
         if (headerRef.current) {
             headerRef.current.focus();
             console.log('Fokusert på header');
