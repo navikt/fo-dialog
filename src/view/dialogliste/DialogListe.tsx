@@ -8,6 +8,7 @@ import { useRootLoaderData } from '../../routing/loaders';
 import { Loader } from '@navikt/ds-react';
 import { isAfter } from 'date-fns';
 import { parseISO } from 'date-fns/parseISO';
+import { isEqual } from 'date-fns/isEqual';
 
 interface Res {
     naaverende: DialogData[];
@@ -46,7 +47,7 @@ export function DialogListe() {
 export function erNyere(sisteDatoA: string | null, sisteDatoB: string | null): number {
     const a = sisteDatoA ? parseISO(sisteDatoA) : new Date();
     const b = sisteDatoB ? parseISO(sisteDatoB) : new Date();
-    return isAfter(a, b) ? -1 : sisteDatoA === sisteDatoB ? 0 : 1;
+    return isAfter(a, b) ? -1 : isEqual(a, b) ? 0 : 1;
 }
 
 const DialogListeFallback = () => {

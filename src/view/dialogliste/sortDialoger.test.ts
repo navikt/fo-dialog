@@ -1,4 +1,4 @@
-import { describe } from 'vitest';
+import { describe, expect } from 'vitest';
 import { erNyere } from './DialogListe';
 
 describe('erNyere', () => {
@@ -21,6 +21,12 @@ describe('erNyere', () => {
         const nyereTid = '2024-09-09T08:00:31.171+00:00';
         const dialoger = [nyereTid, gammelTid];
         expect(dialoger.sort((a, b) => erNyere(a, b))).toStrictEqual([nyereTid, gammelTid]);
+    });
+
+    it('skal sortere riktig når input er like med forskjellige tidssoner', () => {
+        const gammelTid = '2024-09-09T10:00:30.171+02:00';
+        const nyereTid = '2024-09-09T08:00:30.171+00:00';
+        expect(erNyere(gammelTid, nyereTid)).toBe(0);
     });
 
     it('null skal være først', () => {
