@@ -10,6 +10,7 @@ import { useErVeileder } from '../Provider';
 import { useSelectedAktivitet } from '../utils/useAktivitetId';
 import { aktivitetLenke, visAktivitetsplan } from './AktivitetskortLenke';
 import { getTypeTextByAktivitet } from './TextUtils';
+import { HandlingsType } from '../ViewState';
 
 const noOp = () => {};
 export function DialogMedAktivitetHeader() {
@@ -23,13 +24,15 @@ export function DialogMedAktivitetHeader() {
     }
     const headerRef = useRef<HTMLHeadingElement>(null);
 
+    //let  sistHandlingsType  = useLocation().state?.sistHandlingsType;
+
     useEffect(() => {
-        console.log('Fokusert på header11111');
-        if (headerRef.current) {
+        console.log('Fokusert på 11111',HandlingsType);
+        if (headerRef.current && aktivitet?.tittel) {
             headerRef.current.focus();
             console.log('Fokusert på header');
-        }
-    }, [headerRef.current, aktivitet]); // eslint-disable-line react-hooks/exhaustive-deps
+        }3
+    },[headerRef.current, aktivitet?.tittel]); // eslint-disable-line react-hooks/exhaustive-deps
 
     const typeTekst = getTypeTextByAktivitet(aktivitet);
     const infotekst = getInfoText(aktivitet);

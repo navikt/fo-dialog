@@ -8,6 +8,7 @@ import { erArenaAktivitet } from '../utils/utils';
 import { TilbakeKnapp } from './TilbakeKnapp';
 import { useRootLoaderData } from '../../routing/loaders';
 import { RouteIds } from '../../routing/routes';
+import { HandlingsType } from '../ViewState';
 
 export function DialogHeader() {
     const dialog = useSelectedDialog();
@@ -24,13 +25,16 @@ export function DialogHeader() {
 
    const headerRef = useRef<HTMLHeadingElement>(null);
 
+   //let  sistHandlingsType  = useLocation().state?.sistHandlingsType;
+
+
     useEffect(() => {
-        console.log('Fokusert på 333333');
-        if (headerRef.current) {
+        console.log('Fokusert på 333333', HandlingsType);
+        if (headerRef.current && dialog?.overskrift){
             headerRef.current.focus();
             console.log('Fokusert på header');
         }
-    }, [headerRef.current, viseAktivitet]); // eslint-disable-line react-hooks/exhaustive-deps
+    }, [headerRef.current,dialog?.overskrift]); // eslint-disable-line react-hooks/exhaustive-deps
 
     return (
         <Suspense fallback={<HeaderFallback />}>
