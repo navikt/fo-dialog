@@ -31,7 +31,7 @@ export function DialogMedAktivitetHeader() {
         if (headerRef.current && aktivitet?.tittel) {
             headerRef.current.focus();
             console.log('Fokusert på header');
-        }3
+        }
     },[headerRef.current, aktivitet?.tittel]); // eslint-disable-line react-hooks/exhaustive-deps
 
     const typeTekst = getTypeTextByAktivitet(aktivitet);
