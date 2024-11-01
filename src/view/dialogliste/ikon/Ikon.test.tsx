@@ -17,7 +17,7 @@ const dialogUtenAktivitet: DialogData = {
     lestAvBrukerTidspunkt: null,
     opprettetDato: null,
     overskrift: 'Overskrift',
-    sisteDato: null,
+    sisteDato: '2024-11-01T09:58:58.061Z',
     sisteTekst: 'asdfs'
 };
 
