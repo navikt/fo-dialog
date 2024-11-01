@@ -7,6 +7,7 @@ import HistoriskeDialogerOversikt from './HistoriskDialogListe';
 import { useRootLoaderData } from '../../routing/loaders';
 import { Loader } from '@navikt/ds-react';
 import { isAfter } from 'date-fns';
+import { parseISO } from 'date-fns/parseISO';
 
 interface Res {
     naaverende: DialogData[];
@@ -22,7 +23,7 @@ export function DialogListe() {
     const dialoger = useDialoger();
     const { dialogId } = useParams();
 
-    const sorterteDialoger = dialoger.sort((a, b) => erNyere(a.sisteDato, b.sisteDato));
+    const sorterteDialoger = dialoger.toSorted((a, b) => erNyere(a.sisteDato, b.sisteDato));
     const { naaverende, historiske } = sorterteDialoger.reduce(splitHistoriske, { naaverende: [], historiske: [] });
 
     const loaderData = useRootLoaderData();
@@ -43,7 +44,9 @@ export function DialogListe() {
 }
 
 export function erNyere(sisteDatoA: string | null, sisteDatoB: string | null): number {
-    return isAfter(sisteDatoA || '', sisteDatoB || '') ? -1 : sisteDatoA === sisteDatoB ? 0 : 1;
+    const a = sisteDatoA ? parseISO(sisteDatoA) : new Date();
+    const b = sisteDatoB ? parseISO(sisteDatoB) : new Date();
+    return isAfter(a, b) ? -1 : sisteDatoA === sisteDatoB ? 0 : 1;
 }
 
 const DialogListeFallback = () => {
