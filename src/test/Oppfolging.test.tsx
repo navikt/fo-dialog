@@ -77,7 +77,7 @@ describe('<Dialog/>', () => {
         const { queryByRole, getByLabelText, queryByLabelText } = render(<MemoryRouterMedBareDialogTrad />);
         expect(queryByRole('form')).toBeNull();
         await waitFor(() => getByLabelText('Meldinger'));
-        expect(queryByLabelText('Venter på svar fra NAV')).toBeDisabled();
+        expect(queryByLabelText('Venter på svar fra Nav')).toBeDisabled();
         expect(queryByLabelText('Venter på svar fra bruker')).toBeDisabled();
     });
     test('Bruker under oppf. viser komponenter i Dialog', async () => {
@@ -85,14 +85,14 @@ describe('<Dialog/>', () => {
         const { getByText, getByLabelText } = render(<MemoryRouterMedBareDialogTrad />);
         await waitFor(() => getByLabelText('Ny melding'));
         await waitFor(() => getByLabelText('Meldinger'));
-        await waitFor(() => getByText('Venter på svar fra NAV'));
+        await waitFor(() => getByText('Venter på svar fra Nav'));
     });
-    test('Veileder skal kunne fjerne "Venter på svar fra NAV" på brukere som er under oppf. men reservert i KRR og dialog venter på svar', async () => {
+    test('Veileder skal kunne fjerne "Venter på svar fra Nav" på brukere som er under oppf. men reservert i KRR og dialog venter på svar', async () => {
         gitt.veileder().som.harDialogSomVenterPåBruker().som.harBrukerUnderOppfølgingMenReservertIKRR();
         const { queryByRole, getByLabelText, queryByLabelText } = render(<MemoryRouterMedBareDialogTrad />);
         expect(queryByRole('form')).toBeNull();
         await waitFor(() => getByLabelText('Meldinger'));
-        expect(queryByLabelText('Venter på svar fra NAV')).toBeDisabled();
+        expect(queryByLabelText('Venter på svar fra Nav')).toBeDisabled();
         expect(queryByLabelText('Venter på svar fra bruker')).not.toBeDisabled();
     });
     test('Veileder skal kunne endre "Venter på svar fra Bruker" på bruker under oppf. men reservet i KRR og dialog ikke er ferdig behandlet', async () => {
@@ -100,23 +100,23 @@ describe('<Dialog/>', () => {
         const { queryByRole, getByLabelText, queryByLabelText } = render(<MemoryRouterMedBareDialogTrad />);
         expect(queryByRole('form')).toBeNull();
         await waitFor(() => getByLabelText('Meldinger'));
-        expect(queryByLabelText('Venter på svar fra NAV')).not.toBeDisabled();
+        expect(queryByLabelText('Venter på svar fra Nav')).not.toBeDisabled();
         expect(queryByLabelText('Venter på svar fra bruker')).toBeDisabled();
     });
-    test('Veileder skal ikke kunne endre "Venter på svar fra Bruker" eller "Venter på svar fra NAV" på bruker under oppf. reservet i KRR hvis ferdigBehandlet og ikke venter på svar', async () => {
+    test('Veileder skal ikke kunne endre "Venter på svar fra Bruker" eller "Venter på svar fra Nav" på bruker under oppf. reservet i KRR hvis ferdigBehandlet og ikke venter på svar', async () => {
         gitt.veileder().som.harDialog().som.harBrukerUnderOppfølgingMenReservertIKRR();
         const { queryByRole, getByLabelText, queryByLabelText } = render(<MemoryRouterMedBareDialogTrad />);
         expect(queryByRole('form')).toBeNull();
         await waitFor(() => getByLabelText('Meldinger'));
-        expect(queryByLabelText('Venter på svar fra NAV')).toBeDisabled();
+        expect(queryByLabelText('Venter på svar fra Nav')).toBeDisabled();
         expect(queryByLabelText('Venter på svar fra bruker')).toBeDisabled();
     });
-    test('Brukere skal ikke kunne se "Venter på svar fra Bruker" eller "Venter på svar fra NAV"', async () => {
+    test('Brukere skal ikke kunne se "Venter på svar fra Bruker" eller "Venter på svar fra Nav"', async () => {
         gitt.bruker().som.harDialog().som.harBrukerUnderOppfolging();
         const { queryByRole, getByLabelText, queryByLabelText } = render(<MemoryRouterMedBareDialogTrad />);
         expect(queryByRole('form')).toBeNull();
         await waitFor(() => getByLabelText('Meldinger'));
-        expect(queryByLabelText('Venter på svar fra NAV')).not.toBeInTheDocument();
+        expect(queryByLabelText('Venter på svar fra Nav')).not.toBeInTheDocument();
         expect(queryByLabelText('Venter på svar fra bruker')).not.toBeInTheDocument();
     });
 });

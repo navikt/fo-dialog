@@ -25,7 +25,7 @@ export function VenterSvarFraNAV(props: Props) {
     if (!props.visible) return null;
     return (
         <Tag variant="info" size="small">
-            Venter på svar fra NAV
+            Venter på svar fra Nav
         </Tag>
     );
 }

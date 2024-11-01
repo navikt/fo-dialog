@@ -32,7 +32,7 @@ describe('Dialog-liste Etiketter', () => {
         it('Skal IKKE vise venter på svar fra nav etikett', async () => {
             gitt.bruker().som.harDialogSomIkkeErFerdigBehandlet().som.harBrukerUnderOppfolging();
             const { queryByText } = await act(() => render(<MemoryRouterMedBareDialogOversikt />));
-            expect(queryByText('Venter på svar fra NAV')).not.toBeInTheDocument();
+            expect(queryByText('Venter på svar fra Nav')).not.toBeInTheDocument();
         });
     });
 
@@ -45,7 +45,7 @@ describe('Dialog-liste Etiketter', () => {
         it('Skal IKKE vise venter på svar fra nav etikett', async () => {
             gitt.bruker().som.harDialogSomIkkeErFerdigBehandlet().som.harBrukerUnderOppfolging();
             const { queryByText } = await act(() => render(<MemoryRouterMedBareDialogOversikt />));
-            expect(queryByText('Venter på svar fra NAV')).not.toBeInTheDocument();
+            expect(queryByText('Venter på svar fra Nav')).not.toBeInTheDocument();
         });
     });
 });

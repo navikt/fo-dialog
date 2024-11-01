@@ -41,8 +41,8 @@ export function InfoOmDialogSide() {
                         Hvem skriver jeg til?{' '}
                     </Heading>
                     <BodyLong>
-                        Du skriver til veilederen din på ditt NAV-kontor. Du kan også få svar fra andre kollegaer på
-                        NAV-kontoret hvis veilederen din er syk eller på ferie.
+                        Du skriver til veilederen din på ditt Nav-kontor. Du kan også få svar fra andre kollegaer på
+                        Nav-kontoret hvis veilederen din er syk eller på ferie.
                     </BodyLong>
                 </div>
 
@@ -58,12 +58,12 @@ export function InfoOmDialogSide() {
                     <ul className="mt-4 list-disc pl-8">
                         <li>
                             <BodyShort>
-                                kontakte NAV i tjenesten{' '}
+                                kontakte Nav i tjenesten{' '}
                                 <Link href="https://www.nav.no/person/kontakt-oss/skriv-til-oss">«Skriv til oss»</Link>
                             </BodyShort>
                         </li>
                         <li>
-                            <BodyShort>ringe NAV på 55 55 33 33</BodyShort>
+                            <BodyShort>ringe Nav på 55 55 33 33</BodyShort>
                         </li>
                         <li>
                             <BodyShort>
