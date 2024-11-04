@@ -12,7 +12,7 @@ export const NyDialogHeader = () => {
             headerRef.current.focus();
             console.log('Fokusert på header');
         }
-    }, [headerRef.current]); // eslint-disable-line react-hooks/exhaustive-deps
+    }, [headerRef.current, ]); // eslint-disable-line react-hooks/exhaustive-deps
     return (
         <div>
             <div className="flex items-center gap-x-4 border-b border-border-divider bg-white p-1.5 pl-4">

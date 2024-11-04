@@ -186,7 +186,7 @@ const NyDialogForm = (props: Props) => {
                     label="Tema (obligatorisk)"
                     description="Skriv kort hva dialogen skal handle om"
                     disabled={!!aktivitetId || !kansendeMelding}
-                    autoFocus={autoFocusTema}
+                    //autoFocus={autoFocusTema}
                     {...register('tema')}
                     error={errors.tema && errors.tema.message}
                 />
@@ -196,7 +196,7 @@ const NyDialogForm = (props: Props) => {
                     maxLength={5000}
                     {...register('melding')}
                     error={errors.melding && errors.melding.message}
-                    autoFocus={!autoFocusTema}
+                    //autoFocus={!autoFocusTema}
                     onFocus={onfocusMeldingInput}
                 />
 
