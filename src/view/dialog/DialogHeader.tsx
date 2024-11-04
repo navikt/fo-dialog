@@ -27,14 +27,13 @@ export function DialogHeader() {
 
    //let  sistHandlingsType  = useLocation().state?.sistHandlingsType;
 
-
     useEffect(() => {
-        console.log('Fokusert på 333333', HandlingsType);
-        if (headerRef.current && dialog?.overskrift){
+        console.log( headerRef.current || 'test1');
+        if (headerRef.current && dialog?.overskrift && HandlingsType) {
             headerRef.current.focus();
-            console.log('Fokusert på header');
+            console.log( headerRef.current || 'test2');
         }
-    }, [headerRef.current,dialog?.overskrift]); // eslint-disable-line react-hooks/exhaustive-deps
+    },[headerRef.current, dialog?.overskrift]); // eslint-disable-line react-hooks/exhaustive-deps
 
     return (
         <Suspense fallback={<HeaderFallback />}>

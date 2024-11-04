@@ -27,10 +27,10 @@ export function DialogMedAktivitetHeader() {
     //let  sistHandlingsType  = useLocation().state?.sistHandlingsType;
 
     useEffect(() => {
-        console.log('Fokusert på 11111',HandlingsType);
-        if (headerRef.current && aktivitet?.tittel) {
+        console.log( headerRef.current || 'test3');
+        if (headerRef.current && aktivitet?.tittel && HandlingsType) {
             headerRef.current.focus();
-            console.log('Fokusert på header');
+            console.log( headerRef.current || 'test4');
         }
     },[headerRef.current, aktivitet?.tittel]); // eslint-disable-line react-hooks/exhaustive-deps
 
