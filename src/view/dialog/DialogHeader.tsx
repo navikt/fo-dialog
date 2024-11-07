@@ -1,14 +1,14 @@
 import { Heading, Skeleton } from '@navikt/ds-react';
-import React, { Suspense, useEffect, useMemo, useRef } from 'react';
+import React, { Suspense, useMemo, useRef } from 'react';
 import { Await, useMatches } from 'react-router';
 import { DialogMedAktivitetHeader } from '../aktivitet/DialogMedAktivitetHeader';
 import { harAktivitetDataFeil, useAktivitetContext } from '../AktivitetProvider';
-import { useSelectedDialog } from '../utils/useAktivitetId';
+import { useSelectedAktivitet, useSelectedDialog } from '../utils/useAktivitetId';
 import { erArenaAktivitet } from '../utils/utils';
 import { TilbakeKnapp } from './TilbakeKnapp';
 import { useRootLoaderData } from '../../routing/loaders';
 import { RouteIds } from '../../routing/routes';
-import { HandlingsType } from '../ViewState';
+import { DialogTittel } from './DialogTittel';
 
 export function DialogHeader() {
     const dialog = useSelectedDialog();
@@ -17,39 +17,32 @@ export function DialogHeader() {
     const aktivitetData = useAktivitetContext();
     const erFeil = harAktivitetDataFeil(aktivitetData, erArenaAktivitet(aktivitetId));
     const viseAktivitet = !!aktivitetId && !erFeil;
+    const aktivitet = useSelectedAktivitet();
 
     const loaderData = useRootLoaderData();
     const requiredData = useMemo(() => {
         return Promise.all([loaderData.aktiviteter, loaderData.arenaAktiviteter, loaderData.dialoger]);
     }, []);
 
-   const headerRef = useRef<HTMLHeadingElement>(null);
-
-   //let  sistHandlingsType  = useLocation().state?.sistHandlingsType;
-
-    useEffect(() => {
-        console.log( headerRef.current || 'test1');
-        if (headerRef.current && dialog?.overskrift && HandlingsType) {
-            headerRef.current.focus();
-            console.log( headerRef.current || 'test2');
-        }
-    },[headerRef.current, dialog?.overskrift]); // eslint-disable-line react-hooks/exhaustive-deps
+    const dialogTittel=
+        viseAktivitet ? aktivitet ? aktivitet.tittel : ""
+            : dialog ? dialog.overskrift : "" ;
 
     return (
+        <Suspense fallback={<HeaderFallback />}>
+            <Await resolve={requiredData}>
                 <div className="flex flex-col gap-x-4 border-b border-border-divider bg-white py-1">
                     <section aria-label="Dialog header">
-                        {viseAktivitet ? (
-                            <DialogMedAktivitetHeader />
-                        ) : (
                             <div className="flex flex-row gap-x-2 pl-4">
                                 <TilbakeKnapp className="md:hidden" />
-                                <Heading ref={headerRef}  id="mt_main_heading" level="1" size="small" tabIndex={-1}>
-                                    {dialog?.overskrift}
-                                </Heading>
+                                <DialogTittel tittel={dialogTittel} />
+                                {viseAktivitet &&
+                                <DialogMedAktivitetHeader />}
                             </div>
-                        )}
                     </section>
                 </div>
+            </Await>
+        </Suspense>
     );
 }
 
