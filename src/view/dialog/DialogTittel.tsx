@@ -9,11 +9,9 @@ interface Props {
 
 export const DialogTittel: FunctionComponent<Props> = ({ tittel, ariaLabel }) => {
     const headerRef = useRef<HTMLHeadingElement>(null);
-    console.log("dialogtittel 123")
     const { state } = useLocation();
 
     useEffect(() => {
-        console.log("dialogtittel 123 useEffect")
     if (headerRef.current && state && state.fokuspaHedear) {
         headerRef.current.focus();
         const newState = { ...state, fokuspaHedear: false };

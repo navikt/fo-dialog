@@ -9,7 +9,6 @@ export const NyDialogHeader = () => {
     useEffect(() => {
         if (headerRef.current) {
             headerRef.current.focus();
-            console.log('Fokusert på header');
         }
     }, [headerRef.current, ]); // eslint-disable-line react-hooks/exhaustive-deps
     return (
