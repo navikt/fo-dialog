@@ -9,7 +9,7 @@ interface Props {
 
 export const DialogTittel: FunctionComponent<Props> = ({ tittel, ariaLabel }) => {
     const headerRef = useRef<HTMLHeadingElement>(null);
-
+    console.log("dialogtittel 123")
     const { state } = useLocation();
 
     if (headerRef.current && state && state.fokuspaHedear) {
