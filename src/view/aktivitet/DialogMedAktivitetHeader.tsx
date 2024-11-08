@@ -1,6 +1,6 @@
 import { BodyShort, Link, Switch } from '@navikt/ds-react';
 import classNames from 'classnames';
-import React, { } from 'react';
+import React from 'react';
 import { loggKlikkVisAktivitet } from '../../metrics/amplitude-utils';
 import { Aktivitet, AktivitetTypes, ArenaAktivitet, ArenaAktivitetTypes } from '../../utils/aktivitetTypes';
 import { formaterDate, getKlokkeslett } from '../../utils/Date';

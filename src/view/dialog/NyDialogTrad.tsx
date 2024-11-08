@@ -43,10 +43,9 @@ export const DialogFormFallback = () => {
     return (
         <div className="relative h-full w-full overflow-scroll bg-gray-100 lg:max-w-lgContainer xl:max-w-none">
             <div className="space-y-8 p-8 xl:w-full xl:max-w-max-paragraph">
-                        <GuidePanel poster={!bigScreen}>
-                            Her kan du skrive til din veileder om arbeid og oppfølging. Du vil få svar i løpet av noen
-                            dager.
-                        </GuidePanel>
+                <GuidePanel poster={!bigScreen}>
+                    Her kan du skrive til din veileder om arbeid og oppfølging. Du vil få svar i løpet av noen dager.
+                </GuidePanel>
                 <TextField
                     label="Tema (obligatorisk)"
                     description="Skriv kort hva dialogen skal handle om"

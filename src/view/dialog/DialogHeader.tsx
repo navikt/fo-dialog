@@ -24,21 +24,21 @@ export function DialogHeader() {
         return Promise.all([loaderData.aktiviteter, loaderData.arenaAktiviteter, loaderData.dialoger]);
     }, []);
 
-    const dialogTittel=
-        viseAktivitet ? aktivitet ? aktivitet.tittel : ""
-            : dialog ? dialog.overskrift : "" ;
+    const dialogTittel = viseAktivitet ? (aktivitet ? aktivitet.tittel : '') : dialog ? dialog.overskrift : '';
 
     return (
         <Suspense fallback={<HeaderFallback />}>
             <Await resolve={requiredData}>
                 <div className="flex flex-col gap-x-4 border-b border-border-divider bg-white py-1">
                     <section aria-label="Dialog header">
-                                {viseAktivitet ?
-                                    <DialogMedAktivitetHeader />
-                                : <div className="flex flex-row gap-x-2 pl-4">
-                                        <TilbakeKnapp className="md:hidden" />
-                                        <DialogTittel tittel={dialogTittel} />
-                                 </div>}
+                        {viseAktivitet ? (
+                            <DialogMedAktivitetHeader />
+                        ) : (
+                            <div className="flex flex-row gap-x-2 pl-4">
+                                <TilbakeKnapp className="md:hidden" />
+                                <DialogTittel tittel={dialogTittel} />
+                            </div>
+                        )}
                     </section>
                 </div>
             </Await>

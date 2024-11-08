@@ -3,14 +3,13 @@ import { Heading } from '@navikt/ds-react';
 import React, { useEffect, useRef } from 'react';
 
 export const NyDialogHeader = () => {
-
     const headerRef = useRef<HTMLHeadingElement>(null);
 
     useEffect(() => {
         if (headerRef.current) {
             headerRef.current.focus();
         }
-    }, [headerRef.current, ]); // eslint-disable-line react-hooks/exhaustive-deps
+    }, [headerRef.current]); // eslint-disable-line react-hooks/exhaustive-deps
     return (
         <div>
             <div className="flex items-center gap-x-4 border-b border-border-divider bg-white p-1.5 pl-4">

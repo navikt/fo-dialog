@@ -12,11 +12,11 @@ export const DialogTittel: FunctionComponent<Props> = ({ tittel, ariaLabel }) =>
     const { state } = useLocation();
 
     useEffect(() => {
-    if (headerRef.current && state && state.fokuspaHedear) {
-        headerRef.current.focus();
-        const newState = { ...state, fokuspaHedear: false };
-        window.history.replaceState(newState, document.title, window.location.href);
-    }
+        if (headerRef.current && state && state.fokuspaHedear) {
+            headerRef.current.focus();
+            const newState = { ...state, fokuspaHedear: false };
+            window.history.replaceState(newState, document.title, window.location.href);
+        }
     }, [state]);
 
     if (!tittel) {
@@ -24,7 +24,14 @@ export const DialogTittel: FunctionComponent<Props> = ({ tittel, ariaLabel }) =>
     }
 
     return (
-        <Heading ref={headerRef} id="mt_main_heading" aria-label={ariaLabel ? ariaLabel : tittel} level="1" size="small" tabIndex={-1}>
+        <Heading
+            ref={headerRef}
+            id="mt_main_heading"
+            aria-label={ariaLabel ? ariaLabel : tittel}
+            level="1"
+            size="small"
+            tabIndex={-1}
+        >
             {tittel}
         </Heading>
     );
