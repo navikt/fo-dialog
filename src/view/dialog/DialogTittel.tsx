@@ -4,9 +4,10 @@ import { useLocation } from 'react-router-dom';
 
 interface Props {
     tittel: string | null;
+    ariaLabel?: string;
 }
 
-export const DialogTittel: FunctionComponent<Props> = ({ tittel }) => {
+export const DialogTittel: FunctionComponent<Props> = ({ tittel, ariaLabel }) => {
     const headerRef = useRef<HTMLHeadingElement>(null);
 
     const { state } = useLocation();
@@ -21,7 +22,7 @@ export const DialogTittel: FunctionComponent<Props> = ({ tittel }) => {
     }
 
     return (
-        <Heading ref={headerRef} id="mt_main_heading" aria-label={tittel} level="1" size="small" tabIndex={-1}>
+        <Heading ref={headerRef} id="mt_main_heading" aria-label={ariaLabel ? ariaLabel : tittel} level="1" size="small" tabIndex={-1}>
             {tittel}
         </Heading>
     );

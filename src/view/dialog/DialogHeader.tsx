@@ -1,5 +1,5 @@
 import { Heading, Skeleton } from '@navikt/ds-react';
-import React, { Suspense, useMemo, useRef } from 'react';
+import React, { Suspense, useMemo } from 'react';
 import { Await, useMatches } from 'react-router';
 import { DialogMedAktivitetHeader } from '../aktivitet/DialogMedAktivitetHeader';
 import { harAktivitetDataFeil, useAktivitetContext } from '../AktivitetProvider';
@@ -33,12 +33,12 @@ export function DialogHeader() {
             <Await resolve={requiredData}>
                 <div className="flex flex-col gap-x-4 border-b border-border-divider bg-white py-1">
                     <section aria-label="Dialog header">
-                            <div className="flex flex-row gap-x-2 pl-4">
-                                <TilbakeKnapp className="md:hidden" />
-                                <DialogTittel tittel={dialogTittel} />
-                                {viseAktivitet &&
-                                <DialogMedAktivitetHeader />}
-                            </div>
+                                {viseAktivitet ?
+                                    <DialogMedAktivitetHeader />
+                                : <div className="flex flex-row gap-x-2 pl-4">
+                                        <TilbakeKnapp className="md:hidden" />
+                                        <DialogTittel tittel={dialogTittel} />
+                                 </div>}
                     </section>
                 </div>
             </Await>

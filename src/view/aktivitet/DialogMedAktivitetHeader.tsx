@@ -8,6 +8,9 @@ import { useVisAktivitetContext } from '../AktivitetToggleContext';
 import { useErVeileder } from '../Provider';
 import { useSelectedAktivitet } from '../utils/useAktivitetId';
 import { aktivitetLenke, visAktivitetsplan } from './AktivitetskortLenke';
+import { TilbakeKnapp } from '../dialog/TilbakeKnapp';
+import { getTypeTextByAktivitet } from './TextUtils';
+import { DialogTittel } from '../dialog/DialogTittel';
 
 const noOp = () => {};
 
@@ -21,11 +24,16 @@ export function DialogMedAktivitetHeader() {
         return null;
     }
     const infotekst = getInfoText(aktivitet);
+    const typeTekst = getTypeTextByAktivitet(aktivitet);
 
     return (
         <div className="flex w-full md:flex-row flex-row items-center align-text-">
             <div className="flex flex-1 flex-row items-center gap-x-2 lg:max-w-lgContainer xl:max-w-none">
-                {infotekst && <BodyShort className="text-text-subtle">{infotekst}</BodyShort>}
+                <TilbakeKnapp className="md:hidden" />
+                <div className="md:ml-4 flex items-baseline gap-2">
+                    <DialogTittel tittel={aktivitet.tittel} ariaLabel={`${typeTekst}: ${aktivitet?.tittel}`} />
+                    {infotekst && <BodyShort className="text-text-subtle">{infotekst}</BodyShort>}
+                </div>
             </div>
             <div
                 className={classNames('2xl:mr-4 2xl:flex-none', {
