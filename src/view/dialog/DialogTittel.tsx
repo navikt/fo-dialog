@@ -3,7 +3,7 @@ import React, { FunctionComponent, useEffect, useRef } from 'react';
 import { useLocation } from 'react-router-dom';
 
 interface Props {
-    tittel: string | null;
+    tittel: string | null | undefined;
     ariaLabel?: string;
 }
 

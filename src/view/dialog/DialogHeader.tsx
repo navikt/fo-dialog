@@ -3,7 +3,7 @@ import React, { Suspense, useMemo } from 'react';
 import { Await, useMatches } from 'react-router';
 import { DialogMedAktivitetHeader } from '../aktivitet/DialogMedAktivitetHeader';
 import { harAktivitetDataFeil, useAktivitetContext } from '../AktivitetProvider';
-import { useSelectedAktivitet, useSelectedDialog } from '../utils/useAktivitetId';
+import { useSelectedDialog } from '../utils/useAktivitetId';
 import { erArenaAktivitet } from '../utils/utils';
 import { TilbakeKnapp } from './TilbakeKnapp';
 import { useRootLoaderData } from '../../routing/loaders';
@@ -17,14 +17,12 @@ export function DialogHeader() {
     const aktivitetData = useAktivitetContext();
     const erFeil = harAktivitetDataFeil(aktivitetData, erArenaAktivitet(aktivitetId));
     const viseAktivitet = !!aktivitetId && !erFeil;
-    const aktivitet = useSelectedAktivitet();
 
     const loaderData = useRootLoaderData();
     const requiredData = useMemo(() => {
         return Promise.all([loaderData.aktiviteter, loaderData.arenaAktiviteter, loaderData.dialoger]);
     }, []);
 
-    const dialogTittel = viseAktivitet ? (aktivitet ? aktivitet.tittel : '') : dialog ? dialog.overskrift : '';
 
     return (
         <Suspense fallback={<HeaderFallback />}>
@@ -36,7 +34,7 @@ export function DialogHeader() {
                         ) : (
                             <div className="flex flex-row gap-x-2 pl-4">
                                 <TilbakeKnapp className="md:hidden" />
-                                <DialogTittel tittel={dialogTittel} />
+                                <DialogTittel tittel={dialog?.overskrift} />
                             </div>
                         )}
                     </section>
