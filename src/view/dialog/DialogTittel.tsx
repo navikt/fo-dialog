@@ -1,5 +1,5 @@
 import { Heading } from '@navikt/ds-react';
-import React, { FunctionComponent, useRef } from 'react';
+import React, { FunctionComponent, useEffect, useRef } from 'react';
 import { useLocation } from 'react-router-dom';
 
 interface Props {
@@ -12,11 +12,13 @@ export const DialogTittel: FunctionComponent<Props> = ({ tittel, ariaLabel }) =>
     console.log("dialogtittel 123")
     const { state } = useLocation();
 
+    useEffect(() => {
     if (headerRef.current && state && state.fokuspaHedear) {
         headerRef.current.focus();
         //const newState = { ...state, fokuspaHedear: false };
         //window.history.replaceState(newState, document.title, window.location.href);
     }
+    }, []);
     if (!tittel) {
         return null;
     }
