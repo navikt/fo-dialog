@@ -196,7 +196,7 @@ const NyDialogForm = (props: Props) => {
                     maxLength={5000}
                     {...register('melding')}
                     error={errors.melding && errors.melding.message}
-                    //autoFocus={!autoFocusTema}
+                    autoFocus={!autoFocusTema}
                     onFocus={onfocusMeldingInput}
                 />
 
