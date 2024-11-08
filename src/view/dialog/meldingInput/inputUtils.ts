@@ -69,7 +69,7 @@ export const useFocusBeforeHilsen = (textAreaRef: MutableRefObject<HTMLTextAreaE
         if (!fnr) return;
         if (isDirty) return; // Wait until form is actually reset
         const bigScreen = window?.matchMedia(`(min-width: 900px)`)?.matches || false;
-        const shouldAutoFocus = bigScreen && viewState.sistHandlingsType !== HandlingsType.nyDialog;
+        // const shouldAutoFocus = bigScreen && viewState.sistHandlingsType !== HandlingsType.nyDialog;
         // if (shouldAutoFocus) {
         //     if (!textAreaRef.current) return;
         //     const initialText = textAreaRef.current?.value;
