@@ -16,8 +16,8 @@ export const DialogTittel: FunctionComponent<Props> = ({ tittel, ariaLabel }) =>
         console.log("dialogtittel 123 useEffect")
     if (headerRef.current && state && state.fokuspaHedear) {
         headerRef.current.focus();
-        //const newState = { ...state, fokuspaHedear: false };
-        //window.history.replaceState(newState, document.title, window.location.href);
+        const newState = { ...state, fokuspaHedear: false };
+        window.history.replaceState(newState, document.title, window.location.href);
     }
     }, [state]);
 
