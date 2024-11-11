@@ -86,7 +86,7 @@ function DialogPreview(props: Props) {
     const { dialogRoute } = useRoutes();
     const onGoTo = (event: React.MouseEvent<HTMLElement>) => {
         event.preventDefault();
-        navigate(dialogRoute(id), { state: { sistHandlingsType: HandlingsType.ingen, fokuspaHedear: true } });
+        navigate(dialogRoute(id), { state: { sistHandlingsType: HandlingsType.ingen } });
     };
 
     return (

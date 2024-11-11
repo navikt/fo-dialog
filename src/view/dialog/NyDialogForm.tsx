@@ -92,7 +92,6 @@ const NyDialogForm = (props: Props) => {
         };
     }, []);
 
-    //const erVeileder = useErVeileder();
 
     const setOppdaterKladdCallbackValues = ({
         tema,
@@ -131,17 +130,6 @@ const NyDialogForm = (props: Props) => {
         }
     }, [melding, tema, dirtyFields]);
 
-    // useEffect(() => {
-    //     if (!autoFocusTema) {
-    //         const textarea = document.querySelector('textarea[name="melding"]') as HTMLTextAreaElement;
-    //         if (textarea) {
-    //             textarea.focus();
-    //             textarea.selectionStart = 0;
-    //             textarea.selectionEnd = 0;
-    //         }
-    //     }
-    // }, []);
-
     const onSubmit = async (data: NyDialogFormValues) => {
         const { tema, melding } = data;
 
@@ -158,13 +146,6 @@ const NyDialogForm = (props: Props) => {
     };
 
     const bigScreen = window.innerWidth >= 768;
-
-    // const onfocusMeldingInput: FocusEventHandler<HTMLTextAreaElement> = (event) => {
-    //     if (!erVeileder) return;
-    //     if (melding !== startTekst) return;
-    //     event.target.selectionStart = 0;
-    //     event.target.selectionEnd = 0;
-    // };
 
     return (
         <div className="relative h-full w-full overflow-scroll bg-gray-100 lg:max-w-lgContainer xl:max-w-none">
@@ -186,7 +167,6 @@ const NyDialogForm = (props: Props) => {
                     label="Tema (obligatorisk)"
                     description="Skriv kort hva dialogen skal handle om"
                     disabled={!!aktivitetId || !kansendeMelding}
-                    //autoFocus={autoFocusTema}
                     {...register('tema')}
                     error={errors.tema && errors.tema.message}
                 />
@@ -196,8 +176,6 @@ const NyDialogForm = (props: Props) => {
                     maxLength={5000}
                     {...register('melding')}
                     error={errors.melding && errors.melding.message}
-                    //autoFocus={!autoFocusTema}
-                    //onFocus={onfocusMeldingInput}
                 />
 
                 {noeFeilet ? (
