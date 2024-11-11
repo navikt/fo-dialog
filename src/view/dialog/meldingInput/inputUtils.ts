@@ -52,29 +52,4 @@ export const useFocusBeforeHilsen = (textAreaRef: MutableRefObject<HTMLTextAreaE
         textAreaRef.current?.addEventListener('blur', setHasFocusFalse);
         textAreaRef.current?.addEventListener('focus', setHasFocusTrue);
     }, [textAreaRef.current]);
-
-    // const fnr = useFnrContext();
-    // const viewState = useViewContext();
-    // const startTekst = useMeldingStartTekst();
-    // const {
-    //     formState: { defaultValues, isDirty }
-    // } = useFormContext<MeldingFormValues>();
-
-    // useEffect(() => {
-    //     if (!fnr) return;
-    //     if (isDirty) return; // Wait until form is actually reset
-    //     const bigScreen = window?.matchMedia(`(min-width: 900px)`)?.matches || false;
-    //     const shouldAutoFocus = bigScreen && viewState.sistHandlingsType !== HandlingsType.nyDialog;
-    //     if (shouldAutoFocus) {
-    //         if (!textAreaRef.current) return;
-    //         const initialText = textAreaRef.current?.value;
-    //         if (!initialText || !initialText.endsWith(startTekst)) return;
-    //         const start = initialText.length - startTekst.length;
-    //         textAreaRef.current.selectionStart = start;
-    //         textAreaRef.current.selectionEnd = start;
-    //         // if (hasFocus?.current) return;
-    //         // textAreaRef.current?.focus();
-    //         // hasFocus.current = true;
-    //     }
-    // }, [defaultValues?.melding, isDirty, hasFocus]);
 };

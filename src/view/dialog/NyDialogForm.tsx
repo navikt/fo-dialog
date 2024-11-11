@@ -43,7 +43,6 @@ const NyDialogForm = (props: Props) => {
     );
 
     const kladd = findKladd(kladder, null, aktivitetId);
-    //const autoFocusTema = !aktivitetId;
 
     const defaultValues: NyDialogFormValues = {
         tema: kladd?.overskrift ?? cutStringAtLength(defaultTema, 100, '...'),
