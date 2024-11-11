@@ -192,7 +192,7 @@ const NyDialogForm = (props: Props) => {
                 />
                 <Textarea
                     label="Melding (obligatorisk)"
-                    description="Skriv om arbeid og oppfølging"
+                    description="Skriv om arbeid og"
                     maxLength={5000}
                     {...register('melding')}
                     error={errors.melding && errors.melding.message}
