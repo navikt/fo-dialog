@@ -23,7 +23,6 @@ export function DialogHeader() {
         return Promise.all([loaderData.aktiviteter, loaderData.arenaAktiviteter, loaderData.dialoger]);
     }, []);
 
-
     return (
         <Suspense fallback={<HeaderFallback />}>
             <Await resolve={requiredData}>

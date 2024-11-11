@@ -1,6 +1,6 @@
 import { zodResolver } from '@hookform/resolvers/zod';
 import { Alert, Button, GuidePanel, TextField, Textarea, BodyShort } from '@navikt/ds-react';
-import React, {  useEffect, useRef } from 'react';
+import React, { useEffect, useRef } from 'react';
 import { useForm } from 'react-hook-form';
 import { redirect, useNavigate } from 'react-router';
 import { z } from 'zod';
@@ -90,7 +90,6 @@ const NyDialogForm = (props: Props) => {
             timer.current && callback.current && callback.current();
         };
     }, []);
-
 
     const setOppdaterKladdCallbackValues = ({
         tema,
