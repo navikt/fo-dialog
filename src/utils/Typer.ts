@@ -17,7 +17,7 @@ export interface DialogData {
     aktivitetId: StringOrNull;
     overskrift: StringOrNull;
     sisteTekst: StringOrNull;
-    sisteDato: StringOrNull;
+    sisteDato: string;
     opprettetDato: StringOrNull;
     historisk: boolean;
     lest: boolean;

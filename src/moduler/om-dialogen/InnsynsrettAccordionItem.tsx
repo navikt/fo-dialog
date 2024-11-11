@@ -20,7 +20,7 @@ export const InnsynsrettAccordionItem = () => {
                     Er du under 18 år?
                 </Heading>
                 <BodyShort className="pb-4">
-                    Når du er under 18 år så har dine foresatte rett til å be om å få se alt du skriver i NAV sine
+                    Når du er under 18 år så har dine foresatte rett til å be om å få se alt du skriver i Nav sine
                     tjenester. Derfor bør du ikke skrive noe her som du ikke vil at foresatte dine skal lese.
                 </BodyShort>
                 <BodyShort>

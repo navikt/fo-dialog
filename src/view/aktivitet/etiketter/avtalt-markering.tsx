@@ -11,7 +11,7 @@ function AvtaltMarkering(props: Props) {
     if (hidden) return null;
     return (
         <Tag className="mr-2" variant="alt3-filled" size="small">
-            Avtalt med NAV
+            Avtalt med Nav
         </Tag>
     );
 }

@@ -200,7 +200,7 @@ export const sokeavtaleAktivitet: Aktivitet = {
     behandlingSted: null,
     behandlingType: null,
     beskrivelse:
-        'NAV forventer at du søker omtrent 20 stillinger i denne perioden. Det er viktig at du søker på de jobbene du mener du er kvalifisert for. Det er også viktig å søke på mange stillinger, det øker sjansene dine til å finne en jobb.',
+        'Nav forventer at du søker omtrent 20 stillinger i denne perioden. Det er viktig at du søker på de jobbene du mener du er kvalifisert for. Det er også viktig å søke på mange stillinger, det øker sjansene dine til å finne en jobb.',
     effekt: null,
     endretAv: null,
     endretDato: '2019-09-18T09:33:00.062+02:00',
@@ -244,7 +244,7 @@ const sokeavtaleAktivitet2: Aktivitet = {
     behandlingSted: null,
     behandlingType: null,
     beskrivelse:
-        'NAV forventer at du søker omtrent 20 stillinger i denne perioden. Det er viktig at du søker på de jobbene du mener du er kvalifisert for. Det er også viktig å søke på mange stillinger, det øker sjansene dine til å finne en jobb.',
+        'Nav forventer at du søker omtrent 20 stillinger i denne perioden. Det er viktig at du søker på de jobbene du mener du er kvalifisert for. Det er også viktig å søke på mange stillinger, det øker sjansene dine til å finne en jobb.',
     effekt: null,
     endretAv: null,
     endretDato: '2019-09-18T09:33:00.062+02:00',
@@ -327,7 +327,7 @@ export const stillingFraNav: Aktivitet = {
     endretDato: '2018-09-30T10:46:51.622+01:00',
     endretAv: 'z990207',
     historisk: false,
-    kontaktperson: 'Vidar Vidarsen,\n NAV-ansatt, 99 99 99 99,vidar.vidarsen@nav.no',
+    kontaktperson: 'Vidar Vidarsen,\n Nav-ansatt, 99 99 99 99,vidar.vidarsen@nav.no',
     endretAvType: 'NAV',
     transaksjonsType: 'OPPRETTET',
     stillingFraNavData: {
@@ -366,7 +366,7 @@ const stillingFraNav2: Aktivitet = {
     endretDato: '2020-09-30T10:46:51.622+01:00',
     endretAv: 'z990207',
     historisk: false,
-    kontaktperson: 'Vidar Vidarsen,\n NAV-ansatt, 99 99 99 99,vidar.vidarsen@nav.no',
+    kontaktperson: 'Vidar Vidarsen,\n Nav-ansatt, 99 99 99 99,vidar.vidarsen@nav.no',
     endretAvType: 'NAV',
     transaksjonsType: 'STATUS_ENDRET',
     stillingFraNavData: {

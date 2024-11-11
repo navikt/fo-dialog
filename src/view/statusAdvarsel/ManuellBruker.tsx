@@ -31,7 +31,7 @@ function Bruker() {
     return (
         <div className="flex flex-col">
             <StatusAdvarselWrapper>
-                Du har ikke digital oppfølging fra NAV. Du kan derfor ikke ha digital dialog med veileder
+                Du har ikke digital oppfølging fra Nav. Du kan derfor ikke ha digital dialog med veileder
             </StatusAdvarselWrapper>
             <Button onClick={fjernManuell} className="mt-4 self-center">
                 {' '}

@@ -33,7 +33,7 @@ export function getTypeTextByAktivitet(aktivitet: Aktivitet | ArenaAktivitet): s
 export function getTypeText(type: AlleAktivitetTypes): string {
     switch (type) {
         case AktivitetTypes.MOTE:
-            return 'Møte med NAV';
+            return 'Møte med Nav';
         case AktivitetTypes.STILLING:
             return 'Stilling';
         case AktivitetTypes.SOKEAVTALE:
@@ -47,15 +47,15 @@ export function getTypeText(type: AlleAktivitetTypes): string {
         case AktivitetTypes.IJOBB:
             return 'Jobb jeg har nå';
         case AktivitetTypes.STILLING_FRA_NAV:
-            return 'Stilling fra NAV';
+            return 'Stilling fra Nav';
         case ArenaAktivitetTypes.TILTAKSAKTIVITET:
-            return 'Tiltak gjennom NAV';
+            return 'Tiltak gjennom Nav';
         case ArenaAktivitetTypes.GRUPPEAKTIVITET:
             return 'Gruppeaktivitet';
         case ArenaAktivitetTypes.UTDANNINGSAKTIVITET:
             return 'Utdanning';
         case EksternAktivitetTypes.ARENA_TILTAK:
-            return 'Tiltak gjennom NAV';
+            return 'Tiltak gjennom Nav';
         case EksternAktivitetTypes.MIDLERTIDIG_LONNSTILSKUDD:
             return 'Avtale midlertidig lønnstilskudd';
         case EksternAktivitetTypes.VARIG_LONNSTILSKUDD:

@@ -19,7 +19,7 @@ export default function BehandlingAktivitet(props: PropTypes) {
             <InformasjonElement merkelapptekst="Behandlingstype" verdi={behandlingType} />
             <InformasjonElement merkelapptekst="Behandlingssted" verdi={behandlingSted} />
             <InformasjonElement merkelapptekst="Mål for behandlingen" verdi={effekt} />
-            <InformasjonElement merkelapptekst="Oppfølging fra NAV" verdi={behandlingOppfolging} />
+            <InformasjonElement merkelapptekst="Oppfølging fra Nav" verdi={behandlingOppfolging} />
             <InformasjonElement merkelapptekst="Beskrivelse" verdi={beskrivelse} />
         </>
     );

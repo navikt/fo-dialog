@@ -112,9 +112,9 @@ const dialoger: DialogData[] = [
     },
     {
         id: '2',
-        overskrift: 'Du har fått et varsel fra NAV',
+        overskrift: 'Du har fått et varsel fra Nav',
         sisteTekst:
-            'Det er viktig at du gjennomfører denne aktiviteten med NAV. Gjør du ikke det, kan det medføre at stønaden du mottar fra NAV bortfaller for en periode eller stanses. Hvis du ikke kan gjennomføre aktiviteten, ber vi deg ta kontakt med veilederen din så snart som mulig.',
+            'Det er viktig at du gjennomfører denne aktiviteten med Nav. Gjør du ikke det, kan det medføre at stønaden du mottar fra Nav bortfaller for en periode eller stanses. Hvis du ikke kan gjennomføre aktiviteten, ber vi deg ta kontakt med veilederen din så snart som mulig.',
         sisteDato: '2018-02-01T11:52:20.615+01:00',
         opprettetDato: '2018-02-01T11:52:20.535+01:00',
         historisk: false,
@@ -133,7 +133,7 @@ const dialoger: DialogData[] = [
                 sendt: '2018-02-01T11:52:20.615+01:00',
                 lest: true,
                 viktig: true,
-                tekst: 'Det er viktig at du gjennomfører denne aktiviteten med NAV. Gjør du ikke det, kan det medføre at stønaden du mottar fra NAV bortfaller for en periode eller stanses. Hvis du ikke kan gjennomføre aktiviteten, ber vi deg ta kontakt med veilederen din så snart som mulig.'
+                tekst: 'Det er viktig at du gjennomfører denne aktiviteten med Nav. Gjør du ikke det, kan det medføre at stønaden du mottar fra Nav bortfaller for en periode eller stanses. Hvis du ikke kan gjennomføre aktiviteten, ber vi deg ta kontakt med veilederen din så snart som mulig.'
             }
         ],
         egenskaper: ['ESKALERINGSVARSEL']
@@ -143,7 +143,7 @@ const dialoger: DialogData[] = [
         overskrift: 'Automatiske dialoger',
         sisteTekst:
             'Hei!\n' +
-            'Du er registrert som arbeidssøker og NAV trenger å bli kjent med ditt behov for hjelp fra oss, slik at vi kan gi deg riktig veiledning.\n' +
+            'Du er registrert som arbeidssøker og Nav trenger å bli kjent med ditt behov for hjelp fra oss, slik at vi kan gi deg riktig veiledning.\n' +
             'Hva mener du? Klik her og vurder hva du selv tenker https://behovsvurdering.nav.no\n',
         sisteDato: '2018-01-28T12:48:56.097+01:00',
         opprettetDato: '2018-02-27T12:48:56.081+01:00',
@@ -165,7 +165,7 @@ const dialoger: DialogData[] = [
                 viktig: false,
                 tekst:
                     'Hei!\n' +
-                    'Du er registrert som arbeidssøker og NAV trenger å bli kjent med ditt behov for hjelp fra oss, slik at vi kan gi deg riktig veiledning.\n' +
+                    'Du er registrert som arbeidssøker og Nav trenger å bli kjent med ditt behov for hjelp fra oss, slik at vi kan gi deg riktig veiledning.\n' +
                     'Hva mener du? Klik her og vurder hva du selv tenker https://behovsvurdering.nav.no\n'
             },
             {
@@ -180,7 +180,7 @@ const dialoger: DialogData[] = [
                     'Hei!\n' +
                     'Du har svart at du har utfordringer som hindrer deg i å søke eller være i jobb. Vi vil veilede deg videre og trenger derfor å vite litt mer.\n' +
                     'Du kan velge om du vil fortelle om situasjonen din \n' +
-                    '- i et møte med veilederen din på NAV-kontoret\n' +
+                    '- i et møte med veilederen din på Nav-kontoret\n' +
                     '- i en telefonsamtale\n' +
                     '- her i dialogen\n' +
                     'Skriv svaret ditt i feltet under. Hvis du velger "her i dialogen", kan du fortelle mer allerede nå.\n'
@@ -197,7 +197,7 @@ const dialoger: DialogData[] = [
                     'Hei!\n' +
                     'Du har svart at du trenger mer veiledning nå som retten til sykepenger nærmer seg slutten. Vi vil veilede deg videre og trenger derfor å vite litt mer.\n' +
                     'Du kan velge om du vil fortelle om situasjonen din \n' +
-                    '- i et møte med veilederen din på NAV-kontoret\n' +
+                    '- i et møte med veilederen din på Nav-kontoret\n' +
                     '- i en telefonsamtale\n' +
                     '- her i dialogen\n' +
                     'Skriv svaret ditt i feltet under. Hvis du velger "her i dialogen", kan du fortelle mer allerede nå.\n'
@@ -214,7 +214,7 @@ const dialoger: DialogData[] = [
                     'Hei!\n' +
                     'Du har svart at du trenger mer veiledning nå som retten til sykepenger nærmer seg slutten. Vi vil veilede deg videre og trenger derfor å vite litt mer.\n' +
                     'Du kan velge om du vil fortelle om situasjonen din \n' +
-                    '- i et møte med veilederen din på NAV-kontoret\n' +
+                    '- i et møte med veilederen din på Nav-kontoret\n' +
                     '- i en telefonsamtale\n' +
                     '- her i dialogen\n' +
                     'Skriv svaret ditt i feltet under. Hvis du velger "her i dialogen", kan du fortelle mer allerede nå.\n'
@@ -231,7 +231,7 @@ const dialoger: DialogData[] = [
                     'Hei!\n' +
                     'Du har svart at du trenger mer veiledning nå som retten til sykepenger nærmer seg slutten. Vi vil veilede deg videre og trenger derfor å vite litt mer.\n' +
                     'Du kan velge om du vil fortelle om situasjonen din \n' +
-                    '- i et møte med veilederen din på NAV-kontoret\n' +
+                    '- i et møte med veilederen din på Nav-kontoret\n' +
                     '- i en telefonsamtale\n' +
                     '- her i dialogen\n' +
                     'Skriv svaret ditt i feltet under. Hvis du velger "her i dialogen", kan du fortelle mer allerede nå.\n'
@@ -248,7 +248,7 @@ const dialoger: DialogData[] = [
                     'Hei!\n' +
                     'Du har svart at du trenger mer veiledning nå som retten til sykepenger nærmer seg slutten. Vi vil veilede deg videre og trenger derfor å vite litt mer.\n' +
                     'Du kan velge om du vil fortelle om situasjonen din \n' +
-                    '- i et møte med veilederen din på NAV-kontoret\n' +
+                    '- i et møte med veilederen din på Nav-kontoret\n' +
                     '- i en telefonsamtale\n' +
                     '- her i dialogen\n' +
                     'Skriv svaret ditt i feltet under. Hvis du velger "her i dialogen", kan du fortelle mer allerede nå.\n'
@@ -265,7 +265,7 @@ const dialoger: DialogData[] = [
                     'Hei!\n' +
                     'Du har svart at du trenger mer veiledning nå som retten til sykepenger nærmer seg slutten. Vi vil veilede deg videre og trenger derfor å vite litt mer.\n' +
                     'Du kan velge om du vil fortelle om situasjonen din \n' +
-                    '- i et møte med veilederen din på NAV-kontoret\n' +
+                    '- i et møte med veilederen din på Nav-kontoret\n' +
                     '- i en telefonsamtale\n' +
                     '- her i dialogen\n' +
                     'Skriv svaret ditt i feltet under. Hvis du velger "her i dialogen", kan du fortelle mer allerede nå.\n'
@@ -282,7 +282,7 @@ const dialoger: DialogData[] = [
                     'Hei!\n' +
                     'Du har svart at du trenger mer veiledning nå som retten til sykepenger nærmer seg slutten. Vi vil veilede deg videre og trenger derfor å vite litt mer.\n' +
                     'Du kan velge om du vil fortelle om situasjonen din \n' +
-                    '- i et møte med veilederen din på NAV-kontoret\n' +
+                    '- i et møte med veilederen din på Nav-kontoret\n' +
                     '- i en telefonsamtale\n' +
                     '- her i dialogen\n' +
                     'Skriv svaret ditt i feltet under. Hvis du velger "her i dialogen", kan du fortelle mer allerede nå.\n'

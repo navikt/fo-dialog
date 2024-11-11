@@ -19,10 +19,10 @@ export default function IkkeUnderOppfolging(props: Props) {
 function HarPerioderBruker() {
     return (
         <StatusAdvarselWrapper>
-            Du er ikke lenger registrert hos NAV. Hvis du fortsatt skal få oppfølging fra NAV og ha dialog med veileder
+            Du er ikke lenger registrert hos Nav. Hvis du fortsatt skal få oppfølging fra Nav og ha dialog med veileder
             må du være registrert.
             <br />
-            <Link href={`${ARBEIDSSOKERREGISTRERING_URL}`}>Registrer deg hos NAV</Link>
+            <Link href={`${ARBEIDSSOKERREGISTRERING_URL}`}>Registrer deg hos Nav</Link>
         </StatusAdvarselWrapper>
     );
 }
