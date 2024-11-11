@@ -43,7 +43,7 @@ const NyDialogForm = (props: Props) => {
     );
 
     const kladd = findKladd(kladder, null, aktivitetId);
-    const autoFocusTema = !aktivitetId;
+    //const autoFocusTema = !aktivitetId;
 
     const defaultValues: NyDialogFormValues = {
         tema: kladd?.overskrift ?? cutStringAtLength(defaultTema, 100, '...'),
@@ -131,16 +131,16 @@ const NyDialogForm = (props: Props) => {
         }
     }, [melding, tema, dirtyFields]);
 
-    useEffect(() => {
-        if (!autoFocusTema) {
-            const textarea = document.querySelector('textarea[name="melding"]') as HTMLTextAreaElement;
-            if (textarea) {
-                textarea.focus();
-                textarea.selectionStart = 0;
-                textarea.selectionEnd = 0;
-            }
-        }
-    }, []);
+    // useEffect(() => {
+    //     if (!autoFocusTema) {
+    //         const textarea = document.querySelector('textarea[name="melding"]') as HTMLTextAreaElement;
+    //         if (textarea) {
+    //             textarea.focus();
+    //             textarea.selectionStart = 0;
+    //             textarea.selectionEnd = 0;
+    //         }
+    //     }
+    // }, []);
 
     const onSubmit = async (data: NyDialogFormValues) => {
         const { tema, melding } = data;
