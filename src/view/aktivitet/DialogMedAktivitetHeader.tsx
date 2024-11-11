@@ -1,17 +1,19 @@
-import { BodyShort, Heading, Link, Switch } from '@navikt/ds-react';
+import { BodyShort, Link, Switch } from '@navikt/ds-react';
 import classNames from 'classnames';
 import React from 'react';
 import { loggKlikkVisAktivitet } from '../../metrics/amplitude-utils';
 import { Aktivitet, AktivitetTypes, ArenaAktivitet, ArenaAktivitetTypes } from '../../utils/aktivitetTypes';
 import { formaterDate, getKlokkeslett } from '../../utils/Date';
 import { useVisAktivitetContext } from '../AktivitetToggleContext';
-import { TilbakeKnapp } from '../dialog/TilbakeKnapp';
-import { useErVeileder, useFnrContext } from '../Provider';
+import { useErVeileder } from '../Provider';
 import { useSelectedAktivitet } from '../utils/useAktivitetId';
 import { aktivitetLenke, visAktivitetsplan } from './AktivitetskortLenke';
+import { TilbakeKnapp } from '../dialog/TilbakeKnapp';
 import { getTypeTextByAktivitet } from './TextUtils';
+import { DialogTittel } from '../dialog/DialogTittel';
 
 const noOp = () => {};
+
 export function DialogMedAktivitetHeader() {
     const aktivitet = useSelectedAktivitet();
     const { visAktivitet, setVisAktivitet } = useVisAktivitetContext();
@@ -21,18 +23,15 @@ export function DialogMedAktivitetHeader() {
         console.log({ aktivitet });
         return null;
     }
-
-    const typeTekst = getTypeTextByAktivitet(aktivitet);
     const infotekst = getInfoText(aktivitet);
+    const typeTekst = getTypeTextByAktivitet(aktivitet);
 
     return (
-        <div className="flex w-full md:flex-row flex-row items-center">
+        <div className="flex w-full md:flex-row flex-row items-center align-text-">
             <div className="flex flex-1 flex-row items-center gap-x-2 lg:max-w-lgContainer xl:max-w-none">
                 <TilbakeKnapp className="md:hidden" />
                 <div className="md:ml-4 flex items-baseline gap-2">
-                    <Heading level="1" size="small" aria-label={`${typeTekst}: ${aktivitet?.tittel}`}>
-                        {aktivitet?.tittel}
-                    </Heading>
+                    <DialogTittel tittel={aktivitet.tittel} ariaLabel={`${typeTekst}: ${aktivitet?.tittel}`} />
                     {infotekst && <BodyShort className="text-text-subtle">{infotekst}</BodyShort>}
                 </div>
             </div>
