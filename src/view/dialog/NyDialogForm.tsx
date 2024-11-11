@@ -1,6 +1,6 @@
 import { zodResolver } from '@hookform/resolvers/zod';
 import { Alert, Button, GuidePanel, TextField, Textarea, BodyShort } from '@navikt/ds-react';
-import React, { FocusEventHandler, useEffect, useRef } from 'react';
+import React, {  useEffect, useRef } from 'react';
 import { useForm } from 'react-hook-form';
 import { redirect, useNavigate } from 'react-router';
 import { z } from 'zod';
@@ -9,7 +9,7 @@ import { useRoutes } from '../../routing/routes';
 import { findKladd } from '../KladdProvider';
 import { cutStringAtLength } from '../utils/stringUtils';
 import useMeldingStartTekst from './UseMeldingStartTekst';
-import { useErVeileder, useFnrContext } from '../Provider';
+import { useFnrContext } from '../Provider';
 import { useDialogStore } from '../dialogProvider/dialogStore';
 import { useShallow } from 'zustand/react/shallow';
 import useKansendeMelding from '../../utils/UseKanSendeMelding';
@@ -92,7 +92,7 @@ const NyDialogForm = (props: Props) => {
         };
     }, []);
 
-    const erVeileder = useErVeileder();
+    //const erVeileder = useErVeileder();
 
     const setOppdaterKladdCallbackValues = ({
         tema,
@@ -159,12 +159,12 @@ const NyDialogForm = (props: Props) => {
 
     const bigScreen = window.innerWidth >= 768;
 
-    const onfocusMeldingInput: FocusEventHandler<HTMLTextAreaElement> = (event) => {
-        if (!erVeileder) return;
-        if (melding !== startTekst) return;
-        event.target.selectionStart = 0;
-        event.target.selectionEnd = 0;
-    };
+    // const onfocusMeldingInput: FocusEventHandler<HTMLTextAreaElement> = (event) => {
+    //     if (!erVeileder) return;
+    //     if (melding !== startTekst) return;
+    //     event.target.selectionStart = 0;
+    //     event.target.selectionEnd = 0;
+    // };
 
     return (
         <div className="relative h-full w-full overflow-scroll bg-gray-100 lg:max-w-lgContainer xl:max-w-none">
@@ -197,7 +197,7 @@ const NyDialogForm = (props: Props) => {
                     {...register('melding')}
                     error={errors.melding && errors.melding.message}
                     //autoFocus={!autoFocusTema}
-                    onFocus={onfocusMeldingInput}
+                    //onFocus={onfocusMeldingInput}
                 />
 
                 {noeFeilet ? (
