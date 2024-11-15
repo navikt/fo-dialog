@@ -86,13 +86,13 @@ export const DialogTrad = () => {
                 <ValgtDialog>
                     {({ dialog, aktivitet, visAktivitet }) => (
                         <section
-                            className={classNames('flex flex-1 w-full grow overflow-y-scroll xl:max-w-none', {
+                            className={classNames('flex w-full grow xl:max-w-none', {
                                 'flex-col lg:flex-row 2xl:flex-row': aktivitet && !visAktivitet,
                                 'flex-col 2xl:flex-row': aktivitet && visAktivitet,
                                 'flex-col lg:flex-row': !aktivitet
                             })}
                         >
-                            <div className="flex grow flex-col">
+                            <div className="flex min-h-16 flex-1 grow flex-col">
                                 <Meldinger dialogData={dialog} />
                                 <HistoriskInfo />
                             </div>
