@@ -156,7 +156,10 @@ export const useDialogStore = create(
             updateDialogInDialoger: (dialog: DialogData): DialogData => {
                 set(
                     ({ dialoger }) => {
-                        const index = dialoger.findIndex((d) => d.id === dialog.id);
+                        let index = dialoger.findIndex((d) => d.id === dialog.id);
+                        if (index == -1) {
+                            index = dialoger.length + 1;
+                        }
                         const nyeDialoger = [
                             ...dialoger.slice(0, index),
                             dialog,
