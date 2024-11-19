@@ -182,7 +182,7 @@ const NyDialogForm = (props: Props) => {
                 ) : null}
 
                 <div className="flex flex-row gap-x-4">
-                    <Button size="small" loading={isSubmitting} disabled={!kansendeMelding}>
+                    <Button size="small" loading={isSubmitting} disabled={!kansendeMelding || isSubmitting}>
                         Send
                     </Button>
                     <Button
