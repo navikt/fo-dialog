@@ -38,7 +38,6 @@ export default function NyDialogTrad() {
 }
 
 export const DialogFormFallback = () => {
-    console.log('Rendering DialogFormFallback');
     const bigScreen = window.innerWidth >= 768;
     return (
         <div className="relative h-full w-full overflow-scroll bg-gray-100 lg:max-w-lgContainer xl:max-w-none">
