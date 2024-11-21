@@ -104,7 +104,7 @@ export const handlers = [
     }),
     http.post(
         '/veilarbdialog/api/dialog',
-        failOrGetResponse(harNyDialogEllerSendMeldingFeilerSkruddPa, opprettEllerOppdaterDialog, 5000)
+        failOrGetResponse(harNyDialogEllerSendMeldingFeilerSkruddPa, opprettEllerOppdaterDialog)
     ),
     http.post('/veilarbdialog/api/logger/event', () => new Response()),
     http.post(

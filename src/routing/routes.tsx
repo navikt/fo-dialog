@@ -59,7 +59,7 @@ export const dialogRoutes = (fnr: string | undefined): RouteObject[] => [
         path: '/',
         id: RouteIds.Root,
         element: <AppBody />,
-        hydrateFallbackElement: <div className="flex-1 bg-green-50"></div>,
+        hydrateFallbackElement: <div></div>,
         loader: initialPageLoader(fnr),
         shouldRevalidate: () => false,
         children: [
