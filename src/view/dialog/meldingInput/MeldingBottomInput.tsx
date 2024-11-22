@@ -80,8 +80,11 @@ export const MeldingBottomInput = () => {
         return null;
     }
     return (
-        <section aria-label="Ny melding" className="flex justify-center border-t border-border-divider p-4">
-            <div className="grow justify-self-center">
+        <section
+            aria-label="Ny melding"
+            className="flex justify-center border-t border-border-divider p-4 overflow-y-scroll"
+        >
+            <div className="grow justify-self-center ">
                 <ManagedDialogCheckboxes dialog={dialog} />
                 {!oppfolging?.underOppfolging || dialog.historisk ? null : <MeldingBottomInputInner />}
             </div>

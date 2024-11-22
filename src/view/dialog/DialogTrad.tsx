@@ -92,7 +92,7 @@ export const DialogTrad = () => {
                                 'flex-col lg:flex-row': !aktivitet
                             })}
                         >
-                            <div className="flex overflow-hidden flex-1 grow flex-col">
+                            <div className="flex min-h-16 flex-1 grow flex-col">
                                 <Meldinger dialogData={dialog} />
                                 <HistoriskInfo />
                             </div>
