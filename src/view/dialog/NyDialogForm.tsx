@@ -171,6 +171,7 @@ const NyDialogForm = (props: Props) => {
                 <Textarea
                     label="Melding (obligatorisk)"
                     description="Skriv om arbeid og oppfølging"
+                    disabled={!kansendeMelding}
                     maxLength={5000}
                     {...register('melding')}
                     error={errors.melding && errors.melding.message}
@@ -181,7 +182,7 @@ const NyDialogForm = (props: Props) => {
                 ) : null}
 
                 <div className="flex flex-row gap-x-4">
-                    <Button size="small" loading={isSubmitting}>
+                    <Button size="small" loading={isSubmitting} disabled={!kansendeMelding || isSubmitting}>
                         Send
                     </Button>
                     <Button

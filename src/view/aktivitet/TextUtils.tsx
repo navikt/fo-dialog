@@ -65,7 +65,7 @@ export function getTypeText(type: AlleAktivitetTypes): string {
         case EksternAktivitetTypes.ARBRRHDAG:
             return 'Arbeidsrettet rehabilitering';
         case EksternAktivitetTypes.DIGIOPPARB:
-            return 'Digitalt oppfølgingstiltak';
+            return 'Digitalt jobbsøkerkurs';
         case EksternAktivitetTypes.GRUPPEAMO:
             return 'Arbeidsmarkedsopplæring (Gruppe)';
         case EksternAktivitetTypes.INDOPPFAG:

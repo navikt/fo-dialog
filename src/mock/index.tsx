@@ -9,6 +9,7 @@ import { opprettDialogEtterRender } from './Dialog';
 const worker = setupWorker(...handlers);
 opprettDialogEtterRender();
 
+const ignoredFileExtensions = ['.ts', '.js', '.tsx', '.jsx', 'css', 'svg', 'png', '.less', 'woff2'];
 export default () =>
     worker
         .start({
@@ -17,8 +18,6 @@ export default () =>
             },
             onUnhandledRequest: (req, print) => {
                 const hostBlacklist = ['amplitude.nav.no', 'nav.psplugin.com'];
-                const ignoredFileExtensions = ['.ts', '.js', '.tsx', '.jsx', 'css', 'svg', 'png', '.less'];
-
                 const ignore =
                     hostBlacklist.some((route) => req.url.includes(route)) ||
                     ignoredFileExtensions.some((fileExtension) => req.url.split('?')[0].endsWith(fileExtension));
