@@ -36,10 +36,9 @@ export const DialogTrad = () => {
     useEffect(() => {
         // Hvis det navigeres til denne siden med en state (som arg i navigate) så puttes den i context
         // Hvis ikke skal sistHandlingsType være INGEN (Ikke vis send bekreftelse)
-        if (searchParams.has("nyDialog")){
+        if (searchParams.has('nyDialog')) {
             setViewState({ sistHandlingsType: HandlingsType.nyDialog });
-        }
-        else if (!navigationState?.sistHandlingsType) {
+        } else if (!navigationState?.sistHandlingsType) {
             setViewState({ sistHandlingsType: HandlingsType.ingen });
         } else if (navigationState.sistHandlingsType !== viewState.sistHandlingsType) {
             setViewState({ sistHandlingsType: navigationState.sistHandlingsType });
