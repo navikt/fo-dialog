@@ -18,6 +18,7 @@ function getTekst(handling: HandlingsType, erVeileder: boolean, overskrift: Stri
         }
         return `Meldingen om "${overskrift}" er sendt. Du får svar i løpet av noen dager.`;
     }
+    return 'error: erVeileder: ' + erVeileder + ' handling: ' + handling
 }
 
 function Melding(props: { tekst?: string; erVeileder: boolean }) {
