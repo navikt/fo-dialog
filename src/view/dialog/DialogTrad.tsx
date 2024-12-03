@@ -1,8 +1,8 @@
 import { Loader } from '@navikt/ds-react';
 import classNames from 'classnames';
-import React, { ReactNode, Suspense, useEffect, useMemo, useRef, useState } from 'react';
+import React, { ReactNode, Suspense, useEffect, useMemo, useState } from 'react';
 import { Await, useLocation } from 'react-router';
-import { Navigate } from 'react-router-dom';
+import { Navigate, useSearchParams } from 'react-router-dom';
 import { useRoutes } from '../../routing/routes';
 import { dispatchUpdate, UpdateTypes } from '../../utils/UpdateEvent';
 import { useVisAktivitet } from '../AktivitetToggleContext';
@@ -19,8 +19,8 @@ import { DialogData } from '../../utils/Typer';
 import { MaybeAktivitet } from '../AktivitetProvider';
 
 export const DialogTrad = () => {
+    const [searchParams] = useSearchParams();
     const { lesDialog } = useDialogContext();
-
     const valgtDialog = useSelectedDialog();
     const dialogId = valgtDialog?.id;
     const fnr = useFnrContext();
@@ -36,7 +36,10 @@ export const DialogTrad = () => {
     useEffect(() => {
         // Hvis det navigeres til denne siden med en state (som arg i navigate) så puttes den i context
         // Hvis ikke skal sistHandlingsType være INGEN (Ikke vis send bekreftelse)
-        if (!navigationState?.sistHandlingsType) {
+        if (searchParams.has("nyDialog")){
+            setViewState({ sistHandlingsType: HandlingsType.nyDialog });
+        }
+        else if (!navigationState?.sistHandlingsType) {
             setViewState({ sistHandlingsType: HandlingsType.ingen });
         } else if (navigationState.sistHandlingsType !== viewState.sistHandlingsType) {
             setViewState({ sistHandlingsType: navigationState.sistHandlingsType });
