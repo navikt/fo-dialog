@@ -215,7 +215,7 @@ export const nyDialogAction: (fnr: string | undefined) => ActionFunction =
                 slettKladd(null, dialog.aktivitetId);
                 dispatchUpdate(UpdateTypes.Dialog);
                 silentlyHentDialoger(fnr);
-                return redirect(`/${dialog.id}`);
+                return redirect(`/${dialog.id}?nyDialog`);
             } else {
                 return null;
             }
