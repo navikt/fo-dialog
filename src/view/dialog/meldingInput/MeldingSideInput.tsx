@@ -7,7 +7,6 @@ import { dataOrUndefined } from '../../Provider';
 import { useOppfolgingContext } from '../../OppfolgingProvider';
 import KladdLagret from './KladdLagret';
 import { useSelectedDialog } from '../../utils/useAktivitetId';
-
 const MeldingSideInputInner = () => {
     const { onSubmit, noeFeilet } = useContext(MeldingInputContext);
     const {
