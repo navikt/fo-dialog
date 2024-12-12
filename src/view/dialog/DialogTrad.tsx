@@ -17,6 +17,7 @@ import HistoriskInfo from './HistoriskInfo';
 import { useRootLoaderData } from '../../routing/loaders';
 import { DialogData } from '../../utils/Typer';
 import { MaybeAktivitet } from '../AktivitetProvider';
+import ManagedDialogCheckboxes from './DialogCheckboxes';
 
 export const DialogTrad = () => {
     const [searchParams] = useSearchParams();
@@ -97,6 +98,7 @@ export const DialogTrad = () => {
                             <div className="flex min-h-16 flex-1 grow flex-col">
                                 <Meldinger dialogData={dialog} />
                                 <HistoriskInfo />
+                                <ManagedDialogCheckboxes dialog={dialog} />
                             </div>
                             <MeldingInputBox dialog={dialog} />
                         </section>
