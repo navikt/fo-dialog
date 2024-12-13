@@ -186,6 +186,17 @@ const NyDialogForm = (props: Props) => {
                     <Alert variant="error">Noe gikk dessverre galt med systemet. Prøv igjen senere.</Alert>
                 ) : null}
 
+                <DialogCheckboxes
+                    ferdigBehandlet={true}
+                    venterPaSvar={venterPaSvarFraBruker}
+                    toggleVenterPaSvar={() => toggleVenterPaSvar()}
+                    ferdigBehandletDisabled={true}
+                    venterPaSvarDisabled={false}
+                    values={values}
+                    toggleFerdigBehandlet={()=> {}}
+                    isNyopprettet={true}
+                    loading={false}
+                />
                 <div className="flex flex-row gap-x-4">
                     <Button size="small" loading={isSubmitting} disabled={!kansendeMelding || isSubmitting}>
                         Send
@@ -201,17 +212,6 @@ const NyDialogForm = (props: Props) => {
                         Avbryt
                     </Button>
                 </div>
-                <DialogCheckboxes
-                    ferdigBehandlet={true}
-                    venterPaSvar={venterPaSvarFraBruker}
-                    toggleVenterPaSvar={() => toggleVenterPaSvar()}
-                    ferdigBehandletDisabled={true}
-                    venterPaSvarDisabled={false}
-                    values={values}
-                    toggleFerdigBehandlet={()=> {}}
-                    isNyopprettet={true}
-                    loading={false}
-                />
             </form>
         </div>
     );
