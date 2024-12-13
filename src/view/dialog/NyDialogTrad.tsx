@@ -14,7 +14,6 @@ export default function NyDialogTrad() {
     const aktivitetId: StringOrUndefined = useAktivitetId();
     const aktivitetData = useAktivitetContext();
     const aktivitet: MaybeAktivitet = findAktivitet(aktivitetData, aktivitetId);
-
     const defaultTema = getDialogTittel(aktivitet);
 
     const setViewState = useSetViewContext();

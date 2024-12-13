@@ -13,8 +13,6 @@ import { useFnrContext } from '../view/Provider';
 import { NyDialogHeader } from '../view/dialog/DialogHeader/NyDialogHeader';
 import { DialogHeader } from '../view/dialog/DialogHeader';
 import { nyDialogAction } from '../view/dialog/NyDialogForm';
-import ManagedDialogCheckboxes from '../view/dialog/DialogCheckboxes';
-
 const aktivitetQuery = (aktivitetId?: string) => (aktivitetId ? `?aktivitetId=${aktivitetId}` : '');
 
 const baseRoute = () => '/';
@@ -75,9 +73,6 @@ export const dialogRoutes = (fnr: string | undefined): RouteObject[] => [
                             <NyDialogTrad />
                             <Aktivitetskort />
                         </div>
-
-                        <ManagedDialogCheckboxes />
-
                     </>
                 )
             },

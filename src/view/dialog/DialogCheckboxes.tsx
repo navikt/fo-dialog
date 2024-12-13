@@ -1,5 +1,5 @@
 import { Checkbox, CheckboxGroup } from '@navikt/ds-react';
-import React, {  } from 'react';
+import React from 'react';
 import { Status } from '../../api/typer';
 import { notEmpty } from '../../utils/TypeHelper';
 import { useDialogContext } from '../DialogProvider';
@@ -11,7 +11,9 @@ import { DialogData } from '../../utils/Typer';
 
 interface Props {
     toggleFerdigBehandlet(ferdigBehandler: boolean): void;
+
     toggleVenterPaSvar(venterPaSvar: boolean): void;
+
     ferdigBehandlet: boolean;
     venterPaSvar: boolean;
     ferdigBehandletDisabled: boolean;
@@ -19,20 +21,19 @@ interface Props {
     values: ('ferdigBehandlet' | 'venterPaSvar')[];
     loading: boolean;
     isNyopprettet: boolean;
-
 }
 
-const DialogCheckboxes = ({
-                              values,
-                              ferdigBehandlet,
-                              toggleFerdigBehandlet,
-                              toggleVenterPaSvar,
-                              loading,
-                              venterPaSvar,
-                              venterPaSvarDisabled,
-                              ferdigBehandletDisabled,
-                              isNyopprettet
-                          }: Props) => {
+export const DialogCheckboxes = ({
+    values,
+    ferdigBehandlet,
+    toggleFerdigBehandlet,
+    toggleVenterPaSvar,
+    loading,
+    venterPaSvar,
+    venterPaSvarDisabled,
+    ferdigBehandletDisabled,
+    isNyopprettet
+}: Props) => {
     return (
         <div className="mb-2 pl-1">
             <CheckboxGroup legend={'Filter'} hideLegend value={values}>
@@ -63,26 +64,28 @@ const DialogCheckboxes = ({
     );
 };
 
-const ManagedDialogCheckboxes = ({ dialog }: { dialog? : DialogData }) => {
+export const ManagedDialogCheckboxes = ({ dialog }: { dialog: DialogData }) => {
     const visible = useUserInfoContext()?.erVeileder || false;
     const fnr = useFnrContext();
     const hentDialoger = useHentDialoger();
     const dialogContext = useDialogContext();
     const erNyopprettetDialogTrad = dialog == undefined;
 
-
     const toggleFerdigBehandlet = (ferdigBehandlet: boolean) => {
-        !erNyopprettetDialogTrad && dialogContext.setFerdigBehandlet(dialog, ferdigBehandlet).then(() => hentDialoger(fnr));
+        !erNyopprettetDialogTrad &&
+            dialogContext.setFerdigBehandlet(dialog, ferdigBehandlet).then(() => hentDialoger(fnr));
     };
     const toggleVenterPaSvar = (venterPaSvar: boolean) => {
         !erNyopprettetDialogTrad && dialogContext.setVenterPaSvar(dialog, venterPaSvar).then(() => hentDialoger(fnr));
     };
 
     const kansendeMelding = useKansendeMelding();
-    const burdeKunneSetteFerdigBehandlet = !erNyopprettetDialogTrad &&!dialog.ferdigBehandlet && !kansendeMelding;
+    const burdeKunneSetteFerdigBehandlet = !erNyopprettetDialogTrad && !dialog.ferdigBehandlet && !kansendeMelding;
     const burdeKunneFjerneVenterPaSvar = !erNyopprettetDialogTrad && dialog.venterPaSvar && !kansendeMelding;
-    const venterPaSvarDisabled = (!kansendeMelding || !erNyopprettetDialogTrad && dialog.historisk) && !burdeKunneFjerneVenterPaSvar;
-    const ferdigBehandletDisabled = (!kansendeMelding || !erNyopprettetDialogTrad && dialog.historisk) && !burdeKunneSetteFerdigBehandlet;
+    const venterPaSvarDisabled =
+        (!kansendeMelding || (!erNyopprettetDialogTrad && dialog.historisk)) && !burdeKunneFjerneVenterPaSvar;
+    const ferdigBehandletDisabled =
+        (!kansendeMelding || (!erNyopprettetDialogTrad && dialog.historisk)) && !burdeKunneSetteFerdigBehandlet;
 
     const values = [
         !erNyopprettetDialogTrad && !dialog.ferdigBehandlet ? ('ferdigBehandlet' as const) : undefined,
@@ -101,9 +104,8 @@ const ManagedDialogCheckboxes = ({ dialog }: { dialog? : DialogData }) => {
             toggleFerdigBehandlet={toggleFerdigBehandlet}
             toggleVenterPaSvar={toggleVenterPaSvar}
             ferdigBehandlet={dialog ? dialog.ferdigBehandlet : false}
-            venterPaSvar={dialog ?dialog.venterPaSvar : false}
+            venterPaSvar={dialog ? dialog.venterPaSvar : false}
             isNyopprettet={erNyopprettetDialogTrad}
         />
     );
 };
-export default ManagedDialogCheckboxes;

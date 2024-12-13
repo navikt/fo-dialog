@@ -17,7 +17,7 @@ import HistoriskInfo from './HistoriskInfo';
 import { useRootLoaderData } from '../../routing/loaders';
 import { DialogData } from '../../utils/Typer';
 import { MaybeAktivitet } from '../AktivitetProvider';
-import ManagedDialogCheckboxes from './DialogCheckboxes';
+import { ManagedDialogCheckboxes } from './DialogCheckboxes';
 
 export const DialogTrad = () => {
     const [searchParams] = useSearchParams();

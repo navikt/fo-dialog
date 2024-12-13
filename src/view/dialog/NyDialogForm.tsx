@@ -1,6 +1,6 @@
 import { zodResolver } from '@hookform/resolvers/zod';
 import { Alert, Button, GuidePanel, TextField, Textarea, BodyShort } from '@navikt/ds-react';
-import React, { useEffect, useRef } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { redirect, useNavigate } from 'react-router';
 import { z } from 'zod';
@@ -19,6 +19,8 @@ import { SubmitTarget } from 'react-router-dom/dist/dom';
 import { NyTradArgs } from '../DialogProvider';
 import { dispatchUpdate, UpdateTypes } from '../../utils/UpdateEvent';
 import { useInnsynsrett } from '../../api/useInnsynsrett';
+import { DialogCheckboxes } from './DialogCheckboxes';
+import { notEmpty } from '../../utils/TypeHelper';
 
 interface Props {
     defaultTema: string;
@@ -33,6 +35,7 @@ const NyDialogForm = (props: Props) => {
     const { baseRoute } = useRoutes();
     const startTekst = useMeldingStartTekst();
     const fnr = useFnrContext();
+    const [venterPaSvarFraBruker, setVenterPaSvarFraBruker] = useState<boolean>(false);
     const { kladder, oppdaterKladd, slettKladd, noeFeilet } = useDialogStore(
         useShallow((store) => ({
             kladder: store.kladder,
@@ -144,6 +147,8 @@ const NyDialogForm = (props: Props) => {
     };
 
     const bigScreen = window.innerWidth >= 768;
+    const values = [venterPaSvarFraBruker ? ('venterPaSvar' as const) : undefined].filter(notEmpty);
+    const toggleVenterPaSvar = () => setVenterPaSvarFraBruker(!venterPaSvarFraBruker);
 
     return (
         <div className="relative h-full w-full overflow-scroll bg-gray-100 lg:max-w-lgContainer xl:max-w-none">
@@ -196,6 +201,17 @@ const NyDialogForm = (props: Props) => {
                         Avbryt
                     </Button>
                 </div>
+                <DialogCheckboxes
+                    ferdigBehandlet={true}
+                    venterPaSvar={venterPaSvarFraBruker}
+                    toggleVenterPaSvar={() => toggleVenterPaSvar()}
+                    ferdigBehandletDisabled={true}
+                    venterPaSvarDisabled={false}
+                    values={values}
+                    toggleFerdigBehandlet={()=> {}}
+                    isNyopprettet={true}
+                    loading={false}
+                />
             </form>
         </div>
     );
