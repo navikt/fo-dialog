@@ -14,7 +14,6 @@ import { NyDialogHeader } from '../view/dialog/DialogHeader/NyDialogHeader';
 import { DialogHeader } from '../view/dialog/DialogHeader';
 import { nyDialogAction } from '../view/dialog/NyDialogForm';
 import ManagedDialogCheckboxes from '../view/dialog/DialogCheckboxes';
-import dialog from '../mock/Dialog';
 
 const aktivitetQuery = (aktivitetId?: string) => (aktivitetId ? `?aktivitetId=${aktivitetId}` : '');
 
@@ -76,7 +75,9 @@ export const dialogRoutes = (fnr: string | undefined): RouteObject[] => [
                             <NyDialogTrad />
                             <Aktivitetskort />
                         </div>
+                        {/*TODO fjern den ene check boksen, skal bare vise venter på svar fra bruker*/}
                         <ManagedDialogCheckboxes/>
+
                     </>
                 )
             },
