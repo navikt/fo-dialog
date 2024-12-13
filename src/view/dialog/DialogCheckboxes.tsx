@@ -1,11 +1,9 @@
 import { Checkbox, CheckboxGroup } from '@navikt/ds-react';
-import React, { useEffect } from 'react';
+import React, {  } from 'react';
 import { Status } from '../../api/typer';
 import { notEmpty } from '../../utils/TypeHelper';
 import { useDialogContext } from '../DialogProvider';
-import { useOppfolgingContext } from '../OppfolgingProvider';
-import { dataOrUndefined, useFnrContext } from '../Provider';
-import { useSelectedDialog } from '../utils/useAktivitetId';
+import { useFnrContext } from '../Provider';
 import { useUserInfoContext } from '../BrukerProvider';
 import { useHentDialoger } from '../dialogProvider/dialogStore';
 import useKansendeMelding from '../../utils/UseKanSendeMelding';
@@ -20,31 +18,36 @@ interface Props {
     venterPaSvarDisabled: boolean;
     values: ('ferdigBehandlet' | 'venterPaSvar')[];
     loading: boolean;
+    isNyopprettet: boolean;
+
 }
 
 const DialogCheckboxes = ({
-    values,
-    ferdigBehandlet,
-    toggleFerdigBehandlet,
-    toggleVenterPaSvar,
-    loading,
-    venterPaSvar,
-    venterPaSvarDisabled,
-    ferdigBehandletDisabled
-}: Props) => {
+                              values,
+                              ferdigBehandlet,
+                              toggleFerdigBehandlet,
+                              toggleVenterPaSvar,
+                              loading,
+                              venterPaSvar,
+                              venterPaSvarDisabled,
+                              ferdigBehandletDisabled,
+                              isNyopprettet
+                          }: Props) => {
     return (
         <div className="mb-2 pl-1">
             <CheckboxGroup legend={'Filter'} hideLegend value={values}>
                 <div className="flex">
-                    <Checkbox
-                        value={'ferdigBehandlet'}
-                        size="small"
-                        className="pr-4"
-                        disabled={ferdigBehandletDisabled || loading}
-                        onChange={() => toggleFerdigBehandlet(!ferdigBehandlet)}
-                    >
-                        Venter på svar fra Nav
-                    </Checkbox>
+                    {!isNyopprettet && (
+                        <Checkbox
+                            value={'ferdigBehandlet'}
+                            size="small"
+                            className="pr-4"
+                            disabled={ferdigBehandletDisabled || loading}
+                            onChange={() => toggleFerdigBehandlet(!ferdigBehandlet)}
+                        >
+                            Venter på svar fra Nav
+                        </Checkbox>
+                    )}
                     <Checkbox
                         value={'venterPaSvar'}
                         size="small"
@@ -60,28 +63,30 @@ const DialogCheckboxes = ({
     );
 };
 
-const ManagedDialogCheckboxes = ({ dialog }: { dialog: DialogData }) => {
+const ManagedDialogCheckboxes = ({ dialog }: { dialog? : DialogData }) => {
     const visible = useUserInfoContext()?.erVeileder || false;
     const fnr = useFnrContext();
     const hentDialoger = useHentDialoger();
     const dialogContext = useDialogContext();
+    const erNyopprettetDialogTrad = dialog == undefined;
+
 
     const toggleFerdigBehandlet = (ferdigBehandlet: boolean) => {
-        dialogContext.setFerdigBehandlet(dialog, ferdigBehandlet).then(() => hentDialoger(fnr));
+        !erNyopprettetDialogTrad && dialogContext.setFerdigBehandlet(dialog, ferdigBehandlet).then(() => hentDialoger(fnr));
     };
     const toggleVenterPaSvar = (venterPaSvar: boolean) => {
-        dialogContext.setVenterPaSvar(dialog, venterPaSvar).then(() => hentDialoger(fnr));
+        !erNyopprettetDialogTrad && dialogContext.setVenterPaSvar(dialog, venterPaSvar).then(() => hentDialoger(fnr));
     };
 
     const kansendeMelding = useKansendeMelding();
-    const burdeKunneSetteFerdigBehandlet = !dialog.ferdigBehandlet && !kansendeMelding;
-    const burdeKunneFjerneVenterPaSvar = dialog.venterPaSvar && !kansendeMelding;
-    const venterPaSvarDisabled = (!kansendeMelding || dialog.historisk) && !burdeKunneFjerneVenterPaSvar;
-    const ferdigBehandletDisabled = (!kansendeMelding || dialog.historisk) && !burdeKunneSetteFerdigBehandlet;
+    const burdeKunneSetteFerdigBehandlet = !erNyopprettetDialogTrad &&!dialog.ferdigBehandlet && !kansendeMelding;
+    const burdeKunneFjerneVenterPaSvar = !erNyopprettetDialogTrad && dialog.venterPaSvar && !kansendeMelding;
+    const venterPaSvarDisabled = (!kansendeMelding || !erNyopprettetDialogTrad && dialog.historisk) && !burdeKunneFjerneVenterPaSvar;
+    const ferdigBehandletDisabled = (!kansendeMelding || !erNyopprettetDialogTrad && dialog.historisk) && !burdeKunneSetteFerdigBehandlet;
 
     const values = [
-        !dialog.ferdigBehandlet ? ('ferdigBehandlet' as const) : undefined,
-        dialog.venterPaSvar ? ('venterPaSvar' as const) : undefined
+        !erNyopprettetDialogTrad && !dialog.ferdigBehandlet ? ('ferdigBehandlet' as const) : undefined,
+        !erNyopprettetDialogTrad && dialog.venterPaSvar ? ('venterPaSvar' as const) : undefined
     ].filter(notEmpty);
 
     const laster = dialogContext.status === Status.PENDING || dialogContext.status === Status.RELOADING;
@@ -95,10 +100,10 @@ const ManagedDialogCheckboxes = ({ dialog }: { dialog: DialogData }) => {
             loading={laster}
             toggleFerdigBehandlet={toggleFerdigBehandlet}
             toggleVenterPaSvar={toggleVenterPaSvar}
-            ferdigBehandlet={dialog.ferdigBehandlet}
-            venterPaSvar={dialog.venterPaSvar}
+            ferdigBehandlet={dialog ? dialog.ferdigBehandlet : false}
+            venterPaSvar={dialog ?dialog.venterPaSvar : false}
+            isNyopprettet={erNyopprettetDialogTrad}
         />
     );
 };
-
 export default ManagedDialogCheckboxes;

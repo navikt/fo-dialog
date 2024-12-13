@@ -75,8 +75,8 @@ export const dialogRoutes = (fnr: string | undefined): RouteObject[] => [
                             <NyDialogTrad />
                             <Aktivitetskort />
                         </div>
-                        {/*TODO fjern den ene check boksen, skal bare vise venter på svar fra bruker*/}
-                        <ManagedDialogCheckboxes/>
+
+                        <ManagedDialogCheckboxes />
 
                     </>
                 )
