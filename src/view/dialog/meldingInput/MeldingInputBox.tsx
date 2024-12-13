@@ -18,7 +18,6 @@ import { useDialogStore, useSilentlyHentDialoger } from '../../dialogProvider/di
 import { useErVeileder, useFnrContext } from '../../Provider';
 import useKansendeMelding from '../../../utils/UseKanSendeMelding';
 import { useShallow } from 'zustand/react/shallow';
-import { ManagedDialogCheckboxes } from '../DialogCheckboxes';
 
 interface Props {
     dialog: DialogData; // Bruker prop og ikke context siden komponent ikke skal rendrer uten en valgt dialog
@@ -140,8 +139,6 @@ const MeldingInputBox = ({ dialog: valgtDialog }: Props) => {
             return <MeldingSideInput />;
         }
     }, [breakpoint, visAktivitet]);
-
-    if (!kanSendeHenveldelse && erVeileder) return <ManagedDialogCheckboxes dialog={valgtDialog} />; //hvis bruker går inn uner krr eller manuel må veileder kunne fjerne venter på
 
     if (!kanSendeHenveldelse) {
         return null;
