@@ -11,9 +11,7 @@ import { DialogData } from '../../utils/Typer';
 
 interface Props {
     toggleFerdigBehandlet(ferdigBehandler: boolean): void;
-
     toggleVenterPaSvar(venterPaSvar: boolean): void;
-
     ferdigBehandlet: boolean;
     venterPaSvar: boolean;
     ferdigBehandletDisabled: boolean;
