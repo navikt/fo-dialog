@@ -7,6 +7,7 @@ import { dataOrUndefined } from '../../Provider';
 import { useOppfolgingContext } from '../../OppfolgingProvider';
 import KladdLagret from './KladdLagret';
 import { useSelectedDialog } from '../../utils/useAktivitetId';
+import { ManagedDialogCheckboxes } from '../DialogCheckboxes';
 const MeldingSideInputInner = () => {
     const { onSubmit, noeFeilet } = useContext(MeldingInputContext);
     const {
@@ -66,6 +67,7 @@ export const MeldingSideInput = () => {
     return (
         <section aria-label="Ny melding" className="flex flex-1 bg-white p-4">
             <div className="w-full flex flex-col">
+                <ManagedDialogCheckboxes dialog={dialog} />
                 {!oppfolging?.underOppfolging || dialog.historisk ? null : <MeldingSideInputInner />}
             </div>
         </section>

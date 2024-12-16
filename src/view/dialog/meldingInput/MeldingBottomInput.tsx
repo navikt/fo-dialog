@@ -9,6 +9,7 @@ import { dataOrUndefined } from '../../Provider';
 import { useOppfolgingContext } from '../../OppfolgingProvider';
 import KladdLagret from './KladdLagret';
 import { useSelectedDialog } from '../../utils/useAktivitetId';
+import { ManagedDialogCheckboxes } from '../DialogCheckboxes';
 
 const MeldingBottomInputInner = () => {
     const { onSubmit, noeFeilet } = useContext(MeldingInputContext);
@@ -84,6 +85,7 @@ export const MeldingBottomInput = () => {
             className="flex justify-center border-t border-border-divider p-4 overflow-y-scroll"
         >
             <div className="grow justify-self-center ">
+                <ManagedDialogCheckboxes dialog={dialog} />
                 {!oppfolging?.underOppfolging || dialog.historisk ? null : <MeldingBottomInputInner />}
             </div>
         </section>
