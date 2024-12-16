@@ -35,7 +35,7 @@ const NyDialogForm = (props: Props) => {
     const { baseRoute } = useRoutes();
     const startTekst = useMeldingStartTekst();
     const fnr = useFnrContext();
-    const [venterPaSvarFraBruker, setVenterPaSvarFraBruker] = useState<boolean>(false);
+    const [venterPaaSvarFraBruker, setventerPaaSvarFraBruker] = useState<boolean>(false);
     const { kladder, oppdaterKladd, slettKladd, noeFeilet } = useDialogStore(
         useShallow((store) => ({
             kladder: store.kladder,
@@ -139,7 +139,7 @@ const NyDialogForm = (props: Props) => {
 
         loggEvent('arbeidsrettet-dialog.ny.dialog', { paaAktivitet: !!aktivitetId });
         // This will submit to route action
-        fetcher.submit({ melding, tema, aktivitetId, fnr } as SubmitTarget, {
+        fetcher.submit({ melding, tema, aktivitetId, fnr, venterPaaSvarFraBruker } as SubmitTarget, {
             method: 'POST',
             action: '/ny',
             encType: 'application/json'
@@ -147,8 +147,8 @@ const NyDialogForm = (props: Props) => {
     };
 
     const bigScreen = window.innerWidth >= 768;
-    const values = [venterPaSvarFraBruker ? ('venterPaSvar' as const) : undefined].filter(notEmpty);
-    const toggleVenterPaSvar = () => setVenterPaSvarFraBruker(!venterPaSvarFraBruker);
+    const values = [venterPaaSvarFraBruker ? ('venterPaSvar' as const) : undefined].filter(notEmpty);
+    const toggleVenterPaSvar = () => setventerPaaSvarFraBruker(!venterPaaSvarFraBruker);
 
     return (
         <div className="relative h-full w-full overflow-scroll bg-gray-100 lg:max-w-lgContainer xl:max-w-none">
@@ -189,7 +189,7 @@ const NyDialogForm = (props: Props) => {
                 {useErVeileder() ?(
                 <DialogCheckboxes
                     ferdigBehandlet={true}
-                    venterPaSvar={venterPaSvarFraBruker}
+                    venterPaSvar={venterPaaSvarFraBruker}
                     toggleVenterPaSvar={() => toggleVenterPaSvar()}
                     ferdigBehandletDisabled={true}
                     venterPaSvarDisabled={false}
