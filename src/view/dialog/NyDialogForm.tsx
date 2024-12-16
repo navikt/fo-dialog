@@ -9,7 +9,7 @@ import { useRoutes } from '../../routing/routes';
 import { findKladd } from '../KladdProvider';
 import { cutStringAtLength } from '../utils/stringUtils';
 import useMeldingStartTekst from './UseMeldingStartTekst';
-import { useFnrContext } from '../Provider';
+import { useErVeileder, useFnrContext } from '../Provider';
 import { useDialogStore } from '../dialogProvider/dialogStore';
 import { useShallow } from 'zustand/react/shallow';
 import useKansendeMelding from '../../utils/UseKanSendeMelding';
@@ -186,6 +186,7 @@ const NyDialogForm = (props: Props) => {
                     <Alert variant="error">Noe gikk dessverre galt med systemet. Prøv igjen senere.</Alert>
                 ) : null}
 
+                {useErVeileder() ?(
                 <DialogCheckboxes
                     ferdigBehandlet={true}
                     venterPaSvar={venterPaSvarFraBruker}
@@ -197,6 +198,7 @@ const NyDialogForm = (props: Props) => {
                     isNyopprettet={true}
                     loading={false}
                 />
+                ) : null}
                 <div className="flex flex-row gap-x-4">
                     <Button size="small" loading={isSubmitting} disabled={!kansendeMelding || isSubmitting}>
                         Send
