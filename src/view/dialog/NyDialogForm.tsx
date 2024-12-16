@@ -186,18 +186,18 @@ const NyDialogForm = (props: Props) => {
                     <Alert variant="error">Noe gikk dessverre galt med systemet. Prøv igjen senere.</Alert>
                 ) : null}
 
-                {useErVeileder() ?(
-                <DialogCheckboxes
-                    ferdigBehandlet={true}
-                    venterPaSvar={venterPaaSvarFraBruker}
-                    toggleVenterPaSvar={() => toggleVenterPaSvar()}
-                    ferdigBehandletDisabled={true}
-                    venterPaSvarDisabled={false}
-                    values={values}
-                    toggleFerdigBehandlet={()=> {}}
-                    isNyopprettet={true}
-                    loading={false}
-                />
+                {useErVeileder() ? (
+                    <DialogCheckboxes
+                        ferdigBehandlet={true}
+                        venterPaSvar={venterPaaSvarFraBruker}
+                        toggleVenterPaSvar={() => toggleVenterPaSvar()}
+                        ferdigBehandletDisabled={true}
+                        venterPaSvarDisabled={false}
+                        values={values}
+                        toggleFerdigBehandlet={() => {}}
+                        isNyopprettet={true}
+                        loading={false}
+                    />
                 ) : null}
                 <div className="flex flex-row gap-x-4">
                     <Button size="small" loading={isSubmitting} disabled={!kansendeMelding || isSubmitting}>

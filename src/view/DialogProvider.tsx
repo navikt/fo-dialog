@@ -27,7 +27,7 @@ export interface NyTradArgs {
     tema: string;
     aktivitetId: string | undefined;
     fnr: string | undefined;
-    venterPaaSvarFraBruker : boolean;
+    venterPaaSvarFraBruker: boolean;
 }
 export interface NyMeldingArgs {
     melding: string;

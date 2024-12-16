@@ -18,7 +18,6 @@ const MemoryRouterMedBareDialogTrad = () => (
     </SimpleRouterWithoutProvider>
 );
 
-
 const rootLoaderData = {
     dialoger: Promise.resolve([])
 };

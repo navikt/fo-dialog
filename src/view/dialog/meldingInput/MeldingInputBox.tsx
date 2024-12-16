@@ -143,7 +143,6 @@ const MeldingInputBox = ({ dialog: valgtDialog }: Props) => {
 
     if (!kanSendeHenveldelse && erVeileder) return <ManagedDialogCheckboxes dialog={valgtDialog} />; //hvis bruker går inn uner krr eller manuel må veileder kunne fjerne venter på
 
-
     if (!kanSendeHenveldelse) {
         return null;
     }

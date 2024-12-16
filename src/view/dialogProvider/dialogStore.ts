@@ -174,7 +174,14 @@ export const useDialogStore = create(
             },
             nyDialog: ({ melding, aktivitetId, fnr, tema, venterPaaSvarFraBruker }: NyTradArgs) => {
                 const { sendMelding } = get();
-                return sendMelding({ tekst: melding, overskrift: tema, dialogId: undefined, aktivitetId, fnr, venterPaaSvarFraBruker });
+                return sendMelding({
+                    tekst: melding,
+                    overskrift: tema,
+                    dialogId: undefined,
+                    aktivitetId,
+                    fnr,
+                    venterPaaSvarFraBruker
+                });
             },
             nyMelding: ({ melding, dialog, fnr }: NyMeldingArgs) => {
                 const { sendMelding } = get();
