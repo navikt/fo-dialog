@@ -1,5 +1,5 @@
 import { zodResolver } from '@hookform/resolvers/zod';
-import { Alert, Button, GuidePanel, TextField, Textarea, BodyShort } from '@navikt/ds-react';
+import { Alert, Button, GuidePanel, TextField, Textarea, BodyShort, Checkbox } from '@navikt/ds-react';
 import React, { useEffect, useRef, useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { redirect, useNavigate } from 'react-router';
@@ -19,8 +19,6 @@ import { SubmitTarget } from 'react-router-dom/dist/dom';
 import { NyTradArgs } from '../DialogProvider';
 import { dispatchUpdate, UpdateTypes } from '../../utils/UpdateEvent';
 import { useInnsynsrett } from '../../api/useInnsynsrett';
-import { DialogCheckboxes } from './DialogCheckboxes';
-import { notEmpty } from '../../utils/TypeHelper';
 
 interface Props {
     defaultTema: string;
@@ -147,7 +145,6 @@ const NyDialogForm = (props: Props) => {
     };
 
     const bigScreen = window.innerWidth >= 768;
-    const values = [venterPaaSvarFraBruker ? ('venterPaSvar' as const) : undefined].filter(notEmpty);
     const toggleVenterPaSvar = () => setventerPaaSvarFraBruker(!venterPaaSvarFraBruker);
 
     return (
@@ -187,17 +184,15 @@ const NyDialogForm = (props: Props) => {
                 ) : null}
 
                 {useErVeileder() ? (
-                    <DialogCheckboxes
-                        ferdigBehandlet={true}
-                        venterPaSvar={venterPaaSvarFraBruker}
-                        toggleVenterPaSvar={() => toggleVenterPaSvar()}
-                        ferdigBehandletDisabled={true}
-                        venterPaSvarDisabled={false}
-                        values={values}
-                        toggleFerdigBehandlet={() => {}}
-                        isNyopprettet={true}
-                        loading={false}
-                    />
+                    <Checkbox
+                        value={'venterPaSvar'}
+                        size="small"
+                        className="pr-8"
+                        checked={venterPaaSvarFraBruker}
+                        onChange={toggleVenterPaSvar}
+                    >
+                        Venter på svar fra bruker
+                    </Checkbox>
                 ) : null}
                 <div className="flex flex-row gap-x-4">
                     <Button size="small" loading={isSubmitting} disabled={!kansendeMelding || isSubmitting}>

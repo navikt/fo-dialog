@@ -21,7 +21,7 @@ interface Props {
     isNyopprettet: boolean;
 }
 
-export const DialogCheckboxes = ({
+ const DialogCheckboxes = ({
     values,
     ferdigBehandlet,
     toggleFerdigBehandlet,
