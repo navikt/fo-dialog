@@ -3,11 +3,11 @@ import React, { MutableRefObject, useContext, useRef } from 'react';
 import { useFormContext } from 'react-hook-form';
 import { betterErrorMessage, MeldingInputContext, useFocusBeforeHilsen } from './inputUtils';
 import { MeldingFormValues } from './MeldingInputBox';
+import ManagedDialogCheckboxes from '../DialogCheckboxes';
 import { dataOrUndefined } from '../../Provider';
 import { useOppfolgingContext } from '../../OppfolgingProvider';
 import KladdLagret from './KladdLagret';
 import { useSelectedDialog } from '../../utils/useAktivitetId';
-import { ManagedDialogCheckboxes } from '../DialogCheckboxes';
 
 const MeldingSideInputInner = () => {
     const { onSubmit, noeFeilet } = useContext(MeldingInputContext);
