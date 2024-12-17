@@ -1,6 +1,6 @@
 import { zodResolver } from '@hookform/resolvers/zod';
-import { Alert, Button, GuidePanel, TextField, Textarea, BodyShort } from '@navikt/ds-react';
-import React, { useEffect, useRef } from 'react';
+import { Alert, Button, GuidePanel, TextField, Textarea, BodyShort, Checkbox } from '@navikt/ds-react';
+import React, { useEffect, useRef, useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { redirect, useNavigate } from 'react-router';
 import { z } from 'zod';
@@ -9,7 +9,7 @@ import { useRoutes } from '../../routing/routes';
 import { findKladd } from '../KladdProvider';
 import { cutStringAtLength } from '../utils/stringUtils';
 import useMeldingStartTekst from './UseMeldingStartTekst';
-import { useFnrContext } from '../Provider';
+import { useErVeileder, useFnrContext } from '../Provider';
 import { useDialogStore } from '../dialogProvider/dialogStore';
 import { useShallow } from 'zustand/react/shallow';
 import useKansendeMelding from '../../utils/UseKanSendeMelding';
@@ -33,6 +33,7 @@ const NyDialogForm = (props: Props) => {
     const { baseRoute } = useRoutes();
     const startTekst = useMeldingStartTekst();
     const fnr = useFnrContext();
+    const [venterPaaSvarFraBruker, setventerPaaSvarFraBruker] = useState<boolean>(false);
     const { kladder, oppdaterKladd, slettKladd, noeFeilet } = useDialogStore(
         useShallow((store) => ({
             kladder: store.kladder,
@@ -136,7 +137,7 @@ const NyDialogForm = (props: Props) => {
 
         loggEvent('arbeidsrettet-dialog.ny.dialog', { paaAktivitet: !!aktivitetId });
         // This will submit to route action
-        fetcher.submit({ melding, tema, aktivitetId, fnr } as SubmitTarget, {
+        fetcher.submit({ melding, tema, aktivitetId, fnr, venterPaaSvarFraBruker } as SubmitTarget, {
             method: 'POST',
             action: '/ny',
             encType: 'application/json'
@@ -144,6 +145,7 @@ const NyDialogForm = (props: Props) => {
     };
 
     const bigScreen = window.innerWidth >= 768;
+    const toggleVenterPaSvar = () => setventerPaaSvarFraBruker(!venterPaaSvarFraBruker);
 
     return (
         <div className="relative h-full w-full overflow-scroll bg-gray-100 lg:max-w-lgContainer xl:max-w-none">
@@ -181,6 +183,17 @@ const NyDialogForm = (props: Props) => {
                     <Alert variant="error">Noe gikk dessverre galt med systemet. Prøv igjen senere.</Alert>
                 ) : null}
 
+                {useErVeileder() ? (
+                    <Checkbox
+                        value={'venterPaSvar'}
+                        size="small"
+                        className="pr-8"
+                        checked={venterPaaSvarFraBruker}
+                        onChange={toggleVenterPaSvar}
+                    >
+                        Venter på svar fra bruker
+                    </Checkbox>
+                ) : null}
                 <div className="flex flex-row gap-x-4">
                     <Button size="small" loading={isSubmitting} disabled={!kansendeMelding || isSubmitting}>
                         Send

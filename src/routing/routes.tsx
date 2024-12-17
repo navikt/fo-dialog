@@ -15,7 +15,6 @@ import { DialogHeader } from '../view/dialog/DialogHeader';
 import { nyDialogAction } from '../view/dialog/NyDialogForm';
 
 const aktivitetQuery = (aktivitetId?: string) => (aktivitetId ? `?aktivitetId=${aktivitetId}` : '');
-
 const baseRoute = () => '/';
 const dialogRoute = (id: string) => `/${id}`;
 const nyRoute = (aktivitetId: string | undefined = undefined) => `/ny${aktivitetQuery(aktivitetId)}`;
