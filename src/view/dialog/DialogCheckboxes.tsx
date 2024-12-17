@@ -21,7 +21,7 @@ interface Props {
     isNyopprettet: boolean;
 }
 
- const DialogCheckboxes = ({
+const DialogCheckboxes = ({
     values,
     ferdigBehandlet,
     toggleFerdigBehandlet,
