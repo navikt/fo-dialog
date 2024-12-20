@@ -61,7 +61,7 @@ export const useDialogStore = create(
                         return dialoger;
                     })
                     .catch((e) => {
-                        console.error('Kunne ikke hente dialogdata', e);
+                        captureMessage(`Kunne ikke hente dialogdata ${e.toString()}`);
                         set(
                             (prevState) => ({ ...prevState, status: Status.ERROR, error: e }),
                             false,
