@@ -263,7 +263,7 @@ const onIntervalWithCleanup = (pollForChanges: () => Promise<void>) => {
     let interval: NodeJS.Timeout;
     interval = setInterval(() => {
         pollForChanges().catch((e) => {
-            console.error(e);
+            console.error('Klarte ikke polle sistOppdatert', e);
             clearInterval(interval);
         });
     }, 10000);
