@@ -26,7 +26,7 @@ export function fetchData<T>(url: string, config: RequestInit = {}): Promise<T> 
         .then(toJson);
 }
 
-export function sjekkStatuskode(response: Response) {
+export async function sjekkStatuskode(response: Response) {
     if (response.status >= 200 && response.status < 300 && response.ok) {
         return response;
     }
@@ -37,7 +37,7 @@ export function sjekkStatuskode(response: Response) {
         throw new ForbiddenError(response);
     }
     if (response.status >= 400 && response.status <= 500) {
-        throw new ClientError(response);
+        throw new ClientError(response, await response.text());
     }
     if (response.status >= 500) {
         throw new InternalServerError(response);

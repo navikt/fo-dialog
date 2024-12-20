@@ -16,9 +16,11 @@ export class ForbiddenError extends Error {
 
 export class ClientError extends Error {
     response: Response;
-    constructor(response: Response) {
+    body: string;
+    constructor(response: Response, body: string) {
         super(`Client error: ${response.status}`);
         this.response = response;
+        this.body = body;
     }
 }
 
