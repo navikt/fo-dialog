@@ -20,7 +20,11 @@ export default function loggEvent(eventNavn: string, feltObjekt?: object, tagObj
         body: JSON.stringify(event)
     };
     logAmplitudeEvent(eventNavn, { ...feltObjekt, ...tagObjekt });
-    return fetch(url, config);
+    try {
+        fetch(url, config);
+    } catch (e) {
+        console.warn('Klarte ikke logge event', e);
+    }
 }
 
 // TODO remove me in the future
