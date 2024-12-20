@@ -11,17 +11,12 @@ import { useShallow } from 'zustand/react/shallow';
 import { hentDialogerGraphql } from './dialogGraphql';
 import { eqKladd, KladdStore } from '../KladdProvider';
 import { UnautorizedError } from '../../utils/fetchErrors';
+import { captureMessage } from '../../utils/errorCapture';
 
 export const initDialogState: DialogState = {
     status: Status.INITIAL,
     sistOppdatert: new Date(),
     dialoger: []
-};
-
-/* Make sure to not import sentry, just create a similar type */
-declare const window: {
-    captureException: (exception: any) => void;
-    captureMessage: (message: string) => void;
 };
 
 type DialogStore = DialogState &
@@ -153,9 +148,7 @@ export const useDialogStore = create(
                 } catch (e) {
                     if (e instanceof UnautorizedError) {
                     } else {
-                        if (window.captureMessage) {
-                            window.captureMessage('Kunne ikke hente sist oppdatert');
-                        }
+                        captureMessage('Kunne ikke hente sist oppdatert');
                     }
                 }
             },
@@ -271,9 +264,7 @@ const onIntervalWithCleanup = (pollForChanges: () => Promise<void>) => {
     let interval: NodeJS.Timeout;
     interval = setInterval(() => {
         pollForChanges().catch((e) => {
-            if (window.captureMessage) {
-                window.captureMessage('Klarte ikke polle sistOppdatert');
-            }
+            captureMessage('Klarte ikke polle sistOppdatert');
             clearInterval(interval);
         });
     }, 10000);

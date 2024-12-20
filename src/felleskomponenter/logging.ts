@@ -1,6 +1,7 @@
 import { DialogApi } from '../api/UseApiBasePath';
 import { logAmplitudeEvent } from '../metrics/amplitude-utils';
 import { DialogData } from '../utils/Typer';
+import { captureMessage } from '@sentry/react';
 
 interface FrontendEvent {
     name: string;
@@ -20,8 +21,8 @@ export default function loggEvent(eventNavn: string, feltObjekt?: object, tagObj
         body: JSON.stringify(event)
     };
     logAmplitudeEvent(eventNavn, { ...feltObjekt, ...tagObjekt });
-    fetch(url, config).catch((e) => {
-        console.warn('Klarte ikke logge event', e);
+    fetch(url, config).catch((e: Error) => {
+        captureMessage(`Klarte ikke logge event ${e.toString()}`);
     });
 }
 
