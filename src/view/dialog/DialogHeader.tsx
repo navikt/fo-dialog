@@ -8,6 +8,7 @@ import { erArenaAktivitet } from '../utils/utils';
 import { TilbakeKnapp } from './TilbakeKnapp';
 import { useRootLoaderData } from '../../routing/loaders';
 import { RouteIds } from '../../routing/routes';
+import { DialogTittel } from './DialogTittel';
 
 export function DialogHeader() {
     const dialog = useSelectedDialog();
@@ -32,9 +33,7 @@ export function DialogHeader() {
                         ) : (
                             <div className="flex flex-row gap-x-2 pl-4">
                                 <TilbakeKnapp className="md:hidden" />
-                                <Heading level="1" size="small">
-                                    {dialog?.overskrift}
-                                </Heading>
+                                <DialogTittel tittel={dialog?.overskrift} />
                             </div>
                         )}
                     </section>

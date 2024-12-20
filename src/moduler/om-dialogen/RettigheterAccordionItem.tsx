@@ -18,17 +18,17 @@ export function RettigheterAccordionItem() {
             <Accordion.Content>
                 <BodyShort>
                     Informasjon du gir i meldinger til veilederen din brukes til å vurdere behovet ditt for hjelp fra
-                    NAV.
+                    Nav.
                 </BodyShort>
                 <Heading level="3" size="xsmall" className="pt-4">
                     Manuell oppfølging
                 </Heading>
                 <BodyShort className="pb-4">
-                    NAV henter informasjon om deg fra Folkeregisteret og sjekker mot Kontakt- og reservasjonsregisteret.
+                    Nav henter informasjon om deg fra Folkeregisteret og sjekker mot Kontakt- og reservasjonsregisteret.
                 </BodyShort>
                 <BodyShort>
                     Hvis du ikke ønsker å bruke den digitale dialogen, så kan du reservere deg mot digital kommunikasjon
-                    med det offentlige hos Norge. no Hvis du reserverer deg mot digital kommunikasjon, vil NAV følge deg
+                    med det offentlige hos Norge. no Hvis du reserverer deg mot digital kommunikasjon, vil Nav følge deg
                     opp manuelt.
                 </BodyShort>
 
@@ -46,7 +46,7 @@ export function RettigheterAccordionItem() {
                 <BodyShort>
                     Les mer om{' '}
                     <Link href="https://www.nav.no/no/NAV+og+samfunn/Om+NAV/personvern-i-arbeids-og-velferdsetaten">
-                        hvordan NAV behandler personopplysninger
+                        hvordan Nav behandler personopplysninger
                     </Link>
                     .
                 </BodyShort>

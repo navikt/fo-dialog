@@ -44,7 +44,7 @@ const MeldingSideInputInner = () => {
                     maxLength={5000}
                 />
                 <div className="self-stretch mt-2 flex justify-between items-end">
-                    <Button size="small" title="Send" loading={isSubmitting}>
+                    <Button size="small" title="Send" disabled={isSubmitting} loading={isSubmitting}>
                         Send
                     </Button>
                     <KladdLagret />

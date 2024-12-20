@@ -1,6 +1,6 @@
 import { zodResolver } from '@hookform/resolvers/zod';
-import { Alert, Button, GuidePanel, TextField, Textarea, BodyShort } from '@navikt/ds-react';
-import React, { FocusEventHandler, useEffect, useRef } from 'react';
+import { Alert, Button, GuidePanel, TextField, Textarea, BodyShort, Checkbox } from '@navikt/ds-react';
+import React, { useEffect, useRef, useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { redirect, useNavigate } from 'react-router';
 import { z } from 'zod';
@@ -33,6 +33,7 @@ const NyDialogForm = (props: Props) => {
     const { baseRoute } = useRoutes();
     const startTekst = useMeldingStartTekst();
     const fnr = useFnrContext();
+    const [venterPaaSvarFraBruker, setventerPaaSvarFraBruker] = useState<boolean>(false);
     const { kladder, oppdaterKladd, slettKladd, noeFeilet } = useDialogStore(
         useShallow((store) => ({
             kladder: store.kladder,
@@ -43,7 +44,6 @@ const NyDialogForm = (props: Props) => {
     );
 
     const kladd = findKladd(kladder, null, aktivitetId);
-    const autoFocusTema = !aktivitetId;
 
     const defaultValues: NyDialogFormValues = {
         tema: kladd?.overskrift ?? cutStringAtLength(defaultTema, 100, '...'),
@@ -92,8 +92,6 @@ const NyDialogForm = (props: Props) => {
         };
     }, []);
 
-    const erVeileder = useErVeileder();
-
     const setOppdaterKladdCallbackValues = ({
         tema,
         melding
@@ -131,17 +129,6 @@ const NyDialogForm = (props: Props) => {
         }
     }, [melding, tema, dirtyFields]);
 
-    useEffect(() => {
-        if (!autoFocusTema) {
-            const textarea = document.querySelector('textarea[name="melding"]') as HTMLTextAreaElement;
-            if (textarea) {
-                textarea.focus();
-                textarea.selectionStart = 0;
-                textarea.selectionEnd = 0;
-            }
-        }
-    }, []);
-
     const onSubmit = async (data: NyDialogFormValues) => {
         const { tema, melding } = data;
 
@@ -150,7 +137,7 @@ const NyDialogForm = (props: Props) => {
 
         loggEvent('arbeidsrettet-dialog.ny.dialog', { paaAktivitet: !!aktivitetId });
         // This will submit to route action
-        fetcher.submit({ melding, tema, aktivitetId, fnr } as SubmitTarget, {
+        fetcher.submit({ melding, tema, aktivitetId, fnr, venterPaaSvarFraBruker } as SubmitTarget, {
             method: 'POST',
             action: '/ny',
             encType: 'application/json'
@@ -158,13 +145,7 @@ const NyDialogForm = (props: Props) => {
     };
 
     const bigScreen = window.innerWidth >= 768;
-
-    const onfocusMeldingInput: FocusEventHandler<HTMLTextAreaElement> = (event) => {
-        if (!erVeileder) return;
-        if (melding !== startTekst) return;
-        event.target.selectionStart = 0;
-        event.target.selectionEnd = 0;
-    };
+    const toggleVenterPaSvar = () => setventerPaaSvarFraBruker(!venterPaaSvarFraBruker);
 
     return (
         <div className="relative h-full w-full overflow-scroll bg-gray-100 lg:max-w-lgContainer xl:max-w-none">
@@ -186,26 +167,35 @@ const NyDialogForm = (props: Props) => {
                     label="Tema (obligatorisk)"
                     description="Skriv kort hva dialogen skal handle om"
                     disabled={!!aktivitetId || !kansendeMelding}
-                    autoFocus={autoFocusTema}
                     {...register('tema')}
                     error={errors.tema && errors.tema.message}
                 />
                 <Textarea
                     label="Melding (obligatorisk)"
                     description="Skriv om arbeid og oppfølging"
+                    disabled={!kansendeMelding}
                     maxLength={5000}
                     {...register('melding')}
                     error={errors.melding && errors.melding.message}
-                    autoFocus={!autoFocusTema}
-                    onFocus={onfocusMeldingInput}
                 />
 
                 {noeFeilet ? (
                     <Alert variant="error">Noe gikk dessverre galt med systemet. Prøv igjen senere.</Alert>
                 ) : null}
 
+                {useErVeileder() ? (
+                    <Checkbox
+                        value={'venterPaSvar'}
+                        size="small"
+                        className="pr-8"
+                        checked={venterPaaSvarFraBruker}
+                        onChange={toggleVenterPaSvar}
+                    >
+                        Venter på svar fra bruker
+                    </Checkbox>
+                ) : null}
                 <div className="flex flex-row gap-x-4">
-                    <Button size="small" loading={isSubmitting}>
+                    <Button size="small" loading={isSubmitting} disabled={!kansendeMelding || isSubmitting}>
                         Send
                     </Button>
                     <Button
@@ -238,7 +228,7 @@ export const nyDialogAction: (fnr: string | undefined) => ActionFunction =
                 slettKladd(null, dialog.aktivitetId);
                 dispatchUpdate(UpdateTypes.Dialog);
                 silentlyHentDialoger(fnr);
-                return redirect(`/${dialog.id}`);
+                return redirect(`/${dialog.id}?nyDialog`);
             } else {
                 return null;
             }

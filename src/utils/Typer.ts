@@ -10,6 +10,7 @@ export interface NyDialogMeldingData {
     overskrift?: string;
     aktivitetId?: string;
     fnr?: string;
+    venterPaaSvarFraBruker?: boolean;
 }
 
 export interface DialogData {
@@ -17,7 +18,7 @@ export interface DialogData {
     aktivitetId: StringOrNull;
     overskrift: StringOrNull;
     sisteTekst: StringOrNull;
-    sisteDato: StringOrNull;
+    sisteDato: string;
     opprettetDato: StringOrNull;
     historisk: boolean;
     lest: boolean;

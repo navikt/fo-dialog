@@ -9,28 +9,27 @@ import NyDialogForm from './NyDialogForm';
 import { Await } from 'react-router';
 import { useRootLoaderData } from '../../routing/loaders';
 import { Button, GuidePanel, Textarea, TextField } from '@navikt/ds-react';
-import { useErVeileder } from '../Provider';
 
 export default function NyDialogTrad() {
     const aktivitetId: StringOrUndefined = useAktivitetId();
     const aktivitetData = useAktivitetContext();
     const aktivitet: MaybeAktivitet = findAktivitet(aktivitetData, aktivitetId);
-
     const defaultTema = getDialogTittel(aktivitet);
-
     const setViewState = useSetViewContext();
 
     useEffect(() => {
         setViewState({ sistHandlingsType: HandlingsType.ingen });
     }, []);
 
-    // if (!kansendeMelding || (aktivitetId && !aktivitet)) {
-    //     return <div className={styles.dialog} />;
-    // }
-
     const loaderData = useRootLoaderData();
     const requiredData = useMemo(() => {
-        return Promise.all([loaderData.oppfolging, loaderData.veilederNavn, loaderData.me]);
+        return Promise.all([
+            loaderData.oppfolging,
+            loaderData.veilederNavn,
+            loaderData.me,
+            loaderData.aktiviteter,
+            loaderData.arenaAktiviteter
+        ]);
     }, []);
 
     return (
@@ -43,20 +42,13 @@ export default function NyDialogTrad() {
 }
 
 export const DialogFormFallback = () => {
-    console.log('Rendering DialogFormFallback');
     const bigScreen = window.innerWidth >= 768;
-    const erVeileder = useErVeileder();
     return (
         <div className="relative h-full w-full overflow-scroll bg-gray-100 lg:max-w-lgContainer xl:max-w-none">
             <div className="space-y-8 p-8 xl:w-full xl:max-w-max-paragraph">
-                {!erVeileder ? (
-                    <>
-                        <GuidePanel poster={!bigScreen}>
-                            Her kan du skrive til din veileder om arbeid og oppfølging. Du vil få svar i løpet av noen
-                            dager.
-                        </GuidePanel>
-                    </>
-                ) : null}
+                <GuidePanel poster={!bigScreen}>
+                    Her kan du skrive til din veileder om arbeid og oppfølging. Du vil få svar i løpet av noen dager.
+                </GuidePanel>
                 <TextField
                     label="Tema (obligatorisk)"
                     description="Skriv kort hva dialogen skal handle om"

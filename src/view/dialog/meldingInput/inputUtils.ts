@@ -1,10 +1,5 @@
-import { FieldError, useFormContext } from 'react-hook-form';
+import { FieldError } from 'react-hook-form';
 import React, { MutableRefObject, useEffect, useRef } from 'react';
-import { HandlingsType, useViewContext } from '../../ViewState';
-import { MeldingFormValues } from './MeldingInputBox';
-import useMeldingStartTekst from '../UseMeldingStartTekst';
-import { useFnrContext } from '../../Provider';
-
 export const maxMeldingsLengde = 5000;
 export const betterErrorMessage = (error: FieldError, melding: string): FieldError => {
     const tooBig = error.type === 'too_big';
@@ -42,7 +37,7 @@ export interface MeldingInputArgs {
     kladdErLagret: boolean;
 }
 export const MeldingInputContext = React.createContext<MeldingInputArgs>({
-    onSubmit: (e) => Promise.resolve(),
+    onSubmit: (_) => Promise.resolve(),
     noeFeilet: false,
     kladdErLagret: false
 });
@@ -52,34 +47,9 @@ export const useFocusBeforeHilsen = (textAreaRef: MutableRefObject<HTMLTextAreaE
     const hasFocus = useRef(false);
     useEffect(() => {
         if (textAreaRef.current === null) return;
-        const setHasFocusTrue = (ev: FocusEvent) => (hasFocus.current = true);
-        const setHasFocusFalse = (ev: FocusEvent) => (hasFocus.current = false);
+        const setHasFocusTrue = (_: FocusEvent) => (hasFocus.current = true);
+        const setHasFocusFalse = (_: FocusEvent) => (hasFocus.current = false);
         textAreaRef.current?.addEventListener('blur', setHasFocusFalse);
         textAreaRef.current?.addEventListener('focus', setHasFocusTrue);
     }, [textAreaRef.current]);
-
-    const fnr = useFnrContext();
-    const viewState = useViewContext();
-    const startTekst = useMeldingStartTekst();
-    const {
-        formState: { defaultValues, isDirty }
-    } = useFormContext<MeldingFormValues>();
-
-    useEffect(() => {
-        if (!fnr) return;
-        if (isDirty) return; // Wait until form is actually reset
-        const bigScreen = window?.matchMedia(`(min-width: 900px)`)?.matches || false;
-        const shouldAutoFocus = bigScreen && viewState.sistHandlingsType !== HandlingsType.nyDialog;
-        if (shouldAutoFocus) {
-            if (!textAreaRef.current) return;
-            const initialText = textAreaRef.current?.value;
-            if (!initialText || !initialText.endsWith(startTekst)) return;
-            const start = initialText.length - startTekst.length;
-            textAreaRef.current.selectionStart = start;
-            textAreaRef.current.selectionEnd = start;
-            if (hasFocus?.current) return;
-            textAreaRef.current?.focus();
-            hasFocus.current = true;
-        }
-    }, [defaultValues?.melding, isDirty, hasFocus]);
 };

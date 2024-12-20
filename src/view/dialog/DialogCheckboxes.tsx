@@ -43,7 +43,7 @@ const DialogCheckboxes = ({
                         disabled={ferdigBehandletDisabled || loading}
                         onChange={() => toggleFerdigBehandlet(!ferdigBehandlet)}
                     >
-                        Venter på svar fra NAV
+                        Venter på svar fra Nav
                     </Checkbox>
                     <Checkbox
                         value={'venterPaSvar'}

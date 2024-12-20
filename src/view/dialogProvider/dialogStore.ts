@@ -157,7 +157,10 @@ export const useDialogStore = create(
             updateDialogInDialoger: (dialog: DialogData): DialogData => {
                 set(
                     ({ dialoger }) => {
-                        const index = dialoger.findIndex((d) => d.id === dialog.id);
+                        let index = dialoger.findIndex((d) => d.id === dialog.id);
+                        if (index == -1) {
+                            index = dialoger.length + 1;
+                        }
                         const nyeDialoger = [
                             ...dialoger.slice(0, index),
                             dialog,
@@ -170,9 +173,16 @@ export const useDialogStore = create(
                 );
                 return dialog;
             },
-            nyDialog: ({ melding, aktivitetId, fnr, tema }: NyTradArgs) => {
+            nyDialog: ({ melding, aktivitetId, fnr, tema, venterPaaSvarFraBruker }: NyTradArgs) => {
                 const { sendMelding } = get();
-                return sendMelding({ tekst: melding, overskrift: tema, dialogId: undefined, aktivitetId, fnr });
+                return sendMelding({
+                    tekst: melding,
+                    overskrift: tema,
+                    dialogId: undefined,
+                    aktivitetId,
+                    fnr,
+                    venterPaaSvarFraBruker
+                });
             },
             nyMelding: ({ melding, dialog, fnr }: NyMeldingArgs) => {
                 const { sendMelding } = get();

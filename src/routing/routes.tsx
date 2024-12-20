@@ -15,7 +15,6 @@ import { DialogHeader } from '../view/dialog/DialogHeader';
 import { nyDialogAction } from '../view/dialog/NyDialogForm';
 
 const aktivitetQuery = (aktivitetId?: string) => (aktivitetId ? `?aktivitetId=${aktivitetId}` : '');
-
 const baseRoute = () => '/';
 const dialogRoute = (id: string) => `/${id}`;
 const nyRoute = (aktivitetId: string | undefined = undefined) => `/ny${aktivitetQuery(aktivitetId)}`;
@@ -59,6 +58,7 @@ export const dialogRoutes = (fnr: string | undefined): RouteObject[] => [
         path: '/',
         id: RouteIds.Root,
         element: <AppBody />,
+        hydrateFallbackElement: <div></div>,
         loader: initialPageLoader(fnr),
         shouldRevalidate: () => false,
         children: [
@@ -128,6 +128,15 @@ export const Routes = ({ createRouter }: { createRouter: typeof createBrowserRou
     let basename = stripTrailingSlash(import.meta.env.BASE_URL);
     if (erInternFlate) basename = `/dialog`;
     else if (erEksternFlate) basename = '/arbeid/dialog';
-    const browserRouter = createRouter(dialogRoutes(fnr), { basename });
-    return <RouterProvider router={browserRouter} />;
+    const browserRouter = createRouter(dialogRoutes(fnr), {
+        basename,
+        future: {
+            v7_relativeSplatPath: true,
+            v7_fetcherPersist: true,
+            v7_normalizeFormMethod: true,
+            v7_partialHydration: true,
+            v7_skipActionErrorRevalidation: true
+        }
+    });
+    return <RouterProvider future={{ v7_startTransition: true }} router={browserRouter} />;
 };
