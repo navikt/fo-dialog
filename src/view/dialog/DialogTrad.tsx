@@ -17,6 +17,7 @@ import HistoriskInfo from './HistoriskInfo';
 import { useRootLoaderData } from '../../routing/loaders';
 import { DialogData } from '../../utils/Typer';
 import { MaybeAktivitet } from '../AktivitetProvider';
+import { captureMessage } from '../../utils/errorCapture';
 
 export const DialogTrad = () => {
     const [searchParams] = useSearchParams();
@@ -64,10 +65,14 @@ export const DialogTrad = () => {
     useEffect(() => {
         if (!lest && activeTab && activePersonflateTab) {
             if (!dialogId) return;
-            lesDialog(dialogId, fnr).then(() => {
-                dispatchUpdate(UpdateTypes.Dialog);
-                window.dispatchEvent(new Event('aktivitetsplan.dialog.lest')); //lest teller i personflata
-            });
+            lesDialog(dialogId, fnr)
+                .then(() => {
+                    dispatchUpdate(UpdateTypes.Dialog);
+                    window.dispatchEvent(new Event('aktivitetsplan.dialog.lest')); //lest teller i personflata
+                })
+                .catch((error) => {
+                    captureMessage(`Klarte ikke markere dialog som lest ${error.toString()}`);
+                });
         }
     }, [dialogId, lest, activeTab, activePersonflateTab, fnr]);
 
