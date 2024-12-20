@@ -11,12 +11,17 @@ import { useShallow } from 'zustand/react/shallow';
 import { hentDialogerGraphql } from './dialogGraphql';
 import { eqKladd, KladdStore } from '../KladdProvider';
 import { UnautorizedError } from '../../utils/fetchErrors';
-import * as Sentry from '@sentry/react';
 
 export const initDialogState: DialogState = {
     status: Status.INITIAL,
     sistOppdatert: new Date(),
     dialoger: []
+};
+
+/* Make sure to not import sentry, just create a similar type */
+declare const window: {
+    captureException: (exception: any) => void;
+    captureMessage: (message: string) => void;
 };
 
 type DialogStore = DialogState &
@@ -149,7 +154,7 @@ export const useDialogStore = create(
                     if (e instanceof UnautorizedError) {
                     } else {
                         if (window.captureMessage) {
-                            window.captureMessage('Kunne ikke hente sist oppdatert', e);
+                            window.captureMessage('Kunne ikke hente sist oppdatert');
                         }
                     }
                 }
