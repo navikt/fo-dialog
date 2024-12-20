@@ -9,13 +9,13 @@ import {
 } from 'react-router-dom';
 import { captureConsoleIntegration } from '@sentry/react';
 
-export enum Env {
+enum Env {
     Local = 'local',
     Dev = 'dev',
     Prod = 'prod'
 }
 
-export const getEnv = (): Env => {
+const getEnv = (): Env => {
     // TODO: Dette vil ikke virke som internflate
     const { hostname } = window.location;
     if (hostname.includes('dev.nav.no')) return Env.Dev;
@@ -66,6 +66,7 @@ Sentry.init({
 });
 
 declare const window: {
+    location: { hostname: string };
     captureException: typeof Sentry.captureException;
     captureMessage: typeof Sentry.captureMessage;
 };
