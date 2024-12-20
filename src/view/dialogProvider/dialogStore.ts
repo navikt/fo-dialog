@@ -11,6 +11,7 @@ import { useShallow } from 'zustand/react/shallow';
 import { hentDialogerGraphql } from './dialogGraphql';
 import { eqKladd, KladdStore } from '../KladdProvider';
 import { UnautorizedError } from '../../utils/fetchErrors';
+import * as Sentry from '@sentry/react';
 
 export const initDialogState: DialogState = {
     status: Status.INITIAL,
@@ -147,7 +148,9 @@ export const useDialogStore = create(
                 } catch (e) {
                     if (e instanceof UnautorizedError) {
                     } else {
-                        console.warn('Kunne ikke hente sist oppdatert', e);
+                        if (window.captureMessage) {
+                            window.captureMessage('Kunne ikke hente sist oppdatert', e);
+                        }
                     }
                 }
             },
@@ -263,7 +266,9 @@ const onIntervalWithCleanup = (pollForChanges: () => Promise<void>) => {
     let interval: NodeJS.Timeout;
     interval = setInterval(() => {
         pollForChanges().catch((e) => {
-            console.error('Klarte ikke polle sistOppdatert', e);
+            if (window.captureMessage) {
+                window.captureMessage('Klarte ikke polle sistOppdatert');
+            }
             clearInterval(interval);
         });
     }, 10000);

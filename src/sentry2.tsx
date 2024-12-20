@@ -65,4 +65,11 @@ Sentry.init({
     release: import.meta.env.VITE_SENTRY_RELEASE
 });
 
+declare const window: {
+    captureException: typeof Sentry.captureException;
+    captureMessage: typeof Sentry.captureMessage;
+};
+window.captureException = Sentry.captureException;
+window.captureMessage = Sentry.captureMessage;
+
 export const sentryCreateBrowserRouter = Sentry.wrapCreateBrowserRouter(createBrowserRouter);
