@@ -1,3 +1,11 @@
+export class GraphqlError extends Error {
+    errors: { message: string }[];
+    constructor(message: string, errors: { message: string }[]) {
+        super(message);
+        this.errors = errors;
+    }
+}
+
 export class UnautorizedError extends Error {
     response: Response;
     constructor(response: Response) {

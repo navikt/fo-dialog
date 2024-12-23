@@ -1,6 +1,7 @@
 import { DialogApi } from '../../api/UseApiBasePath';
 import { sjekkStatuskode, toJson } from '../../utils/Fetch';
 import { DialogData, KladdData } from '../../utils/Typer';
+import { GraphqlError } from '../../utils/fetchErrors';
 
 const query = `
     query($fnr: String!, $bareMedAktiviteter: Boolean) {
@@ -47,18 +48,18 @@ const queryBody = (fnr: string) => ({
     }
 });
 
-interface GraphqlError {
+interface GraphqlErrorMessage {
     message: string;
 }
 
 export interface GraphqlResponse<T> {
     data: T;
-    errors: GraphqlError[];
+    errors: GraphqlErrorMessage[];
 }
 
 const sjekkGraphqlFeil = <T>(response: GraphqlResponse<T>): Promise<GraphqlResponse<T>> => {
     if ((response?.errors?.length || 0) != 0) {
-        return Promise.reject('Kunne ikke hente dialoger');
+        return Promise.reject(new GraphqlError('Kunne ikke hente dialoger', response.errors));
     }
     return Promise.resolve(response);
 };

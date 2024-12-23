@@ -149,7 +149,7 @@ export const useDialogStore = create(
                     if (e instanceof UnautorizedError) {
                         captureMessage('UnauthorizedError 401 på henting av sist oppdatert');
                     } else {
-                        captureMessage('Kunne ikke hente sist oppdatert');
+                        captureMaybeError(`Kunne ikke hente sist oppdatert ${e.toString()}`, e);
                     }
                 }
             },
