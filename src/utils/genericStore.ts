@@ -1,5 +1,6 @@
 import { create } from 'zustand';
 import { isReloading, Status } from '../api/typer';
+import { captureMaybeError } from './errorCapture';
 
 type GenericStore<StoredDataType, ResultType extends StoredDataType, ArgType> = {
     status: Status;
@@ -10,7 +11,8 @@ type GenericStore<StoredDataType, ResultType extends StoredDataType, ArgType> = 
 
 export const createGenericStore = <StoredDataType, ArgType, ResultType extends StoredDataType>(
     initialData: StoredDataType,
-    fetcher: (arg: ArgType) => Promise<ResultType>
+    fetcher: (arg: ArgType) => Promise<ResultType>,
+    asyncActionDescription: string
 ) => {
     return create<GenericStore<StoredDataType, ResultType, ArgType>>((set) => ({
         data: initialData,
@@ -28,6 +30,7 @@ export const createGenericStore = <StoredDataType, ArgType, ResultType extends S
                 });
                 return data;
             } catch (e) {
+                captureMaybeError(`Kunne ikke ${asyncActionDescription}: ${e?.toString()}`, e);
                 set({
                     error: e?.toString(),
                     status: Status.ERROR

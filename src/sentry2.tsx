@@ -25,7 +25,7 @@ const getEnv = (): Env => {
 
 Sentry.init({
     allowUrls: [/https:\/\/cdn\.nav\.no/],
-    denyUrls: [/https:\/\/cdn\.nav\.no\/personbruker/],
+    denyUrls: [/https:\/\/cdn\.nav\.no\/personbruker/, /https:\/\/nav\.no\/dekoratoren/],
     dsn: 'https://e1ba5c07ce204508b9fcbe5c64211ed5@sentry.gc.nav.no/173',
     integrations: [
         Sentry.reactRouterV6BrowserTracingIntegration({
