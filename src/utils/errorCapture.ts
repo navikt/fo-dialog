@@ -6,7 +6,7 @@ declare const window: {
     captureMessage: (message: string) => void;
 };
 
-export const captureException = (exception: any) => {
+export const captureException = (exception: Error) => {
     if (window.captureException) {
         window.captureException(exception);
     }
@@ -14,5 +14,13 @@ export const captureException = (exception: any) => {
 export const captureMessage = (message: string) => {
     if (window.captureMessage) {
         window.captureMessage(message);
+    }
+};
+
+export const captureMaybeError = (errorMessage: string, error: Error | any) => {
+    if (error instanceof Error) {
+        captureException(new Error(errorMessage, error));
+    } else {
+        captureMessage(errorMessage);
     }
 };

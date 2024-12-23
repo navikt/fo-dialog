@@ -11,7 +11,7 @@ import { useShallow } from 'zustand/react/shallow';
 import { hentDialogerGraphql } from './dialogGraphql';
 import { eqKladd, KladdStore } from '../KladdProvider';
 import { UnautorizedError } from '../../utils/fetchErrors';
-import { captureMessage } from '../../utils/errorCapture';
+import { captureException, captureMaybeError, captureMessage } from '../../utils/errorCapture';
 
 export const initDialogState: DialogState = {
     status: Status.INITIAL,
@@ -61,7 +61,7 @@ export const useDialogStore = create(
                         return dialoger;
                     })
                     .catch((e) => {
-                        captureMessage(`Kunne ikke hente dialogdata ${e.toString()}`);
+                        captureMaybeError(`Kunne ikke hente dialogdata ${e.toString()}`, e);
                         set(
                             (prevState) => ({ ...prevState, status: Status.ERROR, error: e }),
                             false,
@@ -147,7 +147,7 @@ export const useDialogStore = create(
                     }
                 } catch (e) {
                     if (e instanceof UnautorizedError) {
-                        captureMessage('UnautorizedError 401 på henting av sist oppdatert');
+                        captureMessage('UnauthorizedError 401 på henting av sist oppdatert');
                     } else {
                         captureMessage('Kunne ikke hente sist oppdatert');
                     }
@@ -207,7 +207,7 @@ export const useDialogStore = create(
                         return dialog;
                     })
                     .catch((err) => {
-                        console.error('Kunne ikke sende melding', err);
+                        captureMaybeError(`Kunne ikke sende melding: ${err.toString()}`, err);
                         set({ status: Status.ERROR }, false, 'sendMelding/rejected');
                         return undefined;
                     });
