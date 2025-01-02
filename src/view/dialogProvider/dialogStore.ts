@@ -61,7 +61,6 @@ export const useDialogStore = create(
                             false, // flag for overwriting state, default false but needs to be provided when naming actions
                             'hentDialoger/fulfilled'
                         );
-                        return;
                     })
                     .catch((e) => {
                         captureMaybeError(`Kunne ikke hente dialogdata ${e.toString()}`, e);
@@ -70,7 +69,6 @@ export const useDialogStore = create(
                             false,
                             'hentDialoger/error'
                         );
-                        return;
                     });
             },
             hentDialoger: async (fnr) => {

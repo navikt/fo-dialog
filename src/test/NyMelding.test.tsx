@@ -26,7 +26,7 @@ describe('Ny melding', () => {
         vi.clearAllMocks();
     });
 
-    it('når veileder sender en melding skal den dukke opp i chatten', async () => {
+    it('når veileder sender en melding skal payload inneholde dialogId', async () => {
         const { getByLabelText, getByText } = await act(() => render(<IntegrationTestApp />));
         await waitFor(() => getByLabelText('Meldinger'), { timeout: 10000 });
         const input = getByLabelText('Skriv om arbeid og oppfølging');
@@ -48,7 +48,7 @@ describe('Ny melding', () => {
         });
     });
 
-    it('når veileder oppretter en ny dialog skal den dukke opp i chatten', async () => {
+    it('når veileder oppretter en ny dialog payload til backend ikke ha dialogId', async () => {
         const { getByLabelText, getByText } = await act(() => render(<IntegrationTestApp />));
         await waitFor(() => getByLabelText('Meldinger'), { timeout: 10000 });
         await act(async () => getByText('Ny dialog').click());

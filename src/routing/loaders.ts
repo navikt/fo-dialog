@@ -1,5 +1,5 @@
 import { Features, useFeatureToggleStore } from '../featureToggle/FeatureToggleProvider';
-import { defer, useRouteLoaderData } from 'react-router';
+import { useRouteLoaderData } from 'react-router';
 import { useDialogStore } from '../view/dialogProvider/dialogStore';
 import { useBrukerDataStore } from '../view/BrukerProvider';
 import { useOppfolgingStore } from '../view/OppfolgingProvider';
