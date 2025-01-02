@@ -26,6 +26,15 @@ describe('Ny melding', () => {
         vi.clearAllMocks();
     });
 
+    const expectOpprettToHaveBeenCalledWith = (body: Record<any, any>) => {
+        const callsToOpprett = (fetchData as unknown as Mock).mock.calls.filter((call) => {
+            return call[0] === `${DialogApi.opprettDialog}`;
+        });
+        expect(callsToOpprett).toHaveLength(1);
+        const { 0: url, 1: payload } = callsToOpprett[0]; //NOSONAR
+        expect(JSON.parse(payload.body)).toEqual(body);
+    };
+
     it('når veileder sender en melding skal payload inneholde dialogId', async () => {
         const { getByLabelText, getByText } = await act(() => render(<IntegrationTestApp />));
         await waitFor(() => getByLabelText('Meldinger'), { timeout: 10000 });
@@ -36,12 +45,7 @@ describe('Ny melding', () => {
         });
         const sendKnapp = getByText('Send');
         await act(async () => sendKnapp.click());
-        const callsToOpprett = (fetchData as unknown as Mock).mock.calls.filter((call) => {
-            return call[0] === `${DialogApi.opprettDialog}`;
-        });
-        expect(callsToOpprett).toHaveLength(1);
-        const { 0: url, 1: payload } = callsToOpprett[0];
-        expect(JSON.parse(payload.body)).toEqual({
+        expectOpprettToHaveBeenCalledWith({
             tekst: melding,
             fnr: '0123456789',
             dialogId: '2'
@@ -68,12 +72,7 @@ describe('Ny melding', () => {
         );
         const sendKnapp = getByText('Send');
         await act(async () => sendKnapp.click());
-        const callsToOpprett = (fetchData as unknown as Mock).mock.calls.filter((call) => {
-            return call[0] === `${DialogApi.opprettDialog}`;
-        });
-        expect(callsToOpprett).toHaveLength(1);
-        const { 0: url, 1: payload } = callsToOpprett[0];
-        expect(JSON.parse(payload.body)).toEqual({
+        expectOpprettToHaveBeenCalledWith({
             fnr: '0123456789',
             tekst: melding,
             overskrift: tittel,
