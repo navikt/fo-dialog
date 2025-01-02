@@ -203,7 +203,6 @@ export const useDialogStore = create(
                     body: JSON.stringify(nyDialogData)
                 })
                     .then((dialog) => {
-                        console.log('send melding', nyDialogData);
                         const { updateDialogInDialoger, updateDialogWithNewDialog } = get();
                         if (nyDialogData.dialogId) {
                             updateDialogInDialoger(dialog);
