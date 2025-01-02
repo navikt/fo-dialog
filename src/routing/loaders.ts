@@ -21,7 +21,7 @@ interface InitialLoaderData {
 }
 
 export const initialPageLoader = (fnr: string | undefined) => async () => {
-    return defer({
+    return {
         features: useFeatureToggleStore.getState().fetch(undefined),
         dialoger: useDialogStore.getState().hentDialoger(fnr),
         me: useBrukerDataStore.getState().fetch(undefined),
@@ -30,7 +30,7 @@ export const initialPageLoader = (fnr: string | undefined) => async () => {
         aktiviteter: useAktivitetStore.getState().fetch(fnr),
         arenaAktiviteter: useTiltaksAktivitetStore.getState().fetch(fnr),
         innsynsrett: useInnsynsrettStore.getState().fetch(fnr)
-    });
+    };
 };
 
 export const useRootLoaderData = () => useRouteLoaderData(RouteIds.Root) as InitialLoaderData;
