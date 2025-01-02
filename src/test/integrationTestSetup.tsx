@@ -5,8 +5,8 @@ import { Provider } from '../view/Provider';
 import { setupServer } from 'msw/node';
 import { handlers } from '../mock/handlers';
 
-export const setupIntegrationTest = (fnr: string | undefined) => {
-    const ProviderAndRouter = fullRouterAndProvider(fnr, ['/2']);
+export const setupIntegrationTest = (fnr: string | undefined, initialRouteEntries = ['/2']) => {
+    const ProviderAndRouter = fullRouterAndProvider(fnr, initialRouteEntries);
     return {
         worker: setupServer(...handlers), // TODO: Handlers should mock
         App: () => <ProviderAndRouter />
@@ -15,7 +15,7 @@ export const setupIntegrationTest = (fnr: string | undefined) => {
 
 export const fullRouterAndProvider = (fnr: string | undefined, initialEntries: string[] | undefined = undefined) => {
     return () => (
-        <Provider erVeileder={fnr !== undefined}>
+        <Provider erVeileder={fnr !== undefined} fnr={fnr}>
             <AllRoutesInMemory initialEntries={initialEntries} fnr={fnr} />
         </Provider>
     );
