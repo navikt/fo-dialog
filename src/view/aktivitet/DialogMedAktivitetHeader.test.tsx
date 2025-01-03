@@ -118,7 +118,7 @@ describe('<DialogMedAktivitetHeader />', () => {
         vi.spyOn(AktivitetProvider, 'useAktivitetContext').mockImplementation(() => aktivitetRes);
 
         const wrapper = render(
-            <MemoryRouter>
+            <MemoryRouter future={{ v7_startTransition: true, v7_relativeSplatPath: true }}>
                 <DialogMedAktivitetHeader />
             </MemoryRouter>
         );

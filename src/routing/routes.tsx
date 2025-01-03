@@ -114,14 +114,27 @@ export const dialogRoutes = (fnr: string | undefined): RouteObject[] => [
     }
 ];
 
+/* Will be removed in v7 */
+export const reactRouterFutureFlags = {
+    v7_relativeSplatPath: true,
+    v7_fetcherPersist: true,
+    v7_normalizeFormMethod: true,
+    v7_partialHydration: true,
+    v7_skipActionErrorRevalidation: true
+};
+
 export const Routes = ({ createRouter }: { createRouter: typeof createBrowserRouter }) => {
     const fnr = useFnrContext();
     if (USE_HASH_ROUTER) {
-        const hashRouter = createHashRouter(dialogRoutes(fnr));
+        const hashRouter = createHashRouter(dialogRoutes(fnr), {
+            future: reactRouterFutureFlags
+        });
         return <RouterProvider router={hashRouter} />;
     }
     if (process.env.NODE_ENV === 'test') {
-        const inMemoryRouter = createMemoryRouter(dialogRoutes(fnr));
+        const inMemoryRouter = createMemoryRouter(dialogRoutes(fnr), {
+            future: reactRouterFutureFlags
+        });
         return <RouterProvider router={inMemoryRouter} />;
     }
     // Denne er kun for github app eller lokalt (?)
