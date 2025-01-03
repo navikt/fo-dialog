@@ -1,4 +1,4 @@
-import React, { useLayoutEffect } from 'react';
+import { useLayoutEffect } from 'react';
 import { useNavigate } from 'react-router';
 
 import loggEvent from '../felleskomponenter/logging';
@@ -44,5 +44,5 @@ export function EventHandler() {
         return () => document.body.removeEventListener('keydown', listener);
     }, []);
 
-    return <></>;
+    return null;
 }

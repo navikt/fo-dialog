@@ -59,5 +59,5 @@ export function UppdateEventHandler() {
         }
     });
 
-    return <></>;
+    return null;
 }
