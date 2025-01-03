@@ -50,6 +50,7 @@ describe('Ny melding', () => {
             fnr: '0123456789',
             dialogId: '2'
         });
+        await waitFor(() => getByText('Sendt. Bruker får beskjed på sms eller e-post om en halvtime'));
     });
 
     it('når veileder oppretter en ny dialog payload til backend ikke ha dialogId', async () => {
@@ -78,5 +79,6 @@ describe('Ny melding', () => {
             overskrift: tittel,
             venterPaaSvarFraBruker: false
         });
+        await waitFor(() => getByText('Sendt. Bruker får beskjed på sms eller e-post om en halvtime'));
     });
 });
