@@ -23,19 +23,17 @@ export const Page: React.FC<PageProps> = (props) => {
     }, []);
     const { visAktivitet, erVeileder } = props;
     return (
-        <>
-            <Provider visAktivitetDefault={visAktivitet} fnr={erVeileder ? fnr : undefined} erVeileder={erVeileder}>
-                <StatusAdvarsel />
-                <UppdateEventHandler />
-                <div
-                    className={cx('flex max-h-screen min-h-screen', {
-                        // 'max-h-[calc(100vh-180px)] min-h-[calc(100vh-180px)]': erInternFlate,
-                        // 'max-h-[calc(100vh-80px)] min-h-[calc(100vh-80px)]': !erInternFlate
-                    })}
-                >
-                    <Routes createRouter={createMemoryRouter} />
-                </div>
-            </Provider>
-        </>
+        <Provider visAktivitetDefault={visAktivitet} fnr={erVeileder ? fnr : undefined} erVeileder={erVeileder}>
+            <StatusAdvarsel />
+            <UppdateEventHandler />
+            <div
+                className={cx('flex max-h-screen min-h-screen', {
+                    // 'max-h-[calc(100vh-180px)] min-h-[calc(100vh-180px)]': erInternFlate,
+                    // 'max-h-[calc(100vh-80px)] min-h-[calc(100vh-80px)]': !erInternFlate
+                })}
+            >
+                <Routes createRouter={createMemoryRouter} />
+            </div>
+        </Provider>
     );
 };
