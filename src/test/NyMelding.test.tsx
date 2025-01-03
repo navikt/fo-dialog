@@ -47,7 +47,7 @@ describe('Ny melding', () => {
         await act(async () => sendKnapp.click());
         expectOpprettToHaveBeenCalledWith({
             tekst: melding,
-            fnr: '0123456789',
+            fnr,
             dialogId: '2'
         });
         await waitFor(() => getByText('Sendt. Bruker får beskjed på sms eller e-post om en halvtime'));
@@ -74,7 +74,7 @@ describe('Ny melding', () => {
         const sendKnapp = getByText('Send');
         await act(async () => sendKnapp.click());
         expectOpprettToHaveBeenCalledWith({
-            fnr: '0123456789',
+            fnr,
             tekst: melding,
             overskrift: tittel,
             venterPaaSvarFraBruker: false
