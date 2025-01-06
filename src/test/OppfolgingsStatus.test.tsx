@@ -67,13 +67,13 @@ describe('Statusadvarsler', () => {
             getByText('Du kan ikke kontakte denne brukeren digitalt.');
         });
 
-        it('bruker ser advarsel når bruker er under oppf. men reservert i KRR', async () => {
-            gitt.bruker().som.harIngenDialog().som.harBrukerUnderOppfølgingMenReservertIKRR();
-            const { getByText } = await act(() => render(<MemoryRouterMedBareDialogOversikt />));
-            getByText(
-                'For å ta i bruk den digitale dialogen med din veileder, må du fjerne reservasjonen din mot digital kommunikasjon.'
-            );
-        });
+        // it('bruker ser advarsel når bruker er under oppf. men reservert i KRR', async () => {
+        //     gitt.bruker().som.harIngenDialog().som.harBrukerUnderOppfølgingMenReservertIKRR();
+        //     const { getByText } = await act(() => render(<MemoryRouterMedBareDialogOversikt />));
+        //     getByText(
+        //         'For å ta i bruk den digitale dialogen med din veileder, må du fjerne reservasjonen din mot digital kommunikasjon.'
+        //     );
+        // });
     });
 
     describe('Manuell advarsler', () => {

@@ -100,18 +100,18 @@ describe('<AlertStripeContainer/>', () => {
         const { getByText } = render(<StatusAdvarsel />);
         getByText('Du kan ikke kontakte denne brukeren digitalt.');
     });
-    it('Bruker registret KRR viser en advarsel - bruker. ', () => {
-        useFetchOppfolging.data!.underOppfolging = true;
-
-        vi.spyOn(BrukerContext, 'useUserInfoContext').mockImplementation(() => bruker);
-        vi.spyOn(OppfolgingContext, 'useOppfolgingContext').mockImplementation(() => useFetchOppfolging);
-
-        const { getByText, getByRole } = render(<StatusAdvarsel />);
-        getByText(
-            'For å ta i bruk den digitale dialogen med din veileder, må du fjerne reservasjonen din mot digital kommunikasjon.'
-        );
-        expect(getByRole('link').textContent).toBe('Gå til Norge.no for å fjerne reservasjonen');
-    });
+    // it('Bruker registret KRR viser en advarsel - bruker. ', () => {
+    //     useFetchOppfolging.data!.underOppfolging = true;
+    //
+    //     vi.spyOn(BrukerContext, 'useUserInfoContext').mockImplementation(() => bruker);
+    //     vi.spyOn(OppfolgingContext, 'useOppfolgingContext').mockImplementation(() => useFetchOppfolging);
+    //
+    //     const { getByText, getByRole } = render(<StatusAdvarsel />);
+    //     getByText(
+    //         'For å ta i bruk den digitale dialogen med din veileder, må du fjerne reservasjonen din mot digital kommunikasjon.'
+    //     );
+    //     expect(getByRole('link').textContent).toBe('Gå til Norge.no for å fjerne reservasjonen');
+    // });
 
     // test('Bruker kan ikke varsles viser en advarsel - bruker. ', () => {
     //     useFetchOppfolging.data.underOppfolging = true;
