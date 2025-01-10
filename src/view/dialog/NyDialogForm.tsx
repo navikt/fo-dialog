@@ -129,6 +129,11 @@ const NyDialogForm = (props: Props) => {
         }
     }, [melding, tema, dirtyFields]);
 
+    const handleFocus = (event: React.FocusEvent<HTMLTextAreaElement>) => {
+        let startPos = melding.length - startTekst.length;
+        event.target.setSelectionRange(startPos, startPos);
+    };
+
     const onSubmit = async (data: NyDialogFormValues) => {
         const { tema, melding } = data;
 
@@ -177,6 +182,7 @@ const NyDialogForm = (props: Props) => {
                     maxLength={5000}
                     {...register('melding')}
                     error={errors.melding && errors.melding.message}
+                    onFocus={handleFocus}
                 />
 
                 {noeFeilet ? (
