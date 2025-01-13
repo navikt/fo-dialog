@@ -98,7 +98,7 @@ describe('<AlertStripeContainer/>', () => {
         vi.spyOn(OppfolgingContext, 'useOppfolgingContext').mockImplementation(() => useFetchOppfolging);
 
         const { getByText } = render(<StatusAdvarsel />);
-        getByText('Du kan ikke kontakte denne brukeren digitalt.');
+        getByText('Du kan ikke sende meldinger i dialogen fordi kontaktinformasjonen til brukeren er utdatert i KRR.');
     });
     // it('Bruker registret KRR viser en advarsel - bruker. ', () => {
     //     useFetchOppfolging.data!.underOppfolging = true;
