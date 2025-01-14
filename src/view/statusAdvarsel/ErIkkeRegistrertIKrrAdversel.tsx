@@ -2,12 +2,8 @@ import { Link, Heading } from '@navikt/ds-react';
 import React from 'react';
 import StatusAdvarselWrapper from './StatusAdvarselWrapper';
 
-interface Props {
-    erIkkRegristrertIKrr: boolean;
-}
-
-export default function ErIkkeIKrr(props: Props) {
-    return props.erIkkRegristrertIKrr ? <BrukerIkkeIIKrr /> : null;
+export default function ErIkkeRegistrertIKrrAdverselBruker() {
+    return  <BrukerIkkeIIKrr />;
 }
 
 function BrukerIkkeIIKrr() {

@@ -44,7 +44,7 @@ const oppfolgingData = {
     kanReaktiveres: false,
     kanVarsles: !brukerKanIkkeVarsles(),
     inaktiveringsdato: '2018-08-31T10:46:10.971+01:00',
-    registrertKRR: erIkkeRegistrertIKRR()
+    registrertKRR: !erIkkeRegistrertIKRR()
 };
 
 export default oppfolgingData;
