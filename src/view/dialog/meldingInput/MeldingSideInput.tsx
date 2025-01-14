@@ -14,12 +14,18 @@ const MeldingSideInputInner = () => {
     const {
         register,
         getValues,
+        watch,
         formState: { errors, isSubmitting }
     } = useFormContext<MeldingFormValues>();
-    const textAreaRef: MutableRefObject<HTMLTextAreaElement | null> = useRef(null);
-    useFocusBeforeHilsen(textAreaRef);
 
-    const formHooks = register('melding');
+    const melding = watch('melding');
+    const startTekst = watch('startTekst');
+
+    const handleFocus = (event: React.FocusEvent<HTMLTextAreaElement>) => {
+        let startPos = melding.length - (startTekst || '').length;
+        event.target.setSelectionRange(startPos, startPos);
+    };
+
     return (
         <form className="flex flex-1 flex-col overflow-hidden" onSubmit={onSubmit} noValidate autoComplete="off">
             <div className={'overflow-hidden  flex flex-col'}>
@@ -33,15 +39,12 @@ const MeldingSideInputInner = () => {
                         ) : null
                     }
                     className="overflow-auto"
-                    {...formHooks}
-                    ref={(ref) => {
-                        textAreaRef.current = ref;
-                        formHooks.ref(ref);
-                    }}
+                    {...register('melding')}
                     placeholder={'Skriv om arbeid og oppfølging'}
                     minRows={3}
                     maxRows={100} // Will overflow before hitting max lines
                     maxLength={5000}
+                    onFocus={handleFocus}
                 />
                 <div className="self-stretch mt-2 flex justify-between items-end">
                     <Button size="small" title="Send" disabled={isSubmitting} loading={isSubmitting}>

@@ -32,7 +32,8 @@ const schema = (startTekst: string) =>
             .max(maxMeldingsLengde, `Meldingen kan ikke være mer enn ${maxMeldingsLengde}`)
             .refine((melding) => melding !== startTekst, {
                 message: 'Du må fylle ut en melding'
-            })
+            }),
+        startTekst: z.string().optional()
     });
 
 export type MeldingFormValues = z.infer<ReturnType<typeof schema>>;
@@ -63,7 +64,8 @@ const MeldingInputBox = ({ dialog: valgtDialog }: Props) => {
     const setViewState = useSetViewContext();
 
     const defaultValues: MeldingFormValues = {
-        melding: kladd?.tekst || startTekst
+        melding: kladd?.tekst || startTekst,
+        startTekst: startTekst
     };
     const formHandlers = useForm<MeldingFormValues>({
         defaultValues,
