@@ -43,8 +43,8 @@ export default function StatusAdvarsel() {
     if (!kanVarsles) {
         return <KanIkkeVarsles erVeileder={erVeileder} />;
     }
-    if (erKrrBruker){
-        return <ErIkkeIKrr erIkkRegristrertIKrr={erKrrBruker}/>;
+    if (erKrrBruker) {
+        return <ErIkkeIKrr erIkkRegristrertIKrr={erKrrBruker} />;
     }
 
     return null;
