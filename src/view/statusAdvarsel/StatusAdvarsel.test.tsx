@@ -43,7 +43,7 @@ const oppfolgingData: OppfolgingData = {
     erSykmeldtMedArbeidsgiver: false,
     formidlingsgruppe: null,
     servicegruppe: null,
-    erRegistrertKRR: false
+    registrertKRR: false
 };
 
 const useFetchOppfolging: OppfolgingDataProviderType = {
@@ -139,6 +139,7 @@ describe('<AlertStripeContainer/>', () => {
         useFetchOppfolging.data!.underOppfolging = true;
         useFetchOppfolging.data!.reservasjonKRR = false;
         useFetchOppfolging.data!.kanVarsles = true;
+        useFetchOppfolging.data!.registrertKRR = true;
 
         vi.spyOn(BrukerContext, 'useUserInfoContext').mockImplementation(() => veileder);
         vi.spyOn(OppfolgingContext, 'useOppfolgingContext').mockImplementation(() => useFetchOppfolging);
@@ -151,6 +152,7 @@ describe('<AlertStripeContainer/>', () => {
         useFetchOppfolging.data!.underOppfolging = true;
         useFetchOppfolging.data!.reservasjonKRR = false;
         useFetchOppfolging.data!.kanVarsles = true;
+        useFetchOppfolging.data!.registrertKRR = true;
 
         vi.spyOn(BrukerContext, 'useUserInfoContext').mockImplementation(() => bruker);
         vi.spyOn(OppfolgingContext, 'useOppfolgingContext').mockImplementation(() => useFetchOppfolging);
