@@ -42,7 +42,8 @@ const oppfolgingData: OppfolgingData = {
     inaktiveringsdato: '2018-08-31T10:46:10.971+01:00',
     erSykmeldtMedArbeidsgiver: false,
     formidlingsgruppe: null,
-    servicegruppe: null
+    servicegruppe: null,
+    erRegistrertKRR: false
 };
 
 const useFetchOppfolging: OppfolgingDataProviderType = {
