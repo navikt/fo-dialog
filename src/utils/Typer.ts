@@ -52,6 +52,7 @@ export interface OppfolgingData {
     aktorId: string;
     veilederId: StringOrNull;
     reservasjonKRR: boolean;
+    erRegistrertKRR: boolean;
     kanVarsles: boolean;
     manuell: boolean;
     underOppfolging: boolean;
