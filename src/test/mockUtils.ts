@@ -43,7 +43,7 @@ const oppfolgingData: OppfolgingData = {
     formidlingsgruppe: null,
     kanVarsles: true,
     servicegruppe: null,
-    erRegistrertKRR: false
+    registrertKRR: false
 };
 
 const baseOppfolgingsData = {
