@@ -65,7 +65,7 @@ describe('Statusadvarsler', () => {
             gitt.veileder().som.harIngenDialog().som.harBrukerUnderOppfølgingMenReservertIKRR();
             const { getByText } = await act(() => render(<MemoryRouterMedBareDialogOversikt />));
             getByText(
-                'Du kan ikke sende meldinger fordi brukeren har reservert seg mot digital kommunikasjon KRR.'
+                'Du kan ikke sende meldinger i dialogen fordi brukeren ikke har registrert e-post eller telefonnummeret sitt i KRR.'
             );
         });
 
@@ -73,7 +73,7 @@ describe('Statusadvarsler', () => {
             gitt.bruker().som.harIngenDialog().som.harBrukerUnderOppfølgingMenReservertIKRR();
             const { getByText } = await act(() => render(<MemoryRouterMedBareDialogOversikt />));
             getByText(
-                'Du kan ikke sende meldinger i den digitale dialogen fordi du har reservert deg mot digital kommunikasjon i kontakt og reservasjonsregisteret (KRR).'
+                'Du kan ikke sende meldinger i dialogen fordi du ikke har registrert e-post eller telefonnummeret ditt i kontakt og reservasjonsregisteret (KRR).'
             );
         });
     });
