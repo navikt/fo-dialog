@@ -65,7 +65,7 @@ describe('Statusadvarsler', () => {
             gitt.veileder().som.harIngenDialog().som.harBrukerUnderOppfølgingMenReservertIKRR();
             const { getByText } = await act(() => render(<MemoryRouterMedBareDialogOversikt />));
             getByText(
-                'Du kan ikke sende meldinger i dialogen fordi kontaktinformasjonen til brukeren er utdatert i KRR.'
+                'Du kan ikke sende meldinger fordi brukeren har reservert seg mot digital kommunikasjon KRR.'
             );
         });
 
