@@ -34,7 +34,7 @@ export default function StatusAdvarsel() {
     if (!erUnderOppfolging || kanReaktiveres) {
         return <IkkeUnderOppfolging erVeileder={erVeileder} />;
     }
-    if (erReservertKrr) {
+    if (erReservertKrr && erRegistrertIKrrBruker) {
         return <ReservertKrr erVeileder={erVeileder} />;
     }
     if (manuellBruker) {
