@@ -41,17 +41,23 @@ const AppBody = () => {
 
     useLogBruker(brukerdata, oppfolgingData);
 
+
     return (
-        <>
-            <DialogOversikt />
-            <WaitForAllData />
-            <div className={classNames('flex flex-1 flex-col')}>
-                <StatusAdvarsel />
-                <DialogHeaderFeil />
-                <Outlet />
+        <div className="flex flex-1 flex-col">
+            <div className="md:hidden"> <StatusAdvarsel /> </div>
+            <div className="flex flex-1">
+                <DialogOversikt />
+                <WaitForAllData />
+                <div className={classNames('flex flex-1 flex-col')}>
+                    <div className="hidden md:flex flex-col flex-1">
+                     <StatusAdvarsel />
+                    </div>
+                    <DialogHeaderFeil />
+                    <Outlet />
+                </div>
+                <EventHandler />
             </div>
-            <EventHandler />
-        </>
+        </div>
     );
 };
 
