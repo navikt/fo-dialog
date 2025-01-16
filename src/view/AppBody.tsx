@@ -53,7 +53,7 @@ const AppBody = () => {
                 <WaitForAllData />
                 <div className="flex flex-1 flex-col">
                     <div className="hidden md:flex flex-col">
-                        { ([Breakpoint.md, Breakpoint.lg, Breakpoint.xl].includes(breakpoint))
+                        { ([Breakpoint.md, Breakpoint.lg, Breakpoint.xl, Breakpoint['2xl']].includes(breakpoint))
                             ? <StatusAdvarsel /> : null
                         }
                     </div>
