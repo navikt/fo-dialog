@@ -12,6 +12,7 @@ import { dataOrUndefined } from './Provider';
 import { useRootLoaderData } from '../routing/loaders';
 import StatusAdvarsel from './statusAdvarsel/StatusAdvarsel';
 import DialogHeaderFeil from './dialog/DialogHeaderFeil';
+import { Breakpoint, useBreakpoint } from './utils/useBreakpoint';
 
 function hash(val: string) {
     const utf8 = new TextEncoder().encode(val);
@@ -37,20 +38,24 @@ const AppBody = () => {
     const oppfolgingContext = useOppfolgingContext();
     const brukerdata = useUserInfoContext();
     const oppfolgingData = dataOrUndefined(oppfolgingContext);
+    const breakpoint = useBreakpoint();
+
 
     useLogBruker(brukerdata, oppfolgingData);
 
     return (
         <div className="flex flex-1 flex-col">
-            <div className="md:hidden">
-                <StatusAdvarsel />
-            </div>
+            { ([Breakpoint.sm, Breakpoint.initial].includes(breakpoint))
+                ? <StatusAdvarsel /> : null
+            }
             <div className="flex flex-1">
                 <DialogOversikt />
                 <WaitForAllData />
                 <div className="flex flex-1 flex-col">
                     <div className="hidden md:flex flex-col">
-                        <StatusAdvarsel />
+                        { ([Breakpoint.md, Breakpoint.lg, Breakpoint.xl].includes(breakpoint))
+                            ? <StatusAdvarsel /> : null
+                        }
                     </div>
                     <DialogHeaderFeil />
                     <Outlet />

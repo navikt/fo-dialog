@@ -81,9 +81,9 @@ describe('Statusadvarsler', () => {
     describe('Manuell advarsler', () => {
         it('veileder ser advarsel når bruker er under oppf. men manuell', async () => {
             gitt.veileder().som.harIngenDialog().som.harBrukerUnderOppfølgingMenManuell();
-            const { getByText } = await act(() => render(<MemoryRouterMedBareDialogOversikt />));
+            const { getByText } = await act(() => render(<MemoryRouterMedBareDialogOversikt /> ));
             getByText(
-                'Du kan ikke sende meldinger i dialogen fordi kontaktinformasjonen til brukeren er utdatert i KRR.'
+                'Du kan ikke sende meldinger i dialogen fordi kontaktinformasjonen til brukeren er utdatert i KRR.',
             );
         });
 
