@@ -10,7 +10,6 @@ import { EventHandler } from './EventHandler';
 import { useOppfolgingContext } from './OppfolgingProvider';
 import { dataOrUndefined } from './Provider';
 import { useRootLoaderData } from '../routing/loaders';
-import classNames from 'classnames';
 import StatusAdvarsel from './statusAdvarsel/StatusAdvarsel';
 import DialogHeaderFeil from './dialog/DialogHeaderFeil';
 
@@ -41,16 +40,17 @@ const AppBody = () => {
 
     useLogBruker(brukerdata, oppfolgingData);
 
-
     return (
         <div className="flex flex-1 flex-col">
-            <div className="md:hidden"> <StatusAdvarsel /> </div>
+            <div className="md:hidden">
+                <StatusAdvarsel />
+            </div>
             <div className="flex flex-1">
                 <DialogOversikt />
                 <WaitForAllData />
-                <div className={classNames('flex flex-1 flex-col')}>
-                    <div className="hidden md:flex flex-col flex-1">
-                     <StatusAdvarsel />
+                <div className="flex flex-1 flex-col">
+                    <div className="hidden md:flex flex-col">
+                        <StatusAdvarsel />
                     </div>
                     <DialogHeaderFeil />
                     <Outlet />
