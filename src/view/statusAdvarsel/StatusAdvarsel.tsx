@@ -34,13 +34,13 @@ export default function StatusAdvarsel() {
     if (!erUnderOppfolging || kanReaktiveres) {
         return <IkkeUnderOppfolging erVeileder={erVeileder} />;
     }
-    if (erReservertKrr && erRegistrertIKrrBruker) {
+    if (erReservertKrr) {
         return <ReservertKrr erVeileder={erVeileder} />;
     }
     if (manuellBruker) {
         return <ManuellBruker erVeileder={erVeileder} />;
     }
-    if (!kanVarsles) {
+    if (!kanVarsles && erRegistrertIKrrBruker) {
         return <KanIkkeVarsles erVeileder={erVeileder} />;
     }
     if (!erRegistrertIKrrBruker) {

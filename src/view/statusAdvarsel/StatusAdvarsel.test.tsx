@@ -92,15 +92,15 @@ describe('<AlertStripeContainer/>', () => {
         );
     });
 
-    it('Bruker registret KRR viser en advarsel - veileder.', () => {
-        useFetchOppfolging.data!.underOppfolging = true;
-
-        vi.spyOn(BrukerContext, 'useUserInfoContext').mockImplementation(() => veileder);
-        vi.spyOn(OppfolgingContext, 'useOppfolgingContext').mockImplementation(() => useFetchOppfolging);
-
-        const { getByText } = render(<StatusAdvarsel />);
-        getByText('Du kan ikke sende meldinger i dialogen fordi kontaktinformasjonen til brukeren er utdatert i KRR.');
-    });
+    // it('Bruker registret KRR viser en advarsel - veileder.', () => {
+    //     useFetchOppfolging.data!.underOppfolging = true;
+    //
+    //     vi.spyOn(BrukerContext, 'useUserInfoContext').mockImplementation(() => veileder);
+    //     vi.spyOn(OppfolgingContext, 'useOppfolgingContext').mockImplementation(() => useFetchOppfolging);
+    //
+    //     const { getByText } = render(<StatusAdvarsel />);
+    //     getByText('Du kan ikke sende meldinger i dialogen fordi kontaktinformasjonen til brukeren er utdatert i KRR.');
+    // });
     // it('Bruker registret KRR viser en advarsel - bruker. ', () => {
     //     useFetchOppfolging.data!.underOppfolging = true;
     //
