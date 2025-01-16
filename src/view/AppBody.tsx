@@ -39,23 +39,20 @@ const AppBody = () => {
     const brukerdata = useUserInfoContext();
     const oppfolgingData = dataOrUndefined(oppfolgingContext);
     const breakpoint = useBreakpoint();
+    const isMobile  = ([Breakpoint.sm, Breakpoint.initial].includes(breakpoint))
 
 
     useLogBruker(brukerdata, oppfolgingData);
 
     return (
         <div className="flex flex-1 flex-col">
-            { ([Breakpoint.sm, Breakpoint.initial].includes(breakpoint))
-                ? <StatusAdvarsel /> : null
-            }
+            {isMobile ? <StatusAdvarsel /> : null}
             <div className="flex flex-1">
                 <DialogOversikt />
                 <WaitForAllData />
                 <div className="flex flex-1 flex-col">
                     <div className="hidden md:flex flex-col">
-                        { ([Breakpoint.md, Breakpoint.lg, Breakpoint.xl, Breakpoint['2xl']].includes(breakpoint))
-                            ? <StatusAdvarsel /> : null
-                        }
+                        {!isMobile ? <StatusAdvarsel /> : null}
                     </div>
                     <DialogHeaderFeil />
                     <Outlet />
