@@ -1,5 +1,5 @@
 import { createMemoryRouter, RouterProvider } from 'react-router';
-import { RouteIds } from '../routing/routes';
+import { reactRouterFutureFlags, RouteIds } from '../routing/routes';
 import AppBody from '../view/AppBody';
 import { describe, expect } from 'vitest';
 import React from 'react';
@@ -17,9 +17,14 @@ const singleComponentRouter = (initialEntries: string[] | undefined = undefined)
                 element: <AppBody />
             }
         ],
-        { initialEntries }
+        {
+            initialEntries,
+            future: reactRouterFutureFlags
+        }
     );
-const MemoryRouterMedBareDialogOversikt = () => <RouterProvider router={singleComponentRouter(['/'])} />;
+const MemoryRouterMedBareDialogOversikt = () => (
+    <RouterProvider future={{ v7_startTransition: true }} router={singleComponentRouter(['/'])} />
+);
 
 const rootLoaderData = {
     dialoger: Promise.resolve([])

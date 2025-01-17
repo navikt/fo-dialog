@@ -12,7 +12,11 @@ interface Innsynsrett {
     foresatteHarInnsynsrett: boolean;
 }
 
-export const useInnsynsrettStore = createGenericStore(undefined as Innsynsrett | undefined, fetchInnsynsrett);
+export const useInnsynsrettStore = createGenericStore(
+    undefined as Innsynsrett | undefined,
+    fetchInnsynsrett,
+    'hente innsynrett'
+);
 
 export const useInnsynsrett = () =>
     useInnsynsrettStore((state) => {

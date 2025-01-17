@@ -15,7 +15,11 @@ export interface BrukerDataProviderType {
 
 const apiUrl = OppfolgingsApi.me;
 
-export const useBrukerDataStore = createGenericStore(null as Bruker | null, () => fetchData<Bruker>(apiUrl));
+export const useBrukerDataStore = createGenericStore(
+    null as Bruker | null,
+    () => fetchData<Bruker>(apiUrl),
+    'hente brukerdata'
+);
 export const useUserInfoContext = () => useBrukerDataStore(useShallow((state) => state.data));
 export const useBrukerDataProvider = (): BrukerDataProviderType => {
     const { data, error, status } = useBrukerDataStore(

@@ -1,12 +1,12 @@
 import { createMemoryRouter, Outlet, RouterProvider } from 'react-router';
-import { dialogRoutes, RouteIds } from '../routing/routes';
+import { dialogRoutes, reactRouterFutureFlags, RouteIds } from '../routing/routes';
 import React, { ReactElement } from 'react';
 import { Provider } from '../view/Provider';
 import { setupServer } from 'msw/node';
 import { handlers } from '../mock/handlers';
 
-export const setupIntegrationTest = (fnr: string | undefined) => {
-    const ProviderAndRouter = fullRouterAndProvider(fnr, ['/2']);
+export const setupIntegrationTest = (fnr: string | undefined, initialRouteEntries = ['/2']) => {
+    const ProviderAndRouter = fullRouterAndProvider(fnr, initialRouteEntries);
     return {
         worker: setupServer(...handlers), // TODO: Handlers should mock
         App: () => <ProviderAndRouter />
@@ -15,7 +15,7 @@ export const setupIntegrationTest = (fnr: string | undefined) => {
 
 export const fullRouterAndProvider = (fnr: string | undefined, initialEntries: string[] | undefined = undefined) => {
     return () => (
-        <Provider erVeileder={fnr !== undefined}>
+        <Provider erVeileder={fnr !== undefined} fnr={fnr}>
             <AllRoutesInMemory initialEntries={initialEntries} fnr={fnr} />
         </Provider>
     );
@@ -28,8 +28,11 @@ const AllRoutesInMemory = ({
     fnr: string | undefined;
     initialEntries: string[] | undefined;
 }) => {
-    const router = createMemoryRouter(dialogRoutes(fnr), { initialEntries });
-    return <RouterProvider router={router} />;
+    const router = createMemoryRouter(dialogRoutes(fnr), {
+        initialEntries,
+        future: reactRouterFutureFlags
+    });
+    return <RouterProvider future={{ v7_startTransition: true }} router={router} />;
 };
 
 export const SimpleRouterWithoutProvider = ({
@@ -58,7 +61,10 @@ export const SimpleRouterWithoutProvider = ({
                 ]
             }
         ],
-        { initialEntries }
+        {
+            initialEntries,
+            future: reactRouterFutureFlags
+        }
     );
-    return <RouterProvider router={router} />;
+    return <RouterProvider future={{ v7_startTransition: true }} router={router} />;
 };

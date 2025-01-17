@@ -4,7 +4,7 @@ import { createMemoryRouter, RouterProvider } from 'react-router';
 import React from 'react';
 import { setupServer } from 'msw/node';
 import { handlers } from '../../mock/handlers';
-import { dialogRoutes } from '../../routing/routes';
+import { dialogRoutes, reactRouterFutureFlags } from '../../routing/routes';
 import { Provider } from '../Provider';
 
 const fnr = undefined; // Brukerkontekst
@@ -12,7 +12,8 @@ const fnr = undefined; // Brukerkontekst
 // calling createMemoryRouter will create the component and fire the loaders
 const memoryRouter = () =>
     createMemoryRouter(dialogRoutes(fnr), {
-        initialEntries: [`/`]
+        initialEntries: [`/`],
+        future: reactRouterFutureFlags
     });
 
 const server = setupServer(...handlers);
@@ -30,7 +31,7 @@ describe('DialogTrad', () => {
         const { getByLabelText, getByText } = await act(() =>
             render(
                 <Provider visAktivitetDefault={false} fnr={fnr} erVeileder={!!fnr}>
-                    <RouterProvider router={memoryRouter()} />
+                    <RouterProvider future={{ v7_startTransition: true }} router={memoryRouter()} />
                 </Provider>
             )
         );

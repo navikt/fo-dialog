@@ -21,7 +21,8 @@ const fetchOppfolging = (fnr: string | undefined) =>
 
 export const useOppfolgingStore = createGenericStore<OppfolgingData | undefined, string | undefined, OppfolgingData>(
     undefined as OppfolgingData | undefined,
-    fetchOppfolging
+    fetchOppfolging,
+    'hente oppfolging'
 );
 export const useOppfolgingContext = (): OppfolgingDataProviderType =>
     useOppfolgingStore(

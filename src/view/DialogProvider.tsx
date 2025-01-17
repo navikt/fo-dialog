@@ -52,6 +52,7 @@ export interface DialogDataProviderType {
 }
 
 export interface DialogState {
+    isSessionExpired: boolean;
     status: Status;
     sistOppdatert: Date;
     dialoger: DialogData[];

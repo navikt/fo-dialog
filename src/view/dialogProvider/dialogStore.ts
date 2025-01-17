@@ -2,7 +2,7 @@ import { create } from 'zustand';
 import { Status } from '../../api/typer';
 import { DialogData, KladdData, NyDialogMeldingData, SistOppdatert } from '../../utils/Typer';
 import { DialogState, isDialogReloading, NyMeldingArgs, NyTradArgs, SendMeldingArgs } from '../DialogProvider';
-import { fetchData, UnautorizedError } from '../../utils/Fetch';
+import { fetchData } from '../../utils/Fetch';
 import { DialogApi } from '../../api/UseApiBasePath';
 import { isAfter } from 'date-fns';
 import { devtools } from 'zustand/middleware';
@@ -10,8 +10,11 @@ import { EventType, closeWebsocket, listenForNyDialogEvents } from '../../api/ny
 import { useShallow } from 'zustand/react/shallow';
 import { hentDialogerGraphql } from './dialogGraphql';
 import { eqKladd, KladdStore } from '../KladdProvider';
+import { UnautorizedError } from '../../utils/fetchErrors';
+import { captureMaybeError, captureMessage } from '../../utils/errorCapture';
 
 export const initDialogState: DialogState = {
+    isSessionExpired: false,
     status: Status.INITIAL,
     sistOppdatert: new Date(),
     dialoger: []
@@ -20,8 +23,8 @@ export const initDialogState: DialogState = {
 type DialogStore = DialogState &
     KladdStore & {
         kladder: KladdData[];
-        silentlyHentDialoger: (fnr: string | undefined) => Promise<DialogData[]>;
-        hentDialoger: (fnr: string | undefined) => Promise<DialogData[]>;
+        silentlyHentDialoger: (fnr: string | undefined) => Promise<void>;
+        hentDialoger: (fnr: string | undefined) => Promise<void>;
         pollForChanges: (fnr: string | undefined) => Promise<void>;
         configurePoll(config: { fnr: string | undefined; useWebsockets: boolean; erBruker: boolean }): void;
         updateDialogInDialoger: (dialogData: DialogData) => DialogData;
@@ -47,6 +50,8 @@ export const useDialogStore = create(
             kladdStatus: Status.INITIAL,
             // Actions / functions / mutations
             silentlyHentDialoger: async (fnr) => {
+                const { isSessionExpired } = get();
+                if (isSessionExpired) return;
                 return hentDialogerGraphql(fnr)
                     .then(({ dialoger, kladder }) => {
                         // TODO: Find a way to get previous value
@@ -56,16 +61,14 @@ export const useDialogStore = create(
                             false, // flag for overwriting state, default false but needs to be provided when naming actions
                             'hentDialoger/fulfilled'
                         );
-                        return dialoger;
                     })
                     .catch((e) => {
-                        console.error(e);
+                        captureMaybeError(`Kunne ikke hente dialogdata ${e.toString()}`, e);
                         set(
                             (prevState) => ({ ...prevState, status: Status.ERROR, error: e }),
                             false,
                             'hentDialoger/error'
                         );
-                        return [] as unknown as DialogData[];
                     });
             },
             hentDialoger: async (fnr) => {
@@ -78,7 +81,7 @@ export const useDialogStore = create(
                     'hentDialoger/pending'
                 );
                 const { silentlyHentDialoger } = get();
-                return silentlyHentDialoger(fnr);
+                await silentlyHentDialoger(fnr);
             },
             configurePoll({ fnr, useWebsockets, erBruker }) {
                 const { pollForChanges, currentPollFnr } = get();
@@ -132,6 +135,8 @@ export const useDialogStore = create(
             },
             pollForChanges: async (fnr) => {
                 try {
+                    const { isSessionExpired } = get();
+                    if (isSessionExpired) return;
                     let { sistOppdatert: remoteSistOppdatert } = await fetchData<SistOppdatert>(
                         DialogApi.sistOppdatert,
                         {
@@ -145,8 +150,10 @@ export const useDialogStore = create(
                     }
                 } catch (e) {
                     if (e instanceof UnautorizedError) {
+                        captureMessage('UnauthorizedError 401 på henting av sist oppdatert');
+                        set({ isSessionExpired: true }, false, 'setSessionExpired');
                     } else {
-                        console.warn('Kunne ikke hent sist oppdatert', e);
+                        captureMaybeError(`Kunne ikke hente sist oppdatert ${e?.toString()}`, e);
                     }
                 }
             },
@@ -195,7 +202,7 @@ export const useDialogStore = create(
                 })
                     .then((dialog) => {
                         const { updateDialogInDialoger, updateDialogWithNewDialog } = get();
-                        if (!nyDialogData.dialogId) {
+                        if (nyDialogData.dialogId) {
                             updateDialogInDialoger(dialog);
                         } else {
                             updateDialogWithNewDialog(dialog);
@@ -204,7 +211,7 @@ export const useDialogStore = create(
                         return dialog;
                     })
                     .catch((err) => {
-                        console.error(err);
+                        captureMaybeError(`Kunne ikke sende melding: ${err.toString()}`, err);
                         set({ status: Status.ERROR }, false, 'sendMelding/rejected');
                         return undefined;
                     });
@@ -262,7 +269,7 @@ const onIntervalWithCleanup = (pollForChanges: () => Promise<void>) => {
     let interval: NodeJS.Timeout;
     interval = setInterval(() => {
         pollForChanges().catch((e) => {
-            console.error(e);
+            captureMessage('Klarte ikke polle sistOppdatert');
             clearInterval(interval);
         });
     }, 10000);

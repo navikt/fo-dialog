@@ -9,7 +9,11 @@ export interface VeilederInfo {
 }
 
 const fetchVeilederNavn = () => fetchData<VeilederInfo>('/veilarbveileder/api/veileder/me');
-export const useVeilederNavnStore = createGenericStore(undefined as VeilederInfo | undefined, fetchVeilederNavn);
+export const useVeilederNavnStore = createGenericStore(
+    undefined as VeilederInfo | undefined,
+    fetchVeilederNavn,
+    'hente veileder navn'
+);
 export const useVeilederNavn = () =>
     useVeilederNavnStore((state) => {
         return `${state.data?.fornavn} ${state.data?.etternavn}`;

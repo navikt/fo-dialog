@@ -23,7 +23,13 @@ export default function NyDialogTrad() {
 
     const loaderData = useRootLoaderData();
     const requiredData = useMemo(() => {
-        return Promise.all([loaderData.oppfolging, loaderData.veilederNavn, loaderData.me]);
+        return Promise.all([
+            loaderData.oppfolging,
+            loaderData.veilederNavn,
+            loaderData.me,
+            loaderData.aktiviteter,
+            loaderData.arenaAktiviteter
+        ]);
     }, []);
 
     return (

@@ -9,13 +9,13 @@ import {
 } from 'react-router-dom';
 import { captureConsoleIntegration } from '@sentry/react';
 
-export enum Env {
+enum Env {
     Local = 'local',
     Dev = 'dev',
     Prod = 'prod'
 }
 
-export const getEnv = (): Env => {
+const getEnv = (): Env => {
     // TODO: Dette vil ikke virke som internflate
     const { hostname } = window.location;
     if (hostname.includes('dev.nav.no')) return Env.Dev;
@@ -24,6 +24,8 @@ export const getEnv = (): Env => {
 };
 
 Sentry.init({
+    allowUrls: [/https:\/\/cdn\.nav\.no/],
+    denyUrls: [/https:\/\/cdn\.nav\.no\/personbruker/, /https:\/\/nav\.no\/dekoratoren/],
     dsn: 'https://e1ba5c07ce204508b9fcbe5c64211ed5@sentry.gc.nav.no/173',
     integrations: [
         Sentry.reactRouterV6BrowserTracingIntegration({
@@ -47,14 +49,20 @@ Sentry.init({
     ],
     tracePropagationTargets: [
         'localhost',
-        /https:\/\/nav\.no\/(veilarbdialog|veilarboppfolging|veilarbaktivitet|veilarblest)/,
+        /https:\/\/nav\.no\/arbeid\/dialog\/(veilarbdialog|veilarboppfolging|veilarbaktivitet|veilarblest)/,
         /https:\/\/pto\.ekstern\.dev\.nav\.no\/arbeid\/dialog\/(veilarbdialog|veilarboppfolging|veilarbaktivitet|veilarblest)/
     ],
     environment: getEnv(),
     enabled: getEnv() !== Env.Local,
     ignoreErrors: [
-        /Amplitude/
+        /Amplitude/,
         // /^Failed to execute 'removeChild' on 'Node': The node to be removed is not a child of this node.$/,
+        /**
+         * React internal error thrown when something outside react modifies the DOM
+         * This is usually because of a browser extension or Chrome's built-in translate
+         */
+        /Failed to execute 'removeChild' on 'Node': The node to be removed is not a child of this node\./,
+        /Failed to execute 'insertBefore' on 'Node': The node before which the new node is to be inserted is not a child of this node./
     ],
     // Set tracesSampleRate to 1.0 to capture 100%
     // of transactions for performance monitoring.
@@ -63,5 +71,13 @@ Sentry.init({
     // beforeSend: fjernPersonopplysninger,
     release: import.meta.env.VITE_SENTRY_RELEASE
 });
+
+declare const window: {
+    location: { hostname: string };
+    captureException: typeof Sentry.captureException;
+    captureMessage: typeof Sentry.captureMessage;
+};
+window.captureException = Sentry.captureException;
+window.captureMessage = Sentry.captureMessage;
 
 export const sentryCreateBrowserRouter = Sentry.wrapCreateBrowserRouter(createBrowserRouter);

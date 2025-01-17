@@ -70,7 +70,8 @@ const hentVeilarbAktiviteter = (fnr: string | undefined) =>
     hentAktiviteterGraphql(fnr).then((response) => response.data.perioder.flatMap((periode) => periode.aktiviteter));
 export const useAktivitetStore = createGenericStore<undefined | Aktivitet[], string | undefined, Aktivitet[]>(
     undefined,
-    hentVeilarbAktiviteter
+    hentVeilarbAktiviteter,
+    'hente aktiviteter'
 );
 const hentTiltaksAktiviteter = (fnr: string | undefined) =>
     fetchData<ArenaAktivitet[]>(arenaAktivitetUrl, {
@@ -81,7 +82,7 @@ export const useTiltaksAktivitetStore = createGenericStore<
     undefined | ArenaAktivitet[],
     string | undefined,
     ArenaAktivitet[]
->(undefined, hentTiltaksAktiviteter);
+>(undefined, hentTiltaksAktiviteter, 'hente arena-aktiviteter');
 
 export const useAktivitetDataProvider = (): AktivitetDataProviderType => {
     const { aktiviteter, aktiviteterStatus } = useAktivitetStore(

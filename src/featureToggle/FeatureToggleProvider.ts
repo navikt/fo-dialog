@@ -17,8 +17,10 @@ export interface FeatureData {
     error?: string;
 }
 
-export const useFeatureToggleStore = createGenericStore({ [FeatureToggle.USE_WEBSOCKETS]: false }, () =>
-    fetchData<Features>(apiUrl)
+export const useFeatureToggleStore = createGenericStore(
+    { [FeatureToggle.USE_WEBSOCKETS]: false },
+    () => fetchData<Features>(apiUrl),
+    'hente feature toggles'
 );
 
 const apiUrl = AktivitetApi.hentFeatureToggles;
