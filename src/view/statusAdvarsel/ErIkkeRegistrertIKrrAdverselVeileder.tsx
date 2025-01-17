@@ -6,7 +6,7 @@ export default function ErIkkeRegistrertIKrrAdverselVeileder() {
     return <BrukerIkkeIIKrrVeileder />;
 }
 
-const LinkIkkeRegistrertIKrr = 'https://www.norge.no/nb/digital-borger/oppdater-kontaktinformasjon';
+const linkIkkeRegistrertIKrr = 'https://www.norge.no/nb/digital-borger/oppdater-kontaktinformasjon';
 
 function BrukerIkkeIIKrrVeileder() {
     return (
@@ -17,7 +17,7 @@ function BrukerIkkeIIKrrVeileder() {
             Du kan ikke sende meldinger i dialogen fordi brukeren ikke har registrert e-post eller telefonnummeret sitt
             i KRR.
             <br />
-            <Link href={LinkIkkeRegistrertIKrr}>Brukeren må gå til norge.no for å registrere.</Link>
+            <Link href={linkIkkeRegistrertIKrr}>Brukeren må gå til norge.no for å registrere.</Link>
         </StatusAdvarselWrapper>
     );
 }
