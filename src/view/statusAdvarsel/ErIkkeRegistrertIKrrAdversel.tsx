@@ -3,7 +3,7 @@ import React from 'react';
 import StatusAdvarselWrapper from './StatusAdvarselWrapper';
 
 export default function ErIkkeRegistrertIKrrAdverselBruker() {
-    return  <BrukerIkkeIIKrr />;
+    return <BrukerIkkeIIKrr />;
 }
 
 const LinkIkkeRegistrertIKrr = 'https://www.norge.no/nb/digital-borger/oppdater-kontaktinformasjon';

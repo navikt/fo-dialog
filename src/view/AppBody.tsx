@@ -39,8 +39,7 @@ const AppBody = () => {
     const brukerdata = useUserInfoContext();
     const oppfolgingData = dataOrUndefined(oppfolgingContext);
     const breakpoint = useBreakpoint();
-    const isMobile  = ([Breakpoint.sm, Breakpoint.initial].includes(breakpoint))
-
+    const isMobile = [Breakpoint.sm, Breakpoint.initial].includes(breakpoint);
 
     useLogBruker(brukerdata, oppfolgingData);
 
@@ -51,9 +50,7 @@ const AppBody = () => {
                 <DialogOversikt />
                 <WaitForAllData />
                 <div className="flex flex-1 flex-col">
-                    <div className="hidden md:flex flex-col">
-                        {!isMobile ? <StatusAdvarsel /> : null}
-                    </div>
+                    <div className="hidden md:flex flex-col">{!isMobile ? <StatusAdvarsel /> : null}</div>
                     <DialogHeaderFeil />
                     <Outlet />
                 </div>

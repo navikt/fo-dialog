@@ -23,9 +23,7 @@ export function KanIkkeKontakteElektroniskVeileder() {
             </Heading>
             Du kan ikke sende meldinger i dialogen fordi kontaktinformasjonen til brukeren er utdatert i KRR.
             <br />
-            <Link href={linkKanIkkeVarsles}>
-                Brukeren må gå til norge.no for å oppdatere.
-            </Link>
+            <Link href={linkKanIkkeVarsles}>Brukeren må gå til norge.no for å oppdatere.</Link>
         </StatusAdvarselWrapper>
     );
 }

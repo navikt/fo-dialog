@@ -2,7 +2,6 @@ import React from 'react';
 import ErIkkeRegistrertIKrrAdverselBruker from './ErIkkeRegistrertIKrrAdversel';
 import ErIkkeRegistrertIKrrAdverselVeileder from './ErIkkeRegistrertIKrrAdverselVeileder';
 
-
 interface Props {
     erVeileder: boolean;
 }
