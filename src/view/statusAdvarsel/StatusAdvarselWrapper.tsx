@@ -13,6 +13,8 @@ export default function StatusAdvarselWrapper({ children }: Props) {
     );
 }
 
+const linkKanIkkeVarsles = 'https://www.norge.no/nb/digital-borger/oppdater-kontaktinformasjon';
+
 export function KanIkkeKontakteElektroniskVeileder() {
     return (
         <StatusAdvarselWrapper>
@@ -21,7 +23,7 @@ export function KanIkkeKontakteElektroniskVeileder() {
             </Heading>
             Du kan ikke sende meldinger i dialogen fordi kontaktinformasjonen til brukeren er utdatert i KRR.
             <br />
-            <Link href={'https://www.norge.no/nb/digital-borgar/oppdatere'}>
+            <Link href={linkKanIkkeVarsles}>
                 Brukeren må gå til norge.no for å oppdatere.
             </Link>
         </StatusAdvarselWrapper>

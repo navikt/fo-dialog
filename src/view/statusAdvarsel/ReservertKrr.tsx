@@ -9,8 +9,10 @@ interface Props {
 export default function ReservertKrr(props: Props) {
     return props.erVeileder ? <BrukerReservertIKrr />:  <BrukerReservertIKrrVeileder />;
 }
+const linkReservert = "https://www.norge.no/nb/digital-borger/reservasjon"
 
 function BrukerReservertIKrrVeileder() {
+
     return (
         <StatusAdvarselWrapper>
             <Heading spacing size="small" level="3">
@@ -18,7 +20,7 @@ function BrukerReservertIKrrVeileder() {
             </Heading>
             Du kan ikke sende meldinger i den digitale dialogen fordi du har reservert deg mot digital kommunikasjon i
             kontakt og reservasjonsregisteret (KRR).
-            <Link href="https://www.norge.no/nb/digital-borger/reservasjon">
+            <Link href={linkReservert}>
                 Gå til norge.no for å fjerne reservasjonen.
             </Link>
         </StatusAdvarselWrapper>
@@ -34,7 +36,7 @@ function BrukerReservertIKrr() {
             Du kan ikke sende meldinger fordi brukeren har
             reservert seg mot digital kommunikasjon KRR.
             <br />
-            <Link href="https://www.norge.no/nb/digital-borger/reservasjon">
+            <Link href={linkReservert}>
                 Brukeren må gå til norge.no for å fjerne reservasjonen.
             </Link>
         </StatusAdvarselWrapper>
