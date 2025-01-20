@@ -8,7 +8,6 @@ import IkkeUnderOppfolging from './IkkeUnderOppfolging';
 import KanIkkeVarsles from './KanIkkeVarsles';
 import ManuellBruker from './ManuellBruker';
 import ReservertKrr from './ReservertKrr';
-import ErIkkeRegistrertIKrrAdversel from './ErIkkeRegistrertIKrrAdverselBruker';
 
 export default function StatusAdvarsel() {
     const oppfolgingDataContext = useOppfolgingContext();
@@ -26,7 +25,6 @@ export default function StatusAdvarsel() {
     const kanVarsles = oppfolgingData.kanVarsles;
     const manuellBruker = oppfolgingData.manuell;
     const kanReaktiveres = oppfolgingData.kanReaktiveres;
-    const erRegistrertIKrrBruker = oppfolgingData.registrertKRR;
 
     if (!erUnderOppfolging && !harOppfolgingsPerioder) {
         return <AldriUnderOppfolging erVeileder={erVeileder} />;
@@ -40,11 +38,8 @@ export default function StatusAdvarsel() {
     if (manuellBruker) {
         return <ManuellBruker erVeileder={erVeileder} />;
     }
-    if (!kanVarsles && erRegistrertIKrrBruker) {
+    if (!kanVarsles) {
         return <KanIkkeVarsles erVeileder={erVeileder} />;
-    }
-    if (!erRegistrertIKrrBruker) {
-        return <ErIkkeRegistrertIKrrAdversel erVeileder={erVeileder} />;
     }
 
     return null;

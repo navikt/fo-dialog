@@ -11,8 +11,7 @@ export const LocalStorageElement = {
     DIALOG_FEILER: 'dialog_feiler',
     AKTIVITET_FEILER: 'aktivitet_feiler',
     ARENAAKTIVITET_FEILER: 'arenaaktivitet_feiler',
-    NY_DIALOG_SEND_MELDING_FEILER: 'ny_dialog_eller_send_melding_feiler',
-    ER_IKKE_REGISTRERT_I_KRR: 'er_ikke_registrert_i_krr'
+    NY_DIALOG_SEND_MELDING_FEILER: 'ny_dialog_eller_send_melding_feiler'
 };
 
 export const BRUKER_TYPE = {
@@ -47,8 +46,6 @@ export const erEksternBruker = () => hentFraLocalStorage(LocalStorageElement.BRU
 export const harIngenDialoger = () => erSatt(LocalStorageElement.INGEN_DIALOGER);
 
 export const erUnder18 = () => erSatt(LocalStorageElement.UNDER_18);
-
-export const erIkkeRegistrertIKRR = () => erSatt(LocalStorageElement.ER_IKKE_REGISTRERT_I_KRR);
 
 export const harDialogFeilerSkruddPa = () => erSatt(LocalStorageElement.DIALOG_FEILER);
 

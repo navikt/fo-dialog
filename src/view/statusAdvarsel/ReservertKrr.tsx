@@ -1,38 +1,24 @@
-import { Link, Heading } from '@navikt/ds-react';
+import { Link } from '@navikt/ds-react';
 import React from 'react';
-import StatusAdvarselWrapper from './StatusAdvarselWrapper';
+
+import StatusAdvarselWrapper, { KanIkkeKontakteElektroniskVeileder } from './StatusAdvarselWrapper';
 
 interface Props {
     erVeileder: boolean;
 }
 
 export default function ReservertKrr(props: Props) {
-    return props.erVeileder ? <BrukerReservertIKrr /> : <BrukerReservertIKrrVeileder />;
-}
-const linkReservert = 'https://www.norge.no/nb/digital-borger/reservasjon';
-
-function BrukerReservertIKrrVeileder() {
-    return (
-        <StatusAdvarselWrapper>
-            <Heading spacing size="small" level="3">
-                Du har reservert deg mot digital kommunikasjon
-            </Heading>
-            Du kan ikke sende meldinger i den digitale dialogen fordi du har reservert deg mot digital kommunikasjon i
-            kontakt og reservasjonsregisteret (KRR).
-            <Link href={linkReservert}>Gå til norge.no for å fjerne reservasjonen.</Link>
-        </StatusAdvarselWrapper>
-    );
+    return props.erVeileder ? <KanIkkeKontakteElektroniskVeileder /> : <BrukerKrr />;
 }
 
-function BrukerReservertIKrr() {
+function BrukerKrr() {
     return (
         <StatusAdvarselWrapper>
-            <Heading spacing size="small" level="3">
-                Brukeren er reservert i KRR
-            </Heading>
-            Du kan ikke sende meldinger fordi brukeren har reservert seg mot digital kommunikasjon KRR.
-            <br />
-            <Link href={linkReservert}>Brukeren må gå til norge.no for å fjerne reservasjonen.</Link>
+            For å ta i bruk den digitale dialogen med din veileder, må du fjerne reservasjonen din mot digital
+            kommunikasjon.
+            <Link href="https://www.norge.no/nb/digital-borger/reservasjon">
+                Gå til Norge.no for å fjerne reservasjonen
+            </Link>
         </StatusAdvarselWrapper>
     );
 }

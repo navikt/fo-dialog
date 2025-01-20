@@ -42,8 +42,7 @@ const oppfolgingData: OppfolgingData = {
     erSykmeldtMedArbeidsgiver: false,
     formidlingsgruppe: null,
     kanVarsles: true,
-    servicegruppe: null,
-    registrertKRR: false
+    servicegruppe: null
 };
 
 const baseOppfolgingsData = {
