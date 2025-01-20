@@ -46,7 +46,7 @@ const AppBody = () => {
     return (
         <div className="flex flex-1 flex-col">
             {isMobile ? <StatusAdvarsel /> : null}
-            <div className="flex flex-1">
+            <div className="flex flex-1 max-h-full">
                 <DialogOversikt />
                 <WaitForAllData />
                 <div className="flex flex-1 flex-col">
