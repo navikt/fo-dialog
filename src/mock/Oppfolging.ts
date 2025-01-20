@@ -4,7 +4,8 @@ import {
     erKRRBruker,
     erManuellBruker,
     erIkkeUnderOppfolging,
-    ingenOppfPerioder
+    ingenOppfPerioder,
+    erIkkeRegistrertIKRR
 } from './demo/localstorage';
 
 const oppfPerioder: PeriodeData[] = [
@@ -42,7 +43,8 @@ const oppfolgingData = {
     harSkriveTilgang: true,
     kanReaktiveres: false,
     kanVarsles: !brukerKanIkkeVarsles(),
-    inaktiveringsdato: '2018-08-31T10:46:10.971+01:00'
+    inaktiveringsdato: '2018-08-31T10:46:10.971+01:00',
+    registrertKRR: !erIkkeRegistrertIKRR()
 };
 
 export default oppfolgingData;

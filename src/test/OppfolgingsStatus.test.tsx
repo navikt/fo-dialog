@@ -69,14 +69,14 @@ describe('Statusadvarsler', () => {
         it('veileder ser advarsel når bruker er under oppf. men reservert i KRR', async () => {
             gitt.veileder().som.harIngenDialog().som.harBrukerUnderOppfølgingMenReservertIKRR();
             const { getByText } = await act(() => render(<MemoryRouterMedBareDialogOversikt />));
-            getByText('Du kan ikke kontakte denne brukeren digitalt.');
+            getByText('Du kan ikke sende meldinger fordi brukeren har reservert seg mot digital kommunikasjon KRR.');
         });
 
         it('bruker ser advarsel når bruker er under oppf. men reservert i KRR', async () => {
             gitt.bruker().som.harIngenDialog().som.harBrukerUnderOppfølgingMenReservertIKRR();
             const { getByText } = await act(() => render(<MemoryRouterMedBareDialogOversikt />));
             getByText(
-                'For å ta i bruk den digitale dialogen med din veileder, må du fjerne reservasjonen din mot digital kommunikasjon.'
+                'Du kan ikke sende meldinger i den digitale dialogen fordi du har reservert deg mot digital kommunikasjon i kontakt og reservasjonsregisteret (KRR).'
             );
         });
     });
@@ -85,7 +85,9 @@ describe('Statusadvarsler', () => {
         it('veileder ser advarsel når bruker er under oppf. men manuell', async () => {
             gitt.veileder().som.harIngenDialog().som.harBrukerUnderOppfølgingMenManuell();
             const { getByText } = await act(() => render(<MemoryRouterMedBareDialogOversikt />));
-            getByText('Du kan ikke kontakte denne brukeren digitalt.');
+            getByText(
+                'Du kan ikke sende meldinger i dialogen fordi kontaktinformasjonen til brukeren er utdatert i KRR.'
+            );
         });
 
         it('bruker ser advarsel når bruker er under oppf. men manuell', async () => {
@@ -110,13 +112,17 @@ describe('Statusadvarsler', () => {
         it('veileder ser advarsel når bruker er under oppf. men ikke kan varsler (krr-attributt)', async () => {
             gitt.veileder().som.harIngenDialog().som.harBrukerUnderOppfølgingMenKanIkkeVarsles();
             const { getByText } = await act(() => render(<MemoryRouterMedBareDialogOversikt />));
-            getByText('Du kan ikke kontakte denne brukeren digitalt.');
+            getByText(
+                'Du kan ikke sende meldinger i dialogen fordi brukeren ikke har registrert e-post eller telefonnummeret sitt i KRR.'
+            );
         });
 
         it('bruker ser advarsel når bruker er under oppf. men ikke kan varsles (krr-attributt)', async () => {
             gitt.bruker().som.harIngenDialog().som.harBrukerUnderOppfølgingMenKanIkkeVarsles();
             const { getByText } = await act(() => render(<MemoryRouterMedBareDialogOversikt />));
-            getByText(/Du kan ikke varsles om meldinger. Dette er en feil/);
+            getByText(
+                'Du kan ikke sende meldinger i dialogen fordi du ikke har registrert e-post eller telefonnummeret ditt i kontakt og reservasjonsregisteret (KRR).'
+            );
         });
     });
 });
