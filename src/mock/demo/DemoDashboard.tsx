@@ -17,7 +17,8 @@ import {
     harNyDialogEllerSendMeldingFeilerSkruddPa,
     ingenOppfPerioder,
     settLocalStorage,
-    erUnder18
+    erUnder18,
+    erIkkeRegistrertIKRR
 } from './localstorage';
 
 interface Props {
@@ -47,7 +48,7 @@ const brukerTilstandRadios = [
         checked: erManuellBruker()
     },
     {
-        label: 'KRR',
+        label: 'Er reservert i KRR',
         value: LocalStorageElement.KRR_BRUKER,
         checked: erKRRBruker()
     },
@@ -70,6 +71,11 @@ const brukerTilstandRadios = [
         label: 'Under 18',
         value: LocalStorageElement.UNDER_18,
         checked: erUnder18()
+    },
+    {
+        label: 'ikke registrert i KRR',
+        value: LocalStorageElement.ER_IKKE_REGISTRERT_I_KRR,
+        checked: erIkkeRegistrertIKRR()
     }
 ];
 
