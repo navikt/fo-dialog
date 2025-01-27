@@ -42,7 +42,8 @@ const oppfolgingData: OppfolgingData = {
     inaktiveringsdato: '2018-08-31T10:46:10.971+01:00',
     erSykmeldtMedArbeidsgiver: false,
     formidlingsgruppe: null,
-    servicegruppe: null
+    servicegruppe: null,
+    registrertKRR: false
 };
 
 const useFetchOppfolging: OppfolgingDataProviderType = {
@@ -98,7 +99,7 @@ describe('<AlertStripeContainer/>', () => {
         vi.spyOn(OppfolgingContext, 'useOppfolgingContext').mockImplementation(() => useFetchOppfolging);
 
         const { getByText } = render(<StatusAdvarsel />);
-        getByText('Du kan ikke kontakte denne brukeren digitalt.');
+        getByText('Du kan ikke sende meldinger fordi brukeren har reservert seg mot digital kommunikasjon KRR.');
     });
     it('Bruker registret KRR viser en advarsel - bruker. ', () => {
         useFetchOppfolging.data!.underOppfolging = true;
@@ -108,9 +109,9 @@ describe('<AlertStripeContainer/>', () => {
 
         const { getByText, getByRole } = render(<StatusAdvarsel />);
         getByText(
-            'For å ta i bruk den digitale dialogen med din veileder, må du fjerne reservasjonen din mot digital kommunikasjon.'
+            'Du kan ikke sende meldinger i den digitale dialogen fordi du har reservert deg mot digital kommunikasjon i kontakt og reservasjonsregisteret (KRR).'
         );
-        expect(getByRole('link').textContent).toBe('Gå til Norge.no for å fjerne reservasjonen');
+        expect(getByRole('link').textContent).toBe('Gå til norge.no for å fjerne reservasjonen.');
     });
 
     // test('Bruker kan ikke varsles viser en advarsel - bruker. ', () => {
@@ -138,6 +139,7 @@ describe('<AlertStripeContainer/>', () => {
         useFetchOppfolging.data!.underOppfolging = true;
         useFetchOppfolging.data!.reservasjonKRR = false;
         useFetchOppfolging.data!.kanVarsles = true;
+        useFetchOppfolging.data!.registrertKRR = true;
 
         vi.spyOn(BrukerContext, 'useUserInfoContext').mockImplementation(() => veileder);
         vi.spyOn(OppfolgingContext, 'useOppfolgingContext').mockImplementation(() => useFetchOppfolging);
@@ -150,6 +152,7 @@ describe('<AlertStripeContainer/>', () => {
         useFetchOppfolging.data!.underOppfolging = true;
         useFetchOppfolging.data!.reservasjonKRR = false;
         useFetchOppfolging.data!.kanVarsles = true;
+        useFetchOppfolging.data!.registrertKRR = true;
 
         vi.spyOn(BrukerContext, 'useUserInfoContext').mockImplementation(() => bruker);
         vi.spyOn(OppfolgingContext, 'useOppfolgingContext').mockImplementation(() => useFetchOppfolging);

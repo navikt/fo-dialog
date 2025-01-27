@@ -10,9 +10,9 @@ import { EventHandler } from './EventHandler';
 import { useOppfolgingContext } from './OppfolgingProvider';
 import { dataOrUndefined } from './Provider';
 import { useRootLoaderData } from '../routing/loaders';
-import classNames from 'classnames';
 import StatusAdvarsel from './statusAdvarsel/StatusAdvarsel';
 import DialogHeaderFeil from './dialog/DialogHeaderFeil';
+import { Breakpoint, useBreakpoint } from './utils/useBreakpoint';
 
 function hash(val: string) {
     const utf8 = new TextEncoder().encode(val);
@@ -38,20 +38,25 @@ const AppBody = () => {
     const oppfolgingContext = useOppfolgingContext();
     const brukerdata = useUserInfoContext();
     const oppfolgingData = dataOrUndefined(oppfolgingContext);
+    const breakpoint = useBreakpoint();
+    const isMobile = [Breakpoint.sm, Breakpoint.initial].includes(breakpoint);
 
     useLogBruker(brukerdata, oppfolgingData);
 
     return (
-        <>
-            <DialogOversikt />
-            <WaitForAllData />
-            <div className={classNames('flex flex-1 flex-col')}>
-                <StatusAdvarsel />
-                <DialogHeaderFeil />
-                <Outlet />
+        <div className="flex flex-1 flex-col">
+            {isMobile ? <StatusAdvarsel /> : null}
+            <div className="flex flex-1 max-h-full">
+                <DialogOversikt />
+                <WaitForAllData />
+                <div className="flex flex-1 flex-col">
+                    <div className="hidden md:flex flex-col">{!isMobile ? <StatusAdvarsel /> : null}</div>
+                    <DialogHeaderFeil />
+                    <Outlet />
+                </div>
+                <EventHandler />
             </div>
-            <EventHandler />
-        </>
+        </div>
     );
 };
 
