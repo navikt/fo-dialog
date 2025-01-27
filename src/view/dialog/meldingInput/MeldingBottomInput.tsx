@@ -5,7 +5,7 @@ import {
     betterErrorMessage,
     MeldingInputContext,
     useFocusBeforeHilsen,
-    handleCheckAndMoveCursor
+    setCursorsBeforeHilsen
 } from './inputUtils';
 import { MeldingFormValues } from './MeldingInputBox';
 import { PaperplaneIcon } from '@navikt/aksel-icons';
@@ -48,7 +48,7 @@ const MeldingBottomInputInner = () => {
                     maxLength={5000}
                     label="Skriv om arbeid og oppfølging"
                     hideLabel
-                    onFocus={handleCheckAndMoveCursor}
+                    onFocus={setCursorsBeforeHilsen}
                 />
                 <div className="flex flex-col space-y-2 pb-6">
                     <KladdLagret />

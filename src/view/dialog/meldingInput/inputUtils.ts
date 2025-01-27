@@ -54,7 +54,7 @@ export const useFocusBeforeHilsen = (textAreaRef: MutableRefObject<HTMLTextAreaE
     }, [textAreaRef.current]);
 };
 
-export const handleCheckAndMoveCursor = (
+export const setCursorsBeforeHilsen = (
     event: React.FocusEvent<HTMLTextAreaElement>
 ) => {
 
