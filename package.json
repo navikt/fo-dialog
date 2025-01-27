@@ -66,6 +66,7 @@
     "@navikt/ds-css": "^7.9.0",
     "@navikt/ds-react": "^7.9.0",
     "@navikt/ds-tailwind": "^7.9.0",
+    "@rollup/rollup-win32-x64-msvc": "^4.32.0",
     "@sentry/react": "^8.47.0",
     "@vitejs/plugin-react": "^4.3.4",
     "@vitejs/plugin-react-swc": "^3.7.2",

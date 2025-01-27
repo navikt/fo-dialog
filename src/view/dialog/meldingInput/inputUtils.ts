@@ -53,3 +53,25 @@ export const useFocusBeforeHilsen = (textAreaRef: MutableRefObject<HTMLTextAreaE
         textAreaRef.current?.addEventListener('focus', setHasFocusTrue);
     }, [textAreaRef.current]);
 };
+
+export const handleCheckAndMoveCursor = (
+    event: React.FocusEvent<HTMLTextAreaElement>
+) => {
+
+        const textBox = event.target;
+        if (textBox) {
+            const textValue = textBox.value;
+            const lines = textValue.split("\n");
+            const lastLine = lines.at(-1);
+
+            if (lastLine && lastLine.trim().startsWith("Hilsen")) {
+                const numLinesBeforeLast = lines.length - 2;
+                const cursorPosition = lines
+                    .slice(0, numLinesBeforeLast)
+                    .join("\n").length;
+
+                textBox.setSelectionRange(cursorPosition, cursorPosition);
+                textBox.focus();
+            }
+        }
+}

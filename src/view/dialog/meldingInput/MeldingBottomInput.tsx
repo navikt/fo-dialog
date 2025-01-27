@@ -1,7 +1,12 @@
 import { Alert, Button, ErrorMessage, Textarea } from '@navikt/ds-react';
 import React, { MutableRefObject, useContext, useRef } from 'react';
 import { useFormContext } from 'react-hook-form';
-import { betterErrorMessage, MeldingInputContext } from './inputUtils';
+import {
+    betterErrorMessage,
+    MeldingInputContext,
+    useFocusBeforeHilsen,
+    handleCheckAndMoveCursor
+} from './inputUtils';
 import { MeldingFormValues } from './MeldingInputBox';
 import { PaperplaneIcon } from '@navikt/aksel-icons';
 import { Breakpoint, useBreakpoint } from '../../utils/useBreakpoint';
@@ -16,19 +21,13 @@ const MeldingBottomInputInner = () => {
     const {
         register,
         getValues,
-        watch,
         formState: { errors, isSubmitting }
     } = useFormContext<MeldingFormValues>();
     const breakpoint = useBreakpoint();
+    const textAreaRef: MutableRefObject<HTMLTextAreaElement | null> = useRef(null);
+    useFocusBeforeHilsen(textAreaRef);
 
-    const melding = watch('melding');
-    const startTekst = watch('startTekst');
-
-    const handleFocus = (event: React.FocusEvent<HTMLTextAreaElement>) => {
-        let startPos = melding.length - (startTekst || '').length;
-        event.target.setSelectionRange(startPos, startPos);
-    };
-
+    const formHooks = register('melding');
     return (
         <form className="'flex flex-1 flex-col overflow-hidden'" onSubmit={onSubmit} noValidate autoComplete="off">
             <div className="flex items-end">
@@ -38,14 +37,18 @@ const MeldingBottomInputInner = () => {
                 <Textarea
                     id="melding_input"
                     className="w-full"
-                    {...register('melding')}
+                    {...formHooks}
+                    ref={(ref) => {
+                        textAreaRef.current = ref;
+                        formHooks.ref(ref);
+                    }}
                     placeholder={'Skriv om arbeid og oppfølging'}
                     minRows={3}
                     maxRows={12}
                     maxLength={5000}
                     label="Skriv om arbeid og oppfølging"
                     hideLabel
-                    onFocus={handleFocus}
+                    onFocus={handleCheckAndMoveCursor}
                 />
                 <div className="flex flex-col space-y-2 pb-6">
                     <KladdLagret />
