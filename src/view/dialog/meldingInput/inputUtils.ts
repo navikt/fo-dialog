@@ -54,7 +54,7 @@ export const useFocusBeforeHilsen = (textAreaRef: MutableRefObject<HTMLTextAreaE
     }, [textAreaRef.current]);
 };
 
-export const setCursorsBeforeHilsen = (event: React.FocusEvent<HTMLTextAreaElement>) => {
+export const setCursorBeforeHilsen = (event: React.FocusEvent<HTMLTextAreaElement>) => {
     const textBox = event.target;
     if (textBox) {
         const textValue = textBox.value;

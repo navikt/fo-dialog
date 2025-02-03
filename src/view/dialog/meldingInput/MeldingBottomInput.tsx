@@ -1,7 +1,7 @@
 import { Alert, Button, ErrorMessage, Textarea } from '@navikt/ds-react';
 import React, { MutableRefObject, useContext, useRef } from 'react';
 import { useFormContext } from 'react-hook-form';
-import { betterErrorMessage, MeldingInputContext, useFocusBeforeHilsen, setCursorsBeforeHilsen } from './inputUtils';
+import { betterErrorMessage, MeldingInputContext, useFocusBeforeHilsen, setCursorBeforeHilsen } from './inputUtils';
 import { MeldingFormValues } from './MeldingInputBox';
 import { PaperplaneIcon } from '@navikt/aksel-icons';
 import { Breakpoint, useBreakpoint } from '../../utils/useBreakpoint';
@@ -43,7 +43,7 @@ const MeldingBottomInputInner = () => {
                     maxLength={5000}
                     label="Skriv om arbeid og oppfølging"
                     hideLabel
-                    onFocus={setCursorsBeforeHilsen}
+                    onFocus={setCursorBeforeHilsen}
                 />
                 <div className="flex flex-col space-y-2 pb-6">
                     <KladdLagret />
