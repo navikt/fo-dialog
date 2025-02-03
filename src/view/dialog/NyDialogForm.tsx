@@ -19,6 +19,7 @@ import { SubmitTarget } from 'react-router-dom/dist/dom';
 import { NyTradArgs } from '../DialogProvider';
 import { dispatchUpdate, UpdateTypes } from '../../utils/UpdateEvent';
 import { useInnsynsrett } from '../../api/useInnsynsrett';
+import { setCursorBeforeHilsen } from './meldingInput/inputUtils';
 
 interface Props {
     defaultTema: string;
@@ -177,6 +178,7 @@ const NyDialogForm = (props: Props) => {
                     maxLength={5000}
                     {...register('melding')}
                     error={errors.melding && errors.melding.message}
+                    onFocus={setCursorBeforeHilsen}
                 />
 
                 {noeFeilet ? (

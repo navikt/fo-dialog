@@ -1,7 +1,7 @@
 import { Alert, Button, Textarea } from '@navikt/ds-react';
 import React, { MutableRefObject, useContext, useRef } from 'react';
 import { useFormContext } from 'react-hook-form';
-import { betterErrorMessage, MeldingInputContext, useFocusBeforeHilsen } from './inputUtils';
+import { betterErrorMessage, setCursorBeforeHilsen, MeldingInputContext, useFocusBeforeHilsen } from './inputUtils';
 import { MeldingFormValues } from './MeldingInputBox';
 import ManagedDialogCheckboxes from '../DialogCheckboxes';
 import { dataOrUndefined } from '../../Provider';
@@ -42,6 +42,7 @@ const MeldingSideInputInner = () => {
                     minRows={3}
                     maxRows={100} // Will overflow before hitting max lines
                     maxLength={5000}
+                    onFocus={setCursorBeforeHilsen}
                 />
                 <div className="self-stretch mt-2 flex justify-between items-end">
                     <Button size="small" title="Send" disabled={isSubmitting} loading={isSubmitting}>
